@@ -42,47 +42,10 @@
 
   // / Externally or internally accesible domain or IP.
   $URL = 'localhost';
-  // / Unique Salts will make HRCloud2 more secure when running in online mode.
-  $Salts = 'YTMpw2016!';
   // / Scan for viruses during directory scan. Use 1 for true or leave blank for false. 
    // / (ClamAV MUST be installed on the localhost!!!).
   $VirusScan = '0';
 // / ------------------------------
-
-// / Database Information ...
-// / ------------------------------
-// / MSSQL Database Information ...
-  // / Enable MSSQL Support ... 
-  // / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASE TYPES AT ONCE !!!
-  $ENABLE_MSSQL = '1';
-  // / MSSQL Credentials ...
-  $DBName = 'test';
-  $DBPass = 'test';
-  $DBUser = 'root';
-  // / The ServerName should be the name of the Windows Server running MSSQL.
-  $ServerName = 'ServerName';
-  $UserAccount = 'ITPersonsName';
-// / ------------------------------ 
-// / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASES AT ONCE !!!
- // / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASES AT ONCE !!!
-  // / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASES AT ONCE !!!
- // / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASES AT ONCE !!! 
-// / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASES AT ONCE !!!  
-// / ------------------------------ 
-// / MySQL Database Information ...
-  // / Enable MySQL Support ...
-  // / !!! DO NOT ENABLE SUPPORT FOR MULTIPLE DATABASE TYPES AT ONCE !!!
-  $ENABLE_MYSQL = '0';
-  // / MySQL Credentials ...
-  $DBName = 'database1';
-  $DBPass = 'CowEyes13';
-  $DBUser = 'root';
-  // / If your database is hosted on a separate server fill in the information below. 
-  // / For DBAdr use the internal or external IP or URL for the DB. Leave blank for localhost.
-  // / For DBPort you may specify a port or leave blank for default.
-  $DBAdr = '';
-  $DBPort = '';
-// / ------------------------------ 
 
 // / ------------------------------ 
 // / Directory locations ...
