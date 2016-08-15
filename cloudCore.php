@@ -142,15 +142,27 @@ if (isset($_POST['download'])) {
       $F1 = (pathinfo($file, PATHINFO_DIRNAME).'/'.$file);
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudTmpDir.$F2;
+      $F4 = pathinfo($file, PATHINFO_FILENAME);
+      $F5 = pathinfo($file, PATHINFO_EXTENSION);
+      $F6 = $F4.'_'.$fc.'.'.$F5;
       $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
         if($file == "") {
           $txt = ("ERROR HRC2146, No file specified on $Time".'.');
           $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
           echo nl2br("ERROR HRC2146, No file specified"."\n");
-          die(); } 
-      $COPY_TEMP = copy($file, $F3);
-      chmod($F3,0755); }  
+          die(); }
+      if (!file_exists($F3)) { 
+      $COPY_TEMP = copy($file, $F3); }
+      if (is_dir($file)) {
+        mkdir($F3, 0755);
+          foreach ($iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($file, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+            if ($item->isDir()) {
+              mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
+            else {
+    copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } }
 // / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
@@ -158,7 +170,7 @@ if (filesize($ClamLogDir > 1)) {
   echo nl2br('WARNING HRC2154, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
-    die(); } } }
+    die(); } } } 
 
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
@@ -235,10 +247,11 @@ if (isset($_POST['dearchive'])) {
               die(); } } 
         $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
         chmod($F3,0755); 
-        $filesToDearchive = '1';
       } } } }
 
   if (isset($_POST['dearchiveSelected'])) {
+    if (!is_array($_POST['dearchiveSelected'])) {
+    $_POST['dearchiveSelected'] = array($_POST['dearchiveSelected']); }
     foreach (($_POST['dearchiveSelected']) as $File) {
       $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
         'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
@@ -251,11 +264,12 @@ if (isset($_POST['dearchive'])) {
       $abwarray = array('abw');
       $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
       $rararr = array('rar');
-      $rararr = array('zip');
+      $ziparr = array('zip');
       $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-      $filename = $CloudUsrDir.str_replace(" ", "_", $File['file']['name']);
-      $filename1 = pathinfo($filename, PATHINFO_BASENAME);
-      $ext = pathinfo($filename, PATHINFO_EXTENSION);
+      $filename = str_replace(" ", "_", $File);
+      $filename1 = pathinfo($CloudUsrDir.$filename, PATHINFO_BASENAME);
+      $filename2 = pathinfo($CloudUsrDir.$filename, PATHINFO_FILENAME);
+      $ext = pathinfo($CloudUsrDir.$filename, PATHINFO_EXTENSION);
       $UserExt = $_POST['archextension'];  
       // / Check the Cloud Location with ClamAV before archiving, just in case.
       if ($VirusScan == '1') {
@@ -265,23 +279,23 @@ if (isset($_POST['dearchive'])) {
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
           die(); } }
-
+      if (!file_exists($CloudTmpDir.$filename)) {
+        copy($CloudUsrDir.$filename, $CloudTmpDir.$filename); }
+      if (!file_exists($CloudUsrDir.$filename2.'_'.$Date)) {
+        mkdir($CloudUsrDir.$filename2.'_'.$Date, 0755); }
       // / Handle dearchiving of rar compatible files.
-        if(in_array($ext,$rararr) ) {
-        shell_exec('unrar -x '.$CloudUsrDir.$Date.'.rar '.$CloudTmpDir.$filename);
-        copy ($filename1, $CloudTempDir .$UserDirPOST. $filename); 
+        if(in_array($ext,$rararr)) {
+        shell_exec('unrar -e '.$CloudTmpDir.$filename.'.rar '.$CloudUsrDir.$filename2.'_'.$Date);
         $txt = ('OP-Act: '."Submitted $filename to $Date".'.'."$UserExt in $CloudTmpDir on $Time".'.');
         $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } 
       // / Handle dearchiving of .zip compatible files.
-      if(in_array($ext,$ziparr) ) {
-        shell_exec('unzip '.$CloudTmpDir.$Date.'.zip '.$CloudTmpDir.$filename);
-        copy ($filename1, $CloudTmpDir.$filename); 
+      if(in_array($ext,$ziparr)) {
+        shell_exec('unzip '.$CloudTmpDir.$filename.' -d '.$CloudUsrDir.$filename2.'_'.$Date);
         $txt = ('OP-Act: '."Submitted $filename $Date".'.'."$UserExt in $CloudTmpDir on $Time".'.');
         $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } 
       // / Handle dearchiving of 7zipper compatible files.
-      if(in_array($ext,$tararr) ) {
-        shell_exec('7z e'.$CloudTmpDir.$Date.'.'.$UserExt.' '.$CloudTmpDir. $filename); 
-        copy ($filename1, $CloudTmpDir.$filename); 
+      if(in_array($ext,$tararr)) {
+        shell_exec('7z e'.$CloudUsrDir.$filename2.'_'.$Date.'.'.$UserExt.' '.$CloudTmpDir.$filename1); 
         $txt = ('OP-Act: '."Submitted $filename to $Date".'.'."$UserExt in $CloudTmpDir on $Time".'.');
         $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } } 
   
