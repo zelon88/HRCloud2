@@ -46,21 +46,29 @@ document.getElementById("cloudCommands").submit();
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit();
 </script>
-<script type="text/javascript">
+<script>
 jQuery('#input').on('input', function() {
   $("#logo").attr("src","Resources/logo.gif");
 });
 </script>
-<script type="text/javascript">
+<script>
 jQuery('#submitHRAI').on('submit', function() {
   $("#logo").attr("src","Resources/logo.gif");
 });
 </script>
+<div id="cloudContentsDiv" align='center'>
+  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
-<div id="cloudContentsDiv" style="float: center; ">
-  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:375px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+<script>
+;(function($){
+    $(document).ready(function(){
+        $('#cloudContents').height( $(window).height() - 185 );
+        $(window).resize(function(){
+            $('#cloudContents').height( $(this).height() - 185 );
+        });
+    });
+})(jQuery);
+</script>
 </div>
-
 </body>
-
 </html>
