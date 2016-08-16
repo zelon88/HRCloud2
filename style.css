@@ -1,3 +1,10 @@
+
+html {
+    height: 100%;
+}
+body {
+  min-height: 100%;
+}
 input{ 
   box-sizing:border-box; 
 }
@@ -7,7 +14,7 @@ body {
   background: #ffffff;
 }
 .iframer ul {
-  background-color: #ccc;
+  background-color: #ffffff;
 } 
 .nav ul {
   list-style: none;
@@ -55,8 +62,8 @@ body {
     max-width: 650px;
 }
 input[type=submit] {
-  height: 30px;
-  width: 220px;
+  height: 25px;
+  width: 133px;
   -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
   -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
   box-shadow: 0px 0px 0px 2px #9fb4f2;
