@@ -1,0 +1,5 @@
+<?php
+// /Everything and anything below this line is machine generated code.
+
+$node0ServerID = 'D620'; $node0OnlineStatus = 1; $node0Busy = 0; $node0URL = '192.168.1.9/HRProprietary/HRAI'; 
+$nodeCount = 3; 
