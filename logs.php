@@ -3,7 +3,7 @@
 <head>
 <title>HRCloud2 | Home </title>
 <link rel="stylesheet" type="text/css" href="style.css">
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
 <body>
   <?php require 'Applications/HRAI/HRAIHelper.php'; ?>
@@ -44,18 +44,18 @@
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></form></div>
 <script type="text/javascript">
-document.getElementById("HRAIMini").submit;
+document.getElementById("HRAIMini").submit();
 </script>
 
-<div id="cloudContentsDiv" align='center'>
-  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+<div id="logsContentsDiv" align='center'>
+  <iframe src="AppLogs" id="logsContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <script>
 ;(function($){
     $(document).ready(function(){
-        $('#cloudContents').height( $(window).height() - 185 );
+        $('#logsContents').height( $(window).height() - 185 );
         $(window).resize(function(){
-            $('#cloudContents').height( $(this).height() - 185 );
+            $('#logsContents').height( $(this).height() - 185 );
         });
     });
 })(jQuery);
