@@ -1,0 +1,26 @@
+// / The userGui takes in data and checks for a sesFile. If none exists, the first text entry is posted to core.
+// / Posting the first entry to core.php will generate a sesID, get local nodes for the session, check server status, 
+// / and generate a logFile. Once this is all done the core posts the user's text input to the langPar of it's first 
+// / available node along with the sesID and any other Vars we need to identify the user, the sesID, and the request node.
+// / If the request node and the processing node are different machines we must write code to include or exlude the "requires"
+// / accordingly on each node.
+// / The processing node will parse the text input down to a complex identifier we can try to "solve" or "satisfy" with 
+// / data. If we have insufficient data, we ask the user to supply some or search the web. This is where nodes are handy.
+// / The langPar of the processing node will then return its response to the userGUI, which POSTS data about the work
+// / performed back to the sesLogs of any involved nodes. 
+// / When we have free resources and/or available nodes, we search the web and read wiki articles
+// / to copy the data and include it into either an individual, or a common database. 
+// / We determine if it's time to research information by free server resources and number of free nodes. We decide what
+// / to research by searching our ses:ogs for frequently used words, phrases, or patterns in our free time. We can also select
+// / sections of conversations from our logs to parse again, to compare responses or to quantify and qualify what we've learned.
+// / There are three databases on each HRAI server. An individual database for storing learned data, keywords, meta, and 
+// / definitions for the sole use of that particular node. A common database that is a merger of any networked together HRAI. 
+// / And a global read-only database that the individual HRAI server cannot modify, but can update from an official repository.
+// / 
+
+
+MAKE THE FUNCTIONS IN coreVar URL compatible, and clean/fix them up a bit.
+
+Maybe I have to post to a script on the other nodes and then refresh my nodecache with theirs?
+Institute a varCache that we can clone between servers when we need to.
+Make all the functions in online.php so that they can be used with a URL as the arg.
