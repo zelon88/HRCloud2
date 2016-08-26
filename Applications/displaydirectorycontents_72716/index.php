@@ -59,13 +59,30 @@ $tableCount = 0;
 	 $ahref="./?hidden";
 	 $atext="Show";}
 $fileArray1 = array();
+$ArchInc = 0;
+while (file_exists($CloudUsrDir.$UserDirPOST.'/'.'Archive'.'_'.$Date.'_'.$ArchInc)) {
+  $ArchInc++; }
 ?>
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
 <body><p><strong>Operations: </strong>
-<img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/copy.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/deletesmall.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/archive.png'/> | <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/convert.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
-<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall"></p></form>
-<div align='center'><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
+<img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/copy.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/convert.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
+<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall"></p>
+</form>
 </div>
+<div id='archiveOptionsDiv' name='archiveOptionsDiv' style="display:none;">
+<input type="text" id='userfilename' name='userfilename' value='<?php echo 'Archive'.'_'.$Date.'_'.$ArchInc; ?>'> 
+<select id='archextension' name='archextension'> 
+  <option value="zip">Zip</option>
+  <option value="rar">Rar</option>
+  <option value="tar">Tar</option>
+  <option value="7z">7z</option>
+  <option value="tar.gz">Tar.gz</option>
+  <option value="tar.bz2">Tar.bz2</option>
+  <option value="iso">Iso</option>
+</select>
+<input type="submit" id="archiveFileSubmit" name="archiveFileSubmit" value='Archive Files' onclick="toggle_visibility('loadingCommandDiv');">
+</div>
+<div align='center'><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 <?php
 	 // Opens directory
 	 $myDirectory=opendir($CloudLoc.$UserDirPOST.$UserID);
@@ -212,6 +229,27 @@ $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
     data: { dearchive : "1", filesToDearchive : $('input:checkbox:checked').val()},
+
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+
+});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#archiveFileSubmit").click(function(){
+var archiveSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+archiveSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { archive : "1", filesToArchive : $('input:checkbox:checked').val(), 
+    userfilename : $("#userfilename").val(), archextension : $("#archextension").val()},
 
     success: function(data) {
         window.location.href = "cloudCore.php";
