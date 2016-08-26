@@ -107,7 +107,7 @@ if (isset ($ExternalIP)) {
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
   if (!is_array($_FILES["filesToUpload"])) {
-    $_FILES["filesToDownload"] = array($_FILES["filesToUpload"]); }
+    $_FILES["filesToUpload"] = array($_FILES["filesToUpload"]); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     $fc++;
     if ($file !== '.' or $file !== '..') {
@@ -138,7 +138,7 @@ if (isset($_POST['download'])) {
   $fc = 0;
   if (!is_array($_POST['filesToDownload'])) {
     $_POST['filesToDownload'] = array($_POST['filesToDownload']); }
-    foreach ($_POST['filesToDownload'] as $file) {
+    foreach ($_POST['filesToDownload'] as $key=>$file) {
       if ($file == '.' or $file == '..') continue;
       $fc++;
       $file = $CloudUsrDir.$file;
@@ -157,7 +157,7 @@ if (isset($_POST['download'])) {
           die(); }
       if (!file_exists($F3)) { 
       $COPY_TEMP = copy($file, $F3); }
-      if (is_dir($file)) {
+      if (is_dir($file)) { 
         mkdir($F3, 0755);
           foreach ($iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($file, \RecursiveDirectoryIterator::SKIP_DOTS),
@@ -177,11 +177,13 @@ if (filesize($ClamLogDir > 1)) {
 
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
-  foreach ($_POST['filesToArchive'] as $TFile1) { 
-$allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
+  if (!is_array($_POST["filesToArchive"])) {
+    $_POST["filesToArchive"] = array($_POST["filesToArchive"]); }
+  foreach ($_POST['filesToArchive'] as $key=>$TFile1) { 
+$allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
    'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
 $docarray =  array('dat', 'pages', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'odf', 'odt', 'abw');
-$spreadarray = array ('xls', 'xlsx', 'ods');
+$spreadarray = array('xls', 'xlsx', 'ods');
 $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
 $audioarray =  array('mp3', 'avi', 'wma', 'wav', 'ogg');
 $pdfarray = array('pdf');
@@ -189,14 +191,15 @@ $gifarray = array('gif');
 $abwarray = array('abw');
 $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
 $rararr = array('rar');
-$rararr = array('zip');
+$ziparr = array('zip');
 $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-$filename = $CloudUsrDir.$UserDirPOST.str_replace(" ", "_", $TFile1['file']['name']);
+$F1 = str_replace(str_split('\\/ '), '', $TFile1);
+$filename = $CloudUsrDir.$F1;
 $filename1 = pathinfo($filename, PATHINFO_BASENAME);
 $ext = pathinfo($filename, PATHINFO_EXTENSION);
 $UserExt = $_POST['archextension'];
 $UserFileName = $_POST['userfilename'];
-if(!in_array($ext,$allowed) ) {
+if(!in_array($ext, $allowed)) { 
   echo nl2br("ERROR HRC2181, Unsupported File Format\n");
   die(); }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
@@ -208,23 +211,23 @@ if (filesize($ClamLogDir > 1)) {
     try again later.'."\n");
     die(); } }
 // / Handle archiving of rar compatible files.
-if(in_array($UserExt,$rararr) ) {
-  copy ($filename, $CloudTmpDir . $filename); 
-  $txt = ('OP-Act: '."Submitted $filename to $Date".'.'."$UserExt in $CloudTmpDir on $Time".'.');
-  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); 
-  shell_exec('rar -a '.$CloudDir.$UserDirPOST.$UserFileName.'.rar '.$CloudTmpDir.$filename); } 
+if(in_array($UserExt, $rararr)) {
+  copy ($filename, $CloudTmpDir . $filename1); 
+  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
+  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+  shell_exec('rar a '.$CloudUsrDir.$UserFileName.'.rar '.$CloudUsrDir.$filename1); } 
 // / Handle archiving of .zip compatible files.
-if(in_array($UserExt,$ziparr) ) {
-  copy ($filename, $CloudTmpDir.$filename); 
-  $txt = ('OP-Act: '."Submitted $filename to $Date".'.'."$UserExt in $CloudTmpDir on $Time".'.');
+if(in_array($UserExt, $ziparr)) {
+  copy ($filename, $CloudTmpDir.$filename1); 
+  $txt = ('OP-Act: '."SArchived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); 
-  shell_exec('zip '.$CloudTmpDir.$Date.'.zip '.$CloudTmpDir.$filename); } 
+  shell_exec('zip '.$CloudUsrDir.$UserFileName.'.zip '.$CloudUsrDir.$filename1); } 
 // / Handle archiving of 7zipper compatible files.
-if(in_array($UserExt,$tararr) ) {
-  copy ($filename, $CloudTmpDir.$filename); 
-  $txt = ('OP-Act: '."Submitted $filename to $Date".'.'."$UserExt in $CloudTmpDir on $Time".'.');
+if(in_array($UserExt, $tararr)) {
+  copy ($filename, $CloudTmpDir.$filename1); 
+  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); 
-  shell_exec('7z a'.$CloudTmpDir.$Date.'.'.$UserExt.' '.$CloudTmpDir.$filename); } } }  
+  shell_exec('7z a '.$CloudUsrDir.$UserFileName.'.'.$UserExt.' '.$CloudUsrDir.$filename1); } } }  
 
 // / The following code will be performed when a user either uploads or selects archives to extract.
 if (isset($_POST["dearchive"])) {
@@ -255,7 +258,7 @@ if (isset($_POST["dearchive"])) {
         mkdir($CloudUsrDir.$filename2.'_'.$Date, 0755); }
       // / Handle dearchiving of rar compatible files.
         if(in_array($ext,$rararr)) {
-        shell_exec('unrar -e '.$CloudTmpDir.$filename.'.rar '.$CloudUsrDir.$filename2.'_'.$Date);
+        shell_exec('unrar e '.$CloudTmpDir.$filename.'.rar '.$CloudUsrDir.$filename2.'_'.$Date);
         $txt = ('OP-Act: '."Submitted $filename to $filename2_$Date$ in $CloudTmpDir on $Time".'.');
         $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } 
       // / Handle dearchiving of .zip compatible files.
