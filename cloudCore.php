@@ -537,7 +537,7 @@ if (isset($_POST['scanDocSelected'])) {
             $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
-if (file_exists($ClouLoc)) {
+if (file_exists($CloudLoc)) {
   $CleanFiles = glob($CloudTemp.'*');
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
