@@ -221,7 +221,7 @@ if(in_array($UserExt, $ziparr)) {
   copy ($filename, $CloudTmpDir.$filename1); 
   $txt = ('OP-Act: '."SArchived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); 
-  shell_exec('zip '.$CloudUsrDir.$UserFileName.'.zip '.$CloudUsrDir.$filename1); } 
+  shell_exec('zip -j '.$CloudUsrDir.$UserFileName.'.zip '.$CloudUsrDir.$filename1); } 
 // / Handle archiving of 7zipper compatible files.
 if(in_array($UserExt, $tararr)) {
   copy ($filename, $CloudTmpDir.$filename1); 
