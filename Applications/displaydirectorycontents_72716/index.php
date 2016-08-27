@@ -60,14 +60,23 @@ $tableCount = 0;
 	 $atext="Show";}
 $fileArray1 = array();
 $ArchInc = 0;
-while (file_exists($CloudUsrDir.$UserDirPOST.'/'.'Archive'.'_'.$Date.'_'.$ArchInc)) {
+while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) {
   $ArchInc++; }
 ?>
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
 <body><p><strong>Operations: </strong>
-<img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/copy.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/convert.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
-<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall"></p>
+<img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/convert.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
+<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p>
 </form>
+</div>
+<div id='deleteOptionsDiv' name='deleteOptionsDiv' style="display:none;">
+Are you sure?
+<input type="submit" id="deleteFileSubmit" name="deleteFileSubmit" value='Confirm Delete' onclick="toggle_visibility('loadingCommandDiv');">
+</div>
+
+<div id='copyOptionsDiv' name='copyOptionsDiv' style="display:none;">
+<input type="text" id='newcopyfilename' name='newcopyfilename' value='<?php echo $name.'_'.$Date; ?>'> 
+<input type="submit" id="copyFileSubmit" name="copyFileSubmit" value='Copy Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div id='archiveOptionsDiv' name='archiveOptionsDiv' style="display:none;">
 <input type="text" id='userfilename' name='userfilename' value='<?php echo 'Archive'.'_'.$Date.'_'.$ArchInc; ?>'> 
@@ -78,7 +87,6 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'/'.'Archive'.'_'.$Date.'_'.$ArchIn
   <option value="7z">7z</option>
   <option value="tar.gz">Tar.gz</option>
   <option value="tar.bz2">Tar.bz2</option>
-  <option value="iso">Iso</option>
 </select>
 <input type="submit" id="archiveFileSubmit" name="archiveFileSubmit" value='Archive Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
@@ -277,7 +285,46 @@ $.ajax( {
 });
 });
 </script>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#copyFileSubmit").click(function(){
+var copySelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+copySelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { copy : "1", filesToCopy : copySelected, 
+    newcopyfilename : $("#newcopyfilename").val()},
 
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
 
+});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#deleteFileSubmit").click(function(){
+var deleteSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+deleteSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { deleteconfirm : "1", filesToDelete : deleteSelected},
+
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+
+});
+});
+</script>
 </body>
 </html>
