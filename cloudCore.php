@@ -194,14 +194,21 @@ if (isset($_POST['deleteconfirm'])) {
     $_POST['filesToDelete'] = array($_POST['filesToDelete']); }
   foreach ($_POST['filesToDelete'] as $key=>$DFile) { 
     if (is_dir($CloudUsrDir.$DFile)) {
-      rmdir($CloudUsrDir.$DFile); }
-      unlink($CloudUsrDir.$DFile);
-      if (file_exists($CloudTmpDir.$DFile)) {
-        unlink($CloudTmpDir.$DFile); 
-        $txt = ('OP-Act: '."Deleted $DFile from $CloudTmpDir on $Time".'.');
-        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
-      $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
-      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } }
+     $objects = scandir($CloudUsrDir.$DFile); 
+     foreach ($objects as $object) { 
+       if ($object != "." && $object != "..") { 
+         if (is_dir($CloudUsrDir.$DFile."/".$object)) 
+           rmdir($CloudUsrDir.$DFile."/".$object);
+         else
+           unlink($CloudUsrDir.$DFile."/".$object); } }
+     rmdir($CloudUsrDir.$DFile); } 
+    unlink($CloudUsrDir.$DFile);
+    if (file_exists($CloudTmpDir.$DFile)) {
+      unlink($CloudTmpDir.$DFile); 
+      $txt = ('OP-Act: '."Deleted $DFile from $CloudTmpDir on $Time".'.');
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
+    $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
+    $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } }
 
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
@@ -565,21 +572,28 @@ if (isset($_POST['scanDocSelected'])) {
             $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
-if (file_exists($CloudLoc)) {
+if (file_exists($CloudTemp)) {
   $CleanFiles = glob($CloudTemp.'*');
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile !== '.' or $CleanFile !== '..') continue;
-      if ($time - filetime($CleanFile) >= '21600'); // Every 6 hours.
-        unlink($CleanFile);
-        if (file_exists($CleanFile)) {
-          rmdir($CleanFile); }
+    if ($CleanFile == '.' or $CleanFile == '..') continue;
+      if ($time - filemtime($CleanFile) >= '21600') { // Every 6 hours.
+        if (!is_dir($CleanFile)) {
+          unlink($CleanFile); }
+        if (is_dir($CleanFile)) {
+          $objects1 = scandir($CleanFile); 
+          foreach ($objects1 as $object1) { 
+            if ($object1 != "." && $object1 != "..") { 
+              if (!is_dir($CleanFile.'/'.$object1)) {
+                unlink($CleanFile.'/'.$object1); }
+              if (is_dir($CleanFile."/".$object1)) { 
+                @rmdir($CleanFile."/".$object1); } } } } 
           if (!file_exists($CleanFile)) { 
             $txt = ('OP-Act: '."Cleaned $CleanFile on $Time".'.');
             $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); 
           if (file_exists($CleanFile)) { 
             $txt = ('ERROR HRC2614, Could not delete temp file '.$CleanFile.' on '.$Time.'.');
-            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } } }
+            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } } } }
 
 
 
