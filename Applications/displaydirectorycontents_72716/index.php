@@ -193,8 +193,26 @@ if (in_array($extnRAW, $ImageArray)) {
 if (in_array($extnRAW, $MediaArray)) {
 	$specialHTML = '<img src="Resources/stream.png" alt=\'Stream Media\'/>'; }
 if ($extn == "Folder") {
-	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; }
+	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; } 
+?>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#corePostDL<?php echo $tableCount; ?>").click(function(){
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
 
+    success: function(data) {
+    	toggle_visibility('loadingCommandDiv');
+        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name;?>";
+    }
+} );
+
+});
+});
+</script>
+<?php
 	 echo("
 		<tr class='$class'>
 			<td><a id='corePostDL$tableCount' href='#'$favicon class='name' onclick=".'toggle_visibility(\'loadingCommandDiv\');'.">$name</a></td>
@@ -228,7 +246,7 @@ dearchiveSelected.push(this.value);
 $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
-    data: { dearchive : "1", filesToDearchive : $('input:checkbox:checked').val()},
+    data: { dearchive : "1", filesToDearchive : dearchiveSelected},
 
     success: function(data) {
         window.location.href = "cloudCore.php";
@@ -248,7 +266,7 @@ archiveSelected.push(this.value);
 $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
-    data: { archive : "1", filesToArchive : $('input:checkbox:checked').val(), 
+    data: { archive : "1", filesToArchive : archiveSelected, 
     userfilename : $("#userfilename").val(), archextension : $("#archextension").val()},
 
     success: function(data) {
@@ -259,5 +277,7 @@ $.ajax( {
 });
 });
 </script>
+
+
 </body>
 </html>
