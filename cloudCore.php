@@ -175,6 +175,34 @@ if (filesize($ClamLogDir > 1)) {
     try again later.'."\n");
     die(); } } } 
 
+// / The following code is performed whenever a user selects a file to copy.
+if (isset($_POST['copy'])) {
+  if (!is_array($_POST['filesToCopy'])) {
+    $_POST['filesToCopy'] = array($_POST['filesToCopy']); }
+  foreach ($_POST['filesToCopy'] as $key=>$CFile) { 
+    $newCopyFilename = $_POST['newcopyfilename'];
+    if (isset($newCopyFilename)) {
+      $cext = pathinfo($CloudUsrDir.$CFile, PATHINFO_EXTENSION);
+      copy($CloudUsrDir.$CFile, $CloudUsrDir.$newCopyFilename.'.'.$cext);
+        $txt = ('OP-Act: '."Copied $CFile to $newCopyFilename on $Time".'.');
+        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+       } } }
+
+// / The following code is performed whenever a user selects a file to delete.
+if (isset($_POST['deleteconfirm'])) {
+  if (!is_array($_POST['filesToDelete'])) {
+    $_POST['filesToDelete'] = array($_POST['filesToDelete']); }
+  foreach ($_POST['filesToDelete'] as $key=>$DFile) { 
+    if (is_dir($CloudUsrDir.$DFile)) {
+      rmdir($CloudUsrDir.$DFile); }
+      unlink($CloudUsrDir.$DFile);
+      if (file_exists($CloudTmpDir.$DFile)) {
+        unlink($CloudTmpDir.$DFile); 
+        $txt = ('OP-Act: '."Deleted $DFile from $CloudTmpDir on $Time".'.');
+        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
+      $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } }
+
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
   if (!is_array($_POST["filesToArchive"])) {
