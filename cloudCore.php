@@ -36,7 +36,7 @@ $WPFile = '/var/www/html/wp-load.php';
 
 // / Verify that WordPress is installed.
 if (!file_exists($WPFile)) {
-  $txt = ('ERROR HRC265, WordPress not detected on'.$Time.'.');
+  $txt = ('ERROR HRC265, WordPress not detected.');
   $LogFile = file_put_contents($SesLogDir.'/'.'_'.$LogInc.'.txt', $txt.PHP_EOL , FILE_APPEND);
   echo nl2br('ERROR HRC265, WordPress was not detected on the server.'."\n"); }
   else {
