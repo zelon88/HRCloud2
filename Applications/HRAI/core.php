@@ -2,12 +2,36 @@
 <html>
 <head>
 <title>HRAI Core</title>
+<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
+<?php 
+if (!isset($_POST['input'])) { ?>
 <div align='center'>
-<img id='logo' src='Resources/logoslow.gif'/>
+<img id='logo' src='Resources/logoslowbreath.gif'/>
 </div>
+<?php } 
+if (isset($_POST['input'])) { ?>
+<div style="float: left; margin-left: 15px;">
+<img id='logo' src='Resources/logo.gif'/>
+</div>
+<?php } 
+if (!isset($_POST['input'])) { ?>
 <div align='center'>
+<?php } 
+if (isset($_POST['input'])) { ?>
+<div style="float: right; padding-right: 50%;">
+<?php } ?>
 <body>
+<script>
+jQuery('#input').on('input', function() {
+  $("#logo").attr("src","Resources/logo.gif");
+});
+</script>
+<script>
+jQuery('#submitHRAI').on('submit', function() {
+  $("#logo").attr("src","Resources/logo.gif");
+});
+</script>
 <?php
 session_start();
 // SECRET: Get core AI files as well as array and variable libraries.

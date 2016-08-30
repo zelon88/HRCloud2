@@ -65,15 +65,22 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 ?>
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
 <body><p><strong>Operations: </strong>
-<img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/convert.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
+<img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id='scandocoptionsDiv' name='scandocoptionsDiv' onclick="toggle_visibility('scandocshowDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
 <input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p>
-</form>
+</div>
+<div id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
+New Filename: 
+<input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo 'Scanned-Document_'.$Date; ?>'> 
+<select id='outputtopdf' name='outputtopdf'> 
+  <option value="0">Preserve Extensions</option>
+  <option value="1">Create PDF's</option>
+</select>
+<input type="submit" id="scandocSubmit" name="scandocSubmit" value='Scan Document' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div id='deleteOptionsDiv' name='deleteOptionsDiv' style="display:none;">
 Are you sure?
 <input type="submit" id="deleteFileSubmit" name="deleteFileSubmit" value='Confirm Delete' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
-
 <div id='copyOptionsDiv' name='copyOptionsDiv' style="display:none;">
 <input type="text" id='newcopyfilename' name='newcopyfilename' value='<?php echo $name.'_'.$Date; ?>'> 
 <input type="submit" id="copyFileSubmit" name="copyFileSubmit" value='Copy Files' onclick="toggle_visibility('loadingCommandDiv');">
@@ -85,11 +92,40 @@ Are you sure?
   <option value="rar">Rar</option>
   <option value="tar">Tar</option>
   <option value="7z">7z</option>
-  <option value="tar.gz">Tar.gz</option>
   <option value="tar.bz2">Tar.bz2</option>
 </select>
 <input type="submit" id="archiveFileSubmit" name="archiveFileSubmit" value='Archive Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
+
+<div id='convertOptionsDiv' name='convertOptionsDiv' style="display:none;">
+<select id='extension' name='extension'> 
+  <option value="zip">Zip</option>
+  <option value="rar">Rar</option>
+  <option value="tar">Tar</option>
+  <option value="7z">7z</option>
+  <option value="tar.bz2">Tar.bz2</option>
+  <option value="iso">iso</option>
+  <option value="jpg">Jpg</option>
+  <option value="bmp">Bmp</option>
+  <option value="png">Png</option>
+  <option value="mp3">Mp3</option>
+  <option value="avi">Avi</option>
+  <option value="wav">Wav</option>
+  <option value="ogg">Ogg</option>
+  <option value="doc">Doc</option>
+  <option value="docx">Docx</option>
+  <option value="rtf">Rtf</option>
+  <option value="txt">Txt</option>
+  <option value="xls">Xls</option>
+  <option value="xlsx">Xlsx</option>
+  <option value="odf">Odf</option>
+  <option value="ods">Ods</option>
+  <option value="pdf">Pdf</option>
+</select>
+<input type="submit" id="convertSubmit" name="convertSubmit" value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
+</div>
+</form>
+
 <div align='center'><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 <?php
 	 // Opens directory
@@ -326,5 +362,48 @@ $.ajax( {
 });
 });
 </script>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#scandocSubmit").click(function(){
+var scandocSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+scandocSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { scanDocSelected : scandocuserfilename : $("#scandocuserfilename").val(), 
+      outputScanDocToPDF : $("#outputtopdf").val() },
+
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+
+});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#convertSubmit").click(function(){
+var convertSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+convertSelected.push(this.value);
+});
+
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { convertSelected : convertSelected,
+      extension : $("#extension").val() },
+
+} );
+setTimeout(function(){
+      window.location.href = "cloudCore.php";
+}, 3000);
+});
+});
+</script>
+
 </body>
 </html>
