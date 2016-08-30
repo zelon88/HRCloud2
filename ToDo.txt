@@ -1,15 +1,7 @@
-8/8/16
+8/30/16
 
 WHERE WE ARE...
-Our AJAX call to copy files from the permanent Cloud location to the TEMP cloud location is functional.
+Testing the converter.
+Trying to figure out why our Python for DocScan works in bach but not in PHP.
 
-WHATS NEXT...
-1. We want to make another Cowboy PHP video!!!
-2. We want to add checkboxes to the items in our Cloud List.
-3. We want to make each item in the Cloud list have an expanding set of options that rolls out of the bottom of
-     the item in the list.
-4. The roll-down box for each item in the Cloud list will contain the options to Copy, Delete, Move, Convert,
-     Scan, Archive, or Dearchive the selected file.
-5. The header-bar (the row of columns at the top of the Cloud List) will roll down and provide options for
-     all of the items selected via the checkbox's for the items in the Cloud List.
-6. We need to fix the Cleanup scripts so that items in the temp location older than 6 hours are actually removed.
+
