@@ -9,6 +9,7 @@ HRCloud2 DOES NOT directly interact with, or add data to, a database during oper
 
 
 CURRENT CORE FEATURES
+
 -HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory and are cleaned up every 6 hours. 
 
 -Non-hosted permanent files remain until deleted by the end-user.
