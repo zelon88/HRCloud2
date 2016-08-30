@@ -1,5 +1,6 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 <?php
+set_time_limit(0);
 // / APPLICATION INFORMATION ...
 // / HRCloud2, Copyright on 7/12/2016 by Justin Grimes, www.github.com/zelon88
 // / 
@@ -22,7 +23,13 @@
 // / DEPENDENCY REQUIREMENTS ... 
 // / This application requires Debian Linux (w/3rd Party audio license), 
 // / Apache 2.4, PHP 7.0, MySQL, JScript, WordPress, LibreOffice, Unoconv, 
-// / Python, ClamAV, Rar, Unrar, Unzip, 7zipper, FFMPEG, OpenCV, and ImageMagick.
+// / Python 2.7 and 3, ClamAV, Rar, Unrar, Unzip, 7zipper, FFMPEG, OpenCV, 
+// / PyGames Rect, NumPy, setuptools for Python 2 and 3, Python-Pip, thetaexif,
+// / Scikit, Scypy, and ImageMagick.
+
+// / IMPORTANT NOTES ...
+// / You need to allow www-data access to use sudo commands by editing the /etc/sudoers
+// / file and adding the following lne... "www-data ALL=(ALL) NOPASSWD:ALL".
 // / -----------------------------------------------------------------------------------
 
 // / The follwoing code checks if the configuration file.php file exists and 
@@ -310,15 +317,16 @@ if (isset($_POST["dearchive"])) {
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset( $_POST['convertSelected'])) {
   $txt = ('OP-Act: Initiated HRConvert on '.$Time.'.');
-  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);    
+  if (!is_array($_POST["convertSelected"])) {
+    $_POST['convertSelected'] = array($_POST['convertSelected']); }
   foreach ($_POST['convertSelected'] as $file) {
     $txt = ('OP-Act: User selected to Convert file '.$file.' from CLOUD.');
     $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
     $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
       'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-    $File1 = $CloudUsrDir.$file;
-    $file1 = ((pathinfo($File1, PATHINFO_DIRNAME)).'/'.(pathinfo($File1, PATHINFO_FILENAME)));
-    $file2 = $CloudTmpDir.pathinfo($File1, PATHINFO_FILENAME);
+    $file1 = $CloudUsrDir.$file;
+    $file2 = $CloudTmpDir.$file;
     copy($file1, $file2);
     $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.');
     $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
@@ -329,9 +337,6 @@ if (isset( $_POST['convertSelected'])) {
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
     $newFile = $filename . '.' . $extension;
     $newPathname = $CloudUsrDir.$newFile;
-    $safedir = '/tmp/SAFEDIR/isolated/' . $newFile; 
-      if (!file_exists($safedir)) {
-        mkdir($safedir, 0755); }
         $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg');
         $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
         $pdfarray = array('pdf');
@@ -349,7 +354,15 @@ if (isset( $_POST['convertSelected'])) {
         $stub = ('http://localhost/DATA/');
         $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
           if (in_array($oldExtension,$docarray) ) {
-            shell_exec ("unoconv -o $newPathname -f $extension $pathname"); }
+            echo("unoconv -o $newPathname -f $extension $pathname");
+            shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
+            // / For some reason files take a moment to appear after being created with Unoconv.
+            $stopper = 0;
+            while(!file_exists($newPathname)) {
+              $stopper++;
+              if ($stopper == 10) {
+                die('ERROR HRC2364, The converter timed out while copying your file.'); }
+              sleep(2); } }
           if (in_array($oldExtension,$imgarray) ) {
             $height = $_POST['height'];
             $width =  $_POST['width']; 
@@ -373,12 +386,12 @@ if (isset( $_POST['convertSelected'])) {
                 $br = (' -ab ' . $bitrate . ' '); } 
                 shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); } 
           if (in_array($oldExtension,$archarray) ) {
-            $safedir1 = '/tmp/SAFEDIR/isolated/';
-            $safedir2 = "/tmp/SAFEDIR/isolated/$filename";
+            $safedir1 = $CloudTmpDir;
+            $safedir2 = $CloudTmpDir.$filename;
             mkdir("$safedir2", 0755, true);
             chmod($safedir2, 0755);
-            $safedir3 = ("/tmp/SAFEDIR/isolated/$filename" . '.7z');
-            $safedir4 = ("/tmp/SAFEDIR/isolated/$filename" . '.zip');
+            $safedir3 = ($safedir2.'.7z');
+            $safedir4 = ($safedir2.'.zip');
           if(in_array($oldExtension, $arrayzipo) ) {
             shell_exec("unzip $pathname -d $safedir2"); } 
           if(in_array($oldExtension, $array7zo) ) {
@@ -448,10 +461,8 @@ if (!file_exists($newPathname)) {
   die(); } 
 
 if (file_exists($newPathname)) {
-  echo nl2br('ERROR HRC2470, No file to convert.'."\n"); 
   $txt = ('ERROR HRC2470, No file to convert.');
-  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-  die(); } } }
+  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
@@ -496,7 +507,9 @@ if (isset($_POST['streamSelected'])) {
 if (isset($_POST['scanDocSelected'])) {
   $txt = ('OP-Act: Initiated HRDocScan on '.$Time.'.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-    foreach ($_POST['scanDocSelected'] as $scanDoc) {
+    if (!is_array($_POST["scanDocSelected"])) {
+    $_POST['scanDocSelected'] = array($_POST['scanDocSelected']); }
+    foreach ($_POST['scanDocSelected'] as $key=>$scanDoc) {
       $txt = ('OP-Act: User selected to DocScan file '.$scanDoc.' from CLOUD.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
       if (!file_exists($CloudUsrDir.$scanDoc)) {
@@ -515,61 +528,84 @@ if (isset($_POST['scanDocSelected'])) {
     $filename1 = pathinfo($CTD, PATHINFO_FILENAME);
     $oldExtension = pathinfo($CTD, PATHINFO_EXTENSION);
     if (in_array($oldExtension, $pdfarray)) {
-    shell_exec('convert -density 150 -trim '.$CTD.'.jpg -quality 100 -sharpen 0x1.0 '.$CUD); 
+      shell_exec('convert -density 150 -trim '.$CTD.'.jpg -quality 100 -sharpen 0x1.0 '.$CUD);
+      $CTD = $CTD.'.jpg'; 
       $txt = ('OP-Act: Converted '.$CUD.' to '.$CTD.' on '.$Time.'.');
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); 
+      $oldExtension = 'jpg'; }
+    if (in_array($oldExtension,$allowed)) { 
+      list($Width, $Height) = getimagesize($CUD);
+      $EXFreshScript = $InstLoc.'/Applications/document-scanner-master.zip';
+      $EXTempScript = $InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS';
+      mkdir($EXTempScript);
+      chmod($EXTempScript, 0777);
+      $ExtractScripts = shell_exec('unzip '.$EXFreshScript.' -d '.$EXTempScript);
+      chmod($EXTempScript.'/document-scanner', 0777);
+      $TempScript = $EXTempScript.'/document-scanner/scan.py';
+        chmod($EXTempScript.'/document-scanner', 0777);
+        $TempScriptGlob = glob($TempScript);
+        foreach ($TempScriptGlob as $TSG) {
+          chmod($TSG, 0777); }
+        chmod($EXTempScript.'/document-scanner/pyimagesearch', 0777);
+        $TempScript1 = $EXTempScript.'/document-scanner/pyimagesearch';
+        $TempScriptGlob = glob($TempScript1);
+        foreach ($TempScriptGlob as $TSG) {
+          chmod($TSG, 0777); }
+      $OutputDoc = $InstLoc.'/DATA/'.$UserID.'/DOCSCANTEMP.jpg';
+      $Code = 'DOCSCANTEMP.jpg';
+      $newCode = $InstLoc.'/DATA/'.$UserID.'/DOCSCANTEMP.jpg'; 
+      $ScriptData = file_get_contents($TempScript);
+      $SwapCode = str_replace($Code, $newCode, $ScriptData);
+      $WriteCode = file_put_contents($TempScript, $SwapCode);
+      $txt = ('OP-Act: Modified the code of '.$TempScript.' with '.$Width.', '.$Height.' on '.$Time.'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-      unlink($CUD); }
-      if (in_array($oldExtension,$allowed)) {
-        $FreshScript = '/Applications/document-scanner_71916/scanner.py';
-        $TempScript = $CloudTmpDir.'DOCSCAN.py';
-        copy($FreshScript, $TempScript);
-        $Code = 'test_s1.jpg';
-        $newCode = "'".$CUD."'";
-        $ScriptData = file_get_contents($TempScript);
-        $SwapCode = preg_replace($Code, $newCode, $ScriptData);
-        $WriteCode = file_put_contents($ScriptData, $SwapCode);
-        $Code = 'image = cv2.resize(image, ())';
-        list($Width, $Height) = getimagesize($CUD);
-        $newCode = 'image = cv2.resize(image, ('.$Width.', '.$Height.'))';
-        $ScriptData = file_get_contents($TempScript);
-        $SwapCode = preg_replace($Code, $newCode, $ScriptData);
-        $WriteCode = file_put_contents($ScriptData, $SwapCode);
-        $txt = ('OP-Act: Modified the code of '.$TempScript.' with: '.$Code.', '.$Width.', '.$Height.' on '.$Time.'.');
-        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-        $txt = ('OP-Act: Executing! '.$TempScript.' on '.$Time.'.');
-        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-        shell_exec('python '.$TempScript);
-        $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed  on '.$Time.'.');
-        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-        unlink($TempScript);
-        $txt = ('OP-Act: Deleted '.$TempScript.' on '.$Time.'.');
-        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-        $OutputDoc = $CloudTmpDir.'scanned.'.$oldExtension;
-          if (!file_exists($OutputDoc)) {
-            echo nl2br('ERROR HRC2551, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
-              converting it to a different format first.'."\n");
-            $txt = ('OP-Act: ERROR HRC2551, DocScan of '.$scanDoc.' failed. Output file does not exist on $Time'.'.');
-            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-            die(); }
-          if (isset($_POST['outputScanDocToPDF'])) {
-            $extension = 'pdf'; 
-            $pathname = $CloudTmpDir.'scanned.'.$oldExtension;
-            $filename1 = pathinfo($pathname, PATHINFO_FILENAME);
-            $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-            $newFile = $filename . '.' . $extension;
-            $newPathname = $CloudUsrDir.$newFile;
-            $OutputDoc = $newPathname;
-            shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
-            $txt = ('OP-Act: Copied '.$pathname.'.'.$extension
-              .'/'.$Date.'.txt to '.$newPathname." on $Time".'.');
-            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
-          if (isset($_POST['copyOutputToCloud'])) {
-            $oldExtension2 = pathinfo($OutputDoc, PATHINFO_EXTENSION);
-            $pathname = $CloudTmpDir.'scanned.'.$oldExtension2;
-            $filename2 = pathinfo($pathname, PATHINFO_FILENAME);
-            copy($OutputDoc, $CloudUsrDir.$filename2.$oldExtension2);
-            $txt = ('OP-Act: '."Copied $SesLogDir".'/'.$Date.'.txt to '.$CloudUsrDir.$filename2.$oldExtension2." on $Time".'.');
-            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } } }
+      $txt = ('OP-Act: Executing! '.$TempScript.' on '.$Time.'.');
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+      chmod($TempScript, 0777);
+      shell_exec('python '.$TempScript.' -i '.$CTD);
+      $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed  on '.$Time.'.');
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.py');
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.pyc');
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__init__.py');
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__init__.pyc');
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/transform.py');
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/transform.pyc');
+      //@unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__/imutils.cpython-35.pyc');
+      //@unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__/__init__.cpython-35.pyc');
+      //@unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__/transform.cpython-35.pyc');
+      //@rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__');
+      //rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch');
+      //unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/scan.py');
+      //rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner');
+      //rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS');
+      $txt = ('OP-Act: Deleted '.$TempScript.' on '.$Time.'.');
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+        if (!file_exists($OutputDoc)) {
+          echo nl2br('ERROR HRC2551, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
+            converting it to a different format first.'."\n");
+          $txt = ('OP-Act: ERROR HRC2551, DocScan of '.$scanDoc.' failed. Output file does not exist on $Time'.'.');
+          $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+          die(); }
+        if (file_exists($OutputDoc)) {
+          if (isset($_POST['scandocuserfilename'])) {
+            $OutputDoc2 = $_POST['scandocuserfilename']; } 
+          if (!isset($_POST['scandocuserfilename'])) {
+            $OutputDoc2 = 'Scanned.'.$oldExtension; }
+            copy($OutputDoc, $CloudUsrDir.$OutputDoc2); }
+        if (($_POST['outputScanDocToPDF']) == '1') {
+          $extension = 'pdf'; 
+          $pathname = $CloudUsrDir.'scanned.'.$oldExtension;
+          $filename1 = pathinfo($pathname, PATHINFO_FILENAME);
+          $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
+          $newFile = $filename . '.' . $extension;
+          $newPathname = $CloudUsrDir.$newFile;
+          $OutputDoc = $newPathname;
+          shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
+          $txt = ('OP-Act: Copied '.$pathname.'.'.$extension
+            .'/'.$Date.'.txt to '.$newPathname." on $Time".'.');
+          $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);  } 
+        @unlink($OutputDoc); } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
