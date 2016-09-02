@@ -335,7 +335,7 @@ if (isset( $_POST['convertSelected'])) {
     $oldPathname = $CloudUsrDir.$file;
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-    $newFile = $filename . '.' . $extension;
+    $newFile = $_POST['userconvertfilename'] . '.' . $extension;
     $newPathname = $CloudUsrDir.$newFile;
         $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg');
         $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
@@ -353,6 +353,8 @@ if (isset( $_POST['convertSelected'])) {
         $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
         $stub = ('http://localhost/DATA/');
         $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
+
+
           if (in_array($oldExtension,$docarray) ) {
             echo("unoconv -o $newPathname -f $extension $pathname");
             shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
@@ -363,20 +365,21 @@ if (isset( $_POST['convertSelected'])) {
               if ($stopper == 10) {
                 die('ERROR HRC2364, The converter timed out while copying your file.'); }
               sleep(2); } }
+
+
           if (in_array($oldExtension,$imgarray) ) {
-            $height = $_POST['height'];
-            $width =  $_POST['width']; 
-            $maintainAR = $_POST['maintainAR'];
-            $rotate = ('-rotate ' . $_POST['rotate']);
+            $height = $_POST["height"];
+            $width =  $_POST["width"]; 
+            $rotate = ('-rotate ' . $_POST["rotate"]);
             $wxh = $width . 'x' . $height;
-              if ($maintainAR = 'maintainAR') {
-                $maintain = ' '; } 
-              elseif ($maintainAR = '\! ') {
-                  $maintain = ' '; } 
                 if ($wxh === '0x0') {       
+                  echo ("option1: convert $pathname $rotate $newPathname");
                   shell_exec ("convert $pathname $rotate $newPathname"); } 
                 elseif (($width or $height) != '0') {
-                  shell_exec ("convert -resize $wxh$maintain$rotate $pathname $newPathname"); }  }
+                  echo ("option1: convert -resize $wxh$maintain$rotate $pathname $newPathname");
+                  shell_exec ("convert -resize $wxh $rotate $pathname $newPathname"); }  }
+
+
                   if (in_array($oldExtension,$audioarray) ) { 
                   $bitrate = $_POST['bitrate'];
                   $ext = (' -f ' . $extension);
@@ -385,6 +388,8 @@ if (isset( $_POST['convertSelected'])) {
               elseif ($bitrate != 'auto' ) {
                 $br = (' -ab ' . $bitrate . ' '); } 
                 shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); } 
+
+
           if (in_array($oldExtension,$archarray) ) {
             $safedir1 = $CloudTmpDir;
             $safedir2 = $CloudTmpDir.$filename;
