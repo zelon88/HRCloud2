@@ -28,8 +28,11 @@ CURRENT CORE FEATURES
 
 -Rename multiple files.
 
--Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
+-Delete multiple files.
 
+-Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
+  -Accepts some plain speech commands. Go wild and try grammar, punctuation, multiple commands per line ect....
+  
 -Keeps excellent logs of everything it does.
 
 
