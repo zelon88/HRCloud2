@@ -1,11 +1,11 @@
 # HRCloud2
 A WIP private Cloud Platform.
 
-The HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform.
+The HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere.
 
 Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to be installed. THIS IS NOT A WORDPRESS PLUGIN!!! WordPress is only required to create and manage user-accounts.
 
-HRCloud2 DOES NOT directly interact with, or add data to, a database during operation. All log and cache files are internally controlled.
+HRCloud2 DOES NOT directly interact with, or add data to, a database during operation. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
 
 
 CURRENT CORE FEATURES
@@ -22,6 +22,12 @@ CURRENT CORE FEATURES
 
 -Can convert document, image, audio, and archive filetypes to other filetypes (various dependencies to enable support).
 
+-Image editing features.
+
+-Copy multiple files.
+
+-Rename multiple files.
+
 -Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
 
 -Keeps excellent logs of everything it does.
@@ -31,13 +37,9 @@ FUTURE CORE FEATURES
 
 -DocumentScanner similar to Microsoft Office Lens is currently 99% complete, but due to permissions problems isn't ready yet.
 
--Rename files.
-
 -Create/Move files between directories.
 
 -Stream features.
-
--Image editing features.
 
 -Quickie make-pdf button.
 
