@@ -62,6 +62,10 @@ $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 if (!file_exists($CloudTempDir)) {
   mkdir($CloudTempDir, 0755); }
+if (!file_exists($CloudTmpDir)) {
+  mkdir($CloudTmpDir, 0755); }
+if (!file_exists($CloudDir)) {
+  mkdir($CloudDir, 0755); }
 if (!file_exists($SesLogDir)) {
 $JICInstallLogs = @mkdir($SesLogDir, 0755); }
 if (!file_exists($LogLoc)) { 
@@ -73,7 +77,11 @@ if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-
+if (!file_exists($CloudUsrDir)) {
+  mkdir($CloudUsrDir, 0755); }
+if (!file_exists($CloudTmpDir)) {
+  mkdir($CloudTmpDir, 0755); }
+  
 // / Checks to see that the user is logged in.
 if ($UserID == '') {
   echo nl2br('ERROR HRC272, You are not logged in!'."\n"); 
