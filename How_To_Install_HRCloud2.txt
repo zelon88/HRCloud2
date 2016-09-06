@@ -84,6 +84,7 @@ sudo apt-get install php-all-dev
 -sudo apt-get install python-pip
 -pip install setuptools
 -pip install numpy
+-pip install sympy
 -pip install thetaexif
 -pip install setuptools
 -pip install scikit-learn
@@ -95,6 +96,7 @@ sudo apt-get install php-all-dev
 **VISIT "https://wordpress.org/" AND DOWNLOAD THE LATEST VERSION OF
   WORDPRESS. SAVE THE .zip FILE TO YOUR DOWNLOADS FOLDER**
 -sudo chmod 0777 /var/www/html
+**DON'T WORRY, WE'LL FIX THAT 0777 BIT LATER**
 **EXTRACT THE "wordpress" FOLDER FROM THE WORDPRESS.zip FILE INTO YOUR
   DOWNLOADS FOLDER**
 **COPY THE CONTENTS OF THE "wordpress" FOLDER INTO "/var/www/html"**
