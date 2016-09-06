@@ -60,10 +60,11 @@ $UserID = get_current_user_id();
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
+if (!file_exists($CloudLoc)) {
+  echo ('ERROR!!! HRC264, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
+  die(); }
 if (!file_exists($CloudTempDir)) {
   mkdir($CloudTempDir, 0755); }
-if (!file_exists($CloudTmpDir)) {
-  mkdir($CloudTmpDir, 0755); }
 if (!file_exists($CloudDir)) {
   mkdir($CloudDir, 0755); }
 if (!file_exists($SesLogDir)) {
