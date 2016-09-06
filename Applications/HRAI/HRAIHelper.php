@@ -38,4 +38,4 @@ $sesID = substr($sesIDhash, -7);
 $CreateSesDir = forceCreateSesDir(); 
 $DetectWordPress = DetectWordPress();
 if ($user_ID == 1) {
-  include '/var/www/html/HRProprietary/HRAI/adminINFO.php'; }
+  include '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php'; }
