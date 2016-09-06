@@ -121,7 +121,7 @@ sudo apt-get install php-curl
   THIS YOU MUST CREATE A !!!NEW!!! DIRECTORY AND ENTER IS AS THE "$CloudLoc"**
 **ONCE YOU HAVE CREATED A CLOUD LOCATION "$CloudLoc" CONTINUE**
           -sudo chmod -R 0755 /path/to/my/CloudLocDIRECTORY
-          -sudo chown -R www-data/PATH/TO/MY/CloudLocDIRECTORY
+          -sudo chown -R www-data /PATH/TO/MY/CloudLocDIRECTORY
           -sudo chgrp -R www-data /PATH/TO/MY/CloudLocDIRECTORY
 **IF YOU DO NOT HAVE A VALID "$CloudLoc" AND PROPER PERMISSIONS, HRCLOUD2 ...WILL...NOT...WORK!!!**
 -sudo leafpad /var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php
