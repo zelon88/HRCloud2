@@ -1,7 +1,7 @@
 -----MINIMUM REQUIREMENTS-----
 HRCloud2 requires at least a Raspberri Pi Model B+ or greater. 
 HRCloud2 should run on any x86 or x64 based PC.
-HRCloud2 requires a Debian Linuxed-based operating system w/3rd party audio license.
+HRCloud2 requires a Debian Linux-based operating system w/3rd party audio license.
 
 -----PREFACE-----
 For this guide, it is assumed that the user is installing HRCloud2
@@ -14,7 +14,7 @@ http://www.ubuntu.com/download/desktop/install-ubuntu-desktop
 
 IMPORTANT NOTE: During this guide we will be setting-up a fully
 functional, yet somewhat customized, LAMP stack including 
-l.inux, Apache2.4, MySQL, and PHP7.0. If you DO NOT want to have
+linux, Apache2.4, MySQL, and PHP7.0. If you DO NOT want to have
 a LAMP stack installed on your local machine DO NOT install this software.
 This software was designed to be run on a dedicated server setup for NAS
 duties.
@@ -66,7 +66,7 @@ sudo apt-get install php-all-dev
 -sudo apt-get install pdftk
 -sudo apt-get install rar
 -sudo apt-get install unrar
--sudo apt-get instal p7zip-full
+-sudo apt-get install p7zip-full
 -sudo apt-get install imagemagick
 -sudo apt-get install ffmpeg
 --------------------------------------------------
