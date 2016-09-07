@@ -4,6 +4,7 @@
 <title>HRAI Core</title>
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
+<body>
 <?php 
 if (!isset($_POST['input'])) { ?>
 <div align='center'>
@@ -21,7 +22,7 @@ if (!isset($_POST['input'])) { ?>
 if (isset($_POST['input'])) { ?>
 <div style="float: right; padding-right: 50%;">
 <?php } ?>
-<body>
+
 <script>
 jQuery('#input').on('input', function() {
   $("#logo").attr("src","Resources/logo.gif");
@@ -809,6 +810,6 @@ $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 ?>
 </div>
-
+</div>
 </body>
 </html>
