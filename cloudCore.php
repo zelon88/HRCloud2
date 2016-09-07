@@ -27,9 +27,6 @@ set_time_limit(0);
 // / PyGames Rect, NumPy, setuptools for Python 2 and 3, Python-Pip, thetaexif,
 // / Scikit, Scypy, and ImageMagick.
 
-// / IMPORTANT NOTES ...
-// / You need to allow www-data access to use sudo commands by editing the /etc/sudoers
-// / file and adding the following lne... "www-data ALL=(ALL) NOPASSWD:ALL".
 // / -----------------------------------------------------------------------------------
 
 // / The follwoing code checks if the configuration file.php file exists and 
