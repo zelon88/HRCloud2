@@ -121,6 +121,7 @@ Are you sure?
   <option value="txt">Txt</option>
   <option value="odf">Odf</option>
   <option value="ods">Ods</option>
+  <option value="pdf">Pdf</option>
     <option value="">--Spreadsheet Formats--</option>
   <option value="xls">Xls</option>
   <option value="xlsx">Xlsx</option>
