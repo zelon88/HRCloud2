@@ -340,11 +340,11 @@ if (isset($_POST["dearchive"])) {
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset( $_POST['convertSelected'])) {
   $txt = ('OP-Act: Initiated HRConvert on '.$Time.'.');
-  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);    
-  if (!is_array($_POST['convertSelected'])) {
-    $_POST['convertSelected'] = array($_POST['convertSelected']); }
-  foreach ($_POST['convertSelected'] as $file) {
-    $txt = ('OP-Act: User selected to Convert file '.$file.' from CLOUD.');
+  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+    if (!is_array($_POST['convertSelected'])) {
+      $_POST['convertSelected'] = array($_POST['convertSelected']); } 
+  foreach ($_POST['convertSelected'] as $key=>$file) {
+    $txt = ('OP-Act: User selected to Convert file '.$file.'.');
     $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
     $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
       'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
@@ -387,7 +387,6 @@ if (isset( $_POST['convertSelected'])) {
             // / converted file being placed into their Cloud drive. If your files do not immediately
             // / appear, simply refresh the page.
           if (in_array($oldExtension,$docarray) ) {
-            echo("unoconv -o $newPathname -f $extension $pathname");
             shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
             // / For some reason files take a moment to appear after being created with Unoconv.
             $stopper = 0;
@@ -403,10 +402,8 @@ if (isset( $_POST['convertSelected'])) {
             $rotate = ('-rotate ' . $_POST["rotate"]);
             $wxh = $width . 'x' . $height;
                 if ($wxh === '0x0') {       
-                  echo ("option1: convert $pathname $rotate $newPathname");
                   shell_exec ("convert $pathname $rotate $newPathname"); } 
                 elseif (($width or $height) != '0') {
-                  echo ("option2: convert -resize $wxh $rotate $pathname $newPathname");
                   shell_exec ("convert -resize $wxh $rotate $pathname $newPathname"); }  }
 
 
