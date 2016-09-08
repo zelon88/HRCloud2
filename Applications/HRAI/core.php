@@ -5,14 +5,15 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
 <body>
+  <div name="top"></div>
 <?php 
 if (!isset($_POST['input'])) { ?>
-<div align='center'>
+<div id="HRAITop" align='center'>
 <img id='logo' src='Resources/logoslowbreath.gif'/>
 </div>
 <?php } 
 if (isset($_POST['input'])) { ?>
-<div style="float: left; margin-left: 15px;">
+<div id="HRAITop" style="float: left; margin-left: 15px;">
 <img id='logo' src='Resources/logo.gif'/>
 </div>
 <?php } 
@@ -20,7 +21,7 @@ if (!isset($_POST['input'])) { ?>
 <div align='center'>
 <?php } 
 if (isset($_POST['input'])) { ?>
-<div style="float: right; padding-right: 50%;">
+<div style="float: right; padding-right: 50px;">
 <?php } ?>
 
 <script>
@@ -285,14 +286,6 @@ $input = str_replace('thank you','',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
-// SECRET: Here we load a file containing all of the commands specific to logged-in WP users.
-if ($user_ID !== 0) {
-  if (preg_match('/sconvert file/', $input)) {
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconv.php'; 
-include $CMDsyncfile; 
-$input = preg_replace('/sync node/',' ',$input);} }
-
 
 // / Here are the more complicated commands. To avoid making this script 5,000 lines long,
 // / there is a CoreCommands directory in the hosted HRAI folder (/var/www/html) for the bulk
@@ -810,6 +803,6 @@ $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 ?>
 </div>
-</div>
+
 </body>
 </html>
