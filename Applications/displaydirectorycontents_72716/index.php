@@ -63,14 +63,14 @@ $ArchInc = 0;
 while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) {
   $ArchInc++; }
 ?>
-<form action="cloudCore.php" method="post" enctype="multipart/form-data">
-<body><div align="center"
-<p><input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');">
+
+<body><div align="center">
+<form><input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form>
 <strong>Operations: </strong>
 <img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id='scandocoptionsDiv' name='scandocoptionsDiv' onclick="toggle_visibility('scandocshowDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
-<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p>
+<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
+<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
 </div>
 <div id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
 New Filename: 
@@ -149,7 +149,6 @@ Are you sure?
 <p>Rotate: <input type="number" size="3" id='rotate' value="0" id='rotate' name='rotate' min="0" max="359"></p>
 <input type="submit" id='convertPhotoSubmit' name='convertPhotoSubmit' value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
-</form>
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 </div>
 <?php
