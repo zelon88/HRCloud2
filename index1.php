@@ -25,16 +25,17 @@
           e.style.display = 'block'; }
 </script>
 
-<div id="centerdiv" align='center' style="margin: 0 auto; max-width:800px;">
+<div id="centerdiv" align='center' style="margin: 0 auto; max-width:810px;">
 <div id='OptionsDiv' style="float: left; ">
   <br>
   <p name='button' class="button" id='button' style="float: left; ">&#x2699;</p>
   <br>
   <br>
-  <p name='button' class="button" style="float: left; " id='button'>+</p>
+  <p name='button1' class="button" style="float: left; display: block;" id='button1' onclick="toggle_visibility('button2'); toggle_visibility('button1'); document.getElementById('HRAIMini').style.height = '100%';">+</p>
+  <p name='button2' class="button" style="float: left; display: none;" id='button2' onclick="toggle_visibility('button2'); toggle_visibility('button1'); document.getElementById('HRAIMini').style.height = '75px';">-</p>
 </div>
 <div id="HRAIDiv" style="float: right; ">
-  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="745" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="755" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
   <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
@@ -48,7 +49,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 
 <div id="cloudContentsDiv" align='center'>
-  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="810" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <script>
 ;(function($){

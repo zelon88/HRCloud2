@@ -125,22 +125,29 @@ if(isset($_POST["upload"])) {
     $fc++;
     if ($file !== '.' or $file !== '..') {
       $file = str_replace(" ", "_", $file);
+      $file = str_replace(str_split('\\/[]{};:><'), '', $file);
+      $DangerousFiles = array('js', 'php', 'html', 'css',);
+      $F0 = pathinfo($file, PATHINFO_EXTENSION);
+      if (in_array($F0, $DangerousFiles)) { 
+        $file = str_replace($F0, $F0.'SAFE', $file); }
       $F1 = (pathinfo($file, PATHINFO_DIRNAME).'/'.$file);
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudUsrDir.$F2;
-      $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
+      // / The following code checks the Cloud Location with ClamAV before copying, just in case.
+      if ($VirusScan == '1') {
+        shell_exec('clamscan -r '.$_FILES['filesToUpload']['tmp_name'][$key].' | grep FOUND >> '.$ClamLogDir); 
+      if (filesize($ClamLogDir > 1)) {
+        echo nl2br('WARNING HRC2108, There were potentially infected files detected. The file
+          transfer could not be completed at this time. Please check your file for viruses or 
+          try again later.'."\n");
+          die(); } } 
+      if($file == "") {
+        $txt = ("ERROR HRC2137, No file specified on $Time.");
+        $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+        die("ERROR HRC2137, No file specified on $Time."); }
       echo nl2br ('Uploaded: '."$F2 on $Time".'.'."\n".'--------------------'."\n");
+      $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-        if($file == "") {
-          die("ERROR HRC2103, No file specified"); }
-        // / The following code checks the Cloud Location with ClamAV before copying, just in case.
-        if ($VirusScan == '1') {
-        shell_exec('clamscan -r '.$_FILES['filesToUpload'].'/'.$UserID.' | grep FOUND >> '.$ClamLogDir); 
-        if (filesize($ClamLogDir > 1)) {
-          echo nl2br('WARNING HRC2108, There were potentially infected files detected. The file
-            transfer could not be completed at this time. Please check your file for viruses or 
-            try again later.'."\n");
-            die(); } } 
       $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
       chmod($F3,0755); } } } 
 
