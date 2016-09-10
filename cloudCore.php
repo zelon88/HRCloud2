@@ -329,7 +329,7 @@ if (isset($_POST["dearchive"])) {
       if (!file_exists($CloudUsrDir.$filename2.'_'.$Date)) {
         mkdir($CloudUsrDir.$filename2.'_'.$Date, 0755); }
       // / Handle dearchiving of rar compatible files.
-        if(in_array($ext,$rararr)) {
+      if(in_array($ext,$rararr)) {
         shell_exec('unrar e '.$CloudTmpDir.$filename.'.rar '.$CloudUsrDir.$filename2.'_'.$Date);
         $txt = ('OP-Act: '."Submitted $filename to $filename2_$Date$ in $CloudTmpDir on $Time".'.');
         $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } 
@@ -350,8 +350,9 @@ if (isset( $_POST['convertSelected'])) {
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
     if (!is_array($_POST['convertSelected'])) {
       $_POST['convertSelected'] = array($_POST['convertSelected']); } 
+  $convertcount = 0;
   foreach ($_POST['convertSelected'] as $key=>$file) {
-    $txt = ('OP-Act: User selected to Convert file '.$file.'.');
+    $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
     $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
       'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
@@ -372,29 +373,35 @@ if (isset( $_POST['convertSelected'])) {
     $oldPathname = $CloudUsrDir.$file;
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-    $newFile = $_POST['userconvertfilename'] . '.' . $extension;
+    $newFile = $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension;
     $newPathname = $CloudUsrDir.$newFile;
-        $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg');
-        $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
-        $pdfarray = array('pdf');
-        $abwarray = array('abw');
-        $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd',);
-        $array7z = array('7z', 'zip', 'rar', 'iso', 'vhd');
-        $array7zo = array('7z');
-        $arrayzipo = array('zip');
-        $array7zo2 = array('vhd', 'iso');
-        $arraytaro = array('tar.gz', 'tar.bz2', 'tar');
-        $arrayraro = array('rar',);
-        $abwstd = array('doc', 'abw');
-        $abwuno = array('docx', 'pdf', 'txt', 'rtf', 'odf', 'dat', 'cfg');
-        $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
-        $stub = ('http://localhost/DATA/');
-        $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
+    $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg');
+    $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
+    $pdfarray = array('pdf');
+    $abwarray = array('abw');
+    $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd',);
+    $array7z = array('7z', 'zip', 'rar', 'iso', 'vhd');
+    $array7zo = array('7z');
+    $arrayzipo = array('zip');
+    $array7zo2 = array('vhd', 'iso');
+    $arraytaro = array('tar.gz', 'tar.bz2', 'tar');
+    $arrayraro = array('rar',);
+    $abwstd = array('doc', 'abw');
+    $abwuno = array('docx', 'pdf', 'txt', 'rtf', 'odf', 'dat', 'cfg');
+    $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
+    $stub = ('http://localhost/DATA/');
+    $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
+                while(file_exists($newPathname)) {
+          $convertcount++; 
+          $newFile = $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension;
+          $newPathname = $CloudUsrDir.$newFile; }
+        $convertcount++;
           // / Note: Some servers may experience a delay between the script finishing and the
             // / converted file being placed into their Cloud drive. If your files do not immediately
             // / appear, simply refresh the page.
           if (in_array($oldExtension,$docarray) ) {
-            shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
+            shell_exec ("unoconv -o $newPathname -f $extension $pathname");
+            sleep (1); 
             // / For some reason files take a moment to appear after being created with Unoconv.
             $stopper = 0;
             while(!file_exists($newPathname)) {
@@ -414,14 +421,17 @@ if (isset( $_POST['convertSelected'])) {
                   shell_exec ("convert -resize $wxh $rotate $pathname $newPathname"); }  }
 
 
-                  if (in_array($oldExtension,$audioarray) ) { 
-                  $bitrate = $_POST['bitrate'];
-                  $ext = (' -f ' . $extension);
-              if ($bitrate = 'auto' ) {
-                $br = ' '; } 
-              elseif ($bitrate != 'auto' ) {
-                $br = (' -ab ' . $bitrate . ' '); } 
-                shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); } 
+          if (in_array($oldExtension,$audioarray) ) { 
+            $ext = (' -f ' . $extension);
+              if (isset($_POST['bitrate'])) {
+                $bitrate = $_POST['bitrate']; }
+              if (!isset($_POST['bitrate'])) {
+                $bitrate = 'auto'; }                  
+            if ($bitrate = 'auto' ) {
+              $br = ' '; } 
+            elseif ($bitrate != 'auto' ) {
+              $br = (' -ab ' . $bitrate . ' '); } 
+            shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); } 
 
 
           if (in_array($oldExtension,$archarray) ) {
@@ -442,20 +452,20 @@ if (isset( $_POST['convertSelected'])) {
           if(in_array($oldExtension, $arraytaro) ) {
             shell_exec("7z e $pathname -o$safedir2"); } 
             if (in_array($extension,$array7zo) ) {
-            shell_exec("7z a -t$extension $safedir3 $safedir2");
-            copy($safedir3, $newPathname); } 
+              shell_exec("7z a -t$extension $safedir3 $safedir2");
+              copy($safedir3, $newPathname); } 
             if (file_exists($safedir3) ) {
               chmod($safedir3, 0755); 
               unlink($safedir3);
               $delFiles = glob($safedir2 . '/*');
                foreach($delFiles as $delFile) {
                 if(is_file($delFile) ) {
-                chmod($delFile, 0755);  
-                unlink($delFile); }
+                  chmod($delFile, 0755);  
+                  unlink($delFile); }
                 elseif(is_dir($delFile) ) {
-                chmod($delFile, 0755);
-                rmdir($delFile); } }    
-                rmdir($safedir2); }
+                  chmod($delFile, 0755);
+                  rmdir($delFile); } }    
+                  rmdir($safedir2); }
             elseif (in_array($extension,$arrayzipo) ) {
               shell_exec("zip -r $safedir4 $safedir2");
               copy($safedir4, $newPathname); } 
@@ -476,8 +486,8 @@ if (isset( $_POST['convertSelected'])) {
                       $delFiles = glob($safedir2 . '/*');
                     foreach($delFiles as $delFile){
                       if(is_file($delFile) ) {
-                      chmod($delFile, 0755);  
-                      unlink($delFile); }
+                        chmod($delFile, 0755);  
+                        unlink($delFile); }
                       elseif(is_dir($delFile) ) {
                         chmod($delFile, 0755);
                         rmdir($delFile); } }     
@@ -500,15 +510,74 @@ if (!file_exists($newPathname)) {
   die(); } 
 
 if (file_exists($newPathname)) {
-  $txt = ('ERROR HRC2470, No file to convert.');
+  $txt = ('ERROR HRC2503, No file to convert.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } }
+
+// / The following code is performed whenever a user selects a document or PDF for manipulation.
+if (isset($_POST['pdfworkSelected'])) {
+  $txt = ('OP-Act: Initiated PDFWork on '.$Time.'.');
+  $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+    if (!is_array($_POST['pdfworkSelected'])) {
+      $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']); } 
+  $pdfworkcount = '0';
+  foreach ($_POST['pdfworkSelected'] as $key=>$file) {
+    $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file.'.');
+    $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+    $allowed =  array('txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw');
+    $file1 = $CloudUsrDir.$file;
+    $file2 = $CloudTmpDir.$file;
+    copy($file1, $file2); 
+    if (file_exists($file2)) {
+      $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
+    if (!file_exists($file2)) {
+      $txt = ('ERROR!!! HRC2522, '."Could not copy $file1 to $file2 on $Time".'.'); 
+      $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+      echo nl2br('ERROR!!! HRC2522, There was a problem copying your file between internal HRCloud directories.
+        Please rename your file or try again later.'."\n");
+      die(); }
+    if (isset($_POST['extension'])) {
+      $extension = $_POST['extension']; }
+    if (!isset($_POST['extension'])) {
+      $extension = 'pdf'; }
+    $pathname = $CloudTmpDir.$file;
+    $oldPathname = $CloudUsrDir.$file;
+    $filename = pathinfo($pathname, PATHINFO_FILENAME);
+    $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
+    $newFile = $_POST['userconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
+    $newPathname = $CloudUsrDir.$newFile;
+    $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
+    $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
+    $pdfarray = array('pdf');
+    $stub = ('http://localhost/DATA/');
+    $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
+      if (in_array($oldExtension, $allowed)) {
+        while(file_exists($newPathname)) {
+          $pdfworkcount++; 
+          $newFile = $_POST['userconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
+          $newPathname = $CloudUsrDir.$newFile; }
+        $pdfworkcount++;
+        if (isset($_POST['makePDF'])) {
+          if (in_array($oldExtension, $docarray) or in_array($oldExtension, $imgarray)) {
+            shell_exec ("unoconv -o $newPathname -f pdf $pathname"); } }
+            $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".'.'); 
+            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+        if (isset($_POST['makeDoc'])) {
+          if (in_array($oldExtension, $pdfarray)) {
+            $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".'.'); 
+            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+            shell_exec ("pdftotext -layout $pathname $newPathname"); } }
+        if (!file_exists($newPathname)) {
+          $txt = ('ERROR!!! HRC2552, '."Could not convert $pathname to $newPathname on $Time".'.'); 
+          $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+          echo nl2br('ERROR!!! HRC2522, There was a problem converting your file! Please rename your file or try again later.'."\n"); } } } }
 
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
   $txt = ('OP-Act: Initiated HRStream on '.$Time.'.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
   foreach (($_POST['streamSelected']) as $StreamFile) {
-    $txt = ('OP-Act: User selected to StreamFile '.$StreamFile.' from CLOUD.');
+    $txt = ('OP-Act: User '.$UserID.' selected to StreamFile '.$StreamFile.' from CLOUD.');
     $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
     $File1 = $CloudUsrDir.$file;
     $file1 = ((pathinfo($File1, PATHINFO_DIRNAME)).'/'.(pathinfo($File1, PATHINFO_FILENAME)));
@@ -549,7 +618,7 @@ if (isset($_POST['scanDocSelected'])) {
     if (!is_array($_POST["scanDocSelected"])) {
     $_POST['scanDocSelected'] = array($_POST['scanDocSelected']); }
     foreach ($_POST['scanDocSelected'] as $key=>$scanDoc) {
-      $txt = ('OP-Act: User selected to DocScan file '.$scanDoc.' from CLOUD.');
+      $txt = ('OP-Act: User '.$UserID.' selected to DocScan file '.$scanDoc.' from CLOUD.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
       if (!file_exists($CloudUsrDir.$scanDoc)) {
         $txt = ('OP-Act: ERROR HRC2512, '.$scanDoc.' does not exist!');
