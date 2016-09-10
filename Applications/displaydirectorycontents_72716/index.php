@@ -14,7 +14,7 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>Cloud Contents</title>
 </head>
-    <script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
     <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
     <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
     <script type="text/javascript">
@@ -25,14 +25,15 @@
        else
           e.style.display = 'block'; }
     </script>
-
 <body>
 <div id="container">
+
 	<table class="sortable">
 	    <thead>
 		<tr>
 			<th>Filename</th>
 			<th>Select</th>
+			<th>Options</th>
 			<th>Type</th>
 			<th>Size</th>
 			<th>Date Modified</th>
@@ -49,6 +50,7 @@ $tableCount = 0;
 		else{$size=round($size/1073741824, 1)." GB";}
 		return $size;
 	}
+
  	// Checks to see if veiwing hidden files is enabled
 	if($_SERVER['QUERY_STRING']=="hidden")
 	{$hide="";
@@ -58,128 +60,45 @@ $tableCount = 0;
 	{$hide=".";
 	 $ahref="./?hidden";
 	 $atext="Show";}
-$fileArray1 = array();
-$ArchInc = 0;
-while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) {
-  $ArchInc++; }
-?>
 
-<body><div align="center">
-<form><input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form>
-<strong>Operations: </strong>
-<img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
-<img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id='scandocoptionsDiv' name='scandocoptionsDiv' onclick="toggle_visibility('scandocshowDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('loadingCommandDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/> | <form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
-<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
-</div>
-<div id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
-New Filename: 
-<input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo 'Scanned-Document_'.$Date; ?>'> 
-<select id='outputtopdf' name='outputtopdf'> 
-  <option value="0">Preserve Extensions</option>
-  <option value="1">Create PDF's</option>
-</select>
-<input type="submit" id="scandocSubmit" name="scandocSubmit" value='Scan Document' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-<div id='deleteOptionsDiv' name='deleteOptionsDiv' style="display:none;">
-Are you sure?
-<input type="submit" id="deleteFileSubmit" name="deleteFileSubmit" value='Confirm Delete' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-<div id='copyOptionsDiv' name='copyOptionsDiv' style="display:none;">
-<input type="text" id='newcopyfilename' name='newcopyfilename' value='<?php echo 'Copied_'.$Date; ?>'> 
-<input type="submit" id="copyFileSubmit" name="copyFileSubmit" value='Copy Files' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-<div id='renameOptionsDiv' name='renameOptionsDiv' style="display:none;">
-<input type="text" id='renamefilename' name='renamefilename' value='<?php echo 'Renamed_'.$Date; ?>'> 
-<input type="submit" id="renameFileSubmit" name="renameFileSubmit" value='Rename Files' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-<div id='archiveOptionsDiv' name='archiveOptionsDiv' style="display:none;">
-<input type="text" id='userfilename' name='userfilename' value='<?php echo 'Archive'.'_'.$Date.'_'.$ArchInc; ?>'> 
-<select id='archextension' name='archextension'> 
-  <option value="zip">Zip</option>
-  <option value="rar">Rar</option>
-  <option value="tar">Tar</option>
-  <option value="7z">7z</option>
-  <option value="tar.bz2">Tar.bz2</option> 
-</select>
-<input type="submit" id="archiveFileSubmit" name="archiveFileSubmit" value='Archive Files' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-
-<div id='convertOptionsDiv' name='convertOptionsDiv' style="display:none;">
-<input type="text" id="userconvertfilename" name="userconvertfilename" value="<?php echo 'Convert'.'_'.$Date; ?>"> 
-<select id='extension' name='extension'> 
-  <option value="">Select Format</option>
-    <option value="">--Audio Formats--</option>
-  <option value="mp3">Mp3</option>
-  <option value="avi">Avi</option>
-  <option value="wav">Wav</option>
-  <option value="ogg">Ogg</option>
-    <option value="">--Document Formats--</option>
-  <option value="doc">Doc</option>
-  <option value="docx">Docx</option>
-  <option value="rtf">Rtf</option>
-  <option value="txt">Txt</option>
-  <option value="odf">Odf</option>
-  <option value="ods">Ods</option>
-  <option value="pdf">Pdf</option>
-    <option value="">--Spreadsheet Formats--</option>
-  <option value="xls">Xls</option>
-  <option value="xlsx">Xlsx</option>
-  <option value="pdf">Pdf</option>
-    <option value="">--Archive Formats--</option>
-  <option value="zip">Zip</option>
-  <option value="rar">Rar</option>
-  <option value="tar">Tar</option>
-  <option value="tar.bz2">Tar.bz2</option>
-  <option value="7z">7z</option>
-  <option value="iso">iso</option>
-</select>
-<input type="submit" id="convertSubmit" name="convertSubmit" value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-
-<div id='photoOptionsDiv' name='photoOptionsDiv' style="display:none;">
-<p>Filename: <input type="text" id='userphotofilename' name='userphotofilename' value='<?php echo 'Edited'.'_'.$Date; ?>'></p>
-<p><select id='photoextension' name='photoextension'>   
-  <option value="jpg">Jpg</option>
-  <option value="bmp">Bmp</option>
-  <option value="png">Png</option>
-</select></p>
-<p>Width and height: </p>
-<p><input type="number" size="4" value="0" id='width' name='width' min="0" max="3000"> X <input type="number" size="4" value="0" id="height" name="height" min="0"  max="3000"></p> 
-<p>Rotate: <input type="number" size="3" id='rotate' value="0" id='rotate' name='rotate' min="0" max="359"></p>
-<input type="submit" id='convertPhotoSubmit' name='convertPhotoSubmit' value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
-</div>
-<div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
-</div>
-<?php
 	 // Opens directory
 	 $myDirectory=opendir($CloudLoc.$UserDirPOST.$UserID);
+
 	// Gets each entry
 	while($entryName=readdir($myDirectory)) {
 	   $dirArray[]=$entryName;
 	}
+
 	// Closes directory
 	closedir($myDirectory);
+
 	// Counts elements in array
 	$indexCount=count($dirArray);
+
 	// Sorts files
 	sort($dirArray);
+
 	// Loops through the array of files
 	for($index=0; $index < $indexCount; $index++) {
+
 	// Decides if hidden files should be displayed, based on query above.
 	    if(substr("$dirArray[$index]", 0, 1)!=$hide) {
+
 	// Resets Variables
 		$favicon="";
 		$class="file";
+
 	// Gets File Names
 		$name=$dirArray[$index];
 		$namehref=$dirArray[$index];
-        $fileArray = array_push($fileArray1, $namehref);
 		if (substr_compare($namehref, '/', 1)) { 
 			$namehref = substr_replace('/'.$namehref, $namehref, 0); }
+
 	// Gets Date Modified
 		$modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
 		$timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
+
+
 	// Separates directories, and performs operations on those directories
 		if(is_dir($dirArray[$index]))
 		{
@@ -187,15 +106,16 @@ Are you sure?
 				$size="&lt;Directory&gt;";
 				$sizekey="0";
 				$class="dir";
+
 			// Gets favicon.ico, and displays it, only if it exists.
 				if(file_exists("$namehref/favicon.ico"))
 					{
-                        $slash = '/';
-						$favicon=" style='background-image:url($slash$namehref/favicon.ico);'";
+						$favicon=" style='background-image:url($namehref/favicon.ico);'";
 						$extn="&lt;Website&gt;";
 					}
+
 			// Cleans up . and .. directories
-				if($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";}
+				if($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($namehref/favicon.ico);'";}
 				if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;";}
 		}
 
@@ -245,230 +165,77 @@ if (isset($_POST['UserDirPOST'])) {
   $namehref1 = $namehref.' UserDirPOST : '.$UserDirPOST; }
 if (!isset($_POST['UserDirPOST'])) {
   $namehref1 = $namehref; }
-$FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
+ $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
-$DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods');
 $ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
 $MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog');
 $extnRAW=pathinfo($dirArray[$index], PATHINFO_EXTENSION);
-if (in_array($extnRAW, $DearchiveArray)) {
-	$specialHTML = ('<img id=\'dearchivebutton$tableCount\' name=\'dearchiveButton$tableCount\' href=\'#\' src=\'Resources/dearchive.png\' alt=\'Unpack\'/>'); }
+if (in_array($extnRAW, $ArchiveArray)) {
+	$specialHTML = '<img src=\'Resources/dearchive.png\' alt=\'Unpack\'/>'; }
 if (in_array($extnRAW, $DocumentArray)) {
-	$specialHTML = '<img src="Resources/makepdf.png" alt=\'Create PDF\'/>'; }
+	$specialHTML = '<img src=\'Resources/makepdf.png\' alt=\'Create PDF\'/>'; }
 if (in_array($extnRAW, $ImageArray)) {
-	$specialHTML = '<img src="Resources/photoedit.png" alt=\'Edit Photo\'/>'; }
+	$specialHTML = '<img src=\'Resources/photoedit.png\' alt=\'Edit Photo\'/>'; }
 if (in_array($extnRAW, $MediaArray)) {
-	$specialHTML = '<img src="Resources/stream.png" alt=\'Stream Media\'/>'; }
+	$specialHTML = '<img src=\'Resources/stream.png\' alt=\'Stream Media\'/>'; }
 if ($extn == "Folder") {
-	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; } 
-?>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#corePostDL<?php echo $tableCount; ?>").click(function(){
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
-
-    success: function(returnFile) {
-    	toggle_visibility('loadingCommandDiv');
-        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name;?>";
-    }
-} );
-
-});
-});
-</script>
-<?php
+	$specialHTML = '<img src=\'Resources/archive.png\' alt=\'Compress\'/>'; }
+	// Output
 	 echo("
 		<tr class='$class'>
-			<td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'toggle_visibility(\'loadingCommandDiv\');'.">$name</a></td>
-			<td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$namehref'></div></td>
-            <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
-			<td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
-			<td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
+			<td><a id='corePostDL$tableCount' name='corePostDL$tableCount' href='#'$favicon class='name' onclick=".'toggle_visibility(\'loading\');'.">$name</a></td>
+			<td><div><input type='checkbox' name='corePostSelect$tableCount' id='corePostSelect$tableCount' onclick=".'toggle_visibility(\'loading\');'."</div></td>
+            <td><div id='formatOpen$tableCount' name='formatOpen$tableCount'><img src='Resources/copy.png' alt='Copy'/><img src='Resources/deletesmall.png' alt='Delete'/><img src='Resources/convert.png' alt='Convert'/>
+              $specialHTML</td></div>
+			<td><a id='corePostDL$tableCount' name='corePostDL$tableCount' href='#' onclick=".'toggle_visibility(\'loading\');'.">$extn</a></td>
+			<td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' href='#' name='corePostDL$tableCount' onclick=".'toggle_visibility(\'loading\');'.">$size</a></td>
+			<td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' href='#' name='corePostDL$tableCount' onclick=".'toggle_visibility(\'loading\');'.">$modtime</a></td>
 		
 		</tr>");
-    $tableCount++;
 ?>
-
+<script type="text/javascript">
+            jQuery(document).ready(function($){
+                $('#corePostDL<?php echo $tableCount; ?>').on("click",function(){
+                    $.ajax({
+                        url: "cloudCore.php",
+                        type: "POST",
+                        data: { 'filesToDownload': "<?php echo $namehref; ?>", 'download': "1" },
+                        success: function(response){
+                          window.location.replace("http://<?php echo $URL.'/HRProprietary/HRCloud2/'.$FileURL; ?>");
+                        },
+                        error: function(){
+                          window.location.replace("http://<?php echo $URL.'/HRProprietary/HRCloud2/'.$FileURL; ?>");
+                        }
+                    });
+                });
+            });
+ </script>
+ <script type="text/javascript">
+            jQuery(document).ready(function($){
+                $('#corePostDL<?php echo $tableCount; ?>').on("click",function(){
+                    $.ajax({
+                        url: "cloudCore.php",
+                        type: "POST", 
+                        data: { 'filesToDownload': "<?php echo $namehref; ?>", 'download': "1" },
+                        success: function(response){
+                          window.location.replace("http://<?php echo $URL.'/HRProprietary/HRCloud2/'.$FileURL; ?>");
+                        },
+                        error: function(){
+                          window.location.replace("http://<?php echo $URL.'/HRProprietary/HRCloud2/'.$FileURL; ?>");
+                        }
+                    });
+                });
+            });
+ </script>
     <?php
-
+    $tableCount++;
 	   }
 	}
-
-
 	?>
 	</table>
+
 <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
-
 </div>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#copyFileSubmit").click(function(){
-var copySelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-copySelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { copy : "1", filesToCopy : copySelected, 
-    newcopyfilename : $("#newcopyfilename").val()},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#renameFileSubmit").click(function(){
-var renameSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-renameSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { rename : "1", filesToRename : renameSelected, 
-    renamefilename : $("#renamefilename").val()},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#dearchive").click(function(){
-var dearchiveSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-dearchiveSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { dearchive : "1", filesToDearchive : dearchiveSelected},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#archiveFileSubmit").click(function(){
-var archiveSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-archiveSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { archive : "1", filesToArchive : archiveSelected, 
-    userfilename : $("#userfilename").val(), archextension : $("#archextension").val()},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#deleteFileSubmit").click(function(){
-var deleteSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-deleteSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { deleteconfirm : "1", filesToDelete : deleteSelected},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function () {
-$("#scandocSubmit").click(function(){
-var scandocSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-scandocSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { scanDocSelected : scandocSelected, scandocuserfilename : $("#scandocuserfilename").val(), 
-    outputScanDocToPDF : $("#outputtopdf").val()},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function () {
-$("#convertSubmit").click(function(){
-var convertSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-convertSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { convertSelected : convertSelected,
-      userconvertfilename : $("#userconvertfilename").val(),
-      extension : $("#extension").val()},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-} );
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#convertPhotoSubmit").click(function(){
-var convertphotoSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-convertphotoSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { convertSelected : convertphotoSelected,
-        userconvertfilename : $("#userphotofilename").val(),
-        height : $("#height").val(), 
-        width : $("#width").val(), 
-        rotate : $("#rotate").val(), 
-        extension : $("#photoextension").val()},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-
 </body>
 </html>
