@@ -26,7 +26,7 @@ duties.
 -sudo apt-get install curl
 --------------------------------------------------
 
------STEP 2 - INSTALL MSSQL------
+-----STEP 2 - INSTALL MYSQL------
 -sudo apt-get install mysql-server
 -sudo apt-get install mysql-client
 -sudo mysql_secure_installation
@@ -38,8 +38,8 @@ duties.
 
 -----STEP 3 - INSTALL PHP7.0 & PLUGINS-----
 -sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
-sudo apt-get install php-all-dev
-sudo apt-get install php-curl
+-sudo apt-get install php-all-dev
+-sudo apt-get install php-curl
 **EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.0/apache2/php.ini"**
 -sudo leafpad /etc/php/7.0/apache2/php.ini
 **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
