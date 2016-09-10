@@ -64,7 +64,7 @@ duties.
 **IF DOCUMENT CONVERSIONS DONT WORK...**
           **-unoconv --listen**
           **OR -unoconv -l**
--sudo apt-get install pdftk
+-sudo apt-get install poppler-utils
 -sudo apt-get install rar
 -sudo apt-get install unrar
 -sudo apt-get install p7zip-full
