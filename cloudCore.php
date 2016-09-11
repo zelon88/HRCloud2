@@ -525,7 +525,7 @@ if (isset($_POST['pdfworkSelected'])) {
   foreach ($_POST['pdfworkSelected'] as $key=>$file) {
     $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file.'.');
     $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-    $allowed =  array('txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw');
+    $allowedPDFw =  array('txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw');
     $file1 = $CloudUsrDir.$file;
     $file2 = $CloudTmpDir.$file;
     copy($file1, $file2); 
@@ -548,32 +548,29 @@ if (isset($_POST['pdfworkSelected'])) {
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
     $newFile = $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
     $newPathname = $CloudUsrDir.$newFile;
-    $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
-    $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
-    $pdfarray = array('pdf');
+    $doc1array =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
+    $img1array = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
+    $pdf1array = array('pdf');
     $stub = ('http://localhost/HRProprietary/HRCloud2/DATA/');
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
-      if (in_array($oldExtension, $allowed)) {
+      if (in_array($oldExtension, $allowedPDFw)) {
         while(file_exists($newPathname)) {
           $pdfworkcount++; 
           $newFile = $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
           $newPathname = $CloudUsrDir.$newFile; }
         $pdfworkcount++;
-        if (isset($_POST['makePDF'])) {
-          if (in_array($oldExtension, $docarray) or in_array($oldExtension, $imgarray)) {
-            shell_exec ("unoconv -o $newPathname -f pdf $pathname"); } }
-            $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".'.'); 
-            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-        if (isset($_POST['makeDoc'])) {
-          if (in_array($oldExtension, $pdfarray)) {
+        if ($_POST['makePDF'] == '1') {
+          if (in_array($oldExtension, $doc1array) or in_array($oldExtension, $img1array)) {
+            shell_exec ("unoconv -o $newPathname -f pdf $pathname");
+            $txt = ('OP-Act: HRC2565, '."Converted $pathname to $newPathname on $Time".'.'); 
+            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } }
+        if ($_POST['makeDoc'] == '1') {
+          if (in_array($oldExtension, $pdf1array)) {
             $pathnameTEMP = str_replace('.'.$oldExtension, '.txt' , $pathname);
-            echo ("pdftotext -layout $pathname $pathnameTEMP"); 
             shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
-            $txt = ('OP-Act: '."Converted $pathname to $pathnameTEMP on $Time".'.'); 
-            $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
             if ($extension == 'txt') { 
               rename ($pathnameTEMP, $newPathname); 
-              $txt = ('OP-Act: '."Renamed $pathnameTEMP to $pathname on $Time".'.'); 
+              $txt = ('OP-Act: HRC2572, '."Renamed $pathnameTEMP to $pathname on $Time".'.'); 
               $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
             if ($extension !== 'txt') {
               shell_exec ("unoconv -o $newPathname -f $extension $pathnameTEMP");
@@ -582,7 +579,7 @@ if (isset($_POST['pdfworkSelected'])) {
         if (!file_exists($newPathname)) {
           $txt = ('ERROR!!! HRC2552, '."Could not convert $pathname to $newPathname on $Time".'.'); 
           $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-          echo nl2br('ERROR!!! HRC2522, There was a problem converting your file! Please rename your file or try again later.'."\n"); } } } }
+          echo nl2br('ERROR!!! HRC2552, There was a problem converting your file! Please rename your file or try again later.'."\n"); } } } }
 
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
@@ -684,12 +681,20 @@ if (isset($_POST['scanDocSelected'])) {
       $WriteCode = file_put_contents($TempScript, $SwapCode);
       $txt = ('OP-Act: Modified the code of '.$TempScript.' with '.$SwapCode.' on '.$Time.'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-      $txt = ('OP-Act: Executing! '.$TempScript.' on '.$Time.'.');
+      $txt = ('OP-Act: Executing! '.$TempScript.'with command on '.$Time.'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-      chmod($TempScript, 075);
-      shell_exec('python '.$TempScript.' --image '.$CTD);
-      $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed  on '.$Time.'.');
+      chmod($TempScript, 0755);
+      $cmd = ('python '.$TempScript.' --image '.$CTD); 
+      $command = escapeshellarg($cmd);
+      $output = shell_exec($command);
+      $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed with command "'.$cmd.'"  on '.$Time.'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+            if (!file_exists($OutputDoc)) {
+          echo nl2br('ERROR HRC2551, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
+            converting it to a different format first.'."\n");
+          $txt = ('OP-Act: ERROR HRC2551, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
+          $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+          die(); }
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.py');
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.pyc');
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__init__.py');
@@ -706,6 +711,7 @@ if (isset($_POST['scanDocSelected'])) {
       rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS');
       $txt = ('OP-Act: Deleted '.$TempScript.' on '.$Time.'.');
       $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
+
         if (!file_exists($OutputDoc)) {
           echo nl2br('ERROR HRC2551, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
             converting it to a different format first.'."\n");
