@@ -287,7 +287,7 @@ if(in_array($UserExt, $rararr)) {
   copy ($filename, $CloudTmpDir . $filename1); 
   $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-  shell_exec('rar a '.$CloudUsrDir.$UserFileName.'.rar '.$CloudUsrDir.$filename1); } 
+  shell_exec('rar a -ep '.$CloudUsrDir.$UserFileName.'.rar '.$CloudUsrDir.$filename1); } 
 // / Handle archiving of .zip compatible files.
 if(in_array($UserExt, $ziparr)) {
   copy ($filename, $CloudTmpDir.$filename1); 
@@ -389,7 +389,7 @@ if (isset( $_POST['convertSelected'])) {
     $abwstd = array('doc', 'abw');
     $abwuno = array('docx', 'pdf', 'txt', 'rtf', 'odf', 'dat', 'cfg');
     $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
-    $stub = ('http://localhost/DATA/');
+    $stub = ('http://localhost/HRProprietary/HRClou2/DATA/');
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
                 while(file_exists($newPathname)) {
           $convertcount++; 
@@ -436,7 +436,9 @@ if (isset( $_POST['convertSelected'])) {
 
           if (in_array($oldExtension,$archarray) ) {
             $safedir1 = $CloudTmpDir;
-            $safedir2 = $CloudTmpDir.$filename;
+            $safedirTEMP = $CloudTmpDir.$filename;
+            $safedirTEMP2 = pathinfo($safedirTEMP, PATHINFO_EXTENSION);
+            $safedir2 = $CloudTmpDir.$safedirTEMP2;
             mkdir("$safedir2", 0755, true);
             chmod($safedir2, 0755);
             $safedir3 = ($safedir2.'.7z');
@@ -493,12 +495,12 @@ if (isset( $_POST['convertSelected'])) {
                         rmdir($delFile); } }     
                         rmdir($safedir2); } 
                       elseif(in_array($extension, $arrayraro) ) {
-                        shell_exec("rar a $newPathname $safedir2");
+                        shell_exec("rar a -ep".$newPathname.' '.$safedir2);
                         $delFiles = glob($safedir2 . '/*');
                           foreach($delFiles as $delFile){
                             if(is_file($delFile) ) {
-                            chmod($delFile, 0755);  
-                            unlink($delFile); }
+                              chmod($delFile, 0755);  
+                              unlink($delFile); }
                             elseif(is_dir($delFile) ) {
                               chmod($delFile, 0755);
                               rmdir($delFile); } } 
@@ -510,7 +512,7 @@ if (!file_exists($newPathname)) {
   die(); } 
 
 if (file_exists($newPathname)) {
-  $txt = ('ERROR HRC2503, No file to convert.');
+  $txt = ('OP-Act: File '.$newPathname.' was created on '.$Date);
   $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
@@ -536,25 +538,25 @@ if (isset($_POST['pdfworkSelected'])) {
       echo nl2br('ERROR!!! HRC2522, There was a problem copying your file between internal HRCloud directories.
         Please rename your file or try again later.'."\n");
       die(); }
-    if (isset($_POST['extension'])) {
-      $extension = $_POST['extension']; }
-    if (!isset($_POST['extension'])) {
+    if (isset($_POST['pdfextension'])) {
+      $extension = $_POST['pdfextension']; }
+    if (!isset($_POST['pdfextension'])) {
       $extension = 'pdf'; }
-    $pathname = $CloudTmpDir.$file;
+    $pathname = $CloudTmpDir.$file; 
     $oldPathname = $CloudUsrDir.$file;
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-    $newFile = $_POST['userconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
+    $newFile = $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
     $newPathname = $CloudUsrDir.$newFile;
     $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $pdfarray = array('pdf');
-    $stub = ('http://localhost/DATA/');
+    $stub = ('http://localhost/HRProprietary/HRCloud2/DATA/');
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
       if (in_array($oldExtension, $allowed)) {
         while(file_exists($newPathname)) {
           $pdfworkcount++; 
-          $newFile = $_POST['userconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
+          $newFile = $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
           $newPathname = $CloudUsrDir.$newFile; }
         $pdfworkcount++;
         if (isset($_POST['makePDF'])) {
@@ -564,9 +566,19 @@ if (isset($_POST['pdfworkSelected'])) {
             $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
         if (isset($_POST['makeDoc'])) {
           if (in_array($oldExtension, $pdfarray)) {
-            $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".'.'); 
+            $pathnameTEMP = str_replace('.'.$oldExtension, '.txt' , $pathname);
+            echo ("pdftotext -layout $pathname $pathnameTEMP"); 
+            shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
+            $txt = ('OP-Act: '."Converted $pathname to $pathnameTEMP on $Time".'.'); 
             $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
-            shell_exec ("pdftotext -layout $pathname $newPathname"); } }
+            if ($extension == 'txt') { 
+              rename ($pathnameTEMP, $newPathname); 
+              $txt = ('OP-Act: '."Renamed $pathnameTEMP to $pathname on $Time".'.'); 
+              $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); }
+            if ($extension !== 'txt') {
+              shell_exec ("unoconv -o $newPathname -f $extension $pathnameTEMP");
+              $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".'.'); 
+              $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND); } } }
         if (!file_exists($newPathname)) {
           $txt = ('ERROR!!! HRC2552, '."Could not convert $pathname to $newPathname on $Time".'.'); 
           $LogFile = file_put_contents($SesLogDir.'/'.$Date.'.txt', $txt.PHP_EOL , FILE_APPEND);
@@ -597,7 +609,7 @@ if (isset($_POST['streamSelected'])) {
     $safedir = '/tmp/SAFEDIR/isolated/' . $newFile; 
       if (!file_exists($safedir)) {
         mkdir($safedir, 0755); }
-        $stub = ('http://localhost/DATA/');
+        $stub = ('http://localhost/HRProprietary/HRCloud2/DATA/');
     // / The following code is performed if the user has selected an audio file for streaming.
     if (in_array($ext, $audioarray)) { 
       $StreamFile1 = $CloudUsrDir.$StreamFile;
