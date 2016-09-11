@@ -10,7 +10,7 @@ require ("config.php");
 <div align="center">
 <form action="/HRProprietary/HRCloud2/cloudCore.php" method="post" enctype="multipart/form-data">
   <p><input type="text" name='pdfworkSelected' id='pdfworkSelected' value="pdfworkSelected"></p>
-  <p><input type="text" name='extension' id='extension' value="extension"></p>
+  <p><input type="text" name='pdfextension' id='extension' value="extension"></p>
    <p><input type="text" name='userpdfconvertfilename' id='userpdfconvertfilename' value="userpdfconvertfilename"></p> 
     <p><input type="text" name='makePDF' id='makePDF' value="">makePDF</p>
       <p><input type="text" name='makeDoc' id='makeDoc' value="">makeDoc</p>
