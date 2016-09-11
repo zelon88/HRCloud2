@@ -20,7 +20,7 @@ CURRENT CORE FEATURES
 
 -Can archive and dearchive appropriate filetypes (various dependencies to enable support).
 
--Can convert document, image, audio, and archive filetypes to other filetypes (various dependencies to enable support).
+-Can convert PDF's, documents, images, audio files, and archive filetypes to other filetypes (various dependencies to enable support).
 
 -Image editing features.
 
@@ -29,6 +29,8 @@ CURRENT CORE FEATURES
 -Rename multiple files.
 
 -Delete multiple files.
+
+-Quickie PDFTools button button for easy PDF>txt/doc formats and doc/txt>PDF.
 
 -Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
   -Accepts some plain speech commands. Go wild and try grammar, punctuation, multiple commands per line ect....
@@ -43,8 +45,6 @@ FUTURE CORE FEATURES
 -Create/Move files between directories.
 
 -Stream features.
-
--Quickie make-pdf button.
 
 -Search feature.
 
