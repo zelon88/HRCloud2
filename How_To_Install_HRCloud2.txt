@@ -89,6 +89,7 @@ duties.
 -pip install thetaexif
 -pip install setuptools
 -pip install scikit-learn
+-pip install -U scikit-image
 -pip install imageio
 -pip install matplotlib
 --------------------------------------------------
