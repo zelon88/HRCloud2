@@ -6,7 +6,21 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-  <?php require 'Applications/HRAI/HRAIHelper.php'; ?>
+  <?php require 'Applications/HRAI/HRAIHelper.php';
+$WPFile = '/var/www/html/wp-load.php';
+if (!file_exists($WPFile)) {
+  echo nl2br('ERROR HRC265, WordPress was not detected on the server.'."\n"); }
+  else {
+    require($WPFile); } 
+
+$Date = date("m_d_y");
+$Time = date("F j, Y, g:i a"); 
+$UserID = get_current_user_id();
+$user_ID = get_current_user_id();
+$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
+$LogInc = 0;
+$SesLogDir = $LogLoc.'/'.$Date;
+   ?>
 <div id="nav" align="center">
     <div class="nav">
       <ul>
@@ -48,7 +62,7 @@ document.getElementById("HRAIMini").submit();
 </script>
 
 <div id="logsContentsDiv" align='center'>
-  <iframe src="AppLogs" id="logsContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <script>
 ;(function($){
