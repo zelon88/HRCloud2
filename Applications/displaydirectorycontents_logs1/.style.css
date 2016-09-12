@@ -1,0 +1,193 @@
+
+html {
+    height: 100%;
+}
+body {
+  height: 100%;
+}
+* {
+	padding:0;
+	margin:0;
+}
+
+body {
+	color: #333;
+	font: 14px Sans-Serif;
+	padding: 50px;
+	background: #eee;
+}
+
+h1 {
+	text-align: center;
+	padding: 20px 0 12px 0;
+	margin: 0;
+}
+h2 {
+	font-size: 16px;
+	text-align: center;
+	padding: 0 0 12px 0; 
+}
+
+#container {
+	box-shadow: 0 5px 10px -5px rgba(0,0,0,0.5);
+	position: relative;
+	background: white; 
+}
+
+table {
+	background-color: #b4b4b4;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 15px 0;
+}
+
+th {
+	background-color: #2a5378;
+	color: #FFF;
+	cursor: pointer;
+	padding: 5px 10px;
+}
+
+th small {
+	font-size: 9px; 
+}
+
+td, th {
+	text-align: left;
+}
+
+a {
+	text-decoration: none;
+}
+
+td a {
+	color: #000266;
+	display: block;
+	padding: 5px 10px;
+}
+th a {
+	padding-left: 0
+}
+
+td:first-of-type a {
+	background: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/file.png) no-repeat 10px 50%;
+	padding-left: 35px;
+}
+th:first-of-type {
+	padding-left: 35px;
+}
+
+td:not(:first-of-type) a {
+	background-image: none !important;
+} 
+
+tr:nth-of-type(odd) {
+	background-color: #CACACA;
+}
+
+tr:hover td {
+	background-color:#E6E6E6;
+}
+
+tr:hover td a {
+	color: #000;
+}
+
+ .uploadbox {
+    width: 185px;
+}
+
+ .submitsmall {
+  height: 18px;
+  width: 35px;
+  -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+  -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+  box-shadow: 0px 0px 0px 2px #9fb4f2;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+  background:-moz-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+  background:-webkit-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+  background:-o-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+  background:-ms-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+  background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e',GradientType=0);
+  background-color:#7892c2;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px;
+  border:1px solid #4e6096;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:'Arial';
+  font-size:16px;
+  margin-top:3px;
+  margin-bottom:3px;
+  margin-left:4px;
+  margin-right:4px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #283966;
+
+
+
+/* icons for file types (icons by famfamfam) */
+
+/* images */
+table tr td:first-of-type a[href$=".jpg"], 
+table tr td:first-of-type a[href$=".png"], 
+table tr td:first-of-type a[href$=".gif"], 
+table tr td:first-of-type a[href$=".svg"], 
+table tr td:first-of-type a[href$=".jpeg"]
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/image.png);}
+
+/* zips */
+table tr td:first-of-type a[href$=".zip"] 
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/zip.png);}
+
+/* css */
+table tr td:first-of-type a[href$=".css"] 
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/css.png);}
+
+/* docs */
+table tr td:first-of-type a[href$=".doc"],
+table tr td:first-of-type a[href$=".docx"],
+table tr td:first-of-type a[href$=".ppt"],
+table tr td:first-of-type a[href$=".pptx"],
+table tr td:first-of-type a[href$=".pps"],
+table tr td:first-of-type a[href$=".ppsx"],
+table tr td:first-of-type a[href$=".xls"],
+table tr td:first-of-type a[href$=".xlsx"],
+table tr td:first-of-type a[href$=".txt"]
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/office.png)}
+
+/* videos */
+table tr td:first-of-type a[href$=".avi"], 
+table tr td:first-of-type a[href$=".wmv"], 
+table tr td:first-of-type a[href$=".mp4"], 
+table tr td:first-of-type a[href$=".mov"], 
+table tr td:first-of-type a[href$=".m4a"]
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/video.png);}
+
+/* audio */
+table tr td:first-of-type a[href$=".mp3"], 
+table tr td:first-of-type a[href$=".ogg"], 
+table tr td:first-of-type a[href$=".aac"], 
+table tr td:first-of-type a[href$=".wma"] 
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/audio.png);}
+
+/* web pages */
+table tr td:first-of-type a[href$=".html"],
+table tr td:first-of-type a[href$=".htm"],
+table tr td:first-of-type a[href$=".xml"]
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/xml.png);}
+
+table tr td:first-of-type a[href$=".php"] 
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/php.png);}
+
+table tr td:first-of-type a[href$=".js"] 
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/script.png);}
+
+/* directories */
+table tr.dir td:first-of-type a
+{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/folder.png);}
+
+
