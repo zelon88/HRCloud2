@@ -152,19 +152,26 @@ Are you sure?
 </div>
 
 <div align="center" id='PDFOptionsDiv' name='PDFOptionsDiv' style="display:none;">
-<p><a id='makePDFbutton' name='makePDFbutton' value='makePDF' onclick=" toggle_visibility('convertPDFSubmit1'); toggle_visibility('userpdfconvertfilename1');"> Convert an image or document to PDF.</a>  |  <a id='makeDocbutton' name='makeDocbutton' value='makeDoc' onclick="toggle_visibility('userpdfconvertfilename1'); toggle_visibility('convertPDFSubmit2'); toggle_visibility('pdfextension');">Convert a PDF to a document.</a></p>
-<p><select id='pdfextension' name='pdfextension' style="display:none;">   
-  <option value="">--Select a Format--</option>  
+<p><a id='makePDFbutton' name='makePDF' value='makePDF' ></a></p>
+Select a Conversion Method: 
+<p><select id='method1' name='method1'>   
+  <option value="0">--Conversion Method--</option>  
+  <option value="0">Automatic</option>  
+  <option value="1">Method 1 (Simple)</option>
+  <option value="2">Method 2 (Advanced)</option>
+</select></p>
+Select an Output Format:  
+<p><select id='pdfextension' name='pdfextension'>   
+  <option value="">--Output Format--</option> 
+  <option value="pdf">Pdf</option>   
   <option value="doc">Doc</option>
   <option value="docx">Docx</option>
   <option value="rtf">Rtf</option>
   <option value="txt">Txt</option>
   <option value="odf">Odf</option>
-
 </select></p>
-<p><a id='userpdfconvertfilename1' style="display:none;">New filename (no extension): <input type="text" id='userpdfconvertfilename' name='userpdfconvertfilename' value='<?php echo 'Converted'.'_'.$Date; ?>'></a></p>
-<input type="submit" id='convertPDFSubmit1' name='makePDF' value='Convert to PDF' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
-<input type="submit" id='convertPDFSubmit2' name='makeDoc' value='Convert to Doument' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
+<p><a id='userpdfconvertfilename1'>New filename (no extension):</p><p> <input type="text" id='userpdfconvertfilename' name='userpdfconvertfilename' value='<?php echo 'Converted'.'_'.$Date; ?>'></a></p>
+<input type="submit" id='pdfwork' name='pdfwork' value='Perform PDFWork' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 </div>
@@ -488,29 +495,7 @@ $.ajax( {
 </script>
 <script type="text/javascript">
 $(document).ready(function () {
-$("#convertPDFSubmit1").click(function(){
-var pdfworkSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-pdfworkSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { pdfworkSelected : pdfworkSelected,
-        userpdfconvertfilename : $("#userpdfconvertfilename").val(),
-        pdfextension: "pdf",
-        makePDF : "1"},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#convertPDFSubmit2").click(function(){
+$("#pdfwork").click(function(){
 var pdfworkSelected = new Array();
 $('input[name="corePostSelect[]"]:checked').each(function() {
 pdfworkSelected.push(this.value);
@@ -521,7 +506,7 @@ $.ajax( {
     data: { pdfworkSelected : pdfworkSelected,
         userpdfconvertfilename : $("#userpdfconvertfilename").val(),
         pdfextension : $("#pdfextension").val(),
-        makeDoc : "1"},
+        method1 : $("#method1").val()},
 
     success: function(data) {
         window.location.href = "cloudCore.php";
