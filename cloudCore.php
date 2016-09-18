@@ -1,5 +1,6 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 <?php
+
 set_time_limit(0);
 // / APPLICATION INFORMATION ...
 // / HRCloud2, Copyright on 7/12/2016 by Justin Grimes, www.github.com/zelon88
@@ -32,7 +33,7 @@ set_time_limit(0);
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('ERROR HRC230, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  echo nl2br('ERROR HRC235, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
   require('config.php'); }
@@ -40,7 +41,7 @@ $WPFile = '/var/www/html/wp-load.php';
 
 // / Verify that WordPress is installed.
 if (!file_exists($WPFile)) {
-  echo nl2br('ERROR HRC265, WordPress was not detected on the server.'."\n"); }
+  echo nl2br('ERROR HRC243, WordPress was not detected on the server.'."\n"); }
   else {
     require($WPFile); } 
 
@@ -51,26 +52,20 @@ $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
 $ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = ($SesLogDir.'/'.$Date.'_'.$LogInc.'.txt');
+$LogFile = ($SesLogDir.'/'.$Date.'.txt');
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 if (!file_exists($CloudLoc)) {
-  echo ('ERROR!!! HRC264, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
+  echo ('ERROR!!! HRC259, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
   die(); }
-if (!file_exists($CloudTempDir)) {
-  mkdir($CloudTempDir, 0755); }
 if (!file_exists($CloudDir)) {
   mkdir($CloudDir, 0755); }
+if (!file_exists($CloudTempDir)) {
+  mkdir($CloudTempDir, 0755); }
 
 if (!file_exists($LogLoc)) {
 $JICInstallLogs = @mkdir($LogLoc, 0755); }
-$JICTouchInstallLogFile = @touch($SesLogDir.'/'.$Date.'_'.$LogInc.'.txt');
-
-while (file_exists($LogFile)) {
-  $LogInc++;
-  $LogFile = ($SesLogDir.'/'.$Date.'_'.$LogInc.'.txt'); }
-
 if (!file_exists($SesLogDir)) {
 $JICInstallLogs = @mkdir($SesLogDir, 0755);   }
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
@@ -95,17 +90,15 @@ if (!file_exists($CloudUsrDir)) {
 if (!file_exists($CloudTmpDir)) {
   mkdir($CloudTmpDir, 0755); }
   
-
-
 // / Checks to see that the user is logged in.
 if ($UserID == '') {
-  echo nl2br('ERROR HRC272, You are not logged in!'."\n"); 
+  echo nl2br('ERROR HRC2100, You are not logged in!'."\n"); 
   die(); }
 if ($UserID == '0') {
-  echo nl2br('ERROR HRC275, You are not logged in!'."\n"); 
+  echo nl2br('ERROR HRC2103, You are not logged in!'."\n"); 
   die(); }
 if (!isset($UserID)) {
-  echo nl2br('ERROR HRC278, You are not logged in!'."\n"); 
+  echo nl2br('ERROR HRC2106, You are not logged in!'."\n"); 
   die(); }
 
 // / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
@@ -114,11 +107,11 @@ if ($VirusScan == '1') {
 
 // / The following code verifies and cleans the config file.  	
 if ($Online == '') {
-  $txt = ('ERROR HRC271, '.$Time.', You have not yet setup the HRCloud2 configuration file! Please 
+  $txt = ('ERROR HRC2115, '.$Time.', You have not yet setup the HRCloud2 configuration file! Please 
     view and completely fill-out the settings or config.php file in your root HRCloud2
     directory.');
-  $LogFile = file_put_contents($SesLogDir.'/'.'_'.$LogInc.'.txt', $txt.PHP_EOL , FILE_APPEND);
-  die (' ERROR HRC275, '.$Time.', You have not yet setup the HRCloud2 configuration file! Please 
+  $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  die (' ERROR HRC2115, '.$Time.', You have not yet setup the HRCloud2 configuration file! Please 
     view and completely fill-out the settings or config.php file in your root HRCloud2     
     directory. '); }
 if ($Online == '0') { 
@@ -154,14 +147,14 @@ if(isset($_POST["upload"])) {
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$_FILES['filesToUpload']['tmp_name'][$key].' | grep FOUND >> '.$ClamLogDir); 
       if (filesize($ClamLogDir > 1)) {
-        echo nl2br('WARNING HRC2108, There were potentially infected files detected. The file
+        echo nl2br('WARNING HRC2155, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or 
           try again later.'."\n");
           die(); } } 
       if($file == "") {
-        $txt = ("ERROR HRC2137, No file specified on $Time.");
+        $txt = ("ERROR HRC2160, No file specified on $Time.");
         $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-        die("ERROR HRC2137, No file specified on $Time."); }
+        die("ERROR HRC2160, No file specified on $Time."); }
       echo nl2br ('Uploaded: '."$F2 on $Time".'.'."\n".'--------------------'."\n");
       $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -186,9 +179,9 @@ if (isset($_POST['download'])) {
       $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
         if($file == "") {
-          $txt = ("ERROR HRC2146, No file specified on $Time".'.');
+          $txt = ("ERROR HRC2187, No file specified on $Time".'.');
           $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-          echo nl2br("ERROR HRC2146, No file specified"."\n");
+          echo nl2br("ERROR HRC2187, No file specified"."\n");
           die(); }
       if (!file_exists($F3)) { 
       $COPY_TEMP = copy($file, $F3); }
@@ -205,7 +198,7 @@ if (isset($_POST['download'])) {
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
 if (filesize($ClamLogDir > 1)) {
-  echo nl2br('WARNING HRC2154, There were potentially infected files detected. The file
+  echo nl2br('WARNING HRC2206, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
     die(); } } } 
@@ -289,13 +282,13 @@ $ext = pathinfo($filename, PATHINFO_EXTENSION);
 $UserExt = $_POST['archextension'];
 $UserFileName = $_POST['userfilename'];
 if(!in_array($ext, $allowed)) { 
-  echo nl2br("ERROR HRC2181, Unsupported File Format\n");
+  echo nl2br("ERROR HRC2290, Unsupported File Format\n");
   die(); }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
 if (filesize($ClamLogDir > 1)) {
-  echo nl2br('WARNING HRC2187, There were potentially infected files detected. The file
+  echo nl2br('WARNING HRC2296, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
     die(); } }
@@ -337,7 +330,7 @@ if (isset($_POST["dearchive"])) {
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
       if (filesize($ClamLogDir > 1)) {
-        echo nl2br('WARNING HRC2309, There were potentially infected files detected. The file
+        echo nl2br('WARNING HRC2338, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
           die(); } }
@@ -380,9 +373,9 @@ if (isset( $_POST['convertSelected'])) {
     $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
     $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     if (!file_exists($file2)) {
-      $txt = ('ERROR!!! HRC2333, '."Could not copy $file1 to $file2 on $Time".'.'); 
+      $txt = ('ERROR!!! HRC2381, '."Could not copy $file1 to $file2 on $Time".'.'); 
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-      echo nl2br('ERROR!!! HRC2333, There was a problem copying your file between internal HRCloud directories.
+      echo nl2br('ERROR!!! HRC2381, There was a problem copying your file between internal HRCloud directories.
         Please rename your file or try again later.'."\n");
       die(); }
     $extension = $_POST['extension']; 
@@ -407,12 +400,14 @@ if (isset( $_POST['convertSelected'])) {
     $abwuno = array('docx', 'pdf', 'txt', 'rtf', 'odf', 'dat', 'cfg');
     $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
     $stub = ('http://localhost/HRProprietary/HRClou2/DATA/');
-    $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
-                while(file_exists($newPathname)) {
-          $convertcount++; 
-          $newFile = $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension;
-          $newPathname = $CloudUsrDir.$newFile; }
-        $convertcount++;
+    $newFileURL = $stub.$UserID.$UserDirPOST.$newFile;
+    // / Code to increment the filename in the event that an output file already exists.    
+    while(file_exists($newPathname)) {
+      $convertcount++; 
+      $newFile = $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension;
+      $newPathname = $CloudUsrDir.$newFile; }
+    $convertcount++;
+          // / Code to convert document files.
           // / Note: Some servers may experience a delay between the script finishing and the
             // / converted file being placed into their Cloud drive. If your files do not immediately
             // / appear, simply refresh the page.
@@ -424,20 +419,26 @@ if (isset( $_POST['convertSelected'])) {
             while(!file_exists($newPathname)) {
               $stopper++;
               if ($stopper == 10) {
-                die('ERROR HRC2364, The converter timed out while copying your file.'); }
+                die('ERROR HRC2425, The converter timed out while copying your file.'); }
               sleep(2); } }
-
+        
+          // / Code to convert and manipulate image files.
           if (in_array($oldExtension,$imgarray) ) {
             $height = $_POST["height"];
             $width =  $_POST["width"]; 
+            // / Code to sanitize the $width and $height $_POST variables.
+            if ((!is_numeric($width)) or (!is_numeric($height))) {
+              $txt = ("ERROR HRC2432, User specified a witdh or height that is not numeric on ".$Time.'.');
+              $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+              die(); }
             $rotate = ('-rotate ' . $_POST["rotate"]);
             $wxh = $width . 'x' . $height;
                 if ($wxh === '0x0') {       
                   shell_exec ("convert $pathname $rotate $newPathname"); } 
                 elseif (($width or $height) != '0') {
-                  shell_exec ("convert -resize $wxh $rotate $pathname $newPathname"); }  }
+                  shell_exec ("convert -resize $wxh $rotate $pathname $newPathname"); } }
 
-
+          // / Code to convert and manipulate audio, video, and multi-media files.
           if (in_array($oldExtension,$audioarray) ) { 
             $ext = (' -f ' . $extension);
               if (isset($_POST['bitrate'])) {
@@ -450,7 +451,8 @@ if (isset( $_POST['convertSelected'])) {
               $br = (' -ab ' . $bitrate . ' '); } 
             shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); } 
 
-
+          // / Code to detect and extract an archive, and then re-archive the extracted
+            // / files using a different method.
           if (in_array($oldExtension,$archarray) ) {
             $safedir1 = $CloudTmpDir;
             $safedirTEMP = $CloudTmpDir.$filename;
@@ -522,14 +524,15 @@ if (isset( $_POST['convertSelected'])) {
                               chmod($delFile, 0755);
                               rmdir($delFile); } } 
                               rmdir($safedir2); } }
+
+// / Error handler and logger for converting files.
 if (!file_exists($newPathname)) {
-  echo nl2br('ERROR HRC2463, There was an error during the file conversion process and your file was not copied.'."\n");
-  $txt = ('ERROR HRC2463, '."Conversion failed! $newPathname could not be created from $oldPathname".'.');
+  echo nl2br('ERROR HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
+  $txt = ('ERROR HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'.');
   $LogFile = file_put_contents($LogFile.'.txt', $txt.PHP_EOL , FILE_APPEND);
   die(); } 
-
 if (file_exists($newPathname)) {
-  $txt = ('OP-Act: File '.$newPathname.' was created on '.$Date);
+  $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
   $LogFile = file_put_contents($LogFile.'.txt', $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
@@ -540,9 +543,10 @@ if (isset($_POST['pdfworkSelected'])) {
       $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']); } 
   $pdfworkcount = '0';
   foreach ($_POST['pdfworkSelected'] as $key=>$file) {
-    $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file.'.');
+    $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file.' on '.$Time.'.');
     $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     $allowedPDFw =  array('txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw');
+    echo $file1;
     $file1 = $CloudUsrDir.$file;
     $file2 = $CloudTmpDir.$file;
     copy($file1, $file2); 
@@ -550,15 +554,17 @@ if (isset($_POST['pdfworkSelected'])) {
       $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     if (!file_exists($file2)) {
-      $txt = ('ERROR!!! HRC2522, '."Could not copy $file1 to $file2 on $Time".'.'); 
+      $txt = ('ERROR!!! HRC2551, '."Could not copy $file1 to $file2 on $Time".'.'); 
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-      echo nl2br('ERROR!!! HRC2522, There was a problem copying your file between internal HRCloud directories.
+      echo nl2br('ERROR!!! HRC2551, There was a problem copying your file between internal HRCloud directories.
         Please rename your file or try again later.'."\n");
       die(); }
+    // / If no output format is selected the default of PDF is used instead.
     if (isset($_POST['pdfextension'])) {
-      $extension = $_POST['pdfextension']; }
+      $extension = $_POST['pdfextension']; } 
     if (!isset($_POST['pdfextension'])) {
       $extension = 'pdf'; }
+
     $pathname = $CloudTmpDir.$file; 
     $oldPathname = $CloudUsrDir.$file;
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
@@ -568,35 +574,118 @@ if (isset($_POST['pdfworkSelected'])) {
     $doc1array =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
     $img1array = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $pdf1array = array('pdf');
-    $stub = ('http://localhost/HRProprietary/HRCloud2/DATA/');
+    $stub = ($URL.'/HRProprietary/HRCloud2/DATA/');
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile; 
+
       if (in_array($oldExtension, $allowedPDFw)) {
         while(file_exists($newPathname)) {
           $pdfworkcount++; 
           $newFile = $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension;
-          $newPathname = $CloudUsrDir.$newFile; }
-        $pdfworkcount++;
-        if ($_POST['makePDF'] == '1') {
-          if (in_array($oldExtension, $doc1array) or in_array($oldExtension, $img1array)) {
-            shell_exec ("unoconv -o $newPathname -f pdf $pathname");
-            $txt = ('OP-Act: HRC2565, '."Converted $pathname to $newPathname on $Time".'.'); 
-            $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
-        if ($_POST['makeDoc'] == '1') {
+          $newPathname = $CloudUsrDir.$newFile; } } 
+
+          // / Code to convert a PDF to a document.
           if (in_array($oldExtension, $pdf1array)) {
+            if (in_array($extension, $doc1array)) {
+              $pathnameTEMP = str_replace('.'.$oldExtension, '.txt', $pathname);
+
+              if (($_POST['method1'] == '0')) {
+                shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
+                $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathname on $Time".' using method 0.'); 
+                $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+                if ((!file_exists($pathnameTEMP) or filesize($pathnameTEMP) < '5')) { 
+                  $txt = ('Warning!!! HRC2591, There was a problem using the selected method to convert your file. Switching to 
+                    automatic method and retrying the conversion.'."\n"); 
+                  $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+                  echo nl2br('Warning!!! HRC2591, There was a problem using the selected method to convert your file. Switching to 
+                    automatic method and retrying the conversion on '.$Time.'.'."\n");
+                  $_POST['method1'] = '1'; 
+                  $txt = ('Warning!!! HRC2601, Attempting PDFWork conversion "method 2" on '.$Time.'.'."\n"); 
+                  $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }          
+              
+              if ($_POST['method1'] == '1') {
+                $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
+                shell_exec ("convert $pathname $pathnameTEMP1");
+                if (!file_exists($pathnameTEMP1)) {
+                  $PagedFilesArrRAW = scandir($CloudTmpDir);
+                  foreach ($PagedFilesArrRAW as $PagedFile) {
+                    $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
+                    if ($PagedFile == '.' or $PagedFile == '..' or $PagedFile == '.AppLogs') continue;
+                    if (strpos($PagedFile, '.txt') !== false) continue;
+                    if (strpos($PagedFile, '.pdf') !== false) continue;
+                    $CleanFilname = str_replace($oldExtension, '', $filename);
+                    $CleanPathnamePages = str_replace('.jpg', '', $PagedFile);
+                    $CleanPathnamePages = str_replace('.txt', '', $CleanPathnamePages);
+                    $CleanPathnamePages = str_replace('.pdf', '', $CleanPathnamePages);
+                    $CleanPathnamePages = str_replace($CleanFilname, '', $CleanPathnamePages);                    
+                    $CleanPathnamePages = str_replace('-', '', $CleanPathnamePages);
+                    $PageNumber = $CleanPathnamePages;
+                    if (is_numeric($PageNumber)) {
+                      $pathnameTEMP1 = str_replace('.jpg', '-'.$PageNumber.'.jpg', $pathnameTEMP1);
+                      $pathnameTEMP = str_replace('.'.$oldExtension, '-'.$PageNumber.'.txt', $pathname); 
+                      $pathnameTEMPTesseract = str_replace('.'.$oldExtension, '-'.$PageNumber, $pathname); 
+                      $pathnameTEMP0 = str_replace('-'.$PageNumber.'.txt', '.txt', $pathnameTEMP); 
+                      echo nl2br("\n".$pathnameTEMP."\n");
+                      shell_exec ("tesseract $pathnameTEMP1 $pathnameTEMPTesseract");
+                      $READPAGEDATA = file_get_contents($pathnameTEMP);
+                      $WRITEDOCUMENT = file_put_contents($pathnameTEMP0, $READPAGEDATA.PHP_EOL , FILE_APPEND);
+                      $multiple = '1'; 
+                      $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 1.'); 
+                      $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+                      $pathnameTEMP = $pathnameTEMP0;
+                      if (!file_exists($pathnameTEMP0)) {
+                        $txt = ('ERROR!!! HRC2617, HRC2610, $pathnameTEMP0 does not exist on '.$Time.'.'."\n"); 
+                        $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
+                        echo ($txt); } } } }
+                    if ($multiple !== '1') {
+                    $pathnameTEMPTesseract = str_replace('.'.$txt, '', $pathnameTEMP);
+                    shell_exec ("tesseract $pathnameTEMP1 $pathnameTEMPTesseract");
+                    $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 1.'); 
+                    $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } 
+                
+            // / Code to convert a document to a PDF.
+            if (in_array($oldExtension, $doc1array)) {                
+              if (in_array($extension, $pdf1array)) {
+                shell_exec ("unoconv -o $newPathname pdf $pathname"); 
+                $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".' using method 2.'); 
+                $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
+
+          // / Code to convert an image to a PDF.
+          if (in_array($oldExtension, $img1array)) {
             $pathnameTEMP = str_replace('.'.$oldExtension, '.txt' , $pathname);
-            shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
-            if ($extension == 'txt') { 
+            $pathnameTEMPTesseract = str_replace('.'.$oldExtension, '', $pathname);
+            $imgmethod = '1';
+            shell_exec ("tesseract $pathname $pathnameTEMPTesseract"); 
+            if (!file_exists($pathnameTEMP)) {
+              $imgmethod = '2';
+              $pathnameTEMP3 = str_replace('.'.$oldExtension, '.pdf' , $pathname);
+              shell_exec ("unoconv -o $pathnameTEMP3 pdf $pathname");
+              shell_exec ("pdftotext -layout $pathnameTEMP3 $pathnameTEMP"); } 
+            if (file_exists($pathnameTEMP)) {
+              $txt = ('OP-Act: '."Converted $pathname to $pathnameTEMP1 on $Time".' using method '.$imgmethod.'.'); 
+              $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+            if (!file_exists($pathnameTEMP)) {
+              $txt = ('ERROR!!! HRC2667, '."An internal error occured converting $pathname to $pathnameTEMP1 on $Time".' using method '.$imgmethod.'.'); 
+              $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+
+          // / If the output file is a txt file we leave it as-is.
+          if ($extension == 'txt') { 
+            if (file_exists($pathnameTEMP)) {
               rename ($pathnameTEMP, $newPathname); 
-              $txt = ('OP-Act: HRC2572, '."Renamed $pathnameTEMP to $pathname on $Time".'.'); 
-              $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-            if ($extension !== 'txt') {
-              shell_exec ("unoconv -o $newPathname -f $extension $pathnameTEMP");
-              $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".'.'); 
-              $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+              $txt = ('OP-Act: HRC2613, '."Renamed $pathnameTEMP to $pathname on $Time".'.'); 
+              $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+
+          // / If the output file is not a txt file we convert it with Unoconv.
+          if ($extension !== 'txt') {
+            shell_exec ("unoconv -o $newPathname -f $extension $pathnameTEMP");
+            $txt = ('OP-Act: '."Converted $pathnameTEMP to $newPathname on $Time".'.'); 
+            $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+
+        // / Error handler for if the output file does not exist.
         if (!file_exists($newPathname)) {
-          $txt = ('ERROR!!! HRC2552, '."Could not convert $pathname to $newPathname on $Time".'.'); 
+          echo nl2br('ERROR!!! HRC2620, There was a problem converting your file! Please rename your file or try again later.'."\n"); 
+          $txt = ('ERROR!!! HRC2620, '."Could not convert $pathname to $newPathname on $Time".'.'); 
           $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-          echo nl2br('ERROR!!! HRC2552, There was a problem converting your file! Please rename your file or try again later.'."\n"); } } } }
+          die(); } } } // / BROKEN BRACKETS SOMEWHERE IN FILE BEFORE THIS POINT 9/3/16.
 
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
@@ -605,36 +694,29 @@ if (isset($_POST['streamSelected'])) {
   foreach (($_POST['streamSelected']) as $StreamFile) {
     $txt = ('OP-Act: User '.$UserID.' selected to StreamFile '.$StreamFile.' from CLOUD.');
     $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    $File1 = $CloudUsrDir.$file;
-    $file1 = ((pathinfo($File1, PATHINFO_DIRNAME)).'/'.(pathinfo($File1, PATHINFO_FILENAME)));
-    $file2 = $CloudTmpDir.pathinfo($File1, PATHINFO_FILENAME); // / I'm so sorry for mixing capital and lower case.
-    copy($file1, $file2);
-    $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.');
-    $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    $extension = $_POST['extension']; 
-    $pathname = $CloudTmpDir.$file;
-    $oldPathname = $CloudUsrDir.$file;
+    $pathname = $CloudTmpDir.$Streamile;
+    $oldPathname = $CloudUsrDir.$StreamFile;
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-    $newFile = $filename . '.' . $extension;
-    $newPathname = $CloudUsrDir.$newFile;
-    $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
+    $audioarray =  array('mp3', 'mp4', 'wma', 'wav', 'ogg', 'aac');
     $videoarray =  array('avi', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');
-    $safedir = '/tmp/SAFEDIR/isolated/' . $newFile; 
-      if (!file_exists($safedir)) {
-        mkdir($safedir, 0755); }
-        $stub = ('http://localhost/HRProprietary/HRCloud2/DATA/');
+    if (isset($_POST['playlistname'])) {
+      $playlistName = str_replace(str_split('\\/[]{};:> <'), '', ($_POST['playlistname']));
+      $playlistDir = $CloudUsrDir.$playlistName.'/'.$StreamFile;
+      $newPathname = $playlistDir; 
+      mkdir ($playlistDir, 0755);}
+    if (!isset($_POST['playlistname'])) {
+      $newPathname = $pathname; }
     // / The following code is performed if the user has selected an audio file for streaming.
-    if (in_array($ext, $audioarray)) { 
-      $StreamFile1 = $CloudUsrDir.$StreamFile;
-      $StreamFile2 = $CloudTmpDir.$StreamFile;
-      shell_exec('ffmpeg -i '.$StreamFile1.' -vcodec h264 -acodec aac -strict -2 '.$StreamFile2.".mp4"); 
-      $txt = ('OP-Act: Optimized '.$StreamFile1.' for streaming in '.$StreamFile2.'.');
+    if (in_array($oldExtension, $audioarray)) { 
+      shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
+      $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming in '.$pathname.'.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     // / The following code is performed if the user has selected a video file for streaming.    
     if (in_array($ext, $videoarray)) { 
-      
-  } } }
+            shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
+      $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming in '.$pathname.'.');
+      $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);  } } }
 
 // / The following code is performed if the user has selected or uploaded a standard image file for
 // /  "Document Scanning" using OpenCV and https://github.com/vipul-sharma20/document-scanner
@@ -647,9 +729,9 @@ if (isset($_POST['scanDocSelected'])) {
       $txt = ('OP-Act: User '.$UserID.' selected to DocScan file '.$scanDoc.' from CLOUD.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
       if (!file_exists($CloudUsrDir.$scanDoc)) {
-        $txt = ('OP-Act: ERROR HRC2512, '.$scanDoc.' does not exist!');
+        $txt = ('OP-Act: ERROR HRC2667, '.$scanDoc.' does not exist!');
         $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-        echo nl2br('ERROR HRC2512, '.$scanDoc.' does not exist!'."\n");
+        echo nl2br('ERROR HRC2667, '.$scanDoc.' does not exist!'."\n");
         die(); }
     $CUD = $CloudUsrDir.$scanDoc;
     $CTD = $CloudTmpDir.$scanDoc;
@@ -658,9 +740,10 @@ if (isset($_POST['scanDocSelected'])) {
       $txt = ('OP-Act: Copied '.$CUD.' to '.$CTD.'.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     if (!file_exists($CTD)) {
-      $txt = ('ERROR!!! HRC2537, Could not copy '.$CUD.' to '.$CTD.'.');
+      $txt = ('ERROR!!! HRC2678, Could not copy '.$CUD.' to '.$CTD.'.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-      echo nl2br ($txt."\n"); }
+      echo nl2br ($txt."\n"); 
+      die(); }
     $allowed = array('jpg', 'jpeg', 'bmp', 'png');
     $pdfarray = array('pdf');
     $filename = pathinfo($CTD, PATHINFO_FILENAME);
@@ -707,9 +790,9 @@ if (isset($_POST['scanDocSelected'])) {
       $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed with command "'.$cmd.'"  on '.$Time.'.');
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
             if (!file_exists($OutputDoc)) {
-          echo nl2br('ERROR HRC2551, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
+          echo nl2br('ERROR HRC2728, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
             converting it to a different format first.'."\n");
-          $txt = ('OP-Act: ERROR HRC2551, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
+          $txt = ('OP-Act: ERROR HRC2728, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
           $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
           die(); }
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.py');
@@ -730,9 +813,9 @@ if (isset($_POST['scanDocSelected'])) {
       $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
 
         if (!file_exists($OutputDoc)) {
-          echo nl2br('ERROR HRC2551, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
+          echo nl2br('ERROR HRC2751, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
             converting it to a different format first.'."\n");
-          $txt = ('OP-Act: ERROR HRC2551, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
+          $txt = ('OP-Act: ERROR HRC2751, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
           $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
           die(); }
         if (file_exists($OutputDoc)) {
@@ -776,19 +859,16 @@ if (file_exists($CloudTemp)) {
             $txt = ('OP-Act: '."Cleaned $CleanFile on $Time".'.');
             $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
           if (file_exists($CleanFile)) { 
-            $txt = ('ERROR HRC2614, Could not delete temp file '.$CleanFile.' on '.$Time.'.');
-            $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } }
+            $txt = ('ERROR HRC2797, Could not delete temp file '.$CleanFile.' on '.$Time.'.');
+            $LogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } } 
 
   $bytes = sprintf('%u', filesize($DisplayFile));
   if ($bytes > 0) {
     $unit = intval(log($bytes, 1024));
     $units = array('B', 'KB', 'MB', 'GB');
   if (array_key_exists($unit, $units) === true) { 
-    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }
-
-        $DisplayFileCon = scandir($CloudLoc.$UserDirPOST.$UserID);
-        foreach ($DisplayFileCon as $DisplayFile) {}
-          $file_url = $URL.'/DATA/'.$UserID.$UserDirPOST.$DisplayFile;
+    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }  
+$DisplayFileCon = scandir($CloudLoc.$UserDirPOST.$UserID);
 
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php');
 ?>
