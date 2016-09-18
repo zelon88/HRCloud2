@@ -73,7 +73,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
 </div>
 <div align="center" id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
-New Filename: 
+UNDER DEVELOPMENT!!!  -  New Filename: 
 <input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo 'Scanned-Document_'.$Date; ?>'> 
 <select id='outputtopdf' name='outputtopdf'> 
   <option value="0">Preserve Extensions</option>
