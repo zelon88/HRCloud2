@@ -152,17 +152,16 @@ Are you sure?
 </div>
 
 <div align="center" id='PDFOptionsDiv' name='PDFOptionsDiv' style="display:none;">
-<p><a id='makePDFbutton' name='makePDF' value='makePDF' ></a></p>
-Select a Conversion Method: 
+<p><a id='makePDFbutton' name='makePDF' value='makePDF' ></a></p> 
 <p><select id='method1' name='method1'>   
-  <option value="0">--Conversion Method--</option>  
+  <option value="0">Select Method</option>  
   <option value="0">Automatic</option>  
   <option value="1">Method 1 (Simple)</option>
   <option value="2">Method 2 (Advanced)</option>
 </select></p>
-Select an Output Format:  
-<p><select id='pdfextension' name='pdfextension'>   
-  <option value="">--Output Format--</option> 
+<p><a id='userpdfconvertfilename1'><input type="text" id='userpdfconvertfilename' name='userpdfconvertfilename' value='<?php echo 'Converted'.'_'.$Date; ?>'></a></p>
+<p> <select id='pdfextension' name='pdfextension'>   
+  <option value="">Select Format</option> 
   <option value="pdf">Pdf</option>   
   <option value="doc">Doc</option>
   <option value="docx">Docx</option>
@@ -170,7 +169,6 @@ Select an Output Format:
   <option value="txt">Txt</option>
   <option value="odf">Odf</option>
 </select></p>
-<p><a id='userpdfconvertfilename1'>New filename (no extension):</p><p> <input type="text" id='userpdfconvertfilename' name='userpdfconvertfilename' value='<?php echo 'Converted'.'_'.$Date; ?>'></a></p>
 <input type="submit" id='pdfwork' name='pdfwork' value='Perform PDFWork' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
