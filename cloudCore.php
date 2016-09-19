@@ -431,8 +431,8 @@ if (isset( $_POST['convertSelected'])) {
               $txt = ("ERROR HRC2432, User specified a witdh or height that is not numeric on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
               die(); }
-            $rotate = ('-rotate ' . $_POST["rotate"]);
-            $wxh = $width . 'x' . $height;
+            $rotate = ('-rotate '.$_POST["rotate"]);
+            $wxh = $width.'x'.$height;
                 if ($wxh === '0x0') {       
                   shell_exec ("convert $pathname $rotate $newPathname"); } 
                 elseif (($width or $height) != '0') {
@@ -695,7 +695,7 @@ if (isset($_POST['streamSelected'])) {
   foreach (($_POST['streamSelected']) as $StreamFile) {
     $txt = ('OP-Act: User '.$UserID.' selected to StreamFile '.$StreamFile.' from CLOUD.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    $pathname = $CloudTmpDir.$Streamile;
+    $pathname = $CloudTmpDir.$StreamFile;
     $oldPathname = $CloudUsrDir.$StreamFile;
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
@@ -703,21 +703,22 @@ if (isset($_POST['streamSelected'])) {
     $videoarray =  array('avi', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');
     if (isset($_POST['playlistname'])) {
       $playlistName = str_replace(str_split('\\/[]{};:> <'), '', ($_POST['playlistname']));
-      $playlistDir = $CloudUsrDir.$playlistName.'/'.$StreamFile;
+      $playlistDir = $CloudUsrDir.$playlistName.'.Playlist';
       $newPathname = $playlistDir; 
-      mkdir ($playlistDir, 0755);}
-    if (!isset($_POST['playlistname'])) {
-      $newPathname = $pathname; }
+      mkdir ($playlistDir, 0755);
+      copy ($oldPathname, $playlistDir.$StreamFile); }
+    if (isset($_POST['play'])) {
+      $newPathname = $pathname; 
     // / The following code is performed if the user has selected an audio file for streaming.
     if (in_array($oldExtension, $audioarray)) { 
-      shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
-      $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming in '.$pathname.'.');
+      copy ($oldPathname, $newPathname);
+      $txt = ('OP-Act: Copied '.$oldPathname.' for streaming in '.$pathname.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     // / The following code is performed if the user has selected a video file for streaming.    
     if (in_array($ext, $videoarray)) { 
-            shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
+      shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
       $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming in '.$pathname.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);  } } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } }
 
 // / The following code is performed if the user has selected or uploaded a standard image file for
 // /  "Document Scanning" using OpenCV and https://github.com/vipul-sharma20/document-scanner
@@ -791,11 +792,10 @@ if (isset($_POST['scanDocSelected'])) {
       $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed with command "'.$cmd.'"  on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
             if (!file_exists($OutputDoc)) {
-          echo nl2br('ERROR HRC2728, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
+          echo nl2br('WARNING HRC2728, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
             converting it to a different format first.'."\n");
           $txt = ('OP-Act: ERROR HRC2728, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-          die(); }
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.py');
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.pyc');
       unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__init__.py');
@@ -811,7 +811,7 @@ if (isset($_POST['scanDocSelected'])) {
       rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner');
       rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS');
       $txt = ('OP-Act: Deleted '.$TempScript.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 
         if (!file_exists($OutputDoc)) {
           echo nl2br('ERROR HRC2751, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
@@ -836,22 +836,21 @@ if (isset($_POST['scanDocSelected'])) {
           shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
           $txt = ('OP-Act: Copied '.$pathname.'.'.$extension
             .'/'.$Date.'.txt to '.$newPathname." on $Time".'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);  } 
-        @unlink($OutputDoc); } } }
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
-  $CleanFiles = glob($CloudTemp.'*');
+  $CleanFiles = glob($CloudTemp.$UserID.'/*');
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..') continue;
+    if ($CleanFile == '.' or $CleanFile == '..' or strpos($CleanFile, '.Playlist') !== 'false') continue;
       if ($time - filemtime($CleanFile) >= 900) { // Every 15 mins.
         if (!is_dir($CleanFile)) {
           unlink($CleanFile); }
         if (is_dir($CleanFile)) {
           $objects1 = scandir($CleanFile); 
           foreach ($objects1 as $object1) { 
-            if ($object1 != "." && $object1 != ".." && $object1 != '.AppLogs') { 
+            if ($object1 != "." && $object1 != ".." && $object1 !== '.AppLogs' && strpos($object1, '.Playlist') !== 'false') { 
               if (!is_dir($CleanFile.'/'.$object1)) {
                 unlink($CleanFile.'/'.$object1); }
               if (is_dir($CleanFile."/".$object1)) { 
