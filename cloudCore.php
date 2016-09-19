@@ -449,6 +449,8 @@ if (isset( $_POST['convertSelected'])) {
               $br = ' '; } 
             elseif ($bitrate != 'auto' ) {
               $br = (' -ab ' . $bitrate . ' '); } 
+              $txt = ("OP-Act, Executing ffmpeg -i $pathname$ext$br$newPathname on ".$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
             shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); } 
 
           // / Code to detect and extract an archive, and then re-archive the extracted
@@ -529,11 +531,11 @@ if (isset( $_POST['convertSelected'])) {
 if (!file_exists($newPathname)) {
   echo nl2br('ERROR HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
   $txt = ('ERROR HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'.');
-  $MAKELogFile = file_put_contents($LogFile.'.txt', $txt.PHP_EOL , FILE_APPEND);
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   die(); } 
 if (file_exists($newPathname)) {
   $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile.'.txt', $txt.PHP_EOL , FILE_APPEND); } } }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
 if (isset($_POST['pdfworkSelected'])) {
@@ -706,7 +708,7 @@ if (isset($_POST['streamSelected'])) {
       $playlistDir = $CloudUsrDir.$playlistName.'.Playlist';
       $newPathname = $playlistDir; 
       mkdir ($playlistDir, 0755);
-      copy ($oldPathname, $playlistDir.$StreamFile); }
+      copy ($oldPathname, $playlistDir.'/'.$StreamFile); }
     if (isset($_POST['play'])) {
       $newPathname = $pathname; 
     // / The following code is performed if the user has selected an audio file for streaming.
