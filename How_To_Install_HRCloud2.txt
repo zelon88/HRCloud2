@@ -129,7 +129,7 @@ Go to http://localhost/HRProprietary/HRCloud2/index1.php to view your Cloud Driv
 should be considered a staitionary NAS device that you can safely point your "Static NAT" at and access from anywhere. To accomplish
 these things, follow the additional steps below. 
 
------STEP 10 - ADD FIREWALL EXCEPTIONS AND SETUP STATIC NAT ON YOUR ROUTER-----
+-----STEP 9 - ADD FIREWALL EXCEPTIONS AND SETUP STATIC NAT ON YOUR ROUTER-----
 -According to the manual for the manufacturer of your broadband router, find the local IP address where you can make changes to it's
   configuration. Try entering "192.168.1.1" into a browser. If you are greeted with a login screen, check the bottom of your router or your
   system administrator for the required information. If you are not greeted with any tangible login screen other than an error message, 
@@ -147,12 +147,15 @@ these things, follow the additional steps below.
 
 If you have any problems with HRCloud2 please create an issue on http://github.com/zelon88/HRCloud2
 
+
+
 ----- FOR DEVELOPERS ONLY !!!!! -----
 
+IF YOU ARE USING HRCLOUD2 THROUGH AS A STANDARD USER DO NOT GO THROUGH STEP 10 !!!!!
+STEP 10 IS ONLY FOR DEBUGGERS AND DEVELOPERS WHO WANT TO CONTRIBUTE TO THE HRCLOUD2 PROJECT !!!!!
 
-IF YOU ARE USING HRCLOUD2 THROUGH AS A STANDARD USER DO NOT GO THROUGH STEP 9 !!!!!
-STEP 9 IS ONLY FOR DEBUGGERS AND DEVELOPERS WHO WANT TO CONTRIBUTE TO THE HRCLOUD2 PROJECT !!!!!
------ !!!!! OPTIONAL !!!!!  STEP 9 - INSTALL ADVANCED FEATURE DEPENDENCIES-----
+!!!!! OPTIONAL !!!!! 
+----- STEP 10 - INSTALL ADVANCED FEATURE DEPENDENCIES-----
 **VISIT "https://github.com/jayrambhia/Install-OpenCV" AND DOWNLOAD
   THE SCRIPT TO DOWNLOAD, INSTALL, AND BUILD OPENCV FROM SOURCE**
 **EXTRACT THE ".zip" FILE FROM THE GITHUB REPO INTO YOUR DOWNLOADS
