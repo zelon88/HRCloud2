@@ -26,6 +26,8 @@
          e.style.display = 'none';
       else
          e.style.display = 'block'; }
+    function goBack() {
+      window.history.back(); }
     </script>
 
 <body>
@@ -71,15 +73,27 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 ?>
 
 <body><div align="center">
-<form><input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form>
+<form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');">
+<input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form>
+<input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');">
 <strong>Operations: </strong>
 <img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
-<input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
+<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
+<div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
+<a><input type='submit' name="newFolder" id="newFolder" value='New Folder' style="dispaly:none;" onclick="toggle_visibility('makedir'); toggle_visibility('dirToMake');">
+  <input type='submit' name="newFile" id="newFile" value='New File' style="dispaly:none;" onclick="toggle_visibility('upload'); toggle_visibility('filesToUpload');"></form></a></div>
+<form action="cloudCore.php" method="post" enctype="multipart/form-data">
+<div align="center">
+<input type="text" name="dirToMake" id="dirToMake" style="display:none;">
+<input type='submit' name="makedir" id="makedir" value='Create New Folder' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
+<input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple style="display:none;">
+<input type='submit' name="upload" id="upload" value='&#x21E7' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
+</div>
+</div>
 </div>
 <div align="center" id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
-UNDER DEVELOPMENT!!!  -  New Filename: 
+UNDER DEVELOPMENT!!! 
 <input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo $Udir.'Scanned-Document_'.$Date; ?>'> 
 <select id='outputtopdf' name='outputtopdf'> 
   <option value="0">Preserve Extensions</option>
@@ -582,6 +596,25 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { streamSelected : streamSelected,
         play : "1")},
+
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#makedir").click(function(){
+var Selected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+Selected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { UserDir : $("#dirToMake").val()},
 
     success: function(data) {
         window.location.href = "cloudCore.php";
