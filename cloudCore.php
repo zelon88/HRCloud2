@@ -24,9 +24,9 @@ set_time_limit(0);
 // / DEPENDENCY REQUIREMENTS ... 
 // / This application requires Debian Linux (w/3rd Party audio license), 
 // / Apache 2.4, PHP 7.0, MySQL, JScript, WordPress, LibreOffice, Unoconv, 
-// / Python 2.7 and 3, ClamAV, Rar, Unrar, Unzip, 7zipper, FFMPEG, OpenCV, 
+// / Python 2.7 and 3, ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG,  
 // / PyGames Rect, NumPy, setuptools for Python 2 and 3, Python-Pip, thetaexif,
-// / Scikit, Scypy, and ImageMagick.
+// / OpenCV, Scikit, Scypy, and ImageMagick.
 
 // / -----------------------------------------------------------------------------------
 
@@ -132,15 +132,13 @@ if(isset($_POST["upload"])) {
   if (!is_array($_FILES["filesToUpload"])) {
     $_FILES["filesToUpload"] = array($_FILES["filesToUpload"]); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
-    $fc++;
     if ($file !== '.' or $file !== '..') {
       $file = str_replace(" ", "_", $file);
-      $file = str_replace(str_split('\\/[]{};:><'), '', $file);
+      $file = str_replace(str_split('\\/[]{};:>*<'), '', $file);
       $DangerousFiles = array('js', 'php', 'html', 'css',);
       $F0 = pathinfo($file, PATHINFO_EXTENSION);
       if (in_array($F0, $DangerousFiles)) { 
         $file = str_replace($F0, $F0.'SAFE', $file); }
-      $F1 = (pathinfo($file, PATHINFO_DIRNAME).'/'.$file);
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudUsrDir.$F2;
       // / The following code checks the Cloud Location with ClamAV before copying, just in case.
@@ -163,19 +161,15 @@ if(isset($_POST["upload"])) {
 
 // / The following code is performed when a user downloads a selection of files.
 if (isset($_POST['download'])) {
-  $fc = 0;
   if (!is_array($_POST['filesToDownload'])) {
     $_POST['filesToDownload'] = array($_POST['filesToDownload']); }
     foreach ($_POST['filesToDownload'] as $key=>$file) {
       if ($file == '.' or $file == '..') continue;
-      $fc++;
       $file = $CloudUsrDir.$file;
-      $F1 = (pathinfo($file, PATHINFO_DIRNAME).'/'.$file);
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudTmpDir.$F2;
       $F4 = pathinfo($file, PATHINFO_FILENAME);
       $F5 = pathinfo($file, PATHINFO_EXTENSION);
-      $F6 = $F4.'_'.$fc.'.'.$F5;
       $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
         if($file == "") {
@@ -872,5 +866,67 @@ if (file_exists($CloudTemp)) {
     $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }  
 $DisplayFileCon = scandir($CloudLoc.$UserDirPOST.$UserID);
 
-require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php');
+// / Code to search a users Cloud Drive and return the results.
+if (isset($_POST['search'])) { ?>
+  <div align="center"><h3>Search Results</h3></div>
+<hr />
+<?php
+$Date = date("m_d_y");
+$Time = date("F j, Y, g:i a"); 
+$SearchRAW = $_POST['search'];
+$searchRAW = str_replace(str_split('\\/[]{};:>*<'), '', $searchRAW);
+$SearchLower = strtolower($SearchRAW);
+if ($SearchRAW == '') {
+  ?><div align="center"><?php echo nl2br('Please enter a search keyword. s15.'); ?><hr /></div> <?php die(); }
+$PendingResCount1 = '0';
+$PendingResCount2 = '0';
+$ResultFiles = scandir($CloudUsrDir);
+if (isset($SearchRAW)) {       
+  foreach ($ResultFiles as $ResultFile0) {
+    if ($ResultFile0 == '.' or $ResultFile0 == '..') continue;
+      $ResultFile = $CloudUsrDir.$ResultFile0;    
+      $ResultTmpFile = $CloudTmpDir.$ResultFile0;
+      $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
+      $F2 = pathinfo($ResultFile, PATHINFO_BASENAME);
+      $F3 = $CloudTmpDir.$F2;
+      $F4 = pathinfo($ResultFile, PATHINFO_FILENAME);
+      $F5 = pathinfo($ResultFile, PATHINFO_EXTENSION);
+      $txt = ('OP-Act: '."Submitted $ResultFile to $CloudTmpDir on $Time".'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+      $PendingResCount1++; 
+      $ResultRAW = $ResultFile0;
+      $Result = strtolower($ResultRAW);
+      if (!preg_match("/$SearchLower/", $Result)) continue; 
+      if (preg_match("/$SearchLower/", $Result)) { 
+        $PendingResCount2++; 
+        if (!file_exists($ResultTmpFile)) {  
+          if (is_dir($ResultFile)) { 
+            mkdir($F3, 0755);
+            foreach ($iterator = new \RecursiveIteratorIterator(
+              new \RecursiveDirectoryIterator($ResultFile, \RecursiveDirectoryIterator::SKIP_DOTS),
+              \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+              if ($item->isDir()) {
+                mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
+              else {
+                copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } }
+
+      if (!is_dir($ResultFile)) { 
+        copy($ResultFile, $ResultTmpFile); } }
+
+        ?><a href='<?php echo ($ResultURL); ?>'><?php echo nl2br($ResultFile0."\n"); ?></a>
+        <hr /><?php } } 
+
+echo nl2br('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); } ?>
+<br>
+<div align="center"><a href="#" onclick="goBack();">&#8592; Go Back</a></div>
+<hr />
+
+<script type="text/javascript">
+function goBack() {
+    window.history.back(); }
+</script>
+
+<?php }
+if (!isset($_POST['search'])) {
+require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); } 
 ?>
