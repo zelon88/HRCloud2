@@ -1,6 +1,11 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+function goBack() {
+    window.history.back(); }
+</script>
 <?php
-
+if (isset($_GET['UserDirPOST'])) {
+  $_POST['UserDir'] = $_GET['UserDirPOST']; }
 set_time_limit(0);
 // / APPLICATION INFORMATION ...
 // / HRCloud2, Copyright on 7/12/2016 by Justin Grimes, www.github.com/zelon88
@@ -864,20 +869,26 @@ if (file_exists($CloudTemp)) {
     $units = array('B', 'KB', 'MB', 'GB');
   if (array_key_exists($unit, $units) === true) { 
     $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }  
-$DisplayFileCon = scandir($CloudLoc.$UserDirPOST.$UserID);
+$DisplayFileCon = scandir($CloudLoc.'/'.$UserID.$UserDirPOST);
 
 // / Code to search a users Cloud Drive and return the results.
-if (isset($_POST['search'])) { ?>
+if (isset($_POST['search'])) { 
+  $txt = ('OP-Act: '."User initiated Cloud Search on $Time".'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); ?>
   <div align="center"><h3>Search Results</h3></div>
 <hr />
 <?php
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $SearchRAW = $_POST['search'];
+$txt = ('OP-Act: Raw user input is "'.$SearchRAW.'" on '.$Time.'.');
+$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
 $searchRAW = str_replace(str_split('\\/[]{};:>*<'), '', $searchRAW);
+$txt = ('OP-Act: Sanitized user input is "'.$SearchRAW.'" on '.$Time.'.');
+$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
 $SearchLower = strtolower($SearchRAW);
 if ($SearchRAW == '') {
-  ?><div align="center"><?php echo nl2br('Please enter a search keyword. s15.'); ?><hr /></div> <?php die(); }
+  ?><div align="center"><?php echo nl2br('Please enter a search keyword.'."\n".'<a href="#" onclick="goBack();">&#8592; Go Back</a>'); ?><hr /></div> <?php die(); }
 $PendingResCount1 = '0';
 $PendingResCount2 = '0';
 $ResultFiles = scandir($CloudUsrDir);
@@ -909,22 +920,18 @@ if (isset($SearchRAW)) {
                 mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
               else {
                 copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } }
-
       if (!is_dir($ResultFile)) { 
         copy($ResultFile, $ResultTmpFile); } }
 
         ?><a href='<?php echo ($ResultURL); ?>'><?php echo nl2br($ResultFile0."\n"); ?></a>
         <hr /><?php } } 
 
-echo nl2br('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); } ?>
+echo nl2br('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); 
+$txt = ('OP-ACT, Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.');
+$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } ?>
 <br>
 <div align="center"><a href="#" onclick="goBack();">&#8592; Go Back</a></div>
 <hr />
-
-<script type="text/javascript">
-function goBack() {
-    window.history.back(); }
-</script>
 
 <?php }
 if (!isset($_POST['search'])) {
