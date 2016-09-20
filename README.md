@@ -38,7 +38,7 @@ CURRENT CORE FEATURES
 
    1. Resize
 
-   2. 2. Rotate
+   2. Rotate
 
    3. Convert
 
