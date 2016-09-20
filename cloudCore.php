@@ -839,14 +839,14 @@ if (file_exists($CloudTemp)) {
   $CleanFiles = glob($CloudTemp.$UserID.'/*');
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..' or strpos($CleanFile, '.Playlist') !== 'false') continue;
+    if ($CleanFile == '.' or $CleanFile == '..') continue;
       if ($time - filemtime($CleanFile) >= 900) { // Every 15 mins.
         if (!is_dir($CleanFile)) {
           unlink($CleanFile); }
         if (is_dir($CleanFile)) {
           $objects1 = scandir($CleanFile); 
           foreach ($objects1 as $object1) { 
-            if ($object1 != "." && $object1 != ".." && $object1 !== '.AppLogs' && strpos($object1, '.Playlist') !== 'false') { 
+            if ($object1 != "." && $object1 != ".." && $object1) { 
               if (!is_dir($CleanFile.'/'.$object1)) {
                 unlink($CleanFile.'/'.$object1); }
               if (is_dir($CleanFile."/".$object1)) { 
