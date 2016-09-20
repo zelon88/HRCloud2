@@ -1,6 +1,8 @@
 # HRCloud2
 A WIP private Cloud Platform.
 
+![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_0.png)
+
 The HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere.
 
 Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to be installed. THIS IS NOT A WORDPRESS PLUGIN!!! WordPress is only required to create and manage user-accounts.
