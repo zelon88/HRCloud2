@@ -73,31 +73,7 @@ duties.
 -sudo apt-get install tesseract
 --------------------------------------------------
 
-IF YOU ARE USING HRCLOUD2 THROUGH AS A STANDARD USER DO NOT GO THROUGH STEP 5 !!!!!
-STEP 5 IS ONLY FOR DEBUGGERS AND DEVELOPERS WHO WANT TO CONTRIBUTE TO THE HRCLOUD2 PROJECT !!!!!
------ !!!!! OPTIONAL !!!!!  STEP 5 - INSTALL ADVANCED FEATURE DEPENDENCIES-----
-**VISIT "https://github.com/jayrambhia/Install-OpenCV" AND DOWNLOAD
-  THE SCRIPT TO DOWNLOAD, INSTALL, AND BUILD OPENCV FROM SOURCE**
-**EXTRACT THE ".zip" FILE FROM THE GITHUB REPO INTO YOUR DOWNLOADS
-  FOLDER**
--cd /home/USERNAME/Downloads/Install-OpenCV-master/Ubuntu/
--chmod +x * 
--./opencv_latest.sh
--sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
--sudo apt-get install python2.7
--sudo apt-get install python-pip
--pip install setuptools
--pip install numpy
--pip install sympy
--pip install thetaexif
--pip install setuptools
--pip install scikit-learn
--pip install -U scikit-image
--pip install imageio
--pip install matplotlib
---------------------------------------------------
-
------STEP 6 - INSTALL WORDPRESS-----
+-----STEP 5 - INSTALL WORDPRESS-----
 **VISIT "https://wordpress.org/" AND DOWNLOAD THE LATEST VERSION OF
   WORDPRESS. SAVE THE .zip FILE TO YOUR DOWNLOADS FOLDER**
 -sudo chmod 0777 /var/www/html
@@ -112,7 +88,7 @@ STEP 5 IS ONLY FOR DEBUGGERS AND DEVELOPERS WHO WANT TO CONTRIBUTE TO THE HRCLOU
 **RENAME "wp-config-sample.php" TO "wp-config.php"**
 --------------------------------------------------
 
------STEP 7 - INSTALL HRCLOUD2-----
+-----STEP 6 - INSTALL HRCLOUD2-----
 **CREATE A DIRECTORY IN "/var/www/html" NAMED "HRProprietary"**
 **CREATE ANOTHER DIRECTORY IN "/var/www/html/HRProprietary" NAMED "HRCloud2"**
 **VISIT "http://github.com/zelon88/HRCloud2" AND DOWNLOAD THE LATEST HRCLOUD2 .zip FILE
@@ -144,11 +120,11 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
                -sudo chown -R www-data /var/www/html
                -sudo chgrp -R www-data /var/www/html
 
------STEP 8 - SETUP WORDPRESS-----
+-----STEP 7 - SETUP WORDPRESS-----
 **VISIT "http://localhost" IN  A BROWSER AND YOU SHOULD BE GREETED BY THE WORDPRESS INSTALLATION PAGE**
 **COMPLETELY READ AND FILL OUT THE WORDPRESS INSTALLATION PAGE**
 
------STEP 9 - VISIT YOUR CLOUD!!!-----
+-----STEP 8 - VISIT YOUR CLOUD!!!-----
 Go to http://localhost/HRProprietary/HRCloud2/index1.php to view your Cloud Drive! The computer you install HRCloud2 onto
 should be considered a staitionary NAS device that you can safely point your "Static NAT" at and access from anywhere. To accomplish
 these things, follow the additional steps below. 
@@ -170,3 +146,30 @@ these things, follow the additional steps below.
   (however PHP will, so verify that your php.ini file is set correctly!!!).
 
 If you have any problems with HRCloud2 please create an issue on http://github.com/zelon88/HRCloud2
+
+----- FOR DEVELOPERS ONLY !!!!! -----
+
+
+IF YOU ARE USING HRCLOUD2 THROUGH AS A STANDARD USER DO NOT GO THROUGH STEP 9 !!!!!
+STEP 9 IS ONLY FOR DEBUGGERS AND DEVELOPERS WHO WANT TO CONTRIBUTE TO THE HRCLOUD2 PROJECT !!!!!
+----- !!!!! OPTIONAL !!!!!  STEP 9 - INSTALL ADVANCED FEATURE DEPENDENCIES-----
+**VISIT "https://github.com/jayrambhia/Install-OpenCV" AND DOWNLOAD
+  THE SCRIPT TO DOWNLOAD, INSTALL, AND BUILD OPENCV FROM SOURCE**
+**EXTRACT THE ".zip" FILE FROM THE GITHUB REPO INTO YOUR DOWNLOADS
+  FOLDER**
+-cd /home/USERNAME/Downloads/Install-OpenCV-master/Ubuntu/
+-chmod +x * 
+-./opencv_latest.sh
+-sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
+-sudo apt-get install python2.7
+-sudo apt-get install python-pip
+-pip install setuptools
+-pip install numpy
+-pip install sympy
+-pip install thetaexif
+-pip install setuptools
+-pip install scikit-learn
+-pip install -U scikit-image
+-pip install imageio
+-pip install matplotlib
+--------------------------------------------------
