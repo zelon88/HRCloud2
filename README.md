@@ -20,17 +20,27 @@ CURRENT CORE FEATURES
 
 -Can archive and dearchive appropriate filetypes (various dependencies to enable support).
 
--Can convert PDF's, documents, images, audio files, and archive filetypes to other filetypes (various dependencies to enable support).
+-Sophisticated process for handling & converting image and pdf files to documents, with or without OCR!
 
--Image editing features.
+-Can convert almost anything to almost anything else. Including:
+>-1. pdf TO & FROM jpg/bmp/png/doc/txt/rtf/odf
+-2. doc/docx/txt/rtf/pdf TO & FROM doc/docx/txt/rtf/pdf
+-3. xls/xls/odf TO  pdf/ods/odf/xls/xls
+-4. jpg/bmp/png/gif/pdf TO jpg/bmp/png/gif/pdf/doc/txt/rtf/odf
+-5. avi/wav/wma/mp3/mp4/aac/m4a TO & FROM avi/wav/wma/mp3/mp4/aac/m4a
 
--Copy multiple files.
+-Image editing features. Including:
+>-1. Resize
+-2. Rotate
+-3. Convert
 
--Rename multiple files.
+-Copy / Rename / Delete multiple files at once.
 
--Delete multiple files.
+-Create / Move files between directories.
 
--Quickie PDFTools button button for easy PDF>txt/doc formats and doc/txt>PDF.
+-Media Streaming features.
+
+-Search feature.
 
 -Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
   
@@ -38,16 +48,15 @@ CURRENT CORE FEATURES
   
 -Keeps excellent logs of everything it does.
 
-
 FUTURE CORE FEATURES
 
--DocumentScanner similar to Microsoft Office Lens is currently 99% complete, but due to permissions problems isn't ready yet.
+-Help Docs!
 
--Create/Move files between directories.
+-More HRAI features!
 
--Stream features.
+-Smoother GUI!
 
--Search feature.
+-More security!
 
--Settings page.
+-Settings page!
 
