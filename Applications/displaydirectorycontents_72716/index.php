@@ -18,12 +18,14 @@
     <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
     <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
     <script type="text/javascript">
+    function Clear() {    
+      document.getElementById("search").value= ""; }
     function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block'; }
+      var e = document.getElementById(id);
+      if(e.style.display == 'block')
+         e.style.display = 'none';
+      else
+         e.style.display = 'block'; }
     </script>
 
 <body>
@@ -69,7 +71,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <strong>Operations: </strong>
 <img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id='scandocoptionsDiv' name='scandocoptionsDiv' onclick="toggle_visibility('scandocshowDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('searchDiv');" src='Resources/searchsmall.png'/><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
+<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
 <input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
 </div>
 <div align="center" id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
@@ -173,9 +175,15 @@ Are you sure?
 </div>
 
 <div align="center" id='StreamOptionsDiv' name='StreamOptionsDiv' style="display:none;">
-<p><input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('createplaylistbutton1'); toggle_visibility('playlistname');"></input></p>
-<p><input type="text" id='playlistname' name='playlistname' value='<?php echo 'Playlist'.'_'.$Date; ?>' style="display:none;"></p>
-<input type='submit' id='createplaylistbutton1' name='createplaylistbutton1' style="display:none;" value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></input>
+<p><input type="text" id='playlistname' name='playlistname' value='<?php echo 'Playlist'.'_'.$Date; ?>'></p>
+<input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></input>
+</div>
+
+<div align="center" id='SearchOptionsDiv' name='SearchOptionsDiv' style="display:none;">
+<form action="cloudCore.php" method="post" enctypt="multipart/form-data">
+<p><input type="text" id='search' name='search' value='Search...' onclick="Clear();">
+  <input type='submit' id='searchbutton' name='searchbutton' value='Search Cloud' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
+</form>
 </div>
 
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
@@ -310,6 +318,7 @@ $.ajax( {
 });
 </script>
 <?php
+
 	 echo("
 		<tr class='$class'>
 			<td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'toggle_visibility(\'loadingCommandDiv\');'.">$name</a></td>
@@ -522,7 +531,7 @@ $.ajax( {
 </script>
 <script type="text/javascript">
 $(document).ready(function () {
-$("#createplaylistbutton1").click(function(){
+$("#createplaylistbutton").click(function(){
 var streamSelected = new Array();
 $('input[name="corePostSelect[]"]:checked').each(function() {
 streamSelected.push(this.value);
