@@ -42,6 +42,10 @@
 	    </thead>
 	    <tbody><?php
 $tableCount = 0;
+if (isset($_POST['UserDir'])) {
+$Udir = $_POST['UserDir'].'/'; }
+if (!isset($_POST['UserDir'])) {
+$Udir = ''; }
 	// Adds pretty filesizes
 	function pretty_filesize($file) {
 		$size=filesize($file);
@@ -70,13 +74,13 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <form><input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form>
 <strong>Operations: </strong>
 <img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
-<img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id='scandocoptionsDiv' name='scandocoptionsDiv' onclick="toggle_visibility('scandocshowDiv');" src='Resources/docscan.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
+<img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple>
 <input type='submit' name="upload" id="upload" value='&#x21E7' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></p></form>
 </div>
 <div align="center" id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
 UNDER DEVELOPMENT!!!  -  New Filename: 
-<input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo 'Scanned-Document_'.$Date; ?>'> 
+<input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo $Udir.'Scanned-Document_'.$Date; ?>'> 
 <select id='outputtopdf' name='outputtopdf'> 
   <option value="0">Preserve Extensions</option>
   <option value="1">Create PDF's</option>
@@ -88,15 +92,15 @@ Are you sure?
 <input type="submit" id="deleteFileSubmit" name="deleteFileSubmit" value='Confirm Delete' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div align="center" id='copyOptionsDiv' name='copyOptionsDiv' style="display:none;">
-<input type="text" id='newcopyfilename' name='newcopyfilename' value='<?php echo 'Copied_'.$Date; ?>'> 
+<input type="text" id='newcopyfilename' name='newcopyfilename' value='<?php echo $Udir.'Copied_'.$Date; ?>'> 
 <input type="submit" id="copyFileSubmit" name="copyFileSubmit" value='Copy Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div align="center" id='renameOptionsDiv' name='renameOptionsDiv' style="display:none;">
-<input type="text" id='renamefilename' name='renamefilename' value='<?php echo 'Renamed_'.$Date; ?>'> 
+<input type="text" id='renamefilename' name='renamefilename' value='<?php echo $Udir.'Renamed_'.$Date; ?>'> 
 <input type="submit" id="renameFileSubmit" name="renameFileSubmit" value='Rename Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div align="center" id='archiveOptionsDiv' name='archiveOptionsDiv' style="display:none;">
-<input type="text" id='userfilename' name='userfilename' value='<?php echo 'Archive'.'_'.$Date.'_'.$ArchInc; ?>'> 
+<input type="text" id='userfilename' name='userfilename' value='<?php echo $Udir.'Archive'.'_'.$Date.'_'.$ArchInc; ?>'> 
 <select id='archextension' name='archextension'> 
   <option value="zip">Zip</option>
   <option value="rar">Rar</option>
@@ -108,7 +112,7 @@ Are you sure?
 </div>
 
 <div align="center" id='convertOptionsDiv' name='convertOptionsDiv' style="display:none;">
-<input type="text" id="userconvertfilename" name="userconvertfilename" value="<?php echo 'Convert'.'_'.$Date; ?>"> 
+<input type="text" id="userconvertfilename" name="userconvertfilename" value="<?php echo $Udir.'Convert'.'_'.$Date; ?>"> 
 <select id='extension' name='extension'> 
   <option value="">Select Format</option>
     <option value="mp3">--Audio Formats--</option>
@@ -139,7 +143,7 @@ Are you sure?
 </div>
 
 <div align="center" id='photoOptionsDiv' name='photoOptionsDiv' style="display:none;">
-<p>Filename: <input type="text" id='userphotofilename' name='userphotofilename' value='<?php echo 'Edited'.'_'.$Date; ?>'></p>
+<p>Filename: <input type="text" id='userphotofilename' name='userphotofilename' value='<?php echo $Udir.'Edited'.'_'.$Date; ?>'></p>
 <p><select id='photoextension' name='photoextension'>   
   <option value="jpg">Jpg</option>
   <option value="bmp">Bmp</option>
@@ -161,7 +165,7 @@ Are you sure?
   <option value="1">Method 1 (Simple)</option>
   <option value="2">Method 2 (Advanced)</option>
 </select></p>
-<p><a id='userpdfconvertfilename1'><input type="text" id='userpdfconvertfilename' name='userpdfconvertfilename' value='<?php echo 'Converted'.'_'.$Date; ?>'></a></p>
+<p><a id='userpdfconvertfilename1'><input type="text" id='userpdfconvertfilename' name='userpdfconvertfilename' value='<?php echo $Udir.'Converted'.'_'.$Date; ?>'></a></p>
 <p> <select id='pdfextension' name='pdfextension'>   
   <option value="">Select Format</option> 
   <option value="pdf">Pdf</option>   
@@ -175,7 +179,7 @@ Are you sure?
 </div>
 
 <div align="center" id='StreamOptionsDiv' name='StreamOptionsDiv' style="display:none;">
-<p><input type="text" id='playlistname' name='playlistname' value='<?php echo 'Playlist'.'_'.$Date; ?>'></p>
+<p><input type="text" id='playlistname' name='playlistname' value='<?php echo $Udir.'Playlist'.'_'.$Date; ?>'></p>
 <input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></input>
 </div>
 
@@ -190,7 +194,7 @@ Are you sure?
 </div>
 <?php
 	 // Opens directory
-	 $myDirectory=opendir($CloudLoc.$UserDirPOST.$UserID);
+	 $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
 	// Gets each entry
 	while($entryName=readdir($myDirectory)) {
 	   $dirArray[]=$entryName;
@@ -298,8 +302,27 @@ if (in_array($extnRAW, $ImageArray)) {
 if (in_array($extnRAW, $MediaArray)) {
 	$specialHTML = '<img src="Resources/stream.png" alt=\'Stream Media\'/>'; }
 if ($extn == "Folder") {
-	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; } 
+	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; 
+    $namehref = 'cloudCore.php?UserDirPOST='.$namehref; 
 ?>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#corePostDL<?php echo $tableCount; ?>").click(function(){
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
+
+    success: function(returnFile) {
+    	toggle_visibility('loadingCommandDiv');
+        window.location.href = "<?php echo 'cloudCore.php?UserDirPOST='.$name;?>";
+    }
+} );
+});
+});
+</script>
+<?php }
+if ($extn !== "Folder") { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -313,16 +336,14 @@ $.ajax( {
         window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name;?>";
     }
 } );
-
 });
 });
 </script>
-<?php
-
+<?php }
 	 echo("
 		<tr class='$class'>
 			<td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'toggle_visibility(\'loadingCommandDiv\');'.">$name</a></td>
-			<td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$namehref'></div></td>
+			<td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
             <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
 			<td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
 			<td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
