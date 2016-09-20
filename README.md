@@ -23,16 +23,16 @@ CURRENT CORE FEATURES
 -Sophisticated process for handling & converting image and pdf files to documents, with or without OCR!
 
 -Can convert almost anything to almost anything else. Including:
->-1. pdf TO & FROM jpg/bmp/png/doc/txt/rtf/odf
--2. doc/docx/txt/rtf/pdf TO & FROM doc/docx/txt/rtf/pdf
--3. xls/xls/odf TO  pdf/ods/odf/xls/xls
--4. jpg/bmp/png/gif/pdf TO jpg/bmp/png/gif/pdf/doc/txt/rtf/odf
--5. avi/wav/wma/mp3/mp4/aac/m4a TO & FROM avi/wav/wma/mp3/mp4/aac/m4a
+1. pdf TO & FROM jpg/bmp/png/doc/txt/rtf/odf
+2. doc/docx/txt/rtf/pdf TO & FROM doc/docx/txt/rtf/pdf
+3. xls/xls/odf TO  pdf/ods/odf/xls/xls
+4. jpg/bmp/png/gif/pdf TO jpg/bmp/png/gif/pdf/doc/txt/rtf/odf
+5. avi/wav/wma/mp3/mp4/aac/m4a TO & FROM avi/wav/wma/mp3/mp4/aac/m4a
 
 -Image editing features. Including:
->-1. Resize
--2. Rotate
--3. Convert
+1. Resize
+2. Rotate
+3. Convert
 
 -Copy / Rename / Delete multiple files at once.
 
