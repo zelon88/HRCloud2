@@ -45,9 +45,12 @@
 	    <tbody><?php
 $tableCount = 0;
 if (isset($_POST['UserDir'])) {
-$Udir = $_POST['UserDir'].'/'; }
+	?><div align='center'><h3><?php
+  echo$_POST['UserDir']; 
+  ?></h3></div><?php
+  $Udir = $_POST['UserDir'].'/'; }
 if (!isset($_POST['UserDir'])) {
-$Udir = ''; }
+  $Udir = ''; }
 	// Adds pretty filesizes
 	function pretty_filesize($file) {
 		$size=filesize($file);
@@ -73,10 +76,9 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 ?>
 
 <body><div align="center">
-<form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');">
-<input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form>
-<input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');">
-<strong>Operations: </strong>
+<form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+<input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form> | 
+<input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');"> | 
 <img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
@@ -289,9 +291,9 @@ Are you sure?
 				case "exe": $extn="Windows Executable"; break;
 
 				default: if($extn!=""){$extn=strtoupper($extn)." File";} else{$extn="Folder";} break;
-  
 			}
-
+				if (strpos($name, '.Playlist') or strpos($extn, 'PLAYLIST')) {
+					$extn = "Playlist"; }
 			// Gets and cleans up file size
 				$size=pretty_filesize($CloudUsrDir.$dirArray[$index]);
 				$sizekey=filesize($CloudUsrDir.$dirArray[$index]);
@@ -315,10 +317,9 @@ if (in_array($extnRAW, $ImageArray)) {
 	$specialHTML = '<img src="Resources/photoedit.png" alt=\'Edit Photo\'/>'; }
 if (in_array($extnRAW, $MediaArray)) {
 	$specialHTML = '<img src="Resources/stream.png" alt=\'Stream Media\'/>'; }
+// / Handle the AJAX post for if a user clicks on a folder in their drive.
 if ($extn == "Folder") {
-	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; 
-    $namehref = 'cloudCore.php?UserDirPOST='.$namehref; 
-?>
+	$specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -329,14 +330,33 @@ $.ajax( {
 
     success: function(returnFile) {
     	toggle_visibility('loadingCommandDiv');
-        window.location.href = "<?php echo 'cloudCore.php?UserDirPOST='.$name;?>";
+        window.location.href = "<?php echo 'cloudCore.php?UserDirPOST='.$name; ?>";
     }
 } );
 });
 });
 </script>
 <?php }
-if ($extn !== "Folder") { ?>
+// / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
+if ($extn == "Playlist") { ?>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#corePostDL<?php echo $tableCount; ?>").click(function(){
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { playlistSelected : "<?php echo $name; ?>"},
+
+    success: function(returnFile) {
+    	toggle_visibility('loadingCommandDiv');
+        window.location.href = "<?php echo 'cloudCore.php?playlistSelected='.$name; ?>";
+    }
+} );
+});
+});
+</script>
+<?php }
+if (($extn !== "Folder") or ($extn !== "Playlist")) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -347,7 +367,7 @@ $.ajax( {
 
     success: function(returnFile) {
     	toggle_visibility('loadingCommandDiv');
-        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name;?>";
+        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>";
     }
 } );
 });
