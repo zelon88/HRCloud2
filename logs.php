@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>HRCloud2 | Home </title>
+<title>HRCloud2 | Logs </title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
@@ -25,7 +25,7 @@ $SesLogDir = $LogLoc.'/'.$Date;
     <div class="nav">
       <ul>
         <li class="Cloud"><a href="index1.php">Cloud</a></li>
-        <li class="Settings"><a href=""> Settings</a></li>
+        <li class="Settings"><a href="settings.php"> Settings</a></li>
         <li class="Logs"><a href="logs.php">Logs</a></li>
         <li class="Help"><a href="">Help</a></li>
       </ul>
@@ -62,10 +62,11 @@ document.getElementById("HRAIMini").submit();
 </script>
 
 <div id="logsContentsDiv" align='center'>
-  <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="logsContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <script>
 ;(function($){
+  //Resizes the div to the remaining page size.
     $(document).ready(function(){
         $('#logsContents').height( $(window).height() - 185 );
         $(window).resize(function(){

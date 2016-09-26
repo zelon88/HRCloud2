@@ -5,7 +5,16 @@ function goBack() {
 </script>
 <?php
 if (isset($_GET['UserDirPOST'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
   $_POST['UserDir'] = $_GET['UserDirPOST']; }
+if (isset($_POST['UserDirPOST'])) {
+  $_POST['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDirPOST']); 
+  $_POST['UserDir'] = $_POST['UserDirPOST']; }
+if (isset($_POST['UserDir'])) {
+  $_POST['UserDir'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDir']); }
+if(isset($_GET['playlistSelected'])) {
+  $_GET['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['playlistSelected']);
+  $_POST['playlistSelected'] = $_GET['playlistSelected']; }
 set_time_limit(0);
 // / APPLICATION INFORMATION ...
 // / HRCloud2, Copyright on 7/12/2016 by Justin Grimes, www.github.com/zelon88
@@ -38,7 +47,7 @@ set_time_limit(0);
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('ERROR HRC235, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
   require('config.php'); }
@@ -46,7 +55,7 @@ $WPFile = '/var/www/html/wp-load.php';
 
 // / Verify that WordPress is installed.
 if (!file_exists($WPFile)) {
-  echo nl2br('ERROR HRC243, WordPress was not detected on the server.'."\n"); }
+  echo nl2br('ERROR!!! HRC243, WordPress was not detected on the server.'."\n"); }
   else {
     require($WPFile); } 
 
@@ -69,20 +78,22 @@ if (!file_exists($CloudDir)) {
 if (!file_exists($CloudTempDir)) {
   mkdir($CloudTempDir, 0755); }
 
-if (!file_exists($LogLoc)) {
-$JICInstallLogs = @mkdir($LogLoc, 0755); }
-if (!file_exists($SesLogDir)) {
-$JICInstallLogs = @mkdir($SesLogDir, 0755);   }
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-foreach ($LogInstallFiles as $LIF) {
-  if ($LIF == '.' or $LIF == '..') continue;
-  copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); }
-foreach ($LogInstallFiles1 as $LIF1) {
-  if ($LIF1 == '.' or $LIF1 == '..') continue;
-  copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); }
+if (!file_exists($LogLoc)) {
+$JICInstallLogs = @mkdir($LogLoc, 0755); 
+  foreach ($LogInstallFiles as $LIF) {
+    if ($LIF == '.' or $LIF == '..') continue;
+      if (!file_exists($LIF)) {
+      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } } }
+if (!file_exists($SesLogDir)) {
+$JICInstallLogs = @mkdir($SesLogDir, 0755); 
+  foreach ($LogInstallFiles1 as $LIF1) {
+    if ($LIF1 == '.' or $LIF1 == '..') continue;
+      if (!file_exists($LIF1)) {
+      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
 
 if (isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
@@ -97,13 +108,13 @@ if (!file_exists($CloudTmpDir)) {
   
 // / Checks to see that the user is logged in.
 if ($UserID == '') {
-  echo nl2br('ERROR HRC2100, You are not logged in!'."\n"); 
+  echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
   die(); }
 if ($UserID == '0') {
-  echo nl2br('ERROR HRC2103, You are not logged in!'."\n"); 
+  echo nl2br('ERROR!!! HRC2103, You are not logged in!'."\n"); 
   die(); }
 if (!isset($UserID)) {
-  echo nl2br('ERROR HRC2106, You are not logged in!'."\n"); 
+  echo nl2br('ERROR!!! HRC2106, You are not logged in!'."\n"); 
   die(); }
 
 // / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
@@ -111,35 +122,33 @@ if ($VirusScan == '1') {
   shell_exec('freshclam'); }
 
 // / The following code verifies and cleans the config file.  	
-if ($Online == '') {
-  $txt = ('ERROR HRC2115, '.$Time.', You have not yet setup the HRCloud2 configuration file! Please 
-    view and completely fill-out the settings or config.php file in your root HRCloud2
-    directory.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  die (' ERROR HRC2115, '.$Time.', You have not yet setup the HRCloud2 configuration file! Please 
-    view and completely fill-out the settings or config.php file in your root HRCloud2     
-    directory. '); }
-if ($Online == '0') { 
+if ($Accept_GPLv3_OpenSource_License !== '1') {
+  $txt = ('ERROR!!! HRC2124, The user has not accepted the end-user license aggreement in config.php!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2124, You must read and completely fill out the config.php file located in your
+    HRCloud2 installation directory before you can use this software!'); } 
+
+if ($Accept_GPLv3_OpenSource_License == '1') { 
   $CleanConfig = '1';
   $INTIP = 'localhost';
   $EXTIP = 'localhost'; }
-if ($Online !== '0') {
-  $CleanConfig = '1';
-  $INTIP = $InternalIP; 
-  $EXTIP = $ExternalIP; }
 if (isset ($InternalIP)) { 
   unset ($InternalIP); }
 if (isset ($ExternalIP)) { 
   unset ($ExternalIP); } 
 
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+require ($UserConfig);
+
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
+  $_POST["upload"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
   if (!is_array($_FILES["filesToUpload"])) {
     $_FILES["filesToUpload"] = array($_FILES["filesToUpload"]); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file !== '.' or $file !== '..') {
       $file = str_replace(" ", "_", $file);
-      $file = str_replace(str_split('\\/[]{};:>*<'), '', $file);
+      $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
       $DangerousFiles = array('js', 'php', 'html', 'css',);
       $F0 = pathinfo($file, PATHINFO_EXTENSION);
       if (in_array($F0, $DangerousFiles)) { 
@@ -150,14 +159,14 @@ if(isset($_POST["upload"])) {
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$_FILES['filesToUpload']['tmp_name'][$key].' | grep FOUND >> '.$ClamLogDir); 
       if (filesize($ClamLogDir > 1)) {
-        echo nl2br('WARNING HRC2155, There were potentially infected files detected. The file
+        echo nl2br('WARNING!!! HRC2155, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or 
           try again later.'."\n");
           die(); } } 
       if($file == "") {
-        $txt = ("ERROR HRC2160, No file specified on $Time.");
+        $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-        die("ERROR HRC2160, No file specified on $Time."); }
+        die("ERROR!!! HRC2160, No file specified on $Time."); }
       echo nl2br ('Uploaded: '."$F2 on $Time".'.'."\n".'--------------------'."\n");
       $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -165,9 +174,11 @@ if(isset($_POST["upload"])) {
       chmod($F3,0755); } } } 
 
 // / The following code is performed when a user downloads a selection of files.
-if (isset($_POST['download'])) {
+if (isset($_POST["download"])) {
+  $_POST["download"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST["download"]);
   if (!is_array($_POST['filesToDownload'])) {
-    $_POST['filesToDownload'] = array($_POST['filesToDownload']); }
+    $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
+    $_POST['filesToDownload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDownload']); }
     foreach ($_POST['filesToDownload'] as $key=>$file) {
       if ($file == '.' or $file == '..') continue;
       $file = $CloudUsrDir.$file;
@@ -178,9 +189,9 @@ if (isset($_POST['download'])) {
       $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
         if($file == "") {
-          $txt = ("ERROR HRC2187, No file specified on $Time".'.');
+          $txt = ("ERROR!!! HRC2187, No file specified on $Time".'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-          echo nl2br("ERROR HRC2187, No file specified"."\n");
+          echo nl2br("ERROR!!! HRC2187, No file specified"."\n");
           die(); }
       if (!file_exists($F3)) { 
       $COPY_TEMP = copy($file, $F3); }
@@ -197,14 +208,16 @@ if (isset($_POST['download'])) {
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
 if (filesize($ClamLogDir > 1)) {
-  echo nl2br('WARNING HRC2206, There were potentially infected files detected. The file
+  echo nl2br('WARNING!!! HRC2206, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
     die(); } } } 
 
 // / The following code is performed whenever a user selects a file to copy.
 if (isset($_POST['copy'])) {
+  $_POST['copy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['copy']);
   if (!is_array($_POST['filesToCopy'])) {
+    $_POST['filesToCopy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToCopy']);
     $_POST['filesToCopy'] = array($_POST['filesToCopy']); }
     $copycount = 0;
   foreach ($_POST['filesToCopy'] as $key=>$CFile) { 
@@ -220,7 +233,9 @@ if (isset($_POST['copy'])) {
 
 // / The following code is performed whenever a user selects a file to rename.
 if (isset($_POST['rename'])) {
+$_POST['rename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rename']);
   if (!is_array($_POST['filesToRename'])) {
+    $_POST['filesToRename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToRename']);
     $_POST['filesToRename'] = array($_POST['filesToRename']); }
     $rencount = 0;
   foreach ($_POST['filesToRename'] as $key=>$ReNFile) { 
@@ -239,18 +254,30 @@ if (isset($_POST['deleteconfirm'])) {
   if (!is_array($_POST['filesToDelete'])) {
     $_POST['filesToDelete'] = array($_POST['filesToDelete']); }
   foreach ($_POST['filesToDelete'] as $key=>$DFile) { 
+    if (is_dir($CloudDir.$DFile)) {
+      @rmdir($CloudDir.$DFile);
+      @unlink($CloudDir.$DFile); 
+      if (file_exists($CloudDir.$DFile)) {
+        $txt = ('WARNING!!! HRC246, '."Cannot delete $CloudDir$DFile on $Time".'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      if (!file_exists($CloudDir.$DFile)) {
+        $txt = ('OP-Act: '."Deleted $CloudDir$DFile on $Time".'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
     if (is_dir($CloudUsrDir.$DFile)) {
-     $objects = scandir($CloudUsrDir.$DFile); 
-     foreach ($objects as $object) { 
-       if ($object != "." && $object != "..") { 
-         if (is_dir($CloudUsrDir.$DFile."/".$object)) 
-           rmdir($CloudUsrDir.$DFile."/".$object);
-         else 
-           unlink($CloudUsrDir.$DFile."/".$object); } }
-     rmdir($CloudUsrDir.$DFile); } 
-    unlink($CloudUsrDir.$DFile);
+      @rmdir($CloudUsrDir.$DFile);
+      @unlink($CloudUsrDir.$DFile);
+      @rmdir($CloudTmpDir.$DFile);
+      @unlink($CloudTmpDir.$DFile);
+      $objects = scandir($CloudUsrDir.$DFile); 
+      foreach ($objects as $object) { 
+        if ($object != "." && $object != "..") { 
+          if (is_dir($CloudUsrDir.$DFile."/".$object)) 
+             @rmdir($CloudUsrDir.$DFile."/".$object);
+          else 
+            @unlink($CloudUsrDir.$DFile."/".$object); } } } 
+    @unlink($CloudUsrDir.$DFile);
     if (file_exists($CloudTmpDir.$DFile)) {
-      unlink($CloudTmpDir.$DFile); 
+      @unlink($CloudTmpDir.$DFile); 
       $txt = ('OP-Act: '."Deleted $DFile from $CloudTmpDir on $Time".'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
@@ -281,13 +308,13 @@ $ext = pathinfo($filename, PATHINFO_EXTENSION);
 $UserExt = $_POST['archextension'];
 $UserFileName = $_POST['userfilename'];
 if(!in_array($ext, $allowed)) { 
-  echo nl2br("ERROR HRC2290, Unsupported File Format\n");
+  echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
   die(); }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
 if (filesize($ClamLogDir > 1)) {
-  echo nl2br('WARNING HRC2296, There were potentially infected files detected. The file
+  echo nl2br('WARNING!!! HRC2296, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
     die(); } }
@@ -355,7 +382,7 @@ if (isset($_POST["dearchive"])) {
   
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset( $_POST['convertSelected'])) {
-  $txt = ('OP-Act: Initiated HRConvert on '.$Time.'.');
+  $txt = ('OP-Act: Initiated HRConvert2 on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     if (!is_array($_POST['convertSelected'])) {
       $_POST['convertSelected'] = array($_POST['convertSelected']); } 
@@ -418,7 +445,7 @@ if (isset( $_POST['convertSelected'])) {
             while(!file_exists($newPathname)) {
               $stopper++;
               if ($stopper == 10) {
-                die('ERROR HRC2425, The converter timed out while copying your file.'); }
+                die('ERROR!!! HRC2425, The converter timed out while copying your file.'); }
               sleep(2); } }
         
           // / Code to convert and manipulate image files.
@@ -427,15 +454,15 @@ if (isset( $_POST['convertSelected'])) {
             $width =  $_POST["width"]; 
             // / Code to sanitize the $width and $height $_POST variables.
             if ((!is_numeric($width)) or (!is_numeric($height))) {
-              $txt = ("ERROR HRC2432, User specified a witdh or height that is not numeric on ".$Time.'.');
+              $txt = ("ERROR!!! HRC2432, User specified a witdh or height that is not numeric on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
               die(); }
             $rotate = ('-rotate '.$_POST["rotate"]);
             $wxh = $width.'x'.$height;
                 if ($wxh === '0x0') {       
-                  shell_exec ("convert $pathname $rotate $newPathname"); } 
+                  shell_exec ("convert -background none $pathname $rotate $newPathname"); } 
                 elseif (($width or $height) != '0') {
-                  shell_exec ("convert -resize $wxh $rotate $pathname $newPathname"); } }
+                  shell_exec ("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
 
           // / Code to convert and manipulate audio, video, and multi-media files.
           if (in_array($oldExtension,$audioarray) ) { 
@@ -458,6 +485,7 @@ if (isset( $_POST['convertSelected'])) {
             $safedir1 = $CloudTmpDir;
             $safedirTEMP = $CloudTmpDir.$filename;
             $safedirTEMP2 = pathinfo($safedirTEMP, PATHINFO_EXTENSION);
+            $safedirTEMP3 = $CloudTmpDir.pathinfo($safedirTEMP, PATHINFO_BASENAME);            
             $safedir2 = $CloudTmpDir.$safedirTEMP2;
             mkdir("$safedir2", 0755, true);
             chmod($safedir2, 0755);
@@ -528,8 +556,8 @@ if (isset( $_POST['convertSelected'])) {
 
 // / Error handler and logger for converting files.
 if (!file_exists($newPathname)) {
-  echo nl2br('ERROR HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
-  $txt = ('ERROR HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'.');
+  echo nl2br('ERROR!!! HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
+  $txt = ('ERROR!!! HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   die(); } 
 if (file_exists($newPathname)) {
@@ -703,7 +731,7 @@ if (isset($_POST['streamSelected'])) {
     $audioarray =  array('mp3', 'mp4', 'wma', 'wav', 'ogg', 'aac');
     $videoarray =  array('avi', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');
     if (isset($_POST['playlistname'])) {
-      $playlistName = str_replace(str_split('\\/[]{};:> <'), '', ($_POST['playlistname']));
+      $playlistName = str_replace(str_split('\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
       $playlistDir = $CloudUsrDir.$playlistName.'.Playlist';
       $newPathname = $playlistDir; 
       mkdir ($playlistDir, 0755);
@@ -883,7 +911,7 @@ $Time = date("F j, Y, g:i a");
 $SearchRAW = $_POST['search'];
 $txt = ('OP-Act: Raw user input is "'.$SearchRAW.'" on '.$Time.'.');
 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-$searchRAW = str_replace(str_split('\\/[]{};:>*<'), '', $searchRAW);
+$searchRAW = str_replace(str_split('\\/[]{};:!$#&@>*<'), '', $searchRAW);
 $txt = ('OP-Act: Sanitized user input is "'.$SearchRAW.'" on '.$Time.'.');
 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
 $SearchLower = strtolower($SearchRAW);
@@ -934,6 +962,14 @@ $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } ?>
 <hr />
 
 <?php }
+if (isset($_GET['playlistSelected'])) {
+include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
+die(); } 
+if (isset($_POST['playlistSelected'])) {
+include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
+die(); } 
+
 if (!isset($_POST['search'])) {
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); } 
+
 ?>
