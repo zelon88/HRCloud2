@@ -89,6 +89,11 @@ if (isset($_POST['Save'])) {
     $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
     echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
+  if (isset($_POST['NEWShowHRAI'])) {
+    $NEWShowHRAI = $_POST['NEWShowHRAI'];
+    $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    echo nl2br('Saved New HRAI Settings.'."\n"); }
 ?>
 <hr />
 <?php

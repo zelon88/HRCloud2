@@ -22,6 +22,9 @@ $Accept_GPLv3_OpenSource_License = '1';
 // / General Information ... 
 // / Leave '1' for default and to allow individual users to modify their own color-schemes.
 $ColorScheme = '1';
+// / To show HRAI in your Cloud homepage, set $ShowHRAI to '1'. To hide HRAI in your Cloud
+// / homepage set $ShowHRAI to '0'. Default is '1'.
+$ShowHRAI = '1';
 // / ------------------------------
 
 // / ------------------------------

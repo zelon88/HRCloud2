@@ -37,6 +37,7 @@ $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
+
 if (!file_exists($LogLoc)) {
 $JICInstallLogs = @mkdir($LogLoc, 0755); 
   foreach ($LogInstallFiles as $LIF) {
@@ -70,16 +71,22 @@ if ($VirusScan == '1') {
 if ($VirusScan !== '1') {
   $VSEcho = 'Disabled'; }
 
+if ($ShowHRAI == '1') {
+  $SHRAIEcho = 'Enabled'; }
+if ($ShowHRAI !== '1') {
+  $SHRAIEcho = 'Disabled'; }
+
 $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
 ?>
 <body>
-  <div align='center'><h3>Application Settings</h3></div>
+  <br>
+  <div align='center'><h2>HRCloud2 Settings</h2></div>
   <hr />
- <div align='center'>
 <div align='left'>
 <form action="SAVEappSettings.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
-<div align="center">
-<p>Color Scheme: <select id="NEWColorScheme" name="NEWColorScheme">
+
+<p style="padding-left:15px;"><strong>1.</strong> Color Scheme (IN-PROCESS!!): </p>
+  <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;"></p>
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
   <option value="1">Blue (Default)</option>
   <option value="2">Red</option>
@@ -89,12 +96,22 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
   <option value="6">Black</option>
   <option value="7">Black</option>
 </select></p>
-<p>Virus Scanning (Requires ClamAV on server): <select id="NEWVirusScan" name="NEWVirusScan">
+
+<p style="padding-left:15px;"><strong>2.</strong> HRAI Load Balancing Personal Assistant: </p>
+  <p><select id="NEWShowHRAI" name="NEWShowHRAI" style="padding-left:30px; width:100%;">
+  <option value="<?php echo $ShowHRAI; ?>">Current (<?php echo $SHRAIEcho; ?>)</option>
+  <option value="1">Enabled</option>
+  <option value="0">Disabled</option>
+</select></p>
+
+<p style="padding-left:15px;"><strong>3.</strong> Virus Scanning (Requires ClamAV on server): </p>
+  <p><select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;"><p>
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select>
-    <input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p></div>
+<p style="float:center; padding-left:25%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p></div>
+
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="pacmansmall.gif" /></p></div>
   <script type="text/javascript">
     function toggle_visibility(id) {
@@ -107,13 +124,19 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
     window.history.back(); }
 </script>
 <hr />
+
 <div align='center'>
   <p><input type='submit' name='Save' id='Save' value='Save Changes' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='LoadDefaults' id='LoadDefaults' value='Load Defaults' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type="hidden" name='YUMMYSaltHash' id='YUMMYSaltHash' value="<?php echo $SaltHash; ?>">
+
 </form>
+  
   <input type='submit' name='Clear' id='Clear' value='Clear Changes' style="padding: 2px; border: 1px solid black" onclick="reload();"/></p>
-<div id='end' name='end' class='end'></div>
+
+<div id='end' name='end' class='end'>
+<a>NOTE: Changes may take several seconds (or page refreshes) to take effect!</a>
+</div>
 <br>
 <hr />
 </body>

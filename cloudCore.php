@@ -970,6 +970,6 @@ include($InstLoc.'/Applications/HRStreamer/HRStreamer.php');
 die(); } 
 
 if (!isset($_POST['search'])) {
-require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); } 
+include($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); } 
 
 ?>
