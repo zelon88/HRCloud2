@@ -85,7 +85,7 @@ document.getElementById("HRAIMini").submit;
 if ($ShowHRAI == '1') {
   $HRAIHeight = '185'; }
 if ($ShowHRAI !== '1') {
-  $HRAIHeight = '5'; } ?>
+  $HRAIHeight = '80'; } ?>
 <script>
 ;(function($){
     $(document).ready(function(){

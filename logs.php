@@ -19,8 +19,7 @@ $UserID = get_current_user_id();
 $user_ID = get_current_user_id();
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-   ?>
+$SesLogDir = $LogLoc.'/'.$Date; ?>
 <div id="nav" align="center">
     <div class="nav">
       <ul>
@@ -40,37 +39,43 @@ $SesLogDir = $LogLoc.'/'.$Date;
 </script>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:800px;">
-<div id='OptionsDiv' style="float: left; ">
-  <br>
-  <p name='button' class="button" id='button' style="float: left; ">&#x2699;</p>
-  <br>
-  <br>
-  <p name='button' class="button" style="float: left; " id='button'>+</p>
-</div>
-<div id="HRAIDiv" style="float: right; ">
-  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="745" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+<?php if ($ShowHRAI == '1') {  ?>
+<div id="HRAIDiv" style="float: center; ">
+  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
   <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
   <input type="hidden" name="display_name" value="<?php echo $display_name;?>">
   <?php if (!isset($input)) {
     $input = ''; } ?>
+  <div id='HRAIButtons1' name='HRAIButtons1' style="margin-left:15%;">
+  <button id='button1' name='button1' class="button" style="float: left; display: block;" onclick="toggle_visibility('button2'); toggle_visibility('button1'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
+  <button id='button2' name='button2' class="button" style="float: left; display: none;" onclick="toggle_visibility('button2'); toggle_visibility('button1'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
+  </div>
+  <div id='HRAIButtons2' name='HRAIButtons2' style="margin-right:15%;">
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>">
-  <input id='submitHRAI' type="submit" value="Hello HRAI"></form></div>
+  <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
+  </div>
+</div>
 <script type="text/javascript">
-document.getElementById("HRAIMini").submit();
+document.getElementById("HRAIMini").submit;
 </script>
-
+<?php } ?>
 <div id="logsContentsDiv" align='center'>
   <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="logsContents" style="min-height:350px; max-height:950px;" width="800" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
+<?php 
+if ($ShowHRAI == '1') {
+  $HRAIHeight = '185'; }
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '80'; } ?>
 <script>
 ;(function($){
   //Resizes the div to the remaining page size.
     $(document).ready(function(){
-        $('#logsContents').height( $(window).height() - 185 );
+        $('#logsContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
         $(window).resize(function(){
-            $('#logsContents').height( $(this).height() - 185 );
+            $('#logsContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
         });
     });
 })(jQuery);
