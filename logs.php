@@ -6,20 +6,43 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-  <?php require 'Applications/HRAI/HRAIHelper.php';
+  <?php 
+// / The follwoing code checks if the configuration file.php file exists and 
+// / terminates if it does not.
+if (!file_exists('config.php')) {
+  echo nl2br('ERROR!!! Logs19, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+  die (); }
+else {
+  require('config.php'); }
+// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
+if ($ShowHRAI == '1') {
+  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
+    echo nl2br('ERROR!!! Logs13, Cannot process the HRAI Helper file!'."\n"); }
+  else {
+    require('Applications/HRAI/HRAIHelper.php'); } }
+// / Verify that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('ERROR HRC265, WordPress was not detected on the server.'."\n"); }
-  else {
+  echo nl2br('ERROR!!! Logs26, WordPress was not detected on the server!'."\n"); 
+  die (); }
+else {
     require($WPFile); } 
 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserID = get_current_user_id();
-$user_ID = get_current_user_id();
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date; ?>
+$SesLogDir = $LogLoc.'/'.$Date;
+$CloudTemp = $InstLoc.'/DATA/';
+$CloudTempDir = $CloudTemp.$UserID;
+$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
+if (!file_exists($UserConfig)) {
+  echo nl2br('ERROR!!! Index35, User Cache file was not detected on the server!'."\n"); 
+  die (); }
+else {
+    require($UserConfig); } 
+  ?>
 <div id="nav" align="center">
     <div class="nav">
       <ul>
@@ -43,7 +66,7 @@ $SesLogDir = $LogLoc.'/'.$Date; ?>
 <div id="HRAIDiv" style="float: center; ">
   <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
-  <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
+  <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">
   <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
   <input type="hidden" name="display_name" value="<?php echo $display_name;?>">
   <?php if (!isset($input)) {

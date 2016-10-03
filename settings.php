@@ -6,18 +6,27 @@
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-  <?php require 'Applications/HRAI/HRAIHelper.php';
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('ERROR Settings12, WordPress was not detected on the server.'."\n"); }
-  else {
-    require($WPFile); } 
-
+  <?php
+// / The follwoing code checks if the configuration file.php file exists and 
+// / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('ERROR!!! Settings17, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+  echo nl2br('ERROR!!! Settings19, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
   die (); }
 else {
   require('config.php'); }
+// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
+if ($ShowHRAI == '1') {
+  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
+    echo nl2br('ERROR!!! Settings13, Cannot process the HRAI Helper file!'."\n"); }
+  else {
+    require('Applications/HRAI/HRAIHelper.php'); } }
+// / Verify that WordPress is installed.
+$WPFile = '/var/www/html/wp-load.php';
+if (!file_exists($WPFile)) {
+  echo nl2br('ERROR!!! Settings26, WordPress was not detected on the server!'."\n"); 
+  die (); }
+else {
+    require($WPFile); } 
 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
