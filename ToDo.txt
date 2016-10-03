@@ -1,8 +1,11 @@
-8/30/16
+10/2/16
 
 WHERE WE ARE...
 1, Trying to figure out why our Python for DocScan works in bach but not in PHP.
-2. Work on the Stream and Search features.
-3. Move the seslogdir from a single, central .txt file in /html to a safe place in each cloud user's directory.
+2. Work on the Stream features.
+3. Work on Colors.
+4. Work on more settings/options.
+5. Work on HRAI.
+6. Work on Help Docs.
 
 
