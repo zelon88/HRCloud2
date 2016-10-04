@@ -112,7 +112,7 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
 </select>
 <p style="float:center; padding-left:25%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p></div>
 
-<div align="center" id="loading" name="loading" style="display:none;"><p><img src="pacmansmall.gif" /></p></div>
+<div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>
   <script type="text/javascript">
     function toggle_visibility(id) {
        var e = document.getElementById(id);
