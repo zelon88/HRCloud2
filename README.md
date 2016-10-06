@@ -23,7 +23,7 @@ A WIP private Cloud Platform.
 
 - **Do all of this with complete control and 100% privacy!**
 
-- **Create your own scripts with standard Ajax or Curl formatted API's!**
+- **Create API's with standard Ajax or Curl!**
 
 - **Make your own GUI'S!!!!!**
 
