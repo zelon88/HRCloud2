@@ -3,33 +3,33 @@ A WIP private Cloud Platform.
 
 ![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_0.png)
 
-** Host your own Cloud Drive and personal assistant from home! From any device!
+**Host your own Cloud Drive and personal assistant from home! From any device!**
 
-** Upload, download, create, copy, rename and delete multiple files at once!
+**Upload, download, create, copy, rename and delete multiple files at once!**
 
-** Convert multiple files at once! Supports most popular documents, images, archives, music and more.
+**Convert multiple files at once! Supports most popular documents, images, archives, music and more.**
 
-** Create Documents (txt, doc, docx, rtf, odf, ect...) from regular images and non-OCR'd PDF's! 
+**Create Documents (txt, doc, docx, rtf, odf, ect...) from regular images and non-OCR'd PDF's! **
 
-** Rotate, resize, and convert image files!
+**Rotate, resize, and convert image files!**
 
-** Host your own media server!
+**Host your own media server!**
 
-** Excellent logging features!
+**Excellent logging features!**
 
-** Create accounts for your friends and family!
+**Create accounts for your friends and family!**
 
-** Includes HRAI, a WIP personal assistant and application-layer load balancer.
+**Includes HRAI, a WIP personal assistant and application-layer load balancer.**
 
-** Do all of this with complete control and 100% privacy! 
+**Do all of this with complete control and 100% privacy!**
 
-** Create your own scripts with standard Ajax or Curl formatted API's!
+**Create your own scripts with standard Ajax or Curl formatted API's!**
 
-** Make your own GUI'S!!!!! 
+**Make your own GUI'S!!!!!**
 
-** SUPPORT DEVELOPMENT BY WRITING SIMPLE PHP, HTML, JSCRIPT, AJAX, CURL, AND CSS!
+** SUPPORT DEVELOPMENT BY WRITING SIMPLE PHP, HTML, JSCRIPT, AJAX, CURL, AND CSS! **
 
-** [FOLLOW THE OFFICIAL DEVELOPMENT YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)
+** [FOLLOW THE OFFICIAL DEVELOPMENT YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_) **
 
 The HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere.
 
