@@ -81,6 +81,11 @@ if (isset ($_POST['user_ID'])) {
   $user_ID = $_POST['user_ID']; }
 if (isset ($_POST['sesID'])) {
   $sesID = $_POST['sesID']; }
+if (isset ($_POST['HRAIMiniGUIPost'])) {
+  $noMINICore = '1';
+  $includeMINIIframer = '1'; }
+if (!isset ($_POST['HRAIMiniGUIPost'])) {
+  $noMINICore = '1'; }
 if (isset ($_POST['inputServerIDHash'])) {
   $inputServerID = $_POST['inputServerID'];
   $inputServerIDHash = hash ('sha1',$inputServerID);
@@ -195,9 +200,8 @@ $input = strtolower ($input);
 $CoreGreetings = array('hello','hi','hey','sup',);
 
 // / Return a specific basic greeting depending on time of day.
-
 if ($user_ID == '0') {
-  echo nl2br('You are not logged in! This session is temporary! '."\r"); } 
+  echo nl2br('You are not logged in! This session is temporary! '."\r"); }
 
 // / Set time specific basic responses.
 $timeGreeting = 'Hello, ';
@@ -888,8 +892,11 @@ $input = preg_replace('/ram info/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
+
+// / Display a refresh button if the user is not logged in.
+if ($user_ID == '0') { 
+  echo nl2br ('<form action="core.php"><div align="center"><p><input type="submit" name="refresh" id="refresh" href="#" target="_parent" value="&#x21BA" class="button" onclick="toggle_visibility("loadingCommandDiv");"></p></div></form>'); }
 ?>
 </div>
-
 </body>
 </html>
