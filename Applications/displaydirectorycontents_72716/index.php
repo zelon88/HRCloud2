@@ -76,7 +76,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 ?>
 
 <body><div align="center">
-<form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+<form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
 <input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form> | 
 <input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');"> | 
 <img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
@@ -160,7 +160,7 @@ Are you sure?
 
 <div align="center" id='photoOptionsDiv' name='photoOptionsDiv' style="display:none;">
 <p>Filename: <input type="text" id='userphotofilename' name='userphotofilename' value='<?php echo $Udir.'Edited'.'_'.$Date; ?>'></p>
-<p><select id='photoextension' name='photoextension'>   
+<p><select id='photoextension' name='photoextension'>
   <option value="jpg">Jpg</option>
   <option value="bmp">Bmp</option>
   <option value="png">Png</option>
