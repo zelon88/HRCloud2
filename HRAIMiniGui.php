@@ -11,13 +11,17 @@
 // / HRCloud2, although this file provides an example of a simple HTML API call to an HRAI node.
 if (!isset($noMINICore)) {
   $noMINICore = '0'; }
+
+$includeMINIIframerURL = 'core.php#end';  
 if (!isset($includeMINIIframer)) {
-  $includeMINIIframer = '1'; }
+  $includeMINIIframer = '1';
+  $includeMINIIframerURL = 'Applications/HRAI/core.php#end'; }
 
 if ($noMINICore == '0') {
   require('Applications/HRAI/core.php'); }
 if ($includeMINIIframer == '1') { ?>
-  <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post">
+  <hr />
+  <form action="<?php echo $includeMINIIframerURL; ?>" id="Corefile Input" method="post">
   <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
   <input type="hidden" name="HRAIMiniGUIPost" value="1">
   <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
