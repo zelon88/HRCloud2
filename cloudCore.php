@@ -109,12 +109,15 @@ if (!file_exists($CloudTmpDir)) {
 // / Checks to see that the user is logged in.
 if ($UserID == '') {
   echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
 if ($UserID == '0') {
-  echo nl2br('ERROR!!! HRC2103, You are not logged in!'."\n"); 
+  echo nl2br('ERROR!!! HRC2103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
 if (!isset($UserID)) {
-  echo nl2br('ERROR!!! HRC2106, You are not logged in!'."\n"); 
+  echo nl2br('ERROR!!! HRC2106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
 
 // / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
