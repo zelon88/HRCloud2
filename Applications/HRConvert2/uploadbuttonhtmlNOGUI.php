@@ -9,9 +9,14 @@
   </script>
 <div>
  <div id="HRAIConvertOptions0" name="HRAIConvertOptions0" style="display: block;">
-  <p>Step 1 of 2  |  <a id="nextbutton" name="nextbutton" href="#top" target="HRAIMini" style="max-width:100px; border-style: solid; border-color: MidnightBlue;" onclick="toggle_visibility('HRAIConvertSubmit'); toggle_visibility('HRAIConvertOptions1'); toggle_visibility('HRAIConvertOptions0');">Next &#x2192</a></p>
+<?php
+if ($iser_iD < '1') {
+echo nl2br('Unfortunately I cannot convert files for you at this time. Try logging in. '."\r".' I appologize, Commander.'); }
+if ($user_ID > '0') {  ?>
+<p>Step 1 of 2  |  <a id="nextbutton" name="nextbutton" href="#top" target="HRAIMini" style="max-width:100px; border-style: solid; border-color: MidnightBlue;" onclick="toggle_visibility('HRAIConvertSubmit'); toggle_visibility('HRAIConvertOptions1'); toggle_visibility('HRAIConvertOptions0');">Next &#x2192</a></p>
   <p>Please enter a Cloud directory/filename to convert:</p>
   <p><input type="text" name='convertSelected' id='convertSelected' value=""></p> 
+<?php } ?>
   <div align="center">
   </div>
   </div>
