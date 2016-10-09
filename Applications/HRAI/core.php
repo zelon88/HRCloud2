@@ -85,7 +85,8 @@ if (isset ($_POST['HRAIMiniGUIPost'])) {
   $noMINICore = '1';
   $includeMINIIframer = '1'; }
 if (!isset ($_POST['HRAIMiniGUIPost'])) {
-  $noMINICore = '1'; }
+  $noMINICore = '1'; 
+  $includeMINIIFramer = '0'; }
 if (isset ($_POST['inputServerIDHash'])) {
   $inputServerID = $_POST['inputServerID'];
   $inputServerIDHash = hash ('sha1',$inputServerID);
@@ -198,6 +199,7 @@ $input = strtolower ($input);
 <div id="end"></div>
 <?php
 $CoreGreetings = array('hello','hi','hey','sup',);
+$BasicTimeofDay = array('moirning','noon','afternoon','evening','night');
 
 // / Return a specific basic greeting depending on time of day.
 if ($user_ID == '0') {
@@ -205,67 +207,100 @@ if ($user_ID == '0') {
 
 // / Set time specific basic responses.
 $timeGreeting = 'Hello, ';
-if ($input)
-if (date("H") > '17'){
-  if (preg_match('/good morning/',$input)) { 
-    echo nl2br('It is, Commander! Thank you.'."\r"); 
-    $input = preg_replace('/good morning/','',$input);
-    $input = str_replace('good morning','',$input); }
-  if (preg_match('/good afternoon/',$input)) {
-    echo nl2br('It\'s only '.$hour.', Commander.'."\r"); 
-    $input = preg_replace('/good afternoon/','',$input);
-    $input = str_replace('good afternoon','',$input); }
-  if (preg_match('/good day/',$input)) {
-    echo nl2br('It\'s only '.$hour.', Commander.'."\r");  
-    $input = preg_replace('/good day/','',$input);
-    $input = str_replace('good day ','',$input); }
-  if (preg_match('/good evening/',$input)) {
-    echo nl2br('It\'s only '.$hour.', Commander.'."\r"); 
-    $input = preg_replace('/good evening/','',$input);
-    $input = str_replace('good evening','',$input); }
-  $timeGreeting = 'Good morning, '; }
-if (date("H") > '11' && date("H") < '18'){
-  if (preg_match('/good  afternoon/',$input)) {
-    echo nl2br('It has been so far, Commander! Thank you.'."\r"); 
-    $input = preg_replace('/good afternoon/','',$input);
-    $input = str_replace('good afternoon','',$input); }
-  if (preg_match('/good day/',$input)) {
-    echo nl2br('It has been so far, Commander! Thank you.'."\r"); 
-    $input = preg_replace('/good day/','',$input);
-    $input = str_replace('good day ','',$input); }
-  if (preg_match('/good morning/',$input)) {
-    echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-    $input = preg_replace('/good morning/','',$input);
-    $input = str_replace('good morning','',$input); }
-  if (preg_match('/good evening/',$input)) {
-    echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-    $input = preg_replace('/good evening/','',$input);
-    $input = str_replace('good evening','',$input); }
-  $timeGreeting = 'Good afternoon, '; }
-if (date("H") < '12'){
-  if (preg_match('/good evening/',$input)){
-    echo nl2br('Yes, Commander. It has been. Thank you.'."\r"); 
-    $input = preg_replace('/good evening/','',$input);
-    $input = str_replace('good evening','',$input); }
-  if (preg_match('/good morning/',$input)){
-    echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-    $input = preg_replace('/good morning/','',$input);
-    $input = str_replace('good morning','',$input); }
-  if (preg_match('/good afternoon/',$input)){
-    echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-    $input = preg_replace('/good afternoon/','',$input);
-    $input = str_replace('good afternoon','',$input); }
-  if (preg_match('/good day/',$input)){
-    echo nl2br('It\'s '.$hour.', Commander.'."\r");  
-    $input = preg_replace('/good day/','',$input);
-    $input = str_replace('good day ','',$input); }
-  if (preg_match('/good night/',$input)){
-    echo nl2br('Yes, Commander. It has been. Thank you.'."\r"); 
-    $input = preg_replace('/good night/','',$input);
-    $input = str_replace('good night','',$input); }
-  $timeGreeting = 'Good evening, '; }
+$StopTime = '0';
+// / Code for modning specific responses.
+  if (date("H") <= '12' && date("H") >= '0'){
+    if (preg_match('/good morning/',$input)) { 
+      echo nl2br('Good morning, Commander!'."\r"); 
+      $input = preg_replace('/good morning/','',$input);
+      $input = str_replace('good morning','',$input); }
+    if (preg_match('/good afternoon/',$input)) {
+      echo nl2br('It\'s only '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good afternoon/','',$input);
+      $input = str_replace('good afternoon','',$input); }
+    if (preg_match('/good day/',$input)) {
+      echo nl2br('It\'s only '.$hour.', Commander.'."\r");  
+      $input = preg_replace('/good day/','',$input);
+      $input = str_replace('good day ','',$input); }
+    if (preg_match('/good evening/',$input)) {
+      echo nl2br('It\'s only '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good evening/','',$input);
+      $input = str_replace('good evening','',$input); }
+    if (preg_match('/good night/',$input)) {
+      echo nl2br('Goodnight, Commander.'."\r"); 
+      $input = preg_replace('/good night/','',$input);
+      $input = str_replace('goodnight','',$input); }
+    if (preg_match('/goodnight/',$input)) { 
+      echo nl2br('Goodnight, Commander.'."\r"); 
+      $input = preg_replace('/goodnight/','',$input);
+      $input = str_replace('goodnight','',$input); }
+    $timeGreeting = 'Good morning, '; }
+// / Code for afternoon specific responses.
+if ($StopTime == '0') {
+  if (date("H") >= '11' && date("H") <= '20'){  
+    if (preg_match('/good afternoon/',$input)) {
+      echo nl2br('It has been so far, Commander!'."\r"); 
+      $input = preg_replace('/good afternoon/','',$input);
+      $input = str_replace('good afternoon','',$input); }
+    if (preg_match('/good day/',$input)) {
+      echo nl2br('It has been so far, Commander!'."\r"); 
+      $input = preg_replace('/good day/','',$input);
+      $input = str_replace('good day ','',$input); }
+    if (preg_match('/good morning/',$input)) {
+      echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good morning/','',$input);
+      $input = str_replace('good morning','',$input); }
+    if (preg_match('/good evening/',$input)) {
+      echo nl2br('It\'s still only '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good evening/','',$input);
+      $input = str_replace('good evening','',$input); }
+    if (preg_match('/good night/',$input)) {
+      echo nl2br('Goodnight, although it\'s only '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good night/','',$input);
+      $input = str_replace('good night','',$input); }
+    if (preg_match('/goodnight/',$input)) {
+      echo nl2br('Goodnight, although it\'s only '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/goodnight/','',$input);
+      $input = str_replace('goodnight','',$input); }
+    $timeGreeting = 'Good afternoon, '; 
+    $StopTime++; } }
+// / Code for evening specific responses.
+if ($StopTime == '0') {
+  if (date("H") >= '20'){
+    if (preg_match('/good evening/',$input)){
+      echo nl2br('Yes, Commander. It has been.'."\r"); 
+      $input = preg_replace('/good evening/','',$input);
+      $input = str_replace('good evening','',$input); }
+    if (date("H") >= '0' && date("H") <= '12') {
+      if (preg_match('/good morning/',$input)){
+        echo nl2br('Yes, Commander. It has been.'."\r"); 
+        $input = preg_replace('/good morning/','',$input);
+        $input = str_replace('good morning','',$input); } }
+    if (date("H") > '12') {
+      if (preg_match('/good morning/',$input)){
+        echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
+        $input = preg_replace('/good morning/','',$input);
+        $input = str_replace('good morning','',$input); } }
+    if (preg_match('/good afternoon/',$input)){
+      echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good afternoon/','',$input);
+      $input = str_replace('good afternoon','',$input); }
+    if (preg_match('/good day/',$input)){
+      echo nl2br('It\'s '.$hour.', Commander.'."\r");  
+      $input = preg_replace('/good day/','',$input);
+      $input = str_replace('good day ','',$input); }
+    if (preg_match('/good night/',$input)){
+      echo nl2br('Yes, it was. Goodnight, Commander.'."\r"); 
+      $input = preg_replace('/good night/','',$input);
+      $input = str_replace('good night','',$input); }
+    if (preg_match('/goodnight/',$input)){
+      echo nl2br('Yes, it was. Goodnight, Commander.'."\r"); 
+      $input = preg_replace('/goodnight/','',$input);
+      $input = str_replace('goodnight','',$input); }
+    $timeGreeting = 'Good evening, '; 
+    $StopTime++; } }
 
-// / First we respond to basic greetings.
+// /a First we respond to basic greetings.
 if ($input == 'hello'){
   echo nl2br($timeGreeting.'Commander! '."\r"); 
 $input = preg_replace('/hello/','',$input);
@@ -732,7 +767,8 @@ $input = rtrim($input);
 if (preg_match('/what/', $input) && preg_match('/cpu/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
-$input = preg_replace('/what is your cpu/',' ',$input); }
+$input = preg_replace('/what/',' ',$input);
+$input = preg_replace('/cpu/',' ',$input); }
 if (preg_match('/what/', $input) && preg_match('/processor/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
@@ -896,6 +932,10 @@ $input = rtrim($input);
 // / Display a refresh button if the user is not logged in.
 if ($user_ID == '0') { 
   echo nl2br ('<form action="core.php"><div align="center"><p><input type="submit" name="refresh" id="refresh" href="#" target="_parent" value="&#x21BA" class="button" onclick="toggle_visibility("loadingCommandDiv");"></p></div></form>'); }
+
+if (isset($includeMINIIframer)) {
+  include_once('/var/www/html/HRProprietary/HRCloud2/HRAIMiniGui.php'); }
+
 ?>
 </div>
 </body>
