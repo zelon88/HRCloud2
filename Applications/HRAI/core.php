@@ -209,7 +209,7 @@ if ($user_ID == '0') {
 $timeGreeting = 'Hello, ';
 $StopTime = '0';
 // / Code for modning specific responses.
-  if (date("H") <= '12' && date("H") >= '0'){
+  if (date("H") <= '12' && date("H") > '3'){
     if (preg_match('/good morning/',$input)) { 
       echo nl2br('Good morning, Commander!'."\r"); 
       $input = preg_replace('/good morning/','',$input);
@@ -266,17 +266,17 @@ if ($StopTime == '0') {
     $StopTime++; } }
 // / Code for evening specific responses.
 if ($StopTime == '0') {
-  if (date("H") >= '20'){
+  if (date("H") >= '20' or date("H") <= '3') {
     if (preg_match('/good evening/',$input)){
       echo nl2br('Yes, Commander. It has been.'."\r"); 
       $input = preg_replace('/good evening/','',$input);
       $input = str_replace('good evening','',$input); }
-    if (date("H") >= '0' && date("H") <= '12') {
+    if (date("H") > '3' && date("H") <= '12') {
       if (preg_match('/good morning/',$input)){
         echo nl2br('Yes, Commander. It has been.'."\r"); 
         $input = preg_replace('/good morning/','',$input);
         $input = str_replace('good morning','',$input); } }
-    if (date("H") > '12') {
+    if (date("H") <= '3') {
       if (preg_match('/good morning/',$input)){
         echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
         $input = preg_replace('/good morning/','',$input);
@@ -429,12 +429,16 @@ $input = preg_replace('/whats your serverid/',' ',$input);}
 if (preg_match('/what is your serverid/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
-$input = preg_replace('/what is your server id/',' ',$input);} 
+$input = preg_replace('/whats your serverid/',' ',$input);} 
 if (preg_match('/whats your server id/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/whats your server id/',' ',$input);} 
 if (preg_match('/what is your serverid/', $input)) {
+$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+include $CMDsyncfile; 
+$input = preg_replace('/what is your serverid/',' ',$input);} 
+if (preg_match('/what is your server id/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/what is your server id/',' ',$input);} 
