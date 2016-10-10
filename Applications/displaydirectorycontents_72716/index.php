@@ -13,9 +13,26 @@
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>Cloud Contents</title>
-</head>
+<?php
+if (!file_exists($UserConfig)) {
+  echo nl2br('</head>ERROR!!! Index35, User Cache file was not detected on the server!'."\n"); 
+  die (); }
+else {
+    require($UserConfig); } 
+if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+  $ColorScheme = '1'; }
+if ($ColorScheme == '1') {
+  echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/style.css">'); }
+if ($ColorScheme == '2') {
+  echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleRED.css">'); }
+if ($ColorScheme == '3') {
+  echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
+if ($ColorScheme == '4') {
+  echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleGREY.css">'); }
+if ($ColorScheme == '5') {
+  echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
+?>
     <script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-    <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
     <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
     <script type="text/javascript">
     function Clear() {    
@@ -29,7 +46,7 @@
     function goBack() {
       window.history.back(); }
     </script>
-
+</head>
 <body>
 <div id="container">
 	<table class="sortable">
