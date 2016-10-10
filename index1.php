@@ -2,28 +2,24 @@
 <html>
 <head>
 <title>HRCloud2 | Home </title>
-<link rel="stylesheet" type="text/css" href="style.css">
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-</head>
-<body>
-  <?php 
+<?php 
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+  echo nl2br('<head><title>HRCloud2 | Home - ERROR</title></head>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
   die (); }
 else {
   require('config.php'); }
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n"); }
+    echo nl2br('<head><title>HRCloud2 | Home - ERROR Index13</title></head>ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n"); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
 // / Verify that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! Index26, WordPress was not detected on the server!'."\n"); 
+  echo nl2br('<head><title>HRCloud2 | Home - ERROR Index26</title></head>ERROR!!! Index26, WordPress was not detected on the server!'."\n"); 
   die (); }
 else {
     require($WPFile); } 
@@ -32,11 +28,28 @@ $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  echo nl2br('ERROR!!! Index35, User Cache file was not detected on the server!'."\n"); 
+  echo nl2br('<head><title>HRCloud2 | Home - ERROR Index35</title></head>ERROR!!! Index35, User Cache file was not detected on the server!'."\n"); 
   die (); }
 else {
     require($UserConfig); } 
-  ?>
+
+if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+  $ColorScheme = '1'; }
+if ($ColorScheme == '1') {
+  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
+if ($ColorScheme == '2') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
+if ($ColorScheme == '3') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
+if ($ColorScheme == '4') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
+if ($ColorScheme == '5') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); }
+
+?>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+</head>
+<body>
 <div id="nav" align="center">
     <div class="nav">
       <ul>
@@ -58,7 +71,7 @@ else {
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:810px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
-  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
+  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="800" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
   <div id='HRAIButtons1' name='HRAIButtons1' style="margin-left:15%;">
   <button id='button0' name='button0' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button1'); toggle_visibility('button2'); document.getElementById('HRAIMini').style.height = '0px';" >-</button>
   <button id='button1' name='button1' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button1'); toggle_visibility('button2'); document.getElementById('HRAIMini').style.height = '75px';" >+</button>

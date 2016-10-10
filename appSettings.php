@@ -58,13 +58,9 @@ if ($ColorScheme == '2') {
 if ($ColorScheme == '3') {
   $CSEcho = 'Green'; } 
 if ($ColorScheme == '4') {
-  $CSEcho = 'Purple'; }
-if ($ColorScheme == '5') {
   $CSEcho = 'Grey'; }
-if ($ColorScheme == '6') {
+if ($ColorScheme == '5') {
   $CSEcho = 'Black'; }
-if ($ColorScheme == '7') {
-  $CSEcho = 'Black/Red'; }
 
 if ($VirusScan == '1') {
   $VSEcho = 'Enabled'; }
@@ -90,11 +86,10 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
   <option value="1">Blue (Default)</option>
   <option value="2">Red</option>
-  <option value="3">Purple</option>
-  <option value="4">Green</option>
-  <option value="5">Grey</option>
-  <option value="6">Black</option>
-  <option value="7">Black</option>
+  <option value="3">Green</option>
+  <option value="4">Grey</option>
+  <option value="5">Black</option>
+
 </select></p>
 
 <p style="padding-left:15px;"><strong>2.</strong> HRAI Load Balancing Personal Assistant: </p>
