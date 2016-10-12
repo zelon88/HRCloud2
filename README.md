@@ -97,4 +97,9 @@ FUTURE CORE FEATURES
 -More security!
 
 -Settings page!
+
 ![HRClou2](https://raw.githubusercontent.com/zelon88/HRCloud2/384597dc81e6b1fc7c36d89fd7b147cc7ef42b2e/Screenshots/Screenshot_HRCloud2_10_11_16_18.png)
+
+![HRClou2](https://raw.githubusercontent.com/zelon88/HRCloud2/384597dc81e6b1fc7c36d89fd7b147cc7ef42b2e/Screenshots/Screenshot_HRCloud2_10_11_16_14.png)
+
+![HRClou2](https://raw.githubusercontent.com/zelon88/HRCloud2/384597dc81e6b1fc7c36d89fd7b147cc7ef42b2e/Screenshots/Screenshot_HRCloud2_10_11_16_16.png)
