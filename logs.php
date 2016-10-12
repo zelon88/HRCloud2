@@ -49,7 +49,7 @@ else {
         <li class="Cloud"><a href="index1.php">Cloud</a></li>
         <li class="Settings"><a href="settings.php"> Settings</a></li>
         <li class="Logs"><a href="logs.php">Logs</a></li>
-        <li class="Help"><a href="">Help</a></li>
+        <li class="Help"><a href="help.php">Help</a></li>
       </ul>
     </div>
 <script type="text/javascript">

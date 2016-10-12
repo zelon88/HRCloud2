@@ -1,43 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<title>HRCloud2 | Application Settings </title>
-<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<?php 
-$WPFile = '/var/www/html/wp-load.php';
-// / Verify that WordPress is installed.
-if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! HRC2AppSettings16, WordPress was not detected on the server.'."\n"); }
+   <meta charset="UTF-8">
+   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
+   <title>HRCLoud2 | Application Settings</title>
+<?php
+if (!file_exists('config.php')) {
+  echo nl2br('<head><title>HRCloud2 | Settings - ERROR AS9</title></head>ERROR!!! AS9, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+  die (); }
+else {
+  require('config.php'); }
+// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
+if ($ShowHRAI == '1') {
+  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
+    echo nl2br('<head><title>HRCloud2 | Settings - ERROR AS16</title></head>ERROR!!! AS16, Cannot process the HRAI Helper file!'."\n"); }
   else {
+    require('Applications/HRAI/HRAIHelper.php'); } }
+// / Verify that WordPress is installed.
+$WPFile = '/var/www/html/wp-load.php';
+if (!file_exists($WPFile)) {
+  echo nl2br('<head><title>HRCloud2 | Settings - ERROR AS22</title></head>ERROR!!! AS22, WordPress was not detected on the server!'."\n"); 
+  die (); }
+else {
     require($WPFile); } 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserID = get_current_user_id();
-require("config.php");
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-include($UserConfig);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = ($SesLogDir.'/'.$Date.'.txt');
-$CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
-if (!file_exists($CloudLoc)) {
-  echo ('ERROR!!! HRC2AppSettings27, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
-  die(); }
-if (!file_exists($CloudDir)) {
-  mkdir($CloudDir, 0755); }
-if (!file_exists($CloudTempDir)) {
-  mkdir($CloudTempDir, 0755); }
-
+$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
+// / appSettings.php requires log locations. The following code creates the log files and directories if they
+// / do not exist (if cloudCore.php hasn't made them yet).
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-
 if (!file_exists($LogLoc)) {
 $JICInstallLogs = @mkdir($LogLoc, 0755); 
   foreach ($LogInstallFiles as $LIF) {
@@ -50,7 +50,25 @@ $JICInstallLogs = @mkdir($SesLogDir, 0755);
     if ($LIF1 == '.' or $LIF1 == '..') continue;
       if (!file_exists($LIF1)) {
       copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
-
+// / Load the user cache file;
+if (!file_exists($UserConfig)) {
+  echo nl2br('</head>ERROR!!! AS27, User Cache file was not detected on the server!'."\n"); 
+  die (); }
+else {
+    require($UserConfig); } 
+if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+  $ColorScheme = '1'; }
+if ($ColorScheme == '1') {
+  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
+if ($ColorScheme == '2') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
+if ($ColorScheme == '3') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
+if ($ColorScheme == '4') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
+if ($ColorScheme == '5') {
+  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
+// / Prepare the echo value for the color input field.
 if ($ColorScheme == '1') {
   $CSEcho = 'Blue (Default)'; }
 if ($ColorScheme == '2') {
@@ -61,23 +79,38 @@ if ($ColorScheme == '4') {
   $CSEcho = 'Grey'; }
 if ($ColorScheme == '5') {
   $CSEcho = 'Black'; }
-
+// / Prepare the echo value for the virus input field.
 if ($VirusScan == '1') {
   $VSEcho = 'Enabled'; }
 if ($VirusScan !== '1') {
   $VSEcho = 'Disabled'; }
-
+// / Prepare the echo value for the show HRAI input field.
 if ($ShowHRAI == '1') {
   $SHRAIEcho = 'Enabled'; }
 if ($ShowHRAI !== '1') {
   $SHRAIEcho = 'Disabled'; }
 
 $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
+
 ?>
+    <script type="text/javascript">
+    function Clear() {    
+      document.getElementById("search").value= ""; }
+    function toggle_visibility(id) {
+      var e = document.getElementById(id);
+      if(e.style.display == 'block')
+         e.style.display = 'none';
+      else
+         e.style.display = 'block'; }
+    function goBack() {
+      window.history.back(); }
+    </script>
+</head>
 <body>
-  <br>
-  <div align='center'><h2>HRCloud2 Settings</h2></div>
-  <hr />
+<div align="center">
+<h3>HRCloud2 Settings</h3>
+<hr />
+</div>
 <div align='left'>
 <form action="SAVEappSettings.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
@@ -132,7 +165,6 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
 <div id='end' name='end' class='end'>
 <a>NOTE: Changes may take several seconds (or page refreshes) to take effect!</a>
 </div>
-<br>
 <hr />
 </body>
 </html>

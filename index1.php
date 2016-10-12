@@ -48,17 +48,6 @@ if ($ColorScheme == '5') {
 
 ?>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-</head>
-<body>
-<div id="nav" align="center">
-    <div class="nav">
-      <ul>
-        <li class="Cloud"><a href="index1.php">Cloud</a></li>
-        <li class="Settings"><a href="settings.php"> Settings</a></li>
-        <li class="Logs"><a href="logs.php">Logs</a></li>
-        <li class="Help"><a href="">Help</a></li>
-      </ul>
-    </div>
 <script type="text/javascript">
     function toggle_visibility(id) {
        var e = document.getElementById(id);
@@ -67,17 +56,29 @@ if ($ColorScheme == '5') {
        else
           e.style.display = 'block'; }
 </script>
+</head>
+<body>
+<div id="nav" align="center">
+    <div class="nav">
+      <ul>
+        <li class="Cloud"><a href="index1.php">Cloud</a></li>
+        <li class="Settings"><a href="settings.php"> Settings</a></li>
+        <li class="Logs"><a href="logs.php">Logs</a></li>
+        <li class="Help"><a href="help.php">Help</a></li>
+      </ul>
+    </div>
 
-<div id="centerdiv" align='center' style="margin: 0 auto; max-width:810px;">
+<div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
-  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="800" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
+  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
   <div id='HRAIButtons1' name='HRAIButtons1' style="margin-left:15%;">
   <button id='button0' name='button0' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button1'); toggle_visibility('button2'); document.getElementById('HRAIMini').style.height = '0px';" >-</button>
   <button id='button1' name='button1' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button1'); toggle_visibility('button2'); document.getElementById('HRAIMini').style.height = '75px';" >+</button>
   <button id='button2' name='button2' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
   <button id='button3' name='button3' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
   <button id='button4' name='button4' class="button" style="float: left; display: block;" onclick="window.open('HRAIMiniGui.php','HRAI','resizable,height=400,width=650'); return false;">++</button>
+  <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
   </div>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
@@ -95,7 +96,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="cloudContentsDiv" align='center'>
-  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="810" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {
