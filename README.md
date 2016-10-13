@@ -1,8 +1,11 @@
 # HRCloud2
 A WIP private Cloud Platform.
 
+# Screenshots
 https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2_10_11_16_18.png
 https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2_9-8-16_12.png
+
+# A Secure, Private Cloud Storage Platform for your Home Server!
 
 The HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere.
 
@@ -11,7 +14,7 @@ Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to 
 HRCloud2 DOES NOT directly interact with, or add data to, a database during operation. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
 
 
-CURRENT CORE FEATURES
+# CURRENT CORE FEATURES
 
 -HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory and are cleaned up every 6 hours. 
 
@@ -33,23 +36,17 @@ CURRENT CORE FEATURES
 
 -Delete multiple files.
 
+-User Selectable Skins & Color Schemes.
+
 -Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
   -Accepts some plain speech commands. Go wild and try grammar, punctuation, multiple commands per line ect....
   
 -Keeps excellent logs of everything it does.
 
 
-FUTURE CORE FEATURES
+# FUTURE CORE FEATURES
 
--DocumentScanner similar to Microsoft Office Lens is currently 99% complete, but due to permissions problems isn't ready yet.
+-Stream & Playlist features. (under development)
 
--Create/Move files between directories.
 
--Stream features.
-
--Quickie make-pdf button.
-
--Search feature.
-
--Settings page.
 
