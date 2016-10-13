@@ -6,20 +6,20 @@
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('<head><title>HRCloud2 | Home - ERROR</title></head>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+  echo nl2br('</head><body>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('config.php'); }
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('<head><title>HRCloud2 | Home - ERROR Index13</title></head>ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n"); }
+    echo nl2br('</head><body>ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
 // / Verify that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('<head><title>HRCloud2 | Home - ERROR Index26</title></head>ERROR!!! Index26, WordPress was not detected on the server!'."\n"); 
+  echo nl2br('</head><body>ERROR!!! Index26, WordPress was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($WPFile); } 
@@ -28,7 +28,7 @@ $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  echo nl2br('<head><title>HRCloud2 | Home - ERROR Index35</title></head>ERROR!!! Index35, User Cache file was not detected on the server!'."\n"); 
+  echo nl2br('</head><body>ERROR!!! Index35, User Cache file was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($UserConfig); } 
@@ -55,6 +55,8 @@ if ($ColorScheme == '5') {
           e.style.display = 'none';
        else
           e.style.display = 'block'; }
+    function Clear() {    
+      document.getElementById("input").value= ""; }
 </script>
 </head>
 <body>
@@ -87,7 +89,7 @@ if ($ColorScheme == '5') {
   <?php if (!isset($input)) {
     $input = ''; } ?>
   <div id='HRAIButtons2' name='HRAIButtons2' style="margin-right:15%;">
-  <input type="text" name="input" id="input"  value="<?php echo $input; ?>">
+  <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="Clear();">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
   </div>
 </div>

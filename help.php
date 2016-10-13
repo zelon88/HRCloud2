@@ -6,20 +6,20 @@
    <title>HRCloud2 | Settings</title>
 <?php
 if (!file_exists('config.php')) {
-  echo nl2br('<head><title>HRCloud2 | Settings - ERROR Settings9</title></head>ERROR!!! Settings9, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+  echo nl2br('</head><body>ERROR!!! Settings9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('config.php'); }
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('<head><title>HRCloud2 | Settings - ERROR Settings16</title></head>ERROR!!! Settings16, Cannot process the HRAI Helper file!'."\n"); }
+    echo nl2br('</head><body>ERROR!!! Settings16, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
 // / Verify that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('<head><title>HRCloud2 | Settings - ERROR Settings22</title></head>ERROR!!! Settings22, WordPress was not detected on the server!'."\n"); 
+  echo nl2br('</head><body>ERROR!!! Settings22, WordPress was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($WPFile); } 
@@ -33,7 +33,7 @@ $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  echo nl2br('</head>ERROR!!! Settings27, User Cache file was not detected on the server!'."\n"); 
+  echo nl2br('</head><body>ERROR!!! Settings27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($UserConfig); } 
@@ -61,6 +61,8 @@ if ($ColorScheme == '5') {
          e.style.display = 'block'; }
     function goBack() {
       window.history.back(); }
+    function Clear() {    
+      document.getElementById("input").value= ""; }
     </script>
 </head>
 <body>
@@ -83,7 +85,7 @@ if ($ColorScheme == '5') {
   <button id='button2' name='button2' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
   <button id='button3' name='button3' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
   <button id='button4' name='button4' class="button" style="float: left; display: block;" onclick="window.open('HRAIMiniGui.php','HRAI','resizable,height=400,width=650'); return false;">++</button>
-  <form action="settings.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
+  <form action="help.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
   </div>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
@@ -92,7 +94,7 @@ if ($ColorScheme == '5') {
   <?php if (!isset($input)) {
     $input = ''; } ?>
   <div id='HRAIButtons2' name='HRAIButtons2' style="margin-right:15%;">
-  <input type="text" name="input" id="input"  value="<?php echo $input; ?>">
+  <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="Clear();">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
   </div>
 </div>

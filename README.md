@@ -1,36 +1,6 @@
 # HRCloud2
 A WIP private Cloud Platform.
 
-![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_0.png)
-
-- **Host your own Cloud Drive and personal assistant from home! From any device!**
-
-- **Upload, download, create, copy, rename and delete multiple files at once!**
-
-- **Convert multiple files at once! Supports most popular documents, images, archives, music and more.**
-
-- **Create Documents (txt, doc, docx, rtf, odf, ect...) from regular images and non-OCR'd PDF's!**
-
-- **Rotate, resize, and convert image files!**
-
-- **Host your own media server!**
-
-- **Excellent logging features!**
-
-- **Create accounts for your friends and family!**
-
-- **Includes HRAI, a WIP personal assistant and application-layer load balancer.**
-
-- **Do all of this with complete control and 100% privacy!**
-
-- **Create API's with standard Ajax or Curl!**
-
-- **Make your own GUI'S!!!!!**
-
-- **SUPPORT DEVELOPMENT BY WRITING SIMPLE PHP, HTML, JSCRIPT, AJAX, CURL, AND CSS!**
-
-- **[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
-
 The HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere.
 
 Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to be installed. THIS IS NOT A WORDPRESS PLUGIN!!! WordPress is only required to create and manage user-accounts.
@@ -50,56 +20,33 @@ CURRENT CORE FEATURES
 
 -Can archive and dearchive appropriate filetypes (various dependencies to enable support).
 
--Sophisticated process for handling & converting image and pdf files to documents, with or without OCR!
+-Can convert document, image, audio, and archive filetypes to other filetypes (various dependencies to enable support).
 
--Can convert almost anything to almost anything else. Including:
+-Image editing features.
 
-   1. pdf TO & FROM jpg/bmp/png/doc/txt/rtf/odf
+-Copy multiple files.
 
-   2. doc/docx/txt/rtf/pdf TO & FROM doc/docx/txt/rtf/pdf
+-Rename multiple files.
 
-   3. xls/xls/odf TO  pdf/ods/odf/xls/xls
-
-   4. jpg/bmp/png/gif/pdf TO jpg/bmp/png/gif/pdf/doc/txt/rtf/odf
-
-   5. avi/wav/wma/mp3/mp4/aac/m4a TO & FROM avi/wav/wma/mp3/mp4/aac/m4a
-
--Image editing features. Including:
-
-   1. Resize
-
-   2. Rotate
-
-   3. Convert
-
--Copy / Rename / Delete multiple files at once.
-
--Create / Move files between directories.
-
--Media Streaming features.
-
--Search feature.
+-Delete multiple files.
 
 -Includes zelon88's HRAI project as a plugin-ready personal assistant (and future load balancer for networked servers).
-  
--Accepts some plain speech commands. Go wild and try grammar, punctuation, multiple commands per line ect....
+  -Accepts some plain speech commands. Go wild and try grammar, punctuation, multiple commands per line ect....
   
 -Keeps excellent logs of everything it does.
 
+
 FUTURE CORE FEATURES
 
--Help Docs!
+-DocumentScanner similar to Microsoft Office Lens is currently 99% complete, but due to permissions problems isn't ready yet.
 
--More HRAI features!
+-Create/Move files between directories.
 
--Smoother GUI!
+-Stream features.
 
--More security!
+-Quickie make-pdf button.
 
--Settings page!
+-Search feature.
 
-![HRClou2](https://raw.githubusercontent.com/zelon88/HRCloud2/384597dc81e6b1fc7c36d89fd7b147cc7ef42b2e/Screenshots/Screenshot_HRCloud2_10_11_16_18.png)
+-Settings page.
 
-![HRClou2](https://raw.githubusercontent.com/zelon88/HRCloud2/384597dc81e6b1fc7c36d89fd7b147cc7ef42b2e/Screenshots/Screenshot_HRCloud2_10_11_16_14.png)
-
-![HRClou2](https://raw.githubusercontent.com/zelon88/HRCloud2/384597dc81e6b1fc7c36d89fd7b147cc7ef42b2e/Screenshots/Screenshot_HRCloud2_10_11_16_16.png)
