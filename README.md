@@ -2,7 +2,7 @@
 **[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
 # HRCloud2
-A WIP private Cloud Platform.
+A WIP home scale private Cloud Platform.
 
 # Screenshots
 ![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2_10_11_16_18.png)	
@@ -10,9 +10,9 @@ A WIP private Cloud Platform.
 
 # A Secure, Private Cloud Storage Platform for your Home Server!
 
-HRCloud2 is a personal Cloud Platform that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere.
+HRCloud2 is a personal Cloud Platform similar to ownCloud but with far greater capability that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere. 
 
-Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to be installed. THIS IS NOT A WORDPRESS PLUGIN!!! WordPress is only required to create and manage user-accounts.
+Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to be installed. THIS IS NOT A WORDPRESS PLUGIN!!! WordPress is only required to create and manage user-accounts. 
 
 HRCloud2 DOES NOT directly interact with, or add data to, a database during operation. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
 
