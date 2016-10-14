@@ -109,7 +109,7 @@ if ($ColorScheme == '5') {
 <form action="https://github.com/zelon88/HRCloud2/wiki/Dependency-Requirements" target="_parent" method"post">
 <p><input type="submit" id="dependencybutton" name="submitsmall" value="Dependency Info"></input></p></form>
 <form action="https://github.com/zelon88/HRCloud2/wiki/Technical-Description-and-Breakdown" target="_parent" method"post">
-<p><input type="submit" id="techbreakdownbutton" name="submitsmall" value="Technical Breakdown"></input></p></form>
+<p><input type="submit" id="techbreakdownbutton" name="submitsmall" value="Technical Info"></input></p></form>
 <form action="https://github.com/zelon88/HRCloud2/wiki/FAQ" target="_parent" method"post">
 <p><input type="submit" id="faqbutton" name="submitsmall" value="FAQ"></input></p></form>
 <form action="https://github.com/zelon88/HRCloud2/issues/new" target="_parent" method"post">

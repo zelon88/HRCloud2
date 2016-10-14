@@ -109,7 +109,7 @@ if (isset($_POST['Save'])) {
 echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n"); 
 ?><div align="center">   
 <br>
-<button id='button' name='button' onclick="goBack()">Go Back</button>
+<form target ="_parent" action="index1.php" method="get"><button id='button' name='home' value="1">Cloud Home</button></form>
 <br>
 </div>
 <?php }

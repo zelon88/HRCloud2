@@ -120,7 +120,7 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
   <option value="1">Blue (Default)</option>
   <option value="2">Red</option>
   <option value="3">Green</option>
-  <option value="4">Grey</option>
+  <?php // ADD NUMBER 4 NEXT!!!!! ?>
   <option value="5">Black</option>
 
 </select></p>
