@@ -25,7 +25,8 @@ else {
     require($WPFile); } 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
-$UserID = get_current_user_id();
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
@@ -49,10 +50,11 @@ if ($ColorScheme == '4') {
   echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
+if ($UserIDRAW == '0' or $UserIDRAW == '') {
+  echo nl2br('</head><body>ERROR!!! Logs53, You are not logged in!'."\n".'</body></html>'); 
+  die (); }
 ?>
     <script type="text/javascript">
-    function Clear() {    
-      document.getElementById("search").value= ""; }
     function toggle_visibility(id) {
       var e = document.getElementById(id);
       if(e.style.display == 'block')
@@ -61,8 +63,10 @@ if ($ColorScheme == '5') {
          e.style.display = 'block'; }
     function goBack() {
       window.history.back(); }
-    function Clear() {    
+    function ClearInput() {    
       document.getElementById("input").value= ""; }
+    function Clear() {    
+      document.getElementById("search").value= ""; }
     </script>
 </head>
 <body>
@@ -75,16 +79,6 @@ if ($ColorScheme == '5') {
         <li class="Help"><a href="help.php">Help</a></li>
       </ul>
     </div>
-<script type="text/javascript">
-    function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block'; }
-    function Clear() {    
-      document.getElementById("input").value= ""; }
-</script>
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -104,7 +98,7 @@ if ($ColorScheme == '5') {
   <?php if (!isset($input)) {
     $input = ''; } ?>
   <div id='HRAIButtons2' name='HRAIButtons2' style="margin-right:15%;">
-  <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="Clear();">
+  <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="ClearInput();">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
   </div>
 </div>
@@ -113,13 +107,13 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="logsContentsDiv" align='center'>
-  <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="logsContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="logsContents" style="min-height:450px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {
-  $HRAIHeight = '185'; }
+  $HRAIHeight = '85'; }
 if ($ShowHRAI !== '1') {
-  $HRAIHeight = '80'; } ?>
+  $HRAIHeight = '0'; } ?>
 <script>
 ;(function($){
   //Resizes the div to the remaining page size.

@@ -51,8 +51,8 @@ if (!file_exists('config.php')) {
   die (); }
 else {
   require('config.php'); }
-$WPFile = '/var/www/html/wp-load.php';
 
+$WPFile = '/var/www/html/wp-load.php';
 // / Verify that WordPress is installed.
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC243, WordPress was not detected on the server.'."\n"); }
@@ -61,7 +61,8 @@ if (!file_exists($WPFile)) {
 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
-$UserID = get_current_user_id();
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
@@ -107,15 +108,15 @@ if (!file_exists($CloudTmpDir)) {
   mkdir($CloudTmpDir, 0755); }
   
 // / Checks to see that the user is logged in.
-if ($UserID == '') {
+if ($UserIDRAW == '') {
   echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
-if ($UserID == '0') {
+if ($UserIDRAW == '0') {
   echo nl2br('ERROR!!! HRC2103, You are not logged in!'."\n");
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
-if (!isset($UserID)) {
+if (!isset($UserIDRAW)) {
   echo nl2br('ERROR!!! HRC2106, You are not logged in!'."\n");
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
@@ -141,7 +142,17 @@ if (isset ($ExternalIP)) {
   unset ($ExternalIP); } 
 
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-require ($UserConfig);
+if (!file_exists($UserConfig)) { 
+  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
+  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
+  $txt = ('Created a user config file on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+if (!file_exists($UserConfig)) { 
+  $txt = ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); }
+if (file_exists($UserConfig)) {
+require ($UserConfig); }
 
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {

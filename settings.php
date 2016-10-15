@@ -25,7 +25,8 @@ else {
     require($WPFile); } 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
-$UserID = get_current_user_id();
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
@@ -49,6 +50,9 @@ if ($ColorScheme == '4') {
   echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
+if ($UserIDRAW == '0' or $UserIDRAW == '') {
+  echo nl2br('</head><body>ERROR!!! Settings53, You are not logged in!'."\n".'</body></html>'); 
+  die (); }
 ?>
     <script type="text/javascript">
     function Clear() {    
@@ -107,7 +111,7 @@ document.getElementById("HRAIMini").submit;
 </div>
 <?php 
 if ($ShowHRAI == '1') {
-  $HRAIHeight = '185'; }
+  $HRAIHeight = '85'; }
 if ($ShowHRAI !== '1') {
   $HRAIHeight = '0'; } ?>
 <script>

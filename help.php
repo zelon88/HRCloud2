@@ -25,7 +25,8 @@ else {
     require($WPFile); } 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
-$UserID = get_current_user_id();
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
@@ -102,21 +103,21 @@ if ($ColorScheme == '5') {
 document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
-<div id="settingsContentsDiv" align='center'>
-  <iframe src="helper.php" id="settingsContents" name="settingsContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+<div id="helpContentsDiv" align='center'>
+  <iframe src="helper.php" id="helpsContents" name="helpContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {
-  $HRAIHeight = '185'; }
+  $HRAIHeight = '85'; }
 if ($ShowHRAI !== '1') {
   $HRAIHeight = '0'; } ?>
 <script>
 ;(function($){
   //Resizes the div to the remaining page size.
     $(document).ready(function(){
-        $('#settingsContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
+        $('#helpContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
         $(window).resize(function(){
-            $('#settingsContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
+            $('#helpContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
         });
     });
 })(jQuery);

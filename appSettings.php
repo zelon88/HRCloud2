@@ -25,7 +25,8 @@ else {
     require($WPFile); } 
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
-$UserID = get_current_user_id();
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
@@ -90,7 +91,7 @@ if ($ShowHRAI == '1') {
 if ($ShowHRAI !== '1') {
   $SHRAIEcho = 'Disabled'; }
 
-$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
+$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 
 ?>
     <script type="text/javascript">
@@ -163,7 +164,6 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
   <input type='submit' name='Clear' id='Clear' value='Clear Changes' style="padding: 2px; border: 1px solid black" onclick="reload();"/></p>
 
 <div id='end' name='end' class='end'>
-<a>NOTE: Changes may take several seconds (or page refreshes) to take effect!</a>
 </div>
 <hr />
 </body>

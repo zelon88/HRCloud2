@@ -16,13 +16,17 @@ if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC2SAVEAppSettings16, WordPress was not detected on the server.'."\n"); }
   else {
     require($WPFile); } 
+require("config.php");
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
-$UserID = get_current_user_id();
-require("config.php");
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
+if ($UserIDRAW == '0' or $UserIDRAW == '') {
+  echo nl2br('</head><body>ERROR!!! HRC2SAVEAppSettings24, You are not logged in!'."\n".'</body></html>'); 
+  die (); }
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  die('ERROR!!! HRC2SAVEAppSettings25, There was no user cachefile found on'.$Time.'!'); }
+  die('ERROR!!! HRC2SAVEAppSettings29, There was no user cachefile found on '.$Time.'!'); }
 include($UserConfig);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
 $LogInc = 0;
@@ -32,14 +36,14 @@ $LogFile1 = ($SesLogDir.'/'.$Date.'.TEMPVIRUSLOG.txt');
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
-$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserID);
+$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
 
 if (!isset($YUMMYSaltHash)) {
-  echo nl2br('!!! WARNING !!! HRC2SAVEAppSettings32, There was a critical security fault. Login Request Denied.'."\n"); 
+  echo nl2br('!!! WARNING !!! HRC2SAVEAppSettings43, There was a critical security fault. Login Request Denied.'."\n"); 
   die("Application was halted on $Time".'.'); }
 if ($YUMMYSaltHash !== $SaltHash) {
-  echo nl2br('!!! WARNING !!! HRC2SAVEAppSettings32, There was a critical security fault. Login Request Denied.'."\n"); 
+  echo nl2br('!!! WARNING !!! HRC2SAVEAppSettings46, There was a critical security fault. Login Request Denied.'."\n"); 
   die("Application was halted on $Time".'.'); }
 
 if (isset($_POST['Scan'])) { 
@@ -69,7 +73,7 @@ $LogFileSize3 = ($LogFileSize2 - $LogFileSize1);
 if ($LogFileSize3 > 2) {
     $ClamURL = 'DATA/'.$UserID.'/.AppLogs/'.$Date.'/'.$Date.'.txt';
   ?><br><div align="center"><?php
-  echo nl2br('!!! WARNING !!! Potentially infected files found! s40'."\n");
+  echo nl2br('!!! WARNING !!! HRC2SAVEAppSettings76, Potentially infected files found!'."\n");
   echo nl2br('HRCloud2 DID NOT remove any files. Please see the report below or 
     the logs and verify each file before continuing to use HRCloud2.'."\n");
     ?><p><a href="<?php echo $ClamURL; ?>" target="cloudContents">View logfile</a></p> 
@@ -106,7 +110,8 @@ if (isset($_POST['Save'])) {
 ?>
 <hr />
 <?php
-echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n"); 
+echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
+sleep(3); 
 ?><div align="center">   
 <br>
 <form target ="_parent" action="index1.php" method="get"><button id='button' name='home' value="1">Cloud Home</button></form>

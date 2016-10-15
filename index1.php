@@ -23,7 +23,8 @@ if (!file_exists($WPFile)) {
   die (); }
 else {
     require($WPFile); } 
-$UserID = get_current_user_id(); 
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
@@ -83,7 +84,7 @@ if ($ColorScheme == '5') {
   <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
   </div>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
-  <input type="hidden" name="user_ID" value="<?php echo $user_ID;?>">
+  <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">
   <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
   <input type="hidden" name="display_name" value="<?php echo $display_name;?>">
   <?php if (!isset($input)) {

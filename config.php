@@ -52,9 +52,9 @@ $ShowHRAI = '1';
 
 // / ------------------------------ 
 // / Directory locations ...
-// / Windows machines use format 'C:/users/User/Desktop/TestDir'.
-// / Linux machines use format '/home/justin/Desktop/TestDir'.
-  // / Directory where HRCloud2 was installed. (NO SLASH AFTER DIRECTORY!!!)
+// / Use format '/home/justin/Desktop/TestDir'.
+  // / YOU MUST INSTALL HRCLOUD2 TO THE FOLLOWING DIRECTORY!!!
+  // / DO NOT CHANGE THE DEFAULT INSTALL DIRECTORY!!!
   $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
   // / Directory to be scanned for file dumps (NO SLASH AFTER DIRECTORY!!!) ...  
   $CloudLoc = '/home/justin/Desktop/TestDir/Cloud';
