@@ -57,6 +57,7 @@ require_once($coreVarfile);
 require_once($coreArrfile);
 require_once($coreFuncfile);
 require_once($onlineFile);
+require_once('/var/www/html/HRProprietary/HRCloud2/config.php');
 //echo nl2br("Sucessfully loaded library files. \r");
 
 // / Set our Post data for the session. If blank we substitute defaults to avoid errors.
@@ -66,10 +67,11 @@ if (file_exists($wpfile)) {
 require_once($wpfile);
 global $current_user;
 get_currentuserinfo();
-$user_ID = get_current_user_id();
-if ($user_ID == 1) {
+$user_IDRAW = get_current_user_id();
+$userID = hash('ripemd160', $user_IDRAW.$Salts);
+if ($user_IDRAW == 1) {
   include '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php'; }
-if ($user_ID !== 1) {
+if ($user_IDRAW !== 1) {
 $display_name = get_currentuserinfo() ->$display_name; } }
 $inputServerID = defineInputServerID();
 $input = defineUserInput();
