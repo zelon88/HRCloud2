@@ -57,7 +57,7 @@ td, th {
 }
 
 a {
-	text-decoration: none;
+	text-decoration: none; 
 }
 
 td a {
@@ -70,7 +70,7 @@ th a {
 }
 
 td:first-of-type a {
-	background: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/file.png) no-repeat 10px 50%;
+	background: url(Applications/displaydirectorycontents_72716/images/file.png) no-repeat 10px 50%;
 	padding-left: 35px;
 }
 th:first-of-type {
@@ -137,15 +137,15 @@ table tr td:first-of-type a[href$=".png"],
 table tr td:first-of-type a[href$=".gif"], 
 table tr td:first-of-type a[href$=".svg"], 
 table tr td:first-of-type a[href$=".jpeg"]
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/image.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/image.png);}
 
 /* zips */
 table tr td:first-of-type a[href$=".zip"] 
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/zip.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/zip.png);}
 
 /* css */
 table tr td:first-of-type a[href$=".css"] 
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/css.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/css.png);}
 
 /* docs */
 table tr td:first-of-type a[href$=".doc"],
@@ -157,7 +157,7 @@ table tr td:first-of-type a[href$=".ppsx"],
 table tr td:first-of-type a[href$=".xls"],
 table tr td:first-of-type a[href$=".xlsx"],
 table tr td:first-of-type a[href$=".txt"]
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/office.png)}
+{background-image: url(Applications/displaydirectorycontents_72716/images/office.png)}
 
 /* videos */
 table tr td:first-of-type a[href$=".avi"], 
@@ -165,29 +165,29 @@ table tr td:first-of-type a[href$=".wmv"],
 table tr td:first-of-type a[href$=".mp4"], 
 table tr td:first-of-type a[href$=".mov"], 
 table tr td:first-of-type a[href$=".m4a"]
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/video.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/video.png);}
 
 /* audio */
 table tr td:first-of-type a[href$=".mp3"], 
 table tr td:first-of-type a[href$=".ogg"], 
 table tr td:first-of-type a[href$=".aac"], 
 table tr td:first-of-type a[href$=".wma"] 
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/audio.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/audio.png);}
 
 /* web pages */
 table tr td:first-of-type a[href$=".html"],
 table tr td:first-of-type a[href$=".htm"],
 table tr td:first-of-type a[href$=".xml"]
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/xml.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/xml.png);}
 
 table tr td:first-of-type a[href$=".php"] 
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/php.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/php.png);}
 
 table tr td:first-of-type a[href$=".js"] 
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/script.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/script.png);}
 
 /* directories */
 table tr.dir td:first-of-type a
-{background-image: url(http://localhost/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/images/folder.png);}
+{background-image: url(Applications/displaydirectorycontents_72716/images/folder.png);}
 
 

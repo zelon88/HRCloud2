@@ -3,15 +3,14 @@
 <head>
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="./.favicon.ico">
-   <title>Directory Contents</title>
+   <title>HRCLoud2| Log Viewer</title>
 
    <link rel="stylesheet" href="./.style.css">
    <script src="./.sorttable.js"></script>
 </head>
-
 <body>
 <div id="container">
-	<h1>HRCloud2 Logs</h1>
+	<h3>HRCloud2 Logs</h3>
 
 	<table class="sortable">
 	    <thead>
@@ -141,7 +140,7 @@
 				$size=pretty_filesize($dirArray[$index]);
 				$sizekey=filesize($dirArray[$index]);
 		}
-
+    sleep(1);
 	// Output
 	 echo("
 		<tr class='$class'>
