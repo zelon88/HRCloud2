@@ -14,6 +14,22 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>Cloud Contents</title>
 <?php
+
+if (!file_exists('config.php')) {
+  echo nl2br('</head>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  die (); }
+else {
+  require('config.php'); }
+
+$WPFile = '/var/www/html/wp-load.php';
+// / Verify that WordPress is installed.
+if (!file_exists($WPFile)) {
+  echo nl2br('</head>ERROR!!! Index27, WordPress was not detected on the server.'."\n"); }
+  else {
+    require($WPFile); } 
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
   echo nl2br('</head>ERROR!!! Index35, User Cache file was not detected on the server!'."\n"); 
   die (); }
