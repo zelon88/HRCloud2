@@ -23,9 +23,7 @@ if ($includeMINIIframer == '1') { ?>
   <div align="center" id='HRAIButtons2' name='HRAIButtons2'>
   <hr />
   <form action="<?php echo $includeMINIIframerURL; ?>" id="Corefile Input" method="post">
-  <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">
   <input type="hidden" name="HRAIMiniGUIPost" value="1">
-  <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
   <input type="hidden" name="display_name" value="<?php echo $display_name;?>">
   <?php if (!isset($input)) {
     $input = ''; } ?>
