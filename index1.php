@@ -27,12 +27,19 @@ $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
-$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+$CreateUserFiles = 'createUserFiles.php';
+if (isset($_POST['UserDir'])) {
+$UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
+if (!isset($_POST['UserDir'])) {
+$UserDirPOST = ('/'); }
+$CloudUsrDir = $CloudDir.$UserDirPOST; 
+$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+
 if (!file_exists($UserConfig)) {
-  echo nl2br('</head><body>ERROR!!! Index35, User Cache file was not detected on the server!'."\n".'</body></html>'); 
-  die (); }
-else {
-    require($UserConfig); } 
+require ($CreateUserFiles); }
+if (file_exists($UserConfig)) {
+require ($UserConfig); }
 
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }

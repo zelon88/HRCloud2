@@ -76,14 +76,15 @@ if (!file_exists($CloudLoc)) {
   die(); }
 if (!file_exists($CloudDir)) {
   mkdir($CloudDir, 0755); }
-if (!file_exists($CloudTempDir)) {
+if (!file_exists($CloudTempDir)) { 
   mkdir($CloudTempDir, 0755); }
-
+copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
 if (!file_exists($LogLoc)) {
+@mkdir($LogLoc);
 $JICInstallLogs = @mkdir($LogLoc, 0755); 
   foreach ($LogInstallFiles as $LIF) {
     if ($LIF == '.' or $LIF == '..') continue;
@@ -104,9 +105,9 @@ $CloudUsrDir = $CloudDir.$UserDirPOST;
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
-if (!file_exists($CloudTmpDir)) {
+if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
-  
+copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
 // / Checks to see that the user is logged in.
 if ($UserIDRAW == '') {
   echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
@@ -160,7 +161,7 @@ if(isset($_POST["upload"])) {
   if (!is_array($_FILES["filesToUpload"])) {
     $_FILES["filesToUpload"] = array($_FILES["filesToUpload"]); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
-    if ($file !== '.' or $file !== '..') {
+    if ($file !== '.' or $file !== '..' or $file == 'index.html') {
       $file = str_replace(" ", "_", $file);
       $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
       $DangerousFiles = array('js', 'php', 'html', 'css',);
@@ -194,7 +195,7 @@ if (isset($_POST["download"])) {
     $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
     $_POST['filesToDownload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDownload']); }
     foreach ($_POST['filesToDownload'] as $key=>$file) {
-      if ($file == '.' or $file == '..') continue;
+      if ($file == '.' or $file == '..' or $file == 'index.html') continue;
       $file = $CloudUsrDir.$file;
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudTmpDir.$F2;
@@ -652,7 +653,7 @@ if (isset($_POST['pdfworkSelected'])) {
                   $PagedFilesArrRAW = scandir($CloudTmpDir);
                   foreach ($PagedFilesArrRAW as $PagedFile) {
                     $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
-                    if ($PagedFile == '.' or $PagedFile == '..' or $PagedFile == '.AppLogs') continue;
+                    if ($PagedFile == '.' or $PagedFile == '..' or $PagedFile == '.AppLogs' or $PagedFile == 'index.html') continue;
                     if (strpos($PagedFile, '.txt') !== false) continue;
                     if (strpos($PagedFile, '.pdf') !== false) continue;
                     $CleanFilname = str_replace($oldExtension, '', $filename);
@@ -886,7 +887,7 @@ if (file_exists($CloudTemp)) {
   $CleanFiles = glob($CloudTemp.$UserID.'/*');
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..') continue;
+    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html') continue;
       if ($time - filemtime($CleanFile) >= 900) { // Every 15 mins.
         if (!is_dir($CleanFile)) {
           unlink($CleanFile); }
@@ -936,7 +937,7 @@ $PendingResCount2 = '0';
 $ResultFiles = scandir($CloudUsrDir);
 if (isset($SearchRAW)) {       
   foreach ($ResultFiles as $ResultFile0) {
-    if ($ResultFile0 == '.' or $ResultFile0 == '..') continue;
+    if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html') continue;
       $ResultFile = $CloudUsrDir.$ResultFile0;    
       $ResultTmpFile = $CloudTmpDir.$ResultFile0;
       $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
