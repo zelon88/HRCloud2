@@ -952,21 +952,20 @@ if (isset($SearchRAW)) {
       if (!preg_match("/$SearchLower/", $Result)) continue; 
       if (preg_match("/$SearchLower/", $Result)) { 
         $PendingResCount2++; 
-        if (!file_exists($ResultTmpFile)) {  
-          if (is_dir($ResultFile)) { 
-            mkdir($F3, 0755);
+          if (is_dir($ResultFile)) {
+            @mkdir($F3, 0755);
             foreach ($iterator = new \RecursiveIteratorIterator(
               new \RecursiveDirectoryIterator($ResultFile, \RecursiveDirectoryIterator::SKIP_DOTS),
               \RecursiveIteratorIterator::SELF_FIRST) as $item) {
               if ($item->isDir()) {
-                mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
+                @mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
               else {
-                copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } }
-      if (!is_dir($ResultFile)) { 
-        copy($ResultFile, $ResultTmpFile); } }
-
-        ?><a href='<?php echo ($ResultURL); ?>'><?php echo nl2br($ResultFile0."\n"); ?></a>
-        <hr /><?php } } 
+                @copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } 
+        $ResultURL = 'cloudCore.php?UserDirPOST='.$ResultFile0 ; }
+      if (!is_dir($ResultFile)) {  
+          @copy($ResultFile, $ResultTmpFile); } 
+          ?><a href='<?php echo ($ResultURL); ?>'><?php echo nl2br($ResultFile0."\n"); ?></a>
+          <hr /><?php } } 
 
 echo nl2br('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); 
 $txt = ('OP-ACT, Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.');
