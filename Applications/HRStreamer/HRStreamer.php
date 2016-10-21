@@ -4,8 +4,8 @@
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCloud2 Streamer</title>
-    <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
     <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+    <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
     <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
     <script type="text/javascript">
     function toggle_visibility(id) {
@@ -14,9 +14,18 @@
          e.style.display = 'none';
       else
          e.style.display = 'block'; }
+      var songsrc = [];
     function goBack() {
       window.history.back(); }
-    </script>
+      var index = 0;
+      function nextSong(){
+    $('#song').attr('src', songsrc[index++]); }
+
+    $("#song").bind('ended', nextSong());
+    $(document).ready(function(){
+        $('#song')[0].play();
+    });
+</script>
 </head>
 <body>
 
@@ -52,11 +61,11 @@ if ($UserIDRAW == '0' or $UserIDRAW == '') {
 if (file_exists($getID3File)) {
   require($getID3File); }
 if (!file_exists($getID3File)) {
-  $txt = ('ERROR!!! HRS53, the getID3 module is not installed on the server on '.$Time.'!');
+  $txt = ('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  die('ERROR!!! HRS53, the getID3 module is not installed on the server on '.$Time.'!'); }
+  die('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!'); }
 
-// / Set POST variables.
+// / Set POST variables.-
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $_POST['playlistSelected'] = $_GET['playlistSelected']; }
 
@@ -64,6 +73,19 @@ if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $PlaylistName = $_POST['playlistSelected'];  
   $PlaylistDir = $CloudTempDir.'/'.$PlaylistName;
+  if (!file_exists($PlaylistDir)) {
+    mkdir($PlaylistDir, 0755);
+    $txt = ('Creating '.$PlaylistDir.' on '.$Time.'!');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    if (file_exists($PlaylistUSRDir)) {
+      foreach (glob($PlaylistUSRDir) as $PlaylistUSRFiles) {
+        $txt = ('Copied '.$PlaylistUSRFiles.' to '.$PlaylistUSRDir.' on '.$Time.'!');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+        copy ($PlaylistUSRFiles, $PlaylistDir); } } } 
+    if (!file_exists($PlaylistDir)) {
+      $txt = ('ERROR!!! HRS86, The PlaylistDir does not exist on '.$Time.'!');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+      die($txt); }
   $PlaylistNameRAW = str_replace('.Playlist', '', $PlaylistName); }
   else {
     $txt = ('ERROR!!! HRS70, There was no playlist selected on '.$Time.'!');
@@ -85,7 +107,8 @@ if (file_exists($PlaylistDir)) {
   $txt = ('OP-Act: User '.$UserID.' initiated HRStreamer on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   $PLImageArr = array('jpg', 'jpeg', 'bmp', 'png', 'gif');  
-  $PLAudioArr =  array('mp3', 'mp4', 'wma', 'wav', 'ogg', 'aac');
+  $PLAudioArr =  array('mp3', 'mp4', 'wma', 'wav', 'aac');
+  $PLAudioOGGArr =  array('ogg');  
   $PlaylistArtArr = array();
   $PlaylistSongArr = array();
   $PlaylistCacheDir = $PlaylistDir.'/.Cache';
@@ -108,16 +131,18 @@ if (file_exists($PlaylistDir)) {
     $PLSongCount = 0;
   foreach ($PlaylistFiles as $PlaylistFile) {
     if ($PlaylistFile == '.' or $PlaylistFile == '..' or $PlaylistFile == '.Cache' or is_dir($PlaylistFile)) continue;     
-    $PLCount++; 
-    $pathname = $PlaylistDir.'/'.$PlaylistFile;
-    $filename = pathinfo($pathname, PATHINFO_FILENAME);
-    $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
+      $PLCount++; 
+      $pathname = $PlaylistDir.'/'.$PlaylistFile;
+      $newPathname = $PlaylistDir.'/'.$PlaylistName.'.ogg';
+      $filename = pathinfo($pathname, PATHINFO_FILENAME);
+      $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
+    if (in_array($oldExtension, $PLAudioOGGArr)) {
+      array_push($PlaylistSongArr, $PlaylistFile); 
+      $PLSongCount++;}
     if (in_array($oldExtension, $PLImageArr)) {
       array_push($PlaylistArtArr, $PlaylistFile); 
-      $PLImageCount++; }
-    if (in_array($oldExtension, $PLAudioArr)) {
-      array_push($PlaylistSongArr, $PlaylistFile); 
-      $PLSongCount++; } } }
+      $PLImageCount++; } } }
+usleep(500);
 if (!file_exists($PlaylistDir)) { 
   $txt = ('ERROR!!! HRS122, The selected playlist does not exist on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -137,8 +162,9 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
     $PLSongTitle = $id3Tags['tags']['id3v2']['title'][0];
     $PLSongArtist = $id3Tags['tags']['id3v2']['artist'][0]; 
     $PLSongAlbum = $id3Tags['tags']['id3v2']['album'][0]; ?>
-    <div align="center"><p><strong><i><?php echo $SongCount.'. '; ?></i></strong><img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" onclick="toggle_visibility('buttonbar<?php echo$SongCount; ?>');" align="float:center; padding-left:5px;" src="Applications/HRStreamer/Resources/stream.png">
-    <img id="Delete<?php echo $SongCount; ?>" name="Delete<?php echo $SongCount; ?>" style="float:center; padding-right:5px; margin-right:110px" src="Applications/HRStreamer/Resources/deletesmall.png"></p></div>
+    <div align="left"><p><strong><i><a style="float:left;"><?php echo $SongCount.'. '; ?></a></i></strong><img id="hideplay<?php echo $SongCount; ?>" name="hideplay<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar');" style="float:left; padding-right:5px; padding-left:5px; display:none;" src="Applications/HRStreamer/Resources/streamflipped.png">
+    <img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar');" style="float:left; padding-right:5px; padding-left:5px; display:block;" src="Applications/HRStreamer/Resources/stream.png">
+    <img id="Delete<?php echo $SongCount; ?>" name="Delete<?php echo $SongCount; ?>" style="float:left; padding-right:5px; margin-right:110px" src="Applications/HRStreamer/Resources/deletesmall.png"></p></div>
   <?php
     echo nl2br("\n".'<strong>'.$PlaylistSong.'</strong>'."\n"); 
     echo nl2br('<div align="center"><p id="moreInfoLink'.$SongCount.'" style="display:block;" onclick="toggle_visibility(\'PlaylistSongInfo'.$SongCount.'\'); toggle_visibility(\'moreInfoLink'.$SongCount.'\');"><i>More Info</i></p></div>'); ?>
@@ -162,7 +188,9 @@ $RandomImageFile = 'Applications/HRStreamer/Resources/RandomImageFile.png'; ?>
 </div> 
 
 <div id="media" name="media" align="center" style="max-width:65%;">
-
+<div align="center" id="autosong" name="autosong">
+  <audio id="song" name="song" preload="auto" controls="true" autoplay="true" src="" type="audio/mp3" style="width:390px;"></audio>
+</div>
 <?php  
 $SongCount = 0;    
 foreach ($PlaylistFiles as $PlaylistFile) {
@@ -171,8 +199,8 @@ foreach ($PlaylistFiles as $PlaylistFile) {
   $pathname = $PlaylistDir.'/'.$PlaylistFile; ?>
 <script type="text/javascript">
     function vidplay<?php echo $SongCount; ?>() {
-       var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
-       var button<?php echo $SongCount; ?> = document.getElementById("play<?php echo $SongCount; ?>");
+       var audio<?php echo $SongCount; ?> = document.getElementById("song<");
+       var button<?php echo $SongCount; ?> = document.getElementById("play");
        if (audio<?php echo $SongCount; ?>.paused) {
           audio<?php echo $SongCount; ?>.play();
           button<?php echo $SongCount; ?>.textContent = "||"; } 
@@ -180,22 +208,19 @@ foreach ($PlaylistFiles as $PlaylistFile) {
           audio<?php echo $SongCount; ?>.pause();
           button<?php echo $SongCount; ?>.textContent = ">"; } }
     function restart<?php echo $SongCount; ?>() {
-        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
+        var audio<?php echo $SongCount; ?> = document.getElementById("song");
         audio<?php echo $SongCount; ?>.currentTime = 0; }
     function skip<?php echo $SongCount; ?>(value) {
-        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
-        audio<?php echo $SongCount; ?>.currentTime += value; }      
+        var audio<?php echo $SongCount; ?> = document.getElementById("song");
+        audio<?php echo $SongCount; ?>.currentTime += value; 
+        songsrc.push("<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>"); }      
 </script>
-<div align="center" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar<?php echo $SongCount; ?>" style="display:none;">
+<div align="center" id="buttonbar" name="buttonbar" style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
-<audio id="song<?php echo $SongCount; ?>" name="song<?php echo $SongCount; ?>" preload="auto" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/mp3" />
-     <a href="demo.mp4">Download this song.</a> 
-</audio>
-    <button id="restart" onclick="restart<?php echo $SongCount; ?>();">&#8634;</button> 
-    <button id="rew" onclick="skip<?php echo $SongCount; ?>(-10)">&lt;&lt;</button>
-    <button id="play" onclick="vidplay<?php echo $SongCount; ?>()">&gt;</button>
-    <button id="fastFwd" onclick="skip<?php echo $SongCount; ?>(10)">&gt;&gt;</button>
+    <button id="restart" onclick="restart();">&#8634;</button> 
+    <button id="rew" onclick="skip(-10)">&lt;&lt;</button>
+    <button id="fastFwd" onclick="skip">&gt;&gt;</button>
 </div>         
 <?php } ?>
 </div>
@@ -203,11 +228,4 @@ foreach ($PlaylistFiles as $PlaylistFile) {
 
 
 
-
-
-
-
-
-</body>
-</html>
 
