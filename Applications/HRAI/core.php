@@ -4,16 +4,14 @@
 <title>HRAI Core</title>
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 </head>
-<body>
-  <div name="top"></div>
 <?php 
 if (!isset($_POST['input'])) { ?>
-<div id="HRAITop" align='center'>
+<div align='center'>
 <img id='logo' src='Resources/logoslowbreath.gif'/>
 </div>
 <?php } 
 if (isset($_POST['input'])) { ?>
-<div id="HRAITop" style="float: left; margin-left: 15px;">
+<div style="float: left; margin-left: 15px;">
 <img id='logo' src='Resources/logo.gif'/>
 </div>
 <?php } 
@@ -21,9 +19,9 @@ if (!isset($_POST['input'])) { ?>
 <div align='center'>
 <?php } 
 if (isset($_POST['input'])) { ?>
-<div style="float: right; padding-right: 50px;">
+<div style="float: right; padding-right: 50%;">
 <?php } ?>
-
+<body>
 <script>
 jQuery('#input').on('input', function() {
   $("#logo").attr("src","Resources/logo.gif");
@@ -49,7 +47,6 @@ $nodeCache = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/Cache/nodeC
 $CallForHelpURL = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CallForHelp.php';
 $wpfile = '/var/www/html/wp-load.php';
 $date = date("F j, Y, g:i a");
-$hour = date("g:i a");
 $day = date("d");
 
 // / Load core AI files. Write an entry to the log if successful.
@@ -57,7 +54,6 @@ require_once($coreVarfile);
 require_once($coreArrfile);
 require_once($coreFuncfile);
 require_once($onlineFile);
-require_once('/var/www/html/HRProprietary/HRCloud2/config.php');
 //echo nl2br("Sucessfully loaded library files. \r");
 
 // / Set our Post data for the session. If blank we substitute defaults to avoid errors.
@@ -67,11 +63,10 @@ if (file_exists($wpfile)) {
 require_once($wpfile);
 global $current_user;
 get_currentuserinfo();
-$user_IDRAW = get_current_user_id();
-$userID = hash('ripemd160', $user_IDRAW.$Salts);
-if ($user_IDRAW == 1) {
+$user_ID = get_current_user_id();
+if ($user_ID == 1) {
   include '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php'; }
-if ($user_IDRAW !== 1) {
+if ($user_ID !== 1) {
 $display_name = get_currentuserinfo() ->$display_name; } }
 $inputServerID = defineInputServerID();
 $input = defineUserInput();
@@ -83,12 +78,6 @@ if (isset ($_POST['user_ID'])) {
   $user_ID = $_POST['user_ID']; }
 if (isset ($_POST['sesID'])) {
   $sesID = $_POST['sesID']; }
-if (isset ($_POST['HRAIMiniGUIPost'])) {
-  $noMINICore = '1';
-  $includeMINIIframer = '1'; }
-if (!isset ($_POST['HRAIMiniGUIPost'])) {
-  $noMINICore = '1'; 
-  $includeMINIIFramer = '0'; }
 if (isset ($_POST['inputServerIDHash'])) {
   $inputServerID = $_POST['inputServerID'];
   $inputServerIDHash = hash ('sha1',$inputServerID);
@@ -201,122 +190,21 @@ $input = strtolower ($input);
 <div id="end"></div>
 <?php
 $CoreGreetings = array('hello','hi','hey','sup',);
-$BasicTimeofDay = array('moirning','noon','afternoon','evening','night');
-
-// / Return a specific basic greeting depending on time of day.
-if ($user_ID == '0') {
-  echo nl2br('You are not logged in! This session is temporary! '."\r"); }
-
-// / Set time specific basic responses.
-$timeGreeting = 'Hello, ';
-$StopTime = '0';
-// / Code for modning specific responses.
-  if (date("H") <= '12' && date("H") > '3'){
-    if (preg_match('/good morning/',$input)) { 
-      echo nl2br('Good morning, Commander!'."\r"); 
-      $input = preg_replace('/good morning/','',$input);
-      $input = str_replace('good morning','',$input); }
-    if (preg_match('/good afternoon/',$input)) {
-      echo nl2br('It\'s only '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/good afternoon/','',$input);
-      $input = str_replace('good afternoon','',$input); }
-    if (preg_match('/good day/',$input)) {
-      echo nl2br('It\'s only '.$hour.', Commander.'."\r");  
-      $input = preg_replace('/good day/','',$input);
-      $input = str_replace('good day ','',$input); }
-    if (preg_match('/good evening/',$input)) {
-      echo nl2br('It\'s only '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/good evening/','',$input);
-      $input = str_replace('good evening','',$input); }
-    if (preg_match('/good night/',$input)) {
-      echo nl2br('Goodnight, Commander.'."\r"); 
-      $input = preg_replace('/good night/','',$input);
-      $input = str_replace('goodnight','',$input); }
-    if (preg_match('/goodnight/',$input)) { 
-      echo nl2br('Goodnight, Commander.'."\r"); 
-      $input = preg_replace('/goodnight/','',$input);
-      $input = str_replace('goodnight','',$input); }
-    $timeGreeting = 'Good morning, '; }
-// / Code for afternoon specific responses.
-if ($StopTime == '0') {
-  if (date("H") >= '11' && date("H") <= '20'){  
-    if (preg_match('/good afternoon/',$input)) {
-      echo nl2br('It has been so far, Commander!'."\r"); 
-      $input = preg_replace('/good afternoon/','',$input);
-      $input = str_replace('good afternoon','',$input); }
-    if (preg_match('/good day/',$input)) {
-      echo nl2br('It has been so far, Commander!'."\r"); 
-      $input = preg_replace('/good day/','',$input);
-      $input = str_replace('good day ','',$input); }
-    if (preg_match('/good morning/',$input)) {
-      echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/good morning/','',$input);
-      $input = str_replace('good morning','',$input); }
-    if (preg_match('/good evening/',$input)) {
-      echo nl2br('It\'s still only '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/good evening/','',$input);
-      $input = str_replace('good evening','',$input); }
-    if (preg_match('/good night/',$input)) {
-      echo nl2br('Goodnight, although it\'s only '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/good night/','',$input);
-      $input = str_replace('good night','',$input); }
-    if (preg_match('/goodnight/',$input)) {
-      echo nl2br('Goodnight, although it\'s only '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/goodnight/','',$input);
-      $input = str_replace('goodnight','',$input); }
-    $timeGreeting = 'Good afternoon, '; 
-    $StopTime++; } }
-// / Code for evening specific responses.
-if ($StopTime == '0') {
-  if (date("H") >= '20' or date("H") <= '3') {
-    if (preg_match('/good evening/',$input)){
-      echo nl2br('Yes, Commander. It has been.'."\r"); 
-      $input = preg_replace('/good evening/','',$input);
-      $input = str_replace('good evening','',$input); }
-    if (date("H") > '3' && date("H") <= '12') {
-      if (preg_match('/good morning/',$input)){
-        echo nl2br('Yes, Commander. It has been.'."\r"); 
-        $input = preg_replace('/good morning/','',$input);
-        $input = str_replace('good morning','',$input); } }
-    if (date("H") <= '3') {
-      if (preg_match('/good morning/',$input)){
-        echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-        $input = preg_replace('/good morning/','',$input);
-        $input = str_replace('good morning','',$input); } }
-    if (preg_match('/good afternoon/',$input)){
-      echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-      $input = preg_replace('/good afternoon/','',$input);
-      $input = str_replace('good afternoon','',$input); }
-    if (preg_match('/good day/',$input)){
-      echo nl2br('It\'s '.$hour.', Commander.'."\r");  
-      $input = preg_replace('/good day/','',$input);
-      $input = str_replace('good day ','',$input); }
-    if (preg_match('/good night/',$input)){
-      echo nl2br('Yes, it was. Goodnight, Commander.'."\r"); 
-      $input = preg_replace('/good night/','',$input);
-      $input = str_replace('good night','',$input); }
-    if (preg_match('/goodnight/',$input)){
-      echo nl2br('Yes, it was. Goodnight, Commander.'."\r"); 
-      $input = preg_replace('/goodnight/','',$input);
-      $input = str_replace('goodnight','',$input); }
-    $timeGreeting = 'Good evening, '; 
-    $StopTime++; } }
-
-// /a First we respond to basic greetings.
+// / First we respond to basic greetings.
 if ($input == 'hello'){
-  echo nl2br($timeGreeting.'Commander! '."\r"); 
+  echo nl2br('Hello, Commander! '."\r"); 
 $input = preg_replace('/hello/','',$input);
 $input = str_replace('hello ','',$input); }
 if ($input == 'hi'){
-  echo nl2br($timeGreeting.'Commander! '."\r");
+  echo nl2br('Hello, Commander! '."\r");
 $input = preg_replace('/hi/','',$input); 
 $input = str_replace('hi ','',$input); }
 if ($input == 'hey'){
-  echo nl2br($timeGreeting.'Commander! '."\r");
+  echo nl2br('Hello, Commander! '."\r"); 
 $input = preg_replace('/hey/','',$input);
 $input = str_replace('hey ','',$input); }
 if ($input == 'sup'){
-  echo nl2br($timeGreeting.'Commander! '."\r");
+  echo nl2br('Hello, Commander! '."\r");
 $input = preg_replace('/sup/','',$input);
 $input = str_replace('sup ','',$input); }
 
@@ -333,7 +221,7 @@ $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 
 $first4 = substr($input, 0, 4);
-if ($first4 == 'hey '){ 
+if ($first4 == 'hey '){
   echo nl2br('Hello, Commander! '."\r"); 
 $input = str_replace('hey ','',$input); }
 if ($first4 == 'sup '){
@@ -367,49 +255,43 @@ $input = preg_replace('/ please/', '', $input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 
-if (preg_match('/plz/', $input)){
-  echo nl2br('No problem, Commander! '."\r");  
-$input = preg_replace('/plz /','',$input);
-$input = str_replace('plz','',$input); }
+$last8 = substr($input, 0, -8);
+if ($last8 == 'thank you'){
+  echo nl2br('My pleasure! '."\r"); 
+$input = preg_replace('/ please/', '', $input); }
 
 if (preg_match('/please/', $input)){
-  echo nl2br('Of course, Commander! '."\r");  
+  echo nl2br('Of course! '."\r");  
 $input = preg_replace('/please /','',$input);
 $input = str_replace('please','',$input); }
 
-if (preg_match('/thank you/', $input)){
-  echo nl2br('My pleasure. '."\r"); 
-$input = preg_replace('/ please/', '', $input); }
-
 if (preg_match('/thanks/', $input)){
-  echo nl2br('Anytime, Commander! '."\r");  
+  echo nl2br('My pleasure! '."\r");  
 $input = preg_replace('/thanks/',' ',$input);
 $input = str_replace('thanks','',$input); }
 
 if (preg_match('/thx/', $input)){
-  echo nl2br('No problem, Commander! '."\r");  
+  echo nl2br('My pleasure! '."\r");  
 $input = preg_replace('/thx/',' ',$input);
 $input = str_replace('thx','',$input); }
 
-if (preg_match('/your name/', $input)){
-  echo nl2br('HRAI! '."\r");  
-$input = preg_replace('/your name/',' ',$input);
-$input = str_replace('your name','',$input); }
-
-if (preg_match('/whats your name/', $input)){
-  echo nl2br('HRAI! '."\r");  
-$input = preg_replace('/whats your name/',' ',$input);
-$input = str_replace('whats your name','',$input); }
-
-if (preg_match('/what is your name/', $input)){
-  echo nl2br('HRAI! '."\r");  
-$input = preg_replace('/what is your name/',' ',$input);
-$input = str_replace('what is your name','',$input); }
+if (preg_match('/thank you/', $input)){
+  echo nl2br('My pleasure! '."\r");  
+$input = preg_replace('/thank you/',' ',$input);
+$input = str_replace('thank you','',$input); }
 
 // / Now that we've condensed our input a bit we remove any incidental double spaces.
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
+
+// SECRET: Here we load a file containing all of the commands specific to logged-in WP users.
+if ($user_ID !== 0) {
+  if (preg_match('/sconvert file/', $input)) {
+$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconv.php'; 
+include $CMDsyncfile; 
+$input = preg_replace('/sync node/',' ',$input);} }
+
 
 // / Here are the more complicated commands. To avoid making this script 5,000 lines long,
 // / there is a CoreCommands directory in the hosted HRAI folder (/var/www/html) for the bulk
@@ -420,6 +302,10 @@ if (preg_match('/sync node/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/sync node/',' ',$input);} 
+if (preg_match('/who are you/', $input)) {
+$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+include $CMDsyncfile; 
+$input = preg_replace('/who are you/',' ',$input);} 
 if (preg_match('/node sync/', $input)) { 
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
@@ -431,16 +317,12 @@ $input = preg_replace('/whats your serverid/',' ',$input);}
 if (preg_match('/what is your serverid/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
-$input = preg_replace('/whats your serverid/',' ',$input);} 
+$input = preg_replace('/what is your server id/',' ',$input);} 
 if (preg_match('/whats your server id/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/whats your server id/',' ',$input);} 
 if (preg_match('/what is your serverid/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
-include $CMDsyncfile; 
-$input = preg_replace('/what is your serverid/',' ',$input);} 
-if (preg_match('/what is your server id/', $input)) {
 $CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/what is your server id/',' ',$input);} 
@@ -770,15 +652,6 @@ $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 
-if (preg_match('/what/', $input) && preg_match('/cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
-include $CMDcpuinfofile; 
-$input = preg_replace('/what/',' ',$input);
-$input = preg_replace('/cpu/',' ',$input); }
-if (preg_match('/what/', $input) && preg_match('/processor/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
-include $CMDcpuinfofile; 
-$input = preg_replace('/what is your cpu/',' ',$input); }
 if (preg_match('/what is your cpu/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
@@ -934,15 +807,8 @@ $input = preg_replace('/ram info/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
-// / Display a refresh button if the user is not logged in.
-if ($user_ID == '0') { 
-  echo nl2br ('<form action="core.php"><div align="center"><p><input type="submit" name="refresh" id="refresh" href="#" target="_parent" value="&#x21BA" class="button" onclick="toggle_visibility("loadingCommandDiv");"></p></div></form>'); }
-
-if (isset($includeMINIIframer)) {
-  include_once('/var/www/html/HRProprietary/HRCloud2/HRAIMiniGui.php'); }
-
 ?>
 </div>
+
 </body>
 </html>
