@@ -108,7 +108,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
   $ArchInc++; }
 ?>
 
-<body><div align="center">
+<div align="center">
 <form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
 <input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form> | 
 <input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');"> | 
@@ -409,7 +409,7 @@ $.ajax( {
 <?php }
 	 echo("
 		<tr class='$class'>
-			<td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'toggle_visibility(\'loadingCommandDiv\');'.">$name</a></td>
+			<td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
 			<td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
             <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
 			<td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
