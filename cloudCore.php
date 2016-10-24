@@ -76,8 +76,12 @@ if (!file_exists($CloudLoc)) {
   die(); }
 if (!file_exists($CloudDir)) {
   mkdir($CloudDir, 0755); }
+if(!file_exists($CloudTemp)) {
+  mkdir($CloudTemp);
+  copy($InstLoc.'/index.html',$CloudTemp.'index.html'); }
 if (!file_exists($CloudTempDir)) { 
-  mkdir($CloudTempDir, 0755); }
+  mkdir($CloudTempDir, 0755); 
+  copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
 copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
@@ -85,6 +89,7 @@ $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
 if (!file_exists($LogLoc)) {
 @mkdir($LogLoc);
+copy($InstLoc.'/index.html',$LogLoc.'/index.html');
 $JICInstallLogs = @mkdir($LogLoc, 0755); 
   foreach ($LogInstallFiles as $LIF) {
     if ($LIF == '.' or $LIF == '..') continue;
@@ -285,18 +290,26 @@ if (isset($_POST['deleteconfirm'])) {
       @unlink($CloudTmpDir.$DFile);
       $objects = scandir($CloudUsrDir.$DFile); 
       foreach ($objects as $object) { 
-        if ($object != "." && $object != "..") { 
-          if (is_dir($CloudUsrDir.$DFile."/".$object)) 
-             @rmdir($CloudUsrDir.$DFile."/".$object);
-          else 
-            @unlink($CloudUsrDir.$DFile."/".$object); } } } 
+        if ($object == '.' or $object == '..') continue; 
+          if (is_dir($CloudUsrDir.$DFile.'/'.$object)) {
+             $objects2 = scandir($CloudUsrDir.$DFile.'/'.$object);
+             foreach ($objects2 as $object2) { 
+               if ($object2 == '.' or $object2 == '..') continue; 
+                 if (!is_dir($CloudUsrDir.$DFile.'/'.$object.'/'.$object2)) {
+                  @unlink($CloudUsrDir.$DFile.'/'.$object.'/'.$object2); }
+                 if (is_dir($CloudUsrDir.$DFile.'/'.$object.'/'.$object2)) {
+                  @rmdir($CloudUsrDir.$DFile.'/'.$object.'/'.$object2); } }
+             @rmdir($CloudUsrDir.$DFile.'/'.$object); }
+          if (!is_dir($CloudUsrDir.$DFile.'/'.$object)) {
+            @unlink($CloudUsrDir.$DFile.'/'.$object); } } } 
     @unlink($CloudUsrDir.$DFile);
+    @rmdir($CloudUsrDir.$DFile);
     if (file_exists($CloudTmpDir.$DFile)) {
       @unlink($CloudTmpDir.$DFile); 
       $txt = ('OP-Act: '."Deleted $DFile from $CloudTmpDir on $Time".'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
     $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }  
 
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
@@ -733,46 +746,165 @@ if (isset($_POST['pdfworkSelected'])) {
 
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
-  $txt = ('OP-Act: Initiated HRStream on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  foreach (($_POST['streamSelected']) as $StreamFile) {
-    $txt = ('OP-Act: User '.$UserID.' selected to StreamFile '.$StreamFile.' from CLOUD.');
+  // / Define the and sanitize global .Playlist environment variables.
+  $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
+  $PlaylistName = str_replace(str_split('\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
+  $PLVideoArr =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');    
+  $PLVideoArr2 =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');    
+  $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+  $PLAudioArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac');
+  $PLAudioOGGArr =  array('ogg');
+  $PLAudioMP4Arr =  array('mp4');
+  $MediaFileCount = 0;
+  $VideoFileCount = 0;
+  // / Define temp .Playlist environment variables.
+  $PlaylistDir = $CloudTempDir.'/'.$PlaylistName.'.Playlist';
+  $PlaylistCacheDir = $PlaylistDir.'/.Cache';
+  $PlaylistCacheFile = $PlaylistCacheDir.'/cache.xml';
+  $PlaylistCacheFile2 = $PlaylistCacheDir.'/cache.php';
+  // / Define permanent .Playlist environment variables.
+  $playlistDir = $CloudUsrDir.$PlaylistName.'.Playlist'; 
+  $playlistCacheDir = $playlistDir.'/.Cache';
+  $playlistCacheFile = $playlistCacheDir.'/cache.xml';
+  $playlistCacheFile2 = $playlistCacheDir.'/cache.php'; 
+  // / Write the first Playlist entry to the user's logfile.
+  $txt = ('OP-Act: Initiated .Playlist creation on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);  
+  require($getID3File);
+
+  // / The following code creates the .Playlist directory as well as the .Cache directory and cache files.
+  if (!file_exists($PlaylistCacheFile)) {
+    @mkdir($PlaylistDir, 0755);
+    @mkdir($playlistDir, 0755);
+    copy($InstLoc.'/index.html', $PlaylistDir.'/index.html');
+    copy($InstLoc.'/index.html', $playlistDir.'/index.html');
+    @mkdir($PlaylistCacheDir, 0755); 
+    @mkdir($playlistCacheDir, 0755); 
+    copy($InstLoc.'/index.html', $PlaylistCacheDir.'/index.html');
+    copy($InstLoc.'/index.html', $playlistCacheDir.'/index.html');
+    $txt = ('OP-Act: Created a playlist cache file on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  if (strpos($PlaylistCacheDir, '.Playlist') == 'false') {
+    $txt = ('ERROR!!! HRC2746, There was a problem verifying the '.$PlaylistDir.' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    $pathname = $CloudTmpDir.$StreamFile;
-    $oldPathname = $CloudUsrDir.$StreamFile;
-    $filename = pathinfo($pathname, PATHINFO_FILENAME);
-    $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-    $audioarray =  array('mp3', 'mp4', 'wma', 'wav', 'ogg', 'aac');
-    $videoarray =  array('avi', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');
-    $PLAudioArr =  array('mp3', 'mp4', 'wma', 'wav', 'aac');
-    $PLAudioOGGArr =  array('ogg');  
-    if (isset($_POST['playlistname'])) {
-      $playlistName = str_replace(str_split('\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
-      $playlistDir = $CloudUsrDir.$playlistName.'.Playlist';
-      $newPathname = $playlistDir; 
-      mkdir ($playlistDir, 0755);
-      if (in_array($oldExtension, $PLAudioArr)) {
-        $ext = (' -f ' . 'ogg');
-        $bitrate = 'auto';                 
-        if ($bitrate = 'auto' ) {
-          $br = ' '; } 
-        elseif ($bitrate != 'auto' ) {
-          $br = (' -ab ' . $bitrate . ' '); }
-       $pathname = $CloudUsrDir.$StreamFile;
-        $newPathname = $playlistDir.'/'.$filename.'.ogg';
-        $txt = ("OP-Act, Executing ffmpeg -i $pathname$ext$br$newPathname on ".$Time.'.');
+    die($txt); }
+  
+  // / The following code detects which types of files are selected and creates the cache and playlist environment, including directories and cache files.
+  $txt = ('<?xml version="1.0" encoding="UTF-8"?> <playlist version="1" xmlns="'.$URL.'/HRProprietary/HRCloud2/Applications/osmplayer">');
+  $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);
+  $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND);
+  $txt = ('<?php');
+  $MAKEPLCacheFile2 = file_put_contents($PlaylistCacheFile2, $txt.PHP_EOL , FILE_APPEND);  
+  $MAKEplCacheFile2 = file_put_contents($playlistCacheFile2, $txt.PHP_EOL , FILE_APPEND); 
+  foreach (($_POST['streamSelected']) as $MediaFile) {
+    // / The following code will only create cache data if the $MediaFile is in the $PLMediaArr.     
+        $pathname = $CloudUsrDir.$MediaFile;
+        $Scanfilename = pathinfo($pathname, PATHINFO_FILENAME);
+        $ScanoldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
+        $txt = ('OP-Act: Detected a '.$ScanoldExtension.' named '.$MediaFile.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-        shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); }
-      if (in_array($oldExtension, $PLAudioOGGArr)) {
-        copy ($oldPathname, $playlistDir.'/'.$StreamFile); } }
-    // / The following code is performed if the user has selected a video file for streaming.    
-    if (in_array($ext, $videoarray)) { 
+
+        if(in_array($ScanoldExtension, $PLMediaArr)) {
+          $MediaFileCount++; 
+          $getID3 = new getID3;
+          $id3Tags = $getID3->analyze($pathname);
+          getid3_lib::CopyTagsToComments($pathname);
+          // / If id3v2 title tags are set, return them as a variable.
+          if(isset($id3Tags['tags']['id3v2']['title'])) {
+            $PLSongTitle = $id3Tags['tags']['id3v2']['title'][0]; }
+          if(!isset($id3Tags['tags']['id3v2']['title'])) {
+            $PLSongTitle = ''; }
+          // / If id3v2 artist tags are set, return them as a variable.
+          if(isset($id3Tags['tags']['id3v2']['artist'])) {
+            $PLSongArtist = $id3Tags['tags']['id3v2']['artist'][0]; }
+          if(!isset($id3Tags['tags']['id3v2']['artist'])) {
+            $PLSongArtist = ''; }
+          // / If id3v2 album tags are set, return them as a variable.
+          if(isset($id3Tags['tags']['id3v2']['album'])) {
+            $PLSongAlbum = $id3Tags['tags']['id3v2']['album'][0]; }
+          if(!isset($id3Tags['tags']['id3v2']['album'])) {
+            $PLSongAlbum = ''; }
+          // / If id3v2 image tags are set, return it as an image data variable as well as a .jpg file in the .Cache directory..
+          if(isset($id3Tags['comments']['picture'][0])) {
+            $PLSongImage = 'data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); } 
+            $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
+            $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
+            $SongImageFile2 = $CloudTempDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg'; 
+            $MAKECacheImageFile = file_put_contents($PLSongImageDATA, $SongImageFile);
+            $MAKECacheImageFile2 = file_put_contents($PLSongImageDATA, $SongImageFile2);               
+          if(!isset($id3Tags['comments']['picture'][0])) {
+            $PLSongImage = ''; }
+            // / If the audio count is one, this code will open tags within our XML cache file for the tracklist.
+            if ($MediaFileCount == 1) {
+              $txt = ('<tracklist>');
+              $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);  
+              $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND); }
+            // / If the audio count is greater than 0, this code will save the id3 information for the song in the PHP cache file and write the track scr information to the XML cache file..
+            if ($MediaFileCount > 0) {  
+              // / Write XML cachefile data.
+              if (isset($SongImageFile2)) {  
+                if (file_exists($InstLoc.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg')) {
+                  $ImageTags = '<image>'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg</image>'; } }
+              if (!isset($SongImageFile2)) {  
+                $ImageTags = ''; }
+              if (!file_exists($InstLoc.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg')) {
+                $ImageTags = ''; }
+              $txt = ('<track><title>'.$MediaFile.'</title><location>'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$PlaylistName.'.Playlist/'.$MediaFile.'</location>'.$ImageTags.'</track>');
+              $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);  
+              $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND);
+              // / Write PHP cachefile data.
+              $txt = ('$MediaFileCount = '.$MediaFileCount.'; $MediaFileName = '.$MediaFile.'; $PLSongTitle = '.$PLSongTitle.'; $PLSongArtist = '.$PLSongArtist.'; $PLSongAlbum = '.$PLSongAlbum.'; $PLSongImage = '.$PLSongImage.'; ');
+              $MAKEPLCacheFile2 = file_put_contents($PlaylistCacheFile2, $txt.PHP_EOL , FILE_APPEND);  
+              $MAKEplCacheFile2 = file_put_contents($playlistCacheFile2, $txt.PHP_EOL , FILE_APPEND); } } }
+          // / The following code will write the closing tags to the XML file in the event that there were audio files detected.
+          if ($MediaFileCount >= 1) {  
+            // / Write XML cachefile data.
+            $txt = ('</tracklist></playlist>');
+            $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);  
+            $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND); }
+
+  // / The following code converts the selected media files to device friendly formats and places them into the playlist directory.
+  foreach (($_POST['streamSelected']) as $StreamFile) {
+    $pathname = $CloudTempDir.'/'.$StreamFile;
+    $oldPathname = $CloudUsrDir.$StreamFile;
+    copy ($oldPathname, $pathname);
+    if ($StreamFile == '.' or $StreamFile == '..' or is_dir($pathname) or is_dir($oldPathname)) continue;
+      $txt = ('OP-Act: User '.$UserID.' selected to StreamFile '.$StreamFile.' from CLOUD.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+      $filename = pathinfo($pathname, PATHINFO_FILENAME);
+      $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
+        if (in_array($oldExtension, $PLAudioArr)) {
+          $ext = (' -f ' . 'ogg');
+          $bitrate = 'auto';                 
+          if ($bitrate = 'auto' ) {
+            $br = ' '; } 
+          elseif ($bitrate != 'auto' ) {
+            $br = (' -ab ' . $bitrate . ' '); }
+          $pathname = $CloudUsrDir.$StreamFile;
+          $newPathname = $playlistDir.'/'.$filename.'.ogg';
+          $txt = ("OP-Act, Executing ffmpeg -i $pathname$ext$br$newPathname on ".$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+          shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); }  
+        if (in_array($oldExtension, $PLAudioOGGArr)) {
+          copy ($oldPathname, $playlistDir.'/'.$StreamFile); } 
+      
+    // / The following code is performed if the user has selected a video file for streaming that is not already in mp4 format.    
+    if (in_array($ext, $PLVideoArr)) { 
       shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
-      $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming in '.$pathname.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+      $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming to '.$pathname.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+    // / The following code is performed if the user has selected a video file for streaming that is already in mp4 format.    
+    if (in_array($ext, $PLVideoMP4Arr)) { 
+      copy($oldPathname, $newPathname);
+      $txt = ('OP-Act: Copied '.$oldPathname.' for streaming to '.$pathname.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+
+    } }
 
 // / The following code is performed if the user has selected or uploaded a standard image file for
 // /  "Document Scanning" using OpenCV and https://github.com/vipul-sharma20/document-scanner
+
+/* Tp emab;e this development feature, erease comments AND SEARCH HRC2806
 if (isset($_POST['scanDocSelected'])) {
   $txt = ('OP-Act: Initiated HRDocScan on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -888,30 +1020,56 @@ if (isset($_POST['scanDocSelected'])) {
           $txt = ('OP-Act: Copied '.$pathname.'.'.$extension
             .'/'.$Date.'.txt to '.$newPathname." on $Time".'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+/* To emab;e this development feature, erease the these comments AND SEARCH HRC2806 */
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
-  $CleanFiles = glob($CloudTemp.$UserID.'/*');
+  $CleanFiles = scandir($CloudTempDir);
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html') continue;
-      if ($time - filemtime($CleanFile) >= 900) { // Every 15 mins.
-        if (!is_dir($CleanFile)) {
-          unlink($CleanFile); }
-        if (is_dir($CleanFile)) {
-          $objects1 = scandir($CleanFile); 
+    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html' or $CleanFile == '.AppLogs') continue;
+      if ($time - filemtime($CloudTempDir.'/'.$CleanFile) >= 900) { // Every 15 mins.
+        if (!is_dir($CloudTempDir.'/'.$CleanFile)) {
+          unlink($CloudTempDir.'/'.$CleanFile); 
+          $txt = ('OP-Act: Cleaned '.$CleanFile.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        if (is_dir($CloudTempDir.'/'.$CleanFile)) {
+          $objects1 = scandir($CloudTempDir.'/'.$CleanFile); 
           foreach ($objects1 as $object1) { 
-            if ($object1 != "." && $object1 != ".." && $object1) { 
-              if (!is_dir($CleanFile.'/'.$object1)) {
-                unlink($CleanFile.'/'.$object1); }
-              if (is_dir($CleanFile."/".$object1)) { 
-                @rmdir($CleanFile."/".$object1); } } } } 
-          if (!file_exists($CleanFile)) { 
-            $txt = ('OP-Act: '."Cleaned $CleanFile on $Time".'.');
-            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-          if (file_exists($CleanFile)) { 
-            $txt = ('ERROR HRC2797, Could not delete temp file '.$CleanFile.' on '.$Time.'.');
-            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } } 
+            if ($object1 == '.' or $object1 == '..') continue; 
+              if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) {
+                unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
+                $txt = ('OP-Act: Cleaned '.$object1.' on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+              if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) { 
+                  $objects2 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
+                  foreach ($objects2 as $object2) { 
+                    if ($object2 == '.' or $object2 == '..') continue;
+                      if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) {
+                        unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
+                        $txt = ('OP-Act: Cleaned '.$object2.' on '.$Time.'.');
+                        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+                      if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) { 
+                          $objects3 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
+                          foreach ($objects3 as $object3) { 
+                            if ($object3 == '.' or $object3 == '..') continue;
+                              if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) {
+                                unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
+                                $txt = ('OP-Act: Cleaned '.$object3.' on '.$Time.'.');
+                                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+                              if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) { 
+                                @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
+                                $txt = ('OP-Act: Cleaned directory '.$object3.' on '.$Time.'.');
+                                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
+                        @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
+                        $txt = ('OP-Act: Cleaned directory '.$object2.' on '.$Time.'.');
+                        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
+                @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
+                $txt = ('OP-Act: Cleaned directory '.$object1.' on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+                @rmdir($CloudTempDir.'/'.$CleanFile); 
+                $txt = ('OP-Act: Cleaned directory '.$CleanFile.' on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }  
 
   $bytes = sprintf('%u', filesize($DisplayFile));
   if ($bytes > 0) {
