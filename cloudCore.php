@@ -790,12 +790,10 @@ if (isset($_POST['streamSelected'])) {
     die($txt); }
   
   // / The following code detects which types of files are selected and creates the cache and playlist environment, including directories and cache files.
+  // / We also generate a playlist.xml file for osmplayer. We don't wind up using this, but the core functionality is here for compatibility purposes.
   $txt = ('<?xml version="1.0" encoding="UTF-8"?> <playlist version="1" xmlns="'.$URL.'/HRProprietary/HRCloud2/Applications/osmplayer">');
   $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);
   $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND);
-  $txt = ('<?php');
-  $MAKEPLCacheFile2 = file_put_contents($PlaylistCacheFile2, $txt.PHP_EOL , FILE_APPEND);  
-  $MAKEplCacheFile2 = file_put_contents($playlistCacheFile2, $txt.PHP_EOL , FILE_APPEND); 
   foreach (($_POST['streamSelected']) as $MediaFile) {
     // / The following code will only create cache data if the $MediaFile is in the $PLMediaArr.     
         $pathname = $CloudUsrDir.$MediaFile;
@@ -811,17 +809,20 @@ if (isset($_POST['streamSelected'])) {
           getid3_lib::CopyTagsToComments($pathname);
           // / If id3v2 title tags are set, return them as a variable.
           if(isset($id3Tags['tags']['id3v2']['title'])) {
-            $PLSongTitle = $id3Tags['tags']['id3v2']['title'][0]; }
+            $PLSongTitle = $id3Tags['tags']['id3v2']['title'][0]; 
+            $PLSongTitle = str_replace(str_split('\\/[]{};:>#*\'<'), '', ($PLSongTitle)); }
           if(!isset($id3Tags['tags']['id3v2']['title'])) {
             $PLSongTitle = ''; }
           // / If id3v2 artist tags are set, return them as a variable.
           if(isset($id3Tags['tags']['id3v2']['artist'])) {
-            $PLSongArtist = $id3Tags['tags']['id3v2']['artist'][0]; }
+            $PLSongArtist = $id3Tags['tags']['id3v2']['artist'][0]; 
+            $PLSongArtist = str_replace(str_split('\\/[]{};:>$#*\'<'), '', ($PLSongArtist)); }
           if(!isset($id3Tags['tags']['id3v2']['artist'])) {
             $PLSongArtist = ''; }
           // / If id3v2 album tags are set, return them as a variable.
           if(isset($id3Tags['tags']['id3v2']['album'])) {
-            $PLSongAlbum = $id3Tags['tags']['id3v2']['album'][0]; }
+            $PLSongAlbum = $id3Tags['tags']['id3v2']['album'][0]; 
+            $PLSongAlbum = str_replace(str_split('\\/[]{};:>#*\'<'), '', ($PLSongAlbum)); }
           if(!isset($id3Tags['tags']['id3v2']['album'])) {
             $PLSongAlbum = ''; }
           // / If id3v2 image tags are set, return it as an image data variable as well as a .jpg file in the .Cache directory..
@@ -829,9 +830,13 @@ if (isset($_POST['streamSelected'])) {
             $PLSongImage = 'data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); } 
             $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
             $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
-            $SongImageFile2 = $CloudTempDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg'; 
+            $SongImageFileRAW = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
+            $SongImageFile2 = $CloudTempDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
+            $SongImageFile2RAW = $CloudTempDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
             $MAKECacheImageFile = file_put_contents($PLSongImageDATA, $SongImageFile);
-            $MAKECacheImageFile2 = file_put_contents($PLSongImageDATA, $SongImageFile2);               
+            $MAKECacheImageFileRAW = file_put_contents($PLSongImageDATA, $SongImageFileRAW);
+            $MAKECacheImageFile2 = file_put_contents($PLSongImageDATA, $SongImageFile2);  
+            $MAKECacheImageFile2RAW = file_put_contents($PLSongImageDATA, $SongImageFile2RAW);                   
           if(!isset($id3Tags['comments']['picture'][0])) {
             $PLSongImage = ''; }
             // / If the audio count is one, this code will open tags within our XML cache file for the tracklist.
@@ -853,7 +858,7 @@ if (isset($_POST['streamSelected'])) {
               $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);  
               $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND);
               // / Write PHP cachefile data.
-              $txt = ('$MediaFileCount = '.$MediaFileCount.'; $MediaFileName = '.$MediaFile.'; $PLSongTitle = '.$PLSongTitle.'; $PLSongArtist = '.$PLSongArtist.'; $PLSongAlbum = '.$PLSongAlbum.'; $PLSongImage = '.$PLSongImage.'; ');
+              $txt = ('<?php $MediaFileCount'.$MediaFileCount.' = \''.$MediaFileCount.'\'; $MediaFileName'.$MediaFileCount.' = \''.$MediaFile.'\'; $PLSongTitle'.$MediaFileCount.' = \''.$PLSongTitle.'\'; $PLSongArtist'.$MediaFileCount.' = \''.$PLSongArtist.'\'; $PLSongAlbum'.$MediaFileCount.' = \''.$PLSongAlbum.'\'; $PLSongImage'.$MediaFileCount.' = \''.$PLSongImage.'\';?>');
               $MAKEPLCacheFile2 = file_put_contents($PlaylistCacheFile2, $txt.PHP_EOL , FILE_APPEND);  
               $MAKEplCacheFile2 = file_put_contents($playlistCacheFile2, $txt.PHP_EOL , FILE_APPEND); } } }
           // / The following code will write the closing tags to the XML file in the event that there were audio files detected.
