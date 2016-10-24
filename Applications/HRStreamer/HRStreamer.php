@@ -18,13 +18,6 @@
     function goBack() {
       window.history.back(); }
       var index = 0;
-      function nextSong(){
-    $('#song').attr('src', songsrc[index++]); }
-
-    $("#song").bind('ended', nextSong());
-    $(document).ready(function(){
-        $('#song')[0].play();
-    });
 </script>
 </head>
 <body>
@@ -37,7 +30,6 @@ if (!file_exists($WPFile)) {
   die('ERROR!!! HRS26, WordPress was not detected on the server.'); }
   else {
     require($WPFile); } 
-
 // / Detect WordPress and set global variables.
 $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
 $Date = date("m_d_y");
@@ -52,23 +44,19 @@ $LogFile = ($SesLogDir.'/'.$Date.'.txt');
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
-
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   die('ERROR!!! HRS43, You are not logged in on '.$Time.'!'); }
-
 if (file_exists($getID3File)) {
   require($getID3File); }
 if (!file_exists($getID3File)) {
   $txt = ('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   die('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!'); }
-
 // / Set POST variables.-
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $_POST['playlistSelected'] = $_GET['playlistSelected']; }
-
 // / The following code is performed whnenever there is a playlistSelected.
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $PlaylistName = $_POST['playlistSelected'];  
@@ -114,6 +102,8 @@ if (file_exists($PlaylistDir)) {
   $PlaylistCacheDir = $PlaylistDir.'/.Cache';
   $PlaylistCacheFile = $PlaylistCacheDir.'/cache.php';
   $PlaylistFiles = scandir($PlaylistDir); 
+
+  require($PlaylistCacheFile);
   if (!file_exists($PlaylisrCacheFile)) {
     @mkdir($PlaylistCacheDir, 0755); 
     $txt = '<?php';
@@ -142,7 +132,7 @@ if (file_exists($PlaylistDir)) {
     if (in_array($oldExtension, $PLImageArr)) {
       array_push($PlaylistArtArr, $PlaylistFile); 
       $PLImageCount++; } } }
-usleep(500);
+usleep(300);
 if (!file_exists($PlaylistDir)) { 
   $txt = ('ERROR!!! HRS122, The selected playlist does not exist on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -155,30 +145,20 @@ echo ('<div align="center" style="padding-bottom:2px; width:200px; float:right; 
 foreach ($PlaylistSongArr as $PlaylistSong) {
   if ($PlaylistSong == '.' or $PlaylistSong == '..' or is_dir($PlaylistSong)) continue;
     $SongCount++; 
-    echo('</div><div id="PlaylistSong'.$SongCount.'" name="PlaylistSong'.$SongCount.'" style="display:block; width:200px; float:right; clear:right;"><hr />');
-    $getID3 = new getID3;
-    $id3Tags = $getID3->analyze($pathname);
-    getid3_lib::CopyTagsToComments($pathname);
-    $PLSongTitle = $id3Tags['tags']['id3v2']['title'][0];
-    $PLSongArtist = $id3Tags['tags']['id3v2']['artist'][0]; 
-    $PLSongAlbum = $id3Tags['tags']['id3v2']['album'][0]; ?>
-    <div align="left"><p><strong><i><a style="float:left;"><?php echo $SongCount.'. '; ?></a></i></strong><img id="hideplay<?php echo $SongCount; ?>" name="hideplay<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar');" style="float:left; padding-right:5px; padding-left:5px; display:none;" src="Applications/HRStreamer/Resources/streamflipped.png">
-    <img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar');" style="float:left; padding-right:5px; padding-left:5px; display:block;" src="Applications/HRStreamer/Resources/stream.png">
-    <img id="Delete<?php echo $SongCount; ?>" name="Delete<?php echo $SongCount; ?>" style="float:left; padding-right:5px; margin-right:110px" src="Applications/HRStreamer/Resources/deletesmall.png"></p></div>
+    echo('</div><div id="PlaylistSong'.$SongCount.'" name="PlaylistSong'.$SongCount.'" style="display:block; width:200px; float:right; clear:right;"><hr />'); ?>
+    <div align="left"><p><strong><i><a style="float:left;"><?php echo $SongCount.'. '; ?></a></i></strong><img id="hideplay<?php echo $SongCount; ?>" name="hideplay<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>');" style="float:left; padding-right:5px; padding-left:5px; display:none;" src="Applications/HRStreamer/Resources/streamflipped.png">
+    <img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>');" style="float:left; padding-right:5px; padding-left:5px; display:block;" src="Applications/HRStreamer/Resources/stream.png"></p></div>
   <?php
     echo nl2br("\n".'<strong>'.$PlaylistSong.'</strong>'."\n"); 
     echo nl2br('<div align="center"><p id="moreInfoLink'.$SongCount.'" style="display:block;" onclick="toggle_visibility(\'PlaylistSongInfo'.$SongCount.'\'); toggle_visibility(\'moreInfoLink'.$SongCount.'\');"><i>More Info</i></p></div>'); ?>
     <div id="PlaylistSongInfo<?php echo $SongCount; ?>" name="PlaylistSongInfo<?php echo $SongCount; ?>" style="display:none;"><?php 
     echo nl2br('<div align="center"><p onclick="toggle_visibility(\'PlaylistSongInfo'.$SongCount.'\'); toggle_visibility(\'moreInfoLink'.$SongCount.'\');"><i>Less Info</i></p></div>');
-    echo nl2br('<a id="moreInfo" name="moreInfo"><i>Artist: </i>'.$PLSongArtist."\n".'<i>Title: </i>'.$PLSongTitle."\n".'<i>Album: </i>'.$PLSongAlbum.'</a>'); 
-    if(isset($id3Tags['comments']['picture'][0])) {
-      $Image='data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); ?>
+    echo nl2br('<a id="moreInfo" name="moreInfo"><i>Artist: </i>'.${'PLSongArtist'.$SongCount}."\n".'<i>Title: </i>'.${'PLSongTitle'.$SongCount}."\n".'<i>Album: </i>'.${'PLSongAlbum'.$SongCount}.'</a>'); ?>
 
-<div align="center"><img id="FileImage" src="<?php echo @$Image;?>" style="max-width:100px; max-height:100px;"></div>
-<?php } ?>
+<div align="center"><img id="FileImage" src="<?php echo ${'PLSongImage'.$SongCount};?>" style="max-width:100px; max-height:100px;" onclick="document.getElementById('AlbumImage').src='<?php echo ${'PLSongImage'.$SongCount};?>'"></div>
+
 </div></div>
 <?php }
-
 $RandomImageFile = 'Applications/HRStreamer/Resources/RandomImageFile.png'; ?>
 
 <div id="artwork" name="artwork" align="center" style="max-width:65%;">
@@ -188,9 +168,6 @@ $RandomImageFile = 'Applications/HRStreamer/Resources/RandomImageFile.png'; ?>
 </div> 
 
 <div id="media" name="media" align="center" style="max-width:65%;">
-<div align="center" id="autosong" name="autosong">
-  <audio id="song" name="song" preload="auto" controls="true" autoplay="true" src="" type="audio/mp3" style="width:390px;"></audio>
-</div>
 <?php  
 $SongCount = 0;    
 foreach ($PlaylistFiles as $PlaylistFile) {
@@ -199,33 +176,31 @@ foreach ($PlaylistFiles as $PlaylistFile) {
   $pathname = $PlaylistDir.'/'.$PlaylistFile; ?>
 <script type="text/javascript">
     function vidplay<?php echo $SongCount; ?>() {
-       var audio<?php echo $SongCount; ?> = document.getElementById("song<");
-       var button<?php echo $SongCount; ?> = document.getElementById("play");
+       var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
+       var button<?php echo $SongCount; ?> = document.getElementById("play<?php echo $SongCount; ?>");
        if (audio<?php echo $SongCount; ?>.paused) {
-          audio<?php echo $SongCount; ?>.play();
+          audio<?php echo $SongCount; ?>.play<?php echo $SongCount; ?>();
           button<?php echo $SongCount; ?>.textContent = "||"; } 
        else {
-          audio<?php echo $SongCount; ?>.pause();
+          audio<?php echo $SongCount; ?>.pause<?php echo $SongCount; ?>();
           button<?php echo $SongCount; ?>.textContent = ">"; } }
     function restart<?php echo $SongCount; ?>() {
-        var audio<?php echo $SongCount; ?> = document.getElementById("song");
+        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
         audio<?php echo $SongCount; ?>.currentTime = 0; }
     function skip<?php echo $SongCount; ?>(value) {
-        var audio<?php echo $SongCount; ?> = document.getElementById("song");
+        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
         audio<?php echo $SongCount; ?>.currentTime += value; 
         songsrc.push("<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>"); }      
 </script>
-<div align="center" id="buttonbar" name="buttonbar" style="display:none;">
+<div align="center" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar<?php echo $SongCount; ?>" style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
-    <button id="restart" onclick="restart();">&#8634;</button> 
-    <button id="rew" onclick="skip(-10)">&lt;&lt;</button>
-    <button id="fastFwd" onclick="skip">&gt;&gt;</button>
-</div>         
-<?php } ?>
+<div align="center" id="autosong" name="autosong">
+  <audio id="song<?php echo $SongCount; ?>" name="song<?php echo $SongCount; ?>" preload="auto" controls="true" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
+<hr />
+</div> 
+</div>        
+<?php } ?> 
 </div>
-
-
-
 
 
