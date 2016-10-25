@@ -514,7 +514,7 @@ if (isset( $_POST['convertSelected'])) {
             $safedirTEMP = $CloudTmpDir.$filename;
             $safedirTEMP2 = pathinfo($safedirTEMP, PATHINFO_EXTENSION);
             $safedirTEMP3 = $CloudTmpDir.pathinfo($safedirTEMP, PATHINFO_BASENAME);            
-            $safedir2 = $CloudTmpDir.$safedirTEMP2;
+            $safedir2 = $CloudTmpDir.$safedirTEMP3;
             mkdir("$safedir2", 0755, true);
             chmod($safedir2, 0755);
             $safedir3 = ($safedir2.'.7z');
