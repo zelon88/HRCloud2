@@ -1,21 +1,4 @@
-<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
-<script type="text/javascript">
-function goBack() {
-    window.history.back(); }
-</script>
 <?php
-if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-if (isset($_POST['UserDirPOST'])) {
-  $_POST['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDirPOST']); 
-  $_POST['UserDir'] = $_POST['UserDirPOST']; }
-if (isset($_POST['UserDir'])) {
-  $_POST['UserDir'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDir']); }
-if(isset($_GET['playlistSelected'])) {
-  $_GET['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['playlistSelected']);
-  $_POST['playlistSelected'] = $_GET['playlistSelected']; }
-set_time_limit(0);
 // / APPLICATION INFORMATION ...
 // / HRCloud2, Copyright on 7/12/2016 by Justin Grimes, www.github.com/zelon88
 // / 
@@ -43,6 +26,21 @@ set_time_limit(0);
 // / OpenCV, Scikit, Scypy, and ImageMagick.
 
 // / -----------------------------------------------------------------------------------
+
+// / Before we begin we will sanitize API inputs.
+if (isset($_GET['UserDirPOST'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+  $_POST['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+  $_POST['UserDir'] = $_GET['UserDirPOST']; }
+if (isset($_POST['UserDir'])) {
+  $_POST['UserDir'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDir']); 
+  if (isset($_POST['UserDirPOST'])) {
+    $_POST['UserDir'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDirPOST']); } 
+  if (!isset($_POST['UserDirPOST'])) {
+    $_POST['UserDirPOST'] = $_POST['UserDir']; } }
+if(isset($_GET['playlistSelected'])) {
+  $_POST['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['playlistSelected']); }
+set_time_limit(0);
 
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
@@ -902,130 +900,7 @@ if (isset($_POST['streamSelected'])) {
     if (in_array($ext, $PLVideoMP4Arr)) { 
       copy($oldPathname, $newPathname);
       $txt = ('OP-Act: Copied '.$oldPathname.' for streaming to '.$pathname.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
-
-    } }
-
-// / The following code is performed if the user has selected or uploaded a standard image file for
-// /  "Document Scanning" using OpenCV and https://github.com/vipul-sharma20/document-scanner
-
-/* Tp emab;e this development feature, erease comments AND SEARCH HRC2806
-if (isset($_POST['scanDocSelected'])) {
-  $txt = ('OP-Act: Initiated HRDocScan on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    if (!is_array($_POST["scanDocSelected"])) {
-    $_POST['scanDocSelected'] = array($_POST['scanDocSelected']); }
-    foreach ($_POST['scanDocSelected'] as $key=>$scanDoc) {
-      $txt = ('OP-Act: User '.$UserID.' selected to DocScan file '.$scanDoc.' from CLOUD.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-      if (!file_exists($CloudUsrDir.$scanDoc)) {
-        $txt = ('OP-Act: ERROR HRC2667, '.$scanDoc.' does not exist!');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-        echo nl2br('ERROR HRC2667, '.$scanDoc.' does not exist!'."\n");
-        die(); }
-    $CUD = $CloudUsrDir.$scanDoc;
-    $CTD = $CloudTmpDir.$scanDoc;
-    copy ($CUD, $CTD);
-    if (file_exists($CTD)) {
-      $txt = ('OP-Act: Copied '.$CUD.' to '.$CTD.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-    if (!file_exists($CTD)) {
-      $txt = ('ERROR!!! HRC2678, Could not copy '.$CUD.' to '.$CTD.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-      echo nl2br ($txt."\n"); 
-      die(); }
-    $allowed = array('jpg', 'jpeg', 'bmp', 'png');
-    $pdfarray = array('pdf');
-    $filename = pathinfo($CTD, PATHINFO_FILENAME);
-    $filename1 = pathinfo($CTD, PATHINFO_FILENAME);
-    $oldExtension = pathinfo($CTD, PATHINFO_EXTENSION);
-    if (in_array($oldExtension, $pdfarray)) {
-      shell_exec('convert -density 150 -trim '.$CTD.'.jpg -quality 100 -sharpen 0x1.0 '.$CUD);
-      $CTD = $CTD.'.jpg'; 
-      $txt = ('OP-Act: Converted '.$CUD.' to '.$CTD.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-      $oldExtension = 'jpg'; }
-    if (in_array($oldExtension,$allowed)) { 
-      list($Width, $Height) = getimagesize($CUD);
-      $EXFreshScript = $InstLoc.'/Applications/document-scanner-master.zip';
-      $EXTempScript = $InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS';
-      mkdir($EXTempScript);
-      chmod($EXTempScript, 0755);
-      $ExtractScripts = shell_exec('unzip '.$EXFreshScript.' -d '.$EXTempScript);
-      chmod($EXTempScript.'/document-scanner', 0755);
-      $TempScript = $EXTempScript.'/document-scanner/scan.py';
-        chmod($EXTempScript.'/document-scanner', 0755);
-        $TempScriptGlob = glob($TempScript);
-        foreach ($TempScriptGlob as $TSG) {
-          chmod($TSG, 0755); }
-        chmod($EXTempScript.'/document-scanner/pyimagesearch', 0755);
-        $TempScript1 = $EXTempScript.'/document-scanner/pyimagesearch';
-        $TempScriptGlob = glob($TempScript1);
-        foreach ($TempScriptGlob as $TSG) {
-          chmod($TSG, 0755); }
-      $OutputDoc = $InstLoc.'/DATA/'.$UserID.'/DOCSCANTEMP.jpg';
-      $Code = 'DOCSCANTEMP.jpg';
-      $newCode = $InstLoc.'/DATA/'.$UserID.'/DOCSCANTEMP.jpg';
-      $ScriptData = file_get_contents($TempScript);
-      $SwapCode = str_replace($Code, $newCode, $ScriptData);
-      $WriteCode = file_put_contents($TempScript, $SwapCode);
-      $txt = ('OP-Act: Modified the code of '.$TempScript.' with '.$SwapCode.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-      $txt = ('OP-Act: Executing! '.$TempScript.'with command on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-      chmod($TempScript, 0755);
-      $cmd = ('python '.$TempScript.' --image '.$CTD); 
-      $command = escapeshellarg($cmd);
-      $output = shell_exec($command);
-      $txt = ('OP-Act: Execute complete! '.$TempScript.' was executed with command "'.$cmd.'"  on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-            if (!file_exists($OutputDoc)) {
-          echo nl2br('WARNING HRC2728, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
-            converting it to a different format first.'."\n");
-          $txt = ('OP-Act: ERROR HRC2728, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.py');
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/imutils.pyc');
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__init__.py');
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__init__.pyc');
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/transform.py');
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/transform.pyc');
-      @unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__/imutils.cpython-35.pyc');
-      @unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__/__init__.cpython-35.pyc');
-      @unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__/transform.cpython-35.pyc');
-      @rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch/__pycache__');
-      rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/pyimagesearch');
-      unlink($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner/scan.py');
-      rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS/document-scanner');
-      rmdir($InstLoc.'/DATA/'.$UserID.'/TEMPSCRIPTS');
-      $txt = ('OP-Act: Deleted '.$TempScript.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-
-        if (!file_exists($OutputDoc)) {
-          echo nl2br('ERROR HRC2751, There was an error scanning '.$scanDoc.'. Please try renaming the file, or 
-            converting it to a different format first.'."\n");
-          $txt = ('OP-Act: ERROR HRC2751, DocScan of '.$scanDoc.' failed. Output file does not exist on '.$Time.'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-          die(); }
-        if (file_exists($OutputDoc)) {
-          if (isset($_POST['scandocuserfilename'])) {
-            $OutputDoc2 = $_POST['scandocuserfilename']; } 
-          if (!isset($_POST['scandocuserfilename'])) {
-            $OutputDoc2 = 'Scanned.'.$oldExtension; }
-            copy($OutputDoc, $CloudUsrDir.$OutputDoc2); }
-        if (($_POST['outputScanDocToPDF']) == '1') {
-          $extension = 'pdf'; 
-          $pathname = $CloudUsrDir.'scanned.'.$oldExtension;
-          $filename1 = pathinfo($pathname, PATHINFO_FILENAME);
-          $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-          $newFile = $filename . '.' . $extension;
-          $newPathname = $CloudUsrDir.$newFile;
-          $OutputDoc = $newPathname;
-          shell_exec ("unoconv -o $newPathname -f $extension $pathname"); 
-          $txt = ('OP-Act: Copied '.$pathname.'.'.$extension
-            .'/'.$Date.'.txt to '.$newPathname." on $Time".'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
-/* To emab;e this development feature, erease the these comments AND SEARCH HRC2806 */
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
@@ -1146,14 +1021,10 @@ $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } ?>
 <hr />
 
 <?php }
-if (isset($_GET['playlistSelected'])) {
-include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
-die(); } 
-if (isset($_POST['playlistSelected'])) {
+if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
 include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
 die(); } 
 
-if (!isset($_POST['search'])) {
-include($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); } 
+include($InstLoc.'/Applications/displaydirectorycontents_72716/index.php');
 
 ?>
