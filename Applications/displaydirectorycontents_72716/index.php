@@ -1,15 +1,11 @@
-<?php 
-// / This file was downloaded on 7/27/16 by Justin G. for HRCloud2 from 
-// / https://css-tricks.com/snippets/php/display-styled-directory-contents/
-// / Thank you to the author, Chris Coyier!!!
-// / https://css-tricks.com/author/chriscoyier/
-// / IMPORTANT NOTE: THIS SCRIPT IS NO LONGER EXECUTABLE OUTSIDE OF HRC2 !!!
-// / IMPORTANT NOTE: THIS SCRIPT WILL ONLY FUNCTION WHEN INCLUDED OR REQUIRED BY HRC2 !!!
-
-?>
 <!doctype html>
 <html>
 <head>
+<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+function goBack() {
+    window.history.back(); }
+</script>
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>Cloud Contents</title>
@@ -112,9 +108,9 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <form><a><input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
 <input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form> | 
 <input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');"> | 
-<img id='copyButton' name='copyButton' onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
-<img id='dearchive' name='dearchive' onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
+<img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
+<img id='dearchive' name='dearchive' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
+<img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img id='searchButton' name="searchButton" title="Search "alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
 <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
 <a><input type='submit' name="newFolder" id="newFolder" value='New Folder' style="dispaly:none;" onclick="toggle_visibility('makedir'); toggle_visibility('dirToMake');">
   <input type='submit' name="newFile" id="newFile" value='New File' style="dispaly:none;" onclick="toggle_visibility('upload'); toggle_visibility('filesToUpload');"></form></a></div>
@@ -332,7 +328,7 @@ Are you sure?
 				$sizekey=filesize($CloudUsrDir.$dirArray[$index]);
 		}
 if (isset($_POST['UserDirPOST'])) {
-  $namehref1 = $namehref.' UserDirPOST : '.$UserDirPOST; }
+  $namehref1 = $namehref.'?UserDirPOST='.$UserDirPOST; }
 if (!isset($_POST['UserDirPOST'])) {
   $namehref1 = $namehref; }
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
@@ -430,6 +426,25 @@ $.ajax( {
 <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
 
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+$("#makedir").click(function(){
+var Selected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+Selected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { UserDir : $("#dirToMake").val()},
+
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+});
+});
+</script>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#copyFileSubmit").click(function(){
@@ -649,25 +664,6 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { streamSelected : streamSelected,
         play : "1")},
-
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#makedir").click(function(){
-var Selected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-Selected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { UserDir : $("#dirToMake").val()},
 
     success: function(data) {
         window.location.href = "cloudCore.php";
