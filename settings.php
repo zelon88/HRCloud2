@@ -5,6 +5,22 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCloud2 | Settings</title>
 <?php
+
+// / Before we begin we will sanitize API inputs.
+if (isset($_GET['UserDirPOST'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
+  $_POST['UserDir'] = $_GET['UserDirPOST']; 
+  usleep(250); }
+
+if (isset($_GET['UserDir'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
+  $_POST['UserDirPOST'] = $_GET['UserDir'];
+  $_POST['UserDir'] = $_GET['UserDir']; 
+  usleep(250); }
+
+set_time_limit(0);
+
 if (!file_exists('config.php')) {
   echo nl2br('</head><body>ERROR!!! Settings9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
@@ -32,7 +48,9 @@ $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
-$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
   echo nl2br('</head><body>ERROR!!! Settings27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
   die (); }

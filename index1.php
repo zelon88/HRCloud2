@@ -3,6 +3,19 @@
 <head>
 <title>HRCloud2 | Home </title>
 <?php 
+
+// / Before we begin we will sanitize API inputs.
+if (isset($_GET['UserDirPOST'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
+  $_POST['UserDir'] = $_GET['UserDirPOST']; }
+
+if (isset($_GET['UserDir'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
+  $_POST['UserDirPOST'] = $_GET['UserDir'];
+  $_POST['UserDir'] = $_GET['UserDir']; }
+
+set_time_limit(0);
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
@@ -25,6 +38,7 @@ else {
     require($WPFile); } 
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
@@ -35,9 +49,19 @@ if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 
-if (!file_exists($UserConfig)) {
-require ($CreateUserFiles); }
+if (!file_exists($UserConfig)) { 
+  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
+  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
+  $txt = ('Created a user config file on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+if (!file_exists($UserConfig)) { 
+  $txt = ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
 require ($UserConfig); }
 

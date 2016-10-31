@@ -30,16 +30,14 @@
 // / Before we begin we will sanitize API inputs.
 if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
   $_POST['UserDir'] = $_GET['UserDirPOST']; }
-if (isset($_POST['UserDir'])) {
-  $_POST['UserDir'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDir']); 
-  if (isset($_POST['UserDirPOST'])) {
-    $_POST['UserDir'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['UserDirPOST']); } 
-  if (!isset($_POST['UserDirPOST'])) {
-    $_POST['UserDirPOST'] = $_POST['UserDir']; } }
-if(isset($_GET['playlistSelected'])) {
-  $_POST['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['playlistSelected']); }
+
+if (isset($_GET['UserDir'])) {
+  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
+  $_POST['UserDirPOST'] = $_GET['UserDir'];
+  $_POST['UserDir'] = $_GET['UserDir']; }
+
 set_time_limit(0);
 
 // / The follwoing code checks if the configuration file.php file exists and 
@@ -106,6 +104,9 @@ if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
 if (!file_exists($CloudTmpDir)) { 
@@ -145,7 +146,18 @@ if (isset ($InternalIP)) {
 if (isset ($ExternalIP)) { 
   unset ($ExternalIP); } 
 
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+if (!file_exists($UserContacts)) { 
+  $ContactsData = ('<?php ;');
+  $MAKECacheFile = file_put_contents($UserContacts, $ContsctsData.PHP_EOL , FILE_APPEND); 
+  $txt = ('Created a user contacts file on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+if (!file_exists($UserContacts)) { 
+  $txt = ('ERROR!!! HRC2154, There was a problem creating the user contacts file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2154, There was a problem creating the user contacts file on '.$Time.'!'); }
+if (file_exists($UserContacts)) {
+require ($UserContacts); }
+
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
   $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
@@ -791,8 +803,8 @@ if (isset($_POST['pdfworkSelected'])) {
 
         // / Error handler for if the output file does not exist.
         if (!file_exists($newPathname)) {
-          echo nl2br('ERROR!!! HRC2620, There was a problem converting your file! Please rename your file or try again later.'."\n"); 
-          $txt = ('ERROR!!! HRC2620, '."Could not convert $pathname to $newPathname on $Time".'.'); 
+          echo nl2br('ERROR!!! HRC2620, There was a problem converting your file! Please rename your file or try again later.'."\n".'--------------------'."\n"); 
+          $txt = ('ERROR!!! HRC2620, '."Could not convert $pathname to $newPathname on $Time".'!'); 
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
           die(); } } } // / BROKEN BRACKETS SOMEWHERE IN FILE BEFORE THIS POINT 9/3/16.
 
@@ -837,7 +849,7 @@ if (isset($_POST['streamSelected'])) {
     $txt = ('OP-Act: Created a playlist cache file on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (strpos($PlaylistCacheDir, '.Playlist') == 'false') {
-    $txt = ('ERROR!!! HRC2746, There was a problem verifying the '.$PlaylistDir.' on '.$Time.'.');
+    $txt = ('ERROR!!! HRC2746, There was a problem verifying the '.$PlaylistDir.' on '.$Time.'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     die($txt); }
   
@@ -846,6 +858,8 @@ if (isset($_POST['streamSelected'])) {
   $txt = ('<?xml version="1.0" encoding="UTF-8"?> <playlist version="1" xmlns="'.$URL.'/HRProprietary/HRCloud2/Applications/osmplayer">');
   $MAKEPLCacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);
   $MAKEplCacheFile = file_put_contents($playlistCacheFile, $txt.PHP_EOL , FILE_APPEND);
+  if (!is_array($_POST['streamSelected'])) {
+    $_POST['streamSelected'] = array($_POST['streamSelected']); } 
   foreach (($_POST['streamSelected']) as $MediaFile) {
     // / The following code will only create cache data if the $MediaFile is in the $PLMediaArr.     
         $pathname = $CloudUsrDir.$MediaFile;
@@ -922,6 +936,8 @@ if (isset($_POST['streamSelected'])) {
 
   // / The following code converts the selected media files to device friendly formats and places them into the playlist directory.
   foreach (($_POST['streamSelected']) as $StreamFile) {
+    $txt = ('OP-Act: Initiated Streamer on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     $pathname = $CloudTempDir.'/'.$StreamFile;
     $oldPathname = $CloudUsrDir.$StreamFile;
     copy ($oldPathname, $pathname);
@@ -958,6 +974,8 @@ if (isset($_POST['streamSelected'])) {
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
+  $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   $CleanFiles = scandir($CloudTempDir);
   $time = time();
   foreach ($CleanFiles as $CleanFile) {
@@ -1079,6 +1097,6 @@ if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
 include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
 die(); } 
 
-include($InstLoc.'/Applications/displaydirectorycontents_72716/index.php');
+require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php');
 
 ?>
