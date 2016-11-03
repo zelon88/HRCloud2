@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +9,6 @@ if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
   $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
   $_POST['UserDir'] = $_GET['UserDirPOST']; }
-
 if (isset($_GET['UserDir'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
   $_POST['UserDirPOST'] = $_GET['UserDir'];
@@ -20,63 +18,62 @@ set_time_limit(0);
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! Index2-19, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('config.php'); }
+
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
+    echo nl2br('</head><body>ERROR!!! Index2-13, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
-// / Verify that WordPress is installed.
+
+// / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! Index26, WordPress was not detected on the server!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! Index2-26, WordPress was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($WPFile); } 
+
+// / The following code sets variables for the session.
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+$CreateUserFiles = 'createUserFiles.php';
 if (isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
 if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+$AppDir = $InstLoc.'/DATA/'.$UserID.'/.Applications/';
+$ContactsDir = $InstLoc.'/DATA/.'$UserID.'/.AppLogs/Contacts/';
+$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 
-if (!file_exists($UserContacts)) { 
-  $ContactsData = ('<?php ;');
-  $MAKECacheFile = file_put_contents($UserContacts, $ContsctsData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user contacts file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserContacts)) { 
-  $txt = ('ERROR!!! HRC2Index162, There was a problem creating the user contacts file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2Index162, There was a problem creating the user contacts file on '.$Time.'!'); }
-if (file_exists($UserContacts)) {
-require ($UserContacts); }
-
+// / The following code ensures the Contacts directory exists and creates it if it does not. Also creates empty Contacts file.
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
   $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
   $txt = ('Created a user config file on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2Index174, There was a problem creating the user config file on '.$Time.'!'); 
+  $txt = ('ERROR!!! HRC2Index2-151, There was a problem creating the user config file on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2Index174, There was a problem creating the user config file on '.$Time.'!'); }
+  die ('ERROR!!! HRC2Index2-151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
 require ($UserConfig); }
 
+// / The following code determines the color scheme that the user has selected. 
+// / May require a refresh to take effect.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
@@ -108,6 +105,7 @@ if ($ColorScheme == '5') {
     <div class="nav">
       <ul>
         <li class="Cloud"><a href="index1.php">Cloud</a></li>
+        <li class="Drive"><a href="index2.php">Drive</a></li>
         <li class="Settings"><a href="settings.php"> Settings</a></li>
         <li class="Logs"><a href="logs.php">Logs</a></li>
         <li class="Help"><a href="help.php">Help</a></li>
@@ -124,7 +122,7 @@ if ($ColorScheme == '5') {
   <button id='button2' name='button2' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
   <button id='button3' name='button3' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
   <button id='button4' name='button4' class="button" style="float: left; display: block;" onclick="window.open('HRAIMiniGui.php','HRAI','resizable,height=400,width=650'); return false;">++</button>
-  <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
+  <form action="index2.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
   </div>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">
@@ -141,33 +139,24 @@ if ($ColorScheme == '5') {
 document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
-<div id="cloudContentsDiv" align='center' style="width:550px;">
-<div align="center" id="filesOverview" name="filesOverview" style="width:400px;">
-<p><h3>Files</h3></p>
-	<div id="filesOverview1" name="fileOverview1">
-	  <p><a href="index1.php" id="gotomyFiles"><button name="gotomyFiles" >View My Cloud<strong></strong></button></a> | <a id="gotomyFiles"><button name="gotomyFiles">New File...<strong></strong></button></p>
+<div id="cloudContentsDiv" align='center'>
+  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+</div>
 <?php 
-$files = scandir($CloudDir, SCANDIR_SORT_DESCENDING);
-$newest_file = $files[0]; ?>
-	<p>Recent Files: <a href="index1.php"><i><?php echo $newest_file; ?></i></a></p>
-	</div>
-</div>
-<hr />
-<div align="center" id="notesOverview" name="notesOverview" style="width:400px;">
-<p><h3>Notes</h3></p>  
-	<div id="notesOverview1" name="notesOverview1">
-    <p><a href="" id="gotomyNotes"><button name="gotomyNotes" >View My Notes<strong></strong></button></a> | <a id="gotomyNotes"><button name="gotomyFiles">New Note...<strong></strong></button></p>
-
-  <p>Recent Notes: <a href=""><i></i></a></p>
-    </div>
-</div>
-<hr />
-<div align="center" id="overview" name="overview" style="width:400px;">
-<p><h3>Contacts</h3></p>
-	<div id="contactsOverview" name="contactsOverview">
-    </div>
-</div>
-  <p>Recent Notes: <a href=""><i></i></a></p>
+if ($ShowHRAI == '1') {
+  $HRAIHeight = '185'; }
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '80'; } ?>
+<script>
+;(function($){
+    $(document).ready(function(){
+        $('#cloudContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
+        $(window).resize(function(){
+            $('#cloudContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
+        });
+    });
+})(jQuery);
+</script>
 </div>
 </body>
 </html>

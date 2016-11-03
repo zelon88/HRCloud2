@@ -32,7 +32,6 @@ if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
   $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
   $_POST['UserDir'] = $_GET['UserDirPOST']; }
-
 if (isset($_GET['UserDir'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
   $_POST['UserDirPOST'] = $_GET['UserDir'];
@@ -48,13 +47,14 @@ if (!file_exists('config.php')) {
 else {
   require('config.php'); }
 
-$WPFile = '/var/www/html/wp-load.php';
 // / Verify that WordPress is installed.
+$WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC243, WordPress was not detected on the server.'."\n"); }
   else {
     require($WPFile); } 
 
+// / Set variables for the session.
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserIDRAW = get_current_user_id();
@@ -67,8 +67,12 @@ $LogFile = ($SesLogDir.'/'.$Date.'.txt');
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
+
+// / The following code creates required HRCloud2 files if they do not exist. Also installs user 
+// / specific files the first time a new user logs in.
 if (!file_exists($CloudLoc)) {
-  echo ('ERROR!!! HRC259, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
+  echo ('ERROR!!! HRC259, There was an error verifying the CloudLoc as a valid directory. 
+    Please check the config.php file and refresh the page.');
   die(); }
 if (!file_exists($CloudDir)) {
   mkdir($CloudDir, 0755); }
@@ -98,12 +102,17 @@ $JICInstallLogs = @mkdir($SesLogDir, 0755);
       if (!file_exists($LIF1)) {
       copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
 
+// / The following code sets a target directory within a users Cloud drive and prefixes 
+// / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
 if (isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
 if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+$AppDir = $InstLoc.'/DATA/'.$UserID.'/.Applications/';
+$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
+$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
@@ -112,6 +121,7 @@ if (!file_exists($CloudUsrDir)) {
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
+
 // / Checks to see that the user is logged in.
 if ($UserIDRAW == '') {
   echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
@@ -137,6 +147,8 @@ if ($Accept_GPLv3_OpenSource_License !== '1') {
   die ('ERROR!!! HRC2124, You must read and completely fill out the config.php file located in your
     HRCloud2 installation directory before you can use this software!'); } 
 
+// / The following code checks that the user has agreed to the terms of the GPLv3 before cleaning the config variables.
+// / If the user has not read the GPLv3 the script will die!!!
 if ($Accept_GPLv3_OpenSource_License == '1') { 
   $CleanConfig = '1';
   $INTIP = 'localhost';
@@ -146,18 +158,7 @@ if (isset ($InternalIP)) {
 if (isset ($ExternalIP)) { 
   unset ($ExternalIP); } 
 
-if (!file_exists($UserContacts)) { 
-  $ContactsData = ('<?php ;');
-  $MAKECacheFile = file_put_contents($UserContacts, $ContsctsData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user contacts file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserContacts)) { 
-  $txt = ('ERROR!!! HRC2154, There was a problem creating the user contacts file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2154, There was a problem creating the user contacts file on '.$Time.'!'); }
-if (file_exists($UserContacts)) {
-require ($UserContacts); }
-
+// / The following code verifies that a user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
   $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
@@ -170,6 +171,29 @@ if (!file_exists($UserConfig)) {
 if (file_exists($UserConfig)) {
 require ($UserConfig); }
 
+// / The following code ensures the Contacts directory exists and creates it if it does not. Also creates empty Contacts file.
+if (!file_exists($UserContacts)) { 
+  $ContactsData = ('<?php ?>');
+  if (!file_exists($ContactsDir)) {
+    mkdir($ContactsDir); }
+  $MAKEContactsFile = file_put_contents($UserContacts, $ContactsData.PHP_EOL , FILE_APPEND); 
+  $txt = ('Created a user contacts file on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+if (!file_exists($UserContacts)) { 
+  $txt = ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); }
+if (file_exists($UserContacts)) {
+require ($UserContacts); }
+
+// / The following code ensures the Notes directory exists and creates it if it does not.
+if (!file_exists($NotesDir)) { 
+  mkdir($NotesDir); }
+if (!file_exists($NotesDir)) { 
+  $txt = ('ERROR!!! HRC2186, There was a problem creating the user notes directory on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2186, There was a problem creating the user notes directory on '.$Time.'!'); } 
+
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
@@ -179,9 +203,11 @@ if(isset($_POST["upload"])) {
     $_FILES["filesToUpload"] = array($_FILES["filesToUpload"]); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file !== '.' or $file !== '..' or $file == 'index.html') {
+      $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);      
+      $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
       $file = str_replace(" ", "_", $file);
       $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
-      $DangerousFiles = array('js', 'php', 'html', 'css',);
+      $DangerousFiles = array('js', 'php', 'html', 'css');
       $F0 = pathinfo($file, PATHINFO_EXTENSION);
       if (in_array($F0, $DangerousFiles)) { 
         $file = str_replace($F0, $F0.'SAFE', $file); }
