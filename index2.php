@@ -59,6 +59,20 @@ $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 
+// / Checks to see that the user is logged in.
+if ($UserIDRAW == '') {
+  echo nl2br('ERROR!!! HRC2Index2-100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if ($UserIDRAW == '0') {
+  echo nl2br('ERROR!!! HRC2Index2-103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if (!isset($UserIDRAW)) {
+  echo nl2br('ERROR!!! HRC2Index2-106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+
 // / The following code ensures the Contacts directory exists and creates it if it does not. Also creates empty Contacts file.
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');

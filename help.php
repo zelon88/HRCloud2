@@ -19,21 +19,23 @@ if (isset($_GET['UserDir'])) {
 
 set_time_limit(0);
 
+// / Tje fp;;pwomg cpde checks that the config file exists.
 if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! Settings9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Help9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('config.php'); }
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! Settings16, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
+    echo nl2br('</head><body>ERROR!!! HRC2Help16, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
-// / Verify that WordPress is installed.
+
+// / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! Settings22, WordPress was not detected on the server!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Help22, WordPress was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($WPFile); } 
@@ -48,10 +50,13 @@ $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  echo nl2br('</head><body>ERROR!!! Settings27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Help27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($UserConfig); } 
+
+// / The following code determines the color scheme that the user has selected. 
+// / May require a refresh to take effect.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {

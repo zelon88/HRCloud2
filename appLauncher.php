@@ -59,6 +59,20 @@ $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 
+// / Checks to see that the user is logged in.
+if ($UserIDRAW == '') {
+  echo nl2br('ERROR!!! HRC2AL100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if ($UserIDRAW == '0') {
+  echo nl2br('ERROR!!! HRC2AL103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if (!isset($UserIDRAW)) {
+  echo nl2br('ERROR!!! HRC2AL106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+
 // / The following code verifies that a user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
@@ -153,7 +167,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="cloudContentsDiv" align='center'>
-  <iframe src="<?php echo $Application; ?>" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="<?php echo $Application; ?>" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px; max-width:815; margin-top:-4px; margin-left:-4px; border:double;" onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {

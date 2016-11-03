@@ -17,23 +17,26 @@ if (isset($_GET['UserDir'])) {
 
 set_time_limit(0);
 if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! Logs9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Logs9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('config.php'); }
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! Logs16, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
+    echo nl2br('</head><body>ERROR!!! HRC2Logs16, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
-// / Verify that WordPress is installed.
+
+// / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! Logs22, WordPress was not detected on the server!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Logs22, WordPress was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($WPFile); } 
+
+// / The following code sets the variables for the session.    
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserIDRAW = get_current_user_id();
@@ -47,10 +50,27 @@ $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  echo nl2br('</head><body>ERROR!!! Logs27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Logs27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
   die (); }
 else {
     require($UserConfig); } 
+
+// / The following code checks to see that the user is logged in.
+if ($UserIDRAW == '') {
+  echo nl2br('ERROR!!! HRC2Logs100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if ($UserIDRAW == '0') {
+  echo nl2br('ERROR!!! HRC2Logs103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if (!isset($UserIDRAW)) {
+  echo nl2br('ERROR!!! HRC2Logs106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+
+// / The following code determines the color scheme that the user has selected. 
+// / May require a refresh to take effect.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
@@ -64,7 +84,7 @@ if ($ColorScheme == '4') {
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
-  echo nl2br('</head><body>ERROR!!! Logs53, You are not logged in!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Logs53, You are not logged in!'."\n".'</body></html>'); 
   die (); }
 ?>
     <script type="text/javascript">

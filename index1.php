@@ -60,6 +60,20 @@ $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 
+// / The following code checks to see that the user is logged in.
+if ($UserIDRAW == '') {
+  echo nl2br('ERROR!!! HRC2Index100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if ($UserIDRAW == '0') {
+  echo nl2br('ERROR!!! HRC2Index103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if (!isset($UserIDRAW)) {
+  echo nl2br('ERROR!!! HRC2Index106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+
 // / The following code verifies that a user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
@@ -84,7 +98,7 @@ if (!file_exists($UserContacts)) {
 if (!file_exists($UserContacts)) { 
   $txt = ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); }
+  die ('ERROR!!! HRC2Index162, There was a problem creating the user contacts file on '.$Time.'!'); }
 if (file_exists($UserContacts)) {
 require ($UserContacts); }
 
@@ -92,9 +106,9 @@ require ($UserContacts); }
 if (!file_exists($NotesDir)) {
   mkdir($NotesDir); }
 if (!file_exists($NotesDir)) { 
-  $txt = ('ERROR!!! HRC2186, There was a problem creating the user notes directory on '.$Time.'!'); 
+  $txt = ('ERROR!!! HRC2Index186, There was a problem creating the user notes directory on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2186, There was a problem creating the user notes directory on '.$Time.'!'); } 
+  die ('ERROR!!! HRC2Index186, There was a problem creating the user notes directory on '.$Time.'!'); } 
 
 // / The following code returns the newest file or folder for each Cloud module. 
 $files = scandir($CloudDir, SCANDIR_SORT_DESCENDING);
@@ -193,7 +207,7 @@ document.getElementById("HRAIMini").submit;
 <div id="appsOverview" name="appsOverview" style="height:160px; float:right; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 10px;"><p><h3>Apps</h3></p></div>
   <div id="appsOverview1" name="appsOverview1">
-    <form action="appIndex.php">
+    <form action="appLauncher.php">
     <p><input type="submit" value="Go To Apps"></input></form></p>
     <p>Recent Apps: <a href="index2.php"><i><?php echo $newest_app; ?></i></a></p>
   </div>

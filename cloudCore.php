@@ -47,14 +47,14 @@ if (!file_exists('config.php')) {
 else {
   require('config.php'); }
 
-// / Verify that WordPress is installed.
+// / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC243, WordPress was not detected on the server.'."\n"); }
   else {
     require($WPFile); } 
 
-// / Set variables for the session.
+// / The following code sets variables for the session.
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserIDRAW = get_current_user_id();
@@ -122,7 +122,7 @@ if (!file_exists($CloudTmpDir)) {
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
 
-// / Checks to see that the user is logged in.
+// / The following code checks to see that the user is logged in.
 if ($UserIDRAW == '') {
   echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
@@ -265,6 +265,7 @@ if (isset($_POST["download"])) {
               mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
             else {
     copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } }
+    
 // / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 

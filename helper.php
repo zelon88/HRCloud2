@@ -15,18 +15,19 @@ function goBack() {
 // / documentation about HRCloud2.
 
 if (!file_exists('config.php')) {
-  echo nl2br('</head>ERROR!!! Helper12, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  echo nl2br('</head>ERROR!!! HRC2Helper12, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
   require('config.php'); }
 $WPFile = '/var/www/html/wp-load.php';
 
-// / Verify that WordPress is installed.
+// / The following Code verifies that WordPress is installed.
 if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! Helper20, WordPress was not detected on the server.'."\n"); }
+  echo nl2br('</head>ERROR!!! HRC2Helper20, WordPress was not detected on the server.'."\n"); }
   else {
     require($WPFile); } 
 
+// / Tje fp;;pwomg cpde sets the variables for the session.
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserIDRAW = get_current_user_id();
@@ -40,7 +41,7 @@ $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 if (!file_exists($CloudLoc)) {
-  echo ('</head>ERROR!!! Helper36, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
+  echo ('</head>ERROR!!! HRC2Helper36, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
   die(); }
 if (!file_exists($CloudDir)) {
   mkdir($CloudDir, 0755); }
@@ -76,10 +77,25 @@ if (!file_exists($CloudTmpDir)) {
   mkdir($CloudTmpDir, 0755); }
 $UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
 if (!file_exists($UserConfig)) {
-  echo nl2br('</head>ERROR!!! Settings27, User Cache file was not detected on the server!'."\n"); 
+  echo nl2br('</head>ERROR!!! HRC2Helpers27, User Cache file was not detected on the server!'."\n"); 
   die (); }
 else {
     require($UserConfig); } 
+
+// / Checks to see that the user is logged in.
+if ($UserIDRAW == '') {
+  echo nl2br('ERROR!!! HRC2Helper100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if ($UserIDRAW == '0') {
+  echo nl2br('ERROR!!! HRC2Helper103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if (!isset($UserIDRAW)) {
+  echo nl2br('ERROR!!! HRC2Helper106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
