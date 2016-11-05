@@ -122,9 +122,6 @@ if (isset($_POST['LoadDefaults'])) {
   $NEWVirusScan = $VirusScan; 
   $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND);
-  $NEWWordPressIntegration = $WordPressIntegration; 
-  $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
-  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); } } ?></div>
 <br>
 <hr />
