@@ -2,10 +2,10 @@
 **[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
 # HRCloud2
-A WIP home-scale private Cloud Platform.
+A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assistant** that **Converts files, OCR's images, Creates documents, Creates archives, Handles your directories, Manages user accounts, Scans for viruses, Protects your server,** and **runs your own private AppLauncher!** 
 
 # Screenshots
-![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2_10_11_16_18.png)	
+![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2+11-5-16.png?raw=truefs)	
 ![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2_9-8-16_12.png)	
 
 # A Secure, Private Cloud Storage Platform for your Home Server!
