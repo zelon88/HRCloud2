@@ -5,70 +5,22 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCLoud2 | Application Settings</title>
 <?php
-if (!file_exists('config.php')) {
-  echo nl2br('<head><title>HRCloud2 | Settings - ERROR AS9</title></head>ERROR!!! AS9, Cannot process the HRCloud2 configuration file (config.php)!'."\n"); 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AppSettings11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('config.php'); }
-// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
-if ($ShowHRAI == '1') {
-  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('<head><title>HRCloud2 | Settings - ERROR AS16</title></head>ERROR!!! AS16, Cannot process the HRAI Helper file!'."\n"); }
-  else {
-    require('Applications/HRAI/HRAIHelper.php'); } }
-// / Verify that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('<head><title>HRCloud2 | Settings - ERROR AS22</title></head>ERROR!!! AS22, WordPress was not detected on the server!'."\n"); 
+  require('sanitizeCore.php'); }
+
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AppSettings19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-    require($WPFile); } 
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
-// / appSettings.php requires log locations. The following code creates the log files and directories if they
-// / do not exist (if cloudCore.php hasn't made them yet).
-$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
-$LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
-$LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
-$LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-if (!file_exists($LogLoc)) {
-$JICInstallLogs = @mkdir($LogLoc, 0755); 
-  foreach ($LogInstallFiles as $LIF) {
-    if ($LIF == '.' or $LIF == '..') continue;
-      if (!file_exists($LIF)) {
-      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } } }
-if (!file_exists($SesLogDir)) {
-$JICInstallLogs = @mkdir($SesLogDir, 0755); 
-  foreach ($LogInstallFiles1 as $LIF1) {
-    if ($LIF1 == '.' or $LIF1 == '..') continue;
-      if (!file_exists($LIF1)) {
-      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
-// / Load the user cache file;
-if (!file_exists($UserConfig)) {
-  echo nl2br('</head>ERROR!!! AS27, User Cache file was not detected on the server!'."\n"); 
-  die (); }
-else {
-    require($UserConfig); } 
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
+  require('commonCore.php'); }
+
 // / Prepare the echo value for the color input field.
 if ($ColorScheme == '1') {
   $CSEcho = 'Blue (Default)'; }
@@ -80,16 +32,21 @@ if ($ColorScheme == '4') {
   $CSEcho = 'Grey'; }
 if ($ColorScheme == '5') {
   $CSEcho = 'Black'; }
-// / Prepare the echo value for the virus input field.
-if ($VirusScan == '1') {
-  $VSEcho = 'Enabled'; }
-if ($VirusScan !== '1') {
-  $VSEcho = 'Disabled'; }
 // / Prepare the echo value for the show HRAI input field.
 if ($ShowHRAI == '1') {
   $SHRAIEcho = 'Enabled'; }
 if ($ShowHRAI !== '1') {
   $SHRAIEcho = 'Disabled'; }
+// / Prepare the echo value for the virus input field.
+if ($VirusScan == '1') {
+  $VSEcho = 'Enabled'; }
+if ($VirusScan !== '1') {
+  $VSEcho = 'Disabled'; }
+// / Prepare the echo value for the WordPress Integration input field.
+if ($ShowHRAI == '1') {
+  $WPIEcho = 'Enabled'; }
+if ($ShowHRAI == '0') {
+  $WPIEcho = 'Disabled'; }
 
 $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 

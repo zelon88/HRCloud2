@@ -21,10 +21,15 @@ else {
 
 // / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile) or $WordPressIntegration == '0') {
-  $WPFile = $InstLoc.'/Applications/wordpress_11416/wp-load.php'; }
 if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! HRC2CC20, WordPress was not detected on the server.'."\n"); }
+  $WPArch  = $InstLoc.'/Applications/wordpress_11416.zip';
+  $VARDir = '/var/www/html';
+  echo nl2br('</head>ERROR!!! HRC2CC20, WordPress was not detected on the server.'."\n");
+  shell_exec('unzip '.$WPArch.' -d '.$VARDir); 
+  $VARDir = null;
+  unset($VARDir); }
+if (!file_exists($WPFile)) {
+  echo nl2br('</head>ERROR!!! HRC2CC20, WordPress was not detected on the server. And could not be installed.'."\n"); }
   else {
     require($WPFile); } 
 
