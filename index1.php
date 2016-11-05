@@ -5,112 +5,21 @@
 <title>HRCloud2 | Home </title>
 <?php 
 
-// / Before we begin we will sanitize API inputs.
-if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
-  $_POST['UserDirPOST'] = $_GET['UserDir'];
-  $_POST['UserDir'] = $_GET['UserDir']; }
-
-set_time_limit(0);
-
-// / The follwoing code checks if the configuration file.php file exists and 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2Index1-10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('config.php'); }
+  require('sanitizeCore.php'); }
 
-// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
-if ($ShowHRAI == '1') {
-  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
-  else {
-    require('Applications/HRAI/HRAIHelper.php'); } }
-
-// / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! Index26, WordPress was not detected on the server!'."\n".'</body></html>'); 
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-    require($WPFile); } 
-
-// / The following code sets variables for the session.
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-if (isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
-if (!isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'); }
-$CloudUsrDir = $CloudDir.$UserDirPOST; 
-$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$AppDir = $InstLoc.'/Applications/';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
-$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/contacts.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/notes.php';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-$defaultApps = array('.', '..', '', 
-'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'displaydirectorycontents_72716');
-
-// / The following code checks to see that the user is logged in.
-if ($UserIDRAW == '') {
-  echo nl2br('ERROR!!! HRC2Index100, You are not logged in!'."\n"); 
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if ($UserIDRAW == '0') {
-  echo nl2br('ERROR!!! HRC2Index103, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if (!isset($UserIDRAW)) {
-  echo nl2br('ERROR!!! HRC2Index106, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-
-// / The following code verifies that a user config file exists and creates one if it does not.
-if (!file_exists($UserConfig)) { 
-  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
-  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user config file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2Index174, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2Index174, There was a problem creating the user config file on '.$Time.'!'); }
-if (file_exists($UserConfig)) {
-require ($UserConfig); }
-
-// / The following code ensures the Contacts directory exists and creates it if it does not. Also creates Contacts directory.
-if (!file_exists($UserContacts)) { 
-  $ContactsData = ('<?php ?>');
-  if (!file_exists($ContactsDir)) {
-    mkdir($ContactsDir); }
-  $MAKEContactsFile = file_put_contents($UserContacts, $ContactsData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user contacts file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserContacts)) { 
-  $txt = ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2Index162, There was a problem creating the user contacts file on '.$Time.'!'); }
-if (file_exists($UserContacts)) {
-require ($UserContacts); }
-
-// / The following code ensures the Notes directory exists and creates it if it does not.
-if (!file_exists($NotesDir)) {
-  mkdir($NotesDir); }
-if (!file_exists($NotesDir)) { 
-  $txt = ('ERROR!!! HRC2Index186, There was a problem creating the user notes directory on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2Index186, There was a problem creating the user notes directory on '.$Time.'!'); } 
+  require('commonCore.php'); }
 
 // / The following code returns the newest file or folder for each Cloud module. 
 $files = scandir($CloudDir, SCANDIR_SORT_DESCENDING);
@@ -129,22 +38,6 @@ if ($newest_contact == '.' or $newest_contact == '..') {
   $newest_contact = 'No contacts to show!'; }
 if ($newest_note == '.' or $newest_note == '..') {
   $newest_note = 'No notes to show!'; }
-
-// / The following code determines the color scheme that the user has selected. 
-// / May require a refresh to take effect.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); }
-
 ?>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">

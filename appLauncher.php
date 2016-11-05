@@ -3,102 +3,21 @@
 <head>
 <title>HRCloud2 | Apps </title>
 <?php 
-
-// / Before we begin we will sanitize API inputs.
-if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
-  $_POST['UserDirPOST'] = $_GET['UserDir'];
-  $_POST['UserDir'] = $_GET['UserDir']; }
-
-set_time_limit(0);
-
-// / The follwoing code checks if the configuration file.php file exists and 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL22, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('config.php'); }
-// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
-if ($ShowHRAI == '1') {
-  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! HRC2AL29, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
-  else {
-    require('Applications/HRAI/HRAIHelper.php'); } }
+  require('sanitizeCore.php'); }
 
-// / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL36, WordPress was not detected on the server!'."\n".'</body></html>'); 
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-    require($WPFile); } 
-
-// / The following code sets variables for the session.
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-$CreateUserFiles = 'createUserFiles.php';
-if (isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
-if (!isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'); }
-$CloudUsrDir = $CloudDir.$UserDirPOST; 
-$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$AppDir = $InstLoc.'/Applications';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
-$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-
-// / Checks to see that the user is logged in.
-if ($UserIDRAW == '') {
-  echo nl2br('ERROR!!! HRC2AL100, You are not logged in!'."\n"); 
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if ($UserIDRAW == '0') {
-  echo nl2br('ERROR!!! HRC2AL103, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if (!isset($UserIDRAW)) {
-  echo nl2br('ERROR!!! HRC2AL106, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-
-// / The following code verifies that a user config file exists and creates one if it does not.
-if (!file_exists($UserConfig)) { 
-  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
-  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user config file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2AL170, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2AL70, There was a problem creating the user config file on '.$Time.'!'); }
-if (file_exists($UserConfig)) {
-require ($UserConfig); }
-
-// / The following code ensures the Contacts directory exists and creates it if it does not. Also creates Contacts directory.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); }
+  require('commonCore.php'); }
 
 // / Detect which App to launch, or display the appLauncherOverview.
 if (isset($_POST['launchApplication'])) {
@@ -139,10 +58,10 @@ if (isset($_POST['launchApplication'])) {
       </ul>
     </div>
 
-<div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
+<div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
-  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
+  <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="815" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
   <div id='HRAIButtons1' name='HRAIButtons1' style="margin-left:15%;">
   <button id='button0' name='button0' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button1'); toggle_visibility('button2'); document.getElementById('HRAIMini').style.height = '0px';" >-</button>
   <button id='button1' name='button1' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button1'); toggle_visibility('button2'); document.getElementById('HRAIMini').style.height = '75px';" >+</button>
@@ -167,7 +86,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="cloudContentsDiv" align='center'>
-  <iframe src="appIndex.php" id="cloudContents" name="cloudContents" width=810px style="min-height:350px; max-height:950px; margin-top:-4px; margin-left:-4px; border:inset;" onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="appIndex.php" id="cloudContents" name="cloudContents" width=815px style="min-height:350px; max-height:950px; margin-top:-4px; margin-left:-4px; border:inset;" onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {

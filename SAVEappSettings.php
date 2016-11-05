@@ -10,33 +10,24 @@ function goBack() {
     window.history.back(); }
 </script>
 <?php
-// / Verify that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! HRC2SAVEAppSettings16, WordPress was not detected on the server.'."\n"); }
-  else {
-    require($WPFile); } 
-require("config.php");
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-if ($UserIDRAW == '0' or $UserIDRAW == '') {
-  echo nl2br('</head><body>ERROR!!! HRC2SAVEAppSettings24, You are not logged in!'."\n".'</body></html>'); 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2SAS10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-if (!file_exists($UserConfig)) {
-  die('ERROR!!! HRC2SAVEAppSettings29, There was no user cachefile found on '.$Time.'!'); }
-include($UserConfig);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$LogFile = ($SesLogDir.'/'.$Date.'.txt');
-$LogFile1 = ($SesLogDir.'/'.$Date.'.TEMPVIRUSLOG.txt');
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
+else {
+  require('sanitizeCore.php'); }
+
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2SAS19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require('commonCore.php'); }
+
+// / Secutity related processing.
+$SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
 
 if (!isset($YUMMYSaltHash)) {
@@ -97,16 +88,21 @@ if (isset($_POST['Save'])) {
     $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
     echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
-  if (isset($_POST['NEWVirusScan'])) {
-    $NEWVirusScan = $_POST['NEWVirusScan'];
-    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
-    echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
   if (isset($_POST['NEWShowHRAI'])) {
     $NEWShowHRAI = $_POST['NEWShowHRAI'];
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
+  if (isset($_POST['NEWVirusScan'])) {
+    $NEWVirusScan = $_POST['NEWVirusScan'];
+    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
+  if (isset($_POST['NEWWordPressIntegration'])) {
+    $NEWVirusScan = $_POST['NEWWordPressIntegration'];
+    $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    echo nl2br('Saved New WordPress Integration Settings.'."\n"); }
 ?>
 <hr />
 <?php
@@ -125,6 +121,9 @@ if (isset($_POST['LoadDefaults'])) {
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
   $NEWVirusScan = $VirusScan; 
   $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
+  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND);
+  $NEWWordPressIntegration = $WordPressIntegration; 
+  $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); } } ?></div>
 <br>

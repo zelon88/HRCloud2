@@ -16,26 +16,32 @@ if (isset($_GET['UserDir'])) {
   $_POST['UserDir'] = $_GET['UserDir']; }
 
 set_time_limit(0);
+
 // / The follwoing code checks if the configuration file.php file exists and 
 // / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! Index19, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2Index3-19, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('config.php'); }
+
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
 if ($ShowHRAI == '1') {
   if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! Index13, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
+    echo nl2br('</head><body>ERROR!!! HRC2Index13, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
   else {
     require('Applications/HRAI/HRAIHelper.php'); } }
+
 // / Verify that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
+if (!file_exists($WPFile) or if ($WordPressIntegration == '0')) {
+  $WPFile = $InstLoc.'/Applications/wordpress_11416/wp-load.php'; }
 if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! Index26, WordPress was not detected on the server!'."\n".'</body></html>'); 
-  die (); }
-else {
+  echo nl2br('</head>ERROR!!! HRC2Index3-20, WordPress was not detected on the server.'."\n"); }
+  else {
     require($WPFile); } 
+
+// / The following code sets the variables for the session.
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $CloudDir = $CloudLoc.'/'.$UserID;
@@ -59,9 +65,9 @@ if (!file_exists($UserConfig)) {
   $txt = ('Created a user config file on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); 
+  $txt = ('ERROR!!! HRC2Index3-151, There was a problem creating the user config file on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); }
+  die ('ERROR!!! HRC2Index3-151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
 require ($UserConfig); }
 

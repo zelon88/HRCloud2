@@ -27,172 +27,21 @@
 
 // / -----------------------------------------------------------------------------------
 
-// / Before we begin we will sanitize API inputs.
-if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
-  $_POST['UserDirPOST'] = $_GET['UserDir'];
-  $_POST['UserDir'] = $_GET['UserDir']; }
-
-set_time_limit(0);
-
-// / The follwoing code checks if the configuration file.php file exists and 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('config.php')) {
-  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('config.php'); }
+  require('sanitizeCore.php'); }
 
-// / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! HRC243, WordPress was not detected on the server.'."\n"); }
-  else {
-    require($WPFile); } 
-
-// / The following code sets variables for the session.
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = ($SesLogDir.'/'.$Date.'.txt');
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-
-// / The following code creates required HRCloud2 files if they do not exist. Also installs user 
-// / specific files the first time a new user logs in.
-if (!file_exists($CloudLoc)) {
-  echo ('ERROR!!! HRC259, There was an error verifying the CloudLoc as a valid directory. 
-    Please check the config.php file and refresh the page.');
-  die(); }
-if (!file_exists($CloudDir)) {
-  mkdir($CloudDir, 0755); }
-if(!file_exists($CloudTemp)) {
-  mkdir($CloudTemp);
-  copy($InstLoc.'/index.html',$CloudTemp.'index.html'); }
-if (!file_exists($CloudTempDir)) { 
-  mkdir($CloudTempDir, 0755); 
-  copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
-copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
-$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
-$LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
-$LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
-$LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-if (!file_exists($LogLoc)) {
-@mkdir($LogLoc);
-copy($InstLoc.'/index.html',$LogLoc.'/index.html');
-$JICInstallLogs = @mkdir($LogLoc, 0755); 
-  foreach ($LogInstallFiles as $LIF) {
-    if ($LIF == '.' or $LIF == '..') continue;
-      if (!file_exists($LIF)) {
-      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } } }
-if (!file_exists($SesLogDir)) {
-$JICInstallLogs = @mkdir($SesLogDir, 0755); 
-  foreach ($LogInstallFiles1 as $LIF1) {
-    if ($LIF1 == '.' or $LIF1 == '..') continue;
-      if (!file_exists($LIF1)) {
-      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
-
-// / The following code sets a target directory within a users Cloud drive and prefixes 
-// / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
-if (isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
-if (!isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'); }
-$CloudUsrDir = $CloudDir.$UserDirPOST; 
-$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$AppDir = $InstLoc.'/Applications/';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
-$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
-if (!file_exists($CloudUsrDir)) {
-  mkdir($CloudUsrDir, 0755); }
-if (!file_exists($CloudTmpDir)) { 
-  mkdir($CloudTmpDir, 0755); }
-copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
-
-// / The following code checks to see that the user is logged in.
-if ($UserIDRAW == '') {
-  echo nl2br('ERROR!!! HRC2100, You are not logged in!'."\n"); 
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if ($UserIDRAW == '0') {
-  echo nl2br('ERROR!!! HRC2103, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if (!isset($UserIDRAW)) {
-  echo nl2br('ERROR!!! HRC2106, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-
-// / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
-if ($VirusScan == '1') {
-  shell_exec('freshclam'); }
-
-// / The following code verifies and cleans the config file.  	
-if ($Accept_GPLv3_OpenSource_License !== '1') {
-  $txt = ('ERROR!!! HRC2124, The user has not accepted the end-user license aggreement in config.php!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2124, You must read and completely fill out the config.php file located in your
-    HRCloud2 installation directory before you can use this software!'); } 
-
-// / The following code checks that the user has agreed to the terms of the GPLv3 before cleaning the config variables.
-// / If the user has not read the GPLv3 the script will die!!!
-if ($Accept_GPLv3_OpenSource_License == '1') { 
-  $CleanConfig = '1';
-  $INTIP = 'localhost';
-  $EXTIP = 'localhost'; }
-if (isset ($InternalIP)) { 
-  unset ($InternalIP); }
-if (isset ($ExternalIP)) { 
-  unset ($ExternalIP); } 
-
-// / The following code verifies that a user config file exists and creates one if it does not.
-if (!file_exists($UserConfig)) { 
-  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
-  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user config file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); }
-if (file_exists($UserConfig)) {
-require ($UserConfig); }
-
-// / The following code ensures the Contacts directory exists and creates it if it does not. Also creates empty Contacts file.
-if (!file_exists($UserContacts)) { 
-  $ContactsData = ('<?php ?>');
-  if (!file_exists($ContactsDir)) {
-    mkdir($ContactsDir); }
-  $MAKEContactsFile = file_put_contents($UserContacts, $ContactsData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user contacts file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserContacts)) { 
-  $txt = ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2162, There was a problem creating the user contacts file on '.$Time.'!'); }
-if (file_exists($UserContacts)) {
-require ($UserContacts); }
-
-// / The following code ensures the Notes directory exists and creates it if it does not.
-if (!file_exists($NotesDir)) { 
-  mkdir($NotesDir); }
-if (!file_exists($NotesDir)) { 
-  $txt = ('ERROR!!! HRC2186, There was a problem creating the user notes directory on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2186, There was a problem creating the user notes directory on '.$Time.'!'); } 
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
+  die (); }
+else {
+  require('commonCore.php'); }
 
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {

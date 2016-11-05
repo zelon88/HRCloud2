@@ -25,13 +25,16 @@ $ColorScheme = '1';
 // / To show HRAI in your Cloud homepage, set $ShowHRAI to '1'. To hide HRAI in your Cloud
 // / homepage set $ShowHRAI to '0'. Default is '1'.
 $ShowHRAI = '1';
+// / To run HRCloud2 as a STANDALONE Cloud Platform: Set $WordPressIntegration to '0'.
+// / To integrate HRCloud2 into an existing WordPress blog: Set $WordPressIntegration to '1'.
+$WordPressIntegration = '1';
 // / ------------------------------
 
 // / ------------------------------
 // / Admin Login Information ...
-  $AdmLogin = 'Justin';
-  $AdmPass = 'password';
-  $UniqueServerName = 'D620-Server';
+  $AdmLogin = 'YourName';
+  $AdmPass = 'YourPassword';
+  $UniqueServerName = 'YourServer';
 // / ------------------------------
 
 // / ------------------------------  

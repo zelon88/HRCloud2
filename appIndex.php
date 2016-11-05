@@ -9,100 +9,31 @@
 function goBack() {
     window.history.back(); }
 </script>
-
 <?php
 // / This file was meant to be a resource to help users find useful 
 // / documentation about HRCloud2.
 
-if (!file_exists('config.php')) {
-  echo nl2br('</head>ERROR!!! HRC2AppIndex12, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AppIndex20, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('config.php'); }
-$WPFile = '/var/www/html/wp-load.php';
+  require('sanitizeCore.php'); }
 
-// / The following Code verifies that WordPress is installed.
-if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! HRC2AppIndex20, WordPress was not detected on the server.'."\n"); }
-  else {
-    require($WPFile); } 
-
-// / Tje fp;;pwomg cpde sets the variables for the session.
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = ($SesLogDir.'/'.$Date.'.txt');
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$AppDir = $InstLoc.'/Applications/';
-if (!file_exists($CloudLoc)) {
-  echo ('</head>ERROR!!! HRC2AppIndex36, There was an error verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.');
-  die(); }
-if (!file_exists($CloudDir)) {
-  mkdir($CloudDir, 0755); }
-if (!file_exists($CloudTempDir)) {
-  mkdir($CloudTempDir, 0755); }
-
-$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
-$LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
-$LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
-$LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-if (!file_exists($LogLoc)) {
-$JICInstallLogs = @mkdir($LogLoc, 0755); 
-  foreach ($LogInstallFiles as $LIF) {
-    if ($LIF == '.' or $LIF == '..') continue;
-      if (!file_exists($LIF)) {
-      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } } }
-if (!file_exists($SesLogDir)) {
-$JICInstallLogs = @mkdir($SesLogDir, 0755); 
-  foreach ($LogInstallFiles1 as $LIF1) {
-    if ($LIF1 == '.' or $LIF1 == '..') continue;
-      if (!file_exists($LIF1)) {
-      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
-
-if (isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
-if (!isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'); }
-$CloudUsrDir = $CloudDir.$UserDirPOST; 
-$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-if (!file_exists($CloudUsrDir)) {
-  mkdir($CloudUsrDir, 0755); }
-if (!file_exists($CloudTmpDir)) {
-  mkdir($CloudTmpDir, 0755); }
-$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
-if (!file_exists($UserConfig)) {
-  echo nl2br('</head>ERROR!!! HRC2AppIndex27, User Cache file was not detected on the server!'."\n"); 
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AppIndex28, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-    require($UserConfig); } 
-
-// / Checks to see that the user is logged in.
-if ($UserIDRAW == '') {
-  echo nl2br('ERROR!!! HRC2AppIndex100, You are not logged in!'."\n"); 
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if ($UserIDRAW == '0') {
-  echo nl2br('ERROR!!! HRC2AppIndex103, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if (!isset($UserIDRAW)) {
-  echo nl2br('ERROR!!! HRC2AppIndex106, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
+  require('commonCore.php'); }
 
 // / The following code detects the existence of installed apps for the app launcher.
 // / This code also checks that the plugin file is a valid HRCloud2 app.
+$AppDir = $InstLoc.'/Applications/';
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 $newest_app = $apps[0];
-$defaultApps = array('.', '..', '', 
-'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'displaydirectorycontents_72716');
 foreach ($apps as $app) { 
   if ($app == '.' or $app == '..' or in_array($app, $defaultApps)) continue;
     $app = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $app); 
@@ -119,21 +50,6 @@ foreach ($apps as $app) {
       require ($appLoc); 
       $txt = ('Op-Act: Initialized app '.$appName.' on '.$Time.'.'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
-
-// / The following code determines the color scheme that the user has selected. 
-// / May require a refresh to take effect.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
  ?>
 </head>
 <body>

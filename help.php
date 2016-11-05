@@ -5,70 +5,19 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCloud2 | Settings</title>
 <?php
-
-// / Before we begin we will sanitize API inputs.
-if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-
-if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
-  $_POST['UserDirPOST'] = $_GET['UserDir'];
-  $_POST['UserDir'] = $_GET['UserDir']; }
-
-set_time_limit(0);
-
-// / Tje fp;;pwomg cpde checks that the config file exists.
-if (!file_exists('config.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2Help9, Cannot process the HRCloud2 configuration file (config.php)!'."\n".'</body></html>'); 
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2Help10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('config.php'); }
-// / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
-if ($ShowHRAI == '1') {
-  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! HRC2Help16, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
-  else {
-    require('Applications/HRAI/HRAIHelper.php'); } }
+  require('sanitizeCore.php'); }
 
-// / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('</head><body>ERROR!!! HRC2Help22, WordPress was not detected on the server!'."\n".'</body></html>'); 
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2Help19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-    require($WPFile); } 
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$UserConfig = $CloudTemp.$UserID.'/'.'.AppLogs/.config.php';
-if (!file_exists($UserConfig)) {
-  echo nl2br('</head><body>ERROR!!! HRC2Help27, User Cache file was not detected on the server!'."\n".'</body></html>'); 
-  die (); }
-else {
-    require($UserConfig); } 
-
-// / The following code determines the color scheme that the user has selected. 
-// / May require a refresh to take effect.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); } 
+  require('commonCore.php'); }
 ?>
     <script type="text/javascript">
     function Clear() {    
