@@ -110,7 +110,7 @@ if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$AppDir = $InstLoc.'/DATA/'.$UserID.'/.Applications/';
+$AppDir = $InstLoc.'/Applications/';
 $ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
 $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';

@@ -59,6 +59,8 @@ $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+$defaultApps = array('.', '..', '', 
+'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'displaydirectorycontents_72716');
 
 // / The following code checks to see that the user is logged in.
 if ($UserIDRAW == '') {
@@ -121,7 +123,7 @@ $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $newest_note = $notes[0];
 if ($newest_file == '.' or $newest_file == '..') {
   $newest_file = 'No files to show!'; }
-if ($newest_app == '.' or $newest_app == '..') {
+if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
   $newest_app = 'No apps to show!'; }
 if ($newest_contact == '.' or $newest_contact == '..') {
   $newest_contact = 'No contacts to show!'; }

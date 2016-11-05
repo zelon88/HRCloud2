@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>HRCloud2 | Home </title>
+<title>HRCloud2 | Apps </title>
 <?php 
 
 // / Before we begin we will sanitize API inputs.
@@ -52,7 +52,7 @@ if (!isset($_POST['UserDir'])) {
 $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$AppDir = $InstLoc.'/DATA/'.$UserID.'/.Applications/';
+$AppDir = $InstLoc.'/Applications';
 $ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
 $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
@@ -167,7 +167,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="cloudContentsDiv" align='center'>
-  <iframe src="<?php echo $Application; ?>" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px; max-width:815; margin-top:-4px; margin-left:-4px; border:double;" onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="appIndex.php" id="cloudContents" name="cloudContents" width=810px style="min-height:350px; max-height:950px; margin-top:-4px; margin-left:-4px; border:inset;" onload="document.getElementById('loading').style.display='none';">></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {

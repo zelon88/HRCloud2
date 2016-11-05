@@ -115,7 +115,8 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 <div align='left'>
 <form action="SAVEappSettings.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
-<p style="padding-left:15px;"><strong>1.</strong> Color Scheme (IN-PROCESS!!): </p>
+<?php if ($UserIDRAW !== '1' && $UserIDRAW !== '0') { ?>
+<p style="padding-left:15px;"><strong>1.</strong> Color Scheme: </p>
   <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;"></p>
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
   <option value="1">Blue (Default)</option>
@@ -132,14 +133,18 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
+</div>
 
+<?php } 
+if ($UserIDRAW == '1') { ?>
 <p style="padding-left:15px;"><strong>3.</strong> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;"><p>
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select>
-<p style="float:center; padding-left:25%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p></div>
+<p style="float:center; padding-left:25%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<?php } ?>
 
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>
   <script type="text/javascript">
