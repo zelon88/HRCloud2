@@ -49,7 +49,7 @@ $CloudTempDir = $CloudTemp.$UserID;
 $AppDir = $InstLoc.'/Applications/';
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'wordpress_11416');
+  'displaydirectorycontents_72716', 'wordpress_11416.zip');
 
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
