@@ -131,12 +131,12 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form> | 
 <a><input type='submit' name="new" id="new" value='+' class="submitsmall" onclick="toggle_visibility('newOptionsDiv');" onclick="toggle_visibility('newFolder'); toggle_visibility('newFile');"></div>
 <img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
-<img id='dearchive' name='dearchive' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
+<img id='dearchiveButton' name='dearchiveButton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
 <img id='searchButton' name="searchButton" title="Search "alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
 <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
 <a><input type='submit' name="newFolder" id="newFolder" value='New Folder' style="dispaly:none;" onclick="toggle_visibility('makedir'); toggle_visibility('dirToMake');">
-  <input type='submit' name="newFile" id="newFile" value='New File' style="dispaly:none;" onclick="toggle_visibility('upload'); toggle_visibility('filesToUpload');"></form></a></div>
+  <input type='submit' name="newFile" id="newFile" value='New File' style="dispaly:none;" onclick="toggle_visibility('upload'); toggle_visibility('filesToUpload');"></a></div>
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
 <div align="center">
 <input type="text" name="dirToMake" id="dirToMake" style="display:none;">
@@ -461,10 +461,9 @@ $.ajax( {
 });
 });
 </script>
-<?php if (in_array($extension, $archArr)) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
-$("#dearchive").click(function(){
+$("#dearchiveButton").click(function(){
 var dearchiveSelected = new Array();
 $('input[name="corePostSelect[]"]:checked').each(function() {
 dearchiveSelected.push(this.value);
@@ -472,7 +471,7 @@ dearchiveSelected.push(this.value);
 $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
-    data: { dearchive : "1", filesToDearchive : dearchiveSelected},
+    data: { filesToDearchive : dearchiveSelected, dearchiveButton : "1"},
     success: function(data) {
         window.location.href = "cloudCore.php";
     }
@@ -480,7 +479,6 @@ $.ajax( {
 });
 });
 </script>
-<?php } ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#archiveFileSubmit").click(function(){
