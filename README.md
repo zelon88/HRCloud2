@@ -12,9 +12,7 @@ A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assis
 
 HRCloud2 is a personal Cloud CMS Platform similar to ownCloud but with far greater capability that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere. 
 
-Currently HRCloud2 is a standalone web-framework that DOES REQUIRE WordPress to be installed. THIS IS NOT A WORDPRESS PLUGIN!!! WordPress is only required to create and manage user-accounts. 
-
-HRCloud2 DOES NOT directly interact with, or add data to, a database during operation. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
+HRCloud2 can integrate with WordPress, althogh HRCloud2 can install WordPress if it does not exist. HRCloud2 uses user accounts created by WordPress, but does not itself use a database for anything other than user authenticdation. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
 
 
 # CURRENT CORE FEATURES
