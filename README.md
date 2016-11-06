@@ -46,10 +46,13 @@ HRCloud2 DOES NOT directly interact with, or add data to, a database during oper
   
 -Keeps excellent logs of everything it does.
 
+-Stream & Playlist features. (Alpha)
 
 # FUTURE CORE FEATURES
 
--Stream & Playlist features. (under development)
+-AppLauncher!!!
+
+-Apps!!!
 
 
 
