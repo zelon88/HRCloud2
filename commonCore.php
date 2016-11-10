@@ -13,11 +13,11 @@ set_time_limit(0);
 
 // / The follwoing code checks if the config.php file exists and 
 // / terminates if it does not.
-if (!file_exists('config.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
   echo nl2br('ERROR!!! HRC2CC35, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
-  require('config.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/config.php'); }
 
 // / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
@@ -96,8 +96,6 @@ $CloudTmpDir = $CloudTempDir.$UserDirPOST;
 $AppDir = $InstLoc.'/Applications/';
 $ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
 $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
-$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
@@ -142,11 +140,12 @@ if (isset ($ExternalIP)) {
   unset ($ExternalIP); } 
 
 // / HRAI Requires a helper to collect some information to complete HRCloud2 API calls (if HRAI is enabled).
-if ($ShowHRAI == '1') {
-  if (!file_exists('Applications/HRAI/HRAIHelper.php')) {
-    echo nl2br('</head><body>ERROR!!! HRC2AL29, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
-  else {
-    require('Applications/HRAI/HRAIHelper.php'); } }
+if (!function_exists('readOutputOfPHPfile')) {
+  if ($ShowHRAI == '1') {
+    if (!file_exists($InstLoc.'/Applications/HRAI/HRAIHelper.php')) {
+      echo nl2br('</head><body>ERROR!!! HRC2AL29, Cannot process the HRAI Helper file!'."\n".'</body></html>'); }
+    else {
+      require($InstLoc.'/Applications/HRAI/HRAIHelper.php'); } } }
 
 // / The following code verifies that a user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 

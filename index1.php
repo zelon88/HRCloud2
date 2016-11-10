@@ -3,6 +3,17 @@
 <html>
 <head>
 <title>HRCloud2 | Home </title>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block'; }
+    function Clear() {    
+      document.getElementById("input").value= ""; }
+</script>
 <?php 
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
@@ -24,32 +35,31 @@ else {
 // / The following code returns the newest file or folder for each Cloud module. 
 $files = scandir($CloudDir, SCANDIR_SORT_DESCENDING);
 $newest_file = $files[0];
-$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
-$newest_app = $apps[0];
-$contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
-$newest_contact = $contacts[0];
-$notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
-$newest_note = $notes[0];
 if ($newest_file == '.' or $newest_file == '..') {
   $newest_file = 'No files to show!'; }
+
+$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
+$appCount = count($apps) - count($defaultApps);
+$appCounter = 0;
+$newest_app = $apps[0];
 if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
-  $newest_app = 'No apps to show!'; }
+  $newest_app = $apps[1]; }
+if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
+  $newest_app = $apps[2]; }
+if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
+  $newest_app = 'No apps to show!'; } 
+
+$contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
+$newest_contact = $contacts[0];
 if ($newest_contact == '.' or $newest_contact == '..') {
   $newest_contact = 'No contacts to show!'; }
+
+$notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
+$newest_note = $notes[0];
+$newest_note = str_replace('.txt', '', $newest_note);
 if ($newest_note == '.' or $newest_note == '..') {
   $newest_note = 'No notes to show!'; }
 ?>
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-<script type="text/javascript">
-    function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block'; }
-    function Clear() {    
-      document.getElementById("input").value= ""; }
-</script>
 </head>
 <body>
 <div id="nav" align="center">
@@ -107,15 +117,18 @@ document.getElementById("HRAIMini").submit;
     <p>Recent Apps: <a href="index2.php"><i><?php echo $newest_app; ?></i></a></p>
   </div>
 </div>
-<div align="center" id="notesOverview" name="notesOverview" style="width:400px; border:inset; margin-top:170px; margin-bottom:2px;">
+<div align="center" id="<?php echo $appCounter; ?>Overview" name="<?php echo $appCounter; ?>Overview" style="width:400px; border:inset; margin-top:170px; margin-bottom:2px;">
 <div align="left" style="margin-left: 20px;"><p><h3>Notes</h3></p></div>  
   <div id="notesOverview1" name="notesOverview1">
+    <form action="appLauncher.php">
     <p><input type="submit" value="Go To Notes"></input></form></p>
-    <p>Recent Notes: <a href=""><i></i><?php echo $newest_note; ?></a></p>
+    <p>Recent Notes: <a href="Applications/Notes/Notes.php?editNote=<?php echo $newest_note; ?>" target="cloudContentsDiv"><i></i><?php echo $newest_note; ?></a></p>
   </div>
+<?php $appCounter++; ?>
 </div>
-<div align="center" id="overview" name="overview" style="width:400px; border:inset;">
+<div align="center" id="<?php echo $appCounter; ?>overview" name="<?php echo $appCounter; ?>overview" style="width:400px; border:inset;">
 <div align="left" style="margin-left: 20px;"><p><h3>Contacts</h3></p></div>
+    <form action="">  
   <div id="contactsOverview" name="contactsOverview">
   <p><p><input type="submit" value="Go To Contacts"></input></form></p>  
   <p>Recent Contacts: <a href=""><i><?php echo $newest_contact; ?></i></a></p>

@@ -44,7 +44,7 @@ $ShowHRAI = '1';
   // / Internal IP Address.
   $InternalIP = '192.168.1.7';
   // / Externally or internally accesible domain or IP.
-  $URL = 'localhost';
+  $URL = 'http://localhost';
   // / Scan for viruses during directory scan. Use 1 for true or leave blank for false. 
    // / (ClamAV MUST be installed on the localhost!!!).
   $VirusScan = '0';

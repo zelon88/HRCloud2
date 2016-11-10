@@ -2,38 +2,6 @@
 <html>
 <head>
 <title>HRCloud2 | Apps </title>
-<?php 
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require('sanitizeCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require('commonCore.php'); }
-
-// / Detect which App to launch, or display the appLauncherOverview.
-if (isset($_POST['launchApplication'])) {
-  $appToLaunch -= str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['launchApplication']);
-  $appDir = $InstLoc.'/Applications/';
-  $installedApplications = glob($appDir.'*');
-  $appIndex = 'appIndex.php';
-  foreach ($installedApplications as $InstApp) {
-    if ($InstApp == '.' or $InstApp == '..') continue;
-    if ($InstApp == $appToLaunch) {
-      $Application = $appDir.$InstApp; } }
-  if (!isset($Application)) {
-    $txt = ('ERROR!!! HRC2AL191, App not installed on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-    $Application = $appIndex; } }
-?>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
     function toggle_visibility(id) {
@@ -45,6 +13,28 @@ if (isset($_POST['launchApplication'])) {
     function Clear() {    
       document.getElementById("input").value= ""; }
 </script>
+<?php 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require ('sanitizeCore.php'); }
+
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require('commonCore.php'); }
+  
+$AppDir = $InstLoc.'/Applications/';
+$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
+$newest_app = $apps[0];
+
+?>
 </head>
 <body>
 <div id="nav" align="center">
