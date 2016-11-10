@@ -941,6 +941,49 @@ $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 
+if ($input == 'help') {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/help/',' ',$input); }
+if (preg_match('/help me/', $input)) {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/help me/',' ',$input); }
+if (preg_match('/help me/', $input)) {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/help me/',' ',$input); }
+$input = str_replace('  ',' ',$input);
+$input = str_replace('  ',' ',$input);
+$input = rtrim($input);
+
+if ($input == 'guidance') {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/help/',' ',$input); }
+if ($input == 'how to') {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/how to/',' ',$input); }
+if (preg_match('/how to/', $input)) {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/how to/',' ',$input); }
+if (preg_match('/help me/', $input)) {  
+$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
+  '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
+$input = preg_replace('/help me/',' ',$input); }
+$input = str_replace('  ',' ',$input);
+$input = str_replace('  ',' ',$input);
+$input = rtrim($input);
+
 // / Display a refresh button if the user is not logged in.
 if ($user_ID == '0') { 
   echo nl2br ('<form action="core.php"><div align="center"><p><input type="submit" name="refresh" id="refresh" href="#" target="_parent" value="&#x21BA" class="button" onclick="toggle_visibility("loadingCommandDiv");"></p></div></form>'); }
