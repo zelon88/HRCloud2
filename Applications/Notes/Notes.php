@@ -53,13 +53,14 @@ if (!file_exists($NotesDir)) {
 // / The following code is performed whenever a user selects to edit a Note.
 if (isset($_GET['editNote'])) {
   $noteToEdit = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
+  $noteName = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   $noteToEdit = $noteToEdit.'.txt';
   $noteData = file_get_contents($NotesDir.$noteToEdit);
   $noteData = str_replace('<br />', '', $noteData);
   $noteTitle = $_GET['editNote'];
   $noteButtonEcho = 'Edit Note';
   $txt = ('OP-Act: Opening Note '.$noteToDelete.' for editing on '.$Time.'!'); 
-  echo 'Editing <i>'.$noteToEdit.'</i>'; 
+  echo 'Editing <i>'.$noteName.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 
 // / The following code is performed whenever a user selects to delete a Note.
