@@ -15,7 +15,6 @@
       document.getElementById("input").value= ""; }
 </script>
 <?php 
-
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('sanitizeCore.php')) {
@@ -113,7 +112,7 @@ document.getElementById("HRAIMini").submit;
 <div align="left" style="margin-left: 10px;"><p><h3>Apps</h3></p></div>
   <div id="appsOverview1" name="appsOverview1">
     <form action="appLauncher.php">
-    <p><input type="submit" value="Go To Apps"></input></form></p>
+    <p><input type="submit" value="Go To Apps"></input></p>
     <p>Recent Apps: <a href="index2.php"><i><?php echo $newest_app; ?></i></a></p>
   </div>
 </div>
@@ -121,8 +120,9 @@ document.getElementById("HRAIMini").submit;
 <div align="left" style="margin-left: 20px;"><p><h3>Notes</h3></p></div>  
   <div id="notesOverview1" name="notesOverview1">
     <form action="appLauncher.php">
-    <p><input type="submit" value="Go To Notes"></input></form></p>
-    <p>Recent Notes: <a href="Applications/Notes/Notes.php?editNote=<?php echo $newest_note; ?>" target="cloudContentsDiv"><i></i><?php echo $newest_note; ?></a></p>
+    <p><input type="submit" value="Go To Notes"></input></form>
+    <button class="button" onclick="window.open('Applications/Notes/Notes.php','Notes','resizable,height=400,width=650'); return false;">++</button></p>
+    <p>Recent Notes: <a onclick="window.open('Applications/Notes/Notes.php?editNote=<?php echo $newest_note; ?>','Notes','resizable,height=400,width=650'); return false;" href="Applications/Notes/Notes.php?editNote=<?php echo $newest_note; ?>"><i></i><?php echo $newest_note; ?></a></p>
   </div>
 <?php $appCounter++; ?>
 </div>

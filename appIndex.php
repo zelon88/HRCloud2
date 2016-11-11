@@ -26,7 +26,7 @@ if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppIndex20, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
+  require ('sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -34,7 +34,7 @@ if (!file_exists('commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppIndex28, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('commonCore.php'); }
+  require ('commonCore.php'); }
  ?>
 </head>
 <body>
@@ -54,7 +54,7 @@ foreach ($apps as $appName) {
   copy($InstLoc.'/index.html', $AppDir.$appName.'/index.html');
   $appLoc = 'Applications/'.$appName.'/'.$appName.'.php';
   echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="height:160px; float:left; width:195px; height:195px; border:inset; margin-bottom:2px;"><p><strong>'."\n".$appName.'</strong></p><hr />');
-  echo nl2br('<button id="launchApplication" name="launchApplication" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');">'.$appName.'</button></div>');
+  echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');"></input></div>');
 $appCounter++; } 
 ?>
 </div>

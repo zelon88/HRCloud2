@@ -28,7 +28,7 @@ if (!file_exists('commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('commonCore.php'); }
+  require ('commonCore.php'); }
   
 $AppDir = $InstLoc.'/Applications/';
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
