@@ -21,7 +21,7 @@ if (!file_exists('sanitizeCore.php')) {
   die (); }
 else {
   require ('sanitizeCore.php'); }
-
+  
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('commonCore.php')) {
@@ -29,10 +29,6 @@ if (!file_exists('commonCore.php')) {
   die (); }
 else {
   require ('commonCore.php'); }
-  
-$AppDir = $InstLoc.'/Applications/';
-$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
-$newest_app = $apps[0];
 
 ?>
 </head>

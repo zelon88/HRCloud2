@@ -17,9 +17,6 @@ function goBack() {
 </script>
 
 <?php
-// / This file was meant to be a resource to help users find useful 
-// / documentation about HRCloud2.
-
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('sanitizeCore.php')) {
@@ -35,7 +32,16 @@ if (!file_exists('commonCore.php')) {
   die (); }
 else {
   require ('commonCore.php'); }
- ?>
+
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('appCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require ('appCore.php'); }
+
+?>
 </head>
 <body>
 <div align="center">
