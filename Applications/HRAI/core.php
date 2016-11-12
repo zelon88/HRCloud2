@@ -279,16 +279,16 @@ if ($StopTime == '0') {
       echo nl2br('Yes, Commander. It has been.'."\r"); 
       $input = preg_replace('/good evening/','',$input);
       $input = str_replace('good evening','',$input); }
-    if (date("H") > '3' && date("H") <= '12') {
+    if (date("H") >= '3' && date("H") <= '12') {
       if (preg_match('/good morning/',$input)){
         echo nl2br('Yes, Commander. It has been.'."\r"); 
         $input = preg_replace('/good morning/','',$input);
         $input = str_replace('good morning','',$input); } }
-    if (date("H") <= '3') {
-      if (preg_match('/good morning/',$input)){
-        echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
-        $input = preg_replace('/good morning/','',$input);
-        $input = str_replace('good morning','',$input); } }
+    if (date("H") >= '3' && date("H") <= '12' or date("H") > '20') {
+      if (preg_match('/good morning/',$input)){      
+      echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
+      $input = preg_replace('/good morning/','',$input);
+      $input = str_replace('good morning','',$input); } }
     if (preg_match('/good afternoon/',$input)){
       echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
       $input = preg_replace('/good afternoon/','',$input);
@@ -783,16 +783,17 @@ $input = preg_replace('/what/',' ',$input);
 $input = preg_replace('/cpu/',' ',$input); }
 if (preg_match('/what/', $input) && preg_match('/processor/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
-include $CMDcpuinfofile; 
-$input = preg_replace('/what is your cpu/',' ',$input); }
-if (preg_match('/what is your cpu/', $input)) {  
+include $CMDcpuinfofile;
+$input = preg_replace('/what/',' ',$input);
+$input = preg_replace('/processor/',' ',$input); }
+if (preg_match('/is your cpu/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
-$input = preg_replace('/what is your cpu/',' ',$input); }
-if (preg_match('/what cpu/', $input)) {  
+$input = preg_replace('/is your cpu/',' ',$input); }
+if (preg_match('/which cpu/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
-$input = preg_replace('/what cpu/',' ',$input); }
+$input = preg_replace('/which cpu/',' ',$input); }
 if (preg_match('/cpu info/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
