@@ -386,7 +386,10 @@ $.ajax( {
     data: { playlistSelected : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
+      window.setTimeout(function(){
         window.location.href = "<?php echo 'cloudCore.php?playlistSelected='.$name; ?>";
+      }, 2500);
+
     }
 } );
 });
@@ -403,7 +406,9 @@ $.ajax( {
     data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
-        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>";
+      window.setTimeout(function(){
+        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name.'?UserDirPOST='.$UserDirPOST; ?>";
+      }, 2500);
     }
 } );
 });
