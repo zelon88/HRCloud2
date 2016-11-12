@@ -31,33 +31,68 @@ if (!file_exists('commonCore.php')) {
 else {
   require('commonCore.php'); }
 
-// / The following code returns the newest file or folder for each Cloud module. 
-$files = scandir($CloudDir, SCANDIR_SORT_DESCENDING);
-$newest_file = $files[0];
-if ($newest_file == '.' or $newest_file == '..') {
-  $newest_file = 'No files to show!'; }
+// / The following code returns the random file or folder for each Cloud module. 
+$files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);
+$random_file = array_rand($files, 1);
+$random_file = $files[$random_file];
+if ($random_file == '.' or $random_file == '..') {
+  $random_file = $files[$random_file]; }
+if ($random_file == '.' or $random_file == '..') {
+  $random_file = $files[$random_file]; }  
+if ($random_file == '.' or $random_file == '..') {
+  $random_file = $files[$random_file]; }
+if ($random_file == '.' or $random_file == '..') {
+  $random_file = 'No files to show!'; } 
+if ($random_file == '') {
+  $random_file = 'No files to show!'; } 
 
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
-$appCount = count($apps) - count($defaultApps);
-$appCounter = 0;
-$newest_app = $apps[0];
-if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
-  $newest_app = $apps[1]; }
-if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
-  $newest_app = $apps[2]; }
-if ($newest_app == '.' or $newest_app == '..' or in_array($newest_app, $defaultApps)) {
-  $newest_app = 'No apps to show!'; } 
+$random_app = array_rand($apps);
+$random_app = $apps[$random_app];
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = array_rand($apps);
+  $random_app = $apps[$random_app]; }
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = array_rand($apps);
+  $random_app = $apps[$random_app]; }
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = array_rand($apps);
+  $random_app = $apps[$random_app]; }
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = array_rand($apps);
+  $random_app = $apps[$random_app]; }
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = array_rand($apps);
+  $random_app = $apps[$random_app]; }
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = array_rand($apps);
+  $random_app = $apps[$random_app]; }
+if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+  $random_app = 'No apps to show!'; }
 
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
-$newest_contact = $contacts[0];
-if ($newest_contact == '.' or $newest_contact == '..') {
-  $newest_contact = 'No contacts to show!'; }
+$random_contact = array_rand($contacts);
+$random_contact = $contacts[$random_contact];
+if ($random_contact == '.' or $random_contact == '..' or strpos($random_contact, 'contacts.php') == 'true') {
+  $random_contact = 'No contacts to show!'; }
+if ($random_contact == 'contacts.php') { 
+  $random_contact = 'No contacts to show!'; }
 
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
-$newest_note = $notes[0];
-$newest_note = str_replace('.txt', '', $newest_note);
-if ($newest_note == '.' or $newest_note == '..') {
-  $newest_note = 'No notes to show!'; }
+$random_note = array_rand($notes);
+$random_note = $notes[$random_note];
+if ($random_note == '.' or $random_note == '..') {
+  $random_note = array_rand($notes);
+  $random_note = $notes[$random_note]; }
+if ($random_note == '.' or $random_note == '..') {
+  $random_note = array_rand($notes);
+  $random_note = $notes[$random_note]; }
+if ($random_note == '.' or $random_note == '..') {
+  $random_note = array_rand($notes);
+  $random_note = $notes[$random_note]; }
+$random_note = str_replace('.txt', '', $random_note);
+if ($random_note == '.' or $random_note == '..' or $random_note == '') {
+  $random_note = 'No notes to show!'; }
 ?>
 </head>
 <body>
@@ -100,38 +135,36 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="cloudContentsDiv" align='center' style="width:404px; padding-top: 5px;">
-<div id="filesOverview" name="filesOverview" style="height:160px; float:left; width:195px; border:inset; margin-bottom:2px;">
+<div id="filesOverview" name="filesOverview" style="float:left; height:160px; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 10px;"><p><h3>Files</h3></p></div>
   <div id="filesOverview1" name="fileOverview1">
     <form action="index2.php">
     <p><input type="submit" value="Go To Drive"></input></form></p>
-    <p>Recent Files: <a href="index2.php"><i><?php echo $newest_file; ?></i></a></p>
+    <p>Recent Files: <a href="index2.php"><i><?php echo $random_file; ?></i></a></p>
   </div>
 </div>
-<div id="appsOverview" name="appsOverview" style="height:160px; float:right; width:195px; border:inset; margin-bottom:2px;">
+<div id="appsOverview" name="appsOverview" style="float:right; height:160px; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 10px;"><p><h3>Apps</h3></p></div>
   <div id="appsOverview1" name="appsOverview1">
     <form action="appLauncher.php">
-    <p><input type="submit" value="Go To Apps"></input></p>
-    <p>Recent Apps: <a href="index2.php"><i><?php echo $newest_app; ?></i></a></p>
+    <p><input type="submit" value="Go To Apps"></input></p></form>
+    <p>Recent Apps: <a href="appLauncher.php"><i><?php echo $random_app; ?></i></a></p>
   </div>
 </div>
-<div align="center" id="<?php echo $appCounter; ?>Overview" name="<?php echo $appCounter; ?>Overview" style="width:400px; border:inset; margin-top:170px; margin-bottom:2px;">
+<div align="center" id="<?php echo $appCounter; ?>Overview" name="<?php echo $appCounter; ?>Overview" style="float:left; height:160px; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 20px;"><p><h3>Notes</h3></p></div>  
   <div id="notesOverview1" name="notesOverview1">
-    <form action="appLauncher.php">
-    <p><input type="submit" value="Go To Notes"></input></form>
-    <button class="button" onclick="window.open('Applications/Notes/Notes.php','Notes','resizable,height=400,width=650'); return false;">++</button></p>
-    <p>Recent Notes: <a onclick="window.open('Applications/Notes/Notes.php?editNote=<?php echo $newest_note; ?>','Notes','resizable,height=400,width=650'); return false;" href="Applications/Notes/Notes.php?editNote=<?php echo $newest_note; ?>"><i></i><?php echo $newest_note; ?></a></p>
+    <p><input type="submit" value="Launch Notes" onclick="window.open('Applications/Notes/Notes.php','Notes','resizable,height=400,width=650'); return false;"></input></p>
+    <p>Recent Notes: <a onclick="window.open('Applications/Notes/Notes.php?editNote=<?php echo $random_note; ?>','Notes','resizable,height=400,width=650'); return false;" href="Applications/Notes/Notes.php?editNote=<?php echo $random_note; ?>"><i></i><?php echo $random_note; ?></a></p>
   </div>
 <?php $appCounter++; ?>
 </div>
-<div align="center" id="<?php echo $appCounter; ?>overview" name="<?php echo $appCounter; ?>overview" style="width:400px; border:inset;">
+<div align="center" id="<?php echo $appCounter; ?>overview" name="<?php echo $appCounter; ?>overview" style="float:right; height:160px; width:195px; border:inset;">
 <div align="left" style="margin-left: 20px;"><p><h3>Contacts</h3></p></div>
     <form action="">  
   <div id="contactsOverview" name="contactsOverview">
   <p><p><input type="submit" value="Go To Contacts"></input></form></p>  
-  <p>Recent Contacts: <a href=""><i><?php echo $newest_contact; ?></i></a></p>
+  <p>Recent Contacts: <a href=""><i><?php echo $random_contact; ?></i></a></p>
   </div>
 </div>
 </div>

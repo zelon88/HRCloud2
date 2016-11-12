@@ -1,4 +1,8 @@
 <?php
+
+// / This file serves as the Common Core file which can be required by projects that need HRCloud2 to load it's config
+// / file, authenticate user storage, and define variables for the session.
+
 // / Before we begin we will sanitize API inputs.
 if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
