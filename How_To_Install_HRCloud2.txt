@@ -70,6 +70,7 @@ duties.
 -sudo apt-get install p7zip-full
 -sudo apt-get install imagemagick
 -sudo apt-get install ffmpeg
+-sudo apt-get install id3
 -sudo apt-get install tesseract
 --------------------------------------------------
 
