@@ -21,7 +21,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
   echo nl2br('ERROR!!! HRC2CC35, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/config.php'); }
+  require_once('/var/www/html/HRProprietary/HRCloud2/config.php'); }
 
 // / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
@@ -51,9 +51,11 @@ $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $AppDir = $InstLoc.'/Applications/';
+$Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
   'displaydirectorycontents_72716', 'wordpress_11416.zip');
+$installedApps = array_diff($Apps, $defaultApps);
 
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
@@ -74,20 +76,20 @@ $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-if (!file_exists($LogLoc)) {
-@mkdir($LogLoc);
 copy($InstLoc.'/index.html',$LogLoc.'/index.html');
-$JICInstallLogs = @mkdir($LogLoc, 0755); 
+if (!file_exists($LogLoc)) {
+$JICInstallLogs = @mkdir($LogLoc, 0755); }
   foreach ($LogInstallFiles as $LIF) {
+    if (file_exists($LogLoc.'/.config.php')) continue;
+    if (in_array($LIF1, $installedApps)) continue;
     if ($LIF == '.' or $LIF == '..') continue;
-      if (!file_exists($LIF)) {
-      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } } }
+      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
 if (!file_exists($SesLogDir)) {
-$JICInstallLogs = @mkdir($SesLogDir, 0755); 
+$JICInstallLogs = @mkdir($SesLogDir, 0755); }
   foreach ($LogInstallFiles1 as $LIF1) {
+    if (in_array($LIF1, $installedApps)) continue;
     if ($LIF1 == '.' or $LIF1 == '..') continue;
-      if (!file_exists($LIF1)) {
-      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } } }
+      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
 
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.

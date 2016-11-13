@@ -1,5 +1,18 @@
 <?php
 
+if (!file_exists('config.php')) {
+  echo nl2br('ERROR!!! HRC2AC35, Cannot process the HRCloud2 Config file (config.php).'."\n"); 
+  die (); }
+else {
+  require_once ('config.php'); }
+  
+$AppDir = $InstLoc.'/Applications/';
+$Apps = scandir($AppDir);
+$defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
+  'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
+  'displaydirectorycontents_72716', 'wordpress_11416.zip');
+$installedApps = array_diff($Apps, $defaultApps);
+
 // / The following code is perofmed whenever an administrator selects to install a new App.
 if (isset($_POST['installApp'])) {
   if ($UserID == '1') {

@@ -66,7 +66,7 @@ if ($YUMMYSaltHash !== $SaltHash) {
   echo nl2br('!!! WARNING !!! HRC2AppIndex60, There was a critical security fault. Login Request Denied.'."\n"); 
   die("Application was halted on $Time".'.'); }
   $CleanDir = $InstLoc.'/Applications/'.$uninstallApp;
-  @chmod($CleanDir);
+  @chmod($CleanDir, 0755);
   $CleanFiles = scandir($CleanDir);
   include ('janitor.php');
   unlink($CleanDir.'/index.html');
