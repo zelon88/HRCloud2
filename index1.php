@@ -87,7 +87,7 @@ document.getElementById("HRAIMini").submit;
   <div id="filesOverview1" name="fileOverview1">
     <form action="index2.php">
     <p><input type="submit" value="Go To Drive"></input></form></p>
-    <p>Recent Files: <a href="index2.php"><i><?php echo $random_file; ?></i></a></p>
+    <p>Recent Files: <a href="index2.php"><i><?php echo substr($random_file, 0, 20); ?></i></a></p>
   </div>
 </div>
 <div id="appsOverview" name="appsOverview" style="float:right; height:160px; width:195px; border:inset; margin-bottom:2px;">
@@ -95,14 +95,14 @@ document.getElementById("HRAIMini").submit;
   <div id="appsOverview1" name="appsOverview1">
     <form action="appLauncher.php">
     <p><input type="submit" value="Go To Apps"></input></p></form>
-    <p>Recent Apps: <a href="appLauncher.php"><i><?php echo $random_app; ?></i></a></p>
+    <p>Recent Apps: <a href="appLauncher.php"><i><?php echo substr($random_app, 0, 20); ?></i></a></p>
   </div>
 </div>
 <div align="center" id="<?php echo $appCounter; ?>Overview" name="<?php echo $appCounter; ?>Overview" style="float:left; height:160px; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 20px;"><p><h3>Notes</h3></p></div>  
   <div id="notesOverview1" name="notesOverview1">
     <p><input type="submit" value="Launch Notes" onclick="window.open('Applications/Notes/Notes.php','Notes','resizable,height=400,width=650'); return false;"></input></p>
-    <p>Recent Notes: <a onclick="window.open('Applications/Notes/Notes.php?editNote=<?php echo $random_note; ?>','Notes','resizable,height=400,width=650'); return false;" href="Applications/Notes/Notes.php?editNote=<?php echo $random_note; ?>"><i></i><?php echo $random_note; ?></a></p>
+    <p>Recent Notes: <a onclick="window.open('Applications/Notes/Notes.php?editNote=<?php echo $random_note; ?>','Notes','resizable,height=400,width=650'); return false;" href="Applications/Notes/Notes.php?editNote=<?php echo $random_note; ?>"><i></i><?php echo substr($random_note, 0, 20); ?></a></p>
   </div>
 <?php $appCounter++; ?>
 </div>
@@ -111,7 +111,7 @@ document.getElementById("HRAIMini").submit;
     <form action="">  
   <div id="contactsOverview" name="contactsOverview">
   <p><p><input type="submit" value="Go To Contacts"></input></form></p>  
-  <p>Recent Contacts: <a href=""><i><?php echo $random_contact; ?></i></a></p>
+  <p>Recent Contacts: <a href=""><i><?php echo substr($random_contact, 0 , 20); ?></i></a></p>
   </div>
 </div>
 </div>
