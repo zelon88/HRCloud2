@@ -3,16 +3,16 @@
 <head>
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="./.favicon.ico">
-   <title>Directory Contents</title>
+   <title>HRCLoud2 | Log Viewer</title>
 
    <link rel="stylesheet" href="./.style.css">
    <script src="./.sorttable.js"></script>
 </head>
-
 <body>
 <div id="container">
-	<h1>HRCloud2 Logs</h1>
-
+	<div align="center">
+	<h3>HRCloud2 Logs</h3>
+    </div>
 	<table class="sortable">
 	    <thead>
 		<tr>
@@ -79,7 +79,6 @@
 		$modtime=date("M j Y g:i A", filemtime($dirArray[$index]));
 		$timekey=date("YmdHis", filemtime($dirArray[$index]));
 
-
 	// Separates directories, and performs operations on those directories
 		if(is_dir($dirArray[$index]))
 		{
@@ -107,32 +106,8 @@
 
 			// Prettifies file type
 			switch ($extn){
-				case "png": $extn="PNG Image"; break;
-				case "jpg": $extn="JPEG Image"; break;
-				case "jpeg": $extn="JPEG Image"; break;
-				case "svg": $extn="SVG Image"; break;
-				case "gif": $extn="GIF Image"; break;
-				case "ico": $extn="Windows Icon"; break;
 
 				case "txt": $extn="Text File"; break;
-				case "log": $extn="Log File"; break;
-				case "htm": $extn="HTML File"; break;
-				case "html": $extn="HTML File"; break;
-				case "xhtml": $extn="HTML File"; break;
-				case "shtml": $extn="HTML File"; break;
-				case "php": $extn="PHP Script"; break;
-				case "js": $extn="Javascript File"; break;
-				case "css": $extn="Stylesheet"; break;
-
-				case "pdf": $extn="PDF Document"; break;
-				case "xls": $extn="Spreadsheet"; break;
-				case "xlsx": $extn="Spreadsheet"; break;
-				case "doc": $extn="Microsoft Word Document"; break;
-				case "docx": $extn="Microsoft Word Document"; break;
-
-				case "zip": $extn="ZIP Archive"; break;
-				case "htaccess": $extn="Apache Config File"; break;
-				case "exe": $extn="Windows Executable"; break;
 
 				default: if($extn!=""){$extn=strtoupper($extn)." File";} else{$extn="Unknown";} break;
 			}
@@ -152,6 +127,7 @@
 		</tr>");
 	   }
 	}
+	usleep(500);
 	?>
 
 	    </tbody>
