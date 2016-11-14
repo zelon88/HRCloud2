@@ -307,7 +307,7 @@ Are you sure?
   // File-only operations
     else{
       // Gets file extension
-      $extn=pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+      $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
       // Prettifies file type
       switch ($extn){
         case "png": $extn="PNG Image"; break;
@@ -376,7 +376,11 @@ $.ajax( {
 </script>
 <?php }
 // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
-if ($extn == "Playlist") { ?>
+if ($extn == "Playlist") { 
+if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
+  $PLSpecialEcho = '?UserDirPOST = '.$UserDirPOST; } 
+else {
+  $PLSpecialEcho = ''; } ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -386,9 +390,8 @@ $.ajax( {
     data: { playlistSelected : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
-      window.setTimeout(function(){
-        window.location.href = "<?php echo 'cloudCore.php?playlistSelected='.$name; ?>";
-      }, 2500);
+      window.location.href = "<?php echo $PLSpecialEcho.'cloudCore.php?playlistSelected='.$name; ?>";
+
 
     }
 } );
@@ -521,7 +524,7 @@ $.ajax( {
 });
 });
 </script>
-<?php if (in_array($extension, $pdfWordArr)) { ?>
+<?php if (in_array($extnRAW, $pdfWordArr)) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#scandocSubmit").click(function(){
@@ -542,7 +545,7 @@ $.ajax( {
 });
 </script>
 <?php } 
-if (in_array($extension, $convertArr)) { ?>
+if (in_array($extnRAW, $convertArr)) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#convertSubmit").click(function(){
@@ -564,7 +567,7 @@ $.ajax( {
 });
 </script>
 <?php } 
-if (in_array($extension, $imgArr)) { ?>
+if (in_array($extnRAW, $imgArr)) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#convertPhotoSubmit").click(function(){
@@ -589,7 +592,7 @@ $.ajax( {
 });
 </script>
 <?php } 
-if (in_array($extension, $pdfWordArr)) { ?>
+if (in_array($extnRAW, $pdfWordArr)) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#pdfwork").click(function(){
@@ -611,8 +614,7 @@ $.ajax( {
 });
 });
 </script>
-<?php } 
-if (in_array($extension, $PLMediaArr)) { ?>
+<?php } ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#createplaylistbutton").click(function(){
@@ -632,8 +634,6 @@ $.ajax( {
 });
 });
 </script>
-<?php } 
-if (in_array($extension, $PLMediaArr)) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#streambutton").click(function(){
@@ -653,7 +653,6 @@ $.ajax( {
 });
 });
 </script>
-<?php } ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#clipboardCopy").click(function(){
