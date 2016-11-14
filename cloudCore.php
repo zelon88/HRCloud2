@@ -31,14 +31,16 @@ if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
+  require_once('sanitizeCore.php'); }
+
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('commonCore.php')) {
   echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require('commonCore.php'); }
+  require_once('commonCore.php'); }
+
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
@@ -75,6 +77,7 @@ if(isset($_POST["upload"])) {
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
       $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
       chmod($F3,0755); } } } 
+
 // / The following code is performed when a user downloads a selection of files.
 if (isset($_POST["download"])) {
   $txt = ('OP-Act: Initiated Downloader on '.$Time.'.');
@@ -118,6 +121,7 @@ if (filesize($ClamLogDir > 1)) {
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
     die(); } } } 
+
 // / The following code is performed whenever a user selects a file to copy.
 if (isset($_POST['copy'])) {
   $txt = ('OP-Act: Initiated Copier on '.$Time.'.');
@@ -163,6 +167,7 @@ if (isset($_POST['rename'])) {
         $txt = ('OP-Act: '."Copied $ReNFile to $renameFilename on $Time".'.');
         echo nl2br ($txt."\n".'--------------------'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+
 // / The following code is performed whenever a user selects a file to delete.
 if (isset($_POST['deleteconfirm'])) {
   $txt = ('OP-Act: Initiated Deleter on '.$Time.'.');
@@ -513,6 +518,7 @@ if (!file_exists($newPathname)) {
 if (file_exists($newPathname)) {
   $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
@@ -620,7 +626,6 @@ if (isset($_POST['pdfworkSelected'])) {
                     $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 1.'); 
                     echo ($txt."\n".'--------------------'."\n");    
                     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } 
-                
             // / Code to convert a document to a PDF.
             if (in_array($oldExtension, $doc1array)) {                
               if (in_array($extension, $pdf1array)) {
@@ -665,7 +670,8 @@ if (isset($_POST['pdfworkSelected'])) {
           echo nl2br('ERROR!!! HRC2620, There was a problem converting your file! Please rename your file or try again later.'."\n".'--------------------'."\n"); 
           $txt = ('ERROR!!! HRC2620, '."Could not convert $pathname to $newPathname on $Time".'!'); 
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-          die(); } } } // / BROKEN BRACKETS SOMEWHERE IN FILE BEFORE THIS POINT 9/3/16.
+           die(); } } }
+
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
   // / Define the and sanitize global .Playlist environment variables.
@@ -677,10 +683,11 @@ if (isset($_POST['streamSelected'])) {
   $PLAudioArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac');
   $PLAudioOGGArr =  array('ogg');
   $PLAudioMP4Arr =  array('mp4');
+  $PLVideoMP4Arr =  array('mp4');
   $MediaFileCount = 0;
   $VideoFileCount = 0;
   // / Define temp .Playlist environment variables.
-  $PlaylistDir = $CloudTempDir.'/'.$PlaylistName.'.Playlist';
+  $PlaylistDir = $CloudTmpDir.'/'.$PlaylistName.'.Playlist';
   $PlaylistCacheDir = $PlaylistDir.'/.Cache';
   $PlaylistCacheFile = $PlaylistCacheDir.'/cache.xml';
   $PlaylistCacheFile2 = $PlaylistCacheDir.'/cache.php';
@@ -751,14 +758,27 @@ if (isset($_POST['streamSelected'])) {
           if(isset($id3Tags['comments']['picture'][0])) {
             $PLSongImage = 'data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); } 
             $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
+            
             $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
+            $fo1 = fopen($SongImageFile, 'w') or die("Can't create ".$SongImageFile.' on '.$Time.'!');
+            $MAKECacheImageFile = file_put_contents($SongImageFile, $PLSongImageDATA);
+            fclose($fo1);
+            
+            $SongImageFile2 = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
+            $fo2 = fopen($SongImageFile2, 'w') or die("Can't create ".$SongImageFile2.' on '.$Time.'!');
+            $MAKECacheImageFileRAW = file_put_contents($SongImageFile2, $PLSongImageDATA);
+            fclose($fo2);
+
             $SongImageFileRAW = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
-            $SongImageFile2 = $CloudTempDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
-            $SongImageFile2RAW = $CloudTempDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
-            $MAKECacheImageFile = file_put_contents($PLSongImageDATA, $SongImageFile);
-            $MAKECacheImageFileRAW = file_put_contents($PLSongImageDATA, $SongImageFileRAW);
-            $MAKECacheImageFile2 = file_put_contents($PLSongImageDATA, $SongImageFile2);  
-            $MAKECacheImageFile2RAW = file_put_contents($PLSongImageDATA, $SongImageFile2RAW);                   
+            $fo3 = fopen($SongImageFileRAW, 'w') or die("Can't create ".$SongImageFileRAW.' on '.$Time.'!');
+            $MAKECacheImageFileRAW = file_put_contents($SongImageFileRAW, $PLSongImageDATA);                   
+            fclose($fo3);
+
+            $SongImageFile2RAW = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
+            $fo4 = fopen($SongImageFile2, 'w') or die("Can't create ".$SongImageFile2.' on '.$Time.'!');
+            $MAKECacheImageFile2 = file_put_contents($SongImageFile2, $PLSongImageDATA);
+            fclose($fo4);
+
           if(!isset($id3Tags['comments']['picture'][0])) {
             $PLSongImage = ''; }
             // / If the audio count is one, this code will open tags within our XML cache file for the tracklist.
@@ -793,7 +813,7 @@ if (isset($_POST['streamSelected'])) {
   foreach (($_POST['streamSelected']) as $StreamFile) {
     $txt = ('OP-Act: Initiated Streamer on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    $pathname = $CloudTempDir.'/'.$StreamFile;
+    $pathname = $CloudTmpDir.'/'.$StreamFile;
     $oldPathname = $CloudUsrDir.$StreamFile;
     copy ($oldPathname, $pathname);
     if ($StreamFile == '.' or $StreamFile == '..' or is_dir($pathname) or is_dir($oldPathname)) continue;
@@ -826,56 +846,63 @@ if (isset($_POST['streamSelected'])) {
       copy($oldPathname, $newPathname);
       $txt = ('OP-Act: Copied '.$oldPathname.' for streaming to '.$pathname.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
   $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  if (!isset($CloudTempDir) or $CloudTempDir == '' or $CloudTempDir == '/') {
+    die('ERROR!!! HRC2850, There was a critical error on '.$Time.'!'); }
   $CleanFiles = scandir($CloudTempDir);
   $time = time();
+  $SAFEArr = array('var', 'www', 'html', 'HRProprietary', 'HRCloud2', 'index.html', '.AppLogs', 'config.php');
   foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html' or $CleanFile == '.AppLogs') continue;
+    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html' or in_array($CleanFile, $SAFEArr)) continue;
       if ($time - filemtime($CloudTempDir.'/'.$CleanFile) >= 900) { // Every 15 mins.
-        if (!is_dir($CloudTempDir.'/'.$CleanFile)) {
-          unlink($CloudTempDir.'/'.$CleanFile); 
-          $txt = ('OP-Act: Cleaned '.$CleanFile.' on '.$Time.'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      if (!is_dir($CloudTempDir.'/'.$CleanFile)) {
+        unlink($CloudTempDir.'/'.$CleanFile); 
+        $txt = ('OP-Act: Cleaned '.$CleanFile.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         if (is_dir($CloudTempDir.'/'.$CleanFile)) {
           $objects1 = scandir($CloudTempDir.'/'.$CleanFile); 
           foreach ($objects1 as $object1) { 
-            if ($object1 == '.' or $object1 == '..') continue; 
-              if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) {
-                unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
-                $txt = ('OP-Act: Cleaned '.$object1.' on '.$Time.'.');
-                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+            if ($object1 == '.' or $object1 == '..' or $object1 == 'index.html' or in_array($object1, $SAFEArr)) continue; 
+            if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) {
+              unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
+              $txt = ('OP-Act: Cleaned '.$object1.' on '.$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
               if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) { 
                   $objects2 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
                   foreach ($objects2 as $object2) { 
-                    if ($object2 == '.' or $object2 == '..') continue;
-                      if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) {
-                        unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
-                        $txt = ('OP-Act: Cleaned '.$object2.' on '.$Time.'.');
-                        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+                    if ($object2 == '.' or $object2 == '..' or $object2 == 'index.html' or in_array($object2, $SAFEArr)) continue; 
+                    if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) {
+                      unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
+                      $txt = ('OP-Act: Cleaned '.$object2.' on '.$Time.'.');
+                      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
                       if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) { 
                           $objects3 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
                           foreach ($objects3 as $object3) { 
-                            if ($object3 == '.' or $object3 == '..') continue;
-                              if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) {
-                                unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
-                                $txt = ('OP-Act: Cleaned '.$object3.' on '.$Time.'.');
-                                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-                              if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) { 
-                                @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
-                                $txt = ('OP-Act: Cleaned directory '.$object3.' on '.$Time.'.');
-                                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
-                        @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
-                        $txt = ('OP-Act: Cleaned directory '.$object2.' on '.$Time.'.');
-                        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
-                @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
-                $txt = ('OP-Act: Cleaned directory '.$object1.' on '.$Time.'.');
-                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-                @rmdir($CloudTempDir.'/'.$CleanFile); 
-                $txt = ('OP-Act: Cleaned directory '.$CleanFile.' on '.$Time.'.');
-                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }  
+                            if ($object3 == '.' or $object3 == '..' or $object3 == 'index.html' or in_array($object3, $SAFEArr)) continue; 
+                            if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) {
+                              unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
+                              $txt = ('OP-Act: Cleaned '.$object3.' on '.$Time.'.');
+                              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+                            if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) { 
+                              @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
+                              $txt = ('OP-Act: Cleaned directory '.$object3.' on '.$Time.'.');
+                              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
+                        if (!in_array($object2, $SAFEArr)) {
+                          @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
+                          $txt = ('OP-Act: Cleaned directory '.$object2.' on '.$Time.'.');
+                          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }   
+                if (!in_array($object1, $SAFEArr)) {
+                  @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
+                  $txt = ('OP-Act: Cleaned directory '.$object1.' on '.$Time.'.');
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+                if (!in_array($CleanFile, $SAFEArr)) {
+                  @rmdir($CloudTempDir.'/'.$CleanFile); 
+                  $txt = ('OP-Act: Cleaned directory '.$CleanFile.' on '.$Time.'.');
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } }  
   $bytes = sprintf('%u', filesize($DisplayFile));
   if ($bytes > 0) {
     $unit = intval(log($bytes, 1024));

@@ -13,6 +13,13 @@ if (isset($_GET['UserDir'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
   $_POST['UserDirPOST'] = $_GET['UserDir'];
   $_POST['UserDir'] = $_GET['UserDir']; }
+  
+if (isset($_GET['playlistSelected'])) {
+  $_GET['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['playlistSelected']);
+  $_POST['playlistSelected'] = $_GET['playlistSelected']; }
+if (isset($_POST['playlistSelected'])) {
+  $_POST['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['playlistSelected']);
+  $_GET['playlistSelected'] = $_POST['playlistSelected']; }
 
 // / Developers add your code between the following comment lines.....
 

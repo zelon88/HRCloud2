@@ -4,8 +4,10 @@
 // / To use this file in your project or App, set a $CleanFiles array of files or directories 
 // / and then require() this file.
 
+$SAFEArr = array('var', 'www', 'html', 'HRProprietary', 'HRCloud2', 'index.html', '.AppLogs', 'config.php');
 foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == '.AppLogs' or in_array($CleanFile, $defaultApps)) continue;
+    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == '.AppLogs' 
+      or in_array($CleanFile, $SAFEArr) or in_array($CleanFile, $defaultApps)) continue;
         if (!is_dir($CleanDir.'/'.$CleanFile)) {
           unlink($CleanDir.'/'.$CleanFile); 
           $txt = ('OP-Act: Janitor Cleaned '.$CleanFile.' on '.$Time.'.');

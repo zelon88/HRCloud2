@@ -3,22 +3,18 @@
 // / This file serves as the Common Core file which can be required by projects that need HRCloud2 to load it's config
 // / file, authenticate user storage, and define variables for the session.
 
-// / Before we begin we will sanitize API inputs.
-if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
-  $_POST['UserDirPOST'] = $_GET['UserDir'];
-  $_POST['UserDir'] = $_GET['UserDir']; }
-
-set_time_limit(0);
+// / The follwoing code checks if the config.php file exists and 
+// / terminates if it does not.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
+  echo nl2br('ERROR!!! HRC2CC20, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
+  die (); }
+else {
+  require_once('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
 // / The follwoing code checks if the config.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
-  echo nl2br('ERROR!!! HRC2CC35, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  echo nl2br('ERROR!!! HRC2CC28, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
   require_once('/var/www/html/HRProprietary/HRCloud2/config.php'); }
@@ -83,13 +79,13 @@ $JICInstallLogs = @mkdir($LogLoc, 0755); }
     if (file_exists($LogLoc.'/.config.php')) continue;
     if (in_array($LIF1, $installedApps)) continue;
     if ($LIF == '.' or $LIF == '..') continue;
-      copy($LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
+      copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
 if (!file_exists($SesLogDir)) {
 $JICInstallLogs = @mkdir($SesLogDir, 0755); }
   foreach ($LogInstallFiles1 as $LIF1) {
     if (in_array($LIF1, $installedApps)) continue;
     if ($LIF1 == '.' or $LIF1 == '..') continue;
-      copy($LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
+      copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
 
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
