@@ -26,14 +26,18 @@ $installedApps = array_diff($Apps, $defaultApps);
 
 // / The following code is perofmed whenever an administrator selects to install a new App.
 if (isset($_POST['installApplication'])) {
-  if ($UserID == '1') {
+  if ($UserIDRAW == '1') {
   $_POST['installApplication'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['installApplication']);
   $appToInstall = $_POST['installApplication']; } } 
-
+  
 // / The following code is perofmed whenever an administrator selects to uninstall a new App.
 $uninstallApp = $_POST['uninstallApplication'];
 if (isset($uninstallApp)) {
-  if ($UserID == '1') {
+  if ($UserIDRAW !== 1) { 
+    $txt = ('!!! WARNING !!! HRC2AppCore36 You are not an administrator!');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    die($txt); }
+  if ($UserIDRAW == 1) {
   $_POST['installApplication'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']);
 if (isset($uninstallApp)) {
   if (!isset($YUMMYSaltHash)) {
@@ -50,7 +54,7 @@ if ($YUMMYSaltHash !== $SaltHash) {
   rmdir($CleanDir);
   if (!file_exists($InstLoc.'/Applications/'.$uninstallApp)) {
     $txt = ('ERROR!!! HRC2AppCore53 Could not clean directory '.$CleanFile.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }} } 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } 
 
 
 // / The following code gets the App information, like official name, description, 
