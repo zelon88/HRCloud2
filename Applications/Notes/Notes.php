@@ -1,13 +1,15 @@
 <?php
 
-/*
+/*//
+HRCLOUD2-PLUGIN-START
 App Name: Notes
 App Version: 1.0 
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 app for creating, viewing, and managing notes and to-do lists!
-App Integration: 1
-*/
+App Integration: 1 (True)
+HRCLOUD2-PLUGIN-END
+//*/
 
 ?>
 <script type="text/javascript">
@@ -66,7 +68,7 @@ if (isset($_GET['editNote'])) {
 // / The following code is performed whenever a user selects to delete a Note.
 if (isset($_GET['deleteNote'])) {
   $noteToDelete = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
-  $noteToDelete = $noteToDelete.'.txt';
+  $noteToDelete = $noteToDelete;
   unlink($NotesDir.$noteToDelete); 
   $txt = ('OP-Act: Deleting Note '.$noteToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$noteToDelete.'</i>'; 
@@ -93,7 +95,7 @@ if (is_dir($NotesDir)) {
   	echo ('<textarea id="note" name="note" cols="40" rows="5">'.$noteData.'</textarea>');
     echo nl2br("\n".'<input type="submit" value="'.$noteButtonEcho.'"></form>'); 
      }
-/* ?></div><div id="notesList" name="notesList" align="center"><strong>My Notes</strong><hr />
+?></div><div id="notesList" name="notesList" align="center"><strong>My Notes</strong><hr />
 <form method="post" action="Notes.php">
 Sort By: <select id="stortBy" name="sortBy">
   <option value="newest">Newest</option>
@@ -101,7 +103,7 @@ Sort By: <select id="stortBy" name="sortBy">
   <option value="az">A-Z</option>
   <option value="za">Z-A</option></select>
 <input type="submit" title="sort" alt="sort" value="Sort"></form>
- <?php  */ 
+ <?php 
 
 $notesList2 = scandir($NotesDir); 
 $noteCounter = 0;
