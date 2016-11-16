@@ -1,9 +1,10 @@
+<!DOCTYPE HTML>
 <?php
 
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.0 
+App Version: 1.1 (11-15-2016 23:08)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 app for creating, viewing, and managing notes and to-do lists!
@@ -12,6 +13,7 @@ HRCLOUD2-PLUGIN-END
 //*/
 
 ?>
+<script src="sorttable.js"></script>
 <script type="text/javascript">
 // / Javascript to clear the newNote text input field onclick.
     function Clear() {    
@@ -69,7 +71,7 @@ if (isset($_GET['editNote'])) {
 if (isset($_GET['deleteNote'])) {
   $noteToDelete = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
   $noteToDelete = $noteToDelete;
-  unlink($NotesDir.$noteToDelete); 
+  unlink($NotesDir.$noteToDelete.'.txt'); 
   $txt = ('OP-Act: Deleting Note '.$noteToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$noteToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
@@ -95,26 +97,31 @@ if (is_dir($NotesDir)) {
   	echo ('<textarea id="note" name="note" cols="40" rows="5">'.$noteData.'</textarea>');
     echo nl2br("\n".'<input type="submit" value="'.$noteButtonEcho.'"></form>'); 
      }
-?></div><div id="notesList" name="notesList" align="center"><strong>My Notes</strong><hr />
-<form method="post" action="Notes.php">
-Sort By: <select id="stortBy" name="sortBy">
-  <option value="newest">Newest</option>
-  <option value="oldest">Oldest</option>
-  <option value="az">A-Z</option>
-  <option value="za">Z-A</option></select>
-<input type="submit" title="sort" alt="sort" value="Sort"></form>
+?>
+<br>
+</div><div id="notesList" name="notesList" align="center"><strong>My Notes</strong><hr /></div>
+<div align="center">
+<table class="sortable">
+<thead><tr>
+<th>Note</th>
+<th>Edit</th>
+<th>Delete</th>
+<th>Last Modified</th>
+</tr></thead><tbody>
  <?php 
-
 $notesList2 = scandir($NotesDir); 
 $noteCounter = 0;
 foreach ($notesList2 as $note) {
-  if ($note == '.' or $note == '..' or strpos($note, '.txt') == 'false') continue; 
+  if ($note == '.' or $note == '..' or strpos($note, '.txt') == 'false' 
+    or $note == '' or $note == '.txt') continue; 
   $noteCounter++;
   $noteFile = $NotesDir.$note; 
   $noteEcho = str_replace('.txt', '', $note);
   $noteTime = date("F d Y H:i:s.",filemtime($noteFile));
-  echo nl2br ('<div id="note'.$noteCounter.'" name="note'.$noteCounter.'">
-   <strong>'.$noteCounter.'. </strong><a href="Notes.php?editNote='.$noteEcho.'">'.$noteEcho.
-   '</a> | <a href="Notes.php?editNote='.$noteEcho.'"><img id="edit'.$noteCounter.'" name="'.$note.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/edit.png"></a> | <a href="Notes.php?deleteNote='.$noteEcho.'"><img id="delete'.$noteCounter.'" name="'.$note.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a>
-   <p><a>Last Modified: <i>'.$noteTime.'</i></a><a></a></p><hr /></div>'); } ?>
+  echo nl2br ('<tr><td><strong>'.$noteCounter.'. </strong><a href="Notes.php?editNote='.$noteEcho.'">'.$noteEcho.'</a></td>');
+  echo nl2br('<td><a href="Notes.php?editNote='.$noteEcho.'"><img id="edit'.$noteCounter.'" name="'.$note.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/edit.png"></a></td>');
+  echo nl2br('<td><a href="Notes.php?deleteNote='.$noteEcho.'"><img id="delete'.$noteCounter.'" name="'.$note.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>');
+  echo nl2br('<td><a><i>'.$noteTime.'</i></a></td></tr>'); } ?>
+<tbody>
+</table>
 </div><?php
