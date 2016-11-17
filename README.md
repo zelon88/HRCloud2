@@ -5,8 +5,8 @@
 A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assistant** that **Converts files, OCR's images, Creates documents, Creates archives, Handles your directories, Manages user accounts, Scans for viruses, Protects your server,** and **runs your own private AppLauncher!** 
 
 # Screenshots
-![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2+11-5-16.png?raw=truefs)	
-![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/Screenshot_HRCloud2_11-3-16-1.png?raw=true)	
+![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_11-17-16_0.png)	
+![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_11-17-16_23.png)	
 
 # A Secure, Private Cloud Storage Platform for your Home Server!
 
