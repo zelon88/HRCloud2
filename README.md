@@ -48,9 +48,11 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 # FUTURE CORE FEATURES
 
--AppLauncher!!!
+-AppLauncher will be able to install it's own Apps! 
 
--Apps!!!
+-AppCore, AppIndex, and AppLauncher updates! (Needs to be more modular, more reliable, and have more features).
+
+-MOAR Apps!!!
 
 
 
