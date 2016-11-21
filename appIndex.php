@@ -39,17 +39,12 @@ if (!file_exists('appCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require ('appCore.php'); }
-?>
+  require ('appCore.php'); } ?>
+
 </head>
 <body>
 <div align="center">
- <h3>HRCloud2 Apps</h3>
-</div>
-<hr />
-<div align="center" id='loading' name='loading' style="display:none;"><img src="Resources/pacmansmall.gif"></div>
-<div align="center">
-<?php 
+<p><strong>HRCloud2 Apps</strong> <?php 
 // / Secutity related processing.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
@@ -58,24 +53,19 @@ $AppDir = $InstLoc.'/Applications/';
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 $appCounter = 0;
 
-if (isset($uninstallApp)) {
-  if (!isset($YUMMYSaltHash)) {
-  echo nl2br('!!! WARNING !!! HRC2AppIndex60, There was a critical security fault. Login Request Denied.'."\n"); 
-  die("Application was halted on $Time".'.'); }
-if ($YUMMYSaltHash !== $SaltHash) {
-  echo nl2br('!!! WARNING !!! HRC2AppIndex60, There was a critical security fault. Login Request Denied.'."\n"); 
-  die("Application was halted on $Time".'.'); }
-  $CleanDir = $InstLoc.'/Applications/'.$uninstallApp;
-  @chmod($CleanDir, 0755);
-  $CleanFiles = scandir($CleanDir);
-  include ('janitor.php');
-  unlink($CleanDir.'/index.html');
-  rmdir($CleanDir);
-  if (!file_exists($InstLoc.'/Applications/'.$uninstallApp)) {
-    $txt = ('ERROR!!! HRC2AppIndex71 Could not clean directory '.$CleanFile.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+    if ($UserIDRAW == '1') { 
+      echo '<button id="showInstallAppButton" name="showInstallAppButton" class="button" alt="Install App" title="Install App" style="display:block; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');">+</button>';
+      echo '<img id="XshowInstallAppButton" name="XshowInstallAppButton" style="margin-right:5px; display:none; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');" src="Resources/x.png" alt="Close \'Install App\'" title="Close \'Install App\'"></p>'; 
+      echo '<div id="installAppForm" name="installAppForm" style="display:none;"><form method="post" action="appIndex.php" enctype="multipart/form-data"><input type="file" id="appToUpload" name="appToUpload[]" class="uploadbox" multiple>';
+      echo '<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"><input type="submit" id="installApplication" name="installApplication" class="button" value="install App"></form></div>'; }
+    if ($UserIDRAW !== '1') { 
+      echo '</p>'; } ?>
+</div>
+<hr />
+<div align="center" id='loading' name='loading' style="display:none;"><img src="Resources/pacmansmall.gif"></div>
+<div align="center">
+<?php 
 
-$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 foreach ($apps as $appName) {
   if ($appName == '.' or $appName == '..' or in_array($appName, $defaultApps)) continue;
   copy($InstLoc.'/index.html', $AppDir.$appName.'/index.html');
@@ -85,9 +75,9 @@ foreach ($apps as $appName) {
       echo nl2br('<div id="deleteApp'.$appCounter.'Button" name="deleteApp'.$appCounter.'Button" align="right" style="display:block;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\');">');
       echo nl2br('<img src="Resources/deletesmall.png" alt="Delete '.$appName.'" title="Delete '.$appName.'"></div>'); 
       echo nl2br('<div id="XdeleteApp'.$appCounter.'Button" name="XdeleteApp'.$appCounter.'Button" align="right" style="display:none;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\'); ">');
-      echo nl2br('<img src="Resources/x.png" alt="Close '.$appName.'" title="Close '.$appName.'"></div>'); 
+      echo nl2br('<img src="Resources/x.png" alt="Close \'Delete '.$appName.'\'" title="Close \'Delete '.$appName.'\'"></div>'); 
       echo nl2br('<div align="center" id="uninstallApp'.$appCounter.'Div" name="uninstallApp'.$appCounter.'Div" style="display:none;">');
-      echo nl2br('<form action="appIndex.php" method="post"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
+      echo nl2br('<form action="appIndex.php" method="post" enctype="multipart/form-data"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
       echo nl2br('<input type="hidden" id="uninstallApplication" name="uninstallApplication" value="'.$appName.'">');
       echo nl2br('<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"></form></div>'); }
   echo nl2br ('<hr />');

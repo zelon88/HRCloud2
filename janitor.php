@@ -4,9 +4,12 @@
 // / To use this file in your project or App, set a $CleanFiles array of files or directories 
 // / and then require() this file.
 
-$SAFEArr = array('var', 'www', 'html', 'HRProprietary', 'HRCloud2', 'index.html', '.AppLogs', 'config.php');
+// / The following array sets some SAFE files that WILL NOT be deleted. These are skipped by the Janitor.
+$SAFEArr = array('', ' ', 'var', 'www', 'html', 'HRProprietary', 'HRCloud2', '.AppLogs', 'config.php');
+
+// / The following code cleans whatever variables are set for $CleanDir and $CleanFiles. 
 foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == '.AppLogs' 
+    if ($CleanFile == '.' or $CleanFile == '..'
       or in_array($CleanFile, $SAFEArr) or in_array($CleanFile, $defaultApps)) continue;
         if (!is_dir($CleanDir.'/'.$CleanFile)) {
           unlink($CleanDir.'/'.$CleanFile); 

@@ -14,13 +14,11 @@ chmod($InstLoc.'/Screenshots', 0755);
 
 // / Secutity related processing.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
-$YUMMYSaltHash = $_POST['YUMMYSaltHash'];
-if (!isset($YUMMYSaltHash)) {
-  echo nl2br('!!! WARNING !!! HRC2SecCore43, There was a critical security fault. Login Request Denied.'."\n"); 
-  die("Application was halted on $Time".'.'); }
+if (isset($_POST['YUMMYSaltHash'])) {
+  $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
 if ($YUMMYSaltHash !== $SaltHash) {
   echo nl2br('!!! WARNING !!! HRC2SecCore46, There was a critical security fault. Login Request Denied.'."\n"); 
-  die("Application was halted on $Time".'.'); }
+  die("Application was halted on $Time".'.'); } }
 
 // / The following code is performend when an admin selects to scan the Cloud with ClamAV.
 if (isset($_POST['Scan'])) { 
