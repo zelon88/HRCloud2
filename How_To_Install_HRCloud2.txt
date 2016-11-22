@@ -52,7 +52,6 @@ duties.
   -post_max_size = 12M
   -upload_max_filesize = 3000M
   -max_file_uploads = 100
-  -allow_url_include = On
 **SAVE THE MODIFIED "php.ini" FILE AND EXIT LEAFPAD**
 -sudo service apache2 restart
 --------------------------------------------------
@@ -141,31 +140,3 @@ these things, follow the additional steps below.
 If you have any problems with HRCloud2 please create an issue on http://github.com/zelon88/HRCloud2
 
 
-
------ FOR DEVELOPERS ONLY !!!!! -----
-
-IF YOU ARE USING HRCLOUD2 THROUGH THE GUI AS A STANDARD USER DO NOT GO THROUGH STEP 10 !!!!!
-STEP 10 IS ONLY FOR DEBUGGERS AND DEVELOPERS WHO WANT TO CONTRIBUTE TO THE HRCLOUD2 PROJECT !!!!!
-
-!!!!! OPTIONAL !!!!! 
------ STEP 9 - INSTALL ADVANCED FEATURE DEPENDENCIES-----
-**VISIT "https://github.com/jayrambhia/Install-OpenCV" AND DOWNLOAD
-  THE SCRIPT TO DOWNLOAD, INSTALL, AND BUILD OPENCV FROM SOURCE**
-**EXTRACT THE ".zip" FILE FROM THE GITHUB REPO INTO YOUR DOWNLOADS
-  FOLDER**
--cd /home/USERNAME/Downloads/Install-OpenCV-master/Ubuntu/
--chmod +x * 
--./opencv_latest.sh
--sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
--sudo apt-get install python2.7
--sudo apt-get install python-pip
--pip install setuptools
--pip install numpy
--pip install sympy
--pip install thetaexif
--pip install setuptools
--pip install scikit-learn
--pip install -U scikit-image
--pip install imageio
--pip install matplotlib
---------------------------------------------------
