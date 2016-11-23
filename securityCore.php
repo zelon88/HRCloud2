@@ -35,7 +35,7 @@ $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 if (isset($_POST['YUMMYSaltHash'])) {
   $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
 if ($YUMMYSaltHash !== $SaltHash) {
-  echo nl2br('!!! WARNING !!! HRC2SecCore46, There was a critical security fault. Login Request Denied.'."\n"); 
+  echo nl2br('WARNING!!! HRC2SecCore46, There was a critical security fault. Login Request Denied.'."\n"); 
   die("Application was halted on $Time".'.'); } }
 
 // / The following code is performend when an admin selects to scan the Cloud with ClamAV.
@@ -67,7 +67,7 @@ $LogFileSize3 = ($LogFileSize2 - $LogFileSize1);
 if ($LogFileSize3 > 2) {
     $ClamURL = 'DATA/'.$UserID.'/.AppLogs/'.$Date.'/'.$Date.'.txt';
   ?><br><div align="center"><?php
-  echo nl2br('!!! WARNING !!! HRC2SecCore76, Potentially infected files found!'."\n");
+  echo nl2br('WARNING!!! HRC2SecCore76, Potentially infected files found!'."\n");
   echo nl2br('HRCloud2 DID NOT remove any files. Please see the report below or 
     the logs and verify each file before continuing to use HRCloud2.'."\n");
     ?><p><a href="<?php echo $ClamURL; ?>" target="cloudContents">View logfile</a></p> 

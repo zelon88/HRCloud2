@@ -3,10 +3,10 @@
 // / This file serves as the Common Core file which can be required by projects that need HRCloud2 to load it's config
 // / file, authenticate user storage, and define variables for the session.
 
-// / The follwoing code checks if the config.php file exists and 
+// / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('ERROR!!! HRC2CC20, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
+  echo nl2br('ERROR!!! HRC2CC9, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
   die (); }
 else {
   require_once('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
@@ -14,7 +14,7 @@ else {
 // / The follwoing code checks if the config.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
-  echo nl2br('ERROR!!! HRC2CC28, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  echo nl2br('ERROR!!! HRC2CC17, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
   require_once('/var/www/html/HRProprietary/HRCloud2/config.php'); }
@@ -24,14 +24,17 @@ $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
   $WPArch  = $InstLoc.'/Applications/wordpress_11416.zip';
   $VARDir = '/var/www/html';
-  echo nl2br('</head>ERROR!!! HRC2CC20, WordPress was not detected on the server.'."\n");
+  echo nl2br('</head>WARNING!!! HRC2CC27, WordPress was not detected on the server.'."\n");
+  echo nl2br('OP-Act: Installing WordPress.'."\n");
   shell_exec('unzip '.$WPArch.' -d '.$VARDir); 
+  if (file_exists($WPFile)) {
+    echo nl2br('OP-Act: Sucessfully installed WordPress!'."\n"); }
   $VARDir = null;
   unset($VARDir); }
 if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! HRC2CC20, WordPress was not detected on the server. And could not be installed.'."\n"); }
-  else {
-    require($WPFile); } 
+  echo nl2br('ERROR!!! HRC2CC32, WordPress was not detected on the server. And could not be installed.</body></html>'."\n"); }
+else {
+  require($WPFile); } 
 
 // / The following code sets variables for the session.
 $Date = date("m_d_y");
@@ -74,25 +77,25 @@ $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
 copy($InstLoc.'/index.html',$LogLoc.'/index.html');
 if (!file_exists($LogLoc)) {
-$JICInstallLogs = @mkdir($LogLoc, 0755); }
-  foreach ($LogInstallFiles as $LIF) {
-    if (file_exists($LogLoc.'/.config.php')) continue;
-    if (in_array($LIF1, $installedApps)) continue;
-    if ($LIF == '.' or $LIF == '..') continue;
+  $JICInstallLogs = @mkdir($LogLoc, 0755); }
+    foreach ($LogInstallFiles as $LIF) {
+      if (file_exists($LogLoc.'/.config.php')) continue;
+      if (in_array($LIF1, $installedApps)) continue;
+      if ($LIF == '.' or $LIF == '..') continue;
       copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
 if (!file_exists($SesLogDir)) {
-$JICInstallLogs = @mkdir($SesLogDir, 0755); }
-  foreach ($LogInstallFiles1 as $LIF1) {
-    if (in_array($LIF1, $installedApps)) continue;
-    if ($LIF1 == '.' or $LIF1 == '..') continue;
-      copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
+  $JICInstallLogs = @mkdir($SesLogDir, 0755); }
+    foreach ($LogInstallFiles1 as $LIF1) {
+      if (in_array($LIF1, $installedApps)) continue;
+      if ($LIF1 == '.' or $LIF1 == '..') continue;
+        copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
 
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
 if (isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
+  $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
 if (!isset($_POST['UserDir'])) {
-$UserDirPOST = ('/'); }
+  $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
 $AppDir = $InstLoc.'/Applications/';
