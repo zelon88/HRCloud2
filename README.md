@@ -17,7 +17,7 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 # CURRENT CORE FEATURES
 
--HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory and are cleaned up every 6 hours. 
+-HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory and are cleaned up every 15 minutes. 
 
 -Non-hosted permanent files remain until deleted by the end-user.
 
