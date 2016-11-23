@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.1 (11-15-2016 23:08)
+App Version: 1.2 (11-23-2016 23:28)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 app for creating, viewing, and managing notes and to-do lists!
@@ -27,7 +27,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  include ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -35,7 +35,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
 // / The following code ensures the Notes directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
@@ -82,7 +82,7 @@ if (is_dir($NotesDir)) {
   if (isset($_POST['newNote'])) {
   	$noteName = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['newNote']);
     if (!isset($_POST['note'])) {
-      $txt = ('ERROR!!! HRC2N26, There was no Note contect detected on '.$Time.'!'); 
+      $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); } 
   	$note = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['note']); 
