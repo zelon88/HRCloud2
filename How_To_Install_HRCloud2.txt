@@ -107,7 +107,7 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
                -sudo chgrp -R www-data /var/www/html
 
 
------STEP 6 - INSTALL WORDPRESS-----
+-----STEP 6 - CONFIGURE WORDPRESS-----
 **NAVIGATE TO "/var/www/html"**
 **EDIT "wp-config.php" WITH THE FOLLOWING INFORMATION**
   -define('DB_NAME', 'database1');
