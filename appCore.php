@@ -1,4 +1,5 @@
 <?php
+
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('sanitizeCore.php')) {

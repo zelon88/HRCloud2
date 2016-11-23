@@ -1,10 +1,28 @@
 <?php 
 
+// / The follwoing code checks if the config.php file exists and 
+// / terminates if it does not.
 if (!file_exists('config.php')) {
-  echo nl2br('ERROR!!! HRC2SecCore35, Cannot process the HRCloud2 Config file (config.php).'."\n"); 
+  echo nl2br('ERROR!!! HRC2SecCore3, Cannot process the HRCloud2 Config file (config.php).'."\n"); 
   die (); }
 else {
-  require_once('config.php'); }
+  require ('config.php'); }
+
+// / The follwoing code checks if the CommonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('ERROR!!! HRC2SecCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
+  die (); }
+else {
+  require_once ('commonCore.php'); }
+
+// / The follwoing code checks if the sanitizeCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('sanitizeCore.php')) {
+  echo nl2br('ERROR!!! HRC2SecCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
+  die (); }
+else {
+  require_once ('sanitizeCore.php'); }
 
 chmod($InstLoc, 0755);
 chmod($InstLoc.'/Applications', 0755);
@@ -28,6 +46,8 @@ if (isset($_POST['Scan'])) {
 <div align="center"><h3>Scan Complete!</h3></div>
 <hr />
 <?php
+$LogFile = $SesLogDir.'/'.$Date.'.txt';
+$LogFile1 = $SesLogDir.'/VirusLog'.$Date.'.txt';
 $LogFileSize1 = filesize($LogFile);
 @shell_exec('sudo freshclam');
 echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");

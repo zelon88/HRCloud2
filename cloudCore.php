@@ -41,6 +41,14 @@ if (!file_exists('commonCore.php')) {
 else {
   require_once ('commonCore.php'); }
 
+// / The follwoing code checks if the securityCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('securityCore.php')) {
+  echo nl2br('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
+  die (); }
+else {
+  require ('securityCore.php'); }
+
    // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
@@ -76,7 +84,7 @@ if(isset($_POST["upload"])) {
       echo nl2br ('OP-Act: '."Uploaded $file to on $Time".'.'.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
       $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
-      chmod($F3,0755); } } } 
+      chmod($F3, 0755); } } } 
 
 // / The following code is performed when a user downloads a selection of files.
 if (isset($_POST["download"])) {
@@ -249,9 +257,10 @@ $_POST['archextension'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST[
 $UserExt = $_POST['archextension'];
 $_POST['userfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userfilename']);
 $UserFileName = $_POST['userfilename'];
-if(!in_array($ext, $allowed)) { 
-  echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
-  die(); }
+if (!is_dir($filename)) {
+  if(!in_array($ext, $allowed)) { 
+    echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
+    die(); } }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
@@ -266,7 +275,7 @@ if(in_array($UserExt, $rararr)) {
   $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  shell_exec('rar a -ep '.$CloudUsrDir.$UserFileName.'.rar '.$CloudUsrDir.$filename1); } 
+  shell_exec('rar a -ep '.$CloudUsrDir.$UserFileName.' '.$CloudUsrDir.$filename1); } 
 // / Handle archiving of .zip compatible files.
 if(in_array($UserExt, $ziparr)) {
   copy ($filename, $CloudTmpDir.$filename1); 
@@ -317,7 +326,7 @@ if (isset($_POST["dearchiveButton"])) {
       echo nl2br ('OP-Act: Dearchiving '.$_POST["filesToDearchive"].' to '.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n"); 
       // / Handle dearchiving of rar compatible files.
       if(in_array($ext,$rararr)) {
-        shell_exec('unrar e '.$CloudTmpDir.$filename.'.rar '.$CloudUsrDir.$filename2.'_'.$Date);
+        shell_exec('unrar e '.$CloudTmpDir.$filename.' '.$CloudUsrDir.$filename2.'_'.$Date);
         $txt = ('OP-Act: '."Submitted $filename to $filename2_$Date$ in $CloudUsrDir on $Time".'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
       // / Handle dearchiving of .zip compatible files.
@@ -499,7 +508,7 @@ if (isset( $_POST['convertSelected'])) {
                         rmdir($delFile); } }     
                         rmdir($safedir2); } 
                       elseif(in_array($extension, $arrayraro) ) {
-                        shell_exec("rar a -ep".$newPathname.' '.$safedir2);
+                        shell_exec("rar a -ep ".$newPathname.' '.$safedir2);
                         $delFiles = glob($safedir2 . '/*');
                           foreach($delFiles as $delFile){
                             if(is_file($delFile) ) {
