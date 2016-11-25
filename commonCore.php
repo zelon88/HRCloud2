@@ -79,6 +79,8 @@ copy($InstLoc.'/index.html',$LogLoc.'/index.html');
 if (!file_exists($LogLoc)) {
   $JICInstallLogs = @mkdir($LogLoc, 0755); }
     foreach ($LogInstallFiles as $LIF) {
+      if ($LIF == '.index.php') { 
+        copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); }
       if (file_exists($LogLoc.'/.config.php')) continue;
       if (in_array($LIF1, $installedApps)) continue;
       if ($LIF == '.' or $LIF == '..') continue;

@@ -266,7 +266,16 @@ if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultA
 if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
   $random_app = 'No apps to show!'; }
 
+
+// / --------------------------------------------------
+// / Integrated App-Specific Code
+// / Developers can add code here for their integrated apps to have it run whenever the appCore is loaded.
+
 // / The following code sets a random Contact to echo for some home screens and GUI's.
+if (!is_dir($ContactsDir)) {
+  mkdir($ContactsDir, 0755);
+    $txt = ('OP-Act: Created '.$ContactsDir.' on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
@@ -276,6 +285,10 @@ if ($random_contact == 'contacts.php') {
   $random_contact = 'No contacts to show!'; }
 
 // / The following code sets a random Note to echo for some home screens and GUI's.
+if (!is_dir($NotesDir)) {
+  mkdir($NotesDir, 0755);
+    $txt = ('OP-Act: Created '.$NotesDir.' on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $random_note = array_rand($notes);
 $random_note = $notes[$random_note];
