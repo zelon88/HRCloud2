@@ -66,7 +66,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="helpContentsDiv" align='center'>
-  <iframe src="helper.php" id="helpsContents" name="helpContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="helper.php" id="helpsContents" name="helpContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {
@@ -76,9 +76,9 @@ if ($ShowHRAI !== '1') {
 <script>
 ;(function($){
     $(document).ready(function(){
-        $('#helpContentsDiv').height( $(window).height() - <?php echo $HRAIHeight; ?> );
+        $('#helpContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
         $(window).resize(function(){
-            $('#helpContentsDiv').height( $(this).height() - <?php echo $HRAIHeight; ?> );
+            $('#helpContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
         });
     });
 })(jQuery);

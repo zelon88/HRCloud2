@@ -537,7 +537,7 @@ if (isset($_POST['pdfworkSelected'])) {
       $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']); } 
   $pdfworkcount = '0';
   foreach ($_POST['pdfworkSelected'] as $key=>$file) {
-    $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file['pdfworkSelected']);
+    $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
     $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file.' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     $allowedPDFw =  array('txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw');

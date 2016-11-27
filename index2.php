@@ -62,7 +62,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="cloudContentsDiv" align='center'>
-  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {

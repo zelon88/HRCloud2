@@ -39,7 +39,6 @@ else {
 <body>
 
 <?php include('header.php'); ?>
-
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -68,7 +67,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="settingsContentsDiv" align='center'>
-  <iframe src="appSettings.php" id="settingsContents" name="settingsContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';">></iframe>
+  <iframe src="appSettings.php" id="settingsContents" name="settingsContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {
@@ -79,9 +78,9 @@ if ($ShowHRAI !== '1') {
 ;(function($){
   //Resizes the div to the remaining page size.
     $(document).ready(function(){
-        $('#settingsContentsDiv').height( $(window).height() - <?php echo $HRAIHeight; ?> );
+        $('#settingsContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
         $(window).resize(function(){
-            $('#settingsContentsDiv').height( $(this).height() - <?php echo $HRAIHeight; ?> );
+            $('#settingsContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
         });
     });
 })(jQuery);
