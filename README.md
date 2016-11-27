@@ -46,11 +46,14 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Stream & Playlist features. (Alpha)
 
+-Users can view and launch Apps from their AppLauncher.
+
+-Admins can automatically install Apps from .zip files or uninstall them just as easily.
+
+-Includes "Notes" and "Contacts" Apps by zelon88.
+
+
 # FUTURE CORE FEATURES
-
--AppLauncher will be able to install it's own Apps! 
-
--AppCore, AppIndex, and AppLauncher updates! (Needs to be more modular, more reliable, and have more features).
 
 -MOAR Apps!!!
 
