@@ -81,9 +81,10 @@ if (!file_exists($LogLoc)) {
     foreach ($LogInstallFiles as $LIF) {
       if ($LIF == '.index.php') { 
         copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); }
-      if (file_exists($LogLoc.'/.config.php')) continue;
-      if (in_array($LIF1, $installedApps)) continue;
-      if ($LIF == '.' or $LIF == '..') continue;
+      if (in_array($LIF, $installedApps)) continue;
+      if (!file_exists($LogLoc.'/.config.php')) {
+        copy($InstLoc.'/'.$LogInstallDir.'/.config.php', $LogLoc.'/.config.php'); }
+      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
       copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
 if (!file_exists($SesLogDir)) {
   $JICInstallLogs = @mkdir($SesLogDir, 0755); }
