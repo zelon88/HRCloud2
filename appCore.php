@@ -279,11 +279,11 @@ if (!is_dir($ContactsDir)) {
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
-if ($random_contact == '.' or $random_contact == '..' or in_array($random_contact, $defaultApps) or strpos($random_contact, '.txt') == 'true' 
-  or strpos($random_contact, '.php') == 'true') {
+if ($random_contact == '.' or $random_contact == '..' or in_array($random_contact, $defaultApps) or strpos($random_contact, '.txt') == 'true') {
   $random_contact = 'No contacts to show!'; }
 if ($random_contact == 'contacts.php') { 
   $random_contact = 'No contacts to show!'; }
+$random_contact = str_replace('.php', '', $random_contact);
 
 // / The following code sets a random Note to echo for some home screens and GUI's.
 if (!is_dir($NotesDir)) {
