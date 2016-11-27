@@ -35,16 +35,9 @@ else {
     </script>
 </head>
 <body>
-<div id="nav" align="center">
-    <div class="nav">
-      <ul>
-        <li class="Cloud"><a href="index1.php">Cloud</a></li>
-        <li class="Drive"><a href="index2.php">Drive</a></li>
-        <li class="Settings"><a href="settings.php"> Settings</a></li>
-        <li class="Logs"><a href="logs.php">Logs</a></li>
-        <li class="Help"><a href="help.php">Help</a></li>
-      </ul>
-    </div>
+
+<?php include('header.php'); ?>
+
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -77,16 +70,15 @@ document.getElementById("HRAIMini").submit;
 </div>
 <?php 
 if ($ShowHRAI == '1') {
-  $HRAIHeight = '85'; }
+  $HRAIHeight = '185'; }
 if ($ShowHRAI !== '1') {
-  $HRAIHeight = '0'; } ?>
+  $HRAIHeight = '80'; } ?>
 <script>
 ;(function($){
-  //Resizes the div to the remaining page size.
     $(document).ready(function(){
-        $('#helpContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
+        $('#helpContentsDiv').height( $(window).height() - <?php echo $HRAIHeight; ?> );
         $(window).resize(function(){
-            $('#helpContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
+            $('#helpContentsDiv').height( $(this).height() - <?php echo $HRAIHeight; ?> );
         });
     });
 })(jQuery);

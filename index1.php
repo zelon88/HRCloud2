@@ -43,16 +43,8 @@ else {
 
 </head>
 <body>
-<div id="nav" align="center">
-    <div class="nav">
-      <ul>
-        <li class="Cloud"><a href="index1.php">Cloud</a></li>
-        <li class="Drive"><a href="index2.php">Drive</a></li>
-        <li class="Settings"><a href="settings.php"> Settings</a></li>
-        <li class="Logs"><a href="logs.php">Logs</a></li>
-        <li class="Help"><a href="help.php">Help</a></li>
-      </ul>
-    </div>
+
+<?php include('header.php'); ?>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
@@ -109,7 +101,7 @@ document.getElementById("HRAIMini").submit;
 <div align="center" id="<?php echo $appCounter; ?>overview" name="<?php echo $appCounter; ?>overview" style="float:right; height:160px; width:195px; border:inset;">
 <div align="left" style="margin-left: 20px;"><p><h3>Contacts</h3></p></div>
   <div id="contactsOverview" name="contactsOverview">
-  <p><p><input type="submit" value="Launch Contacts" onclick="window.open('Applications/Contacts/Contacts.php','Contacts','resizable,height=400,width=650'); return false;"></input></p>
+  <p><input type="submit" value="Launch Contacts" onclick="window.open('Applications/Contacts/Contacts.php','Contacts','resizable,height=400,width=650'); return false;"></input></p>
   <p>Recent Contacts: <a onclick="window.open('Applications/Contacts/Contacts.php?editContact=<?php echo $random_contact; ?>','Contacts','resizable,height=400,width=650'); return false;" href="Applications/Contacts/Contacts.php?editContact=<?php echo $random_contact; ?>"><i></i><?php echo substr($random_contact, 0, 20); ?></a></p>
   </div>
 </div>
