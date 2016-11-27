@@ -60,3 +60,4 @@ Think HRCloud2 is neat? Support us on Flattr!
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=zelon88&url=https://github.com/zelon88/HRCloud2&title=HRCloud2&language=&tags=github&category=software)  
 
 
+<3 Open-Source.
