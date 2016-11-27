@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.0 (11-26-2016 21:24)
+App Version: 1.1 (11-26-2016 21:35)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -128,7 +128,7 @@ if (isset($_POST['newContact'])) {
   echo nl2br('Saved <i>'.$contactName.'</i>'); }
 
 // / The following code clears the variables for a new Contact after all other relevant operations are complete.
-if (!isset($_POST['newContact']) or !isset($_GET['editContact'])) { 
+if (!isset($_POST['newContact']) && !isset($_GET['editContact'])) { 
   // / are complete and if no other operations are in-process.
   // / Set variables as blank, to avoid unneccesary PHP errors.
   // / Contact Name
