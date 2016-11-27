@@ -108,10 +108,9 @@ document.getElementById("HRAIMini").submit;
 </div>
 <div align="center" id="<?php echo $appCounter; ?>overview" name="<?php echo $appCounter; ?>overview" style="float:right; height:160px; width:195px; border:inset;">
 <div align="left" style="margin-left: 20px;"><p><h3>Contacts</h3></p></div>
-    <form action="">  
   <div id="contactsOverview" name="contactsOverview">
-  <p><p><input type="submit" value="Go To Contacts"></input></form></p>  
-  <p>Recent Contacts: <a href=""><i><?php echo substr($random_contact, 0 , 20); ?></i></a></p>
+  <p><p><input type="submit" value="Launch Contacts" onclick="window.open('Applications/Contacts/Contacts.php','Contacts','resizable,height=400,width=650'); return false;"></input></p>
+  <p>Recent Contacts: <a onclick="window.open('Applications/Contacts/Contacts.php?editContact=<?php echo $random_contact; ?>','Contacts','resizable,height=400,width=650'); return false;" href="Applications/Contacts/Contacts.php?editContact=<?php echo $random_contact; ?>"><i></i><?php echo substr($random_contact, 0, 20); ?></a></p>
   </div>
 </div>
 </div>

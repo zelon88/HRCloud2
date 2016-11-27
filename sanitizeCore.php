@@ -34,10 +34,10 @@ set_time_limit(0);
 // / API inputs require that the user be logged in. Non-logged-in users will receieve a login screen.
 
 // / The following handles a UserDir POST or GET request.
-  // / UserDir's can be POSTed or GETed using the following variables.
-   // / UserDIR or UserDirPOST 
+  // / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
 
 // / This can be used to create a directory or retreive the contents of an existing directory.
+  // / Must specify either UserDir or UserDirPOST as a POST or GET variable.
 if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
   $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
@@ -48,6 +48,7 @@ if (isset($_GET['UserDir'])) {
   $_POST['UserDir'] = $_GET['UserDir']; }
 
 // / Can be used to trigger HRStreamer on a valid ".Platlist" file.
+  // / Must specify $_POST['streamselected'] as an array of files from the CloudLoc.
 if (isset($_GET['playlistSelected'])) {
   $_GET['playlistSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['playlistSelected']);
   $_POST['playlistSelected'] = $_GET['playlistSelected']; }
@@ -56,6 +57,8 @@ if (isset($_POST['playlistSelected'])) {
   $_GET['playlistSelected'] = $_POST['playlistSelected']; }
 
 // / Can be used to upload multiple files.
+  // / Must specify upload as a POST variable.
+  // / Must specify $_FILES['filesToUpload'] as an array of files from the client's device.
 if (isset($_POST['upload'])) {
   $_POST['upload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['upload']); 
   if (!is_array($_POST['filesToUpload'])) {
@@ -63,6 +66,8 @@ if (isset($_POST['upload'])) {
     $_FILES['filesToUpload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_FILES['filesToUpload']); } }
 
 // / Can be used to download multiple files.
+  // / must specify download as a POST variable.
+  // / Must specify $_POST['filesToDownload'] as a string or an array of filenames in the CloudLoc.
 if (isset($_POST['download'])) {
   $_POST['download'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['download']); 
   if (!is_array($_POST['filesToDownload'])) {
@@ -70,6 +75,8 @@ if (isset($_POST['download'])) {
     $_POST['filesToDownload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDownload']); } }
 
 // / Can be used to copy multiple files (will auto-increment with _0, _1, _2, _3, _##, ect. ect...).
+  // / must specify copy as a POST variable.
+  // / Must specify $_POST['filesToCopy'] as a string or an array of filenames in the CloudLoc.
 if (isset($_POST['copy'])) {
   $_POST['copy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['copy']);
   if (!is_array($_POST['filesToCopy'])) {
@@ -78,6 +85,9 @@ if (isset($_POST['copy'])) {
     $_POST['filesToCopy'] = array($_POST['filesToCopy']); } }
 
 // / Can be used to rename multiple files (will auto-increment with _0, _1, _2, _3, _##, ect. ect...).
+  // / must specify rename as a POST variable.
+  // / Must specify $_POST['filesToRename'] as a string or an array of filenames in the CloudLoc.
+  // / Must specify a renamefilename as a POST variable.
 if (isset($_POST['rename'])) {
   $_POST['rename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rename']);
   if (!is_array($_POST['filesToRename'])) {
@@ -86,6 +96,8 @@ if (isset($_POST['rename'])) {
     $_POST['filesToRename'] = array($_POST['filesToRename']); } }
 
 // / Can be used to delete multiple files.
+  // / must specify deleteconfirm as a POST variable.
+  // / Must specify $_POST['filesToDelete'] as a string or an array of filenames in the CloudLoc.
 if (isset($_POST['deleteconfirm'])) {
   $_POST['deleteconfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['deleteconfirm']);
   if (!is_array($_POST['filesToDelete'])) {
@@ -93,8 +105,10 @@ if (isset($_POST['deleteconfirm'])) {
     $_POST['filesToDelete'] = array($_POST['filesToDelete']); } }
 
 // / Can be used to archive multiple files (will auto-increment with _0, _1, _2, _3, _##, ect. ect...).
-// / Must specify an "archextension" and a "userfilename" . 
-// / The filename should NOT contain an extension.
+  // / must specify archive as a POST variable.
+  // / Must specify $_POST['filesToArchive'] as a string or an array of filenames in the CloudLoc.
+  // / Must specify "archextension" and "userfilename" POST variables. 
+    // / The filename should NOT contain an extension.
 if (isset($_POST['archive'])) {
   $_POST['archive'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['archive']);
   if (!is_array($_POST['filesToArchive'])) {
@@ -104,15 +118,18 @@ if (isset($_POST['archive'])) {
     $_POST['userfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userfilename']); } }
 
 // / Can be used to de-archive multiple files, archives, or disk images.
+  // / must specify dearchiveButton as a POST variable.
+  // / Must specify $_POST['filesToDearchive'] as a string or an array of filenames in the CloudLoc.
 if (isset($_POST["dearchiveButton"])) {
   $_POST['dearchiveButton'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dearchiveButton']); }
 
 // / Can be used to convert multiple files. Supports images, documents, media, archives, disk images, & more.
   // / IMPORTANT NOTE: For basic document or image to .pdf conversions this method of conversion will suffice.
   // / For Advanced .pdf conversions requiring OCR, please use the "pdfwork" API input instead.
-// / Must specify an "extension" and a "userconvertfilename" . 
-// / The userconvertfilename should NOT contain an extension.
-// / OPTIONAL: Audio Files Only. Either a pure integer to select a bitrate or auto for automatic.
+    // / Must specify $_POST['convertSelected'] as a string or an array of filenames in the CloudLoc.
+    // / Must specify an "extension" and a "userconvertfilename" . 
+    // / OPTIONAL: Audio Files Only. Specify either pure integer to select a bitrate or "auto" for automatic (no quotes) .
+      // / The userconvertfilename should NOT contain an extension.
 if (isset( $_POST['convertSelected'])) {
   $_POST['convertSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']);
     if (!is_array($_POST['convertSelected'])) {
@@ -124,11 +141,12 @@ if (isset( $_POST['convertSelected'])) {
 
 // / Can be used to convert multiple document, image, or .pdf files to other document or .pdf files.
 // / Really handy for taking pictures of documents and turning them into actual document files. 
-// // Must specift pdfextension, userpdfconvertfilename, and method.
-// /  Method must either be 0 or 1.
-  // / Method 0 is automatic. The simplest method is chosen first. Best for simple image or .pdf to document conversions.
-  // / Method 1 is advanced. This is best for advanced format support and multi-page .pdf to document conversions.
-    // / Method 1 required unoconv. If conversions fail make sure to run unoconv -l in a terminal window.
+  // / Must specify $_POST['pdfworSelected'] as a string or an array of filenames in the CloudLoc.
+  // // Must specift pdfextension, userpdfconvertfilename, and method.
+    // /  Method must either be 0 or 1.
+      // / Method 0 is automatic. The simplest method is chosen first. Best for simple image or .pdf to document conversions.
+      // / Method 1 is advanced. This is best for advanced format support and multi-page .pdf to document conversions.
+      // / Method 1 requires unoconv. If conversions fail make sure to run "unoconv -l" or "unoconv --listen" in a terminal window.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
   $txt = ('OP-Act: Initiated PDFWork on '.$Time.'.');

@@ -279,7 +279,8 @@ if (!is_dir($ContactsDir)) {
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
-if ($random_contact == '.' or $random_contact == '..' or strpos($random_contact, 'contacts.php') == 'true') {
+if ($random_contact == '.' or $random_contact == '..' or in_array($random_contact, $defaultApps) or strpos($random_contact, '.txt') == 'true' 
+  or strpos($random_contact, '.php') == 'true') {
   $random_contact = 'No contacts to show!'; }
 if ($random_contact == 'contacts.php') { 
   $random_contact = 'No contacts to show!'; }
@@ -292,16 +293,20 @@ if (!is_dir($NotesDir)) {
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $random_note = array_rand($notes);
 $random_note = $notes[$random_note];
-if ($random_note == '.' or $random_note == '..') {
+if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.txt') == 'true' 
+  or strpos($random_note, '.php') == 'true') {
   $random_note = array_rand($notes);
   $random_note = $notes[$random_note]; }
-if ($random_note == '.' or $random_note == '..') {
+if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.txt') == 'true' 
+  or strpos($random_note, '.php') == 'true') {
   $random_note = array_rand($notes);
   $random_note = $notes[$random_note]; }
-if ($random_note == '.' or $random_note == '..') {
+if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.txt') == 'true' 
+  or strpos($random_note, '.php') == 'true') {
   $random_note = array_rand($notes);
   $random_note = $notes[$random_note]; }
 $random_note = str_replace('.txt', '', $random_note);
-if ($random_note == '.' or $random_note == '..' or $random_note == '') {
+if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or $random_note == '' 
+  or strpos($random_note, '.txt') == 'true' or strpos($random_note, '.php') == 'true') {
   $random_note = 'No notes to show!'; } 
 ?>
