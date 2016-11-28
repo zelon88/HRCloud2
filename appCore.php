@@ -31,6 +31,9 @@ $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI',
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
   'displaydirectorycontents_72716', 'wordpress_11416.zip');
 $installedApps = array_diff($Apps, $defaultApps);
+if (isset($_POST['uninstallApplication'])) { 
+  $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
+$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 
 // / The following code will be performed when an administrator selects to install an HRCloud2 App..
 if (isset($_POST['installApplication'])) {
@@ -205,26 +208,29 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
       $lines = @file($ApplicationFile);
       $lineCounter = 0;
       if ($lines == null) continue;
-    foreach ($lines as $line) {
-      if (strpos('App Name: ', $line) == 'true') {
-        $ApplicationName = str_replace('App Name: ', '', $lines[$lineCounter]); 
-        $ApplicationName = trim($ApplicationName);} 
-      if (strpos('App Version: ', $line) == 'true') {
-        $ApplicationVersion = str_replace('App Version: ', '', $lines[$lineCounter]); 
-        $ApplicationVersion = trim($ApplicationVersion); } 
-      if (strpos('App License: ', $line) == 'true') {
-        $ApplicationLicense = str_replace('App License: ', '', $lines[$lineCounter]);  
-        $ApplicationLicense = trim($ApplicationLicense); }
-      if (strpos('App Author: ', $line) == 'true') {
-        $ApplicationAuthor = str_replace('App Author: ', '', $lines[$lineCounter]); 
-        $ApplicationAuthor = trim($ApplicationAuthor); } 
-      if (strpos('App Description: ', $line) == 'true') {
-        $ApplicationDescription = str_replace('App Description: ', '', $lines[$lineCounter]); 
-        $ApplicationDescription = trim($ApplicationDescription); } 
-      if (strpos('App Integration: ', $line) == 'true') {
-        $ApplicationIntegration = str_replace('App Integration: ', '', $lines[$lineCounter]); 
-        $ApplicationIntegration = trim($ApplicationIntegration); } 
-      $lineCounter++; } } } 
+      foreach ($lines as $line) {
+        if (strpos($line, 'App Name: ') == 'true') {
+          $ApplicationName = str_replace('App Name: ', '', $line); 
+          $ApplicationName = trim($ApplicationName); } 
+        if (strpos($line, 'App Version: ') == 'true') {
+          $ApplicationVersion = str_replace('App Version: ', '', $line); 
+          $ApplicationVersion = trim($ApplicationVersion); } 
+        if (strpos($line, 'App License: ') == 'true') {
+          $ApplicationLicense = str_replace('App License: ', '', $line);  
+          $ApplicationLicense = trim($ApplicationLicense); }
+        if (strpos($line, 'App Author: ') == 'true') { 
+          $ApplicationAuthor = str_replace('App Author: ', '', $line); 
+          $ApplicationAuthor = trim($ApplicationAuthor); } 
+        if (strpos($line, 'App Description: ') == 'true') {
+          $ApplicationDescription = str_replace('App Description: ', '', $line); 
+          $ApplicationDescription = trim($ApplicationDescription); } 
+        if (strpos($line, 'App Website: ') == 'true') { 
+          $ApplicationWebsite = str_replace('App Website: ', '', $line); 
+          $ApplicationAWebsite = trim($ApplicationWebsite); } 
+        if (strpos($line, 'App Integration: ') == 'true') {
+          $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
+          $ApplicationIntegration = trim($ApplicationIntegration); } 
+        $lineCounter++; } } } 
 
 // / The following code returns the random file or folder for each Cloud module. 
 $files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);

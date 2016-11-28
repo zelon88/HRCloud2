@@ -33,24 +33,27 @@ if (!file_exists('commonCore.php')) {
 else {
   require_once ('commonCore.php'); }
 
-// / The follwoing code checks if the commonCore.php file exists and 
+// / The follwoing code checks if the appCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('appCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('appCore.php'); } ?>
+  require_once ('appCore.php'); } 
+
+// / The follwoing code checks if the securityCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('securityCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL47, Cannot process the HRCloud2 App Core file (securityCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require_once ('securityCore.php'); } ?>
 
 </head>
 <body>
 <div align="center">
 <p><strong>HRCloud2 Apps</strong> <?php 
-// / Secutity related processing.
-$SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
-$YUMMYSaltHash = $_POST['YUMMYSaltHash'];
-$uninstallApp = $_POST['uninstallApplication'];
-$AppDir = $InstLoc.'/Applications/';
-$apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
+// / Secutity related processing.\
 $appCounter = 0;
 
     if ($UserIDRAW == '1') { 
@@ -65,23 +68,88 @@ $appCounter = 0;
 <div align="center" id='loading' name='loading' style="display:none;"><img src="Resources/pacmansmall.gif"></div>
 <div align="center">
 <?php 
-
+// / The following code detects and displays each valid App in the "Applications" directory.
 foreach ($apps as $appName) {
   if ($appName == '.' or $appName == '..' or in_array($appName, $defaultApps)) continue;
   copy($InstLoc.'/index.html', $AppDir.$appName.'/index.html');
   $appLoc = 'Applications/'.$appName.'/'.$appName.'.php';
-  echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="height:160px; float:left; width:195px; height:195px; border:inset; margin-bottom:2px;"><strong>'."\n".$appName.'</strong>');
+  $appIcon = 'Applications/'.$appName.'/'.$appName.'.png';
+  // / The folloiwing code declares the AppInfo for the app being displayed by scanning for the 
+    // / HRCLOUD2-PLUGIN declaration contained within each HRC2 App.
+    $lines = file($appLoc);
+    $lineCounter = 0;
+      foreach ($lines as $line) {
+        if (strpos($line, 'App Name: ') == 'true') {
+          $ApplicationName = str_replace('App Name: ', '', $line); 
+          $ApplicationName = trim($ApplicationName); } 
+        if (strpos($line, 'App Version: ') == 'true') {
+          $ApplicationVersion = str_replace('App Version: ', '', $line); 
+          $ApplicationVersion = trim($ApplicationVersion); } 
+        if (strpos($line, 'App License: ') == 'true') {
+          $ApplicationLicense = str_replace('App License: ', '', $line);  
+          $ApplicationLicense = trim($ApplicationLicense); }
+        if (strpos($line, 'App Author: ') == 'true') { 
+          $ApplicationAuthor = str_replace('App Author: ', '', $line); 
+          $ApplicationAuthor = trim($ApplicationAuthor); } 
+        if (strpos($line, 'App Description: ') == 'true') {
+          $ApplicationDescription = str_replace('App Description: ', '', $line); 
+          $ApplicationDescription = trim($ApplicationDescription); } 
+        if (strpos($line, 'App Website: ') == 'true') { 
+          $ApplicationWebsite = str_replace('App Website: ', '', $line); 
+          $ApplicationAWebsite = trim($ApplicationWebsite); } 
+        if (strpos($line, 'App Integration: ') == 'true') {
+          $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
+          $ApplicationIntegration = trim($ApplicationIntegration); } 
+        $lineCounter++; }
+
+  echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:195px; height:195px; border:inset; margin-bottom:2px;">'."\n".'<strong>'.$appName.'</strong>');
+  echo ('<div align="center"><p>');
+
+  // / The following code displays administrator specific buttons.
   if ($UserIDRAW == '1') {
-      echo nl2br('<div id="deleteApp'.$appCounter.'Button" name="deleteApp'.$appCounter.'Button" align="right" style="display:block;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\');">');
-      echo nl2br('<img src="Resources/deletesmall.png" alt="Delete '.$appName.'" title="Delete '.$appName.'"></div>'); 
-      echo nl2br('<div id="XdeleteApp'.$appCounter.'Button" name="XdeleteApp'.$appCounter.'Button" align="right" style="display:none;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\'); ">');
-      echo nl2br('<img src="Resources/x.png" alt="Close \'Delete '.$appName.'\'" title="Close \'Delete '.$appName.'\'"></div>'); 
-      echo nl2br('<div align="center" id="uninstallApp'.$appCounter.'Div" name="uninstallApp'.$appCounter.'Div" style="display:none;">');
-      echo nl2br('<form action="appIndex.php" method="post" enctype="multipart/form-data"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
-      echo nl2br('<input type="hidden" id="uninstallApplication" name="uninstallApplication" value="'.$appName.'">');
-      echo nl2br('<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"></form></div>'); }
+    echo ('<img id="deleteApp'.$appCounter.'Button" name="deleteApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:block;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\');" src="Resources/deletesmall.png" alt="Delete \''.$appName.'\'" title="Delete \''.$appName.'\'">'); 
+    echo ('<img id="XdeleteApp'.$appCounter.'Button" name="XdeleteApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \'Delete '.$appName.'\'" title="Close \'Delete '.$appName.' \'">'); }
+
+  // / The followind code displays the App image and Launch button to all users.
+  echo ('<img id="infoApp'.$appCounter.'Button" name="infoApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:block;" src="Resources/info.png" alt="Show \''.$appName.'\' Info" title="Show \''.$appName.'\' Info" onclick="toggle_visibility(\'infoApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XinfoApp'.$appCounter.'Button\'); toggle_visibility(\'infoApp'.$appCounter.'Div\');">'); 
+  echo ('<img id="XinfoApp'.$appCounter.'Button" name="XinfoApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'infoApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XinfoApp'.$appCounter.'Button\'); toggle_visibility(\'infoApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \''.$appName.'\' Info" title="Close \''.$appName.'\' Info">'); 
+  echo ('<img src="Resources/newwindow.png" style="padding-left:6px; padding-bottom:2px; float:right;" alt="Launch \''.$appName.'\' in a new window" title="Launch \''.$appName.'\' in a new window" onclick="window.open(\''.$appLoc.'\',\''.$appName.'\',\'resizable,height=400,width=650\'); return false;">');
+  echo ('</p></div>');
   echo nl2br ('<hr />');
   echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');">');
+
+  // / The following code displays administrator specific buttons.
+  if ($UserIDRAW == '1') {
+    echo nl2br('<div align="center" id="uninstallApp'.$appCounter.'Div" name="uninstallApp'.$appCounter.'Div" style="display:none;">');
+    echo nl2br('<hr /><form action="appIndex.php" method="post" enctype="multipart/form-data"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
+    echo ('<input type="hidden" id="uninstallApplication" name="uninstallApplication" value="'.$appName.'">');
+    echo ('<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"></form><br></div>'); }
+  
+  // / The followind code displays the App image and Launch button to all users.
+  echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="display:none; onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
+  echo ('<div align="center" id="appSelector'.$appCounter.'"><a onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
+  
+  // / The following code displays the Basic App information, when clicked.
+  echo ('<div align="left" id="appBasic'.$appCounter.'" name="appBasic'.$appCounter.'" style="display:none;"><hr />');
+  echo ('<div align="center"><strong>App Info</strong></div>');
+  echo ('<p>App Name: <i>'.$ApplicationName.'</i></p>');
+  echo ('<p>App Version: <i>'.$ApplicationVersion.'</i></p>');
+  echo ('<p>App Author: <i>'.$ApplicationAuthor.'</i></p>');
+  echo ('<p>App Website: <i>'.$ApplicationWebsite.'</i></p>');
+  echo ('<p>App License: <i>'.$ApplicationLicense.'</i></p>');
+  echo ('</div>');
+
+  // / The following code displays the App description, when clicked.
+  echo ('<div align="left"id="appDescription'.$appCounter.'" name="appDescription'.$appCounter.'" style="display:none;"><hr />');
+  echo ('<div align="center"><strong>App Description</strong></div>');
+  echo ('<p><i>'.$ApplicationDescription.'</i></p>');
+  echo ('</div></div>');
+
+  // / The followind code displays the App icon, if one exits in the App Directory.
+  if (file_exists($appIcon)) {
+    echo nl2br('<p><img src="'.$appIcon.'" maxwidth="48px" max-height="48px" id="app'.$appName.'Icon" name="app'.$appName.'Icon" style="display:block;" title="'.$appName.'" alt="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\';"></p> '); }
+  
+  // / The following code signifies the end of each App Div in the appIndex. DO NOT ADD APP-SPECIFIC CODE BELOW THIS LINE!!!
   echo nl2br('</div>');     
 $appCounter++; } 
 ?>
