@@ -116,7 +116,8 @@
 				$size=pretty_filesize($dirArray[$index]);
 				$sizekey=filesize($dirArray[$index]);
 		}
-
+		if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
+		  or strpos($namehref, '.css') == 'true' or strpos($namehref, '.html') == 'true' or strpos($namehref, '.php') == 'true') continue;
 	// Output
 	 echo("
 		<tr class='$class'>
