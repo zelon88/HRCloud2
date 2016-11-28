@@ -54,6 +54,7 @@ if (isset($_POST['calculatorInput'])) {
   $calculatorInput = str_replace('take away', '-', $calculatorInput);
   $calculatorInput = str_replace('times', '*', $calculatorInput);
   $calculatorInput = str_replace('divided by', '/', $calculatorInput);
+  $calculatorInput = str_replace(str_split('abcdefghijklmnopqrstuvwyz'), '', $calculatorInput);
   $calculatorInput = str_replace(' ', '', $calculatorInput);
   $calculatorArguments = str_replace(str_split('[]{};:$!#&@><'), '', $calculatorInput);
   // / The following code cleans the user input for the math interpreter.
