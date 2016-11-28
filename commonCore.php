@@ -34,7 +34,7 @@ if (!file_exists($WPFile)) {
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC2CC32, WordPress was not detected on the server. And could not be installed.</body></html>'."\n"); }
 else {
-  require($WPFile); } 
+  require_once ($WPFile); } 
 
 // / The following code sets variables for the session.
 $Date = date("m_d_y");
@@ -182,4 +182,14 @@ if ($ColorScheme == '4') {
   echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); }
+
+// / The following code defines a function originally written by Justin Cook...
+  // / http://www.justin-cook.com/wp/2006/03/31/php-parse-a-string-between-two-strings/
+function get_string_between($string, $start, $end){
+    $string = ' ' . $string;
+    $ini = strpos($string, $start);
+    if ($ini == 0) return '';
+    $ini += strlen($start);
+    $len = strpos($string, $end, $ini) - $ini;
+    return substr($string, $ini, $len); } 
 ?>

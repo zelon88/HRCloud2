@@ -21,7 +21,7 @@ if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2Index1-10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require ('sanitizeCore.php'); }
+  require_once ('sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -29,7 +29,7 @@ if (!file_exists('commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  include ('commonCore.php'); }
+  include_once ('commonCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -37,7 +37,7 @@ if (!file_exists('appCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require ('appCore.php'); }
+  require_once ('appCore.php'); }
 
 ?>
 

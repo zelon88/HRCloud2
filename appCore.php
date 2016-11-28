@@ -6,7 +6,7 @@ if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppCore5, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require ('sanitizeCore.php'); }
+  require_once ('sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -14,7 +14,7 @@ if (!file_exists('commonCore.php')) {
   echo nl2br('ERROR!!! HRC2AppCore13, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require ('commonCore.php'); }
+  require_once ('commonCore.php'); }
 
 // / The follwoing code checks if the securityCore.php file exists and 
 // / terminates if it does not.
@@ -22,7 +22,7 @@ if (!file_exists('securityCore.php')) {
   echo nl2br('ERROR!!! HRC2AppCore21, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
   die (); }
 else {
-  require ('securityCore.php'); }
+  require_once ('securityCore.php'); }
   
 // / The following code sets the global variables for the session.
 $AppDir = $InstLoc.'/Applications/';

@@ -74,6 +74,8 @@ foreach ($apps as $appName) {
   copy($InstLoc.'/index.html', $AppDir.$appName.'/index.html');
   $appLoc = 'Applications/'.$appName.'/'.$appName.'.php';
   $appIcon = 'Applications/'.$appName.'/'.$appName.'.png';
+  if (!file_exists($appIcon)) {
+    $appIcon = 'Resources/appicon.png'; }
   // / The folloiwing code declares the AppInfo for the app being displayed by scanning for the 
     // / HRCLOUD2-PLUGIN declaration contained within each HRC2 App.
     $lines = file($appLoc);

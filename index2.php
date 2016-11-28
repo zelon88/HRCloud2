@@ -10,7 +10,7 @@ if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2Index2-10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
+  require_once ('sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -18,7 +18,7 @@ if (!file_exists('commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2Index2-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('commonCore.php'); }
+  require_once ('commonCore.php'); }
 ?>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
