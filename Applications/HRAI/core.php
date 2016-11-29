@@ -38,13 +38,14 @@ session_start();
 // SECRET: The nodeCache is where data about recent HRAI networks is stored. 
 // SECRET: The $nodeCache is a machine generated file.
 //echo nl2br("Starting HRAI Core!"."\r\r");
-$langParserfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/langPar.php';
-$onlineFile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/online.php';
-$coreVarfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreVar.php';
-$coreFuncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreFunc.php';
-$coreArrfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreArr.php';
-$nodeCache = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/Cache/nodeCache.php';
-$CallForHelpURL = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CallForHelp.php';
+$InstLoc = '/var/www/html/HRProprietary/HRCloud2';
+$langParserfile = $InstLoc.'/Applications/HRAI/langPar.php';
+$onlineFile = $InstLoc.'/Applications/HRAI/online.php';
+$coreVarfile = $InstLoc.'/Applications/HRAI/coreVar.php';
+$coreFuncfile = $InstLoc.'/Applications/HRAI/coreFunc.php';
+$coreArrfile = $InstLoc.'/Applications/HRAI/coreArr.php';
+$nodeCache = $InstLoc.'/Applications/HRAI/Cache/nodeCache.php';
+$CallForHelpURL = $InstLoc.'/Applications/HRAI/CallForHelp.php';
 $wpfile = '/var/www/html/wp-load.php';
 $date = date("F j, Y, g:i a");
 $hour = date("g:i a");
@@ -54,43 +55,43 @@ require_once($coreVarfile);
 require_once($coreArrfile);
 require_once($coreFuncfile);
 require_once($onlineFile);
-require_once('/var/www/html/HRProprietary/HRCloud2/config.php');
+require_once($InstLoc.'/config.php');
 //echo nl2br("Sucessfully loaded library files. \r");
 // / Set our Post data for the session. If blank we substitute defaults to avoid errors.
 
 // / The following code starts WordPress.
 $DetectWordPress = detectWordPress();
 
+// / The followind code handles POSTED variables from other HRAI nodes.
 $display_name = defineDisplay_Name();
 $user_IDPOST = defineUser_ID(); 
 $sesIDPOST = authSesID();
 $input = defineUserInput();
 
-// / The following code detects
+// / The following code detects the user_ID and returns related variables.
 $user_IDRAW = get_current_user_id();
 $user_ID = hash('ripemd160', $user_IDRAW.$Salts);
-if ($user_IDRAW == 1) {
-  include '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php'; }
 
-if (isset ($_POST['HRAIMiniGUIPost'])) {
+if (isset($_POST['HRAIMiniGUIPost'])) {
   $noMINICore = '1';
   $includeMINIIframer = '1'; }
-if (!isset ($_POST['HRAIMiniGUIPost'])) {
+if (!isset($_POST['HRAIMiniGUIPost'])) {
   $noMINICore = '1'; 
   $includeMINIIFramer = '0'; }
-if (!isset ($_POST['sesID'])) {
+if (!isset($_POST['sesID'])) {
 $sesIDhash = hash('sha1', $display_name.$day);
 $sesID = substr($sesIDhash, -7); }
 
 // / The following code creates the session directory and session log files.
 $CreateSesDir = forceCreateSesDir();
-$sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
-$JICsesLogfileDir = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID);
+$sesLogfile = ($InstLoc.'/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
+$JICsesLogfileDir = ($InstLoc.'/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID);
 if (!is_dir($JICsesLogfileDir)) {
   mkdir($JICsesLogfileDir, 0755); }
 if (!file_exists($JICsesLogfileDir)) {
   $JICCreateSesDir = file_put_contents($sesLogfile, ''); }
 
+// / The following code verifies that a POSTED HRAI request came from a node with similar Salts.
 if (isset ($_POST['inputServerIDHash'])) {
   $inputServerID = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['inputServerID']);
   $inputServerIDHash = hash ('sha1',$inputServerID.$networkSalts);
@@ -134,7 +135,7 @@ $getServBusy = getServBusy();
 if ($getServBusy == 1) {
 $serverIDCFH = hash('sha1', $serverID.$sesID.$day); 
 echo nl2br("This server reports it is busy! \r"); 
-  $CallForHelpURL = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CallForHelp.php';
+  $CallForHelpURL = $InstLoc.'/Applications/HRAI/CallForHelp.php';
           $dataArr = array('user_ID' => "$user_ID",
             'display_name' => "$display_name",
             'serverIDCFH' => "$serverIDCFH",
@@ -381,286 +382,286 @@ $input = rtrim($input);
 // /
 // / Update / Refresh / Sync
 if (preg_match('/sync node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/sync node/',' ',$input);} 
 if (preg_match('/node sync/', $input)) { 
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/node sync/',' ',$input);} 
 if (preg_match('/whats your serverid/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/whats your serverid/',' ',$input);} 
 if (preg_match('/what is your serverid/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/whats your serverid/',' ',$input);} 
 if (preg_match('/whats your server id/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/whats your server id/',' ',$input);} 
 if (preg_match('/what is your serverid/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/what is your serverid/',' ',$input);} 
 if (preg_match('/what is your server id/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/what is your server id/',' ',$input);} 
 if (preg_match('/reload node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/reload node/',' ',$input);} 
 if (preg_match('/refresh node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/refresh node/',' ',$input);} 
 if (preg_match('/update node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/update node/',' ',$input); } 
 if (preg_match('/syncnode/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/syncnode/',' ',$input); }
 if (preg_match('/sync your node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/sync your node/',' ',$input); }
 if (preg_match('/reload your node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/reload your node/',' ',$input); }
 if (preg_match('/refresh your node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/refresh your node/',' ',$input); }
 if (preg_match('/nodesync/', $input)) {  
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile; 
 $input = preg_replace('/nodesync/',' ',$input); }
 if (preg_match('/get node/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile;
 $input = preg_replace('/get node/',' ',$input); } 
 if (preg_match('/refresh the nodecache/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile;
 $input = preg_replace('/refresh the nodecache/',' ',$input); } 
 if (preg_match('/reload the nodecache/', $input)) {
-$CMDsyncfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDsync.php'; 
+$CMDsyncfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'; 
 include $CMDsyncfile;
 $input = preg_replace('/reload the nodecache/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/callforhelp/', $input)) {
-$CMDcfhfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcfh.php'; 
+$CMDcfhfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'; 
 include $CMDcfhfile; 
 $input = preg_replace('/callforhelp/',' ',$input); }
 if (preg_match('/call for help/', $input)) { 
-$CMDcfhfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcfh.php'; 
+$CMDcfhfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'; 
 include $CMDcfhfile; 
 $input = preg_replace('/call for help/',' ',$input); }
 if (preg_match('/cfh/', $input)) {
-$CMDcfhfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcfh.php'; 
+$CMDcfhfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'; 
 include $CMDcfhfile; } 
 if (preg_match('/get help/', $input)) {
-$CMDcfhfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcfh.php'; 
+$CMDcfhfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'; 
 include $CMDcfhfile; 
 $input = preg_replace('/get help/',' ',$input); } 
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/what time/', $input)) { 
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/what time/',' ',$input); }
 if (preg_match('/what is the time/', $input)) {
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/what is the time/',' ',$input); }
 if (preg_match('/whats the time/', $input)) {
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/whats the time/',' ',$input); }
 if (preg_match('/have you got the time/', $input)) {
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile;
 $input = preg_replace('/have you got the time/',' ',$input); } 
 if (preg_match('/have you got the date/', $input)) {
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/have you got the date/',' ',$input); }
 if (preg_match('/what is the date/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
  include $CMDtimefile; 
 $input = preg_replace('/what is the date/',' ',$input); }
 if (preg_match('/whats the the date/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; }
 if (preg_match('/what day is it/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/what day is it/',' ',$input); }
 if (preg_match('/what date is it/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/what date is it',' ',$input); }
 if (preg_match('/date/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; }
 if (preg_match('/the time/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/the time/',' ',$input); }
 if (preg_match('/what time/', $input)) {  
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/what time/',' ',$input); }
 if (preg_match('/tell me the day/', $input)) {   
- $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
+ $CMDtimefile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
 $input = preg_replace('/tell me the day/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/what is your status/', $input)) {  
- $CMDbusyfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+ $CMDbusyfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 include $CMDbusyfile; 
 $input = preg_replace('/what is your status/',' ',$input); }
 if (preg_match('/whats your status/', $input)) {  
- $CMDbusyfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+ $CMDbusyfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 include $CMDbusyfile; 
 $input = preg_replace('/whats your status/',' ',$input); }
 if (preg_match('/server status/', $input)) {  
- $CMDbusyfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+ $CMDbusyfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 include $CMDbusyfile; 
 $input = preg_replace('/server status/',' ',$input); }
 if (preg_match('/busy/', $input)) {  
- $CMDbusyfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+ $CMDbusyfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 include $CMDbusyfile; 
 $input = preg_replace('/busy/',' ',$input); } 
 if (preg_match('/idle/', $input)) {  
- $CMDbusyfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+ $CMDbusyfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 include $CMDbusyfile; 
 $input = preg_replace('/idle/',' ',$input); } 
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/what is your uptime/', $input)) {  
- $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
+ $CMDuptfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
 $input = preg_replace('/what is your uptime/',' ',$input); }
 if (preg_match('/how long have you been online/', $input)) {  
- $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
+ $CMDuptfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
 $input = preg_replace('/how long have you been online/',' ',$input); }
 if (preg_match('/uptime/', $input)) {  
- $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
+ $CMDuptfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
 $input = preg_replace('/uptime/',' ',$input); }
 if (preg_match('/how long have you been up/', $input)) {  
- $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
+ $CMDuptfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
 $input = preg_replace('/how long have you been up/',' ',$input); }
 if (preg_match('/how long have you been awake/', $input)) {  
- $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
+ $CMDuptfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
 $input = preg_replace('/how long have you been awake/',' ',$input); }
 if (preg_match('/how long have you been on/', $input)) {  
- $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
+ $CMDuptfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
 $input = preg_replace('/how long have you been on/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/convert a/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert a/',' ',$input); }
 if (preg_match('/convert this/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert this/',' ',$input); }
 if (preg_match('/convert my/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert my/',' ',$input); }
 if (preg_match('/convert file/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert file/',' ',$input); }
 if (preg_match('/convert image/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert image/',' ',$input); }
 if (preg_match('/convert photo/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert photo/',' ',$input); }
 if (preg_match('/convert picture/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert picture/',' ',$input); }
 if (preg_match('/convert song/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert song/',' ',$input); }
 if (preg_match('/convert media/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert media/',' ',$input); }
 if (preg_match('/convert archive/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert archive/',' ',$input); }
 if (preg_match('/convert mp3/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert mp3/',' ',$input); }
 if (preg_match('/convert zip/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert zip/',' ',$input); }
 if (preg_match('/convert rar/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert rar/',' ',$input); }
 if (preg_match('/convert jpg/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert jpg/',' ',$input); }
 if (preg_match('/convert jpeg/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert jpeg/',' ',$input); }
 if (preg_match('/convert bmp/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert bmp/',' ',$input); }
 if (preg_match('/convert 7z/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert 7z/',' ',$input); }
 if (preg_match('/convert something/', $input)) {  
-$CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
+$CMDconvfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
 $input = preg_replace('/convert something/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/scan a/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan a/',' ',$input); }
 if (preg_match('/scan this/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/convert this/',' ',$input); }
 if (preg_match('/scan my/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan my/',' ',$input); }
 if (preg_match('/scan file/', $input)) {  
@@ -684,224 +685,224 @@ $CMDscanfile = '/var/www/html/HRProprietary/HRAI/HRCloud2/Applications/CoreComma
 include $CMDscanfile; 
 $input = preg_replace('/scan song/',' ',$input); }
 if (preg_match('/scan media/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan media/',' ',$input); }
 if (preg_match('/convert archive/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan archive/',' ',$input); }
 if (preg_match('/scan mp3/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan mp3/',' ',$input); }
 if (preg_match('/scan zip/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan zip/',' ',$input); }
 if (preg_match('/scan rar/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan rar/',' ',$input); }
 if (preg_match('/convert jpg/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan jpg/',' ',$input); }
 if (preg_match('/scan jpeg/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan jpeg/',' ',$input); }
 if (preg_match('/scan bmp/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan bmp/',' ',$input); }
 if (preg_match('/scan 7z/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan 7z/',' ',$input); }
 if (preg_match('/scan something/', $input)) {  
-$CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$CMDscanfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
 $input = preg_replace('/scan something/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/what/', $input) && preg_match('/cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/what/',' ',$input);
 $input = preg_replace('/cpu/',' ',$input); }
 if (preg_match('/what/', $input) && preg_match('/processor/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile;
 $input = preg_replace('/what/',' ',$input);
 $input = preg_replace('/processor/',' ',$input); }
 if (preg_match('/is your cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/is your cpu/',' ',$input); }
 if (preg_match('/which cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/which cpu/',' ',$input); }
 if (preg_match('/cpu info/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu info/',' ',$input); }
 if (preg_match('/cpu status/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu status/',' ',$input); }
 if (preg_match('/cpu usage/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu usage/',' ',$input); }
 if (preg_match('/cpu stats/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu stats/',' ',$input); }
 if (preg_match('/cpu specs/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu specs/',' ',$input); }
 if (preg_match('/cpu specification/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu specification/',' ',$input); }
 if (preg_match('/how many cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/how many cpu/',' ',$input); }
 if (preg_match('/how many cores/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/how many cores/',' ',$input); }
 if (preg_match('/cpu brand/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu brand/',' ',$input); }
 if (preg_match('/cpu type/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu type/',' ',$input); }
 if (preg_match('/type cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/type cpu/',' ',$input); }
 if (preg_match('/brand cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/brand cpu/',' ',$input); }
 if (preg_match('/is your cpu/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/is your cpu/',' ',$input); }
 if (preg_match('/cpu status/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/cpu status/',' ',$input); }
 if (preg_match('/processor status/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/processor status/',' ',$input); }
 if (preg_match('/processor brand/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/processor brand/',' ',$input); }
 if (preg_match('/processor type/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/processor type/',' ',$input); }
 if (preg_match('/type processor/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/type processor/',' ',$input); }
 if (preg_match('/brand processor/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/brand processor/',' ',$input); }
 if (preg_match('/is your processor/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/is your processor/',' ',$input); }
 if (preg_match('/intel or amd/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/intel or amd/',' ',$input); }
 if (preg_match('/amd or intel/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/amd or intel/',' ',$input); }
 if (preg_match('/arm or amd/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/arm or amd/',' ',$input); }
 if (preg_match('/arm or intel/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/arm or intel/',' ',$input); }
 if (preg_match('/intel or arm/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/intel or arm/',' ',$input); }
 if (preg_match('/amd or arm/', $input)) {  
-$CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
+$CMDcpuinfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
 $input = preg_replace('/amd or arm/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if (preg_match('/how much ram/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/how much ram/',' ',$input); }
 if (preg_match('/how much memory/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/how much memory/',' ',$input); }
 if (preg_match('/ram usage/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/ram usage/',' ',$input); }
 if (preg_match('/ram use/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/ram use/',' ',$input); }
 if (preg_match('/memory use/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/memory use/',' ',$input); }
 if (preg_match('/mem use/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/mem use/',' ',$input); }
 if (preg_match('/mem info/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/mem info/',' ',$input); }
 if (preg_match('/memory info/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile;  
 $input = preg_replace('/memory info/',' ',$input); }
 if (preg_match('/ram info/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
 $input = preg_replace('/ram info/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if ($input == 'help') {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/help/',' ',$input); }
 if (preg_match('/help me/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/help me/',' ',$input); }
 if (preg_match('/help me/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/help me/',' ',$input); }
@@ -909,22 +910,22 @@ $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 if ($input == 'guidance') {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/help/',' ',$input); }
 if ($input == 'how to') {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/how to/',' ',$input); }
 if (preg_match('/how to/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/how to/',' ',$input); }
 if (preg_match('/help me/', $input)) {  
-$CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
+$CMDmeminfofile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
   '<a href="https://github.com/zelon88/HRCloud2" target="parent"><i>github.com/zelon88/HRCloud2</i></a>'); 
 $input = preg_replace('/help me/',' ',$input); }
@@ -935,7 +936,7 @@ $input = rtrim($input);
 if ($user_ID == '0') { 
   echo nl2br ('<form action="core.php"><div align="center"><p><input type="submit" name="refresh" id="refresh" href="#" target="_parent" value="&#x21BA" class="button" onclick="toggle_visibility("loadingCommandDiv");"></p></div></form>'); }
 if (isset($includeMINIIframer)) {
-  include_once('/var/www/html/HRProprietary/HRCloud2/HRAIMiniGui.php'); }
+  include_once($InstLoc.'/HRAIMiniGui.php'); }
 ?>
 </div>
 </body>
