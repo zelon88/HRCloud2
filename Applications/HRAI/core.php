@@ -9,11 +9,8 @@
 <?php 
 if (isset($_POST['display_name'])) {
   $_POST['display_name'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['display_name']); }
-
 if (!isset($_POST['input'])) { ?>
-<div id="HRAITop" align='center'>
-<img id='logo' src='Resources/logoslowbreath.gif'/>
-</div>
+<div id="HRAITop" align='center'><img id='logo' src='Resources/logoslowbreath.gif'/></div>
 <?php } 
 if (isset($_POST['input'])) {
   $_POST['input'] = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['input']); ?>
@@ -27,13 +24,10 @@ if (!isset($_POST['input'])) { ?>
 if (isset($_POST['input'])) { ?>
 <div style="float: right; padding-right: 50px;">
 <?php } ?>
-
 <script>
 jQuery('#input').on('input', function() {
   $("#logo").attr("src","Resources/logo.gif");
 });
-</script>
-<script>
 jQuery('#submitHRAI').on('submit', function() {
   $("#logo").attr("src","Resources/logo.gif");
 });
@@ -55,7 +49,6 @@ $wpfile = '/var/www/html/wp-load.php';
 $date = date("F j, Y, g:i a");
 $hour = date("g:i a");
 $day = date("d");
-
 // / Load core AI files. Write an entry to the log if successful.
 require_once($coreVarfile);
 require_once($coreArrfile);
@@ -63,26 +56,22 @@ require_once($coreFuncfile);
 require_once($onlineFile);
 require_once('/var/www/html/HRProprietary/HRCloud2/config.php');
 //echo nl2br("Sucessfully loaded library files. \r");
-
 // / Set our Post data for the session. If blank we substitute defaults to avoid errors.
+
+// / The following code starts WordPress.
+$DetectWordPress = detectWordPress();
+
 $display_name = defineDisplay_Name();
-$user_ID = defineUser_ID();
-if (file_exists($wpfile)) {
-require_once($wpfile);
-global $current_user;
-get_currentuserinfo();
+$user_IDPOST = defineUser_ID(); 
+$sesIDPOST = authSesID();
+$input = defineUserInput();
+
+// / The following code detects
 $user_IDRAW = get_current_user_id();
 $user_ID = hash('ripemd160', $user_IDRAW.$Salts);
 if ($user_IDRAW == 1) {
   include '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php'; }
-if ($user_IDRAW !== 1) {
-$display_name = get_currentuserinfo() ->$display_name; } }
-$inputServerID = defineInputServerID();
-$input = defineUserInput();
-$DetectWordPress = detectWordPress();
-echo nl2br($DetectWordPress);
-if (isset ($_POST['display_name'])) {
-  $display_name = $_POST['display_name']; }
+
 if (isset ($_POST['HRAIMiniGUIPost'])) {
   $noMINICore = '1';
   $includeMINIIframer = '1'; }
@@ -92,19 +81,18 @@ if (!isset ($_POST['HRAIMiniGUIPost'])) {
 if (!isset ($_POST['sesID'])) {
 $sesIDhash = hash('sha1', $display_name.$day);
 $sesID = substr($sesIDhash, -7); }
-$ForceCreateSesDir = forceCreateSesDir();
+
+// / The following code creates the session directory and session log files.
+$CreateSesDir = forceCreateSesDir();
 $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
-if ($sesLogfile !== $ForceCreateSesDir) {
-  //echo nl2br("There was an issue creating the session directory.\r"); 
-}
-//echo nl2br("\rSucessfully loaded core variables. \r");
-//echo nl2br("Sucessfully loaded core functions. \r");
-//echo nl2br("Sucessfully loaded core POST data. \r");
+$JICsesLogfileDir = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID);
+if (!is_dir($JICsesLogfileDir)) {
+  mkdir($JICsesLogfileDir, 0755); }
+if (!file_exists($JICsesLogfileDir)) {
+  $JICCreateSesDir = file_put_contents($sesLogfile, ''); }
 
 if (isset ($_POST['inputServerIDHash'])) {
-  $user_IDPOST = $_POST['user_ID'];
-  $sesIDPOST = $_POST['sesID'];
-  $inputServerID = $_POST['inputServerID'];
+  $inputServerID = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['inputServerID']);
   $inputServerIDHash = hash ('sha1',$inputServerID.$networkSalts);
   $sesLogfile0 = fopen("$sesLogfile", "a+");
   $txt = ('CoreAI: Server '.$inputServerID.', connecting with '.$inputServerIDHash.' using sesID: '.$sesIDPOST.' and user_ID: '.$user_IDPOST.' on '.$date.'.');
@@ -113,19 +101,17 @@ if (isset ($_POST['inputServerIDHash'])) {
     $txt = ('ERROR!!! HRAI101, This request could not be authenticated! inputServerIDHash Discrepency!');
     $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND);
     die ('ERROR!!! HRAI101, This request could not be authenticated!'); } }
-
 // / Write an entry to logfile if there was a problem loading library files.
 if (!file_exists($coreArrfile)) {
   $sesLogfile0 = fopen("$sesLogfile", "a+");
   $txt = ('CoreAI: '."User $display_name".','." $user_ID during $sesID on $date".'. ERROR: No coreArrfile 
-  	      array file found. Continuing... ');
+          array file found. Continuing... ');
   $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
 if (!file_exists($coreVarfile)){
   $sesLogfile0 = fopen("$sesLogfile", "a+");
   $txt = ('CoreAI: '."User $display_name".','." $user_ID during $sesID on $date".'. ERROR: No coreVarfile 
-  	      variable file found. Continuing... ');
+          variable file found. Continuing... ');
   $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
-
 // / Check how many other HRAI servers are in the vicinity. Return number of servers.
 include($nodeCache); 
 $serverStat = getServStat();
@@ -143,7 +129,6 @@ $compLogfile = @file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND);
 // / if there was in issue.
 if (!file_exists($sesLogfile)) {
   echo nl2br('Discrepency detected!'."\r"); }
-
 // / Check to see if our server is busy. Find other nodes on the local network to help if so.
 $getServBusy = getServBusy();
 if ($getServBusy == 1) {
@@ -163,10 +148,8 @@ echo nl2br("This server reports it is busy! \r");
     $txt = ('CoreAI: Sent a CallForHelp request on '.$date.'. Continuing the script. ');
     $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
     echo nl2br("   Activating CallForHelp! Continuing... \r");  }
-
 if ($getServBusy <= 1) {
-
-  if (($_POST['input']) != '') {  
+  if (($_POST['input']) !== '') {  
           $dataArr = array('user_ID' => "$user_ID",
             'display_name' => "$display_name",
             'sesID' => "$sesID", 
@@ -181,7 +164,6 @@ if ($getServBusy <= 1) {
     $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
     //echo nl2br("Sent a local LangPar request.\r"); 
   } }
-
 $cpuUseNow = getServCPUUseNow();
 $servMemUse = getServMemUse();
 $servPageUse = getServPageUse();
@@ -189,10 +171,8 @@ $servPageUse = getServPageUse();
 //echo nl2br('CPU Average: '.$cpuUseNow."\r"); 
 ///echo nl2br("Node Count: $nodeCount \r");
 //cho nl2br("--------------------------------\r");
-
 if (!file_exists($sesLogfile)) {
   echo nl2br('The core is not synced!'."\r"); }
-
 // / Some basic commands to get the project started. Simple stuff, no computational thought or hashing.
 // / Before we sinplify our input by removing punctuation and convert uppercase to lowercase we copy
 // / the raw input to a new variable name, just-in-case. 
@@ -206,13 +186,12 @@ $input = strtolower ($input);
 ?>
 <div id="end"></div>
 <?php
+set_time_limit(0);
 $CoreGreetings = array('hello','hi','hey','sup',);
 $BasicTimeofDay = array('moirning','noon','afternoon','evening','night');
-
 // / Return a specific basic greeting depending on time of day.
 if ($user_ID == '0') {
   echo nl2br('You are not logged in! This session is temporary! '."\r"); }
-
 // / Set time specific basic responses.
 $timeGreeting = 'Hello, ';
 $StopTime = '0';
@@ -307,7 +286,6 @@ if ($StopTime == '0') {
       $input = str_replace('goodnight','',$input); }
     $timeGreeting = 'Good evening, '; 
     $StopTime++; } }
-
 // /a First we respond to basic greetings.
 if ($input == 'hello'){
   echo nl2br($timeGreeting.'Commander! '."\r"); 
@@ -325,19 +303,15 @@ if ($input == 'sup'){
   echo nl2br($timeGreeting.'Commander! '."\r");
 $input = preg_replace('/sup/','',$input);
 $input = str_replace('sup ','',$input); }
-
 // / Then we subtract basic greetings from the rest of the input, incase there is a command
 // / behind the greeting. Again, this is very simple stuff.
-
 $first3 = substr($input, 0, 3);
 if ($first3 == 'hi '){
   echo nl2br('Hello, Commander! '."\r"); 
 $input = str_replace('hi ','',$input); }
-
 // / Now that we've condensed our input a bit we remove any incidental double spaces.
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
-
 $first4 = substr($input, 0, 4);
 if ($first4 == 'hey '){ 
   echo nl2br('Hello, Commander! '."\r"); 
@@ -345,78 +319,62 @@ $input = str_replace('hey ','',$input); }
 if ($first4 == 'sup '){
   echo nl2br('Hello, Commander! '."\r"); 
 $input = str_replace('sup ', '', $input); }
-
 // / Now that we've condensed our input a bit we remove any incidental double spaces.
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
-
 $first5 = substr($input, 0, 5);
 if ($first5 == 'hello'){
   echo nl2br('Hello, Commander! '."\r"); 
 $input = str_replace('hello ','',$input); }
-
 // / Now that we've condensed our input a bit we remove any incidental double spaces.
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
-
 $first6 = substr($input, 0, 6);
 if ($first6 == 'please'){
   echo nl2br('Of course! '."\r");  
 $input = preg_replace('/please /', '', $input); }
-
 $last6 = substr($input, 0, -6);
 if ($last6 == 'please'){
   echo nl2br('Of course! '."\r"); 
 $input = preg_replace('/ please/', '', $input); }
-
 // / Now that we've condensed our input a bit we remove any incidental double spaces.
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
-
 if (preg_match('/plz/', $input)){
   echo nl2br('No problem, Commander! '."\r");  
 $input = preg_replace('/plz /','',$input);
 $input = str_replace('plz','',$input); }
-
 if (preg_match('/please/', $input)){
   echo nl2br('Of course, Commander! '."\r");  
 $input = preg_replace('/please /','',$input);
 $input = str_replace('please','',$input); }
-
 if (preg_match('/thank you/', $input)){
   echo nl2br('My pleasure. '."\r"); 
 $input = preg_replace('/ please/', '', $input); }
-
 if (preg_match('/thanks/', $input)){
   echo nl2br('Anytime, Commander! '."\r");  
 $input = preg_replace('/thanks/',' ',$input);
 $input = str_replace('thanks','',$input); }
-
 if (preg_match('/thx/', $input)){
   echo nl2br('No problem, Commander! '."\r");  
 $input = preg_replace('/thx/',' ',$input);
 $input = str_replace('thx','',$input); }
-
 if (preg_match('/your name/', $input)){
   echo nl2br('HRAI! '."\r");  
 $input = preg_replace('/your name/',' ',$input);
 $input = str_replace('your name','',$input); }
-
 if (preg_match('/whats your name/', $input)){
   echo nl2br('HRAI! '."\r");  
 $input = preg_replace('/whats your name/',' ',$input);
 $input = str_replace('whats your name','',$input); }
-
 if (preg_match('/what is your name/', $input)){
   echo nl2br('HRAI! '."\r");  
 $input = preg_replace('/what is your name/',' ',$input);
 $input = str_replace('what is your name','',$input); }
-
 // / Now that we've condensed our input a bit we remove any incidental double spaces.
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 // / Here are the more complicated commands. To avoid making this script 5,000 lines long,
 // / there is a CoreCommands directory in the hosted HRAI folder (/var/www/html) for the bulk
 // / of this code. It's all really simple, no learning or research or hashing.
@@ -497,8 +455,6 @@ $input = preg_replace('/reload the nodecache/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
-
 if (preg_match('/callforhelp/', $input)) {
 $CMDcfhfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcfh.php'; 
 include $CMDcfhfile; 
@@ -517,7 +473,6 @@ $input = preg_replace('/get help/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/what time/', $input)) { 
  $CMDtimefile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDtime.php'; 
 include $CMDtimefile; 
@@ -571,7 +526,6 @@ $input = preg_replace('/tell me the day/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/what is your status/', $input)) {  
  $CMDbusyfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 include $CMDbusyfile; 
@@ -595,7 +549,6 @@ $input = preg_replace('/idle/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/what is your uptime/', $input)) {  
  $CMDuptfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDuptime.php'; 
 include $CMDuptfile; 
@@ -623,7 +576,6 @@ $input = preg_replace('/how long have you been on/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/convert a/', $input)) {  
 $CMDconvfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 include $CMDconvfile; 
@@ -699,7 +651,6 @@ $input = preg_replace('/convert something/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/scan a/', $input)) {  
 $CMDscanfile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDscan.php'; 
 include $CMDscanfile; 
@@ -775,7 +726,6 @@ $input = preg_replace('/scan something/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/what/', $input) && preg_match('/cpu/', $input)) {  
 $CMDcpuinfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 include $CMDcpuinfofile; 
@@ -901,7 +851,6 @@ $input = preg_replace('/amd or arm/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if (preg_match('/how much ram/', $input)) {  
 $CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 include $CMDmeminfofile; 
@@ -941,7 +890,6 @@ $input = preg_replace('/ram info/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if ($input == 'help') {  
 $CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For help with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
@@ -960,7 +908,6 @@ $input = preg_replace('/help me/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 if ($input == 'guidance') {  
 $CMDmeminfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/CoreCommands/CMDmeminfo.php'; 
 echo nl2br('For guidance with HRCloud2 or HRAI, please visit the official '."\n".'zelon88/HRCloud2 Github repo and open an issue.'."\n".
@@ -984,14 +931,11 @@ $input = preg_replace('/help me/',' ',$input); }
 $input = str_replace('  ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
-
 // / Display a refresh button if the user is not logged in.
 if ($user_ID == '0') { 
   echo nl2br ('<form action="core.php"><div align="center"><p><input type="submit" name="refresh" id="refresh" href="#" target="_parent" value="&#x21BA" class="button" onclick="toggle_visibility("loadingCommandDiv");"></p></div></form>'); }
-
 if (isset($includeMINIIframer)) {
   include_once('/var/www/html/HRProprietary/HRCloud2/HRAIMiniGui.php'); }
-
 ?>
 </div>
 </body>

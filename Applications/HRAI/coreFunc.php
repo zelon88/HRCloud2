@@ -11,7 +11,7 @@ function defineUserInput() {
 if(empty($_POST['input'])) {
   $input = ''; } 
 if(!empty($_POST['input'])) {
-  $input = $_POST['input']; } 
+  $input = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['input']); } 
 return ($input); }
 
 // / If no display name has been set we set this to 0 to avoid errors. We need a display name to generate a sesLog.
@@ -20,7 +20,7 @@ function defineDisplay_Name() {
 if(empty($_POST['display_name'])) {
   $display_name = '0'; } 
 if(!empty($_POST['display_name'])) {
-  $display_name = $_POST['display_name']; }
+  $display_name = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['display_name']); }
   return ($display_name); } 
 
 // / If there is no user_ID we set this var to 0, which assumes either the user is not logged in or there is no WordPress.
@@ -30,7 +30,7 @@ function defineUser_ID() {
 if(empty($_POST['user_ID'])) {
   $user_ID = '0'; } 
 if(!empty($_POST['user_ID'])) {
-  $user_ID = $_POST['user_ID']; }
+  $user_ID = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['user_ID']); }
   return ($user_ID); }
 
 // / If there is no serverID we set the serverID to 0, which means localhost. This helps us track data that travels between
@@ -39,7 +39,7 @@ function defineInputServerID() {
 if(empty($_POST['serverID'])) {
   $inputServerID = '0'; } 
 if(!empty($_POST['serverID'])) {
-  $inputServerID = $_POST['serverID']; } 
+  $inputServerID = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['serverID']); } 
   return ($inputServerID); }
 
 function forceCreateSesID() {
@@ -47,7 +47,7 @@ $user_ID = defineUser_ID();
 $display_name = defineDisplay_Name();
 $day = date("d");
 if(isset($_POST['sesID'])){
-  $sesID = $_POST['sesID']; 
+  $sesID = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['sesID']); 
     if (empty($sesID)) {
       $sesIDhash = hash('sha1', $display_name.$day);
       $sesID = substr($sesIDhash, -7); } }
@@ -158,6 +158,7 @@ if (!file_exists($sesLogfile)){
 function detectWordPress() {
 $wpfile = '/var/www/html/wp-load.php';
 if (file_exists($wpfile)){
+require_once($wpfile);
 $txt = ''; } 
 if (!file_exists($wpfile)){
 $txt = 'No WordPress detected! '; }
