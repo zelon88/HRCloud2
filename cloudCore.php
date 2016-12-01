@@ -128,7 +128,7 @@ if (filesize($ClamLogDir > 1)) {
   echo nl2br('WARNING!!! HRC2206, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
-    die(); } } } 
+  die(); } } } 
 
 // / The following code is performed whenever a user selects a file to copy.
 if (isset($_POST['copy'])) {

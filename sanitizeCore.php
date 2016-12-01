@@ -42,6 +42,7 @@ if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
   $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
   $_POST['UserDir'] = $_GET['UserDirPOST']; }
+// / I realize this looks strange, but it's valid and intensional. DO NOT MODIFY IT !!!
 if (isset($_GET['UserDir'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
   $_POST['UserDirPOST'] = $_GET['UserDir'];
@@ -149,7 +150,6 @@ if (isset( $_POST['convertSelected'])) {
       // / Method 1 requires unoconv. If conversions fail make sure to run "unoconv -l" or "unoconv --listen" in a terminal window.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
-  $txt = ('OP-Act: Initiated PDFWork on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     if (!is_array($_POST['pdfworkSelected'])) {
       $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']); } 

@@ -2,27 +2,27 @@
 
 // / The follwoing code checks if the config.php file exists and 
 // / terminates if it does not.
-if (!file_exists('config.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
   echo nl2br('ERROR!!! HRC2SecCore3, Cannot process the HRCloud2 Config file (config.php).'."\n"); 
   die (); }
 else {
-  require ('config.php'); }
+  require ('/var/www/html/HRProprietary/HRCloud2/config.php'); }
 
 // / The follwoing code checks if the CommonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2SecCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('commonCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('ERROR!!! HRC2SecCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('sanitizeCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
 chmod($InstLoc, 0755);
 chmod($InstLoc.'/Applications', 0755);

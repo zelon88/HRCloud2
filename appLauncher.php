@@ -16,25 +16,25 @@
 <?php 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('sanitizeCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
   
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('commonCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
 ?>
 </head>
 <body>
 
-<?php include('header.php'); ?>
+<?php include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">
 <?php if ($ShowHRAI == '1') {  ?>
