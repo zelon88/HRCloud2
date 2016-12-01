@@ -1,4 +1,26 @@
 <?php
+
+$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'; 
+$inputMATCH = array('callforhelp', 'call for help', 'cfh', 'load balance', 'balance load',);
+$CMDcounter++;
+
+if (isset($input) && $input !== '') {
+  foreach ($inputMATCH as $inputM1) {
+    if (preg_match('/'.$inputM1.'/', $input)) {
+      $CMDinit[$CMDcounter] = 1;
+      $input = preg_replace('/'.$inputM1.'/',' ',$input); } } }
+
+if (!isset($input)) {
+  $input = ''; }
+
+$input = str_replace('   ',' ',$input);
+$input = str_replace('  ',' ',$input);
+$input = rtrim($input);
+$input = ltrim($input);
+if ($CMDinit[$CMDcounter] == 1) {
+
+// / --------------------------------------
+
 // / Write the nodeCount to the sesLogfile.
   $sesLogfileO = fopen("$sesLogfile", "a+");
   $txt = ('CoreAI: RELOADED nodeCache, nodeCount is '.$nodeCount.' on '.$date.'. ');
@@ -25,4 +47,4 @@ echo nl2br("Yes, Sir! \r");
     $txt = ('CoreAI: Sent a CallForHelp request on '.$date.'. Continuing the script. ');
     $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
     echo nl2br("-CallForHelp activated! \r");
-    echo nl2br("--------------------------------\r");
+    echo nl2br("--------------------------------\r"); }

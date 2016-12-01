@@ -1,4 +1,25 @@
 <?php
+
+$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+$inputMATCH = array('what cpu', 'what processor', 'whats cpu', 'whats processor', 'whats your cpu', 
+  'whats your processor', 'cpu info', 'cpuinfo', 'processorinfo', 'processor info', 'proc info', 'procinfo',
+  'cpu type', 'cpu brand', 'processor brand', 'cpu vendor', 'processor vendor', 'cpu vendor', 'is your cpu',
+  'is your processor', 'cpu spec');
+$CMDcounter++;
+
+foreach ($inputMATCH as $inputM1) {
+  if (preg_match('/'.$inputM1.'/', $input)) {
+    include $CMDfile; 
+    $input = preg_replace('/'.$inputM1.'/',' ',$input); } }
+
+$input = str_replace('   ',' ',$input);
+$input = str_replace('  ',' ',$input);
+$input = rtrim($input);
+$input = ltrim($input);
+if ($CMDinit[$CMDcounter] == 1) {
+
+// / --------------------------------------
+
 // / This code was copied from https://gist.github.com/ezzatron/1321581 on 4/12/2016
 // / by Justin Grimes. It has been slightly modified for use as an HRAI Core Command.
 // / Thanks, Erin Millard! 
@@ -50,4 +71,4 @@ $GetNumOfCores = getNumOfCores();
     echo nl2br('CPU Information:'."\r");
     echo nl2br("Total Threads: $GetNumOfCores\r");
     echo nl2br("$GetCPUInfo \r");
-    echo nl2br("--------------------------------\r");
+    echo nl2br("--------------------------------\r"); }
