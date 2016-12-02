@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calculator
-App Version: 1.0 (11-27-2016 00:00)
+App Version: 1.1 (11-29-2016 23:15)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for doing math.
@@ -19,7 +19,6 @@ HRCLOUD2-PLUGIN-END
       document.getElementById("calculatorInput").value= ""; }
 </script>
 <div id='CalculatorAPP' name='CalculatorAPP' align='center'><h3>Calculator</h3><hr />
-
 <form action="Calculator.php" method="post">
 <input id="calculatorInput" name="calculatorInput" value="" type="text">
 <input type="submit" id="calculatorSubmit" name="calculatorSubmit" title="Perform Equation" alt="Perform Equation" value="Perform Equation"></form>
@@ -34,7 +33,16 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
-if (isset($_POST['calculatorInput'])) {
+if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
+  // / The following code defines a function originally written by Justin Cook...
+  // / http://www.justin-cook.com/wp/2006/03/31/php-parse-a-string-between-two-strings/
+    function get_string_between($string, $start, $end) {
+      $string = ' ' . $string;
+      $ini = strpos($string, $start);
+      if ($ini == 0) return '';
+      $ini += strlen($start);
+      $len = strpos($string, $end, $ini) - $ini;
+      return substr($string, $ini, $len); } 
   // / The following code sets the global variables for the session.
   $numbers = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
   $basicFunctions = str_split('+-xX*/');
@@ -43,7 +51,6 @@ if (isset($_POST['calculatorInput'])) {
   $subtractionFunctions = str_split('-');
   $multicationFunctions = str_split('*');
   $divisionFunctions = str_split('/');
-  // / The following code sets the POST data to variables for the session.
   $calculatorInput = str_replace(str_split('[]{};:$!#&@><'), '', $_POST['calculatorInput']);
   $calculatorInput = strtolower($calculatorInput);
   $calculatorInput = str_replace(str_split('xX'), '*', $calculatorInput);
@@ -64,8 +71,6 @@ if (isset($_POST['calculatorInput'])) {
     $calculatorInput = str_replace(')'.$number, ')*'.$number, $calculatorInput); }
   if ($calculatorInput == '') {
     echo ('There was no equation to calculate!'); }
-
-  // / The following code defines basic and advanced functions for the math interpreter.
 
   $priorityFunctions = get_string_between($calculatorInput, '(', ')');
   $priorityFunctions = str_replace(str_split('()'), '', $priorityFunctions);
