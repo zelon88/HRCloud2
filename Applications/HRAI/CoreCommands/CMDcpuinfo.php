@@ -1,16 +1,21 @@
 <?php
 
-$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
+$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcpuinfo.php'; 
 $inputMATCH = array('what cpu', 'what processor', 'whats cpu', 'whats processor', 'whats your cpu', 
-  'whats your processor', 'cpu info', 'cpuinfo', 'processorinfo', 'processor info', 'proc info', 'procinfo',
-  'cpu type', 'cpu brand', 'processor brand', 'cpu vendor', 'processor vendor', 'cpu vendor', 'is your cpu',
+  'whats your processor', 'what is your processor', 'what is your cpu', 'cpu info', 'cpuinfo', 
+  'processorinfo', 'processor info', 'proc info', 'procinfo', 'cpu type', 'cpu brand', 
+  'processor brand', 'cpu vendor', 'processor vendor', 'cpu vendor', 'is your cpu',
   'is your processor', 'cpu spec');
 $CMDcounter++;
 
-foreach ($inputMATCH as $inputM1) {
-  if (preg_match('/'.$inputM1.'/', $input)) {
-    include $CMDfile; 
-    $input = preg_replace('/'.$inputM1.'/',' ',$input); } }
+if (isset($input) && $input !== '') {
+  foreach ($inputMATCH as $inputM1) {
+    if (preg_match('/'.$inputM1.'/', $input)) {
+      $CMDinit[$CMDcounter] = 1;
+      $input = preg_replace('/'.$inputM1.'/',' ',$input); } } }
+
+if (!isset($input)) {
+  $input = ''; }
 
 $input = str_replace('   ',' ',$input);
 $input = str_replace('  ',' ',$input);

@@ -1,7 +1,10 @@
 <?php
 
+// / Credit goes to http://www.sitepoint.com/forums/showthread.php?70104-How-do-I-output-System-Uptime
+// / for the logical prowess behind echo'ing the server uptime.
+
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php'; 
-$inputMATCH = array('what is your uptime', 'whats your uptime', 'server uptime', 'busy', 'how long have you been online',
+$inputMATCH = array('what is your uptime', 'whats your uptime', 'server uptime', 'how long have you been online',
   'how long have you been awake', 'how long have you been on', 'how long have you been up');
 $CMDcounter++;
 
@@ -22,14 +25,18 @@ if ($CMDinit[$CMDcounter] == 1) {
 
 // / --------------------------------------
 
+exec("uptime", $system); // get the uptime stats
+$string = $system[0]; // this might not be necessary
+$uptime = explode(" ", $string); // break up the stats into an array
 
-$string = exec("uptime", $server); // get the uptime stats 
-$string = $system[0]; // this might not be necessary 
-$uptime = explode(" ", $string); // break up the stats into an array 
-$up_days = $uptime[4]; // grab the days from the array 
-$up_days1 = str_replace(',', '', $up_days);
-$up_days2 = str_replace(':', ' h & ', $up_days1);
-$up_days2 = ($up_days2." m");
+$up_days = $uptime[4]; // grab the days from the array
 
-echo nl2br("The server has been up for $up_days2.\r"); 
+$hours = explode(":", $uptime[7]); // split up the hour:min in the stats
+
+$up_hours = $hours[0]; // grab the hours
+$mins = $hours[1]; // get the mins
+$up_mins = str_replace(",", "", $mins); // strip the comma from the mins
+
+echo nl2br("This server has been up for " . $up_days . " days, " . $up_hours . " hours, and " . $up_mins . " minutes.\n");
+// echo the results  
 echo nl2br("--------------------------------\r"); } 

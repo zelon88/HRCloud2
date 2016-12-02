@@ -2,7 +2,8 @@
 
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 $inputMATCH = array('what time', 'what is the time', 'whats the time', 'have you got the date', 'what is the date',
-  'whats the the date', 'what day is it', 'what date is it' ,'date', 'what time', 'the day', 'tell me the day', 'what day is it');
+  'whats the the date', 'what day is it', 'what date is it' ,'date', 'what time', 
+  'the time', 'the day', 'tell me the day', 'what day is it');
 $CMDcounter++;
 
 if (isset($input)) {
