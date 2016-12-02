@@ -4,10 +4,10 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.2 (11-23-2016 23:28)
+App Version: 1.3 (11-26-2016 00:16)
 App License: GPLv3
 App Author: zelon88
-App Description: A simple HRCloud2 app for creating, viewing, and managing notes and to-do lists!
+App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
 App Integration: 1 (True)
 HRCLOUD2-PLUGIN-END
 //*/
@@ -59,7 +59,7 @@ if (isset($_GET['editNote'])) {
   $noteToEdit = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   $noteName = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   $noteToEdit = $noteToEdit.'.txt';
-  $noteData = file_get_contents($NotesDir.$noteToEdit);
+  $noteData = @file_get_contents($NotesDir.$noteToEdit);
   $noteData = str_replace('<br />', '', $noteData);
   $noteTitle = $_GET['editNote'];
   $noteButtonEcho = 'Edit Note';
