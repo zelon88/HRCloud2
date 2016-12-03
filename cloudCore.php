@@ -724,7 +724,7 @@ if (isset($_POST['streamSelected'])) {
   if (strpos($PlaylistCacheDir, '.Playlist') == 'false') {
     $txt = ('ERROR!!! HRC2746, There was a problem verifying the '.$PlaylistDir.' on '.$Time.'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    die($txt); }
+    die($txt); } 
   
   // / The following code detects which types of files are selected and creates the cache and playlist environment, including directories and cache files.
   // / We also generate a playlist.xml file for osmplayer. We don't wind up using this, but the core functionality is here for compatibility purposes.
@@ -769,22 +769,22 @@ if (isset($_POST['streamSelected'])) {
             $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
             
             $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
-            $fo1 = fopen($SongImageFile, 'w') or die("Can't create ".$SongImageFile.' on '.$Time.'!');
+            $fo1 = fopen($SongImageFile, 'w');
             $MAKECacheImageFile = file_put_contents($SongImageFile, $PLSongImageDATA);
             fclose($fo1);
             
             $SongImageFile2 = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
-            $fo2 = fopen($SongImageFile2, 'w') or die("Can't create ".$SongImageFile2.' on '.$Time.'!');
+            $fo2 = fopen($SongImageFile2, 'w');
             $MAKECacheImageFileRAW = file_put_contents($SongImageFile2, $PLSongImageDATA);
             fclose($fo2);
 
             $SongImageFileRAW = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
-            $fo3 = fopen($SongImageFileRAW, 'w') or die("Can't create ".$SongImageFileRAW.' on '.$Time.'!');
+            $fo3 = fopen($SongImageFileRAW, 'w');
             $MAKECacheImageFileRAW = file_put_contents($SongImageFileRAW, $PLSongImageDATA);                   
             fclose($fo3);
 
             $SongImageFile2RAW = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
-            $fo4 = fopen($SongImageFile2, 'w') or die("Can't create ".$SongImageFile2.' on '.$Time.'!');
+            $fo4 = fopen($SongImageFile2, 'w');
             $MAKECacheImageFile2 = file_put_contents($SongImageFile2, $PLSongImageDATA);
             fclose($fo4);
 
@@ -843,7 +843,25 @@ if (isset($_POST['streamSelected'])) {
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
           shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); }  
         if (in_array($oldExtension, $PLAudioOGGArr)) {
-          copy ($oldPathname, $playlistDir.'/'.$StreamFile); } 
+          copy ($oldPathname, $playlistDir.'/'.$StreamFile); } } }
+
+// / The following code is performed when a user selects files to share.
+  if (isset($_POST['shareConfirm'])) {
+    $txt = ('OP-Act: Initiated Share on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+    $_POST['shareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['shareConfirm']);
+    if (!is_array($_POST["filesToShare"])) {
+      $_POST['filesToShare'] = array($_POST['filesToShare']); }
+    foreach ($_POST['filesToShare'] as $FTS) {
+      $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
+      copy($CloudUsrDir.$FTS, $CloudShareDir.$FTS); 
+      if (file_exists($CloudShareDir.$FTS)) {
+        $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      if (!file_exists($CloudShareDir.$FTS)) {
+        $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        die($txt); } 
       
     // / The following code is performed if the user has selected a video file for streaming that is not already in mp4 format.    
     if (in_array($ext, $PLVideoArr)) { 
@@ -854,7 +872,26 @@ if (isset($_POST['streamSelected'])) {
     if (in_array($ext, $PLVideoMP4Arr)) { 
       copy($oldPathname, $newPathname);
       $txt = ('OP-Act: Copied '.$oldPathname.' for streaming to '.$pathname.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+
+// / The following code is performed when a user selects files to unshare.
+  if (isset($_POST['unshareConfirm'])) {
+    $txt = ('OP-Act: Initiated UnShare on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+    $_POST['unshareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']);
+  if (isset($_POST["filesToUnShare"])) {
+    if (!is_array($_POST["filesToUnShare"])) {
+      $_POST['filesToUnShare'] = array($_POST['filesToUnShare']); }
+    foreach ($_POST['filesToUnShare'] as $FTS) {
+      $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
+      copy($CloudUsrDir.$FTS. $CloudShareDir.$FTS); 
+      if (file_exists($CloudShareDir.$FTS)) {
+        $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      if (!file_exists($CloudShareDir.$FTS)) {
+        $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        die($txt); } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
@@ -870,7 +907,7 @@ if (file_exists($CloudTemp)) {
       if ($time - filemtime($CloudTempDir.'/'.$CleanFile) >= 900) { // Every 15 mins.
       if (!is_dir($CloudTempDir.'/'.$CleanFile)) {
         unlink($CloudTempDir.'/'.$CleanFile); 
-        $txt = ('OP-Act: Cleaned '.$CleanFile.' on '.$Time.'.');
+        $tx = ('OP-Act: Cleaned '.$CleanFile.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         if (is_dir($CloudTempDir.'/'.$CleanFile)) {
           $objects1 = scandir($CloudTempDir.'/'.$CleanFile); 
@@ -911,13 +948,14 @@ if (file_exists($CloudTemp)) {
                 if (!in_array($CleanFile, $SAFEArr)) {
                   @rmdir($CloudTempDir.'/'.$CleanFile); 
                   $txt = ('OP-Act: Cleaned directory '.$CleanFile.' on '.$Time.'.');
-                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } }  
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
   $bytes = sprintf('%u', filesize($DisplayFile));
   if ($bytes > 0) {
     $unit = intval(log($bytes, 1024));
     $units = array('B', 'KB', 'MB', 'GB');
   if (array_key_exists($unit, $units) === true) { 
-    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }  
+    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } } } 
+
 $DisplayFileCon = scandir($CloudLoc.'/'.$UserID.$UserDirPOST);
 // / Code to search a users Cloud Drive and return the results.
 if (isset($_POST['search'])) { 
@@ -983,5 +1021,5 @@ $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } ?>
 if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
 include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
 die(); } 
-require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php');
+require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); 
 ?>

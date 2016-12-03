@@ -69,7 +69,7 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } ?>
 <div id="logsContentsDiv" align='center'>
-  <iframe src="DATA/<?php echo $UserID; ?>/.AppLogs/.index.php" id="logsContents" name="logsContents" style="min-height:450px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
+  <iframe src="DATA/<?php echo $UserID; ?>/.AppData/.index.php" id="logsContents" name="logsContents" style="min-height:450px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
 <?php 
 if ($ShowHRAI == '1') {

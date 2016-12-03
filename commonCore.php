@@ -41,14 +41,15 @@ $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
+$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
 $ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = $SesLogDir.'/HRC2'.$Date.'.txt';
+$LogFile = $SesLogDir.'/HRC2-'.$Date.'.txt';
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
+$CloudShareDir = $LogLoc.'/Shared/';
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
@@ -75,9 +76,10 @@ $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-copy($InstLoc.'/index.html',$LogLoc.'/index.html');
+@copy($InstLoc.'/index.html',$LogLoc.'/index.html');
 if (!file_exists($LogLoc)) {
-  $JICInstallLogs = @mkdir($LogLoc, 0755); }
+  $JICInstallLogs = @mkdir($LogLoc, 0755); 
+  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); }
     foreach ($LogInstallFiles as $LIF) {
       if ($LIF == '.index.php') { 
         copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); }
@@ -102,14 +104,16 @@ if (!isset($_POST['UserDir'])) {
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
 $AppDir = $InstLoc.'/Applications/';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
+$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
+if (!file_exists($CloudShareDir)) {
+  mkdir($CloudShareDir, 0755); }
 
 // / The following code checks to see that the user is logged in.
 if ($UserIDRAW == '') {

@@ -23,7 +23,8 @@ if ($includeMINIIframer == '1') { ?>
   <?php if (!isset($input)) {
     $input = ''; } ?>
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>">
-  <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
+  <input id='submitHRAI' type="submit" value="Hello HRAI">
+  <input type="hidden" name="display_name" value="<?php echo $display_name;?>"></form>
   </div>
 <?php } ?>
 

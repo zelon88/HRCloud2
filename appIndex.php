@@ -104,7 +104,7 @@ foreach ($apps as $appName) {
           $ApplicationIntegration = trim($ApplicationIntegration); } 
         $lineCounter++; }
 
-  echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:195px; height:195px; border:inset; margin-bottom:2px;">'."\n".'<strong>'.$appName.'</strong>');
+  echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">'."\n".'<strong>'.$appName.'</strong>');
   echo ('<div align="center"><p>');
 
   // / The following code displays administrator specific buttons.
