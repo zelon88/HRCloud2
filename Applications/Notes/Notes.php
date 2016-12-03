@@ -39,7 +39,7 @@ else {
 
 // / The following code ensures the Notes directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Notes/';
+$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
 $notesList = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $newest_note = $notesList[0];
 $noteData = '';
