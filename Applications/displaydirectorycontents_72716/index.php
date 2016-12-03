@@ -27,12 +27,12 @@ $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
   echo nl2br('</head>ERROR!!! HRC2Index27, WordPress was not detected on the server.'."\n"); }
   else {
-    require($WPFile); } 
+    require_once($WPFile); } 
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.contacts.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.notes.php';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 if (!file_exists($UserConfig)) {
   echo nl2br('</head>ERROR!!! HRC2Index35, User Cache file was not detected on the server!'."\n"); 
   die (); }
@@ -133,7 +133,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchiveButton' name='dearchiveButton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
-<img id='searchButton' name="searchButton" title="Search "alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
+<img id='shareButton' name="shareButton" title="Share "alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/share.png'/> | <img id='SearchButton' name="SearchButton" title="Search"alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/></a>
 <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
 <a><input type='submit' name="newFolder" id="newFolder" value='New Folder' style="dispaly:none;" onclick="toggle_visibility('makedir'); toggle_visibility('dirToMake');">
   <input type='submit' name="newFile" id="newFile" value='New File' style="dispaly:none;" onclick="toggle_visibility('upload'); toggle_visibility('filesToUpload');"></a></div>
@@ -245,13 +245,16 @@ Are you sure?
 <p><input type="text" id='playlistname' name='playlistname' value='<?php echo $Udir.'Playlist'.'_'.$Date; ?>'>
   <input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></p></input>
 </div>
+<div align="center" id='ShareOptionsDiv' name='ShareOptionsDiv' style="display:none;">
+<p><input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
+</div>
 <div align="center" id='SearchOptionsDiv' name='SearchOptionsDiv' style="display:none;">
 <form action="cloudCore.php" method="post" enctypt="multipart/form-data">
 <p><input type="text" id='search' name='search' value='Search...' onclick="Clear();">
   <input type='submit' id='searchbutton' name='searchbutton' value='Search Cloud' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
 </form>
 </div>
-<div align="center" id='ClipboardOptionsDiv' name='SearchOptionsDiv' style="display:none;">
+<div align="center" id='ClipboardOptionsDiv' name='ClipboardOptionsDiv' style="display:none;">
 <p><input type='submit' id='clipboardCopy' name='clipboardCopy' value='Copy' onclick="toggle_visibility('loadingCommandDiv');"></input>
   | <input type='submit' id='clipboardPaste' name='clipboardPaste' value='Paste' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
 </div>
@@ -633,8 +636,7 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
+</script><script type="text/javascript">
 $(document).ready(function () {
 $("#streambutton").click(function(){
 var streamSelected = new Array();
@@ -652,8 +654,7 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
+</script><script type="text/javascript">
 $(document).ready(function () {
 $("#clipboardCopy").click(function(){
 var clipboardCopySelected = new Array();
@@ -674,8 +675,7 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
+</script><script type="text/javascript">
 $(document).ready(function () {
 $("#clipboardPaste").click(function(){
 var clipboardPasteSelected = new Array();
@@ -690,6 +690,44 @@ $.ajax( {
         clipboardPaste: "1",
         clipboardSelected : clipboardPasteSelected,
         clipboardPasteDir : "<?php echo $Udir; ?>"},
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+});
+});
+</script><script type="text/javascript">
+$(document).ready(function () {
+$("#clipboardPaste").click(function(){
+var clipboardPasteSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+clipboardPasteSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: {
+        clipboard : "1",
+        clipboardPaste: "1",
+        clipboardSelected : clipboardPasteSelected,
+        clipboardPasteDir : "<?php echo $Udir; ?>"},
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+});
+});
+</script><script type="text/javascript">
+$(document).ready(function () {
+$("#sharebutton").click(function(){
+var shareSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+shareSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { shareConfirm : "1", filesToShare : shareSelected},
     success: function(data) {
         window.location.href = "cloudCore.php";
     }
