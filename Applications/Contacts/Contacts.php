@@ -48,7 +48,7 @@ else {
 
 // / The following code ensures the Contacts directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/Contacts/';
+$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
 $contactsList = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $newest_contact = $contactsList[0];
 $contactData = '';
