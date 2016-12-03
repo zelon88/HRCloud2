@@ -35,10 +35,7 @@ jQuery('#submitHRAI').on('submit', function() {
 <?php
 session_start();
 
-// SECRET: Get core AI files as well as array and variable libraries.
-// SECRET: The nodeCache is where data about recent HRAI networks is stored. 
-// SECRET: The $nodeCache is a machine generated file.
-//echo nl2br("Starting HRAI Core!"."\r\r");
+// / The following code sets the variables for the session.
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
 $langParserfile = $InstLoc.'/Applications/HRAI/langPar.php';
 $onlineFile = $InstLoc.'/Applications/HRAI/online.php';
@@ -46,7 +43,7 @@ $coreVarfile = $InstLoc.'/Applications/HRAI/coreVar.php';
 $coreFuncfile = $InstLoc.'/Applications/HRAI/coreFunc.php';
 $coreArrfile = $InstLoc.'/Applications/HRAI/coreArr.php';
 $nodeCache = $InstLoc.'/Applications/HRAI/Cache/nodeCache.php';
-$HRAIMiniGUIFile = ($InstLoc.'/HRAIMiniGui.php');
+$HRAIMiniGUIFile = $InstLoc.'/HRAIMiniGui.php';
 $CallForHelpURL = $InstLoc.'/Applications/HRAI/CallForHelp.php';
 $HRC2ConfigFile = $InstLoc.'/config.php';
 $HRC2SecurityCoreFile = $InstLoc.'/securityCore.php';
@@ -55,7 +52,7 @@ $date = date("F j, Y, g:i a");
 $hour = date("g:i a");
 $day = date("d");
 
-// / Specifies if HRAI is required in an Iframer (Tells HRAI to shrink it's footprint).
+// / The following code specifies if HRAI is required in an Iframer (Tells HRAI to shrink it's footprint).
 if (isset($_POST['HRAIMiniGUIPost'])) {
   $noMINICore = '1';
   $includeMINIIframer = '1'; }
@@ -63,7 +60,7 @@ if (!isset($_POST['HRAIMiniGUIPost'])) {
   $noMINICore = '1'; 
   $includeMINIIFramer = '0'; }
 
-// / Load core AI files. Write an entry to the log if successful.
+// / The following code loads core AI files. Write an entry to the log if successful.
 require_once($coreVarfile);
 require_once($coreArrfile);
 require_once($coreFuncfile);
@@ -101,8 +98,8 @@ if (!isset($_POST['sesID'])) {
 
 // / The following code creates the session directory and session log files.
 $CreateSesDir = forceCreateSesDir();
-$sesLogfile = ($InstLoc.'/DATA/'.$user_ID.'/.AppLogs/'.$Date.'/HRAI'.$sesID.'.txt'); 
-$JICsesLogfileDir = ($InstLoc.'/DATA/'.$user_ID.'/.AppLogs/'.$Date);
+$sesLogfile = ($InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date.'/HRAI-'.$sesID.'.txt'); 
+$JICsesLogfileDir = ($InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date);
 if (!is_dir($JICsesLogfileDir)) {
   mkdir($JICsesLogfileDir, 0755); }
 if (!file_exists($JICsesLogfileDir)) {

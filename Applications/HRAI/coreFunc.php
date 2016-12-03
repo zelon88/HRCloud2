@@ -21,7 +21,7 @@ if(empty($_POST['display_name'])) {
   $display_name = '0'; } 
 if(!empty($_POST['display_name'])) {
   $display_name = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['display_name']); }
-  return ($display_name); } 
+return ($display_name); } 
 
 // / If there is no user_ID we set this var to 0, which assumes either the user is not logged in or there is no WordPress.
 // / Without this var we cannot generate a sesID.
@@ -31,7 +31,7 @@ if(empty($_POST['user_ID'])) {
   $user_ID = '0'; } 
 if(!empty($_POST['user_ID'])) {
   $user_ID = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['user_ID']); }
-  return ($user_ID); }
+return ($user_ID); }
 
 // / If there is no serverID we set the serverID to 0, which means localhost. This helps us track data that travels between
 // / HRAI nodes.
@@ -40,7 +40,7 @@ if(empty($_POST['serverID'])) {
   $inputServerID = '0'; } 
 if(!empty($_POST['serverID'])) {
   $inputServerID = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['serverID']); } 
-  return ($inputServerID); }
+return ($inputServerID); }
 
 function forceCreateSesID() {
 $user_ID = defineUser_ID();
@@ -85,8 +85,6 @@ if($sesID !== $sesIDAuth){
 $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
 return ($sesID); }
 
-
-
 // / Get the session ID. If sesID is empty we post all vars to core.php to generate one, then post the data back
 // / for processing. 
 function getSesIDFromCore () {
@@ -98,9 +96,9 @@ function getSesIDFromCore () {
       $input = defineUserInput();
       $display_name = defineDisplay_Name();
       $dataArr = array('user_ID' =>  "$user_ID",
-            'input' => "$input",
-            'display_name' =>  '$display_name',
-            'serverID' => '$serverID');
+        'input' => "$input",
+        'display_name' =>  '$display_name',
+        'serverID' => '$serverID');
   $handle = curl_init($coreFile);
   curl_setopt($handle, CURLOPT_POST, true);
   curl_setopt($handle, CURLOPT_POSTFIELDS, $dataArr);
@@ -144,11 +142,11 @@ if (!file_exists($sesLogfile)){
  $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
 // / If a logfile still doesn't exist try making one with extra privilages.
 if (!file_exists($sesLogfile)){
- mkdir('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt', 0755);
- $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt');
- $txt = ('CoreAI: '."User $display_name".','." $user_ID initiated $sesID with $input on $date".
-         ' Libraries loaded. Logfile created, method 4. ');
- $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
+  mkdir('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt', 0755);
+  $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt');
+  $txt = ('CoreAI: '."User $display_name".','." $user_ID initiated $sesID with $input on $date".
+    ' Libraries loaded. Logfile created, method 4. ');
+  $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
 // / If we cannot establish a logfile we kill the script.
 if (!file_exists($sesLogfile)){
  die('An internal error was encountered. I attempted to genereate a logfile for the session by several methods 
@@ -158,10 +156,10 @@ if (!file_exists($sesLogfile)){
 function detectWordPress() {
 $wpfile = '/var/www/html/wp-load.php';
 if (file_exists($wpfile)){
-require_once($wpfile);
-$txt = ''; } 
+  require_once($wpfile);
+  $txt = ''; } 
 if (!file_exists($wpfile)){
-$txt = 'No WordPress detected! '; }
+  $txt = 'No WordPress detected! '; }
 return($txt); }
 
 // / This function executes a PHP file and returns the output as the return variable.
@@ -169,8 +167,8 @@ function readOutputOfPHPfile($aPHPfileORurl) {
 ob_start(); // begin collecting output
 $varCache = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/Cache/varCache.php';
 $result = ob_get_clean(); // retrieve output from myfile.php, stop buffering
-    $varCache = fopen("$varCache", "a+");
-    $txt = ('$result = '.$result);
-    $compLogfile = file_put_contents($varCache, $txt.PHP_EOL , FILE_APPEND); 
+$varCache = fopen("$varCache", "a+");
+$txt = ('$result = '.$result);
+$compLogfile = file_put_contents($varCache, $txt.PHP_EOL , FILE_APPEND); 
 return $result; }
 
