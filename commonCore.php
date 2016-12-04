@@ -19,6 +19,24 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
 else {
   require_once('/var/www/html/HRProprietary/HRCloud2/config.php'); }
 
+// / The following code verifies and cleans the config file.    
+if ($Accept_GPLv3_OpenSource_License !== '1') {
+  $txt = ('ERROR!!! HRC2CC124, The admin has not accepted the end-user license aggreement in config.php!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2CC124, You must read and completely fill out the config.php file located in your
+    HRCloud2 installation directory before you can use this software!'); } 
+
+// / The following code checks that the user has agreed to the terms of the GPLv3 before cleaning the config variables.
+// / If the user has not read the GPLv3 the script will die!!!
+if ($Accept_GPLv3_OpenSource_License == '1') { 
+  $CleanConfig = '1';
+  $INTIP = 'localhost';
+  $EXTIP = 'localhost'; }
+if (isset ($InternalIP)) { 
+  unset ($InternalIP); }
+if (isset ($ExternalIP)) { 
+  unset ($ExternalIP); } 
+
 // / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
@@ -49,13 +67,40 @@ $LogFile = $SesLogDir.'/HRC2-'.$Date.'.txt';
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
-$CloudShareDir = $LogLoc.'/Shared/';
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'wordpress_11416.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11416.zip');
 $installedApps = array_diff($Apps, $defaultApps);
+
+// / The following code checks to see that the user is logged in.
+if ($UserIDRAW == '') {
+  echo nl2br('ERROR!!! HRC2CC100, You are not logged in!'."\n"); 
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if ($UserIDRAW == '0') {
+  echo nl2br('ERROR!!! HRC2CC103, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+if (!isset($UserIDRAW)) {
+  echo nl2br('ERROR!!! HRC2CC106, You are not logged in!'."\n");
+  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
+  die(); }
+
+// / The following code sets a target directory within a users Cloud drive and prefixes 
+// / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
+if (isset($_POST['UserDir'])) {
+  $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
+if (!isset($_POST['UserDir'])) {
+  $UserDirPOST = ('/'); }
+$CloudUsrDir = $CloudDir.$UserDirPOST; 
+$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+$CloudShareDir = $LogLoc.'/Shared';
+$AppDir = $InstLoc.'/Applications/';
+$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
+$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
@@ -76,6 +121,8 @@ $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
+$SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
+$SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
 @copy($InstLoc.'/index.html',$LogLoc.'/index.html');
 if (!file_exists($LogLoc)) {
   $JICInstallLogs = @mkdir($LogLoc, 0755); 
@@ -94,62 +141,23 @@ if (!file_exists($SesLogDir)) {
       if (in_array($LIF1, $installedApps)) continue;
       if ($LIF1 == '.' or $LIF1 == '..') continue;
         copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
-
-// / The following code sets a target directory within a users Cloud drive and prefixes 
-// / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
-if (isset($_POST['UserDir'])) {
-  $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
-if (!isset($_POST['UserDir'])) {
-  $UserDirPOST = ('/'); }
-$CloudUsrDir = $CloudDir.$UserDirPOST; 
-$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$AppDir = $InstLoc.'/Applications/';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
+copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
 if (!file_exists($CloudShareDir)) {
-  mkdir($CloudShareDir, 0755); }
-
-// / The following code checks to see that the user is logged in.
-if ($UserIDRAW == '') {
-  echo nl2br('ERROR!!! HRC2CC100, You are not logged in!'."\n"); 
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if ($UserIDRAW == '0') {
-  echo nl2br('ERROR!!! HRC2CC103, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
-if (!isset($UserIDRAW)) {
-  echo nl2br('ERROR!!! HRC2CC106, You are not logged in!'."\n");
-  wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
+  $JICInstallShared = @mkdir($CloudShareDir, 0755); 
+  @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html'); }
+    foreach ($SharedInstallFiles as $SIF) {
+      if (in_array($SIF, $installedApps)) continue;
+      if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
+      copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } 
 
 // / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
 if ($VirusScan == '1') {
   shell_exec('freshclam'); }
-
-// / The following code verifies and cleans the config file.  	
-if ($Accept_GPLv3_OpenSource_License !== '1') {
-  $txt = ('ERROR!!! HRC2CC124, The user has not accepted the end-user license aggreement in config.php!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2CC124, You must read and completely fill out the config.php file located in your
-    HRCloud2 installation directory before you can use this software!'); } 
-
-// / The following code checks that the user has agreed to the terms of the GPLv3 before cleaning the config variables.
-// / If the user has not read the GPLv3 the script will die!!!
-if ($Accept_GPLv3_OpenSource_License == '1') { 
-  $CleanConfig = '1';
-  $INTIP = 'localhost';
-  $EXTIP = 'localhost'; }
-if (isset ($InternalIP)) { 
-  unset ($InternalIP); }
-if (isset ($ExternalIP)) { 
-  unset ($ExternalIP); } 
 
 // / The following code verifies that a user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 

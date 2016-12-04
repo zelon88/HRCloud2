@@ -847,32 +847,22 @@ if (isset($_POST['streamSelected'])) {
 
 // / The following code is performed when a user selects files to share.
   if (isset($_POST['shareConfirm'])) {
+    $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
     $txt = ('OP-Act: Initiated Share on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     $_POST['shareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['shareConfirm']);
     if (!is_array($_POST["filesToShare"])) {
-      $_POST['filesToShare'] = array($_POST['filesToShare']); }
+      $_POST['filesToShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToShare'])); }
     foreach ($_POST['filesToShare'] as $FTS) {
       $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      copy($CloudUsrDir.$FTS, $CloudShareDir.$FTS); 
-      if (file_exists($CloudShareDir.$FTS)) {
+      copy($CloudUsrDir.$FTS, $CloudShareDir.'/'.$FTS); 
+      if (file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-      if (!file_exists($CloudShareDir.$FTS)) {
+      if (!file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-        die($txt); } 
-      
-    // / The following code is performed if the user has selected a video file for streaming that is not already in mp4 format.    
-    if (in_array($ext, $PLVideoArr)) { 
-      shell_exec('ffmpeg -i '.$oldPathname.' -vcodec h264 -acodec aac -strict -2 '.$newPathname.".mp4"); 
-      $txt = ('OP-Act: Optimized '.$oldPathname.' for streaming to '.$pathname.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
-    // / The following code is performed if the user has selected a video file for streaming that is already in mp4 format.    
-    if (in_array($ext, $PLVideoMP4Arr)) { 
-      copy($oldPathname, $newPathname);
-      $txt = ('OP-Act: Copied '.$oldPathname.' for streaming to '.$pathname.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+        die($txt); } }
 
 // / The following code is performed when a user selects files to unshare.
   if (isset($_POST['unshareConfirm'])) {
@@ -881,14 +871,14 @@ if (isset($_POST['streamSelected'])) {
     $_POST['unshareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']);
   if (isset($_POST["filesToUnShare"])) {
     if (!is_array($_POST["filesToUnShare"])) {
-      $_POST['filesToUnShare'] = array($_POST['filesToUnShare']); }
+      $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
     foreach ($_POST['filesToUnShare'] as $FTS) {
       $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      copy($CloudUsrDir.$FTS. $CloudShareDir.$FTS); 
-      if (file_exists($CloudShareDir.$FTS)) {
+      copy($CloudUsrDir.$FTS. $CloudShareDir.'/'.$FTS); 
+      if (file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-      if (!file_exists($CloudShareDir.$FTS)) {
+      if (!file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         die($txt); } } }

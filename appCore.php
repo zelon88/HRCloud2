@@ -29,7 +29,7 @@ $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'wordpress_11416.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11416.zip');
 $installedApps = array_diff($Apps, $defaultApps);
 if (isset($_POST['uninstallApplication'])) { 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
