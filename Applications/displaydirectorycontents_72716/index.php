@@ -17,11 +17,11 @@ setTimeout(function(){
   $convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
   $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
   $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
-if (!file_exists('config.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
   echo nl2br('</head>ERROR!!! HRC2Index19, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
-  require('config.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/config.php'); }
 $WPFile = '/var/www/html/wp-load.php';
 // / Verify that WordPress is installed.
 if (!file_exists($WPFile)) {
@@ -31,6 +31,7 @@ if (!file_exists($WPFile)) {
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
+$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 if (!file_exists($UserConfig)) {
@@ -51,9 +52,9 @@ if ($ColorScheme == '4') {
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 ?>
-    <script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-    <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
+<script type="text/javascript">
     function Clear() {    
       document.getElementById("search").value= ""; }
     function toggle_visibility(id) {
@@ -62,8 +63,6 @@ if ($ColorScheme == '5') {
          e.style.display = 'none';
       else
          e.style.display = 'block'; }
-    function goBack() {
-      window.history.back(); }
 $(document).ready(function () {
 $("#makedir").click(function(){
 var Selected = new Array();
@@ -85,7 +84,7 @@ $.ajax( {
 <body>
 <div id="container">
   <table class="sortable">
-      <thead>
+    <thead>
     <tr>
       <th>Filename</th>
       <th>Select</th>
@@ -93,8 +92,9 @@ $.ajax( {
       <th>Size</th>
       <th>Date Modified</th>
     </tr>
-      </thead>
-      <tbody><?php
+    </thead>
+    <tbody>
+<?php
 $tableCount = 0;
 if (isset($_POST['UserDir'])) {
   ?><div align='center'><h3><?php
@@ -110,8 +110,7 @@ if (!isset($_POST['UserDir'])) {
     elseif(($size<1048576)&&($size>1023)){$size=round($size/1024, 1)." KB";}
     elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB";}
     else{$size=round($size/1073741824, 1)." GB";}
-    return $size;
-  }
+    return $size; }
   // Checks to see if veiwing hidden files is enabled
   if($_SERVER['QUERY_STRING']=="hidden")
   {$hide="";
@@ -246,7 +245,7 @@ Are you sure?
   <input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></p></input>
 </div>
 <div align="center" id='ShareOptionsDiv' name='ShareOptionsDiv' style="display:none;">
-<p><input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
+<p><form action="<?php echo $UserSharedIndex; ?>"><input type='submit' id='viewsharebutton' name='viewsharebutton' value='View Shared' onclick="toggle_visibility('loadingCommandDiv');"></input></form> | <input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
 </div>
 <div align="center" id='SearchOptionsDiv' name='SearchOptionsDiv' style="display:none;">
 <form action="cloudCore.php" method="post" enctypt="multipart/form-data">
@@ -261,58 +260,40 @@ Are you sure?
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 </div>
 <?php
-   // Opens directory
    $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
-  // Gets each entry
   while($entryName=readdir($myDirectory)) {
-     $dirArray[]=$entryName;
-  }
-  // Closes directory
+     $dirArray[]=$entryName; }
   closedir($myDirectory);
-  // Counts elements in array
   $indexCount=count($dirArray);
-  // Sorts files
   sort($dirArray);
-  // Loops through the array of files
   for($index=0; $index < $indexCount; $index++) {
-  // Decides if hidden files should be displayed, based on query above.
       if(substr("$dirArray[$index]", 0, 1)!=$hide) {
-  // Resets Variables
     $favicon="";
     $class="file";
-  // Gets File Names
     $name=$dirArray[$index];
     $namehref=$dirArray[$index];
         $fileArray = array_push($fileArray1, $namehref);
     if (substr_compare($namehref, '/', 1)) { 
       $namehref = substr_replace('/'.$namehref, $namehref, 0); }
-  // Gets Date Modified
     $modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
     $timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
-  // Separates directories, and performs operations on those directories
-    if(is_dir($dirArray[$index]))
-    {
+    if(is_dir($dirArray[$index])) {
         $extn="&lt;Directory&gt;";
         $size="&lt;Directory&gt;";
         $sizekey="0";
         $class="dir";
-      // Gets favicon.ico, and displays it, only if it exists.
-        if(file_exists("$namehref/favicon.ico"))
-          {
+        if(file_exists("$namehref/favicon.ico")) {
                         $slash = '/';
             $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";
-            $extn="&lt;Website&gt;";
-          }
-      // Cleans up . and .. directories
+            $extn="&lt;Website&gt;"; }
         if($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";}
-        if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; }
-    }
+        if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
   // File-only operations
-    else{
+    else {
       // Gets file extension
       $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
       // Prettifies file type
-      switch ($extn){
+      switch ($extn) {
         case "png": $extn="PNG Image"; break;
         case "jpg": $extn="JPEG Image"; break;
         case "jpeg": $extn="JPEG Image"; break;
@@ -336,14 +317,13 @@ Are you sure?
         case "zip": $extn="ZIP Archive"; break;
         case "htaccess": $extn="Apache Config File"; break;
         case "exe": $extn="Windows Executable"; break;
-        default: if($extn!=""){$extn=strtoupper($extn)." File";} else{$extn="Folder";} break;
-      }
+        default: if ($extn!=""){$extn=strtoupper($extn)." File";} else {
+          $extn="Folder";} 
+          break; }
         if (strpos($name, '.Playlist') or strpos($extn, 'PLAYLIST')) {
           $extn = "Playlist"; }
-      // Gets and cleans up file size
         $size=pretty_filesize($CloudUsrDir.$dirArray[$index]);
-        $sizekey=filesize($CloudUsrDir.$dirArray[$index]);
-    }
+        $sizekey=filesize($CloudUsrDir.$dirArray[$index]); }
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
@@ -425,7 +405,7 @@ $.ajax( {
     <tr class='$class'>
       <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
       <td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
-            <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
+      <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
       <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
       <td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
     
@@ -728,6 +708,23 @@ $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
     data: { shareConfirm : "1", filesToShare : shareSelected},
+    success: function(data) {
+        window.location.href = "cloudCore.php";
+    }
+} );
+});
+});
+</script><script type="text/javascript">
+$(document).ready(function () {
+$("#unsharebutton").click(function(){
+var unshareSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+unshareSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { unshareConfirm : "1", filesToUnShare : unshareSelected},
     success: function(data) {
         window.location.href = "cloudCore.php";
     }
