@@ -91,7 +91,6 @@
 			<td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
 			<td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td>
 		</tr>"); } }
-	usleep(500);
 	?>
 	    </tbody>
 	</table>
