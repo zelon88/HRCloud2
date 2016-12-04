@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calculator
-App Version: 1.1 (11-29-2016 23:15)
+App Version: 1.2 (12-4-2016 01:08)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for doing math.
@@ -20,6 +20,10 @@ HRCLOUD2-PLUGIN-END
 </script>
 <div id='CalculatorAPP' name='CalculatorAPP' align='center'><h3>Calculator</h3><hr />
 <form action="Calculator.php" method="post">
+<?php 
+if (!isset($calculatorInput)) { 
+  echo ('<p>Enter an equation to calculate.</p>'); } 
+?>
 <input id="calculatorInput" name="calculatorInput" value="" type="text">
 <input type="submit" id="calculatorSubmit" name="calculatorSubmit" title="Perform Equation" alt="Perform Equation" value="Perform Equation"></form>
 <hr />
