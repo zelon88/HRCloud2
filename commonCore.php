@@ -70,6 +70,7 @@ if (!isset($UserIDRAW)) {
   echo nl2br('ERROR!!! HRC2CC106, You are not logged in!'."\n");
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
+
 // / The followind code hashes the user ID and sets the directory structure for the session.
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
@@ -111,10 +112,7 @@ if (!file_exists($UserConfig)) {
   @chmod($UserConfig, 0755); 
   @chown($UserConfig, 'www-data'); } 
 if (!file_exists($UserConfig)) { 
-  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
-  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user config file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  copy($LogInstallDir.'.config.php', $UserConfig); }
 if (!file_exists($UserConfig)) { 
   $txt = ('ERROR!!! HRC2CC151, There was a problem creating the user config file on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
@@ -190,5 +188,4 @@ if ($ColorScheme == '4') {
   echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); }
-
 ?>
