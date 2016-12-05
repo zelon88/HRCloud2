@@ -892,7 +892,7 @@ if (file_exists($CloudTemp)) {
     die('ERROR!!! HRC2850, There was a critical error on '.$Time.'!'); }
   $CleanFiles = scandir($CloudTempDir);
   $time = time();
-  $SAFEArr = array('var', 'www', 'html', 'HRProprietary', 'HRCloud2', 'index.html', '.AppLogs', 'config.php');
+  $SAFEArr = array('var', 'www', 'html', 'HRProprietary', 'HRCloud2', 'index.html', '.AppLogs', 'config.php', '.config.php');
   foreach ($CleanFiles as $CleanFile) {
     if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html' or in_array($CleanFile, $SAFEArr)) continue;
       if ($time - filemtime($CloudTempDir.'/'.$CleanFile) >= 900) { // Every 15 mins.
