@@ -35,6 +35,8 @@ $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Share
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 if (!file_exists($UserConfig)) {
+  @chmod($UserConfig, 0755); }
+if (!file_exists($UserConfig)) {
   echo nl2br('</head>ERROR!!! HRC2Index35, User Cache file was not detected on the server!'."\n"); 
   die (); }
 else {
@@ -83,17 +85,6 @@ $.ajax( {
 </head>
 <body>
 <div id="container">
-  <table class="sortable">
-    <thead>
-    <tr>
-      <th>Filename</th>
-      <th>Select</th>
-      <th>Type</th>
-      <th>Size</th>
-      <th>Date Modified</th>
-    </tr>
-    </thead>
-    <tbody>
 <?php
 $tableCount = 0;
 if (isset($_POST['UserDir'])) {
@@ -245,10 +236,10 @@ Are you sure?
   <input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></p></input>
 </div>
 <div align="center" id='ShareOptionsDiv' name='ShareOptionsDiv' style="display:none;">
-<p><form action="<?php echo $UserSharedIndex; ?>"><input type='submit' id='viewsharebutton' name='viewsharebutton' value='View Shared' onclick="toggle_visibility('loadingCommandDiv');"></input></form> | <input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
+<p><form action="<?php echo $UserSharedIndex; ?>" enctype="multipart/form-data"><input type='submit' id='viewsharebutton' name='viewsharebutton' value='View Shared' onclick="toggle_visibility('loadingCommandDiv');"></input></form> | <input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
 </div>
 <div align="center" id='SearchOptionsDiv' name='SearchOptionsDiv' style="display:none;">
-<form action="cloudCore.php" method="post" enctypt="multipart/form-data">
+<form action="cloudCore.php" method="post" enctype="multipart/form-data">
 <p><input type="text" id='search' name='search' value='Search...' onclick="Clear();">
   <input type='submit' id='searchbutton' name='searchbutton' value='Search Cloud' onclick="toggle_visibility('loadingCommandDiv');"></input></p>
 </form>
@@ -259,6 +250,17 @@ Are you sure?
 </div>
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 </div>
+  <table class="sortable">
+    <thead>
+    <tr>
+      <th>Filename</th>
+      <th>Select</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Date Modified</th>
+    </tr>
+    </thead>
+    <tbody>
 <?php
    $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
   while($entryName=readdir($myDirectory)) {
@@ -708,23 +710,6 @@ $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
     data: { shareConfirm : "1", filesToShare : shareSelected},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#unsharebutton").click(function(){
-var unshareSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-unshareSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { unshareConfirm : "1", filesToUnShare : unshareSelected},
     success: function(data) {
         window.location.href = "cloudCore.php";
     }
