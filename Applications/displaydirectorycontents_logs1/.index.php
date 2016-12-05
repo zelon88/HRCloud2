@@ -10,6 +10,46 @@
 <body>
 <div id="container">
   <div align="center"><h3>HRCloud2 Logs</h3></div>
+<?php
+// / Tje following code verifies that the HRCloud2 configuration file exists.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
+  echo nl2br('</head>ERROR!!! HRC2SharedIndex19, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+  die (); }
+else {
+  require('/var/www/html/HRProprietary/HRCloud2/config.php'); }
+$WPFile = '/var/www/html/wp-load.php';
+// / Verify that WordPress is installed.
+if (!file_exists($WPFile)) {
+  echo nl2br('</head>ERROR!!! HRC2SharedIndex27, WordPress was not detected on the server.'."\n"); }
+  else {
+    require_once($WPFile); } 
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
+$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
+if (!file_exists($UserConfig)) {
+  @chmod($UserConfig, 0755); }
+if (!file_exists($UserConfig)) {
+  echo nl2br('</head>ERROR!!! HRC2SharedIndex35, User Cache file was not detected on the server!'."\n"); 
+  die (); }
+else {
+    require($UserConfig); } 
+
+if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+  $ColorScheme = '1'; }
+if ($ColorScheme == '1') {
+  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
+if ($ColorScheme == '2') {
+  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
+if ($ColorScheme == '3') {
+  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
+if ($ColorScheme == '4') {
+  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
+if ($ColorScheme == '5') {
+  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
+?>
 <table class="sortable">
 <thead>
   <tr>
