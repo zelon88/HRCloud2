@@ -21,8 +21,6 @@ else {
 
 // / The following code verifies and cleans the config file.    
 if ($Accept_GPLv3_OpenSource_License !== '1') {
-  $txt = ('ERROR!!! HRC2CC124, The admin has not accepted the end-user license aggreement in config.php!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   die ('ERROR!!! HRC2CC124, You must read and completely fill out the config.php file located in your
     HRCloud2 installation directory before you can use this software!'); } 
 
@@ -58,21 +56,6 @@ else {
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = $SesLogDir.'/HRC2-'.$Date.'.txt';
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
-$AppDir = $InstLoc.'/Applications/';
-$Apps = scandir($AppDir);
-$defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
-  'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11416.zip');
-$installedApps = array_diff($Apps, $defaultApps);
 
 // / The following code checks to see that the user is logged in.
 if ($UserIDRAW == '') {
@@ -87,7 +70,33 @@ if (!isset($UserIDRAW)) {
   echo nl2br('ERROR!!! HRC2CC106, You are not logged in!'."\n");
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
   die(); }
-
+// / The followind code hashes the user ID and sets the directory structure for the session.
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
+$LogInc = 0;
+$SesLogDir = $LogLoc.'/'.$Date;
+$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
+$LogFile = $SesLogDir.'/HRC2-'.$Date.'.txt';
+$CloudDir = $CloudLoc.'/'.$UserID;
+$CloudTemp = $InstLoc.'/DATA/';
+$CloudTempDir = $CloudTemp.$UserID;
+$CloudShareDir = $LogLoc.'/Shared';
+$AppDir = $InstLoc.'/Applications/';
+$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
+$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
+$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
+$LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
+$LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
+$LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
+$SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
+$SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
+$AppDir = $InstLoc.'/Applications/';
+$Apps = scandir($AppDir);
+$defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
+  'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11416.zip');
+$installedApps = array_diff($Apps, $defaultApps);
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
 if (isset($_POST['UserDir'])) {
@@ -96,11 +105,22 @@ if (!isset($_POST['UserDir'])) {
   $UserDirPOST = ('/'); }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$CloudShareDir = $LogLoc.'/Shared';
-$AppDir = $InstLoc.'/Applications/';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
+
+// / The following code verifies that a user config file exists and creates one if it does not.
+if (!file_exists($UserConfig)) { 
+  @chmod($UserConfig, 0755); 
+  @chown($UserConfig, 'www-data'); } 
+if (!file_exists($UserConfig)) { 
+  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
+  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
+  $txt = ('Created a user config file on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+if (!file_exists($UserConfig)) { 
+  $txt = ('ERROR!!! HRC2CC151, There was a problem creating the user config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); }
+if (file_exists($UserConfig)) {
+require ($UserConfig); }
 
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
@@ -117,13 +137,7 @@ if (!file_exists($CloudTempDir)) {
   mkdir($CloudTempDir, 0755); 
   copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
 copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
-$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
-$LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
-$LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
-$LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-$SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
-$SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
-@copy($InstLoc.'/index.html',$LogLoc.'/index.html');
+
 if (!file_exists($LogLoc)) {
   $JICInstallLogs = @mkdir($LogLoc, 0755); 
   @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); }
@@ -131,22 +145,25 @@ if (!file_exists($LogLoc)) {
       if ($LIF == '.index.php') { 
         copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); }
       if (in_array($LIF, $installedApps)) continue;
-      if (!file_exists($LogLoc.'/.config.php')) {
-        copy($InstLoc.'/'.$LogInstallDir.'/.config.php', $LogLoc.'/.config.php'); }
       if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
       copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
+copy($InstLoc.'/index.html',$LogLoc.'/index.html');
+
 if (!file_exists($SesLogDir)) {
   $JICInstallLogs = @mkdir($SesLogDir, 0755); }
     foreach ($LogInstallFiles1 as $LIF1) {
       if (in_array($LIF1, $installedApps)) continue;
       if ($LIF1 == '.' or $LIF1 == '..') continue;
         copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
+
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
+
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
 copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
+
 if (!file_exists($CloudShareDir)) {
   $JICInstallShared = @mkdir($CloudShareDir, 0755); 
   @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html'); }
@@ -158,19 +175,6 @@ if (!file_exists($CloudShareDir)) {
 // / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
 if ($VirusScan == '1') {
   shell_exec('freshclam'); }
-
-// / The following code verifies that a user config file exists and creates one if it does not.
-if (!file_exists($UserConfig)) { 
-  $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
-  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
-  $txt = ('Created a user config file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2CC151, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2151, There was a problem creating the user config file on '.$Time.'!'); }
-if (file_exists($UserConfig)) {
-require ($UserConfig); }
 
 // / The following code determines the color scheme that the user has selected. 
 // / May require a refresh to take effect.
