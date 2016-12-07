@@ -1,5 +1,13 @@
 <?php
 
+
+
+/*
+HRCLOUD2 VERSION INFORMATION
+THIS VERSION : v0.9,8
+WRITTEN ON : 12/7/16 @ 0000 (12:00 am)
+*/
+
 // / The follwoing code checks if the CommonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
@@ -16,7 +24,13 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
+$ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); 
+$AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); 
+$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); 
+
 if ($ClearCachePOST == '1' or $ClearCachePOST == 'true') {
+  $txt = ('OP_Act: CompatCore - Cleaning user cache files on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   unlink($UserConfig); 
   if (!file_exists($UserConfig)) { 
     copy($LogInstallDir.'.config.php', $UserConfig); }
@@ -31,20 +45,54 @@ if ($ClearCachePOST == '1' or $ClearCachePOST == 'true') {
 // / Will establish a CuRL connection to Github and download the latest Master commit in .zip form and unpack it
   // / to the $InstLoc. Temporary files will then be deleted.
 if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true') {
-  set_time_limit(0);
-
-  $ResourceDir = $InstLoc.'/Resources';
+  $DownloadUpdate = 'true';
+  $InstallUpdate = 'true';
+  $CleanUpdate = 'true';
+  $ResourceDir = $InstLoc.'/Resources/TEMP';
+  $UpdatedZIP = $ResourceDir.'/HRC2-UPDATE.zip';
+  $UpdatedZIP1 = $ResourceDir.'/HRC2-UPDATE.zip';
   $UpdatedZIPURL = 'https://github.com/zelon88/HRCloud2/archive/master.zip';
+  $txt = ('OP-Act: Initiating Auto-Updater on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
+  if ($UserIDRAW !== 1) {
+    $txt = ('ERROR!!! HRC2CompatCore43, A non-administrator attempted to update the system on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  if (!file_exists($ResourceDir)) {
+    $txt = ('OP-Act: Creating a TEMP directory in /Resources to store pending updates on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+    mkdir($ResourceDir, 0755); } }
 
-  $ch2=curl_init();
-  $MAKEUpdatedZIP = fopen($ResourceDir.'/item.zip','w+');
-  curl_setopt($ch2, CURLOPT_URL, $UpdatedZIPURL->URL);
-  curl_setopt($ch2, CURLOPT_FILE, $MAKEUpdatedZIP );
-  curl_setopt($ch2, CURLOPT_TIMEOUT, 5040);
-  curl_setopt($ch2, CURLOPT_POST, 1);
-  curl_setopt($ch2, CURLOPT_POSTFIELDS,$UpdatedZIPURL->XMLRequest);
-  curl_setopt($ch2, CURLOPT_SSLVERSION, 3); 
-  curl_setopt($ch2, CURLOPT_FOLLOWLOCATION, true);
-  curl_exec($ch2);
-  curl_close($ch2);
-  fclose($MAKEUpdatedZIP); }
+if ($DownloadUpdate == '1' or $DownloadUpdate == 'true') {
+  $txt = ('OP-Act: Opening a connection to Github and downloading data on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  set_time_limit(0);
+  $MAKEUpdatedZIP = file_put_contents($UpdatedZIP, fopen($UpdatedZIPURL, 'r')); }
+
+if ($InstallUpdate == '1' or $InstallUpdate == 'true') {
+  shell_exec('unzip '.$UpdatedZIP.' -d '.$ResourceDir);
+  shell_exec('cd '.$ResourceDir.' ; zip -r ../'.$UpdatedZIP1.' *');
+  shell_exec('unzip -o '.$UpdatedZIP1.' -d '.$InstLoc); }
+
+// / The following code cleans and deletes old, unused, or otherwise deprecated files from HRCloud2.
+if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true') {
+  $txt = ('OP-Act: Initiating Compatibility Checker on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  
+  $txt = ('OP-Act: Scanning HRCloud2 Installation directories for deprecated files on'.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  if (file_exists($InstLoc.'/createUserFiles.php')) {
+    @unlink($InstLoc.'/createUserFiles.php'); }
+  if (file_exists($InstLoc.'/DocScan.php')) {
+    @unlink($InstLoc.'/DocScan.php'); }
+  if (file_exists($InstLoc.'/clipboardTester.php')) {
+    @unlink($InstLoc.'/clipboardTester.php'); }
+  if (file_exists($InstLoc.'/TEST.php')) {
+    @unlink($InstLoc.'/TEST.php'); }
+  if (file_exists($InstLoc.'/TEST1.php')) {
+    @unlink($InstLoc.'/TEST1.php'); }
+  if (file_exists($InstLoc.'/TEST2.php')) {
+    @unlink($InstLoc.'/TEST2.php'); }
+  if (file_exists($InstLoc.'/TEST3.php')) {
+    @unlink($InstLoc.'/TEST3.php'); }
+  if (file_exists($InstLoc.'/TEST4.php')) {
+    @unlink($InstLoc.'/TEST4.php'); } } 

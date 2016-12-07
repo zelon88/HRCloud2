@@ -33,10 +33,31 @@ set_time_limit(0);
 // / To use the official API, satisfy the corresponding POST or GET variables below.
 // / API inputs require that the user be logged in. Non-logged-in users will receieve a login screen.
 
-// / The following handles a UserDir POST or GET request.
-  // / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
+// / Can be used to clear the USER SPECIFIC HRCloud2 cache files. Accepts a value of '1' or 'true'.
+  // / THIS WILL ONLY AFFECT THE LOGGED-IN USER!!!
+if (isset($_POST['ClearUserCache'])) {
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearUserCache']); }
 
-// / This can be used to create a directory or retreive the contents of an existing directory.
+// / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
+  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES!!!
+if (isset($_POST['ClearCache'])) {
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); }
+
+// / Can be used to automatically download and install the latest HRCloud2 update from Github. 
+  // / Accepts a value of '1' or 'true'.
+  // / ONLY ADMINISTRATORS CAN AUTO-UPDATE HRC2!!!
+if (isset($_POST['AutoUpdate'])) {
+  $AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); }
+
+// / Can be used to automatically check for and repair compatibility bugs and known issues.
+  // / Accepts a value of '1' or 'true'.
+if (isset($_POST['CheckCompatibility'])) {
+$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); }
+if (isset($_POST['CheckCompat'])) {
+$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompat']); }
+
+// / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
+  // / This can be used to create a directory or retreive the contents of an existing directory.
   // / Must specify either UserDir or UserDirPOST as a POST or GET variable.
 if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
