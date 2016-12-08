@@ -7,21 +7,31 @@
 <?php
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppSettings11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppSettings19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('commonCore.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AppSettings19, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
 
 // / Prepare the echo value for the color input field.
+$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
+
 if ($ColorScheme == '1') {
   $CSEcho = 'Blue (Default)'; }
 if ($ColorScheme == '2') {
@@ -47,8 +57,6 @@ if ($ShowHRAI == '1') {
   $WPIEcho = 'Enabled'; }
 if ($ShowHRAI == '0') {
   $WPIEcho = 'Disabled'; }
-
-$SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 
 ?>
     <script type="text/javascript">
@@ -81,7 +89,6 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
   <option value="3">Green</option>
   <?php // ADD NUMBER 4 NEXT!!!!! ?>
   <option value="5">Black</option>
-
 </select></p>
 
 <p style="padding-left:15px;"><strong>2.</strong> HRAI Load Balancing Personal Assistant: </p>
@@ -93,8 +100,21 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 </div>
 
 <?php } 
+
 if ($UserIDRAW == '1') { ?>
-<p style="padding-left:15px;"><strong>3.</strong> Virus Scanning (Requires ClamAV on server): </p>
+<p style="float:center"><h3>Admin Settings</h3></p>
+<hr />
+
+<p style="padding-left:15px;"><strong>3.</strong> Update Options </p>
+ <p style="float:center; padding-left:25%;">Automatic Update Options: </p>
+ <p style="float:center; padding-left:25%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+ <p style="float:center; padding-left:25%;">Manual Update Options: </p>
+ <p style="float:center; padding-left:25%;">
+  <input type='submit' name='AutoDownload' id='AutoDownload' value='Download Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
+  <input type='submit' name='AutoInstall' id='AutoInstall' value='Install Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
+  <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+
+<p style="padding-left:15px;"><strong>4.</strong> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;"><p>
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>

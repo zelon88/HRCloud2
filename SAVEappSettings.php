@@ -13,27 +13,28 @@ function goBack() {
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SAS10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
 // / The follwoing code checks if the securityCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('securityCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SAS10, Cannot process the HRCloud2 Secutity Core file (securityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('securityCore.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SAS19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('commonCore.php'); } ?>
+  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); } ?>
+
 <br>
 <?php
 if (isset($_POST['Save'])) {
@@ -78,6 +79,15 @@ if (isset($_POST['LoadDefaults'])) {
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND);
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); } ?></div>
 <br>
+<?php
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2SAS41, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
+?>
 <hr />
 <div id='end' name='end' class='end'></div>
 </body>

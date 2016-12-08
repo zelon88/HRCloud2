@@ -34,27 +34,44 @@ set_time_limit(0);
 // / API inputs require that the user be logged in. Non-logged-in users will receieve a login screen.
 
 // / Can be used to clear the USER SPECIFIC HRCloud2 cache files. Accepts a value of '1' or 'true'.
-  // / THIS WILL ONLY AFFECT THE LOGGED-IN USER!!!
+  // / THIS WILL ONLY AFFECT THE LOGGED-IN USER !!!
 if (isset($_POST['ClearUserCache'])) {
-  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearUserCache']); }
+  $ClearUserCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearUserCache']); }
 
 // / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
-  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES!!!
-if (isset($_POST['ClearCache'])) {
-  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); }
+  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
+if (isset($_POST['ClearGlobalCache'])) {
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearGlobalCache']); }
 
 // / Can be used to automatically download and install the latest HRCloud2 update from Github. 
+// / Will perform "AutoDownload", "AutoInstall", and "AutoClean" consecutively. 
   // / Accepts a value of '1' or 'true'.
-  // / ONLY ADMINISTRATORS CAN AUTO-UPDATE HRC2!!!
+  // / ONLY ADMINISTRATORS CAN AUTO-UPDATE HRC2 !!!
 if (isset($_POST['AutoUpdate'])) {
   $AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); }
+
+// / Can be used to automatically download the latest HRCloud2 package from Github.
+  // / DOES NOT INSTALL OR REPLACE ANYTHING !!!
+  // / ONLY ADMINISTRATORS CAN DOWNLOAD HRC2 UPDATES !!!
+if (isset($_POST['AutoDownload'])) {
+  $AutoDownloadPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoDownload']); }
+
+// / Can be used to automatically install an official HRC2 update package that was download manually.
+  // / WILL EXTRACT AND OVER-WRITE HRC2 SYSTEM FILES WITH ONES FROM /Resources/TEMP
+if (isset($_POST['AutoInstall'])) {
+  $AutoInstallPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall']); }
+
+// / Can be used to clean up the HRC2 temp directories and perform compatibility adjustments after a manual update.
+  // / ONLY ADMINISTRATORS CAN DOWNLOAD HRC2 UPDATES !!!
+if (isset($_POST['AutoClean'])) {
+  $AutoCleanPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoClean']); }
 
 // / Can be used to automatically check for and repair compatibility bugs and known issues.
   // / Accepts a value of '1' or 'true'.
 if (isset($_POST['CheckCompatibility'])) {
-$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); }
+  $CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); }
 if (isset($_POST['CheckCompat'])) {
-$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompat']); }
+  $CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompat']); }
 
 // / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
   // / This can be used to create a directory or retreive the contents of an existing directory.
