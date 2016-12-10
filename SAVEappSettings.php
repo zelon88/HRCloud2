@@ -9,6 +9,7 @@
 function goBack() {
     window.history.back(); }
 </script>
+<div style="margin-left:15px;">
 <?php
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
@@ -91,5 +92,6 @@ else {
   require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
 ?>
 <div id='end' name='end' class='end'></div>
+</div>
 </body>
 </html>

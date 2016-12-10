@@ -1,16 +1,15 @@
 <?php
 
-
-
-/*
+/*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,8
-WRITTEN ON : 12/7/16
+THIS VERSION : v0.9,8.2
+WRITTEN ON : 12/10/16
 */
+
+echo ('<div style="margin-left:15px;">');
 
 // / The follwoing code checks if the CommonCore.php file exists and 
 // / terminates if it does not.
-
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2CompatCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
@@ -122,7 +121,6 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       echo nl2br ($txt.'<hr />'); 
       die($txt.'<hr />'); }
-    unlink($UpdatedZIP);
     shell_exec('zip -o -R '.$UpdatedZIP.' '.$ResourceDir1.'/* ');
     $txt = ('OP-Act: Created an installation image on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
@@ -136,7 +134,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   $Version1 = $Version;
   require ($InstLoc.'/versionInfo.php'); 
   if ($Version1 < $Version) {
-    $txt = ('ERROR!!! HRC2CompatCore94, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
+    $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
     die ($txt.'<hr />'); }
 
@@ -206,44 +204,45 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
   $ResourceDirFiles = scandir($ResourceDir1);
   foreach ($ResourceDirFiles as $ResourceDirFile) {
     if ($ResourceDirFile == '.' or $ResourceDirFile == '..') continue;
-      if (is_dir($ResourceDirFile)) {
-        $CleanDir = $ResourceDirFile;
+        $CleanDir = $ResourceDir1.'/'.$ResourceDirFile;
+      if (is_file($CleanDir)) {
+        @unlink($CleanDir); }
+      if (is_dir($CleanDir)) {
         $CleanFiles = scandir($CleanDir.'/');
         include ($InstLoc.'/janitor.php'); 
-        if (file_exists($CleanDir.'/config.php')) {              
-          @chmod($CleanDir.'/config.php');
-          @unlink($CleanDir.'/config.php'); }
-        if (file_exists($CleanDir.'/index.php')) {  
-          @chmod($CleanDir.'/index.php'); 
-          @unlink($CleanDir.'/index.php'); } 
-      foreach ($ResourceDirFiles as $ResourceDirFiles) {
-        if ($ResourceDirFiles == '.' or $ResourceDirFiles == '..') continue;
-          if (is_dir($ResourceDirFiles)) {
-            $CleanDir = $ResourceDirFiles;
+        @chmod($CleanDir.'/config.php');
+        @unlink($CleanDir.'/config.php');
+        @chmod($CleanDir.'/index.html');
+        @unlink($CleanDir.'/index.html');
+        @chmod($CleanDir);
+        @rmdir($CleanDir);  
+      foreach ($CleanFiles as $ResourceDirFile2) {
+        if ($ResourceDirFile2 == '.' or $ResourceDirFile2 == '..') continue;
+          $CleanDir = $ResourceDir1.'/'.$ResourceDirFile.'/'.$ResourceDirFile2;
+          if (is_dir($CleanDir)) {
             $CleanFiles = scandir($CleanDir.'/');
             include ($InstLoc.'/janitor.php'); 
-            if (file_exists($CleanDir.'/config.php')) { 
               @chmod($CleanDir.'/config.php');
-              @unlink($CleanDir.'/config.php'); }
-            if (file_exists($CleanDir.'/index.php')) {   
-              @chmod($CleanDir.'/index.php');
-              @unlink($CleanDir.'/index.php'); } } } } }
-    @chmod($CleanDir);
-    @rmdir($CleanDir); 
+              @unlink($CleanDir.'/config.php');   
+              @chmod($CleanDir.'/index.html');
+              @unlink($CleanDir.'/index.html'); 
+              @chmod($CleanDir);
+              @rmdir($CleanDir); } } } }
     if (is_dir($CleanDir)) { 
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); } 
     $CleanDir = $ResourceDir1;
     @chmod($CleanDir);
-    @rmdir($CleanDir); 
+    @rmdir($CleanDir);
     if (is_dir($CleanDir)) { 
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); 
-      $txt = ('Notice!!! HRC2CompatCore220, Some files could not be deleted on '.$Time.'!'); 
+      $txt = ('Warning!!! HRC2CompatCore220, Some files could not be deleted on '.$Time.'!'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
     if (!is_dir($CleanDir)) {
       $txt = ('OP-Act: Deleted temporary update data on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+  copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); }
 
 // / The following code cleans and deletes old, unused, or otherwise deprecated files from HRCloud2.
 if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST == 'Compat Check') {
@@ -313,3 +312,4 @@ if (isset($_POST['ClearCache']) or isset($_POST['AutoUpdate']) or isset($_POST['
   isset($_POST['AutoClean']) or isset($_POST['CheckCompatibility'])) {
   echo ('<div align="center"><form target ="_parent" action="settings.php" method="get"><button id="button" name="home" value="1">Settings</button></form>
     <br><form target ="_parent" action="index1.php" method="get"><button id="button" name="home" value="1">Home</button></form></div>'); }
+echo ('</div>');
