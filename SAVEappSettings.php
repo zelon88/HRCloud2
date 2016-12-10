@@ -65,8 +65,9 @@ echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 sleep(3); 
 ?><div align="center">   
 <br>
-<form target ="_parent" action="index1.php" method="get"><button id='button' name='home' value="1">Cloud Home</button></form>
+<form target ="_parent" action="settings.php" method="get"><button id='button' name='home' value="1">Settings</button></form>
 <br>
+<form target ="_parent" action="index1.php" method="get"><button id='button' name='home' value="1">Home</button></form>
 </div>
 <?php }
 if (isset($_POST['LoadDefaults'])) {
@@ -79,6 +80,7 @@ if (isset($_POST['LoadDefaults'])) {
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND);
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); } ?></div>
 <br>
+<hr />
 <?php
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -88,7 +90,6 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php')) 
 else {
   require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
 ?>
-<hr />
 <div id='end' name='end' class='end'></div>
 </body>
 </html>

@@ -102,17 +102,18 @@ if ($ShowHRAI == '0') {
 <?php } 
 
 if ($UserIDRAW == '1') { ?>
-<p style="float:center"><h3>Admin Settings</h3></p>
+<div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
 <p style="padding-left:15px;"><strong>3.</strong> Update Options </p>
- <p style="float:center; padding-left:25%;">Automatic Update Options: </p>
- <p style="float:center; padding-left:25%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
- <p style="float:center; padding-left:25%;">Manual Update Options: </p>
- <p style="float:center; padding-left:25%;">
+ <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
+ <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+ <p style="float:center; padding-left:10%;">Manual Update Options: </p>
+ <p style="float:center; padding-left:10%;">
   <input type='submit' name='AutoDownload' id='AutoDownload' value='Download Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='AutoInstall' id='AutoInstall' value='Install Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
-  <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+  <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
+  <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <p style="padding-left:15px;"><strong>4.</strong> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;"><p>
@@ -120,7 +121,7 @@ if ($UserIDRAW == '1') { ?>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select>
-<p style="float:center; padding-left:25%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php } ?>
 
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>

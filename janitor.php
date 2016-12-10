@@ -16,7 +16,7 @@ foreach ($CleanFiles as $CleanFile) {
           $txt = ('OP-Act: Janitor Cleaned '.$CleanFile.' on '.$Time.'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         if (is_dir($CleanDir.'/'.$CleanFile)) {
-          $objects1 = scandir($CloudTempDir.'/'.$CleanFile); 
+          $objects1 = scandir($CleanDir.'/'.$CleanFile); 
           foreach ($objects1 as $object1) { 
             if ($object1 == '.' or $object1 == '..') continue; 
               if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1)) {
@@ -24,7 +24,7 @@ foreach ($CleanFiles as $CleanFile) {
                 $txt = ('OP-Act: Janitor Cleaned '.$object1.' on '.$Time.'.');
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
               if (is_dir($CleanDir.'/'.$CleanFile.'/'.$object1)) { 
-                  $objects2 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
+                  $objects2 = scandir($CleanDir.'/'.$CleanFile.'/'.$object1); 
                   foreach ($objects2 as $object2) { 
                     if ($object2 == '.' or $object2 == '..') continue;
                       if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) {
