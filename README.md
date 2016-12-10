@@ -52,13 +52,13 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Includes "Notes", "Contacts", and "Calculator" Apps by zelon88.
 
+-Automatic Updates (downloads latest updates from Github and installs itself).
+
 
 # FUTURE CORE FEATURES
 
 
 -MOAR Apps (like Gallery and HRStreamer2)!!!
-
--Automatic Updates (downloads and installs latest master.zip from Github and installs itself).
 
 -Clear user / master cache option.
 
