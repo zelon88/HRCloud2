@@ -109,19 +109,6 @@ if (!isset($_POST['UserDir'])) {
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
 
-// / The following code verifies that a user config file exists and creates one if it does not.
-if (!file_exists($UserConfig)) { 
-  @chmod($UserConfig, 0755); 
-  @chown($UserConfig, 'www-data'); } 
-if (!file_exists($UserConfig)) { 
-  copy($LogInstallDir.'.config.php', $UserConfig); }
-if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
-if (file_exists($UserConfig)) {
-  require ($UserConfig); }
-
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
 if (!file_exists($CloudLoc)) {
@@ -183,6 +170,19 @@ if (!file_exists($CloudShareDir)) {
       if (in_array($SIF, $installedApps)) continue;
       if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
       copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } 
+
+// / The following code verifies that a user config file exists and creates one if it does not.
+if (!file_exists($UserConfig)) { 
+  @chmod($UserConfig, 0755); 
+  @chown($UserConfig, 'www-data'); } 
+if (!file_exists($UserConfig)) { 
+  copy($LogInstallDir.'.config.php', $UserConfig); }
+if (!file_exists($UserConfig)) { 
+  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
+if (file_exists($UserConfig)) {
+  require ($UserConfig); }
 
 // / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
 if ($VirusScan == '1') {
