@@ -201,7 +201,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
       $txt = ('OP-Act: Deleted update packages on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
-  $ResourceDirFiles = scandir($ResourceDir1);
+  if (is_dir($ResourceDir1)) {
+    $ResourceDirFiles = scandir($ResourceDir1); 
   foreach ($ResourceDirFiles as $ResourceDirFile) {
     if ($ResourceDirFile == '.' or $ResourceDirFile == '..') continue;
         $CleanDir = $ResourceDir1.'/'.$ResourceDirFile;
@@ -227,7 +228,7 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
               @chmod($CleanDir.'/index.html');
               @unlink($CleanDir.'/index.html'); 
               @chmod($CleanDir);
-              @rmdir($CleanDir); } } } }
+              @rmdir($CleanDir); } } } } }
     if (is_dir($CleanDir)) { 
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); } 
     $CleanDir = $ResourceDir1;
