@@ -2,7 +2,7 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,8.2
+THIS VERSION : v0.9,8.4
 WRITTEN ON : 12/10/16
 */
 
@@ -81,7 +81,7 @@ if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true'  or $AutoUpdatePOST == '
 
 // / The following code is performed whenever a user selects to manually download an update package.
 if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST == 'Download Update') {
-  $txt = ('OP-Act: Initiating update "Auto-Downloader" on '.$Time.'.'); 
+  $txt = ('OP-Act: Initiating "Auto-Update Downloader" on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
   if ($UserIDRAW !== 1) {
@@ -105,7 +105,7 @@ if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST 
 
 // / The following code is performed whenever a user selects to perform a manual installation of the cached update package.
 if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST == 'Install Update') {
-  $txt = ('OP-Act: Initiating update "Auto-Installer" on '.$Time.'.'); 
+  $txt = ('OP-Act: Initiating "Auto-Update Installer" on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   echo nl2br ($txt.'<hr />');
   if ($UserIDRAW !== 1) {
@@ -177,7 +177,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
 
 if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clean Update') {
-  $txt = ('OP-Act: Initiating update "Auto-Cleaner" on '.$Time.'.'); 
+  $txt = ('OP-Act: Initiating "Auto-Update Cleaner" on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   if ($UserIDRAW !== 1) {

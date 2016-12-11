@@ -105,7 +105,7 @@ if ($UserIDRAW == '1') { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
-<p style="padding-left:15px;"><strong>3.</strong> Update Options </p>
+<p style="padding-left:15px;"><strong>3.</strong> System Update </p>
  <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
  <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
  <p style="float:center; padding-left:10%;">Manual Update Options: </p>

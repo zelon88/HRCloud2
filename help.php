@@ -58,8 +58,7 @@ else {
     $input = ''; } ?>
   <div id='HRAIButtons2' name='HRAIButtons2' style="margin-right:15%;">
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="Clear();">
-  <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
-  </div>
+  <input id='submitHRAI' type="submit" value="Hello HRAI"></div></form>
 </div>
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;

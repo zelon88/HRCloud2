@@ -160,6 +160,8 @@ copy($InstLoc.'/index.html',$TempResourcesDir.'/index.html');
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
+if (!file_exists($CloudShareDir)) { 
+  mkdir($CloudShareDir, 0755); }
 copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
 
 // / The following code checks if the CloudShareDir exists, and creates one if it does not.
