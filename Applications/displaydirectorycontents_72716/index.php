@@ -5,7 +5,6 @@
 <script type="text/javascript">
 function goBack() {
   window.history.back(); }
-setTimeout(function(){
 </script>
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
@@ -117,7 +116,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
   $ArchInc++; }
 ?>
 <div align="center" style="margin-bottom:5px;">
-<input type='submit' name="back" id="back" value='&#x2190;' href="#" class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | <input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"> | <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
+<input type='submit' name="back" id="back" value='&#x2190;' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
 <div align="center" style="margin-bottom:5px;"><img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchiveButton' name='dearchiveutton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
@@ -417,9 +416,9 @@ $.ajax( {
     
     </tr>");
     $tableCount++; } } ?>
+  </tbody>
   </table>
 <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
-</div>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#copyFileSubmit").click(function(){
