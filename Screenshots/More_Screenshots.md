@@ -7,3 +7,5 @@
 ![Settings2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/0_Settings-2.png?raw=true)	
 ![Logs](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/0_Logs.png?raw=true)	
 ![Help](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/0_Help.png?raw=true)	
+![Settings - Update Results](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/0_Update_Results.png?raw=true)	
+
