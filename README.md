@@ -19,10 +19,6 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory and are cleaned up every 15 minutes. 
 
--Compatible with CDN's, multi-domain's, reverse-proxies, multi-server's (single domain or multi-domain), WordPress multi-site, or any combination thereof.
-
--Compatible with any storage mediaum. Removable devices,  virtual machines (VM's), network storage (and NAS devices), RAID arrays, or conventional storage.
-
 -Non-hosted permanent files remain until deleted by the end-user.
 
 -HRCloud2 can upload and manipulate multiple files per request. To download multiple files the user can select files and the archive format of their choosing.
@@ -57,6 +53,16 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 -Includes "Notes", "Contacts", and "Calculator" Apps by zelon88.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
+
+# RUNS ON
+
+-Any x86 or x64 PC that meets the [Dependency Requirements](https://github.com/zelon88/HRCloud2/wiki/Dependency-Requirements).
+
+-Raspberry Pi and other linux-capable maker-boards.
+
+-Compatible with CDN's, multi-domain's, reverse-proxies, multi-server's (single domain or multi-domain), WordPress multi-site, or any combination thereof.
+
+-Compatible with any storage mediaum. Removable devices,  virtual machines (VM's), network storage (and NAS devices), RAID arrays, or conventional storage.
 
 
 # FUTURE CORE FEATURES
