@@ -2,7 +2,7 @@
 **[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
 # HRCloud2
-A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assistant** that **Converts files, OCR's images, Creates documents, Creates archives, Handles your directories, Manages user accounts, Scans for viruses, Protects your server,** and **runs your own private AppLauncher!** 
+A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assistant** that **Converts files, OCR's images, Creates documents, Creates archives, Handles your directories, Manages user accounts, Scans for viruses, Protects your server, Keeps itself up-to-date,** and **runs your own private AppLauncher!** 
 
 # Screenshots
 ![HRClou2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_11-17-16_0.png)	
