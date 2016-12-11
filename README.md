@@ -62,7 +62,7 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Compatible with CDN's, multi-domain's, reverse-proxies, multi-server's (single domain or multi-domain), WordPress multi-site, or any combination thereof.
 
--Compatible with any storage mediaum. Removable devices,  virtual machines (VM's), network storage (and NAS devices), RAID arrays, or conventional storage.
+-Compatible with any storage medium. Including removable devices,  virtual machines (VM's), network storage (and NAS devices), RAID arrays, or conventional storage.
 
 
 # FUTURE CORE FEATURES
