@@ -35,6 +35,14 @@ set_time_limit(0);
 
 // / Can be used to clear the USER SPECIFIC HRCloud2 cache files. Accepts a value of '1' or 'true'.
   // / THIS WILL ONLY AFFECT THE LOGGED-IN USER !!!
+
+// / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
+  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
+if (isset($_POST['ClearGlobalCache'])) {
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearGlobalCache']); }
+
+// / Can be used to clear the USER SPECIFIC HRCloud2 cache files. Accepts a value of '1' or 'true'.
+  // / THIS WILL ONLY AFFECT THE LOGGED-IN USER !!!
 if (isset($_POST['ClearUserCache'])) {
   $ClearUserCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearUserCache']); }
 
@@ -72,6 +80,20 @@ if (isset($_POST['CheckCompatibility'])) {
   $CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); }
 if (isset($_POST['CheckCompat'])) {
   $CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompat']); }
+
+// / Can be used to specify shared files for UN-sharing. Will ONLY delete the shared copy of the file. Originals will remain.
+if (isset($_POST['unshareConfirm'])) {
+  $ClearUserCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']); 
+  if (!is_array($_POST['filesToUnShare'])) {
+    $_POST['filesToUnShare'] = array($_POST['filesToUnShare']); 
+    $_POST['filesToUnShare'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare']); } }
+
+// / Can be used to specify files for sharing files with other people by giving them a static URL on the server.
+if (isset($_POST['shareConfirm'])) {
+  $ClearUserCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['shareConfirm']); 
+  if (!is_array($_POST['filesToShare'])) {
+    $_POST['filesToShare'] = array($_POST['filesToShare']); 
+    $_POST['filesToShare'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToShare']); } }
 
 // / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
   // / This can be used to create a directory or retreive the contents of an existing directory.

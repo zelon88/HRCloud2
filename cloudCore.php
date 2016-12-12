@@ -875,12 +875,12 @@ if (isset($_POST['streamSelected'])) {
       $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
     foreach ($_POST['filesToUnShare'] as $FTS) {
       $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      copy($CloudUsrDir.$FTS. $CloudShareDir.'/'.$FTS); 
-      if (file_exists($CloudShareDir.'/'.$FTS)) {
-        $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      @unlink($CloudShareDir.'/'.$FTS);
       if (!file_exists($CloudShareDir.'/'.$FTS)) {
-        $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
+        $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      if (file_exists($CloudShareDir.'/'.$FTS)) {
+        $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         die($txt); } } }
 
