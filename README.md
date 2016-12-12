@@ -49,6 +49,8 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Users can view and launch Apps from their AppLauncher.
 
+-Share files with other users or the public.
+
 -Admins can automatically install Apps from .zip files or uninstall them just as easily.
 
 -Includes "Notes", "Contacts", and "Calculator" Apps by zelon88.
@@ -74,8 +76,6 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 -Clear user / master cache option.
 
 -Clipboard (copy/paste files, folders, items between locations)
-
--Shared files.
 
 ----------------------------
 Think HRCloud2 is neat? Support us on Flattr!
