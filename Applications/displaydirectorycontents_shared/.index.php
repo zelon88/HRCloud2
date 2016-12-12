@@ -20,11 +20,15 @@ function toggle_visibility(id) {
 </script>
 </head>
 <body>
-<div id="container">
-<div align="center"><h3>HRCloud2 Shared Files</h3></div>
-<div align="center" style="margin-bottom:10px;"><form><input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form></div>
+<div align="center" id="container">
+<div align="center"><h3>Shared Files</h3></div>
+<div align="center" style="margin-bottom:10px;">
+<form>
+<input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+<input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></form></div>
 <div align="center" name="unshareButton" id="unshareButton" style="margin-bottom:10px;"><img src="/HRProprietary/HRCloud2/Resources/deletesmall.png" title="Remove Shared File" alt="Remove Shared File" onclick="toggle_visibility('loadingCommandDiv');"></div>
-<div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
+<div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
+</div>
 <?php
 // / Tje following code verifies that the HRCloud2 configuration file exists.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
@@ -145,11 +149,12 @@ $fileCounter = 0;
 			<td><a href='./$namehref'>$extn</a></td>
       <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$namehref'></div></td>
             <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
-			<td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td>
-		</div></tr>"); ?>
+			<td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>"); ?>
 <?php 
 $fileCounter++;
 } } ?>
+</tbody>
+</table>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#unshareButton").click(function(){
@@ -159,16 +164,14 @@ unshareSelected.push(this.value);
 });
 $.ajax( {
     type: 'POST',
-    url: 'cloudCore.php',
+    url: '<?php echo $URL; ?>/HRProprietary/HRCloud2/cloudCore.php',
     data: { unshareConfirm : "1", filesToUnShare : unshareSelected},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "<?php echo $URL; ?>/HRProprietary/HRCloud2/cloudCore.php";
     }
 } );
 });
 });
 </script>
-</tbody>
-</table>
 </body>
 </html>
