@@ -116,7 +116,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
   $ArchInc++; }
 ?>
 <div align="center" style="margin-bottom:5px;">
-<input type='submit' name="back" id="back" value='&#x2190;' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
+<input type='submit' name="back" id="back" value='&#x2190' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
 <div align="center" style="margin-bottom:5px;"><img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchiveButton' name='dearchiveutton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
@@ -239,7 +239,8 @@ Are you sure?
   <input type='submit' id='createplaylistbutton' name='createplaylistbutton' value='Create Playlist' onclick="toggle_visibility('loadingCommandDiv');"></p>
 </div>
 <div align="center" id='ShareOptionsDiv' name='ShareOptionsDiv' style="display:none;">
-<p><form action="<?php echo $UserSharedIndex; ?>" enctype="multipart/form-data"><input type='submit' id='viewsharebutton' name='viewsharebutton' value='View Shared' onclick="toggle_visibility('loadingCommandDiv');"></form> | <input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></p>
+<p><form action="<?php echo $UserSharedIndex; ?>" enctype="multipart/form-data"><input type='submit' id='viewsharebutton' name='viewsharebutton' value='View Shared' onclick="toggle_visibility('loadingCommandDiv');"></form></p>
+<p><input type='submit' id='sharebutton' name='sharebutton' value='Share Files' onclick="toggle_visibility('loadingCommandDiv');"></p>
 </div>
 <div align="center" id='SearchOptionsDiv' name='SearchOptionsDiv' style="display:none;">
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
