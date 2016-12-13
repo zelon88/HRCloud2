@@ -77,7 +77,19 @@ if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 
 $fileCounter = 0;
-
+?>
+<table class="sortable">
+  <thead>
+	<tr>
+	  <th>Filename</th>
+	  <th>Type</th>
+	  <th>Select</th>
+	  <th>Size</th>
+	  <th>Date Modified</th>
+	</tr>
+	  </thead>
+	  <tbody>
+<?php
 	function pretty_filesize($file) {
 	  $size=filesize($file);
 	  if($size<1024){$size=$size." Bytes";}
@@ -132,17 +144,6 @@ $fileCounter = 0;
 		if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
 			or strpos($namehref, '.css') == 'true' or strpos($namehref, '.html') == 'true' or strpos($namehref, '.css') == 'true' 
 			or strpos($namehref, 'Shared') == 'true') continue; ?>
-<table class="sortable">
-  <thead>
-	<tr>
-	  <th>Filename</th>
-	  <th>Type</th>
-	  <th>Select</th>
-	  <th>Size</th>
-	  <th>Date Modified</th>
-	</tr>
-	  </thead>
-	  <tbody>
 <?php
 	 echo("<tr class='$class'>
 			<td><a href='./$namehref'$favicon class='name'>$name</a></td>
