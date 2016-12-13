@@ -250,7 +250,7 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
     echo nl2br ($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (file_exists($UpdatedZIP1)) {
-    @unlink($UpdatedZI2); 
+    @unlink($UpdatedZIP1); 
     $txt = ('OP-Act: Deleted update package on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
