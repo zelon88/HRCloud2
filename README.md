@@ -1,4 +1,3 @@
-
 **[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
 # HRCloud2
@@ -15,7 +14,6 @@ A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assis
 HRCloud2 is a personal Cloud CMS Platform similar to ownCloud but with far greater capability that includes all the same functionality as a standard end-user based Cloud platform. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere. 
 
 HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it needs from WordPress it does not exist. HRCloud2 uses user accounts created by WordPress, but does not itself use a database for anything other than user authenticdation. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
-
 
 # CURRENT CORE FEATURES
 
@@ -79,6 +77,9 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 -Clipboard (copy/paste files, folders, items between locations)
 
 ----------------------------
+
+[![HRCloud2](https://www.openhub.net/p/HRCloud2/widgets/project_partner_badge?format=gif&ref=samplg)](https://www.openhub.net/p/HRCloud2)
+
 Think HRCloud2 is neat? Support us on Flattr!
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=zelon88&url=https://github.com/zelon88/HRCloud2&title=HRCloud2&language=&tags=github&category=software)  
 
