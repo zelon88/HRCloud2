@@ -933,8 +933,7 @@ if (isset($_POST['clipboard'])) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     require ($UserClipboard);
 $txt = $clipboardArray['selected'];
-     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
- } }
+     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
@@ -942,63 +941,16 @@ if (file_exists($CloudTemp)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   if (!isset($CloudTempDir) or $CloudTempDir == '' or $CloudTempDir == '/') {
     die('ERROR!!! HRC2850, There was a critical error on '.$Time.'!'); }
-  $CleanFiles = scandir($CloudTempDir);
-  $time = time();
-  $SAFEArr = array('var', 'www', 'html', 'HRProprietary', 'HRCloud2', 'index.html', '.AppLogs', 'config.php', '.config.php');
-  foreach ($CleanFiles as $CleanFile) {
-    if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == 'index.html' or in_array($CleanFile, $SAFEArr)) continue;
-      if ($time - filemtime($CloudTempDir.'/'.$CleanFile) >= 900) { // Every 15 mins.
-      if (!is_dir($CloudTempDir.'/'.$CleanFile)) {
-        unlink($CloudTempDir.'/'.$CleanFile); 
-        $tx = ('OP-Act: Cleaned '.$CleanFile.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-        if (is_dir($CloudTempDir.'/'.$CleanFile)) {
-          $objects1 = scandir($CloudTempDir.'/'.$CleanFile); 
-          foreach ($objects1 as $object1) { 
-            if ($object1 == '.' or $object1 == '..' or $object1 == 'index.html' or in_array($object1, $SAFEArr)) continue; 
-            if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) {
-              unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
-              $txt = ('OP-Act: Cleaned '.$object1.' on '.$Time.'.');
-              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
-              if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1)) { 
-                  $objects2 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
-                  foreach ($objects2 as $object2) { 
-                    if ($object2 == '.' or $object2 == '..' or $object2 == 'index.html' or in_array($object2, $SAFEArr)) continue; 
-                    if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) {
-                      unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
-                      $txt = ('OP-Act: Cleaned '.$object2.' on '.$Time.'.');
-                      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
-                      if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2)) { 
-                          $objects3 = scandir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
-                          foreach ($objects3 as $object3) { 
-                            if ($object3 == '.' or $object3 == '..' or $object3 == 'index.html' or in_array($object3, $SAFEArr)) continue; 
-                            if (!is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) {
-                              unlink($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
-                              $txt = ('OP-Act: Cleaned '.$object3.' on '.$Time.'.');
-                              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-                            if (is_dir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3)) { 
-                              @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3); 
-                              $txt = ('OP-Act: Cleaned directory '.$object3.' on '.$Time.'.');
-                              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
-                        if (!in_array($object2, $SAFEArr)) {
-                          @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1.'/'.$object2); 
-                          $txt = ('OP-Act: Cleaned directory '.$object2.' on '.$Time.'.');
-                          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }   
-                if (!in_array($object1, $SAFEArr)) {
-                  @rmdir($CloudTempDir.'/'.$CleanFile.'/'.$object1); 
-                  $txt = ('OP-Act: Cleaned directory '.$object1.' on '.$Time.'.');
-                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-                if (!in_array($CleanFile, $SAFEArr)) {
-                  @rmdir($CloudTempDir.'/'.$CleanFile); 
-                  $txt = ('OP-Act: Cleaned directory '.$CleanFile.' on '.$Time.'.');
-                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } 
-  $bytes = sprintf('%u', filesize($DisplayFile));
-  if ($bytes > 0) {
-    $unit = intval(log($bytes, 1024));
-    $units = array('B', 'KB', 'MB', 'GB');
-  if (array_key_exists($unit, $units) === true) { 
-    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } } } 
+  $CleanDir = $CloudTempDir;
+  $CleanFiles = scandir($CloudTempDir); 
+  include ('janitor.php'); }
 
+$bytes = sprintf('%u', filesize($DisplayFile));
+if ($bytes > 0) {
+  $unit = intval(log($bytes, 1024));
+  $units = array('B', 'KB', 'MB', 'GB');
+  if (array_key_exists($unit, $units) === true) { 
+    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }
 $DisplayFileCon = scandir($CloudLoc.'/'.$UserID.$UserDirPOST);
 // / Code to search a users Cloud Drive and return the results.
 if (isset($_POST['search'])) { 

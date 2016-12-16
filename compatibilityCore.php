@@ -2,8 +2,8 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,8.5
-WRITTEN ON : 12/13/16
+THIS VERSION : v0.9,8.7
+WRITTEN ON : 12/15/16
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -78,7 +78,7 @@ if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true'  or $AutoUpdatePOST == '
     $txt = ('OP-Act: Created a TEMP directory in /Resources to store pending updates on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
 
-// / The following code is performed whenever a user selects to manually download an update package.
+// / The following code is performed whenever a user selects to download an update package.
 if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST == 'Download Update') {
   $txt = ('OP-Act: Initiating "Auto-Update Downloader" on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
@@ -102,7 +102,7 @@ if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST 
     echo nl2br ($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
 
-// / The following code is performed whenever a user selects to perform a manual installation of the cached update package.
+// / The following code is performed whenever a user selects to install an update package.
 if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST == 'Install Update') {
   $txt = ('OP-Act: Initiating "Auto-Update Installer" on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
@@ -237,6 +237,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
 
+// / The following code is performed when a user selects to Clean temporary update package files.
 if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clean Update') {
   $txt = ('OP-Act: Initiating "Auto-Update Cleaner" on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
@@ -265,6 +266,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
 
   if (is_dir($ResourceDir1)) {
     $ResourceDirFiles = scandir($ResourceDir1); 
+    $CleanFiles = $ResourceDirFiles;
+    include ($InstLoc.'/janitor.php'); 
   foreach ($ResourceDirFiles as $ResourceDirFile) {
     if ($ResourceDirFile == '.' or $ResourceDirFile == '..') continue;
         $CleanDir = $ResourceDir1.'/'.$ResourceDirFile;
@@ -277,6 +280,10 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
         @unlink($CleanDir.'/config.php');
         @chmod($CleanDir.'/index.html');
         @unlink($CleanDir.'/index.html');
+        @chmod($CleanDir.'/jquery-3.1.0.min.js');
+        @unlink($CleanDir.'/jquery-3.1.0.min.js');
+        @chmod($CleanDir.'/wordpress_11416.zip');
+        @unlink($CleanDir.'/wordpress_11416.zip');
         @chmod($CleanDir);
         @rmdir($CleanDir);  
       foreach ($CleanFiles as $ResourceDirFile2) {
@@ -289,8 +296,29 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
               @unlink($CleanDir.'/config.php');   
               @chmod($CleanDir.'/index.html');
               @unlink($CleanDir.'/index.html'); 
+              @chmod($CleanDir.'/jquery-3.1.0.min.js');
+              @unlink($CleanDir.'/jquery-3.1.0.min.js');
+              @chmod($CleanDir.'/wordpress_11416.zip');
+              @unlink($CleanDir.'/wordpress_11416.zip');
               @chmod($CleanDir);
-              @rmdir($CleanDir); } } } } }
+              @rmdir($CleanDir); 
+
+      foreach ($CleanFiles as $ResourceDirFile3) {
+        if ($ResourceDirFile3 == '.' or $ResourceDirFile4 == '..') continue;
+          $CleanDir = $ResourceDir1.'/'.$ResourceDirFile.'/'.$ResourceDirFile2.'/'.$ResourceDirFile3;
+          if (is_dir($CleanDir)) {
+            $CleanFiles = scandir($CleanDir.'/');
+            include ($InstLoc.'/janitor.php'); 
+              @chmod($CleanDir.'/config.php');
+              @unlink($CleanDir.'/config.php');   
+              @chmod($CleanDir.'/index.html');
+              @unlink($CleanDir.'/index.html'); 
+              @chmod($CleanDir.'/jquery-3.1.0.min.js');
+              @unlink($CleanDir.'/jquery-3.1.0.min.js');
+              @chmod($CleanDir.'/Applications/wordpress_11416.zip');
+              @unlink($CleanDir.'/Applications/wordpress_11416.zip');
+              @chmod($CleanDir);
+              @rmdir($CleanDir); } } } } } }
     if (is_dir($CleanDir)) { 
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); } 
     $CleanDir = $ResourceDir1;
@@ -305,9 +333,7 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
       $txt = ('OP-Act: Deleted temporary update data on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
-  
-  copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); 
-  copy ($InstLoc.'/index.html', $ResourceDir1.'/index.html'); }
+  copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); } }
 
 // / The following code cleans and deletes old, unused, or otherwise deprecated files from HRCloud2.
 if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST == 'Compat Check') {
@@ -338,6 +364,8 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/adminLogin.php'); } 
   if (file_exists($InstLoc.'/AdminLogin.php')) {
     @unlink($InstLoc.'/AdminLogin.php'); } 
+  if (file_exists($InstLoc.'/Applocatopms/HRAI/awake.php')) {
+    @unlink($InstLoc.'/Applocatopms/HRAI/awake.php'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
