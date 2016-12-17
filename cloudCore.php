@@ -862,8 +862,7 @@ if (isset($_POST['streamSelected'])) {
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
       if (!file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-        die($txt); } }
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
 
 // / The following code is performed when a user selects files to unshare.
   if (isset($_POST['unshareConfirm'])) {
@@ -881,8 +880,7 @@ if (isset($_POST['streamSelected'])) {
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
       if (file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-        die($txt); } } }
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } }
 
 
 // / The following code controls the creation and management of a users clipboard cache file.
