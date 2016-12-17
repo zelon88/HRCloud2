@@ -1,0 +1,3 @@
+This is a placeholder file for the /Resources/TEMP folder.
+
+This is a required folder!!! The files inside of it are disposable.
