@@ -2,8 +2,8 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,8.8
-WRITTEN ON : 12/16/16
+THIS VERSION : v0.9,8.9
+WRITTEN ON : 12/17/16
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -267,7 +267,7 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
   if (is_dir($ResourceDir1)) {
     $ResourceDirFiles = scandir($ResourceDir1); 
     $CleanFiles = $ResourceDirFiles;
-    include ($InstLoc.'/janitor.php'); 
+    include ($InstLoc.'/janitor.php');  
   foreach ($ResourceDirFiles as $ResourceDirFile) {
     if ($ResourceDirFile == '.' or $ResourceDirFile == '..') continue;
         $CleanDir = $ResourceDir1.'/'.$ResourceDirFile;
@@ -286,16 +286,32 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
         @unlink($CleanDir.'/wordpress_11416.zip');
         @chmod($CleanDir.'/Database/Words/index.html');
         @unlink($CleanDir.'/Database/Words/index.html');
-        @chmod($CleanDir.'/Applications/index.html');
-        @unlink($CleanDir.'/Applications/index.html');
-        @chmod($CleanDir.'/Applications');
-        @rmdir($CleanDir.'/Applications');
         @chmod($CleanDir.'/Words/index.html');
         @unlink($CleanDir.'/Words/index.html');
         @chmod($CleanDir.'/Database/Words');
         @rmdir($CleanDir.'/Database/Words');
         @chmod($CleanDir.'/Words');
         @rmdir($CleanDir.'/Words');
+        @chmod($CleanDir.'/displaydirectorycontents_72716');
+        @rmdir($CleanDir.'/displaydirectorycontents_72716');
+        @chmod($CleanDir.'/displaydirectorycontents_logs');
+        @rmdir($CleanDir.'/displaydirectorycontents_logs');
+        @chmod($CleanDir.'/displaydirectorycontents_logs1');
+        @rmdir($CleanDir.'/displaydirectorycontents_logs1'); 
+        @chmod($CleanDir.'/displaydirectorycontents_shared');
+        @rmdir($CleanDir.'/displaydirectorycontents_shared');
+        @chmod($CleanDir.'/Applications/index.html');
+        @unlink($CleanDir.'/Applications/index.html');
+        @chmod($CleanDir.'/Applications');
+        @rmdir($CleanDir.'/Applications');
+        @chmod($CleanDir.'/Resources');
+        @rmdir($CleanDir.'/Resources');
+        @chmod($CleanDir.'/Screenshots');
+        @rmdir($CleanDir.'/Screenshots');
+        @chmod($CleanDir.'/HRAI');
+        @rmdir($CleanDir.'/HRAI');
+        @chmod($CleanDir.'/HRStreamer');
+        @rmdir($CleanDir.'/HRStreamer');
         @chmod($CleanDir);
         @rmdir($CleanDir);  
       foreach ($CleanFiles as $ResourceDirFile2) {
@@ -303,25 +319,45 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
           $CleanDir = $ResourceDir1.'/'.$ResourceDirFile.'/'.$ResourceDirFile2;
           if (is_dir($CleanDir)) {
             $CleanFiles = scandir($CleanDir.'/');
-            include ($InstLoc.'/janitor.php'); 
-              @chmod($CleanDir.'/config.php');
-              @unlink($CleanDir.'/config.php');   
-              @chmod($CleanDir.'/index.html');
-              @unlink($CleanDir.'/index.html'); 
-              @chmod($CleanDir.'/jquery-3.1.0.min.js');
-              @unlink($CleanDir.'/jquery-3.1.0.min.js');
-              @chmod($CleanDir.'/wordpress_11416.zip');
-              @unlink($CleanDir.'/wordpress_11416.zip');
-              @chmod($CleanDir.'/Applications/index.html');
-              @unlink($CleanDir.'/Applications/index.html');
-              @chmod($CleanDir.'/Applications');
-              @rmdir($CleanDir.'/Applications');
-              @chmod($CleanDir.'/Database/Words');
-              @rmdir($CleanDir.'/Database/Words');
-              @chmod($CleanDir.'/Words');
-              @rmdir($CleanDir.'/Words');
-              @chmod($CleanDir);
-              @rmdir($CleanDir); 
+            include ($InstLoc.'/janitor.php');  
+            @chmod($CleanDir.'/config.php');
+            @unlink($CleanDir.'/config.php');
+            @chmod($CleanDir.'/index.html');
+            @unlink($CleanDir.'/index.html');
+            @chmod($CleanDir.'/jquery-3.1.0.min.js');
+            @unlink($CleanDir.'/jquery-3.1.0.min.js');
+            @chmod($CleanDir.'/wordpress_11416.zip');
+            @unlink($CleanDir.'/wordpress_11416.zip');
+            @chmod($CleanDir.'/Database/Words/index.html');
+            @unlink($CleanDir.'/Database/Words/index.html');
+            @chmod($CleanDir.'/Words/index.html');
+            @unlink($CleanDir.'/Words/index.html');
+            @chmod($CleanDir.'/Database/Words');
+            @rmdir($CleanDir.'/Database/Words');
+            @chmod($CleanDir.'/Words');
+            @rmdir($CleanDir.'/Words');
+            @chmod($CleanDir.'/displaydirectorycontents_72716');
+            @rmdir($CleanDir.'/displaydirectorycontents_72716');
+            @chmod($CleanDir.'/displaydirectorycontents_logs');
+            @rmdir($CleanDir.'/displaydirectorycontents_logs');
+            @chmod($CleanDir.'/displaydirectorycontents_logs1');
+            @rmdir($CleanDir.'/displaydirectorycontents_logs1'); 
+            @chmod($CleanDir.'/displaydirectorycontents_shared');
+            @rmdir($CleanDir.'/displaydirectorycontents_shared');
+            @chmod($CleanDir.'/Applications/index.html');
+            @unlink($CleanDir.'/Applications/index.html');
+            @chmod($CleanDir.'/Applications');
+            @rmdir($CleanDir.'/Applications');
+            @chmod($CleanDir.'/Resources');
+            @rmdir($CleanDir.'/Resources');
+            @chmod($CleanDir.'/Screenshots');
+            @rmdir($CleanDir.'/Screenshots');
+            @chmod($CleanDir.'/HRAI');
+            @rmdir($CleanDir.'/HRAI');
+            @chmod($CleanDir.'/HRStreamer');
+            @rmdir($CleanDir.'/HRStreamer');
+            @chmod($CleanDir);
+            @rmdir($CleanDir); 
 
         foreach ($CleanFiles as $ResourceDirFile3) {
           if ($ResourceDirFile3 == '.' or $ResourceDirFile4 == '..') continue;
@@ -329,33 +365,48 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
             if (is_dir($CleanDir)) {
               $CleanFiles = scandir($CleanDir.'/');
               include ($InstLoc.'/janitor.php'); 
-                @chmod($CleanDir.'/config.php');
-                @unlink($CleanDir.'/config.php');   
-                @chmod($CleanDir.'/index.html');
-                @unlink($CleanDir.'/index.html'); 
-                @chmod($CleanDir.'/jquery-3.1.0.min.js');
-                @unlink($CleanDir.'/jquery-3.1.0.min.js');
-                @chmod($CleanDir.'/wordpress_11416.zip');
-                @unlink($CleanDir.'/wordpress_11416.zip');
-                @chmod($CleanDir.'/Database/Words/index.html');
-                @unlink($CleanDir.'/Database/Words/index.html');
-                @chmod($CleanDir.'/Words/index.html');
-                @unlink($CleanDir.'/Words/index.html');
-                @chmod($CleanDir.'/Applications/index.html');
-                @unlink($CleanDir.'/Applications/index.html');
-                @chmod($CleanDir.'/Applications');
-                @rmdir($CleanDir.'/Applications');
-                @chmod($CleanDir.'/Database/Words');
-                @rmdir($CleanDir.'/Database/Words');
-                @chmod($CleanDir.'/Words');
-                @rmdir($CleanDir.'/Words');
-                @chmod($CleanDir);
-                @rmdir($CleanDir); } } } } } }
+              @chmod($CleanDir.'/config.php');
+              @unlink($CleanDir.'/config.php');
+              @chmod($CleanDir.'/index.html');
+              @unlink($CleanDir.'/index.html');
+              @chmod($CleanDir.'/jquery-3.1.0.min.js');
+              @unlink($CleanDir.'/jquery-3.1.0.min.js');
+              @chmod($CleanDir.'/wordpress_11416.zip');
+              @unlink($CleanDir.'/wordpress_11416.zip');
+              @chmod($CleanDir.'/Database/Words/index.html');
+              @unlink($CleanDir.'/Database/Words/index.html');
+              @chmod($CleanDir.'/Words/index.html');
+              @unlink($CleanDir.'/Words/index.html');
+              @chmod($CleanDir.'/Database/Words');
+              @rmdir($CleanDir.'/Database/Words');
+              @chmod($CleanDir.'/Words');
+              @rmdir($CleanDir.'/Words');
+              @chmod($CleanDir.'/displaydirectorycontents_72716');
+              @rmdir($CleanDir.'/displaydirectorycontents_72716');
+              @chmod($CleanDir.'/displaydirectorycontents_logs');
+              @rmdir($CleanDir.'/displaydirectorycontents_logs');
+              @chmod($CleanDir.'/displaydirectorycontents_logs1');
+              @rmdir($CleanDir.'/displaydirectorycontents_logs1'); 
+              @chmod($CleanDir.'/displaydirectorycontents_shared');
+              @rmdir($CleanDir.'/displaydirectorycontents_shared');
+              @chmod($CleanDir.'/Applications/index.html');
+              @unlink($CleanDir.'/Applications/index.html');
+              @chmod($CleanDir.'/Applications');
+              @rmdir($CleanDir.'/Applications');
+              @chmod($CleanDir.'/Resources');
+              @rmdir($CleanDir.'/Resources');
+              @chmod($CleanDir.'/Screenshots');
+              @rmdir($CleanDir.'/Screenshots');
+              @chmod($CleanDir.'/HRAI');
+              @rmdir($CleanDir.'/HRAI');
+              @chmod($CleanDir.'/HRStreamer');
+              @rmdir($CleanDir.'/HRStreamer');
+              @chmod($CleanDir);
+              @rmdir($CleanDir); } } } } } }
     if (is_dir($CleanDir)) { 
-      copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); } 
-    $CleanDir = $ResourceDir1;
-    @chmod($CleanDir);
-    @rmdir($CleanDir);
+      $CleanDir = $ResourceDir1;
+      @chmod($CleanDir);
+      @rmdir($CleanDir); }
     if (is_dir($CleanDir)) { 
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); 
       $txt = ('Warning!!! HRC2CompatCore220, Some files could not be deleted on '.$Time.'!'); 

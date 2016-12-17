@@ -74,7 +74,7 @@ foreach ($CleanFiles as $CleanFile) {
                                         $objects7 = scandir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object6); 
                                         foreach ($objects7 as $object7) { 
                                           if ($object7 == '.' or $object7 == '..' or $object7 == '' or $object7 == ' '
-                                            or in_array($object6, $SAFEArr) or in_array($object7, $defaultApps)) continue;
+                                            or in_array($object7, $SAFEArr) or in_array($object7, $defaultApps)) continue;
                                           if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6.'/'.$object7)) {
                                             @unlink($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6.'/'.$object7); 
                                             $txt = ('OP-Act: Janitor Cleaned '.$object7.' on '.$Time.'.');
