@@ -2,8 +2,8 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,8.7
-WRITTEN ON : 12/15/16
+THIS VERSION : v0.9,8.8
+WRITTEN ON : 12/16/16
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -284,6 +284,18 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
         @unlink($CleanDir.'/jquery-3.1.0.min.js');
         @chmod($CleanDir.'/wordpress_11416.zip');
         @unlink($CleanDir.'/wordpress_11416.zip');
+        @chmod($CleanDir.'/Database/Words/index.html');
+        @unlink($CleanDir.'/Database/Words/index.html');
+        @chmod($CleanDir.'/Applications/index.html');
+        @unlink($CleanDir.'/Applications/index.html');
+        @chmod($CleanDir.'/Applications');
+        @rmdir($CleanDir.'/Applications');
+        @chmod($CleanDir.'/Words/index.html');
+        @unlink($CleanDir.'/Words/index.html');
+        @chmod($CleanDir.'/Database/Words');
+        @rmdir($CleanDir.'/Database/Words');
+        @chmod($CleanDir.'/Words');
+        @rmdir($CleanDir.'/Words');
         @chmod($CleanDir);
         @rmdir($CleanDir);  
       foreach ($CleanFiles as $ResourceDirFile2) {
@@ -300,25 +312,45 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
               @unlink($CleanDir.'/jquery-3.1.0.min.js');
               @chmod($CleanDir.'/wordpress_11416.zip');
               @unlink($CleanDir.'/wordpress_11416.zip');
+              @chmod($CleanDir.'/Applications/index.html');
+              @unlink($CleanDir.'/Applications/index.html');
+              @chmod($CleanDir.'/Applications');
+              @rmdir($CleanDir.'/Applications');
+              @chmod($CleanDir.'/Database/Words');
+              @rmdir($CleanDir.'/Database/Words');
+              @chmod($CleanDir.'/Words');
+              @rmdir($CleanDir.'/Words');
               @chmod($CleanDir);
               @rmdir($CleanDir); 
 
-      foreach ($CleanFiles as $ResourceDirFile3) {
-        if ($ResourceDirFile3 == '.' or $ResourceDirFile4 == '..') continue;
-          $CleanDir = $ResourceDir1.'/'.$ResourceDirFile.'/'.$ResourceDirFile2.'/'.$ResourceDirFile3;
-          if (is_dir($CleanDir)) {
-            $CleanFiles = scandir($CleanDir.'/');
-            include ($InstLoc.'/janitor.php'); 
-              @chmod($CleanDir.'/config.php');
-              @unlink($CleanDir.'/config.php');   
-              @chmod($CleanDir.'/index.html');
-              @unlink($CleanDir.'/index.html'); 
-              @chmod($CleanDir.'/jquery-3.1.0.min.js');
-              @unlink($CleanDir.'/jquery-3.1.0.min.js');
-              @chmod($CleanDir.'/Applications/wordpress_11416.zip');
-              @unlink($CleanDir.'/Applications/wordpress_11416.zip');
-              @chmod($CleanDir);
-              @rmdir($CleanDir); } } } } } }
+        foreach ($CleanFiles as $ResourceDirFile3) {
+          if ($ResourceDirFile3 == '.' or $ResourceDirFile4 == '..') continue;
+            $CleanDir = $ResourceDir1.'/'.$ResourceDirFile.'/'.$ResourceDirFile2.'/'.$ResourceDirFile3;
+            if (is_dir($CleanDir)) {
+              $CleanFiles = scandir($CleanDir.'/');
+              include ($InstLoc.'/janitor.php'); 
+                @chmod($CleanDir.'/config.php');
+                @unlink($CleanDir.'/config.php');   
+                @chmod($CleanDir.'/index.html');
+                @unlink($CleanDir.'/index.html'); 
+                @chmod($CleanDir.'/jquery-3.1.0.min.js');
+                @unlink($CleanDir.'/jquery-3.1.0.min.js');
+                @chmod($CleanDir.'/wordpress_11416.zip');
+                @unlink($CleanDir.'/wordpress_11416.zip');
+                @chmod($CleanDir.'/Database/Words/index.html');
+                @unlink($CleanDir.'/Database/Words/index.html');
+                @chmod($CleanDir.'/Words/index.html');
+                @unlink($CleanDir.'/Words/index.html');
+                @chmod($CleanDir.'/Applications/index.html');
+                @unlink($CleanDir.'/Applications/index.html');
+                @chmod($CleanDir.'/Applications');
+                @rmdir($CleanDir.'/Applications');
+                @chmod($CleanDir.'/Database/Words');
+                @rmdir($CleanDir.'/Database/Words');
+                @chmod($CleanDir.'/Words');
+                @rmdir($CleanDir.'/Words');
+                @chmod($CleanDir);
+                @rmdir($CleanDir); } } } } } }
     if (is_dir($CleanDir)) { 
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); } 
     $CleanDir = $ResourceDir1;

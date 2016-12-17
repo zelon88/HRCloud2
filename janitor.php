@@ -5,7 +5,7 @@
 // / and then require() this file.
 
 // / The following array sets some SAFE files that WILL NOT be deleted. These are skipped by the Janitor.
-$SAFEArr = array('', ' ', 'HRProprietary', 'HRCloud2', '.AppData', 'config.php', '.config.php');
+$SAFEArr = array('', ' ', 'HRProprietary', 'HRCloud2', '.AppData', 'config.php');
 
 $CleanFilesRAW = $CleanFiles;
 // / The following code cleans whatever variables are set for $CleanDir and $CleanFiles. 
@@ -51,7 +51,34 @@ foreach ($CleanFiles as $CleanFile) {
                         if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4)) {
                           @unlink($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4); 
                           $txt = ('OP-Act: Janitor Cleaned '.$object4.' on '.$Time.'.');
-                          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } } } } } }
+                          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+                          if (is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4)) { 
+                            $objects5 = scandir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4); 
+                            foreach ($objects5 as $object5) { 
+                              if ($object5 == '.' or $object5 == '..' or $object5 == '' or $object5 == ' '
+                                or in_array($object5, $SAFEArr) or in_array($object5, $defaultApps)) continue;
+                              if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5)) {
+                                @unlink($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5); 
+                                $txt = ('OP-Act: Janitor Cleaned '.$object5.' on '.$Time.'.');
+                                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }                           
+                                if (is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5)) { 
+                                  $objects6 = scandir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5); 
+                                  foreach ($objects6 as $object6) { 
+                                    if ($object6 == '.' or $object6 == '..' or $object6 == '' or $object6 == ' '
+                                      or in_array($object6, $SAFEArr) or in_array($object6, $defaultApps)) continue;
+                                    if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6)) {
+                                      @unlink($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6); 
+                                      $txt = ('OP-Act: Janitor Cleaned '.$object6.' on '.$Time.'.');
+                                      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+                                      if (is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6)) { 
+                                        $objects7 = scandir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object6); 
+                                        foreach ($objects7 as $object7) { 
+                                          if ($object7 == '.' or $object7 == '..' or $object7 == '' or $object7 == ' '
+                                            or in_array($object6, $SAFEArr) or in_array($object7, $defaultApps)) continue;
+                                          if (!is_dir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6.'/'.$object7)) {
+                                            @unlink($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4.'/'.$object5.'/'.$object6.'/'.$object7); 
+                                            $txt = ('OP-Act: Janitor Cleaned '.$object7.' on '.$Time.'.');
+                                            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } } } } } } } } } } } } } }
 @rmdir($CleanDir); } 
 
 foreach ($CleanFilesRAW as $CleanFile) {
