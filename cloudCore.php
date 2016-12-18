@@ -603,7 +603,7 @@ if (isset($_POST['pdfworkSelected'])) {
                   $PagedFilesArrRAW = scandir($CloudTmpDir);
                   foreach ($PagedFilesArrRAW as $PagedFile) {
                     $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
-                    if ($PagedFile == '.' or $PagedFile == '..' or $PagedFile == '.AppLogs' or $PagedFile == 'index.html') continue;
+                    if ($PagedFile == '.' or $PagedFile == '..' or $PagedFile == '.AppData' or $PagedFile == 'index.html') continue;
                     if (strpos($PagedFile, '.txt') !== false) continue;
                     if (strpos($PagedFile, '.pdf') !== false) continue;
                     $CleanFilname = str_replace($oldExtension, '', $filename);
@@ -890,7 +890,7 @@ if (isset($_POST['clipboard'])) {
   $clipboard = str_replace(str_split('\\/[]{};:>$#!&* <'), '', ($_POST['clipboard']));
   $txt = ('OP-Act: Initiated Clipboard on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  $UserClipboard = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.clipboard.php';
+  $UserClipboard = $InstLoc.'/DATA/'.$UserID.'/.AppData/.clipboard.php';
   $opCounter = 0;
   include($UserClipboard);
   $opCounter = $clipboardArray['opCounter'];
@@ -907,6 +907,8 @@ if (isset($_POST['clipboard'])) {
     foreach ($_POST['clipboardSelected'] as $clipboardSelected) {
       $clipboardSelected = str_replace(str_split('\\/[]{};:>$#!&* <'), '', $clipboardSelected);
       $CopyDir = str_replace(str_split('\\/[]{};:>$#!&* <'), '', ($_POST['clipboardCopyDir'])); 
+      if ($CopyDir !== '') {
+        $CopyDir = $CopyDir.'/'; }
       $txt = ('OP-Act: User selected to Copy an item to Clipboard on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
       if ($copyCounter == 0) {
@@ -930,18 +932,43 @@ if (isset($_POST['clipboard'])) {
     echo nl2br($txt);
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     require ($UserClipboard);
-$txt = $clipboardArray['selected'];
-     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+    foreach ($clipboardArray['selected'] as $clipboardSelected) {
+      if (!file_exists($CloudUsrDir.'/'.$clipboardSelected)) { 
+        $txt = 'ERROR!!! HRC2937, No file exists while copying '.$clipboardSelected.' to '.$PasteDir.' on '.$Time.'.';
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+        echo nl2br($txt."\n"); }
+      if (file_exists($CloudUsrDir.'/'.$clipboardSelected)) { 
+        if (is_file($CloudUsrDir.'/'.$clipboardSelected)) {
+          copy($CloudUsrDir.'/'.$clipboardSelected, $CloudUsrDir.'/'.$PasteDir); 
+          $txt = 'OP-Act: Copied '.$clipboardSelected.' to '.$PasteDir.' on '.$Time.'.';
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+          if (!file_exists($CloudUsrDir.'/'.$clipboardSelected)) { 
+            $txt = 'ERROR!!! HRC2945, There was a problem copying '.$clipboardSelected.' to '.$PasteDir.' on '.$Time.'.';
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+            echo nl2br($txt."\n"); } }
+        if (is_dir($CloudUsrDir.'/'.$clipboardSelected)) {
+
+        }
+           } } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTemp)) {
   $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  if (!isset($CloudTempDir) or $CloudTempDir == '' or $CloudTempDir == '/') {
-    die('ERROR!!! HRC2850, There was a critical error on '.$Time.'!'); }
-  $CleanDir = $CloudTempDir;
-  $CleanFiles = scandir($CloudTempDir); 
-  include ('janitor.php'); }
+  
+  $DFiles = glob($CloudTmpDir.'/*');
+  $now   = time();
+
+  foreach ($DFiles as $DFile) {
+    if (in_array($DFile, $defaultApps)) continue;
+    if ($DFile !== ($CloudTmpDir.'/.') or $DFile !== ($CloudTmpDir.'/..')) continue;
+    if ($now - filemtime($file) >= 60 * 60 * 24 * 0.125) { // Time to keep files.
+    if (is_file($DFile)) {
+      unlink($DFile); }
+    if (is_dir($DFile)) {
+      $CleanDir = $DFile;
+      $CleanFiles = scandir($DFile);
+      include('janitor.php'); } } } }
 
 $bytes = sprintf('%u', filesize($DisplayFile));
 if ($bytes > 0) {
@@ -957,8 +984,6 @@ if (isset($_POST['search'])) {
   <div align="center"><h3>Search Results</h3></div>
 <hr />
 <?php
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
 $SearchRAW = $_POST['search'];
 $txt = ('OP-Act: Raw user input is "'.$SearchRAW.'" on '.$Time.'.');
 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
