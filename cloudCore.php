@@ -891,10 +891,7 @@ if (isset($_POST['clipboard'])) {
   $txt = ('OP-Act: Initiated Clipboard on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   $UserClipboard = $InstLoc.'/DATA/'.$UserID.'/.AppData/.clipboard.php';
-  $opCounter = 0;
   include($UserClipboard);
-  $opCounter = $clipboardArray['opCounter'];
-  $opCounter++;
   $txt = '';
   $MAKEClipboardFile = file_put_contents($UserClipboard, $txt.PHP_EOL , FILE_APPEND); 
   $copyCounter = 0;
@@ -912,7 +909,7 @@ if (isset($_POST['clipboard'])) {
       $txt = ('OP-Act: User selected to Copy an item to Clipboard on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
       if ($copyCounter == 0) {
-        $clipboardArray = '<?php $clipboardArray = array(\'type\'=>\'filecopy\', \'opCounter\'=>\''.$opCounter.'\', \'selected\'=>\''.$CopyDir.$clipboardSelected.'\'';
+        $clipboardArray = '<?php $clipboardSelected = array(\''.$CopyDir.$clipboardSelected.'\'';
         $MAKEClipboardFile = file_put_contents($UserClipboard, $clipboardArray.PHP_EOL , FILE_APPEND); } 
       if ($copyCounter > 0) { 
         $clipboardArray = ', \''.$CopyDir.$clipboardSelected.'\'';
@@ -932,21 +929,21 @@ if (isset($_POST['clipboard'])) {
     echo nl2br($txt);
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     require ($UserClipboard);
-    foreach ($clipboardArray['selected'] as $clipboardSelected) {
-      if (!file_exists($CloudUsrDir.'/'.$clipboardSelected)) { 
+    foreach ($clipboardSelected as $clipboardSelected1) {
+      if (!file_exists($CloudUsrDir.'/'.$clipboardSelected1)) { 
         $txt = 'ERROR!!! HRC2937, No file exists while copying '.$clipboardSelected.' to '.$PasteDir.' on '.$Time.'.';
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
         echo nl2br($txt."\n"); }
-      if (file_exists($CloudUsrDir.'/'.$clipboardSelected)) { 
-        if (is_file($CloudUsrDir.'/'.$clipboardSelected)) {
-          copy($CloudUsrDir.'/'.$clipboardSelected, $CloudUsrDir.'/'.$PasteDir); 
-          $txt = 'OP-Act: Copied '.$clipboardSelected.' to '.$PasteDir.' on '.$Time.'.';
+      if (file_exists($CloudUsrDir.'/'.$clipboardSelected1)) { 
+        if (is_file($CloudUsrDir.'/'.$clipboardSelected1)) {
+          copy($CloudUsrDir.'/'.$clipboardSelected1, $CloudUsrDir.'/'.$PasteDir); 
+          $txt = 'OP-Act: Copied '.$clipboardSelected1.' to '.$PasteDir.' on '.$Time.'.';
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-          if (!file_exists($CloudUsrDir.'/'.$clipboardSelected)) { 
-            $txt = 'ERROR!!! HRC2945, There was a problem copying '.$clipboardSelected.' to '.$PasteDir.' on '.$Time.'.';
+          if (!file_exists($CloudUsrDir.'/'.$clipboardSelected1)) { 
+            $txt = 'ERROR!!! HRC2945, There was a problem copying '.$clipboardSelected1.' to '.$PasteDir.' on '.$Time.'.';
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
             echo nl2br($txt."\n"); } }
-        if (is_dir($CloudUsrDir.'/'.$clipboardSelected)) {
+        if (is_dir($CloudUsrDir.'/'.$clipboardSelected1)) {
 
         }
            } } } }

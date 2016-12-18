@@ -39,7 +39,7 @@ $HRC2Config = $InstLoc.'/config.php';
 $HRAIConfig = $InstLoc.'/Applications/HRAI/adminINFO.php';
 
 // / The following code is performed whenever an admin selects to 
-if ($ClearCachePOST == '1' or $ClearCachePOST == 'true') {
+if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'Clear User Cache') {
   $txt = ('OP_Act: Initiated User Cache Cleaner on '.$Time.'.');
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
@@ -56,6 +56,9 @@ if ($ClearCachePOST == '1' or $ClearCachePOST == 'true') {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
     die ($txt.'<hr />'); }
   if (file_exists($UserConfig)) {
+    $txt = ('OP-Act: Cleaned user cache files on '.$Time.'!'); 
+    echo nl2br($txt.'<hr />');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
     require ($UserConfig); } }
 
 // / The following code is performed whenever a user requests that HRCloud2 Auto-Update to the latest version.

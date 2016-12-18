@@ -97,15 +97,17 @@ if ($ShowHRAI == '0') {
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
-</div>
 
+<p style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
+  <a style="padding-left:10%;">
+    <input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php } 
 
 if ($UserIDRAW == '1') { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
-<p style="padding-left:15px;"><strong>3.</strong> System Update </p>
+<p style="padding-left:15px;"><strong>4.</strong> System Update </p>
  <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
  <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
  <p style="float:center; padding-left:10%;">Manual Update Options: </p>
@@ -115,13 +117,13 @@ if ($UserIDRAW == '1') { ?>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
-<p style="padding-left:15px;"><strong>4.</strong> Virus Scanning (Requires ClamAV on server): </p>
-  <p><select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;"><p>
+<p style="padding-left:15px;"><strong>5.</strong> Virus Scanning (Requires ClamAV on server): </p>
+  <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;"><p>
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select>
-<p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php } ?>
 
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>
@@ -143,9 +145,7 @@ if ($UserIDRAW == '1') { ?>
   <input type="hidden" name='YUMMYSaltHash' id='YUMMYSaltHash' value="<?php echo $SaltHash; ?>">
 
 </form>
-  
   <input type='submit' name='Clear' id='Clear' value='Clear Changes' style="padding: 2px; border: 1px solid black" onclick="reload();"/></p>
-
 <div id='end' name='end' class='end'>
 </div>
 <hr />
