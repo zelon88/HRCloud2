@@ -120,7 +120,7 @@ while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) 
 <div align="center" style="margin-bottom:5px;"><img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchiveButton' name='dearchiveutton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
 <img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
-<img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/share.png'/> | <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
+<img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/share.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
 </div>
 </div>
 
@@ -653,7 +653,7 @@ $.ajax( {
     data: {
         clipboard : "1",
         clipboardCopy: "1",
-        clipboardSelected : clipboardCopySelected,
+        clipboardSelected: clipboardCopySelected,
         clipboardCopyDir : "<?php echo $Udir; ?>"},
     success: function(data) {
         window.location.href = "cloudCore.php";
@@ -674,28 +674,6 @@ $.ajax( {
     data: {
         clipboard : "1",
         clipboardPaste: "1",
-        clipboardSelected : clipboardPasteSelected,
-        clipboardPasteDir : "<?php echo $Udir; ?>"},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#clipboardPaste").click(function(){
-var clipboardPasteSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-clipboardPasteSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: {
-        clipboard : "1",
-        clipboardPaste: "1",
-        clipboardSelected : clipboardPasteSelected,
         clipboardPasteDir : "<?php echo $Udir; ?>"},
     success: function(data) {
         window.location.href = "cloudCore.php";
