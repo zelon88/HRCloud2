@@ -38,18 +38,14 @@ set_time_limit(0);
 
 // / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
   // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
-if (isset($_POST['ClearGlobalCache'])) {
-  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearGlobalCache']); }
+if (isset($_POST['ClearCachePOST'])) {
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCachePOST']); }
 
-// / Can be used to clear the USER SPECIFIC HRCloud2 cache files. Accepts a value of '1' or 'true'.
-  // / THIS WILL ONLY AFFECT THE LOGGED-IN USER !!!
 if (isset($_POST['ClearUserCache'])) {
-  $ClearUserCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearUserCache']); }
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearUserCache']); }
 
-// / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
-  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
-if (isset($_POST['ClearGlobalCache'])) {
-  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearGlobalCache']); }
+if (isset($_POST['ClearCache'])) {
+  $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); }
 
 // / Can be used to automatically download and install the latest HRCloud2 update from Github. 
 // / Will perform "AutoDownload", "AutoInstall", and "AutoClean" consecutively. 
