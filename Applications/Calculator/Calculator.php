@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calculator
-App Version: 1.2 (12-4-2016 01:08)
+App Version: 1.3 (12-20-2016 11:45-)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for doing math.
@@ -55,7 +55,7 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
   $subtractionFunctions = str_split('-');
   $multicationFunctions = str_split('*');
   $divisionFunctions = str_split('/');
-  $calculatorInput = str_replace(str_split('[]{};:$!#&@><'), '', $_POST['calculatorInput']);
+  $calculatorInput = str_replace(str_split('[]{};:$!#&@>=<'), '', $_POST['calculatorInput']);
   $calculatorInput = strtolower($calculatorInput);
   $calculatorInput = str_replace(str_split('xX'), '*', $calculatorInput);
   $calculatorInput = str_replace('multiplied by', '*', $calculatorInput);
