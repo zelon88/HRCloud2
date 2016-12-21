@@ -75,7 +75,7 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { UserDir : $("#dirToMake").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -88,10 +88,10 @@ $.ajax( {
 $tableCount = 0;
 if (isset($_POST['UserDir'])) {
   ?><div align='center'><h3><?php
-  echo$_POST['UserDir']; 
+  echo$_POST['UserDirPOST']; 
   ?></h3></div><?php
-  $Udir = $_POST['UserDir'].'/'; }
-if (!isset($_POST['UserDir'])) {
+  $Udir = $_POST['UserDirPOST'].'/'; }
+if (!isset($_POST['UserDirPOST'])) {
   $Udir = ''; }
   // Adds pretty filesizes
   function pretty_filesize($file) {
@@ -112,7 +112,7 @@ if (!isset($_POST['UserDir'])) {
    $atext="Show";}
 $fileArray1 = array();
 $ArchInc = 0;
-while (file_exists($CloudUsrDir.$UserDirPOST.'Archive'.'_'.$Date.'_'.$ArchInc)) {
+while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
   $ArchInc++; }
 ?>
 <div align="center" style="margin-bottom:5px;">
@@ -367,7 +367,7 @@ $.ajax( {
 // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
 if ($extn == "Playlist") { 
 if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
-  $PLSpecialEcho = '?UserDirPOST = '.$UserDirPOST; } 
+  $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; } 
 else {
   $PLSpecialEcho = ''; } ?>
 <script type="text/javascript">
@@ -433,7 +433,7 @@ $.ajax( {
     data: { copy : "1", filesToCopy : copySelected, 
     newcopyfilename : $("#newcopyfilename").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -452,7 +452,7 @@ $.ajax( {
     data: { rename : "1", filesToRename : renameSelected, 
     renamefilename : $("#renamefilename").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -470,7 +470,7 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { filesToDearchive : dearchiveSelected, dearchiveButton : "1"},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -489,7 +489,7 @@ $.ajax( {
     data: { archive : "1", filesToArchive : archiveSelected, 
     userfilename : $("#userfilename").val(), archextension : $("#archextension").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -527,7 +527,7 @@ $.ajax( {
     data: { scanDocSelected : scandocSelected, scandocuserfilename : $("#scandocuserfilename").val(), 
     outputScanDocToPDF : $("#outputtopdf").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -549,7 +549,7 @@ $.ajax( {
       userconvertfilename : $("#userconvertfilename").val(),
       extension : $("#extension").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 } );
@@ -574,7 +574,7 @@ $.ajax( {
         rotate : $("#rotate").val(), 
         extension : $("#photoextension").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -597,7 +597,7 @@ $.ajax( {
         pdfextension : $("#pdfextension").val(),
         method1 : $("#method1").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -617,7 +617,7 @@ $.ajax( {
     data: { streamSelected : streamSelected,
         playlistname : $("#playlistname").val()},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -635,7 +635,7 @@ $.ajax( {
     data: { streamSelected : streamSelected,
         play : "1")},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -656,7 +656,7 @@ $.ajax( {
         clipboardSelected: clipboardCopySelected,
         clipboardCopyDir : "<?php echo $Udir; ?>"},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -674,9 +674,9 @@ $.ajax( {
     data: {
         clipboard : "1",
         clipboardPaste: "1",
-        clipboardPasteDir : "<?php echo $Udir; ?>"},
+        clipboardPasteDir : "<?php echo $UserDirPOST; ?>"},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
@@ -693,7 +693,7 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { shareConfirm : "1", filesToShare : shareSelected},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
