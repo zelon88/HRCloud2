@@ -101,7 +101,10 @@ foreach ($apps as $appName) {
           $ApplicationAWebsite = trim($ApplicationWebsite); } 
         if (strpos($line, 'App Integration: ') == 'true') {
           $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
-          $ApplicationIntegration = trim($ApplicationIntegration); } 
+          $ApplicationIntegration = trim($ApplicationIntegration); }
+        if (strpos($line, 'App Permission: 0') == 'true' or strpos($line, 'App Permission: admin') == 'true' 
+          or strpos($line, 'App Permission: Admin') == 'true') {
+            if ($UserIDRAW !== 1) continue 2; }
         $lineCounter++; }
 
   echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">'."\n".'<strong>'.$appName.'</strong>');

@@ -93,6 +93,7 @@ $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
 $SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
 $SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
 $TempResourcesDir = $InstLoc.'/Resources/TEMP';
+$BackupDir = $InstLoc.'/BACKUP';
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
@@ -163,6 +164,17 @@ copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
 if (!file_exists($CloudShareDir)) { 
   mkdir($CloudShareDir, 0755); }
 copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
+
+// / The following code will create a backup directory for restoration data.
+  // / NO USER DATA IS STORED IN THE BACKUP DIRECTORY!!! Only server configuration data.
+if (!file_exists($BackupDir)) {
+  mkdir($BackupDir, 0755);
+  if (file_exists($BackupDir)) {
+    $txt = ('OP-Act: Created a Backup Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  if (!file_exists($BackupDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Backup Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
 
 // / The following code checks if the CloudShareDir exists, and creates one if it does not.
 if (!file_exists($CloudShareDir)) {

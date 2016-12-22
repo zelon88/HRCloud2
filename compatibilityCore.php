@@ -2,8 +2,8 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.2
-WRITTEN ON : 12/21/16
+THIS VERSION : v0.9,9.3
+WRITTEN ON : 12/22/16
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -83,7 +83,7 @@ if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true'  or $AutoUpdatePOST == '
 
 // / The following code is performed whenever a user selects to download an update package.
 if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST == 'Download Update') {
-  $txt = ('OP-Act: Initiating "Auto-Update Downloader" on '.$Time.'.'); 
+  $txt = ('OP-Act: Initiating Update-Downloader on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
   if ($UserIDRAW !== 1) {
@@ -107,7 +107,7 @@ if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST 
 
 // / The following code is performed whenever a user selects to install an update package.
 if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST == 'Install Update') {
-  $txt = ('OP-Act: Initiating "Auto-Update Installer" on '.$Time.'.'); 
+  $txt = ('OP-Act: Initiating Update-Installer on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   echo nl2br ($txt.'<hr />');
   // / The following code checks that the user is an administrator.
@@ -213,7 +213,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $BAKinc = 0;
   while (file_exists($InstLoc.'/configBACKUP'.$BAKinc.'.php')) {
     $BAKinc++; }
-  copy ($InstLoc.'/config.php', $InstLoc.'/configBACKUP'.$BAKinc.'.php'); 
+  copy ($InstLoc.'/config.php', $InstLoc.'/BACKUP/configBACKUP'.$BAKinc.'.php'); 
   rename ($ResourceDir1.'/config.php', $ResourceDir1.'/configLATEST.php');
   copy ($InstLoc.'/config.php', $ResourceDir1.'/config.php');
 
@@ -242,7 +242,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
 
 // / The following code is performed when a user selects to Clean temporary update package files.
 if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clean Update') {
-  $txt = ('OP-Act: Initiating "Auto-Update Cleaner" on '.$Time.'.'); 
+  $txt = ('OP-Act: Initiating Update-Cleaner on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   if ($UserIDRAW !== 1) {
@@ -426,6 +426,13 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
   $txt = ('OP-Act: Initiating Compatibility Checker on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  $ChkFileIsBACKUP = scandir($InstLoc);
+  foreach ($ChkFileIsBACKUP as $ChkFileIsBACKUP1) {
+    if (strpos($ChkFileIsBACKUP1, 'configBACKUP') == 'true') {
+      rename($InstLoc.'/'.$ChkFileIsBACKUP1, $BackupDir.'/'.$ChkFileIsBACKUP1); 
+      $txt = ('OP-Act: Copied the backup file "'.$ChkFileIsBACKUP1.'" to the Backup Directory on '.$Time.'.'); 
+      echo nl2br ($txt.'<hr />');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
   if (file_exists($InstLoc.'/createUserFiles.php')) {
     @unlink($InstLoc.'/createUserFiles.php'); }
   if (file_exists($InstLoc.'/DocScan.php')) {
