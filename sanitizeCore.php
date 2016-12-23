@@ -8,8 +8,6 @@
 // / POST or GET inputs, you should put it in this file and then require this file into
 // / your code project, or app.
 
-// / The following code will sanitize API inputs. Authentication is automatic. 
-
 
 // / -----------------------------
 
@@ -48,7 +46,7 @@ if (isset($_POST['ClearCache'])) {
   $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); }
 
 // / Can be used to automatically download and install the latest HRCloud2 update from Github. 
-// / Will perform "AutoDownload", "AutoInstall", and "AutoClean" consecutively. 
+// / Will perform "AutoDownload", "AutoInstall", "AutoClean", and "CompatCheck" consecutively. 
   // / Accepts a value of '1' or 'true'.
   // / ONLY ADMINISTRATORS CAN AUTO-UPDATE HRC2 !!!
 if (isset($_POST['AutoUpdate'])) {

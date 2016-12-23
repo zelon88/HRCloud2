@@ -56,12 +56,12 @@ else {
 // / Secutity related processing.\
 $appCounter = 0;
 
-    if ($UserIDRAW == '1') { 
+    if ($UserIDRAW == 1) { 
       echo '<button id="showInstallAppButton" name="showInstallAppButton" class="button" alt="Install App" title="Install App" style="display:block; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');">+</button>';
       echo '<img id="XshowInstallAppButton" name="XshowInstallAppButton" style="margin-right:5px; display:none; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');" src="Resources/x.png" alt="Close \'Install App\'" title="Close \'Install App\'"></p>'; 
       echo '<div id="installAppForm" name="installAppForm" style="display:none;"><form method="post" action="appIndex.php" enctype="multipart/form-data"><input type="file" id="appToUpload" name="appToUpload[]" class="uploadbox" multiple>';
       echo '<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"><input type="submit" id="installApplication" name="installApplication" class="button" value="install App"></form></div>'; }
-    if ($UserIDRAW !== '1') { 
+    if ($UserIDRAW !== 1) { 
       echo '</p>'; } ?>
 </div>
 <hr />
@@ -111,7 +111,7 @@ foreach ($apps as $appName) {
   echo ('<div align="center"><p>');
 
   // / The following code displays administrator specific buttons.
-  if ($UserIDRAW == '1') {
+  if ($UserIDRAW == 1) {
     echo ('<img id="deleteApp'.$appCounter.'Button" name="deleteApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:block;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\');" src="Resources/deletesmall.png" alt="Delete \''.$appName.'\'" title="Delete \''.$appName.'\'">'); 
     echo ('<img id="XdeleteApp'.$appCounter.'Button" name="XdeleteApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \'Delete '.$appName.'\'" title="Close \'Delete '.$appName.' \'">'); }
 
@@ -124,7 +124,7 @@ foreach ($apps as $appName) {
   echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');">');
 
   // / The following code displays administrator specific buttons.
-  if ($UserIDRAW == '1') {
+  if ($UserIDRAW == 1) {
     echo nl2br('<div align="center" id="uninstallApp'.$appCounter.'Div" name="uninstallApp'.$appCounter.'Div" style="display:none;">');
     echo nl2br('<hr /><form action="appIndex.php" method="post" enctype="multipart/form-data"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
     echo ('<input type="hidden" id="uninstallApplication" name="uninstallApplication" value="'.$appName.'">');

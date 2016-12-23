@@ -3,7 +3,7 @@
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
 THIS VERSION : v0.9,9.3
-WRITTEN ON : 12/22/16
+WRITTEN ON : 12/23/16
 */
 
 echo ('<div style="margin-left:15px;">');

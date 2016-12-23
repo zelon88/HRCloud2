@@ -80,7 +80,6 @@ if ($ShowHRAI == '0') {
 <div align='left'>
 <form action="SAVEappSettings.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
-<?php if ($UserIDRAW !== '1' && $UserIDRAW !== '0') { ?>
 <p style="padding-left:15px;"><strong>1.</strong> Color Scheme: </p>
   <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;"></p>
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
@@ -101,9 +100,9 @@ if ($ShowHRAI == '0') {
 <p style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
   <a style="padding-left:10%;">
     <input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
-<?php } 
 
-if ($UserIDRAW == '1') { ?>
+<?php
+if ($UserIDRAW == 1) { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
