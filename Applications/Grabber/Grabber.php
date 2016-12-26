@@ -2,30 +2,32 @@
 
 /*//
 HRCLOUD2-PLUGIN-START
-App Name: Calculator
-App Version: 1.3 (12-20-2016 11:45-)
+App Name: Grabber
+App Version: 1.1 (12-25-2016 09:35)
 App License: GPLv3
 App Author: zelon88
-App Description: A simple HRCloud2 App for doing math.
+App Description: A simple HRCloud2 App for grabbing files from URL's.
 App Integration: 0 (False)
 HRCLOUD2-PLUGIN-END
 //*/
+
+// / The following code sanitizes the user input URL. 
 if (isset($_POST['grabberURL'])) { 
   $grabberURLPOST = str_replace(str_split('[]{};$!#^&@>*<'), '', $_POST['grabberURL']); }
 
+// / The following code sanitizes the user input filename. 
 if (isset($_POST['grabberFilename'])) { 
   $GrabberFilenamePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['grabberFilename']); }
 
-$YouTubeArr = array('youtube', 'youtu.be', 'googlevideo', 'googleusercontent', 'gstatic');
-$DangerArr = array('<script ', '<?', '?>');  
 ?>
-<script src="sorttable.js"></script>
 <script type="text/javascript">
-// / Javascript to clear the newNote text input field onclick.
+// / Javascript to clear the text input fields onclick.
     function Clear() {    
       document.getElementById("grabberURL").value= ""; }
     function Clear() {    
       document.getElementById("grabberFilename").value= ""; }
+    function goBack() {
+      window.history.back(); }
 </script>
 <div id='GrabberAPP' name='GrabberAPP' align='center'><h3>File Grabber</h3><hr />
 <form action="Grabber.php" method="post" enctype="multipart/form-data">
@@ -49,8 +51,18 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
-  $GrabberFile = $CloudUsrDir.$GrabberFilenamePOST;  
+if ($UserIDRAW == 0) {
+  $txt = ('ERROR!!! HRC2GrabberApp56, A non-logged in user attempted to execute the Grabber App on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  die($txt); }
 
+$ERROR = 0;
+$YouTubeArr = array('youtube', 'youtu.be', 'googlevideo', 'googleusercontent', 'gstatic');
+$DangerArr = array('<script ', '<?', '?>');
+$DangerExtArr = array('.php', '.html', '.js', '.a');  
+$txt = ('OP-Act: Initiating Grabber App on '.$Time.'.');
+$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  
 // / The following function was found on 
  // / http://stackoverflow.com/questions/7684771/how-check-if-file-exists-from-the-url
 // / It checks if a remote file exists and returns the status. 
@@ -79,34 +91,60 @@ function grab_simple_file($url, $filename) {
 
 if (isset($grabberURLPOST)) {
   $GrabberFile = $CloudUsrDir.$GrabberFilenamePOST;  
+  $GrabberTmpFile = $CloudTmpDir.$GrabberFilenamePOST;  
   if (strpos('http', $grabberURLPOST) == 'false') {
     $txt = ('ERROR!!! HRC2GrabberApp43, The supplied URL "'.$grabberURLPOST.'" is not valid on '.$Time.'!'); 
+    $ERROR = 1;
     echo ($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $txt = ('OP-Act: Scanning URL for file on '.$Time.'.');
+    echo ($txt.'<hr />');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   if (strpos($grabberURLPOST, 'http') == 'true') {
-    if (does_url_exist($grabberURLPOST) == 'true') { 
-    // / The following code is performed on normal URL's and files.
-      $txt = ('OP-Act: Scanning URL with simple method for file on '.$Time.'.');
+    foreach($DangerExtArr as $DangerExtArr1) {
+      $Ext1Count = count($DangerExtArr1);
+      $ExtString = substr($grabberURLPOST, -$Ext1Count);
+      if (strpos($ExtString, $DangerExtArr1) == 'true') {
+        $txt = ('ERROR!!! HRC2GrabberApp99, The file at the specified URL is an unsupported filetype on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+        die($txt); } }
+    if (does_url_exist($grabberURLPOST) == 'true') {     // / The following code is performed on normal URL's and files.
+      $txt = ('OP-Act: Scan complete! A File exists at '.$grabberURLPOST.' on '.$Time.'.');
       echo ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
       if (does_url_exist($grabberURLPOST) == 'true') {
-        $GRABData = grab_simple_file($grabberURLPOST, $GrabberFile); 
+        $GRABData1 = grab_simple_file($grabberURLPOST, $GrabberFile); 
+        $GRABData2 = grab_simple_file($grabberURLPOST, $GrabberTmpFile); 
+      // / Check the Cloud Location with ClamAV before archiving, just in case.
+      if ($VirusScan == '1') {
+        shell_exec('clamscan -r '.$GrabberFile.' | grep FOUND >> '.$ClamLogDir); 
+        shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
+        if (filesize($ClamLogDir > 10)) {
+          echo nl2br('WARNING!!! HRC2GrabberApp124, There were potentially infected files detected. The file
+            transfer could not be completed at this time. Please check your file for viruses or
+            try again later.'."\n");
+            die(); } }
         if (!file_exists($GrabberFile)) {
           $txt = ('ERROR!!! HRC2GrabberApp115, There was a problem creating '.$GrabberFilenamePOST.' on '.$Time.'!'); 
+          $ERROR = 1;
           echo ($txt.'<hr />');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         if (file_exists($GrabberFile)) {
           $txt = ('OP-Act: Created '.$GrabberFilenamePOST.' on '.$Time.'!'); 
           echo ($txt.'<hr />');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
-
-
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
 
       if (does_url_exist($grabberURLPOST) == 'false') {
         $txt = ('ERROR!!! HRC2GrabberApp70, The supplied URL contains reference to a file that does not exist on '.$Time.'!');
+        $ERROR = 1;
         echo ($txt.'<hr />');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } } }
-
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
+  
+  $txt1 = ('<p><form action="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$GrabberFilenamePOST.'"><input type="submit" id="downloadGrabbed" name="downloadGrabbed" value="Download Grabbed File"></form></p>');
+  if (!file_exists($GrabberFile) or $ERROR == 1) {
+    $txt1 = ''; }
+  $txt2 = ('<p><button id="goBack" name="goBack" onclick="goBack();">Go Back</button></p>');
+  echo nl2br($txt1.$txt2.'<hr />'); }
 
 ?>
 </div>
