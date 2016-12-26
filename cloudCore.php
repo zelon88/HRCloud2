@@ -72,7 +72,7 @@ if(isset($_POST["upload"])) {
       // / The following code checks the Cloud Location with ClamAV before copying, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$_FILES['filesToUpload']['tmp_name'][$key].' | grep FOUND >> '.$ClamLogDir); 
-      if (filesize($ClamLogDir > 1)) {
+      if (filesize($ClamLogDir >= 10)) {
         echo nl2br('WARNING!!! HRC2155, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or 
           try again later.'."\n");
@@ -125,7 +125,7 @@ if (isset($_POST["download"])) {
 // / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-if (filesize($ClamLogDir > 1)) {
+if (filesize($ClamLogDir > 10)) {
   echo nl2br('WARNING!!! HRC2206, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
@@ -265,7 +265,7 @@ if (!is_dir($filename)) {
 // / Check the Cloud Location with ClamAV before archiving, just in case.
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-if (filesize($ClamLogDir > 1)) {
+if (filesize($ClamLogDir > 10)) {
   echo nl2br('WARNING!!! HRC2296, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
@@ -315,7 +315,7 @@ if (isset($_POST["dearchiveButton"])) {
       // / Check the Cloud Location with ClamAV before archiving, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-      if (filesize($ClamLogDir > 1)) {
+      if (filesize($ClamLogDir > 10)) {
         echo nl2br('WARNING HRC2338, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");

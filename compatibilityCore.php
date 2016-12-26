@@ -2,7 +2,7 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.4
+THIS VERSION : v0.9,9.5
 WRITTEN ON : 12/25/16
 */
 

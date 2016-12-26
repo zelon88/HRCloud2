@@ -206,6 +206,8 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
     if ($Application == '.' or $Application == '..' or $Application == 'index.html' or in_array($Application, $defaultApps)) continue;
      $ApplicationFile = $InstLoc.'/Applications/'.$Application.'/'.$Application.'.php';
       $lines = @file($ApplicationFile);
+      if (!is_file($ApplicationFile)) continue;
+      if (is_dir($ApplicationFile)) continue;
       $lineCounter = 0;
       if ($lines == null) continue;
       foreach ($lines as $line) {

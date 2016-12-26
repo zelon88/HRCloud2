@@ -74,6 +74,9 @@ if (isset($_POST['Scan'])) {
 <?php
 $LogFile = $SesLogDir.'/'.$Date.'.txt';
 $LogFile1 = $SesLogDir.'/VirusLog'.$Date.'.txt';
+if(!file_exists($LogFile1)) {
+  $txt = ('OP-Act: Created a seslogfile on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile1, $txt.PHP_EOL, FILE_APPEND); }
 $LogFileSize1 = filesize($LogFile);
 @shell_exec('sudo freshclam');
 echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");

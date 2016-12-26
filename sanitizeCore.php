@@ -211,6 +211,18 @@ if (isset($_POST['pdfworkSelected'])) {
   $_POST['userpdfconvertfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userpdfconvertfilename']);
   $_POST['method'] =  str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']); }
 
+// / Can be used to "Grab" a file from an external URL and copy it to a users Cloud drive.
+// / Set the grabberURL to the external URL for the file to download.
+// Users must also specify a grabberFilename.
+if (isset($_POST['grabberURL'])) { 
+  $grabberURLPOST = str_replace(str_split('[]{};$!#^&@>*<'), '', $_POST['grabberURL']); }
+
+// / Can be used to "Grab" a file from an external URL and copy it to a users Cloud drive.
+// / Set the grabberFilename to the internal Cloud directory/filename for the file being downloaded.  
+// Users must also specify a grabberURL
+if (isset($_POST['grabberFilename'])) { 
+  $GrabberFilenamePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['grabberFilename']); }
+
 // / / There is an API input for creating playlists, but it sucks and I'm still working on HRStreamer. When it's ready, or
    // / if the date is later than February of 2017, plaease open a support ticket and tell me to update this code. 
   // / HRC2SanCore139.
