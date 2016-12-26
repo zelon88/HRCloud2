@@ -72,7 +72,7 @@ if(isset($_POST["upload"])) {
       // / The following code checks the Cloud Location with ClamAV before copying, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$_FILES['filesToUpload']['tmp_name'][$key].' | grep FOUND >> '.$ClamLogDir); 
-      if (filesize($ClamLogDir >= 10)) {
+      if (filesize($ClamLogDir >= 2)) {
         echo nl2br('WARNING!!! HRC2155, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or 
           try again later.'."\n");
@@ -125,7 +125,7 @@ if (isset($_POST["download"])) {
 // / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-if (filesize($ClamLogDir > 10)) {
+if (filesize($ClamLogDir >= 3)) {
   echo nl2br('WARNING!!! HRC2206, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
@@ -266,7 +266,7 @@ if (!is_dir($filename)) {
 // / Check the Cloud Location with ClamAV before archiving, just in case.
 if ($VirusScan == '1') {
   shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-if (filesize($ClamLogDir > 10)) {
+if (filesize($ClamLogDir >= 3)) {
   echo nl2br('WARNING!!! HRC2296, There were potentially infected files detected. The file
     transfer could not be completed at this time. Please check your file for viruses or
     try again later.'."\n");
@@ -316,7 +316,7 @@ if (isset($_POST["dearchiveButton"])) {
       // / Check the Cloud Location with ClamAV before archiving, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-      if (filesize($ClamLogDir > 10)) {
+      if (filesize($ClamLogDir >= 3)) {
         echo nl2br('WARNING HRC2338, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
@@ -354,7 +354,7 @@ if (isset( $_POST['convertSelected'])) {
     if (!is_array($_POST['convertSelected'])) {
       $_POST['convertSelected'] = array($_POST['convertSelected']); } 
   $convertcount = 0;
-  foreach ($_POST['convertSelected'] as $key=>$file) {
+  foreach ($_POST['convertSelected'] as $key => $file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -420,17 +420,16 @@ if (isset( $_POST['convertSelected'])) {
           if (in_array($oldExtension,$imgarray) ) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['width']);
-            // / Code to sanitize the $width and $height $_POST variables.
-            if ((!is_numeric($width)) or (!is_numeric($height))) {
-              $txt = ("ERROR!!! HRC2432, User specified a witdh or height that is not numeric on ".$Time.'.');
-              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-              die(); }
             $_POST["rotate"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rotate']);
             $rotate = ('-rotate '.$_POST["rotate"]);
             $wxh = $width.'x'.$height;
-                if ($wxh === '0x0') {       
+                if ($wxh == '0x0' or $wxh =='x0' or $wxh == '0x' or $wxh == '0' or $wxh == '00' or $wxh == '' or $wxh == ' ') {       
+                  $txt = ("OP-Act, Executing \"convert -background none $pathname $rotate $newPathname\" on ".$Time.'.');
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
                   shell_exec ("convert -background none $pathname $rotate $newPathname"); } 
-                elseif (($width or $height) != '0') {
+                else {
+                  $txt = ("OP-Act, Executing \"convert -background none -resize $wxh $rotate $pathname $newPathname\" on ".$Time.'.');
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
                   shell_exec ("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
           // / Code to convert and manipulate audio, video, and multi-media files.
           if (in_array($oldExtension,$audioarray) ) { 
@@ -443,7 +442,7 @@ if (isset( $_POST['convertSelected'])) {
               $br = ' '; } 
             elseif ($bitrate != 'auto' ) {
               $br = (' -ab ' . $bitrate . ' '); } 
-              $txt = ("OP-Act, Executing ffmpeg -i $pathname$ext$br$newPathname on ".$Time.'.');
+              $txt = ("OP-Act, Executing \"ffmpeg -i $pathname$ext$br$newPathname\" on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
             shell_exec ("ffmpeg -y -i $pathname$ext$br$newPathname"); } 
           // / Code to detect and extract an archive, and then re-archive the extracted
