@@ -227,6 +227,7 @@ if (isset($_POST['deleteconfirm'])) {
     $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
     echo nl2br ('OP-Act: '."Deleted $DFile on $Time".'.'."\n".'--------------------'."\n");   
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }  
+
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
   $txt = ('OP-Act: Initiated Archiver on '.$Time.'.');
@@ -453,8 +454,7 @@ if (isset( $_POST['convertSelected'])) {
             $safedirTEMP2 = pathinfo($safedirTEMP, PATHINFO_EXTENSION);
             $safedirTEMP3 = $CloudTmpDir.pathinfo($safedirTEMP, PATHINFO_BASENAME);            
             $safedir2 = $CloudTmpDir.$safedirTEMP3;
-            mkdir("$safedir2", 0755, true);
-            chmod($safedir2, 0755);
+            mkdir("$safedir2", 0755);
             $safedir3 = ($safedir2.'.7z');
             $safedir4 = ($safedir2.'.zip');
           if(in_array($oldExtension, $arrayzipo) ) {
@@ -471,54 +471,54 @@ if (isset( $_POST['convertSelected'])) {
               shell_exec("7z a -t$extension $safedir3 $safedir2");
               copy($safedir3, $newPathname); } 
             if (file_exists($safedir3) ) {
-              chmod($safedir3, 0755); 
-              unlink($safedir3);
+              @chmod($safedir3, 0755); 
+              @unlink($safedir3);
               $delFiles = glob($safedir2 . '/*');
                foreach($delFiles as $delFile) {
                 if(is_file($delFile) ) {
-                  chmod($delFile, 0755);  
-                  unlink($delFile); }
+                  @chmod($delFile, 0755);  
+                  @unlink($delFile); }
                 elseif(is_dir($delFile) ) {
-                  chmod($delFile, 0755);
-                  rmdir($delFile); } }    
-                  rmdir($safedir2); }
+                  @chmod($delFile, 0755);
+                  @rmdir($delFile); } }    
+                  @rmdir($safedir2); }
             elseif (in_array($extension,$arrayzipo) ) {
               shell_exec("zip -r $safedir4 $safedir2");
-              copy($safedir4, $newPathname); } 
+              @copy($safedir4, $newPathname); } 
               if (file_exists($safedir4) ) {
-                chmod($safedir4, 0755); 
-                unlink($safedir4);
+                @chmod($safedir4, 0755); 
+                @unlink($safedir4);
                 $delFiles = glob($safedir2 . '/*');
                   foreach($delFiles as $delFile){
                     if(is_file($delFile) ) {
-                      chmod($delFile, 0755);  
-                      unlink($delFile); }
+                      @chmod($delFile, 0755);  
+                      @unlink($delFile); }
                     elseif(is_dir($delFile) ) {
-                      chmod($delFile, 0755);
-                      rmdir($delFile); } }    
-                      rmdir($safedir2); }
+                      @chmod($delFile, 0755);
+                      @rmdir($delFile); } }    
+                      @rmdir($safedir2); }
                     elseif (in_array($extension, $arraytaro) ) {
                       shell_exec ("tar czf $newPathname $safedir2");
                       $delFiles = glob($safedir2 . '/*');
                     foreach($delFiles as $delFile){
                       if(is_file($delFile) ) {
-                        chmod($delFile, 0755);  
-                        unlink($delFile); }
+                        @chmod($delFile, 0755);  
+                        @unlink($delFile); }
                       elseif(is_dir($delFile) ) {
-                        chmod($delFile, 0755);
-                        rmdir($delFile); } }     
-                        rmdir($safedir2); } 
+                        @chmod($delFile, 0755);
+                        @rmdir($delFile); } }     
+                        @rmdir($safedir2); } 
                       elseif(in_array($extension, $arrayraro) ) {
                         shell_exec("rar a -ep ".$newPathname.' '.$safedir2);
                         $delFiles = glob($safedir2 . '/*');
                           foreach($delFiles as $delFile){
                             if(is_file($delFile) ) {
-                              chmod($delFile, 0755);  
+                              @chmod($delFile, 0755);  
                               unlink($delFile); }
                             elseif(is_dir($delFile) ) {
-                              chmod($delFile, 0755);
-                              rmdir($delFile); } } 
-                              rmdir($safedir2); } }
+                              @chmod($delFile, 0755);
+                              @rmdir($delFile); } } 
+                              @rmdir($safedir2); } }
 // / Error handler and logger for converting files.
 if (!file_exists($newPathname)) {
   echo nl2br('ERROR!!! HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
