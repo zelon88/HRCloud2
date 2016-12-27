@@ -52,7 +52,11 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Admins can automatically install Apps from .zip files or uninstall them just as easily.
 
--Includes "Notes", "Contacts", and "Calculator", Grabber, and ServStat Apps.
+-Includes "Notes", "Contacts", and "Calculator" apps by zelon88.
+
+-Includes "Grabber" app by zelon88 for downloading URL's straight to your Cloud Drive.
+
+-Includes ServStat app for admins that allows monitoring of local or remote servers.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
