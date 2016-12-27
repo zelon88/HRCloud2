@@ -405,7 +405,9 @@ if (isset( $_POST['convertSelected'])) {
           // / Note: Some servers may experience a delay between the script finishing and the
             // / converted file being placed into their Cloud drive. If your files do not immediately
             // / appear, simply refresh the page.
-          if (in_array($oldExtension,$docarray) ) {
+          if (in_array($oldExtension, $docarray)) {
+            $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pathname\" on ".$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
             shell_exec ("unoconv -o $newPathname -f $extension $pathname");
             sleep (1); 
             // / For some reason files take a moment to appear after being created with Unoconv.
@@ -423,14 +425,14 @@ if (isset( $_POST['convertSelected'])) {
             $_POST["rotate"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rotate']);
             $rotate = ('-rotate '.$_POST["rotate"]);
             $wxh = $width.'x'.$height;
-                if ($wxh == '0x0' or $wxh =='x0' or $wxh == '0x' or $wxh == '0' or $wxh == '00' or $wxh == '' or $wxh == ' ') {       
-                  $txt = ("OP-Act, Executing \"convert -background none $pathname $rotate $newPathname\" on ".$Time.'.');
-                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-                  shell_exec ("convert -background none $pathname $rotate $newPathname"); } 
-                else {
-                  $txt = ("OP-Act, Executing \"convert -background none -resize $wxh $rotate $pathname $newPathname\" on ".$Time.'.');
-                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-                  shell_exec ("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
+            if ($wxh == '0x0' or $wxh =='x0' or $wxh == '0x' or $wxh == '0' or $wxh == '00' or $wxh == '' or $wxh == ' ') {       
+              $txt = ("OP-Act, Executing \"convert -background none $pathname $rotate $newPathname\" on ".$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+              shell_exec ("convert -background none $pathname $rotate $newPathname"); } 
+            else {
+              $txt = ("OP-Act, Executing \"convert -background none -resize $wxh $rotate $pathname $newPathname\" on ".$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+              shell_exec ("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
           // / Code to convert and manipulate audio, video, and multi-media files.
           if (in_array($oldExtension,$audioarray) ) { 
             $ext = (' -f ' . $extension);
