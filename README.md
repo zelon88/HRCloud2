@@ -54,9 +54,9 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Includes "Notes", "Contacts", and "Calculator" apps by zelon88.
 
--Includes "Grabber" app by zelon88 for downloading URL's straight to your Cloud Drive.
+-Includes "Grabber" App by zelon88 for downloading URL's straight to your Cloud Drive.
 
--Includes ServStat app for admins that allows monitoring of local or remote servers.
+-Includes "ServStat" App for admins that allows monitoring of local or remote servers.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
