@@ -2,8 +2,8 @@
 
 /*<div style="margin-left:15px;">
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.7
-WRITTEN ON : 12/26/16
+THIS VERSION : v0.9,9.7.5
+WRITTEN ON : 12/27/16
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -42,10 +42,10 @@ $HRAIConfig = $InstLoc.'/Applications/HRAI/adminINFO.php';
 if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'Clear User Cache') {
   $txt = ('OP_Act: Initiated User Cache Cleaner on '.$Time.'.');
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   if ($UserIDRAW !== 1) {
     $txt = ('ERROR!!! HRC2CompatCore51, A non-administrator attempted to clear the global system cache on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   unlink($UserConfig); 
   if (!file_exists($UserConfig)) { 
@@ -53,12 +53,12 @@ if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'C
   if (!file_exists($UserConfig)) { 
     $txt = ('ERROR!!! HRC2CompatCore55, There was a problem creating the user config file on '.$Time.'!'); 
     echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
   if (file_exists($UserConfig)) {
     $txt = ('OP-Act: Cleaned user cache files on '.$Time.'!'); 
     echo nl2br($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     require ($UserConfig); } }
 
 // / The following code is performed whenever a user requests that HRCloud2 Auto-Update to the latest version.
@@ -71,72 +71,72 @@ if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true'  or $AutoUpdatePOST == '
   $CheckCompatPOST = 'true';
   $txt = ('OP-Act: Initiating Auto-Updater on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   
   if ($UserIDRAW !== 1) {
     $txt = ('ERROR!!! HRC2CompatCore43, A non-administrator attempted to update the system on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   if (!file_exists($ResourceDir)) {
     mkdir($ResourceDir, 0755); 
     $txt = ('OP-Act: Created a TEMP directory in /Resources to store pending updates on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 // / The following code is performed whenever a user selects to download an update package.
 if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST == 'Download Update') {
   $txt = ('OP-Act: Initiating Update-Downloader on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);   
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   
   if ($UserIDRAW !== 1) {
     $txt = ('ERROR!!! HRC2CompatCore89, A non-administrator attempted to download a system update on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   set_time_limit(0);
   $MAKEUpdatedZIP = file_put_contents($UpdatedZIP1, fopen($UpdatedZIPURL, 'r')); 
   $txt = ('OP-Act: Opened a connection to Github and downloading data on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   set_time_limit(0); 
   if (!file_exists($UpdatedZIP1)) {
     $txt = ('ERROR!!! HRC2CompatCore79, Could not download the HRCLOUD2.zip file from Github on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); } 
   if (file_exists($UpdatedZIP1)) {
     $txt = ('OP-Act: The latest version of HRCloud2 was sucessfully downloaded on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 // / The following code is performed whenever a user selects to install an update package.
 if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST == 'Install Update') {
   $txt = ('OP-Act: Initiating Update-Installer on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br ($txt.'<hr />');
   // / The following code checks that the user is an administrator.
   if ($UserIDRAW !== 1) {
     $txt = ('ERROR!!! HRC2CompatCore51, A non-administrator attempted to install a cached update on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   // / The following code checks that there is an update .zip package to install before continuing.
   // / If a .zip file does exist, it is unpacked.
   if (file_exists($UpdatedZIP1)) {  
     shell_exec('unzip -o '.$UpdatedZIP1.' -d '.$ResourceDir);
     $txt = ('OP-Act: Unpacked archive on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   // / The following code is an error handler for if an update .zip package does NOT exist.
   if (!file_exists($UpdatedZIP1)) { 
     $txt = ('ERROR!!! HRC2CompatCore108, There are no stored update packages on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   // / The following code is performed as a check that the update .zip package was unpacked.
   if (!file_exists($ResourceDir1)) {
     $txt = ('ERROR!!! HRC2CompatCore130, There was a problem unpacking the update packages on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   // / The following code is performed when an update .zip package was sucessfully unpacked.
   // / It will recursively copy all update files and directories to a folder, and then zip that folder
     // / into an "installation image" that we can over-write the $InstLoc with.
   if (file_exists($ResourceDir1)) {
     $txt = ('OP-Act: The update packages were unpacked sucessfulle on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);     
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
     $UPDATEFiles = scandir($ResourceDir1);
     foreach($UPDATEFiles as $UF) {
       if ($UF == '.' or $UF == '..' or $UF == 'var' or $UF == 'www' or $UF == 'html' or $UF == 'HRProprietary') continue;
@@ -196,7 +196,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                         if (is_file($UFSrcDir6)) {
                           copy ($UFSrcDir6, $UFDstDir6); } } } } } } } } } } } }   
         $txt = ('OP-Act: Copied update data on '.$Time.'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 
   // / The following code checks the HRCloud2 version and stops the update process if an old version was prepared.
   require ($ResourceDir1.'/versionInfo.php'); 
@@ -204,12 +204,12 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   require ($InstLoc.'/versionInfo.php'); 
   if ($Version1 < $Version) {
     $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
 
   // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
   $txt = ('OP-Act: Preserving server configuration data on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     $BAKinc = 0;
   while (file_exists($InstLoc.'/configBACKUP'.$BAKinc.'.php')) {
     $BAKinc++; }
@@ -232,40 +232,40 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   if ($Version1 !== $Version) {
     $txt = ('ERROR!!! HRC2CompatCore94, Version discrepency detected after unpacking the installation image on '.$Time.'!'."\n".
       '    Important Note: Manual install reccomended! If problem persists, use a terminal window or file manager to update.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
   if ($Version1 == $Version) {
     if ($Version1 == $Version) {
       $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 
 // / The following code is performed when a user selects to Clean temporary update package files.
 if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clean Update') {
   $txt = ('OP-Act: Initiating Update-Cleaner on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   if ($UserIDRAW !== 1) {
     $txt = ('ERROR!!! HRC2CompatCore184, A non-administrator attempted to clear the system update cache on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   if (!file_exists($UpdatedZIP1)) {
     $txt = ('OP-Act: No update packages detected on '.$Time.'!'); 
     echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   if (file_exists($UpdatedZIP1)) {
     @unlink($UpdatedZIP1); 
     $txt = ('OP-Act: Deleted update package on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   if (file_exists($UpdatedZIP1)) {
     $txt = ('Warning!!! HRC2CompatCore165, There was a problem deleting update packages on '.$Time.'!'); 
     echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);  
     if (!file_exists($UpdatedZIP1)) {
       $txt = ('OP-Act: Deleted update packages on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
 
   if (is_dir($ResourceDir1)) {
     $ResourceDirFiles = scandir($ResourceDir1); 
@@ -414,25 +414,25 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
       copy ($InstLoc.'/index.html', $CleanDir.'/index.html'); 
       $txt = ('Warning!!! HRC2CompatCore220, Some files could not be deleted on '.$Time.'!'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
     if (!is_dir($CleanDir)) {
       $txt = ('OP-Act: Deleted temporary update data on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
   copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); } }
 
 // / The following code cleans and deletes old, unused, or otherwise deprecated files from HRCloud2.
 if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST == 'Compat Check') {
   $txt = ('OP-Act: Initiating Compatibility Checker on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $ChkFileIsBACKUP = scandir($InstLoc);
   foreach ($ChkFileIsBACKUP as $ChkFileIsBACKUP1) {
     if (strpos($ChkFileIsBACKUP1, 'configBACKUP') == 'true') {
       rename($InstLoc.'/'.$ChkFileIsBACKUP1, $BackupDir.'/'.$ChkFileIsBACKUP1); 
       $txt = ('OP-Act: Copied the backup file "'.$ChkFileIsBACKUP1.'" to the Backup Directory on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
   if (file_exists($InstLoc.'/search2.php')) {
     @unlink($InstLoc.'/search2.php'); }
   if (file_exists($InstLoc.'/createUserFiles.php')) {
@@ -463,7 +463,7 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/Applocatopms/HRAI/awake.php'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   if (file_exists($ResourceDir1.'/versionInfo.php')) {
     require ($ResourceDir1.'/versionInfo.php'); 
     $Version1 = $Version;
@@ -471,24 +471,24 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     if ($Version1 > $Version) {
       $txt = ('OP-Act: The verson '.$Version.' of HRCloud2 stored in the update queue is newer than the one already installed on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Continuing with errors on '.$Time.'.'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if ($Version1 < $Version) {
       $txt = ('OP-Act: The verson '.$Version.' of HRCloud2 stored in the update queue is older than the one already installed on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Continuing with errors on '.$Time.'.'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if ($Version1 == $Version) {
       $txt = ('OP-Act: The verson '.$Version.' of HRCloud2 stored in the update queue is already installed on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
   if (!file_exists($ResourceDir1.'/versionInfo.php')) { 
     require ($InstLoc.'/versionInfo.php');  
       $txt = ('OP-Act: This server is running HRCloud2 '.$Version.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
 $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); 
 $AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); 
 $AutoDownloadPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoDownload']); 

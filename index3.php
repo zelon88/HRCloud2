@@ -61,12 +61,12 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppLogs/.config.php';
 
 if (!file_exists($UserConfig)) { 
   $CacheData = ('$ColorScheme = \'0\'; $VirusScan = \'0\'; $ShowHRAI = \'1\';');
-  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL , FILE_APPEND); 
+  $MAKECacheFile = file_put_contents($UserConfig, $CacheData.PHP_EOL, FILE_APPEND); 
   $txt = ('Created a user config file on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 if (!file_exists($UserConfig)) { 
   $txt = ('ERROR!!! HRC2Index3-151, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die ('ERROR!!! HRC2Index3-151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
 require ($UserConfig); }

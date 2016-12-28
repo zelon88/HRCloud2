@@ -204,7 +204,7 @@ if (isset( $_POST['convertSelected'])) {
       // / Method 1 requires unoconv. If conversions fail make sure to run "unoconv -l" or "unoconv --listen" in a terminal window.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     if (!is_array($_POST['pdfworkSelected'])) {
       $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']); } 
   $_POST['pdfextension'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfextension']); 

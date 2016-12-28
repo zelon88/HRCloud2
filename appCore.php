@@ -40,7 +40,7 @@ if (isset($_POST['installApplication'])) {
   // / Perform security check (UserID).
   if ($UserIDRAW !== 1) { 
     $txt = ('!!! WARNING !!! HRC2AppCore30 You are not an administrator!');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt); }
 if (!isset($YUMMYSaltHash)) {
   echo nl2br('!!! WARNING !!! HRC2AppCore41, There was a critical security fault. Login Request Denied.'."\n"); 
@@ -51,7 +51,7 @@ if ($YUMMYSaltHash !== $SaltHash) {
 if (isset($_FILES["appToUpload"])) {
   // / Perform security check (SaltHash).
   $txt = ('OP-Act: Initiated AppCore Uploader on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   if (!is_array($_FILES["appToUpload"])) {
     $_FILES["appToUpload"] = array($_FILES["appToUpload"]['name']); }
   foreach ($_FILES['appToUpload']['name'] as $key=>$file) {
@@ -73,14 +73,14 @@ if (isset($_FILES["appToUpload"])) {
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       if($file == "") {
         $txt = ("ERROR!!! HRC2AppCore160, No file specified on $Time.");
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
         die("ERROR!!! HRC2AppCore160, No file specified on $Time."); }
       $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
       echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $COPY_TEMP = copy($_FILES['appToUpload']['tmp_name'][$key], $appInstallDir0); 
     $txt = ('OP-Act: Initiated AppCore Dearchiver on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $allowed =  $installableArr;
       $archarray = $installableArr;
       $rararr = array('rar');
@@ -92,7 +92,7 @@ if (isset($_FILES["appToUpload"])) {
       $ext = pathinfo($appInstallDir0, PATHINFO_EXTENSION);  
       if (!in_array($ext, $installableArr)) {
         $txt = ('ERROR!!! HRC2AppCore40, The '.$file.' is not a valid archive format on '.$Time.'!');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         die($txt); }
       // / Create the new App directory in Applications/
       if (!file_exists($appInstallDir)) {
@@ -103,17 +103,17 @@ if (isset($_FILES["appToUpload"])) {
       if(in_array($ext,$rararr)) {
         shell_exec('unrar e '.$appInstallDir0.' '.$AppDir);
         $txt = ('OP-Act: '."Installed $appInstallDir0. to $appInstallDir on $Time".'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
       // / Handle dearchiving of .zip compatible files.
       if(in_array($ext,$ziparr)) {
         shell_exec('unzip '.$appInstallDir0.' -d '.$AppDir);
         $txt = ('OP-Act: '."Installed $appInstallDir0. to $appInstallDir on $Time".'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
       // / Handle dearchiving of 7zipper compatible files.
       if(in_array($ext,$tararr)) {
         shell_exec('7z e'.$AppDir.'.'.$ext.' '.$appInstallDir0); 
         $txt = ('OP-Act: '."Installed $appInstallDir0. to $appInstallDir on $Time".'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 
             // / Check the Cloud Location with ClamAV before archiving, just in case.
       if ($VirusScan == '1') {
@@ -132,20 +132,20 @@ if (isset($_FILES["appToUpload"])) {
     if (!file_exists($appInstallDir)) {
       $txt = ('ERROR!!! HRC2AppCore137, There was a problem creating '.$appInstallDir.' on '.$Time.'.'); 
       echo nl2br ($txt."\n".'--------------------'."\n"); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if (file_exists($appInstallDir)) {
       $txt = ('OP-Act: Installed App '.$appInstallDir.' on '.$Time.'.'); 
       echo nl2br ($txt."\n".'--------------------'."\n"); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     unlink ($appInstallDir0); 
     if (!file_exists($appInstallDir0)) {
       $txt = ('OP-Act: Cleaning up on '.$Time.'.'); 
       echo nl2br ($txt."\n".'--------------------'."\n"); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
     if (file_exists($appInstallDir0)) {
       $txt = ('ERROR!!! HRC2AppCore142, There was a problem cleaning up '.$appToInstallRAW.' on '.$Time.'.'); 
       echo nl2br ($txt."\n".'--------------------'."\n"); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }} } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }} } }
   
 // / The following code is perofmed whenever an administrator selects to uninstall a new App.
 if (isset($_POST['uninstallApplication'])) {
@@ -153,7 +153,7 @@ if (isset($_POST['uninstallApplication'])) {
   // / Check that the user is an administrator.
   if ($UserIDRAW !== 1) { 
     $txt = ('!!! WARNING !!! HRC2AppCore36 You are not an administrator!');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt); }
   // / Check that the SaltHash is set.
   if (!isset($YUMMYSaltHash)) {
@@ -164,7 +164,7 @@ if (isset($_POST['uninstallApplication'])) {
     echo nl2br('!!! WARNING !!! HRC2AppCore60, There was a critical security fault. Login Request Denied.'."\n"); 
     die("Application was halted on $Time".'.'); }
   $txt = ('OP-Act: Initiated AppCore Uninstaller on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']);
     // / Sets the CleanDir and CleanFiles variables for the Janitor.
   $CleanDir = $InstLoc.'/Applications/'.$uninstallApp;
@@ -175,11 +175,11 @@ if (isset($_POST['uninstallApplication'])) {
       unlink($CleanDir); 
       if (!file_exists($CleanDir)) {
         $txt = ('OP-Act: Deleted file '.$CleanDir.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n".'--------------------'."\n"); } 
       if (!file_exists($CleanDir)) {
         $txt = ('ERROR!!! HRC2AppCore165 Could not delete file '.$CleanDir.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n".'--------------------'."\n"); } } }
   if (is_dir($CleanDir)) {
   $CleanFiles = scandir($CleanDir);
@@ -192,11 +192,11 @@ if (isset($_POST['uninstallApplication'])) {
   // / Check that the Janitor suceeded in deleting the target App.
   if (!file_exists($CleanDir)) {
     $txt = ('OP-Act: Uninstalled App '.$uninstallApp.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt."\n".'--------------------'."\n"); }
   if (file_exists($CleanDir)) {
     $txt = ('ERROR!!! HRC2AppCore183 Could not uninstall App '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     echo nl2br($txt."\n".'--------------------'."\n"); } } }
 
 // / The following code gets the App information, like official name, description, 
@@ -283,7 +283,7 @@ if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultA
 if (!is_dir($ContactsDir)) {
   mkdir($ContactsDir, 0755);
     $txt = ('OP-Act: Created '.$ContactsDir.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
@@ -297,7 +297,7 @@ $random_contact = str_replace('.php', '', $random_contact);
 if (!is_dir($NotesDir)) {
   mkdir($NotesDir, 0755);
     $txt = ('OP-Act: Created '.$NotesDir.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $random_note = array_rand($notes);
 $random_note = $notes[$random_note];

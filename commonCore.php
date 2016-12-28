@@ -171,10 +171,10 @@ if (!file_exists($BackupDir)) {
   mkdir($BackupDir, 0755);
   if (file_exists($BackupDir)) {
     $txt = ('OP-Act: Created a Backup Directory on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   if (!file_exists($BackupDir)) {
     $txt = ('ERROR!!! HRC2CommonCore137, The Backup Directory does not exist and could not be created on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 // / The following code checks if the CloudShareDir exists, and creates one if it does not.
 if (!file_exists($CloudShareDir)) {
@@ -193,7 +193,7 @@ if (!file_exists($UserConfig)) {
   copy($LogInstallDir.'.config.php', $UserConfig); }
 if (!file_exists($UserConfig)) { 
   $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
   require ($UserConfig); }

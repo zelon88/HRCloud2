@@ -42,22 +42,22 @@ if (isset($_POST['Save'])) {
   if (isset($_POST['NEWColorScheme'])) {
     $NEWColorScheme = $_POST['NEWColorScheme'];
     $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
   if (isset($_POST['NEWShowHRAI'])) {
     $NEWShowHRAI = $_POST['NEWShowHRAI'];
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
   if (isset($_POST['NEWVirusScan'])) {
     $NEWVirusScan = $_POST['NEWVirusScan'];
     $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
   if (isset($_POST['NEWWordPressIntegration'])) {
     $NEWVirusScan = $_POST['NEWWordPressIntegration'];
     $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New WordPress Integration Settings.'."\n"); }
 ?>
 <hr />
@@ -75,10 +75,10 @@ if (isset($_POST['LoadDefaults'])) {
   require('config.php');
   $NEWColorScheme = $ColorScheme; 
   $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
-  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND); 
+  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
   $NEWVirusScan = $VirusScan; 
   $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
-  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL , FILE_APPEND);
+  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); } ?></div>
 <br>
 <hr />
