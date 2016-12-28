@@ -3,9 +3,9 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 1.0 (12-26-2016 09:35)
+App Version: 1.1 (12-27-2016 22:00)
 App License: GPLv3
-App Author: zelon88 (w/special credits.)
+App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
 App Integration: 0 (False)
 HRCLOUD2-PLUGIN-END
@@ -17,12 +17,41 @@ HRCLOUD2-PLUGIN-END
   // / 3. Itzik Gur (http://www.iconarchive.com/artist/itzikgur.html)
   // / 4. StackExchange user "dhaupin" (http://stackoverflow.com/users/2418655/dhaupin), (http://stackoverflow.com/questions/4705759/how-to-get-cpu-usage-and-ram-usage-without-exec/29669238)
 
-// / The following will reurn the servers current RAM usage percentage and current RAM usage in gigabytes (GB).
-require('ramUpdater.php');
+
+// / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2ServMonitorApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+
+// / The following code creates a cache dir, or returns an error if one cannot be created.
+if (!is_dir('Cache/')) {
+  @mkdir('Cache/', 0755); }
+if (!is_dir('Cache/')) {
+  $txt = ('ERROR!!! HRC2ServMonitorApp16, Could not create a Cache directory on '.$Time.'! Check permission and ownership of the HRC2 $InstLoc foun in "config.php!"'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  die($txt); }
+
+// / The following code creates a user-specific cache file for the user, if one does not alreay exist.
+  // / This cache file will store user-specific data relating to ServMonitor settings and preferences.
+$ServMonUserCache = $CloudTmpDir.'/.AppData/ServMon.php';
+if (!file_exists($ServMonUserCache)) {
+  
+
+}
+
+
 // / The following code will return the server's CPU load percentage average for the past 5 minutes.
 require('cpuUpdater.php');
+// / The following will reurn the servers current RAM usage percentage and current RAM usage in gigabytes (GB).
+require('ramUpdater.php');
 // / The following code will return the server's network load information.
 require('networkUpdater.php');
+// / The following code will return the server's disk load information.
+require('diskUpdater.php');
+// / The following code will return the server's temperature and voltage information.
+require('tempvoltUpdater.php');
 
 ?>
 <!DOCTYPE html>
