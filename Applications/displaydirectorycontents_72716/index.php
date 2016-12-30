@@ -86,13 +86,27 @@ $.ajax( {
 <div id="container">
 <?php
 $tableCount = 0;
-if (isset($_POST['UserDir'])) {
-  ?><div align='center'><h3><?php
-  echo$_POST['UserDirPOST']; 
-  ?></h3></div><?php
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
+  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
+    $_POST['UserDir'] = '/'; 
+    $_POST['UserDirPOST'] = '/'; } 
   $Udir = $_POST['UserDirPOST'].'/'; }
-if (!isset($_POST['UserDirPOST'])) {
-  $Udir = ''; }
+if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
+  $Udir = '/'; }
+
+if ($Udir == '//') {
+  $Udir = '/'; }
+
+$Udir = str_replace('//', '/', $Udir);
+$Udir = str_replace('//', '/', $Udir);
+$Udir = str_replace('//', '/', $Udir);
+$Udir = rtrim($Udir,'//');
+$Udir = ltrim($Udir,'/');
+$Udir = $Udir.'/';
+?><div align='center'><h3><?php
+echo rtrim(ltrim($Udir, '/'), '/'); 
+?></h3></div><?php
+
   // Adds pretty filesizes
   function pretty_filesize($file) {
     $size=filesize($file);
@@ -507,7 +521,7 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { deleteconfirm : "1", filesToDelete : deleteSelected},
     success: function(data) {
-        window.location.href = "cloudCore.php";
+        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
 } );
 });
