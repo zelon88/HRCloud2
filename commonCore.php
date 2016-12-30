@@ -103,12 +103,20 @@ $installedApps = array_diff($Apps, $defaultApps);
 
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
+if (isset($_POST['UserDirPOST'])) {
+  $UserDirPOST = ('/'.$_POST['UserDirPOST'].'/'); }
 if (isset($_POST['UserDir'])) {
   $UserDirPOST = ('/'.$_POST['UserDir'].'/'); }
-if (!isset($_POST['UserDir'])) {
+if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) {
   $UserDirPOST = ('/'); }
+if ($UserDirPOST == '//') {
+  $UserDirPost = '/'; }
 $CloudUsrDir = $CloudDir.$UserDirPOST; 
 $CloudTmpDir = $CloudTempDir.$UserDirPOST; 
+if (strpos($CloudUsrDir, '//') == 'true'){
+  str_replace('//', '/', $CloudUsrDir); }
+if (strpos($CloudTmpDir, '//') == 'true'){
+  str_replace('//', '/', $CloudTmpDir); }
 
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.

@@ -238,6 +238,7 @@ if (isset($_POST['archive'])) {
     $_POST['filesToArchive'] = array($_POST['filesToArchive']); }
   foreach ($_POST['filesToArchive'] as $key=>$TFile1) {
 $TFile1 = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $TFile1); 
+$TFile1 = str_replace(' ', '\ ', $TFile1); 
 $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
    'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
 $docarray =  array('dat', 'pages', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'odf', 'odt', 'abw');
@@ -251,14 +252,17 @@ $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd')
 $rararr = array('rar');
 $ziparr = array('zip');
 $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-$F1 = str_replace(str_split('\\/ '), '', $TFile1);
-$filename = $CloudUsrDir.$F1;
+$filename = $CloudUsrDir.$TFile1;
 $filename1 = pathinfo($filename, PATHINFO_BASENAME);
 $ext = pathinfo($filename, PATHINFO_EXTENSION);
 $_POST['archextension'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['archextension']);
 $UserExt = $_POST['archextension'];
 $_POST['userfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userfilename']);
-$UserFileName = $_POST['userfilename'];
+$UDP = '';
+if ($UserDirPOST !== '/') {
+  $UDP = $UserDirPOST; }
+$UserFileName = $UDP.$_POST['userfilename'];
+$UserFileName = str_replace(' ', '\ ', $UserFileName); 
 if (!is_dir($filename)) {
   if(!in_array($ext, $allowed)) { 
     echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
@@ -273,45 +277,49 @@ if (filesize($ClamLogDir >= 3)) {
     die(); } }
 // / Handle archiving of rar compatible files.
 if(in_array($UserExt, $rararr)) {
-  copy ($filename, $CloudTmpDir . $filename1); 
-  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
+  copy ($filename, $CloudTmpDir.$TFile1); 
+  shell_exec('rar a -ep '.$CloudUsrDir.$UserFileName.' '.$CloudTmpDir.$TFile1); 
+  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  shell_exec('rar a -ep '.$CloudUsrDir.$UserFileName.' '.$CloudUsrDir.$filename1); } 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
 // / Handle archiving of .zip compatible files.
 if(in_array($UserExt, $ziparr)) {
-  copy ($filename, $CloudTmpDir.$filename1); 
-  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
+  copy ($filename, $CloudTmpDir.$TFile1); 
+  shell_exec('zip -j '.$CloudUsrDir.$UserFileName.'.zip '.$CloudTmpDir.$TFile1); 
+  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  shell_exec('zip -j '.$CloudUsrDir.$UserFileName.'.zip '.$CloudUsrDir.$filename1); } 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
 // / Handle archiving of 7zipper compatible files.
 if(in_array($UserExt, $tararr)) {
-  copy ($filename, $CloudTmpDir.$filename1); 
-  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudTmpDir on $Time".'.');
+  copy ($filename, $CloudTmpDir.$TFile1); 
+  shell_exec('7z a '.$CloudUsrDir.$UserFileName.'.'.$UserExt.' '.$CloudTmpDir.$TFile1); 
+  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  shell_exec('7z a '.$CloudUsrDir.$UserFileName.'.'.$UserExt.' '.$CloudUsrDir.$filename1); } } }  
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }  
 
 // / The following code will be performed when a user selects archives to extract.
 if (isset($_POST["dearchiveButton"])) {
   $txt = ('OP-Act: Initiated Dearchiver on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST['dearchiveButton'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dearchiveButton']);
+  $UDP = '';
+  if ($UserDirPOST !== '/') {
+    $UDP = $UserDirPOST; }
   if (isset($_POST["filesToDearchive"])) {
     if (!is_array($_POST["filesToDearchive"])) {
       $_POST['filesToDearchive'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDearchive']);
       $_POST['filesToDearchive'] = array($_POST['filesToDearchive']); }
     foreach (($_POST['filesToDearchive']) as $File) {
       $File = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $File); 
+      $File = str_replace(' ', '\ ', $File); 
       $allowed =  array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
       $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
       $rararr = array('rar');
       $ziparr = array('zip');
       $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-      $filename = str_replace(" ", "_", $File);
-      $filename1 = pathinfo($CloudUsrDir.$filename, PATHINFO_BASENAME);
-      $filename2 = pathinfo($CloudUsrDir.$filename, PATHINFO_FILENAME);
+      $filename0 = pathinfo($CloudTmpDir.$File, PATHINFO_BASENAME);
+      $filename1 = pathinfo($CloudUsrDir.$File, PATHINFO_BASENAME);
+      $filename2 = pathinfo($CloudUsrDir.$File, PATHINFO_FILENAME);
       $ext = pathinfo($CloudUsrDir.$filename, PATHINFO_EXTENSION);  
       // / Check the Cloud Location with ClamAV before archiving, just in case.
       if ($VirusScan == '1') {
@@ -321,30 +329,34 @@ if (isset($_POST["dearchiveButton"])) {
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
           die(); } }
-      if (!file_exists($CloudTmpDir.$filename)) {
-        copy($CloudUsrDir.$filename, $CloudTmpDir.$filename); }
-      if (!file_exists($CloudUsrDir.$filename2.'_'.$Date)) {
-        mkdir($CloudUsrDir.$filename2.'_'.$Date, 0755); }
-      echo nl2br ('OP-Act: Dearchiving '.$_POST["filesToDearchive"].' to '.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n"); 
+      if (!file_exists($CloudTmpDir.$File)) {
+        copy($CloudUsrDir.$File, $CloudTmpDir.$File); }
+      if (!file_exists($CloudUsrDir.$filename2)) {
+        mkdir($CloudUsrDir.$filename2, 0755); }
+
+      echo nl2br ('OP-Act: Dearchiving '.$_POST["filesToDearchive"].' to '.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n");
+        $txt = ('OP-Act: Initiated Dearchiver on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       // / Handle dearchiving of rar compatible files.
       if(in_array($ext,$rararr)) {
-        shell_exec('unrar e '.$CloudTmpDir.$filename.' '.$CloudUsrDir.$filename2.'_'.$Date);
-        $txt = ('OP-Act: '."Submitted $filename to $filename2_$Date$ in $CloudUsrDir on $Time".'.'); 
+        shell_exec('unrar e '.$filename0.'/'.$filename2.'.'.$ext.' '.$filename1.'/'.$filename2);
+        $txt = ('OP-Act: '."Submitted $File to $filename2 in $filename1/$filename2 on $Time".'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
       // / Handle dearchiving of .zip compatible files.
       if(in_array($ext,$ziparr)) {
-        shell_exec('unzip '.$CloudTmpDir.$filename.' -d '.$CloudUsrDir.$filename2.'_'.$Date);
-        $txt = ('OP-Act: '."Submitted $filename to $filename2_$Date in $CloudUsrDir on $Time".'.'); 
+        shell_exec('unzip '.$filename0.'/'.$filename2.'.'.$ext.' -d '.$filename1.'/'.$filename2);
+        $txt = ('OP-Act: '."Submitted $File to $filename2 in $filename1/$filename2 on $Time".'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
       // / Handle dearchiving of 7zipper compatible files.
       if(in_array($ext,$tararr)) {
-        shell_exec('7z e'.$CloudUsrDir.$filename2.'_'.$Date.'.'.$ext.' '.$CloudTmpDir.$filename1); 
-        $txt = ('OP-Act: '."Submitted $filename to $filename2_$Date in $CloudUsrDir on $Time".'.'); 
+        shell_exec('7z e '.$filename0.'/'.$filename2.'.'.$ext.' '.$filename1.'/'.$filename2); 
+        $txt = ('OP-Act: '."Submitted $File to $filename2 in $filename1/$filename2 on $Time".'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
     if (!file_exists($CloudUsrDir.$filename2.'_'.$Date))
       $txt = ('ERROR!!! HRC2449, There was a problem creating '.$CloudUsrDir.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n"); 
       echo nl2br ('ERROR!!! HRC2449, There was a problem creating '.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+  
   
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset( $_POST['convertSelected'])) {
