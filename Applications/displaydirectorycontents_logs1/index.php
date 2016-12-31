@@ -260,55 +260,38 @@ Are you sure?
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
 </div>
 <?php
-   // Opens directory
    $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
-  // Gets each entry
   while($entryName=readdir($myDirectory)) {
-     $dirArray[]=$entryName;
-  }
-  // Closes directory
+     $dirArray[]=$entryName; }
   closedir($myDirectory);
-  // Counts elements in array
   $indexCount=count($dirArray);
-  // Sorts files
   sort($dirArray);
-  // Loops through the array of files
   for($index=0; $index < $indexCount; $index++) {
-  // Decides if hidden files should be displayed, based on query above.
     if(substr("$dirArray[$index]", 0, 1)!=$hide) {
-  // Resets Variables
       $favicon="";
       $class="file";
-  // Gets File Names
       $name=$dirArray[$index];
       $namehref=$dirArray[$index];
       $fileArray = array_push($fileArray1, $namehref);
       if (substr_compare($namehref, '/', 1)) { 
         $namehref = substr_replace('/'.$namehref, $namehref, 0); }
       if (strpos($namehref, 'html') == 'true' or strpos($namehref, 'php') == 'true' or strpos($namehref, 'css') == 'true') continue;
-  // Gets Date Modified
       $modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
       $timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
-  // Separates directories, and performs operations on those directories
       if(is_dir($dirArray[$index])) {
           $extn="&lt;Directory&gt;";
           $size="&lt;Directory&gt;";
           $sizekey="0";
           $class="dir";
-      // Gets favicon.ico, and displays it, only if it exists.
           if(file_exists("$namehref/favicon.ico")) {
             $slash = '/';
             $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";
             $extn="&lt;Website&gt;"; }
-      // Cleans up . and .. directories
         if($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";}
         if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
 
-  // File-only operations
     else {
-      // Gets file extension
       $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
-      // Prettifies file type
       switch ($extn) {
         case "png": $extn="PNG Image"; break;
         case "jpg": $extn="JPEG Image"; break;
@@ -336,7 +319,6 @@ Are you sure?
         default: if($extn!=""){$extn=strtoupper($extn)." File";} else{$extn="Folder";} break; }
         if (strpos($name, '.Playlist') or strpos($extn, 'PLAYLIST')) {
           $extn = "Playlist"; }
-      // Gets and cleans up file size
         $size=pretty_filesize($CloudUsrDir.$dirArray[$index]);
         $sizekey=filesize($CloudUsrDir.$dirArray[$index]); }
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
@@ -418,11 +400,11 @@ $.ajax( {
       or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true'
       or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true' 
       or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true') continue;
-
     if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
       or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
       or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
       or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true') continue;
+   // Output
    echo("
     <tr class='$class'>
       <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
@@ -436,306 +418,5 @@ $.ajax( {
   </table>
 <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#copyFileSubmit").click(function(){
-var copySelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-copySelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { copy : "1", filesToCopy : copySelected, 
-    newcopyfilename : $("#newcopyfilename").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#renameFileSubmit").click(function(){
-var renameSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-renameSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { rename : "1", filesToRename : renameSelected, 
-    renamefilename : $("#renamefilename").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#dearchiveButton").click(function(){
-var dearchiveSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-dearchiveSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { filesToDearchive : dearchiveSelected, dearchiveButton : "1"},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#archiveFileSubmit").click(function(){
-var archiveSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-archiveSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { archive : "1", filesToArchive : archiveSelected, 
-    userfilename : $("#userfilename").val(), archextension : $("#archextension").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#deleteFileSubmit").click(function(){
-var deleteSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-deleteSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { deleteconfirm : "1", filesToDelete : deleteSelected},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<?php if (in_array($extnRAW, $pdfWordArr)) { ?>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#scandocSubmit").click(function(){
-var scandocSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-scandocSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { scanDocSelected : scandocSelected, scandocuserfilename : $("#scandocuserfilename").val(), 
-    outputScanDocToPDF : $("#outputtopdf").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<?php } 
-if (in_array($extnRAW, $convertArr)) { ?>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#convertSubmit").click(function(){
-var convertSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-convertSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { convertSelected : convertSelected,
-      userconvertfilename : $("#userconvertfilename").val(),
-      extension : $("#extension").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-} );
-});
-</script>
-<?php } 
-if (in_array($extnRAW, $imgArr)) { ?>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#convertPhotoSubmit").click(function(){
-var convertphotoSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-convertphotoSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { convertSelected : convertphotoSelected,
-        userconvertfilename : $("#userphotofilename").val(),
-        height : $("#height").val(), 
-        width : $("#width").val(), 
-        rotate : $("#rotate").val(), 
-        extension : $("#photoextension").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<?php } 
-if (in_array($extnRAW, $pdfWordArr)) { ?>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#pdfwork").click(function(){
-var pdfworkSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-pdfworkSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { pdfworkSelected : pdfworkSelected,
-        userpdfconvertfilename : $("#userpdfconvertfilename").val(),
-        pdfextension : $("#pdfextension").val(),
-        method1 : $("#method1").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
-<?php } ?>
-<script type="text/javascript">
-$(document).ready(function () {
-$("#createplaylistbutton").click(function(){
-var streamSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-streamSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { streamSelected : streamSelected,
-        playlistname : $("#playlistname").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#streambutton").click(function(){
-var streamSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-streamSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { streamSelected : streamSelected,
-        play : "1")},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#clipboardCopy").click(function(){
-var clipboardCopySelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-clipboardCopySelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: {
-        clipboard : "1",
-        clipboardCopy: "1",
-        clipboardSelected : clipboardCopySelected,
-        clipboardCopyDir : "<?php echo $Udir; ?>"},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#clipboardPaste").click(function(){
-var clipboardPasteSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-clipboardPasteSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: {
-        clipboard : "1",
-        clipboardPaste: "1",
-        clipboardSelected : clipboardPasteSelected,
-        clipboardPasteDir : "<?php echo $Udir; ?>"},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#clipboardPaste").click(function(){
-var clipboardPasteSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-clipboardPasteSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: {
-        clipboard : "1",
-        clipboardPaste: "1",
-        clipboardSelected : clipboardPasteSelected,
-        clipboardPasteDir : "<?php echo $Udir; ?>"},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script><script type="text/javascript">
-$(document).ready(function () {
-$("#sharebutton").click(function(){
-var shareSelected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-shareSelected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { shareConfirm : "1", filesToShare : shareSelected},
-    success: function(data) {
-        window.location.href = "cloudCore.php";
-    }
-} );
-});
-});
-</script>
 </body>
 </html>
