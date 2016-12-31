@@ -110,8 +110,7 @@ if (!isset($_POST['UserDir'])) {
     elseif(($size<1048576)&&($size>1023)){$size=round($size/1024, 1)." KB";}
     elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB";}
     else{$size=round($size/1073741824, 1)." GB";}
-    return $size;
-  }
+    return $size; }
   // Checks to see if veiwing hidden files is enabled
   if($_SERVER['QUERY_STRING']=="hidden")
   {$hide="";
@@ -276,43 +275,41 @@ Are you sure?
   // Loops through the array of files
   for($index=0; $index < $indexCount; $index++) {
   // Decides if hidden files should be displayed, based on query above.
-      if(substr("$dirArray[$index]", 0, 1)!=$hide) {
+    if(substr("$dirArray[$index]", 0, 1)!=$hide) {
   // Resets Variables
-    $favicon="";
-    $class="file";
+      $favicon="";
+      $class="file";
   // Gets File Names
-    $name=$dirArray[$index];
-    $namehref=$dirArray[$index];
-        $fileArray = array_push($fileArray1, $namehref);
-    if (substr_compare($namehref, '/', 1)) { 
-      $namehref = substr_replace('/'.$namehref, $namehref, 0); }
+      $name=$dirArray[$index];
+      $namehref=$dirArray[$index];
+      $fileArray = array_push($fileArray1, $namehref);
+      if (substr_compare($namehref, '/', 1)) { 
+        $namehref = substr_replace('/'.$namehref, $namehref, 0); }
+      if (strpos($namehref, 'html') == 'true' or strpos($namehref, 'php') == 'true' or strpos($namehref, 'css') == 'true') continue;
   // Gets Date Modified
-    $modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
-    $timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
+      $modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
+      $timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
   // Separates directories, and performs operations on those directories
-    if(is_dir($dirArray[$index]))
-    {
-        $extn="&lt;Directory&gt;";
-        $size="&lt;Directory&gt;";
-        $sizekey="0";
-        $class="dir";
+      if(is_dir($dirArray[$index])) {
+          $extn="&lt;Directory&gt;";
+          $size="&lt;Directory&gt;";
+          $sizekey="0";
+          $class="dir";
       // Gets favicon.ico, and displays it, only if it exists.
-        if(file_exists("$namehref/favicon.ico"))
-          {
-                        $slash = '/';
+          if(file_exists("$namehref/favicon.ico")) {
+            $slash = '/';
             $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";
-            $extn="&lt;Website&gt;";
-          }
+            $extn="&lt;Website&gt;"; }
       // Cleans up . and .. directories
         if($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";}
-        if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; }
-    }
+        if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
+
   // File-only operations
-    else{
+    else {
       // Gets file extension
       $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
       // Prettifies file type
-      switch ($extn){
+      switch ($extn) {
         case "png": $extn="PNG Image"; break;
         case "jpg": $extn="JPEG Image"; break;
         case "jpeg": $extn="JPEG Image"; break;
@@ -336,14 +333,12 @@ Are you sure?
         case "zip": $extn="ZIP Archive"; break;
         case "htaccess": $extn="Apache Config File"; break;
         case "exe": $extn="Windows Executable"; break;
-        default: if($extn!=""){$extn=strtoupper($extn)." File";} else{$extn="Folder";} break;
-      }
+        default: if($extn!=""){$extn=strtoupper($extn)." File";} else{$extn="Folder";} break; }
         if (strpos($name, '.Playlist') or strpos($extn, 'PLAYLIST')) {
           $extn = "Playlist"; }
       // Gets and cleans up file size
         $size=pretty_filesize($CloudUsrDir.$dirArray[$index]);
-        $sizekey=filesize($CloudUsrDir.$dirArray[$index]);
-    }
+        $sizekey=filesize($CloudUsrDir.$dirArray[$index]); }
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
@@ -394,8 +389,6 @@ $.ajax( {
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
       window.location.href = "<?php echo $PLSpecialEcho.'cloudCore.php?playlistSelected='.$name; ?>";
-
-
     }
 } );
 });
@@ -421,6 +414,15 @@ $.ajax( {
 });
 </script>
 <?php }
+    if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
+      or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true'
+      or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true' 
+      or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true') continue;
+
+    if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
+      or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
+      or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
+      or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true') continue;
    echo("
     <tr class='$class'>
       <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
