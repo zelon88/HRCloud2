@@ -122,6 +122,7 @@ if ($ColorScheme == '5') {
       or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
       or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
       or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true') continue;	
+    	
 	// Output
 	 echo("<tr class='$class'>
 			<td><a href='./$namehref/.index.php'$favicon class='name'>$name</a></td>
