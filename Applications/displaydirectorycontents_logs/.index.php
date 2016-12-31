@@ -101,37 +101,27 @@ if ($ColorScheme == '5') {
 		  if(file_exists($namehref."/favicon.ico")) {
 		    $favicon=" style='background-image:url($namehref/favicon.ico);'";
 		    $extn="&lt;Website&gt;"; }
-			// Cleans up . and .. directories
-				if ($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($namehref/.favicon.ico);'";}
-				if ($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
-
-	// File-only operations
+		  if ($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($namehref/.favicon.ico);'";}
+		  if ($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
 		  else {
-		  // Gets file extension
 		  $extn=pathinfo($dirArray[$index], PATHINFO_EXTENSION);
-
-			// Prettifies file type
 		  switch ($extn) {
 		    case "txt": $extn="Text File"; 
 		    break;
 		    default: 
 		  if ($extn!=""){$extn=strtoupper($extn)." File"; } 
 		  else {$extn="Unknown"; } break; }
-
-			// Gets and cleans up file size
-				$size=pretty_filesize($dirArray[$index]);
-				$sizekey=filesize($dirArray[$index]); }
+		$size=pretty_filesize($dirArray[$index]);
+		$sizekey=filesize($dirArray[$index]); }
 
     if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
       or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true'
       or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true' 
       or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true') continue;
-
     if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
       or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
       or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
       or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true') continue;	
-
 	// Output
 	 echo("<tr class='$class'>
 			<td><a href='./$namehref/.index.php'$favicon class='name'>$name</a></td>
@@ -142,7 +132,6 @@ if ($ColorScheme == '5') {
 	?>
 	    </tbody>
 	</table>
-
 </div>
 </body>
 </html>
