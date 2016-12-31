@@ -91,6 +91,7 @@ if ($ColorScheme == '5') {
 		$name=$dirArray[$index];
 		$modtime=date("M j Y g:i A", filemtime($dirArray[$index]));
 		$namehref=$dirArray[$index];
+        if (strpos($namehref, 'html') == 'true' or strpos($namehref, 'php') == 'true' or strpos($namehref, 'css') == 'true') continue;
 		$timekey=date("YmdHis", filemtime($dirArray[$index]));
 		if(is_dir($dirArray[$index])) {
 		  $extn="&lt;Directory&gt;";
@@ -121,9 +122,16 @@ if ($ColorScheme == '5') {
 				$size=pretty_filesize($dirArray[$index]);
 				$sizekey=filesize($dirArray[$index]); }
 
-		if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
-			or strpos($namehref, '.css') == 'true' or strpos($namehref, '.html') == 'true' or strpos($namehref, '.css') == 'true' 
-			or strpos($namehref, 'Shared') == 'true') continue;
+    if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
+      or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true'
+      or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true' 
+      or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true') continue;
+
+    if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
+      or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
+      or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
+      or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true') continue;	
+
 	// Output
 	 echo("<tr class='$class'>
 			<td><a href='./$namehref/.index.php'$favicon class='name'>$name</a></td>
