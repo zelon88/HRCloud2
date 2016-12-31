@@ -10,12 +10,7 @@ function goBack() {
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>Cloud Contents</title>
 <?php
-  $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-  $archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
-  $pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
-  $convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-  $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
-  $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
+// / Verify the config.php file.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
   echo nl2br('</head>ERROR!!! HRC2Index19, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
@@ -27,12 +22,27 @@ if (!file_exists($WPFile)) {
   echo nl2br('</head>ERROR!!! HRC2Index27, WordPress was not detected on the server.'."\n"); }
   else {
     require_once($WPFile); } 
+// / Set variables for the session.
+$PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+$archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
+$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
+$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+$pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
+$ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
+$DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
+$DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods');
+$ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
+$MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog');
+$fileArray1 = array();
+$ArchInc = 0;
+$imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
+// / User config loader.
 if (!file_exists($UserConfig)) {
   @chmod($UserConfig, 0755); }
 if (!file_exists($UserConfig)) {
@@ -40,6 +50,7 @@ if (!file_exists($UserConfig)) {
   die (); }
 else {
     require($UserConfig); } 
+// / Color scheme handler.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
@@ -52,6 +63,40 @@ if ($ColorScheme == '4') {
   echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleGREY.css">'); }
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
+// / User directory handler.
+$tableCount = 0;
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
+  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
+    $_POST['UserDir'] = '/'; 
+    $_POST['UserDirPOST'] = '/'; } 
+  $Udir = $_POST['UserDirPOST'].'/'; }
+if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+$Udir = str_replace('//', '/', $Udir);
+$Udir = str_replace('//', '/', $Udir);
+$Udir = str_replace('//', '/', $Udir);
+$Udir = rtrim($Udir,'//');
+$Udir = ltrim($Udir,'/');
+$Udir = $Udir.'/';
+// / GUI specific resources.
+  function pretty_filesize($file) {
+    $size=filesize($file);
+    if($size<1024){$size=$size." Bytes"; }
+    elseif(($size<1048576)&&($size>1023)){$size=round($size/1024, 1)." KB"; }
+    elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB"; }
+    else{$size=round($size/1073741824, 1)." GB"; }
+    return $size; }
+  // Checks to see if veiwing hidden files is enabled
+  if($_SERVER['QUERY_STRING']=="hidden")
+  { $hide="";
+   $ahref="./";
+   $atext="Hide"; }
+  else
+  { $hide=".";
+   $ahref="./?hidden";
+   $atext="Show"; }
 ?>
 <script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
@@ -64,68 +109,13 @@ if ($ColorScheme == '5') {
          e.style.display = 'none';
       else
          e.style.display = 'block'; }
-$(document).ready(function () {
-$("#makedir").click(function(){
-var Selected = new Array();
-$('input[name="corePostSelect[]"]:checked').each(function() {
-Selected.push(this.value);
-});
-$.ajax( {
-    type: 'POST',
-    url: 'cloudCore.php',
-    data: { UserDir : $("#dirToMake").val()},
-    success: function(data) {
-        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
-    }
-} );
-});
-});
 </script>
 </head>
 <body>
 <div id="container">
-<?php
-$tableCount = 0;
-if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
-  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
-    $_POST['UserDir'] = '/'; 
-    $_POST['UserDirPOST'] = '/'; } 
-  $Udir = $_POST['UserDirPOST'].'/'; }
-if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
-  $Udir = '/'; }
-
-if ($Udir == '//') {
-  $Udir = '/'; }
-
-$Udir = str_replace('//', '/', $Udir);
-$Udir = str_replace('//', '/', $Udir);
-$Udir = str_replace('//', '/', $Udir);
-$Udir = rtrim($Udir,'//');
-$Udir = ltrim($Udir,'/');
-$Udir = $Udir.'/';
-?><div align='center'><h3><?php
+<div align='center'><h3><?php
 echo rtrim(ltrim($Udir, '/'), '/'); 
 ?></h3></div><?php
-
-  // Adds pretty filesizes
-  function pretty_filesize($file) {
-    $size=filesize($file);
-    if($size<1024){$size=$size." Bytes";}
-    elseif(($size<1048576)&&($size>1023)){$size=round($size/1024, 1)." KB";}
-    elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB";}
-    else{$size=round($size/1073741824, 1)." GB";}
-    return $size; }
-  // Checks to see if veiwing hidden files is enabled
-  if($_SERVER['QUERY_STRING']=="hidden")
-  {$hide="";
-   $ahref="./";
-   $atext="Hide";}
-  else
-  {$hide=".";
-   $ahref="./?hidden";
-   $atext="Show";}
-$fileArray1 = array();
-$ArchInc = 0;
 while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
   $ArchInc++; }
 ?>
@@ -280,34 +270,35 @@ Are you sure?
     </thead>
     <tbody>
 <?php
-   $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
-  while($entryName=readdir($myDirectory)) {
-     $dirArray[]=$entryName; }
+  $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
+  while ($entryName=readdir($myDirectory)) {
+    $dirArray[]=$entryName; }
   closedir($myDirectory);
   $indexCount=count($dirArray);
   sort($dirArray);
-  for($index=0; $index < $indexCount; $index++) {
-      if(substr("$dirArray[$index]", 0, 1)!=$hide) {
-    $favicon="";
-    $class="file";
-    $name=$dirArray[$index];
-    $namehref=$dirArray[$index];
-        $fileArray = array_push($fileArray1, $namehref);
+  for ($index=0; $index < $indexCount; $index++) {
+    if (substr("$dirArray[$index]", 0, 1)!=$hide) {
+      $favicon="";
+      $class="file";
+      $name=$dirArray[$index];
+      if ($name == 'index.html') continue;
+      $namehref=$dirArray[$index];
+      $fileArray = array_push($fileArray1, $namehref);
     if (substr_compare($namehref, '/', 1)) { 
       $namehref = substr_replace('/'.$namehref, $namehref, 0); }
     $modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
     $timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
-    if(is_dir($dirArray[$index])) {
-        $extn="&lt;Directory&gt;";
-        $size="&lt;Directory&gt;";
-        $sizekey="0";
-        $class="dir";
-        if(file_exists("$namehref/favicon.ico")) {
-                        $slash = '/';
-            $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";
-            $extn="&lt;Website&gt;"; }
-        if($name=="."){$name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";}
-        if($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
+    if (is_dir($dirArray[$index])) {
+      $extn="&lt;Directory&gt;";
+      $size="&lt;Directory&gt;";
+      $sizekey="0";
+      $class="dir";
+        if (file_exists("$namehref/favicon.ico")) {
+          $slash = '/';
+          $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";
+          $extn="&lt;Website&gt;"; }
+        if ($name==".") { $name=". (Current Directory)"; $extn="&lt;System Dir&gt;"; $favicon=" style='background-image:url($slash$namehref/favicon.ico);'";}
+        if ($name=="..") { $name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
   // File-only operations
     else {
       // Gets file extension
@@ -319,38 +310,44 @@ Are you sure?
         case "jpeg": $extn="JPEG Image"; break;
         case "svg": $extn="SVG Image"; break;
         case "gif": $extn="GIF Image"; break;
-        case "ico": $extn="Windows Icon"; break;
-        case "txt": $extn="Text File"; break;
-        case "log": $extn="Log File"; break;
-        case "htm": $extn="HTML File"; break;
-        case "html": $extn="HTML File"; break;
-        case "xhtml": $extn="HTML File"; break;
-        case "shtml": $extn="HTML File"; break;
-        case "php": $extn="PHP Script"; break;
-        case "js": $extn="Javascript File"; break;
-        case "css": $extn="Stylesheet"; break;
-        case "pdf": $extn="PDF Document"; break;
-        case "xls": $extn="Spreadsheet"; break;
-        case "xlsx": $extn="Spreadsheet"; break;
-        case "doc": $extn="Microsoft Word Document"; break;
-        case "docx": $extn="Microsoft Word Document"; break;
-        case "zip": $extn="ZIP Archive"; break;
-        case "htaccess": $extn="Apache Config File"; break;
-        case "exe": $extn="Windows Executable"; break;
-        default: if ($extn!=""){$extn=strtoupper($extn)." File";} else {
-          $extn="Folder";} 
+        case "ico": $extn = "Windows Icon"; break;
+        case "txt": $extn = "Text File"; break;
+        case "log": $extn = "Log File"; break;
+        case "htm": $extn = "HTML File"; break;
+        case "html": $extn = "HTML File"; break;
+        case "xhtml": $extn = "HTML File"; break;
+        case "shtml": $extn = "HTML File"; break;
+        case "php": $extn = "PHP Script"; break;
+        case "js": $extn = "Javascript File"; break;
+        case "css": $extn = "Stylesheet"; break;
+        case "pdf": $extn = "PDF Document"; break;
+        case "xls": $extn = "Spreadsheet"; break;
+        case "xlsx": $extn= "Spreadsheet"; break;
+        case "doc": $extn = "Microsoft Word Document"; break;
+        case "docx": $extn = "Microsoft Word Document"; break;
+        case "zip": $extn = "ZIP Archive"; break;
+        case "htaccess": $extn = "Apache Config File"; break;
+        case "exe": $extn = "Windows Executable"; break;
+        case '<Directory>': $extn = 'Folder'; break;
+        case 'Directory': $extn = 'Folder'; break;
+        case '<directory>': $extn = 'Folder'; break;
+        case 'directory': $extn = 'Folder'; break;
+        default: if ($extn != ""){ $extn = strtoupper($extn)." File"; } else {
+          $extn = "Folder"; } 
           break; }
-        if (strpos($name, '.Playlist') or strpos($extn, 'PLAYLIST')) {
-          $extn = "Playlist"; }
-        $size=pretty_filesize($CloudUsrDir.$dirArray[$index]);
-        $sizekey=filesize($CloudUsrDir.$dirArray[$index]); }
+        if (strpos($extn, 'directory') == 'true' or strpos($extn, 'Directory') == 'true' or strpos($name, '.') == 'false') {
+          $extn = "Folder"; }
+        if (strpos($name, '.Playlist') == 'true' or strpos($extn, 'PLAYLIST') == 'true') {
+          $extn = "Playlist"; } 
+        $size = pretty_filesize($CloudUsrDir.$dirArray[$index]);
+        $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
-$ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
-$DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
-$DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods');
-$ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
-$MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog');
 $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+if ($extnRAW == '' or $extnRAW == NULL) {
+  $extn = "Folder"; 
+  $size = "Unknown"; }
+if (preg_match('~[0-9]~', $size) == 'false') {
+  $size = "Unknown"; }
 if (in_array($extnRAW, $DearchiveArray)) {
   $specialHTML = ('<img id=\'dearchivebutton$tableCount\' name=\'dearchiveButton$tableCount\' href=\'#\' src=\'Resources/dearchive.png\' alt=\'Unpack\'/>'); }
 if (in_array($extnRAW, $DocumentArray)) {
@@ -359,9 +356,11 @@ if (in_array($extnRAW, $ImageArray)) {
   $specialHTML = '<img src="Resources/photoedit.png" alt=\'Edit Photo\'/>'; }
 if (in_array($extnRAW, $MediaArray)) {
   $specialHTML = '<img src="Resources/stream.png" alt=\'Stream Media\'/>'; }
-// / Handle the AJAX post for if a user clicks on a folder in their drive.
 if ($extn == "Folder") {
-  $specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; ?>
+  $specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; }
+// / Handle the AJAX post for if a user clicks on a folder in their drive.
+if ($extn == 'Folder' or $extn == '<Directory>' or strpos($name, '.') == 'false' 
+  or $extnRAW == '' or $extnRAW == NULL) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -379,7 +378,7 @@ $.ajax( {
 </script>
 <?php }
 // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
-if ($extn == "Playlist") { 
+if ($extn == 'Playlist' or $extn == 'PLAYLIST') { 
 if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
   $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; } 
 else {
@@ -394,15 +393,13 @@ $.ajax( {
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
       window.location.href = "<?php echo $PLSpecialEcho.'cloudCore.php?playlistSelected='.$name; ?>";
-
-
     }
 } );
 });
 });
 </script>
 <?php }
-if (($extn !== "Folder") or ($extn !== "Playlist")) { ?>
+if ($extn !== "Folder" or $extn !== "Playlist") { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -428,7 +425,6 @@ $.ajax( {
       <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
       <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
       <td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
-    
     </tr>");
     $tableCount++; } } ?>
   </tbody>
@@ -452,8 +448,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#renameFileSubmit").click(function(){
 var renameSelected = new Array();
@@ -471,8 +465,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#dearchiveButton").click(function(){
 var dearchiveSelected = new Array();
@@ -489,8 +481,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#archiveFileSubmit").click(function(){
 var archiveSelected = new Array();
@@ -508,8 +498,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#deleteFileSubmit").click(function(){
 var deleteSelected = new Array();
@@ -636,7 +624,6 @@ $.ajax( {
 } );
 });
 });
-</script><script type="text/javascript">
 $(document).ready(function () {
 $("#streambutton").click(function(){
 var streamSelected = new Array();
@@ -654,7 +641,6 @@ $.ajax( {
 } );
 });
 });
-</script><script type="text/javascript">
 $(document).ready(function () {
 $("#clipboardCopy").click(function(){
 var clipboardCopySelected = new Array();
@@ -675,7 +661,6 @@ $.ajax( {
 } );
 });
 });
-</script><script type="text/javascript">
 $(document).ready(function () {
 $("#clipboardPaste").click(function(){
 var clipboardPasteSelected = new Array();
@@ -695,7 +680,6 @@ $.ajax( {
 } );
 });
 });
-</script><script type="text/javascript">
 $(document).ready(function () {
 $("#sharebutton").click(function(){
 var shareSelected = new Array();
