@@ -89,8 +89,13 @@ if (isset($_POST['shareConfirm'])) {
     $_POST['filesToShare'] = array($_POST['filesToShare']); 
     $_POST['filesToShare'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToShare']); } }
 
-// / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
+// / Can be used to create directories in the user Drive root. 
   // / This can be used to create a directory or retreive the contents of an existing directory.
+  // / Example: 'Pictures/' needs to exist before 'Pictures/Flowers' can be created.
+if (isset($_POST['dirToMake'])) {
+  $_POST['dirToMake'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dirToMake']); }
+
+// / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
   // / Must specify either UserDir or UserDirPOST as a POST or GET variable.
 if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);

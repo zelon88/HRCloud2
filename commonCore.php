@@ -118,6 +118,7 @@ if (strpos($CloudUsrDir, '//') == 'true'){
 if (strpos($CloudTmpDir, '//') == 'true'){
   str_replace('//', '/', $CloudTmpDir); }
 
+
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
 if (!file_exists($CloudLoc)) {
@@ -134,44 +135,51 @@ if (!file_exists($CloudTempDir)) {
   copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
 copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
 
-// / The following code checks if the LogLoc exists, and creates one if it does not.
-// / Also creates the file strucutre needed for the Logs to display content and store cache data.
-if (!file_exists($LogLoc)) {
-  $JICInstallLogs = @mkdir($LogLoc, 0755); 
-  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); }
-    foreach ($LogInstallFiles as $LIF) {
-      if ($LIF == '.index.php') { 
-        copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); }
-      if (in_array($LIF, $installedApps)) continue;
-      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
-      copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } 
-copy($InstLoc.'/index.html',$LogLoc.'/index.html');
-
-// / The following code checks if the SesLogDir exists, and creates one if it does not.
-// / Also creates the file strucutre needed for the sesLog to display content.
-if (!file_exists($SesLogDir)) {
-  $JICInstallLogs = @mkdir($SesLogDir, 0755); }
-    foreach ($LogInstallFiles1 as $LIF1) {
-      if (in_array($LIF1, $installedApps)) continue;
-      if ($LIF1 == '.' or $LIF1 == '..') continue;
-        copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } 
-
-// / The following code checks if the CloudUsrDir exists, and creates one if it does not.
-if (!file_exists($CloudUsrDir)) {
-  mkdir($CloudUsrDir, 0755); }
-
 // / The following code checks if the TempResources directory exists, and creates one if it does not.
 if (!file_exists($TempResourcesDir)) {
   mkdir($TempResourcesDir, 0755); }
 copy($InstLoc.'/index.html',$TempResourcesDir.'/index.html');
 
+// / The following code checks if the CloudUsrDir exists, and creates one if it does not.
+if (!file_exists($CloudUsrDir)) {
+  mkdir($CloudUsrDir, 0755); }
+
 // / The following code checks if the CloudTmpDir exists, and creates one if it does not.
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
 copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
-if (!file_exists($CloudShareDir)) { 
-  mkdir($CloudShareDir, 0755); }
-copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
+
+// / The following code checks if the LogLoc exists, and creates one if it does not.
+// / Also creates the file strucutre needed for the Logs to display content and store cache data.
+if (!file_exists($LogLoc)) {
+  $JICInstallLogs = @mkdir($LogLoc, 0755); 
+  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
+    foreach ($LogInstallFiles as $LIF) {
+      if (in_array($LIF, $installedApps)) continue;
+      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
+      @copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } }
+copy($InstLoc.'/'.$LogInstallDir.'.index.php',$LogLoc.'/.index.php');
+
+// / The following code checks if the SesLogDir exists, and creates one if it does not.
+// / Also creates the file strucutre needed for the sesLog to display content.
+if (!file_exists($SesLogDir)) {
+  $JICInstallLogs = @mkdir($SesLogDir, 0755);
+  @copy($InstLoc.'/index.html', $SesLogDir.'/index.html');
+    foreach ($LogInstallFiles1 as $LIF1) {
+      if (in_array($LIF1, $installedApps)) continue;
+      if ($LIF1 == '.' or $LIF1 == '..') continue;
+        @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
+@copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
+
+// / The following code checks if the CloudShareDir exists, and creates one if it does not.
+if (!file_exists($CloudShareDir)) {
+  $JICInstallShared = @mkdir($CloudShareDir, 0755); 
+  @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html');
+    foreach ($SharedInstallFiles as $SIF) {
+      if (in_array($SIF, $installedApps)) continue;
+      if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
+      @copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } }
+@copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
 
 // / The following code will create a backup directory for restoration data.
   // / NO USER DATA IS STORED IN THE BACKUP DIRECTORY!!! Only server configuration data.
@@ -183,15 +191,6 @@ if (!file_exists($BackupDir)) {
   if (!file_exists($BackupDir)) {
     $txt = ('ERROR!!! HRC2CommonCore137, The Backup Directory does not exist and could not be created on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-
-// / The following code checks if the CloudShareDir exists, and creates one if it does not.
-if (!file_exists($CloudShareDir)) {
-  $JICInstallShared = @mkdir($CloudShareDir, 0755); 
-  @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html'); }
-    foreach ($SharedInstallFiles as $SIF) {
-      if (in_array($SIF, $installedApps)) continue;
-      if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
-      copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } 
 
 // / The following code verifies that a user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
@@ -205,10 +204,6 @@ if (!file_exists($UserConfig)) {
   die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
   require ($UserConfig); }
-
-// / The following code checks if VirusScan is enabled and update ClamAV definitions accordingly.
-if ($VirusScan == '1') {
-  shell_exec('freshclam'); }
 
 // / The following code determines the color scheme that the user has selected. 
 // / May require a refresh to take effect.

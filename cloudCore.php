@@ -28,29 +28,48 @@
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('sanitizeCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
 // / The follwoing code checks if the securityCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('securityCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
   echo nl2br('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
   die (); }
 else {
-  require ('securityCore.php'); }
+  require ('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('commonCore.php'); }
+  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
-   // / The following code is performed when a user initiates a file upload.
+// / The following code is perfomed whenever a user POSTs an input directory.
+if (isset($_POST['dirToMake'])) {
+  $MAKEUserDir = $_POST['dirToMake'];
+  if (!file_exists($CloudDir.'/'.$MAKEUserDir)) {
+    @mkdir ($CloudDir.'/'.$MAKEUserDir, 0755); 
+      $txt = ('OP-Act: Created '.$CloudDir.'/'.$MAKEUserDir.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudTempDir.'/'.$MAKEUserDir)) {    
+    @mkdir ($CloudTempDir.'/'.$MAKEUserDir, 0755); 
+      $txt = ('OP-Act: Created '.$CloudTempDir.'/'.$MAKEUserDir.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  // / The following code double checks that the specified directory were created and returns an error if it was not.
+  if (!file_exists($CloudDir.'/'.$MAKEUserDir)) {
+      $txt = ('ERROR!!! HRC265, Could not create '.$CloudDir.'/'.$MAKEUserDir.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudTempDir.'/'.$MAKEUserDir)) {    
+      $txt = ('ERROR!!! HRC265, Could not create '.$CloudTempDir.'/'.$MAKEUserDir.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+
+// / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -69,14 +88,6 @@ if(isset($_POST["upload"])) {
         $file = str_replace($F0, $F0.'SAFE', $file); }
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudUsrDir.$F2;
-      // / The following code checks the Cloud Location with ClamAV before copying, just in case.
-      if ($VirusScan == '1') {
-        shell_exec('clamscan -r '.$_FILES['filesToUpload']['tmp_name'][$key].' | grep FOUND >> '.$ClamLogDir); 
-      if (filesize($ClamLogDir >= 2)) {
-        echo nl2br('WARNING!!! HRC2155, There were potentially infected files detected. The file
-          transfer could not be completed at this time. Please check your file for viruses or 
-          try again later.'."\n");
-          die(); } } 
       if($file == "") {
         $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -85,7 +96,17 @@ if(isset($_POST["upload"])) {
       echo nl2br ('OP-Act: '."Uploaded $file to on $Time".'.'.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
-      chmod($F3, 0755); } } } 
+      chmod($F3, 0755); } } 
+      // / The following code checks the Cloud Location with ClamAV before copying, just in case.
+      if ($VirusScan == '1') {
+        shell_exec('clamscan -r '.$CloudDir.' | grep FOUND >> '.$ClamLogDir); 
+        if (filesize($ClamLogDir >= 3)) {
+          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+            transfer could not be completed at this time. Please check your file for viruses or
+            try again later.'."\n");
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+          unlink($F3);
+          die($txt); } } } 
 
 // / The following code is performed when a user downloads a selection of files.
 if (isset($_POST["download"])) {
@@ -121,15 +142,16 @@ if (isset($_POST["download"])) {
               mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
             else {
     copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } }
-    
 // / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
-if ($VirusScan == '1') {
-  shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-if (filesize($ClamLogDir >= 3)) {
-  echo nl2br('WARNING!!! HRC2206, There were potentially infected files detected. The file
-    transfer could not be completed at this time. Please check your file for viruses or
-    try again later.'."\n");
-  die(); } } } 
+      if ($VirusScan == '1') {
+        shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
+        if (filesize($ClamLogDir >= 3)) {
+          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+            transfer could not be completed at this time. Please check your file for viruses or
+            try again later.'."\n");
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   
+          unlink($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName());       
+          die($txt); } } } 
 
 // / The following code is performed whenever a user selects a file to copy.
 if (isset($_POST['copy'])) {
@@ -204,6 +226,7 @@ if (isset($_POST['deleteconfirm'])) {
       @rmdir($CloudTmpDir.$DFile);
       @unlink($CloudTmpDir.$DFile);
       $objects = scandir($CloudUsrDir.$DFile); 
+      // / Delete files from User directory.
       foreach ($objects as $object) { 
         if ($object == '.' or $object == '..') continue; 
           if (is_dir($CloudUsrDir.$DFile.'/'.$object)) {
@@ -219,12 +242,31 @@ if (isset($_POST['deleteconfirm'])) {
             @unlink($CloudUsrDir.$DFile.'/'.$object); } } } 
     @unlink($CloudUsrDir.$DFile);
     @rmdir($CloudUsrDir.$DFile);
+      // / Delete files from Temp User directory.
+      foreach ($objects as $object) { 
+        if ($object == '.' or $object == '..') continue; 
+          if (is_dir($CloudTmpDir.$DFile.'/'.$object)) {
+             $objects2 = scandir($CloudTmpDir.$DFile.'/'.$object);
+             foreach ($objects2 as $object2) { 
+               if ($object2 == '.' or $object2 == '..') continue; 
+                 if (!is_dir($CloudTmpDir.$DFile.'/'.$object.'/'.$object2)) {
+                  @unlink($CloudTmpDir.$DFile.'/'.$object.'/'.$object2); }
+                 if (is_dir($CloudTmpDir.$DFile.'/'.$object.'/'.$object2)) {
+                  @unlink($CloudTmpDir.$DFile.'/'.$object.'/'.$object2.'/index.html');
+                  @rmdir($CloudTmpDir.$DFile.'/'.$object.'/'.$object2); } }
+             @unlink($CloudTmpDir.$DFile.'/'.$object.'/index.html'); 
+             @rmdir($CloudTmpDir.$DFile.'/'.$object); }
+          if (!is_dir($CloudTmpDir.$DFile.'/'.$object)) {
+            @unlink($CloudTmpDir.$DFile.'/'.$object); } } 
+    @unlink($CloudTmpDir.$DFile);
+    @unlink($CloudTmpDir.$DFile.'/index.html');
+    @rmdir($CloudTmpDir.$DFile);
     if (file_exists($CloudTmpDir.$DFile)) {
       @unlink($CloudTmpDir.$DFile); 
       $txt = ('OP-Act: '."Deleted $DFile from $CloudTmpDir on $Time".'.');
-      echo nl2br ('OP-Act: '."Deleted $DFile on $Time".'.'."\n".'--------------------'."\n");
+      echo nl2br ('OP-Act: '."Deleted $DFile from Temp directory on $Time".'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir on $Time".'.');
+    $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir from User directory on $Time".'.');
     echo nl2br ('OP-Act: '."Deleted $DFile on $Time".'.'."\n".'--------------------'."\n");   
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
 
@@ -268,13 +310,14 @@ if (!is_dir($filename)) {
     echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
     die(); } }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
-if ($VirusScan == '1') {
-  shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-if (filesize($ClamLogDir >= 3)) {
-  echo nl2br('WARNING!!! HRC2296, There were potentially infected files detected. The file
-    transfer could not be completed at this time. Please check your file for viruses or
-    try again later.'."\n");
-    die(); } }
+      if ($VirusScan == '1') {
+        shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
+        if (filesize($ClamLogDir >= 3)) {
+          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+            transfer could not be completed at this time. Please check your file for viruses or
+            try again later.'."\n");
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+          die($txt); } }
 // / Handle archiving of rar compatible files.
 if(in_array($UserExt, $rararr)) {
   copy ($filename, $CloudTmpDir.$TFile1); 
@@ -299,64 +342,174 @@ if(in_array($UserExt, $tararr)) {
 
 // / The following code will be performed when a user selects archives to extract.
 if (isset($_POST["dearchiveButton"])) {
+  // / The following code sets the global dearchive variables for the session.
   $txt = ('OP-Act: Initiated Dearchiver on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST['dearchiveButton'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dearchiveButton']);
   $UDP = '';
-  if ($UserDirPOST !== '/') {
+  $allowed =  array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
+  $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
+  $rararr = array('rar');
+  $ziparr = array('zip');
+  $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
+  if ($UserDirPOST !== '/' or $UserDirPOST !== '//') {
     $UDP = $UserDirPOST; }
   if (isset($_POST["filesToDearchive"])) {
     if (!is_array($_POST["filesToDearchive"])) {
       $_POST['filesToDearchive'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDearchive']);
       $_POST['filesToDearchive'] = array($_POST['filesToDearchive']); }
     foreach (($_POST['filesToDearchive']) as $File) {
+      if ($File == '.' or $File == '..') continue;
+      // / The following code sets variables for each archive being extracted.
       $File = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $File); 
       $File = str_replace(' ', '\ ', $File); 
-      $allowed =  array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-      $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-      $rararr = array('rar');
-      $ziparr = array('zip');
-      $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-      $filename0 = pathinfo($CloudTmpDir.$File, PATHINFO_BASENAME);
-      $filename1 = pathinfo($CloudUsrDir.$File, PATHINFO_BASENAME);
-      $filename2 = pathinfo($CloudUsrDir.$File, PATHINFO_FILENAME);
-      $ext = pathinfo($CloudUsrDir.$filename, PATHINFO_EXTENSION);  
-      // / Check the Cloud Location with ClamAV before archiving, just in case.
+      $File = str_replace('//', '/', $File);   
+      $File = str_replace('//', '/', $File);      
+      $File = ltrim($UDP.$File, '/'); 
+      // / The following code sets and detects the USER directory and filename variables to be used for the operation.
+      $dearchUserPath = str_replace('//', '/', $CloudDir.'/'.$File);
+      $ext = pathinfo(str_replace('//', '/', $CloudDir.'/'.$File), PATHINFO_EXTENSION); 
+      $dearchUserDir = str_replace('.'.$ext, '', $dearchUserPath);
+      $dearchUserFile = pathinfo($dearchUserPath, PATHINFO_FILENAME);
+      $dearchUserFilename = $dearchUserFile.'.'.$ext;
+      // / The following code sets the TEMP directory and filename variables to be used to copy files for the operation.
+      $dearchTempPath = str_replace('//', '/', $CloudTempDir.'/'.$File);
+      $dearchTempDir = str_replace('.'.$ext, '', $dearchTempPath);
+      $dearchTempFile = $dearchUserFile;
+      $dearchTempFilename = $dearchUserFile.'.'.$ext;
+      // / Check the Cloud Location with ClamAV before dearchiving, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-      if (filesize($ClamLogDir >= 3)) {
-        echo nl2br('WARNING HRC2338, There were potentially infected files detected. The file
-          transfer could not be completed at this time. Please check your file for viruses or
-          try again later.'."\n");
-          die(); } }
-      if (!file_exists($CloudTmpDir.$File)) {
-        copy($CloudUsrDir.$File, $CloudTmpDir.$File); }
-      if (!file_exists($CloudUsrDir.$filename2)) {
-        mkdir($CloudUsrDir.$filename2, 0755); }
+        if (filesize($ClamLogDir >= 3)) {
+          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+            transfer could not be completed at this time. Please check your file for viruses or
+            try again later.'."\n");
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+          die($txt); } } 
 
-      echo nl2br ('OP-Act: Dearchiving '.$_POST["filesToDearchive"].' to '.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n");
-        $txt = ('OP-Act: Initiated Dearchiver on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      // / The following code creates all of the temporary directories and file copies needed for the operation.
+      // / The following code is performed when a dearchTempDir already exists.
+      if (file_exists($dearchTempDir)) {
+        copy ('index.html', $dearchTempDir.'/index.html');
+        if (!is_dir($dearchTempDir)) {
+          mkdir ($dearchTempDir, 0755);  
+        if (is_dir($dearchTempDir)) {
+          $txt = ('OP-Act: Verified '.$dearchTempDir.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+        // / The follwing code creates a dearchTempDir if one does not exist, and checks again.
+        if (!is_dir($dearchTempDir)) {
+          mkdir($dearchTempDir, 0755); 
+          copy ('index.html', $dearchTempDir.'/index.html');
+        if (is_dir($dearchTempDir)) {
+          $txt = ('OP-Act: Created '.$dearchTempDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+        // / The following double checks that all directories exist, and writes an error to the logfile if there are any.
+        if (!is_dir($dearchTempDir)) {
+          $txt = ('ERROR!!! HRC2390, Could not create a temp directory at '.$dearchTempDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+          die($txt); } 
+        if (!is_dir($dearchTempDir)) {
+          $txt = ('ERROR!!! HRC2394, Could not create a temp directory at '.$dearchTempDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+          die($txt); } }
+      if (!file_exists($dearchTempDir)) {
+        mkdir($dearchTempDir);
+        copy ('index.html', $dearchTempDir.'/index.html');
+        if (is_dir($dearchTempDir)) {
+          $txt = ('OP-Act: Created '.$dearchTempDir.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+        if (!is_dir($dearchTempDir)) {
+          $txt = ('ERROR!!! HRC2404, Could not create a temp directory at '.$dearchTempDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+
+      // / The following code creates all of the user directories and file copies needed for the operation.
+      // / The following code is performed when a dearchUserDir already exists.
+      if (file_exists($dearchUserDir)) {
+        copy ('index.html', $dearchUserDir.'/index.html');
+        if (!is_dir($dearchUserDir)) {
+          mkdir ($dearchUserDir, 0755);  
+        if (is_dir($dearchUserDir)) {
+          $txt = ('OP-Act: Verified '.$dearchUserDir.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+        // / The follwing code creates a dearchUserDir if one does not exist, and checks again.
+        if (!is_dir($dearchUserDir)) {
+          mkdir($dearchUserDir, 0755); 
+          copy ('index.html', $dearchUserDir.'/index.html');
+        if (is_dir($dearchUserDir)) {
+          $txt = ('OP-Act: Created '.$dearchUserDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+        // / The following double checks that all directories exist, and writes an error to the logfile if there are any.
+        if (!is_dir($dearchUserDir)) {
+          $txt = ('ERROR!!! HRC2390, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+          die($txt); } 
+        if (!is_dir($dearchUserDir)) {
+          $txt = ('ERROR!!! HRC2394, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+          die($txt); } }
+      if (!file_exists($dearchUserDir)) {
+        mkdir($dearchUserDir);
+        copy ('index.html', $dearchUserDir.'/index.html');
+        if (is_dir($dearchUserDir)) {
+          $txt = ('OP-Act: Created '.$dearchUserDir.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+        if (!is_dir($dearchUserDir)) {
+          $txt = ('ERROR!!! HRC2404, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+      
+      // / The following code checks that the source files exist and are valid, and returns any errors that occur.
+      if (file_exists($dearchUserDir)) {
+        if (is_dir($dearchUserDir)) {
+          copy ($dearchUserPath, $dearchTempPath);
+          if (!file_exists($dearchTempPath)) {
+            $txt = ('ERROR!!! HRC2412, There was a problem copying '.$dearchUserPath.' to '.$dearchTempPath.' on '.$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+            die($txt); } 
+          if (file_exists($dearchTempPath)) { 
+            $txt = ('OP-Act, Copied '.$dearchUserPath.' to '.$dearchTempPath.' on '.$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+        if (!is_dir($dearchUserDir)) {
+          $txt = ('ERROR!!! HRC2419, Discrepency detected! The dearchive directory supplied is not a directory on '.$Time.'!');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+      if (!file_exists($dearchUserDir)) {
+          mkdir($dearchUserDir, 0755); 
+          if (file_exists($dearchUserDir)) {
+            $txt = ('OP-Act: Created '.$dearchUserDir.' on '.$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+            die($txt); }
+          if (!file_exists($dearchUserDir)) {
+            $txt = ('ERROR!!! HRC2428, The dearchive directory was not detected on '.$Time.'!');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+            die($txt); } }
       // / Handle dearchiving of rar compatible files.
       if(in_array($ext,$rararr)) {
-        shell_exec('unrar e '.$filename0.'/'.$filename2.'.'.$ext.' '.$filename1.'/'.$filename2);
-        $txt = ('OP-Act: '."Submitted $File to $filename2 in $filename1/$filename2 on $Time".'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+        $txt = ('OP-Act: Executing "unrar e '.$dearchTempPath.' '.$dearchUserDir.'" on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        shell_exec('unrar e '.$dearchTempPath.' '.$dearchUserDir);
+        if (file_exists($dearchUserDir)) {
+          $txt = ('OP-Act: '."Dearchived $dearchTempPath to $dearchUserDir using method 1 on $Time".'.'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
       // / Handle dearchiving of .zip compatible files.
       if(in_array($ext,$ziparr)) {
-        shell_exec('unzip '.$filename0.'/'.$filename2.'.'.$ext.' -d '.$filename1.'/'.$filename2);
-        $txt = ('OP-Act: '."Submitted $File to $filename2 in $filename1/$filename2 on $Time".'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+        $txt = ('OP-Act: Executing "unzip -o '.$dearchTempPath.' -d '.$dearchUserDir.'" on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        shell_exec('unzip -o '.$dearchTempPath.' -d '.$dearchUserDir);
+        if (file_exists($dearchUserDir)) {
+          $txt = ('OP-Act: '."Dearchived $dearchTempPath to $dearchUserDir using method 2 on $Time".'.'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
       // / Handle dearchiving of 7zipper compatible files.
       if(in_array($ext,$tararr)) {
-        shell_exec('7z e '.$filename0.'/'.$filename2.'.'.$ext.' '.$filename1.'/'.$filename2); 
-        $txt = ('OP-Act: '."Submitted $File to $filename2 in $filename1/$filename2 on $Time".'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-    if (!file_exists($CloudUsrDir.$filename2.'_'.$Date))
-      $txt = ('ERROR!!! HRC2449, There was a problem creating '.$CloudUsrDir.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n"); 
-      echo nl2br ('ERROR!!! HRC2449, There was a problem creating '.$filename2.'_'.$Date.' on '.$Time."\n".'--------------------'."\n"); 
+        $txt = ('OP-Act: Executing "7z e '.$dearchTempPath.' '.$dearchUserDir.'" on '.$Time.'.'); 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        shell_exec('7z e '.$dearchTempPath.' '.$dearchUserDir); 
+        if (file_exists($dearchUserDir)) {
+          $txt = ('OP-Act: '."Dearchived $dearchTempPath to $dearchUserDir using method 3 on $Time".'.'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+    // / Return an error if the extraction failed and no files were created.
+    if (!file_exists($dearchUserDir)) {
+      $txt = ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
+      echo nl2br ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
-  
   
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset( $_POST['convertSelected'])) {
@@ -379,7 +532,7 @@ if (isset( $_POST['convertSelected'])) {
     $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if (!file_exists($file2)) {
-      $txt = ('ERROR!!! HRC2381, '."Could not copy $file1 to $file2 on $Time".'.'); 
+      $txt = ('ERROR!!! HRC2381, '."Could not copy $file1 to $file2 on $Time".'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       echo nl2br('ERROR!!! HRC2381, There was a problem copying your file between internal HRCloud directories.
         Please rename your file or try again later.'."\n");
@@ -407,7 +560,7 @@ if (isset( $_POST['convertSelected'])) {
     $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
     $stub = ('http://localhost/HRProprietary/HRClou2/DATA/');
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile;
-    // / Code to increment the filename in the event that an output file already exists.    
+    // / Code to increment the conversion in the event that an output file already exists.    
     while(file_exists($newPathname)) {
       $convertcount++; 
       $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension);
@@ -535,7 +688,7 @@ if (isset( $_POST['convertSelected'])) {
 // / Error handler and logger for converting files.
 if (!file_exists($newPathname)) {
   echo nl2br('ERROR!!! HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
-  $txt = ('ERROR!!! HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'.');
+  $txt = ('ERROR!!! HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   die(); } 
 if (file_exists($newPathname)) {
@@ -562,7 +715,7 @@ if (isset($_POST['pdfworkSelected'])) {
       $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if (!file_exists($file2)) {
-      $txt = ('ERROR!!! HRC2551, '."Could not copy $file1 to $file2 on $Time".'.'); 
+      $txt = ('ERROR!!! HRC2551, '."Could not copy $file1 to $file2 on $Time".'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       echo nl2br('ERROR!!! HRC2551, There was a problem copying your file between internal HRCloud directories.
         Please rename your file or try again later.'."\n");
@@ -895,7 +1048,6 @@ if (isset($_POST['streamSelected'])) {
         $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } }
 
-
 // / The following code controls the creation and management of a users clipboard cache file.
 if (isset($_POST['clipboardCopy'])) {
   if (!is_array($_POST['clipboardSelected'])) {
@@ -966,23 +1118,25 @@ if (isset($_POST['clipboardCopy'])) {
            } } }
 
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
-if (file_exists($CloudTemp)) {
+if (file_exists($CloudTempDir)) {
   $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  
-  $DFiles = glob($CloudTmpDir.'/*');
-  $now   = time();
-
+  $DFiles = glob($CloudTempDir.'/*');
+  $now = time();
   foreach ($DFiles as $DFile) {
     if (in_array($DFile, $defaultApps)) continue;
-    if ($DFile !== ($CloudTmpDir.'/.') or $DFile !== ($CloudTmpDir.'/..')) continue;
-    if ($now - filemtime($file) >= 60 * 60 * 24 * 0.125) { // Time to keep files.
+    if ($DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
+    if (($now - filemtime($DFile)) >= 60 * 60) { // Time to keep files.
     if (is_file($DFile)) {
-      unlink($DFile); }
+      @chmod ($DFile, 0755);
+      unlink($DFile); 
+      $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if (is_dir($DFile)) {
       $CleanDir = $DFile;
+      @chmod ($CleanDir, 0755);
       $CleanFiles = scandir($DFile);
-      include('janitor.php'); } } } }
+      include('/var/www/html/HRProprietary/HRCloud2/janitor.php'); } } } }
 
 $bytes = sprintf('%u', filesize($DisplayFile));
 if ($bytes > 0) {
