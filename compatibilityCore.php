@@ -1,9 +1,9 @@
 <?php
 
-/*<div style="margin-left:15px;">
+/*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.7.5
-WRITTEN ON : 12/27/16
+THIS VERSION : v0.9,9.7.8
+WRITTEN ON : 1/3/2017
 */
 
 echo ('<div style="margin-left:15px;">');

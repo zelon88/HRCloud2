@@ -22,10 +22,10 @@
 // / DEPENDENCY REQUIREMENTS ... 
 // / This application requires Debian Linux (w/3rd Party audio license), 
 // / Apache 2.4, PHP 7.0, MySQL, JScript, WordPress, LibreOffice, Unoconv, 
-// / Python 2.7 and 3, ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG,  
-// / PyGames Rect, NumPy, setuptools for Python 2 and 3, Python-Pip, thetaexif,
-// / OpenCV, Scikit, Scypy, and ImageMagick.
+// / Python 2.7 and 3, ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG,
+// / and ImageMagick.
 // / -----------------------------------------------------------------------------------
+
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
@@ -56,6 +56,7 @@ if (isset($_POST['dirToMake'])) {
   if (!file_exists($CloudDir.'/'.$MAKEUserDir)) {
     @mkdir ($CloudDir.'/'.$MAKEUserDir, 0755); 
       $txt = ('OP-Act: Created '.$CloudDir.'/'.$MAKEUserDir.' on '.$Time.'.');
+      echo nl2br ('OP-Act: Created '.$_POST['dirToMake'].' on '.$Time.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   if (!file_exists($CloudTempDir.'/'.$MAKEUserDir)) {    
     @mkdir ($CloudTempDir.'/'.$MAKEUserDir, 0755); 
@@ -93,7 +94,7 @@ if(isset($_POST["upload"])) {
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
         die("ERROR!!! HRC2160, No file specified on $Time."); }
       $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
-      echo nl2br ('OP-Act: '."Uploaded $file to on $Time".'.'.'.'."\n".'--------------------'."\n");
+      echo nl2br ('OP-Act: '."Uploaded $file to on $Time".'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
       chmod($F3, 0755); } } 
@@ -119,6 +120,29 @@ if (isset($_POST["download"])) {
     foreach ($_POST['filesToDownload'] as $key=>$file) {
       $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
       if ($file == '.' or $file == '..' or $file == 'index.html') continue;
+      // / The following code handles when a user selects to download a directory where no intermediate
+        // / directories exist in the CloudTempDir.
+      $directories = explode('/', $file);
+      if (is_array($directories)) {
+        $txt = ('OP-Act: Initiating Intermediate Directory Handler on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        $int = 0;
+        foreach ($directories as $directory) {
+          $int++;
+          // / The following code describes the intermediate directory handler method to use depending on 
+            // / which iteration the script is currently on.
+          if ($int == 0 or $int == 1) {   
+            $D[$int] = $CloudTempDir.'/'.$directory.'/';
+            mkdir($D[$int], 0755); }
+          if ($int !== 0 or $int !== 1) {
+            mkdir($D[$int--].$directory, 0755);
+            $D[$int] = $D[$int--].$directory.'/'; }
+            if (file_exists($D[$int])) {
+              $txt = ('OP-Act: Created '.$D[$int].' on '.$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+            if (!file_exists($D[$int])) {
+              $txt = ('ERROR!!! HRC2141, Could not ceate '.$D[$int].' on '.$Time.'!');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
       $file = $CloudUsrDir.$file;
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudTmpDir.$F2;
@@ -456,7 +480,6 @@ if (isset($_POST["dearchiveButton"])) {
         if (!is_dir($dearchUserDir)) {
           $txt = ('ERROR!!! HRC2404, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-      
       // / The following code checks that the source files exist and are valid, and returns any errors that occur.
       if (file_exists($dearchUserDir)) {
         if (is_dir($dearchUserDir)) {
@@ -507,7 +530,7 @@ if (isset($_POST["dearchiveButton"])) {
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
     // / Return an error if the extraction failed and no files were created.
     if (!file_exists($dearchUserDir)) {
-      $txt = ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
+      $txt = ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time.'.'); 
       echo nl2br ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
   
@@ -582,7 +605,6 @@ if (isset( $_POST['convertSelected'])) {
               if ($stopper == 10) {
                 die('ERROR!!! HRC2425, The converter timed out while copying your file.'); }
               sleep(2); } }
-        
           // / Code to convert and manipulate image files.
           if (in_array($oldExtension,$imgarray) ) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
