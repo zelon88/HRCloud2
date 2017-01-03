@@ -80,6 +80,8 @@ $Udir = str_replace('//', '/', $Udir);
 $Udir = rtrim($Udir,'//');
 $Udir = ltrim($Udir,'/');
 $Udir = $Udir.'/';
+$Udir = str_replace('//', '/', $Udir);
+$Udir = str_replace('//', '/', $Udir);
 // / GUI specific resources.
   function pretty_filesize($file) {
     $size=filesize($file);
@@ -341,6 +343,10 @@ Are you sure?
           $extn = "Playlist"; } 
         $size = pretty_filesize($CloudUsrDir.$dirArray[$index]);
         $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
+$CleanUdir = str_replace('//', '/', $Udir.$name);
+$CleanUdir = str_replace('//', '/', $CleanUdir);
+$CleanUdir = str_replace('//', '/', $CleanUdir);
+if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
 $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
 if ($extnRAW == '' or $extnRAW == NULL) {
@@ -367,10 +373,10 @@ $("#corePostDL<?php echo $tableCount; ?>").click(function(){
 $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
-    data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
+    data: { download : "1", dirToMake : "<?php echo $CleanUdir; ?>", filesToDownload : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
-        window.location.href = "<?php echo 'cloudCore.php?UserDirPOST='.$name; ?>";
+        window.location.href = "<?php echo 'cloudCore.php?UserDirPOST='.$CleanUdir; ?>";
     }
 } );
 });
