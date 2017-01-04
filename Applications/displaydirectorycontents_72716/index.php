@@ -22,22 +22,31 @@ if (!file_exists($WPFile)) {
   echo nl2br('</head>ERROR!!! HRC2Index27, WordPress was not detected on the server.'."\n"); }
   else {
     require_once($WPFile); } 
-// / Set variables for the session.
+// / Set all primary array data.
 $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-$archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
-$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
-$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-$pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods');
 $ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
 $MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog');
-$fileArray1 = array();
-$ArchInc = 0;
+// / Set all secondary array data.
+$archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
+$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
+$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+$pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
+$fileArray1 = array();
+// / Set all incremental data to 0.
+$tableCount = 0;
+$ArchInc = 0;
+$ConvertInc = 0;
+$RenameInc = 0;
+$ConvertInc = 0;
+$EditInc = 0;
+// / Reset and re-detect the UserID, just-in-case.
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
+// / Handle integrated App variables.
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
@@ -64,7 +73,6 @@ if ($ColorScheme == '4') {
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 // / User directory handler.
-$tableCount = 0;
 if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
   if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
     $_POST['UserDir'] = '/'; 
@@ -74,14 +82,10 @@ if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) {
   $Udir = '/'; }
 if ($Udir == '//') {
   $Udir = '/'; }
-$Udir = str_replace('//', '/', $Udir);
-$Udir = str_replace('//', '/', $Udir);
-$Udir = str_replace('//', '/', $Udir);
-$Udir = rtrim($Udir,'//');
-$Udir = ltrim($Udir,'/');
-$Udir = $Udir.'/';
-$Udir = str_replace('//', '/', $Udir);
-$Udir = str_replace('//', '/', $Udir);
+// / User directory cleaner.
+$Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
+$Udir = ltrim(rtrim($Udir,'//'),'/').'/';
+$Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
 // / GUI specific resources.
   function pretty_filesize($file) {
     $size=filesize($file);
@@ -90,15 +94,15 @@ $Udir = str_replace('//', '/', $Udir);
     elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB"; }
     else{$size=round($size/1073741824, 1)." GB"; }
     return $size; }
-  // Checks to see if veiwing hidden files is enabled
-  if($_SERVER['QUERY_STRING']=="hidden")
-  { $hide="";
-   $ahref="./";
-   $atext="Hide"; }
-  else
-  { $hide=".";
-   $ahref="./?hidden";
-   $atext="Show"; }
+// Checks to see if veiwing hidden files is enabled
+if ($_SERVER['QUERY_STRING']=="hidden") { 
+  $hide="";
+  $ahref="./";
+  $atext="Hide"; }
+else { 
+  $hide=".";
+  $ahref="./?hidden";
+  $atext="Show"; }
 ?>
 <script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
