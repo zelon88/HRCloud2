@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.1 (11-26-2016 21:35)
+App Version: 1.2 (1-3-2017 21:45)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -33,7 +33,7 @@ HRCLOUD2-PLUGIN-END
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2ConcactsApp10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2ContactsApp10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   include ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
@@ -41,7 +41,7 @@ else {
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2ConcactsApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2ContactsApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
@@ -55,12 +55,12 @@ $contactData = '';
 $contactButtonEcho = 'New Contact';
 $contactTitle = 'New Contact...';
 if (!file_exists($NotesDir)) { 
-  $txt = ('OP-Act: Creating user contacts directory on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $txt = ('OP-Act: Creating user contacts directory on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   mkdir($ContactsDir); }
 if (!file_exists($ContactsDir)) { 
-  $txt = ('ERROR!!! HRC2N19, There was a problem creating the user contacts directory on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $txt = ('ERROR!!! HRC2ContactsApp19, There was a problem creating the user contacts directory on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die ($txt); } 
 
 // / The following code is performed whenever a user selects to edit a Contact.
@@ -69,6 +69,10 @@ if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
   $ContactToEdit = str_replace(' ', '_', $ContactToEdit);
   $ContactToEdit = $ContactToEdit.'.php';
   $ContactFile = $ContactsDir.$ContactToEdit;
+  if (!file_exists($ContactFile)) {
+    $txt = ('OP-Act: No contact to show.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die('No contact to show.'); }
   require ($ContactFile);
   $ContactData = file_get_contents($ContactsDir.$contactToEdit);
   $ContactData = str_replace('<br />', '', $contactData);
@@ -76,7 +80,7 @@ if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
   $contactButtonEcho = 'Edit Contact';
   $txt = ('OP-Act: Opening Contact '.$contactToEdit.' for editing on '.$Time.'!'); 
   echo 'Editing <i>'.$ContactTitle.'</i>'; 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 
 // / The following code is performed whenever a user selects to delete a Contact.
 if (isset($_GET['deleteContact'])) {
@@ -88,7 +92,7 @@ if (isset($_GET['deleteContact'])) {
     @unlink($ContactsDir.$contactToDelete); } 
   $txt = ('OP-Act: Deleting Contacts '.$contactToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$contactToDelete.'</i>'; 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 
 // / If the input POSTS are set, we turn them into a contact.
 if (isset($_POST['newContact'])) {
@@ -124,7 +128,7 @@ if (isset($_POST['newContact'])) {
   $ContactNotes = file_put_contents($ContactFile, '$ContactNotes = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactNotes']).'\';'.PHP_EOL, FILE_APPEND); 
   $ContactSyntaxEnd = file_put_contents($ContactFile, '?>'.PHP_EOL, FILE_APPEND);
   $txt = ('OP-Act: Contact '.$contactName.' created sucessfully on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br('Saved <i>'.$contactName.'</i>'); }
 
 // / The following code clears the variables for a new Contact after all other relevant operations are complete.
