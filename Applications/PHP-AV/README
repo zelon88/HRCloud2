@@ -1,0 +1,83 @@
+
+##################################################
+#            p h p A n t i V i r u s             #
+#                 version 1.0.2                  #
+##################################################
+
+##################################################
+# This software is provided as-is, without       #
+# warranty or guarantee of any kind. Use at your #
+# own risk.                                      #
+##################################################
+
+  PHP Anti-Virus Homepage:
+  http://sourceforge.net/projects/phpantivirus/
+
+
+ CONTENTS
+----------
+
+	1. Introduction
+	2. Installation
+	3. Wanted List
+	4. Authors
+	5. License
+
+
+ 1.0 INTRODUCTION
+------------------
+
+	Welcome to PHP Anti-Virus. I wrote this script because of server
+	vulnerabilities that allowed spammers to deface web sites and append spyware
+	to any public web site they pleased. Although preventable, it is yet
+	undetectable (until a visitor complains, or you next test every page on the
+	site).
+
+	This script scans the base web files folder recursively for malicious code
+	that may have snuck into publically accessable web files.
+
+	Version 1.0.1 brings a few enhancements over the original release, but
+	please be patient as it is still early days yet.
+
+
+ 2.0 INSTALLATION
+------------------
+
+	Please see INSTALL for installation instructions.
+
+
+ 3.0 WANTED LIST
+-----------------
+
+	* Complete virus definition list, constantly updated (massive problem!)
+	* Better documentation for "non techies"
+	* Nicer interface for configuration and scanning
+	* Centralised administration for multiple webspaces - script to include an
+	  XML connector for local Java(?) client to retrieve and report. Possibly
+	  found a Java programmer :)
+
+	If you have any feature requests, please log them on our SourceForge
+	project page for easy maintenance and tracking.
+
+
+ 4.0 AUTHORS
+-------------
+
+	At the moment it's just myself, FujitsuBoy (aka Keyboard Artist). I hope
+	I've found a Java programmer for the centralisable end-client, but new
+	members would be very useful. I'm currently looking for:
+
+	* Someone experienced enough to help write virus definition updates
+	* Web hosting companies who have seen more exploits than hot dinners
+	* PHP "gurus" i.e. if you can't write it blindfold STFU
+
+	Please e-mail me if you have enough time on your hands and you're king of
+	your art. I can see a lot of potential in this script - as I say, early
+	days!
+
+
+ 5.0 LICENSE
+-------------
+
+	This software is licensed under GPL - please read COPYING for the full
+	license agreement.
