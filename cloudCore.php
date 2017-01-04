@@ -410,7 +410,6 @@ if (isset($_POST["dearchiveButton"])) {
             try again later.'."\n");
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
           die($txt); } } 
-
       // / The following code creates all of the temporary directories and file copies needed for the operation.
       // / The following code is performed when a dearchTempDir already exists.
       if (file_exists($dearchTempDir)) {
@@ -445,8 +444,6 @@ if (isset($_POST["dearchiveButton"])) {
         if (!is_dir($dearchTempDir)) {
           $txt = ('ERROR!!! HRC2404, Could not create a temp directory at '.$dearchTempDir.' on '.$Time.'!');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-
-      // / The following code creates all of the user directories and file copies needed for the operation.
       // / The following code is performed when a dearchUserDir already exists.
       if (file_exists($dearchUserDir)) {
         copy ('index.html', $dearchUserDir.'/index.html');
@@ -767,8 +764,7 @@ if (isset($_POST['pdfworkSelected'])) {
           if (in_array($oldExtension, $pdf1array)) {
             if (in_array($extension, $doc1array)) {
               $pathnameTEMP = str_replace('.'.$oldExtension, '.txt', $pathname);
-    
-            $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
+              $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
               if (($_POST['method1'] == '0')) {
                 shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
                 $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathname on $Time".' using method 0.'); 
@@ -782,8 +778,7 @@ if (isset($_POST['pdfworkSelected'])) {
                   $_POST['method1'] = '1'; 
                   $txt = ('Notice!!! HRC2601, Attempting PDFWork conversion "method 2" on '.$Time.'.'."\n"); 
                   echo ($txt."\n".'--------------------'."\n"); 
-                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }          
-              
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
               if ($_POST['method1'] == '1') {
                 $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
                 shell_exec ("convert $pathname $pathnameTEMP1");
@@ -956,27 +951,22 @@ if (isset($_POST['streamSelected'])) {
           if(isset($id3Tags['comments']['picture'][0])) {
             $PLSongImage = 'data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); } 
             $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
-            
             $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
             $fo1 = fopen($SongImageFile, 'w');
             $MAKECacheImageFile = file_put_contents($SongImageFile, $PLSongImageDATA);
             fclose($fo1);
-            
             $SongImageFile2 = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
             $fo2 = fopen($SongImageFile2, 'w');
             $MAKECacheImageFileRAW = file_put_contents($SongImageFile2, $PLSongImageDATA);
             fclose($fo2);
-
             $SongImageFileRAW = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
             $fo3 = fopen($SongImageFileRAW, 'w');
             $MAKECacheImageFileRAW = file_put_contents($SongImageFileRAW, $PLSongImageDATA);                   
             fclose($fo3);
-
             $SongImageFile2RAW = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.txt';
             $fo4 = fopen($SongImageFile2, 'w');
             $MAKECacheImageFile2 = file_put_contents($SongImageFile2, $PLSongImageDATA);
             fclose($fo4);
-
           if(!isset($id3Tags['comments']['picture'][0])) {
             $PLSongImage = ''; }
             // / If the audio count is one, this code will open tags within our XML cache file for the tracklist.

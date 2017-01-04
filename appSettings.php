@@ -57,7 +57,6 @@ if ($ShowHRAI == '1') {
   $WPIEcho = 'Enabled'; }
 if ($ShowHRAI == '0') {
   $WPIEcho = 'Disabled'; }
-
 ?>
     <script type="text/javascript">
     function Clear() {    
