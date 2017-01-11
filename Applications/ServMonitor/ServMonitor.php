@@ -25,6 +25,9 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
 else {
   include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
+// / The following code sets the variables for the session.
+$basicMonitorCounter = 0;
+
 // / The following code creates a cache dir, or returns an error if one cannot be created.
 if (!is_dir('Cache/')) {
   @mkdir('Cache/', 0755); 
@@ -112,42 +115,78 @@ require('tempvoltUpdater.php');
             });
             $('#ramgaugeContainer').jqxGauge('value', <?php echo $ram; ?>);
         });
-    </script>
+
+// / The following code displays the CPU temperature gauge.
+         $(document).ready(function () {    
+            $('#cputempgaugeContainer').jqxGauge({
+                ranges: [{ startValue: 0, endValue: 15, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
+                         { startValue: 15, endValue: 40, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
+                         { startValue: 40, endValue: 70, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
+                         { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
+                ticksMinor: { interval: 5, size: '5%' },
+                ticksMajor: { interval: 10, size: '9%' },
+                value: 0,
+                colorScheme: 'scheme05',
+                animationDuration: 1200
+            });
+            $('#cputempgaugeContainer').on('valueChanging', function (e) {
+                $('#gaugeValue').text(Math.round(e.args.value) + 'CPU Degrees Celcius');
+            });
+            $('#cputempgaugeContainer').jqxGauge('value', <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>);
+        });
+</script>
+
 </head>
 <body style="background:white;">
 
-<div align="center" id="basicMonitorsSHOWbutton" name="basicMonitorsSHOWbutton" onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="display:none;">Show "Basic Monitors"</div>
-<div style="display:block; float:center;" id='basicMonitors' name="basicMonitors">  
+<div align="center" id="basicMonitorsSHOWbutton" name="basicMonitorsSHOWbutton" onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="clear:both; display:none;">Show "Basic Monitors"</div>
+<div style="display:block; float:center;" id='basicMonitors' name="Monitors">  
 <?php
 // / The following code displays the basic monitoring analytics for the session.
 ?>
-<div id="basicMonitors" name="basicMonitors" align="center" style="display:block; float:center;">
+<div id="basicMonitors" name="basicMonitors" align="center" style="clear:both; display:block; float:center;">
 <p><a style="margin-left:5%;"><strong>Basic Server Monitors</strong></a><a onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></p></a>
 <hr />
-<div align="center" id="basicMonitorsheader" name="basicMonitorsheader"><p><a onclick="toggle_visibility1('basicutilizationMonitors');">Utilization</a> | <a>Temperature</a> | <a>Voltage</a> | <a>Specifications</a></p></div>
+<div align="center" id="basicMonitorsheader" name="basicMonitorsheader" style="clear:both"><p><a onclick="toggle_visibility1('basicutilizationMonitors');">Utilization</a> | <a onclick="toggle_visibility1('basictemperatureMonitors');">Temperature</a> | <a>Voltage</a> | <a>Specifications</a></p></div>
 
-<div id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
+<div id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
 <a style="padding-left:5px;" onclick="toggle_visibility('cpuGauge');"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  1. CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('ramGauge');"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  2. RAM Usage: </strong>  <i><?php echo $ram; ?>%, (<?php echo $mem; ?>) </i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('ramGauge');"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  2. RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
 </div>
 
-</div>
+<div id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
+<a style="padding-left:5px;" onclick="toggle_visibility('cpuTemperatureGauge');"><strong><img src="Resources/gauge.png" title="CPU Temperature" alt="CPU Temperature">  1. CPU Temperature: </strong>  <i><?php echo $thermalSensorArr[0]; ?> </i></a><hr />
+<?php
+foreach ($thermalSensorArr as $thermalSensorDATA) { 
+  if ($thermalSensorDATA == $thermalSensorArr[0]) continue; 
+  $basicMonitorCounter++; ?>
+<a style="padding-left:5px;" onclick="toggle_visibility('acc<?php echo $basicMonitorCounter; ?>TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Accessory <?php echo $basicMonitorCounter; ?> Temperature" alt="Accessory <?php echo $basicMonitorCounter; ?> Temperature">  <?php echo $basicMonitorCounter; ?>. Accessory Temperature: </strong>  <i><?php echo implode(', ', explode('   ,   ', $thermalSensorDATA)); ?></i></a><hr />
+<?php } ?>
+<a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> <?php echo $basicMonitorCounter; ?>. Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('acc1TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> <?php echo $basicMonitorCounter; ?>. Power Status: </strong>  <i><?php echo $cputemp; ?></i></a><hr />
 
+</div>
 </div>
 <hr />
-<div align="center" id="advancedMonitorsSHOWbutton" name="advancedMonitorsSHOWbutton" onclick="toggle_visibility1('advancedMonitors'); toggle_visibility1('advancedMonitorsSHOWbutton');" style="display:none;">Show "Advanced Monitors"</div>
-<div id="advancedMonitors" name="advancedMonitors" align="center" style="display:block; float:center;">
+<div align="center" id="advancedMonitorsSHOWbutton" name="advancedMonitorsSHOWbutton" onclick="toggle_visibility1('advancedMonitors'); toggle_visibility1('advancedMonitorsSHOWbutton');" style="clear:both; display:none;">Show "Advanced Monitors"</div>
+<div id="advancedMonitors" name="advancedMonitors" align="center" style="clear:both; display:block; float:center;">
     <p><a style="margin-left:5%;"><strong>Advanced Server Monitors</strong></a><a onclick="toggle_visibility1('advancedMonitors'); toggle_visibility1('advancedMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></a></p>
     <hr />
     <div align="center" id="cpuGauge" name="cpuGauge" style="border:inset; float:left; width:355px; height:365px;">
-        <?php echo $cpu; ?>% CPU Usage <img src="Resources/x.png" title="Close CPU Info" alt="Close CPU Info" onclick="toggle_visibility1('cpuGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
+        CPU Usage: <?php echo $cpu; ?>% <img src="Resources/x.png" title="Close CPU Info" alt="Close CPU Info" onclick="toggle_visibility1('cpuGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
         <div style="float: center;" id="cpugaugeContainer"></div>
     </div>
 
     <div align="center" id="ramGauge" name="ramGauge" style="border:inset; float:left; width:355px; height:365px;">
-        <?php echo $ram; ?>% RAM Usage <img src="Resources/x.png" title="Close RAM Info" alt="Close RAM Info" onclick="toggle_visibility1('ramGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
+        RAM Usage: <?php echo $ram; ?>% <img src="Resources/x.png" title="Close RAM Info" alt="Close RAM Info" onclick="toggle_visibility1('ramGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
         <div style="float: center;" id="ramgaugeContainer"></div>
     </div>
+
+    <div align="center" id="cputemperatureGauge" name="cputemperatureGauge" style="border:inset; float:left; width:355px; height:365px;">
+        CPU Temperature: <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>&#8451 <img src="Resources/x.png" title="Close CPU Temp Info" alt="Close CPU Temp Info" onclick="toggle_visibility1('cputemperatureGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
+        <div style="float: center;" id="cputempgaugeContainer"></div>
+    </div>
+</div>
 </div>
 <hr />
 </body>

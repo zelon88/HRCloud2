@@ -30,25 +30,24 @@ $MAKETempvoltCacheFile3 = file_put_contents($tempvoltCacheFile, implode('   ,   
 // / The following code builds arrays of sensor output data in memory from the cache files.
 $tempvoltCacheDATA = file($tempvoltCacheFile);
 $thermalSensorArr = array();
+$thermalSensorArr1 = array();
 $batterySensorArr = array();
+$batterySensorArr1 = array();
 $powerSensorArr = array();
+
 // / The following code retreieves data from the cache file that is on it's own line.	
 foreach ($tempvoltCacheDATA as $cacheDATALine) {
-  if (strpos($sensorCheck, 'Thermal') == 'true' && strpos($cacheDATALine, '   ,   ') == 'false') {
+  if (strpos($cacheDATALine, 'Thermal') == 'true') {
     array_push($thermalSensorArr, $cacheDATALine); } 
-  if (strpos($sensorCheck, 'Battery') == 'true' && strpos($cacheDATALine, '   ,   ') == 'false') {
+  if (strpos($cacheDATALine, 'Cooling') == 'true') {
+    array_push($thermalSensorArr, $cacheDATALine); } 
+  if (strpos($cacheDATALine, 'Battery') == 'true') {
     array_push($batterySensorArr, $cacheDATALine); } 
-  if (strpos($sensorCheck, 'Adapter') == 'true' && strpos($cacheDATALine, '   ,   ') == 'false') {
-    array_push($batterySensorArr, $cacheDATALine); }
-  // / The following code retrievs data from the cache file that is separated by '   ,   '.
-  $cacheDATAArr = explode('   ,   ', $cacheDATALine); 
-	foreach ($cacheDATAArr as $sensorCheck) {
-	  if (strpos($sensorCheck, 'Thermal') == 'true') {
-        array_push($thermalSensorArr, $sensorCheck); } 
-	  if (strpos($sensorCheck, 'Battery') == 'true') {
-        array_push($batterySensorArr, $sensorCheck); } 
-      if (strpos($sensorCheck, 'Adapter') == 'true') {
-        array_push($batterySensorArr, $sensorCheck); } } }
+  if (strpos($cacheDATALine, 'Adapter') == 'true') {
+    array_push($batterySensorArr, $cacheDATALine); } }
+
+$thermalSensorArr1 = explode(', ', $thermalSensorArr[0]);
+$batterySensorArr1 = explode(', ', $batterySensorArr[0]);
 
 // / The following code retrieves advanced statistics related to the server's temps and voltages using lm-sensors, if it is available.
 // / The following code parses the output of sensors for Basic Temp information.
