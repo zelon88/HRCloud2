@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 1.0.2-1.0 (1-3-2017 00:00)
+App Version: 2.0 (1-11-2017 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,6 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
+$versions = 'PHP-AV App v2.0 | Virus Definition v1.2';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -26,11 +27,9 @@ HRCLOUD2-PLUGIN-END
     </script>
 <div align="center"><h3>PHP-AV</h3><hr /></div>
 <?php
-// PHP ANTI-VIRUS v1.0.2
+// PHP ANTI-VIRUS v2.0
 // Written by FujitsuBoy (aka Keyboard Artist)
-
-// If you have any comments or suggestions please let FujitsuBoy know:
-// keyboardartist@users.sourceforge.net
+// Modified by zelon88
 
 // / The following code loads needed HRCloud2 features and functions.
 require('/var/www/html/HRProprietary/HRCloud2/config.php');
@@ -38,12 +37,11 @@ require('/var/www/html/HRProprietary/HRCloud2/commonCore.php');
 
 // / The following code checks if App permission is set to '1' and if the user is an administrator or not.
 $initData = file_get_contents('PHP-AV.php');
-if (strpos($initData, 'App Permission: 0') == 'true' or strpos($initData, 'App Permission: Admin') == 'true'
-  or strpos($initData, 'App Permission: admin') == 'true') {
-  if ($UserIDRAW !== '1') {
-  	$txt ('ERROR!!! HRC2PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);  
-    die($txt); } }
+
+if ($UserIDRAW !== 1) {
+  $txt = ('ERROR!!! HRC2PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);  
+  die($txt); } 
 if (!isset($_POST['AVScan'])) { ?>
 <div align="center">
 <br>
@@ -60,7 +58,9 @@ if (!isset($_POST['AVScan'])) { ?>
 <a style="max-width:75%;"><hr /></a>
 </div>
 <br>
-<input type="submit" name="AVScan" id="AVScan" value="Scan Server"></form>
+<input type="submit" name="AVScan" id="AVScan" value="Scan Server" onclick="toggle_visibility('loading');"></form>
+<div align="center"><img src='Resources/logosmall.gif' id='loading' name='loading' style="display:none; max-width:64px; max-height:64px;"/></div>
+
 </div>
 <?php }
 if (isset($_POST['AVScan'])) {
@@ -105,9 +105,10 @@ function virus_check($file, $defs, $debug) {
 		$filecount++;
 		$data = file($file);
 		$data = implode('\r\n', $data);
+		$data1 = md5_file($file);
 		$clean = 1;
 		foreach ($defs as $virus) {
-			if (strpos($data, $virus[1])) {
+			if (strpos($data, $virus[1]) or strpos($data1, $virus[2])) {
 				// file matches virus defs
 				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
 				$infected++;
@@ -196,6 +197,9 @@ echo '<p><strong>Scanned files:</strong> ' . $filecount . '</p>';
 echo '<p class=r><strong>Infected files:</strong> ' . $infected . '</p>';
 echo '</div>';
 // output full report
-echo $report; } ?>
+echo $report; } 
+?>
+<hr />
+<p style="text-align:center;">Loaded virus definition: <i><a href="virus.def"><?php echo $versions; ?></i></p>
 </body>
 </html>
