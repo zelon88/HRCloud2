@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 1.2 (12-27-2016 00:00)
+App Version: 1.3 (1-11-2017 22:50)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -144,7 +144,7 @@ require('tempvoltUpdater.php');
 <?php
 // / The following code displays the basic monitoring analytics for the session.
 ?>
-<div id="basicMonitors" name="basicMonitors" align="center" style="clear:both; display:block; float:center;">
+<div id="basicMonitors" name="basicMonitors" align="center" style="float:center; clear:both; display:block; float:center;">
 <p><a style="margin-left:5%;"><strong>Basic Server Monitors</strong></a><a onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></p></a>
 <hr />
 <div align="center" id="basicMonitorsheader" name="basicMonitorsheader" style="clear:both"><p><a onclick="toggle_visibility1('basicutilizationMonitors');">Utilization</a> | <a onclick="toggle_visibility1('basictemperatureMonitors');">Temperature</a> | <a>Voltage</a> | <a>Specifications</a></p></div>
@@ -163,7 +163,7 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
 <a style="padding-left:5px;" onclick="toggle_visibility('acc<?php echo $basicMonitorCounter; ?>TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Accessory <?php echo $basicMonitorCounter; ?> Temperature" alt="Accessory <?php echo $basicMonitorCounter; ?> Temperature">  <?php echo $basicMonitorCounter; ?>. Accessory Temperature: </strong>  <i><?php echo implode(', ', explode('   ,   ', $thermalSensorDATA)); ?></i></a><hr />
 <?php } ?>
 <a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> <?php echo $basicMonitorCounter; ?>. Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('acc1TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> <?php echo $basicMonitorCounter; ?>. Power Status: </strong>  <i><?php echo $cputemp; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('adpterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> <?php echo $basicMonitorCounter; ?>. Power Status: </strong>  <i><?php echo $adapterSensorArr[0]; ?></i></a><hr />
 
 </div>
 </div>
@@ -182,7 +182,7 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
         <div style="float: center;" id="ramgaugeContainer"></div>
     </div>
 
-    <div align="center" id="cputemperatureGauge" name="cputemperatureGauge" style="border:inset; float:left; width:355px; height:365px;">
+    <div align="center" id="cpuTemperatureGauge" name="cpuTemperatureGauge" style="border:inset; float:left; width:355px; height:365px;">
         CPU Temperature: <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>&#8451 <img src="Resources/x.png" title="Close CPU Temp Info" alt="Close CPU Temp Info" onclick="toggle_visibility1('cputemperatureGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
         <div style="float: center;" id="cputempgaugeContainer"></div>
     </div>

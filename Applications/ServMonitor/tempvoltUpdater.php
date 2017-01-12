@@ -33,21 +33,22 @@ $thermalSensorArr = array();
 $thermalSensorArr1 = array();
 $batterySensorArr = array();
 $batterySensorArr1 = array();
-$powerSensorArr = array();
+$adapterSensorArr = array();
 
 // / The following code retreieves data from the cache file that is on it's own line.	
 foreach ($tempvoltCacheDATA as $cacheDATALine) {
   if (strpos($cacheDATALine, 'Thermal') == 'true') {
-    array_push($thermalSensorArr, $cacheDATALine); } 
+    array_push($thermalSensorArr, $cacheDATALine); }
   if (strpos($cacheDATALine, 'Cooling') == 'true') {
-    array_push($thermalSensorArr, $cacheDATALine); } 
+    array_push($thermalSensorArr, $cacheDATALine); }
   if (strpos($cacheDATALine, 'Battery') == 'true') {
-    array_push($batterySensorArr, $cacheDATALine); } 
+    array_push($batterySensorArr, $cacheDATALine); }
   if (strpos($cacheDATALine, 'Adapter') == 'true') {
-    array_push($batterySensorArr, $cacheDATALine); } }
+    array_push($adapterSensorArr, $cacheDATALine); } }
 
 $thermalSensorArr1 = explode(', ', $thermalSensorArr[0]);
 $batterySensorArr1 = explode(', ', $batterySensorArr[0]);
+$adapterSensorArr1 = explode(', ', $adapterSensorArr[0]);
 
 // / The following code retrieves advanced statistics related to the server's temps and voltages using lm-sensors, if it is available.
 // / The following code parses the output of sensors for Basic Temp information.
