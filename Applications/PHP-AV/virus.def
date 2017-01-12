@@ -1,14 +1,112 @@
 Malware	Hancitor	f472c00abef3324460989972362458e1
-Malware	hancitor	f472c00abef3324460989972362458e1
-Malware	Chanitor
+Malware	hancitor
+Malware	Chanitor	AllocHeapMemory(0x500000u);
 Malware	chanitor
+Malware	Ruckguv	1c319670a717305f7373c8529092f8c3
+Malware	ruckguv
+Malware	tinyloader
+Malware	TinyLoader	0c77886a3ea42b75fcd860d4d97e72c5
+Malware	TinyLoader.1	a3ea1a008619687bdfef08d2af83f548
+Malware	TinyLoader.2	a53d8212a47bf25eeca87c1e27042686
+Malware	TinyLoader.3	a7a666ab9548fd1f0a8eb8050d8ca483
+Malware	TinyLoader.4	a9cc6736e573ad9e77359062e88114e2
+Malware	TinyLoader.5	aaac35389c9be79c67c4f5c4c630e5d5
+Malware	TinyLoader.6	b3a057f55a8fa2aad5b8d212a42b4a88
+Malware	TinyLoader.7	bcf271e83c964eb1fd89e6f1a7b7a62f
+Malware	TinyLoader.8	c42f20e2a68b8829b52b8399b7b33bf2
+Malware	TinyLoader.9	d785592932323f6ddaa121bcdcbceba0
+Malware	TinyLoader.10	e08aeb0bfcbae33b851af9f8be413111
+Malware	TinyLoader.11	e92254f9ce7d6f45e907e77de146ef37
+Malware	TinyLoader.12	ec322598eec364a755b5aea70d2a2da8
+Malware	TinyLoader.13	1c02f2f3fa15cc6a472119389d25983e
+Malware	TinyLoader.14	1c2a757c63ee418135e89cc8ef0d6e63
+Malware	TinyLoader.15	2b3704e0acbcbc265d0d08502a9bf373
+Malware	TinyLoader.16	3a7ac0c907b2c406ab480d4ed2f18161
+Malware	TinyLoader.17	3f71031ce8ecb0f48847ccb8be86a5fe
+Malware	TinyLoader.18	4b86cbb2e9f195bef3770d877206068d
+Malware	TinyLoader.19	6ee164908a94a881032d0649e2bd2505
+Malware	TinyLoader.20	6f7fabeb9ce76a1d52dbf5a40cbc74e8
+Malware	TinyLoader.21	7b7ffdd46d1f7ccea146fd9d5a2412ae
+Malware	TinyLoader.22	7c69dc17977b3431ff15c1ae5927ed0d
+Malware	TinyLoader.23	7eddbf17a3d1e398621194b0f22402a7
+Malware	TinyLoader.24	8d6d7a7d77215370d733bda57ef029f4
+Malware	TinyLoader.25	8df542e35225e0708cd2b3fe5e18ac79
+Malware	TinyLoader.26	9b340ac013c052ffb2beb29d26009a24
+Malware	TinyLoader.27	47e5c290f3f443cca027aa344cbf194f
+Malware	TinyLoader.28	54f1cda856ae921846e27f6d7cc3d795
+Malware	TinyLoader.29	77f124332a17b3ef6c0b6a799ad0c888
+Malware	TinyLoader.30	89a19ccb91977d8b1a020f580083d014
+Malware	TinyLoader.31	9320175f8af07503a2b2eb4d057bac07
+Malware	TinyLoader.32	885829081f91c6baf458166c3f42e281
+Malware	TinyLoader.33	a1d1ba04f3cb2cc6372b5986fadb1b9f
+Malware	TinyLoader.34	266ce6d907a90e83da0083eee06af123
+Malware	TinyLoader.35	aa7897623f64576586e4b6ec99d8ccc6
+Malware	TinyLoader.36	79dc1ce122f7bddd730d886df1a4739a
+Malware	TinyLoader.37	a94c51c5e316d6e3b1cde1f80f99eb94
+Malware	TinyLoader.38	637b764c78ddda0e1d5351a10b19bcb8
+Malware	TinyLoader.39	739cea68598ae347fae1d983e16a7d27
+Malware	TinyLoader.40	c755c9532c1ee517b25f98719968e154
+Malware	TinyLoader.41	9a2fb9aa94d78313420c4106108b5fef
+Malware	TinyLoader.42	19516ab9a7169c53bd811c975d5fea7d
+Malware	TinyLoader.43	227e6b1f3e66f00a4fc683d4f39da904
+Malware	TinyLoader.44	a86b91fda7ec634e44e4b6b7e69ed659
+Malware TinyLoader.45	id_1123.exe
+Malware TinyLoader.46	7777.exe
+Malware TinyLoader.47	c.work.exe
+Malware TinyLoader.48	40930.exe
+Malware	cryptowall
+Malware	CryptoWall	227e6b1f3e66f00a4fc683d4f39da904
+Malware	CryptoWall.1	2af149845f4d1ce8e712622d3f1ec46e
+Malware	AbaddonPOS	91992a1cac7f15e899b22d9a53cabf71
+Malware	AbaddonPOS.1	538482356b4eb4e0552d16b08d5c2908
+Malware	AbaddonPOS.2	05134cd6a50440b2c6d9ef62d2c2c3a3
+Malware	AbaddonPOS.3	7b137055fd40c39bdc76d27ff4fc82ed
+Malware	AbaddonPOS.4	7e49d646cb74718dcce21d3d3ad948d1
+Malware	AbaddonPOS.5	4aa0ca129358b82a285e0d069a36e7fb
+Malware	AbaddonPOS.6	3733bb7a96e3091183d80b7a4914c830
+Malware	AbaddonPOS.7	c7db01ba6b73188640e0fb65aab0d535
+Malware	AbaddonPOS.8	81055d3e6ab2f349f334a87b090041dc
+Malware	AbaddonPOS.9	da0cd8228745081b58594103163d22b8
+Malware	AbaddonPOS.10	04b68e4f4c7583201397d6674a3e2503
+Malware	AbaddonPOS.11	4a85feef07d4aed664624331cdbcdd66
+Malware	AbaddonPOS.12	6ac78bc0bd16273c654cec105567c73e
+Malware	AbaddonPOS.13	6b02efef0580dce8e49d27196cff6825
+Malware	AbaddonPOS.14	6f1d8ca36190668163f005c7f2c9007f
+Malware	AbaddonPOS.15	421dfc4856262445d12fe110bf4f2c56
+Malware	AbaddonPOS.16	9646e0a87be71c225f2aa8639354bd4f
+Malware	AbaddonPOS.17	46810f106dbaaff5c3c701c71aa16ee9
+Malware	AbaddonPOS.18	e9aeb88d393e6259b5fb520bc7a49ac0
+Malware	AbaddonPOS.19	5bf979f90307bac11d13be3031e4c6f9
+Malware	AbaddonPOS.20	a168fef5d5a3851383946814f15d96a7
+Malware	AbaddonPOS.21	a55843235cd8e36c7e254c5c05662a5b
+Malware	AbaddonPOS.22	1c19494385cb21b7e18252b5abd104f6
+Malware	AbaddonPOS.23	2b58f7cb4df18509a743226064b30675
+Malware	AbaddonPOS.24	752dcae6eb492263608a06489546098f
+Malware	AbaddonPOS.25	976275965fcf19a98da824b1959500c1
+Malware	AbaddonPOS.26	227e6b1f3e66f00a4fc683d4f39da904
+Malware	AbaddonPOS.27	8ca1278e2821fd2dd19c28725f754577
+Malware	AbaddonPOS.28	ac03e0e9f70136adede78872e45f6182
+Malware	AbaddonPOS.29	12cd4df2264624578919596371edee81
+Malware	AbaddonPOS.30	317f9c57f7983e2608d5b2f00db954ff
+Malware	AbaddonPOS.31	f63e0a7ca8349e02342c502157ec485d
+Malware	AbaddonPOS.32	0900582ba65c70a421b5d21d4ed21f16
+Malware	AbaddonPOS.33	4b0db5398f02dae5315f0baff1475807
+Malware	AbaddonPOS.34	703f492b2624899ec47b929f65265bbb
+Malware	AbaddonPOS.35	5e33b1273b2e2d4cd0986b9873ab4bc4
+Malware	AbaddonPOS.36	d11c4a4f76b2bea502b80229a83c30bc
+Malware	AbaddonPOS.37	e50edb61e796c6ead88cac53719e2d00
+Malware	AbaddonPOS.38	dc1a975e20eca705c6c78dc24f1290b5
+Malware	AbaddonPOS.39	6a6977ea317f0240a3dacc0753257518
+Malware	AbaddonPOS.40	5e06563f6303eab10c3cd46f0fd5c2d6
+Malware	AbaddonPOS.41	7ef654cdc7c2b54772400e26eb292caf
+Malware	AbaddonPOS.42	946be7ddd511ff9f49b5073896346eab
 Malware	Tordal
 Malware	tordal
 Malware	Theori
 Malware	theori
 Malware	PonyForx
 Malware	ponyforx
-Malware	Pony.exe
+Malware	Pony.exe	f6b398f96cc1bfb82246326e9b1ef6e6
 Malware	pony.exe
 Malware	PonyBuilder.exe
 Malware	masm32
@@ -18,13 +116,51 @@ Malware	DllTest.exe
 Malware	Pony.dll
 Malware	pony.dll
 Exploit CVE-2016-7200	188.165.163.226
-Exploit CVE-2016-7200	<Session SID="161" BitFlags="208">
+Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200	chakraBase.add(0x1DA2F5),
-Exploit CVE-2016-7200	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
+Exploit CVE-2016-7200.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
 Trojan	Zeus Panda
 Trojan	Dreambot
-Trojan Nuclear Pack	188.166.118.34
+Trojan	Vawtrak	5238cd34caae600b3f592e2595aa6949
+Trojan	Vawtrak.1	6fad86a0fcc912f32474f6c7a86fe37a
+Trojan	vawtrak
+Trojan	Emotet	7c401bde8cafc5b745b9f65effbd588f
+Trojan	Emotet.1	34c10ae0b87e3202fea252e25746c32d
+Trojan	Emotet.2	9ab7b38da6eee714680adda3fdb08eb6
+Trojan	Emotet.3	ae5fa7fa02e7a29e1b54f407b33108e7
+Trojan	Emotet.4	1d4d5a1a66572955ad9e01bee0203c99
+Trojan	Emotet.5	cdb4be5d62e049b6314058a8a27e975d
+Trojan	Emotet.6	642a9becd99538738d6e0a7ebfbf2ef6
+Trojan	Emotet.7	aca8bdbd8e79201892f8b46a3005744b
+Trojan	Emotet.8	9b011c8f47d228d12160ca7cd6ca9c1f
+Trojan	Emotet.9	6358fae78681a21dd26f63e8ac6148cc
+Trojan	Emotet.10	ac49e85de3fced88e3e4ef78af173b37
+Trojan	Emotet.11	c0f8b2e3f1989b93f749d8486ce6f609
+Trojan	Emotet.12	1561359c46a2df408f9860b162e7e13b
+Trojan	Emotet.13	a8ca1089d442543933456931240e6d45
+Trojan	Emotet.14	Trojan Nuclear Pack
+Trojan	Emotet.15	177ae9a7fc02130009762858ad182678
+Trojan	Emotet.16	1a6fe1312339e26eb5f7444b89275ebf
+Trojan	Emotet.17	257e82d6c0991d8bd2d6c8eee4c672c7
+Trojan	Emotet.18	3855724146ff9cf8b9bbda26b828ff05
+Trojan	Emotet.19	3bac5797afd28ac715605fa9e7306333
+Trojan	Emotet.20	3d28b10bcf3999a1b317102109644bf1
+Trojan	Emotet.21	4e2eb67aa36bd3da832e802cd5bdf8bc
+Trojan	Emotet.22	4f81a713114c4180aeac8a6b082cee4d
+Trojan	Emotet.23	52f05ee28bcfec95577d154c62d40100
+Trojan	Emotet.24	772559c590cff62587c08a4a766744a7
+Trojan	Emotet.25	806489b327e0f016fb1d509ae984f760
+Trojan	Emotet.26	876a6a5252e0fc5c81cc852d5b167f2b
+Trojan	Emotet.27	94fa5551d26c60a3ce9a10310c765a89
+Trojan	Emotet.28	A5a86d5275fa2ccf8a55233959bc0274
+Trojan	Emotet.29	b43afd499eb90cee778c22969f656cd2
+Trojan	Emotet.30	b93a6ee991a9097dd8992efcacb3b2f7
+Trojan	Emotet.31	ddd7cdbc60bd0cdf4c6d41329b43b4ce
+Trojan	Emotet.32	e01954ac6d0009790c66b943e911063e
+Trojan	Emotet.33	e49c549b95dbd8ebc0930ad3f147a4b9
+Trojan	Emotet.34	ea804a986c02d734ad38ed0cb4d157a7
+Trojan	Emotet.35	188.166.118.34
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
