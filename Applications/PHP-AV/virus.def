@@ -117,14 +117,15 @@ Malware	Pony.dll
 Malware	pony.dll
 Exploit CVE-2016-7200	188.165.163.226
 Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
-Exploit CVE-2016-7200	chakraBase.add(0x1DA2F5),
-Exploit CVE-2016-7200.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
+Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
+Exploit CVE-2016-7200.2.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
 Trojan	Zeus Panda
 Trojan	Dreambot
 Trojan	Vawtrak	5238cd34caae600b3f592e2595aa6949
 Trojan	Vawtrak.1	6fad86a0fcc912f32474f6c7a86fe37a
 Trojan	vawtrak
+Trojan	emotet
 Trojan	Emotet	7c401bde8cafc5b745b9f65effbd588f
 Trojan	Emotet.1	34c10ae0b87e3202fea252e25746c32d
 Trojan	Emotet.2	9ab7b38da6eee714680adda3fdb08eb6
@@ -160,7 +161,7 @@ Trojan	Emotet.31	ddd7cdbc60bd0cdf4c6d41329b43b4ce
 Trojan	Emotet.32	e01954ac6d0009790c66b943e911063e
 Trojan	Emotet.33	e49c549b95dbd8ebc0930ad3f147a4b9
 Trojan	Emotet.34	ea804a986c02d734ad38ed0cb4d157a7
-Trojan	Emotet.35	188.166.118.34
+Trojan Emotet.35	188.166.118.34
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -193,6 +194,24 @@ Santy Worm	NeverEverNoSanity
 Santy Worm	WebWorm
 StatCounter Exploit	stolen_cookie_file
 Traversal Exploit	...//etc/passwd 
+Ransomware	Locky	7a23368ee84781d7584e058a9922f324
+Ransomware	Locky.1	74dde1905eff75cf3328832988a785de
+Ransomware	Locky.2	d9df60c24ceca5c4d623ff48ccd4e9b9
+Ransomware	Locky.3	c5ad81d8d986c92f90d0462bc06ac9c6
+Ransomware	Locky.4	357c162a35c3623d1a1791c18e9f56e7
+Ransomware	Locky.5	7b45833d87d8bd38c44cbaeece65dbbd04e12b8c1ef81a383cf7f0fce9832660
+Ransomware	Locky.6	357c162a35c3623d1a1791c18e9f56e72bcd76f6ef9f4cbcf5952f62b9bc8a08
+Ransomware	Locky.7	b0ca8c5881c1d27684c23db7a88d11e1
+Ransomware	Locky.8	c325dcf4c6c1e2b62a7c5b1245985083
+Ransomware	Locky.9	mrsweeter.ru/87h78rf33g
+Ransomware	Locky.10	185.130.7.22
+Ransomware	Locky.11	sBpFSa.exe
+Ransomware	Locky.12	WRwe3X.exe
+Ransomware	Locky.13	gvtg77996
+Ransomware	Locky.14	buhjolk.at
+Ransomware	Locky.15	dIseJh.exe
+Ransomware	Locky.16	aY5TFn.exe
+Ransomware	Locky.17	buhjolk.at
 Known Spyware Host	dreampark.co.jp
 Known Spyware Host	enigmasoftwaregroup.com
 Known Spyware Host	healthycomputerclub.com
@@ -921,3 +940,5 @@ Known Spyware Host	mailstat.us
 Known Spyware Host	via.intercom.io
 Known Spyware Host	hsms06.com
 Known Spyware Host	rjmetrics.com
+Known Ransomware Host	slater.chat.ru
+Known Ransomware Host	hundeschulegoerg.de
