@@ -82,6 +82,10 @@ if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) {
   $Udir = '/'; }
 if ($Udir == '//') {
   $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
 // / User directory cleaner.
 $Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
 $Udir = ltrim(rtrim($Udir,'//'),'/').'/';
@@ -370,7 +374,8 @@ if ($extn == "Folder") {
   $specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; }
 // / Handle the AJAX post for if a user clicks on a folder in their drive.
 if ($extn == 'Folder' or $extn == '<Directory>' or strpos($name, '.') == 'false' 
-  or $extnRAW == '' or $extnRAW == NULL) { ?>
+  or $extnRAW == '' or $extnRAW == NULL) { 
+?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -380,7 +385,7 @@ $.ajax( {
     data: { download : "1", dirToMake : "<?php echo $CleanUdir; ?>", filesToDownload : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
-        window.location.href = "<?php echo 'cloudCore.php?UserDirPOST='.$CleanUdir; ?>";
+        window.location.href = "<?php echo ('cloudCore.php?UserDirPOST='.$CleanUdir); ?>";
     }
 } );
 });
@@ -390,8 +395,8 @@ $.ajax( {
 // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
 if ($extn == 'Playlist' or $extn == 'PLAYLIST') { 
 if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
-  $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; } 
-else {
+  $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; 
+} else {
   $PLSpecialEcho = ''; } ?>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -402,7 +407,7 @@ $.ajax( {
     data: { playlistSelected : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
-      window.location.href = "<?php echo $PLSpecialEcho.'cloudCore.php?playlistSelected='.$name; ?>";
+      window.location.href = "<?php echo $PLSpecialEcho.'cloudCore.php'; ?>";
     }
 } );
 });
