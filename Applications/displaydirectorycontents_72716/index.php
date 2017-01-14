@@ -280,7 +280,8 @@ Are you sure?
     </thead>
     <tbody>
 <?php
-  $myDirectory=opendir($CloudLoc.'/'.$UserID.$UserDirPOST);
+  $myDirectory = rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/');
+  $myDirectory=opendir($myDirectory);
   while ($entryName=readdir($myDirectory)) {
     $dirArray[]=$entryName; }
   closedir($myDirectory);
@@ -354,6 +355,7 @@ Are you sure?
 $CleanUdir = str_replace('//', '/', $Udir.$name);
 $CleanUdir = str_replace('//', '/', $CleanUdir);
 $CleanUdir = str_replace('//', '/', $CleanUdir);
+$CleanDir = rtrim($CleanUdir, '/');
 if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
 $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
@@ -414,7 +416,7 @@ $.ajax( {
 });
 </script>
 <?php }
-if ($extn !== "Folder" or $extn !== "Playlist") { ?>
+if ($extn !== "Folder" or $extn !== "Playlist" or ) { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
@@ -425,7 +427,7 @@ $.ajax( {
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
       window.setTimeout(function(){
-        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name.'?UserDirPOST='.$UserDirPOST; ?>";
+        window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>";
       }, 2500);
     }
 } );
