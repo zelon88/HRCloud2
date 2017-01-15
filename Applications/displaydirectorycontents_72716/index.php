@@ -416,7 +416,7 @@ $.ajax( {
 });
 </script>
 <?php }
-if ($extn !== "Folder" or $extn !== "Playlist" or ) { ?>
+if ($extn !== "Folder" or $extn !== "Playlist") { ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#corePostDL<?php echo $tableCount; ?>").click(function(){
