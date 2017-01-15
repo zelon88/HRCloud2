@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.0 (1-11-2017 22:50)
+App Version: 2.1 (1-15-2017 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.0 | Virus Definition v1.3, 1/12/2017';
+$versions = 'PHP-AV App v2.1 | Virus Definition v1.4, 1/15/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -108,9 +108,10 @@ function virus_check($file, $defs, $debug) {
 		$data = file($file);
 		$data = implode('\r\n', $data);
 		$data1 = md5_file($file);
+		$data2 = hash_file('sha256', $file);
 		$clean = 1;
 		foreach ($defs as $virus) {
-			if (strpos($data, $virus[1]) or strpos($data1, $virus[2])) {
+			if (strpos($data, $virus[1]) or strpos($data1, $virus[2]) or strpos($data2, $virus[3])) {
 				// file matches virus defs
 				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
 				$infected++;
@@ -186,8 +187,6 @@ $dircount = 0;
 $filecount = 0;
 $infected = 0;
 // load virus defs from flat file
-if (!check_defs('virus.def'))
-	trigger_error("Virus.def vulnerable to overwrite, please change permissions", E_USER_ERROR);
 $defs = load_defs('virus.def', $debug);
 // scan specified root for specified defs
 file_scan($CONFIG['scanpath'], $defs, $CONFIG['debug']);
