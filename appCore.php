@@ -91,8 +91,9 @@ if (isset($_FILES["appToUpload"])) {
       $filename2 = pathinfo($appInstallDir0, PATHINFO_FILENAME);
       $ext = pathinfo($appInstallDir0, PATHINFO_EXTENSION);  
       if (!in_array($ext, $installableArr)) {
-        $txt = ('ERROR!!! HRC2AppCore40, The '.$file.' is not a valid archive format on '.$Time.'!');
+        $txt = ('ERROR!!! HRC2AppCore40, The file "'.$file.'" is not a valid archive format on '.$Time.'!');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        unlink ($appInstallDir0);
         die($txt); }
       // / Create the new App directory in Applications/
       if (!file_exists($appInstallDir)) {
