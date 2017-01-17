@@ -56,43 +56,55 @@ $adapterSensorArr1 = explode(', ', $adapterSensorArr[0]);
 exec('sensors | awk -v ORS=, \'/temp/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA4);
 $MAKETempvoltCacheFile4 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA4).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/Temp/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA5);
+$tempvoltDATA5 = str_replace(array("\r", "\n"), '', $tempvoltDATA5);
 $MAKETempvoltCacheFile5 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA5).PHP_EOL, FILE_APPEND);
 
 // / The following code parses the output of sensors for Memory Temp information.
 // / (array key 2)
 exec('sensors | awk -v ORS=, \'/SODIMM/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA6);
+$tempvoltDATA6 = str_replace(array("\r", "\n"), '', $tempvoltDATA6);
 $MAKETempvoltCacheFile6 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA6).PHP_EOL, FILE_APPEND);
 
 // / The following code parses the output of sensors for Voltage information.
 // / (array key 3, 4, 5, and 6)
 exec('sensors | awk -v ORS=, \'/in/ {sub(" V", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA7);
+$tempvoltDATA7 = str_replace(array("\r", "\n"), '', $tempvoltDATA7);
 $MAKETempvoltCacheFile7 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA7).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/In/ {sub(" V", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA8);
+$tempvoltDATA8 = str_replace(array("\r", "\n"), '', $tempvoltDATA8);
 $MAKETempvoltCacheFile8 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA8).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/voltage/ {sub(" V", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA9);
+$tempvoltDATA9 = str_replace(array("\r", "\n"), '', $tempvoltDATA9);
 $MAKETempvoltCacheFile9 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA9).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/Voltage/ {sub(" V", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA10);
+$tempvoltDATA10 = str_replace(array("\r", "\n"), '', $tempvoltDATA10);
 $MAKETempvoltCacheFile10 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA10).PHP_EOL, FILE_APPEND);
 
 // / The following code parses the output of sensors for Fan Speed information.
 // / (array key 7 and 8)
 exec('sensors | awk -v ORS=, \'/Fan/ {sub(" RPM", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA11);
+$tempvoltDATA11 = str_replace(array("\r", "\n"), '', $tempvoltDATA11);
 $MAKETempvoltCacheFile11 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA11).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/fan/ {sub(" RPM", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA12);
+$tempvoltDATA12 = str_replace(array("\r", "\n"), '', $tempvoltDATA12);
 $MAKETempvoltCacheFile12 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA12).PHP_EOL, FILE_APPEND);
 
 // / The following code parses the outpuf of sensors for Core CPU Temperature information.
 // / (array key 9 and 10)
 exec('sensors | awk -v ORS=, \'/core/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA13);
+$tempvoltDATA13 = str_replace(array("\r", "\n"), '', $tempvoltDATA13);
 $MAKETempvoltCacheFile13 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA13).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/Core/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA14);
+$tempvoltDATA14 = str_replace(array("\r", "\n"), '', $tempvoltDATA14);
 $MAKETempvoltCacheFile14 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA14).PHP_EOL, FILE_APPEND);
 
 // / The following code parses the outpuf of sensors for Other information.
 // / (array key 11 and 12)
 exec('sensors | awk -v ORS=, \'/other/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA15);
+$tempvoltDATA15 = str_replace(array("\r", "\n"), '', $tempvoltDATA15);
 $MAKETempvoltCacheFile15 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA15).PHP_EOL, FILE_APPEND);
 exec('sensors | awk -v ORS=, \'/Other/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA16);
+$tempvoltDATA16 = str_replace(array("\r", "\n"), '', $tempvoltDATA16);
 $MAKETempvoltCacheFile16 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA16).PHP_EOL, FILE_APPEND);
 
 /*
