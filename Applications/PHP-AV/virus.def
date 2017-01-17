@@ -165,6 +165,27 @@ Trojan	Emotet.33	e49c549b95dbd8ebc0930ad3f147a4b9
 Trojan	Emotet.34	ea804a986c02d734ad38ed0cb4d157a7
 Trojan	Terdot.A	 	151778e132753186eb8bb0dd5b6563a3d919af7e6bbdc4395e17442556021741
 Trojan	Terdot.A.1	 	61a3ece84544ab539e69156a882f49d1082555a48e77b3ffab0dd854b7bac8d3
+Trojan	Sundown	542.swf
+Trojan	Sundown	225.swf
+Trojan	Sundown	fvdvsdfv.png
+Trojan	Sundown	542.swf
+Trojan	Sundown	225.swf
+Trojan	Sundown	fvdvsdfv.png
+Trojan	Sundown	542.swf
+Trojan	Sundown	208.swf
+Trojan	Sundown	5421.swf
+Trojan	Sundown	 	4fe30eb4fd3c1e54b58f901e94e36fc1a8c7a514bf827e7611740d260dd73f4b
+Trojan	Sundown	 	cf730db69db781c515919b26ac46698c5249a62a5413edd11e1dd92fd3a44acb
+Trojan	Sundown	 	67d598c6acbd6545ab24bbd44cedcb825657746923f47473dc40d0d1f122abb6
+Trojan	Sundown	 	0744ba67c5f8210fcdcf4acb328df68780e96d10f2c68b8eddbb9a355bca213e
+Trojan	Sundown	 	fc4bb31eb4e3d533e369b3687d72abb263937c698019b4f50229a5ca2d083bbb
+Trojan	Sundown	 	112db20b0f6cbb39bd24dd2dbe121e62506c6862b1db1276b0219bda76a903dd
+Trojan	Sundown	 	c4b894094c08ea234a2a2652f77383f4a22c5402918c330a7ad6f39520dcc53c
+Trojan	Sundown	etgerf.exe
+Trojan	Sundown	rgfrf.exe
+Trojan	Sundown	radEF99C.tmp.exe
+Trojan	Sundown	 	9ee649300ee66768afdb2b8866d504e802bd40fd8e4125667bb0f0e2bb6d339f
+Trojan	Sundown	z.tmp
 Trojan Emotet.35	188.166.118.34
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
@@ -752,7 +773,7 @@ Known Spyware Host	midwestmentorinvestmentstore.com
 Known Spyware Host	bullhostingprizesim.com
 Known Spyware Host	foneinternetidsub.com
 Known Spyware Host	psiphontoday.com
-Known Spyware Host	fotocollegehavenband.com
+Known Spyware Host	fotocollegehavenband.co
 Known Spyware Host	frontberrygraphicafter.com
 Known Spyware Host	dxmetaarkvegas.com
 Known Spyware Host	gameprimeeggsplus.com
@@ -1049,3 +1070,4 @@ Known Ransomware Host	208.67.222.222
 Known Ransomware Host	resolver1.opendns.com
 Known Ransomware Host	198.105.254.228
 Known Ransomware Host	voligon.cn
+Known Ransomware Host: Sundown	188.165.163.227
