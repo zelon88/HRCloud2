@@ -163,6 +163,8 @@ Trojan	Emotet.31	ddd7cdbc60bd0cdf4c6d41329b43b4ce
 Trojan	Emotet.32	e01954ac6d0009790c66b943e911063e
 Trojan	Emotet.33	e49c549b95dbd8ebc0930ad3f147a4b9
 Trojan	Emotet.34	ea804a986c02d734ad38ed0cb4d157a7
+Trojan	Terdot.A	 	151778e132753186eb8bb0dd5b6563a3d919af7e6bbdc4395e17442556021741
+Trojan	Terdot.A.1	 	61a3ece84544ab539e69156a882f49d1082555a48e77b3ffab0dd854b7bac8d3
 Trojan Emotet.35	188.166.118.34
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
@@ -195,7 +197,23 @@ Liber Inc. Exploit	Web-res.biz
 Santy Worm	NeverEverNoSanity
 Santy Worm	WebWorm
 StatCounter Exploit	stolen_cookie_file
-Traversal Exploit	...//etc/passwd 
+Traversal Exploit	...//etc/passwd
+Ransomware	RigEK	0e78c0dc543ae85b59d60d6a0de3986cb4cab1640cb0809a3e9ce10657a71851
+Ransomware	RigEK.1	 	c9b281940374a6b02349c8804b6f58ae1faec061dccd346118acdf68c050824d
+Ransomware	RigEK.2	 	e5df732f8fca61061901a1f56cd7c2dbcb8bd2422ace9c2e9237250fc2179331
+Ransomware	RigEK.4	 	0e9bedc57f97bb2c7119ad4713b03fc9b10df09202fb7a237b610aec4687b736
+Ransomware	RigEK.5	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365847cd
+Ransomware	RigEK.6	 	2ab8768a94a4983f4c5a19fc486c85386305e51d6f86854cc50db89f98701d5d
+Ransomware	RigEK.7	 	31f8dbc34d8c34982ff6248a60786175cd010bbb80f18eb6cfd8ff83d2c3a0e5
+Ransomware	RigEK.8	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365847cd
+Ransomware	RigEK.9	 	6ca263b7d150b820c5f13458d1ceaaf0360ac401779379bcec77a99f2bf8e5ce
+Ransomware	RigEK.10	 	6993b911a6310ff7097105922de714d7a070c13633e79c36701d3cccf4086719
+Ransomware	RigEK.11	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365847cd
+Ransomware	RigEK.12	krp3cmg
+Ransomware	RigEK.13	381m6bv285.exe
+Ransomware	CryptXXX	a89f7c458d358615f2d3f0642141febb	fdbeed00cacca229607aa70ee3538c92d57bab7b29cbce0f1c05c1f84c68aa20
+Ransomware	CryptXXX.1	41706d9153eef3a2f5795e58a334b00fa3f40e8d	d9888e38a2f813139331dbac1f07fede19c784a4c2212cff8c17c83a40a2f84d
+Ransomware	CryptXXX.2	 	275ebe2a72951737a3502d00f967c87d4f2fba03c4828d27270ab0f88a4d8f65
 Ransomware	CryptoWall.1	3769639c17f0cd5045964b0839c9f009	03467f231a3fce6795545ae99a6dad161effa3bf681031693815eabf1648ee66
 Ransomware	CryptoWall.2	b6c7943c056ace5911b95d36ff06e0e4	d5a70ba5a194ab737fc52b9f4283ce9d32f090590aea34224f7ea9ec63557a4f
 Ransomware	CryptoWall.3	b30a8168ff49145d7d3cdcfd47dbfaef	23eae15fbd3fff11ae9c0a74dec2f078a0213b6df54cf0011a0f5feae20437ec
@@ -958,3 +976,76 @@ Known Spyware Host	hsms06.com
 Known Spyware Host	rjmetrics.com
 Known Ransomware Host	slater.chat.ru
 Known Ransomware Host	hundeschulegoerg.de
+Known Ransomware Host	capitalsend.info
+Known Ransomware Host	investmentreply.info
+Known Ransomware Host	pure-send.com
+Known Ransomware Host	yourspamshield.com
+Known Ransomware Host	spamerlist.com
+Known Ransomware Host	smartanleger.net
+Known Ransomware Host	sharehold.info
+Known Ransomware Host	sharefinancial.info
+Known Ransomware Host	sharefinance.info
+Known Ransomware Host	finstock.info
+Known Ransomware Host	finreply.info
+Known Ransomware Host	fininvest.info
+Known Ransomware Host	communicationsdigest.com
+Known Ransomware Host	anlegersmart.com
+Known Ransomware Host	181.224.139.64
+Known Ransomware Host	74.208.147.73
+Known Ransomware Host	91.121.74.154
+Known Ransomware Host	stjoeschool.org
+Known Ransomware Host	vaippaandedicators.reducemycard.com
+Known Ransomware Host	185.118.164.42
+Known Ransomware Host	85.25.160.124
+Known Ransomware Host	192.169.189.167
+Known Ransomware Host	192.169.190.97
+Known Ransomware Host	209.126.120.8
+Known Ransomware Host	litigators.esteroscreen.com
+Known Ransomware Host	reikleivn-azarashi.orlandohomesbydevito.com
+Known Ransomware Host	reikleivn-azarashi.orlandohomesbydevito.com
+Known Ransomware Host	frageboegen-plletyksin.breastcanceroutreach.com
+Known Ransomware Host	candidulumbestuurlijk.newlandsierrarealestate.com
+Known Ransomware Host	mcimaildmz.dinnerplate.co.uk
+Known Ransomware Host	et.jacquieleebrasil.com.br
+Known Ransomware Host	kw.projetoraizes.com.br
+Known Ransomware Host	host.vivialvarez.com.ar
+Known Ransomware Host	85.25.107.126
+Known Ransomware Host	207.182.149.14
+Known Ransomware Host	178.32.131.248
+Known Ransomware Host	178.32.131.185
+Known Ransomware Host	85.25.107.127
+Known Ransomware Host	188.165.163.227
+Known Ransomware Host	93.190.143.211
+Known Ransomware Host	45.56.117.118
+Known Ransomware Host	144.76.133.38
+Known Ransomware Host	23.88.147.108
+Known Ransomware Host	54.186.95.29
+Known Ransomware Host	pationare.bit
+Known Ransomware Host	settledness.ru
+Known Ransomware Host	dutchcreekresort.com
+Known Ransomware Host	185.141.25.207
+Known Ransomware Host	79.110.251.102
+Known Ransomware Host	185.141.25.207
+Known Ransomware Host	mannyshrag.com
+Known Ransomware Host	ianusshale.net
+Known Ransomware Host	za95uur.ag0clk.top
+Known Ransomware Host	activaclinics.com
+Known Ransomware Host	195.123.209.74
+Known Ransomware Host	185.141.25.234
+Known Ransomware Host	h01wi.d7riwiu.top
+Known Ransomware Host	miligratonylaonella.com
+Known Ransomware Host	emploiadomicile.info
+Known Ransomware Host	185.141.25.234
+Known Ransomware Host	213.252.244.121
+Known Ransomware Host	kasdima.top
+Known Ransomware Host	scadradio.org
+Known Ransomware Host	176.223.111.82
+Known Ransomware Host	po1289k.kremalopsi.gq
+Known Ransomware Host	104.238.131.117
+Known Ransomware Host	loremipsumdolorsitamet.pw
+Known Ransomware Host	82.165.174.205
+Known Ransomware Host	institut-angeetbeaute.fr
+Known Ransomware Host	208.67.222.222
+Known Ransomware Host	resolver1.opendns.com
+Known Ransomware Host	198.105.254.228
+Known Ransomware Host	voligon.cn
