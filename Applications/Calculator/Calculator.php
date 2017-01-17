@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calculator
-App Version: 1.3 (12-20-2016 11:45-)
+App Version: 1.4 (1-16-2017 22:45)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for doing math.
@@ -38,6 +38,7 @@ else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
 if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
+  $calculatorInput = strtolower($calculatorInput);
   // / The following code defines a function originally written by Justin Cook...
   // / http://www.justin-cook.com/wp/2006/03/31/php-parse-a-string-between-two-strings/
     function get_string_between($string, $start, $end) {
