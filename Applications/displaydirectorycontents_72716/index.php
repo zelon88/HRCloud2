@@ -409,7 +409,7 @@ $.ajax( {
     data: { playlistSelected : "<?php echo $name; ?>"},
     success: function(returnFile) {
       toggle_visibility('loadingCommandDiv');
-      window.location.href = "<?php echo $PLSpecialEcho.'cloudCore.php'; ?>";
+      window.location.href = "<?php echo ('cloudCore.php?playlistSelected='.$name); ?>";
     }
 } );
 });
@@ -531,9 +531,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<?php if (in_array($extnRAW, $pdfWordArr)) { ?>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#scandocSubmit").click(function(){
 var scandocSelected = new Array();
@@ -551,10 +548,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<?php } 
-if (in_array($extnRAW, $convertArr)) { ?>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#convertSubmit").click(function(){
 var convertSelected = new Array();
@@ -573,10 +566,6 @@ $.ajax( {
 } );
 } );
 });
-</script>
-<?php } 
-if (in_array($extnRAW, $imgArr)) { ?>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#convertPhotoSubmit").click(function(){
 var convertphotoSelected = new Array();
@@ -598,10 +587,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<?php } 
-if (in_array($extnRAW, $pdfWordArr)) { ?>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#pdfwork").click(function(){
 var pdfworkSelected = new Array();
@@ -621,9 +606,6 @@ $.ajax( {
 } );
 });
 });
-</script>
-<?php } ?>
-<script type="text/javascript">
 $(document).ready(function () {
 $("#createplaylistbutton").click(function(){
 var streamSelected = new Array();
@@ -651,7 +633,7 @@ $.ajax( {
     type: 'POST',
     url: 'cloudCore.php',
     data: { streamSelected : streamSelected,
-        play : "1")},
+        play : "1"},
     success: function(data) {
         window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
