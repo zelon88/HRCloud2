@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.8.4
-WRITTEN ON : 1/16/2017
+THIS VERSION : v0.9,9.8.5
+WRITTEN ON : 1/17/2017
 */
 
 echo ('<div style="margin-left:15px;">');
