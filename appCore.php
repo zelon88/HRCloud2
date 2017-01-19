@@ -29,7 +29,7 @@ $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11416.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11717.zip');
 $installedApps = array_diff($Apps, $defaultApps);
 if (isset($_POST['uninstallApplication'])) { 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
@@ -183,9 +183,11 @@ if (isset($_POST['uninstallApplication'])) {
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n".'--------------------'."\n"); } } }
   if (is_dir($CleanDir)) {
-  $CleanFiles = scandir($CleanDir);
   echo nl2br('OP-Act: Executing Janitor on Target: '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
   // / Includes the janitor to delete the target App.
+  $CleanFiles = scandir($CleanDir);
+  include ('janitor.php');
+  $CleanFiles = scandir($CleanDir);
   include ('janitor.php');
   @unlink ($CleanDir.'/index.html');
   @unlink ($CleanDir.'/'.$uninstallApp.'.php');

@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.8.5
-WRITTEN ON : 1/17/2017
+THIS VERSION : v0.9,9.8.6
+WRITTEN ON : 1/18/2017
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -285,8 +285,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
         @unlink($CleanDir.'/index.html');
         @chmod($CleanDir.'/jquery-3.1.0.min.js');
         @unlink($CleanDir.'/jquery-3.1.0.min.js');
-        @chmod($CleanDir.'/wordpress_11416.zip');
-        @unlink($CleanDir.'/wordpress_11416.zip');
+        @chmod($CleanDir.'/wordpress_11717.zip');
+        @unlink($CleanDir.'/wordpress_11717.zip');
         @chmod($CleanDir.'/Database/Words/index.html');
         @unlink($CleanDir.'/Database/Words/index.html');
         @chmod($CleanDir.'/Words/index.html');
@@ -329,8 +329,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
             @unlink($CleanDir.'/index.html');
             @chmod($CleanDir.'/jquery-3.1.0.min.js');
             @unlink($CleanDir.'/jquery-3.1.0.min.js');
-            @chmod($CleanDir.'/wordpress_11416.zip');
-            @unlink($CleanDir.'/wordpress_11416.zip');
+            @chmod($CleanDir.'/wordpress_11717.zip');
+            @unlink($CleanDir.'/wordpress_11717.zip');
             @chmod($CleanDir.'/Database/Words/index.html');
             @unlink($CleanDir.'/Database/Words/index.html');
             @chmod($CleanDir.'/Words/index.html');
@@ -374,8 +374,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
               @unlink($CleanDir.'/index.html');
               @chmod($CleanDir.'/jquery-3.1.0.min.js');
               @unlink($CleanDir.'/jquery-3.1.0.min.js');
-              @chmod($CleanDir.'/wordpress_11416.zip');
-              @unlink($CleanDir.'/wordpress_11416.zip');
+              @chmod($CleanDir.'/wordpress_11717.zip');
+              @unlink($CleanDir.'/wordpress_11717.zip');
               @chmod($CleanDir.'/Database/Words/index.html');
               @unlink($CleanDir.'/Database/Words/index.html');
               @chmod($CleanDir.'/Words/index.html');

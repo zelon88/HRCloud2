@@ -35,7 +35,7 @@ if ($ShowHRAI == '1') {
 // / Verify that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile) or if ($WordPressIntegration == '0')) {
-  $WPFile = $InstLoc.'/Applications/wordpress_11416/wp-load.php'; }
+  $WPFile = $InstLoc.'/Applications/wordpress_11717/wp-load.php'; }
 if (!file_exists($WPFile)) {
   echo nl2br('</head>ERROR!!! HRC2Index3-20, WordPress was not detected on the server.'."\n"); }
   else {

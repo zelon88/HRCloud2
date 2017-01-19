@@ -38,7 +38,7 @@ if (isset ($ExternalIP)) {
 // / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  $WPArch  = $InstLoc.'/Applications/wordpress_11416.zip';
+  $WPArch  = $InstLoc.'/Applications/wordpress_11717.zip';
   $VARDir = '/var/www/html';
   echo nl2br('</head>WARNING!!! HRC2CommonCore27, WordPress was not detected on the server.'."\n");
   echo nl2br('OP-Act: Installing WordPress.'."\n");
@@ -98,7 +98,7 @@ $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11416.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11717.zip');
 $installedApps = array_diff($Apps, $defaultApps);
 
 // / The following code sets a target directory within a users Cloud drive and prefixes 
