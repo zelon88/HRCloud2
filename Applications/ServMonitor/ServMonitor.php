@@ -152,6 +152,7 @@ require('tempvoltUpdater.php');
 <div id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
 <a style="padding-left:5px;" onclick="toggle_visibility('cpuGauge');"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  1. CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
 <a style="padding-left:5px;" onclick="toggle_visibility('ramGauge');"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  2. RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('diskGauge');"><strong><img src="Resources/gauge.png" title="More DISK Info" alt="More RAM Info">  3. Disk Usage: </strong>  <i><?php echo $diskUsage[0]; ?></i></a><hr />
 </div>
 
 <div id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
@@ -184,10 +185,9 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
     </div>
 
     <div align="center" id="cpuTemperatureGauge" name="cpuTemperatureGauge" style="border:inset; float:left; width:355px; height:365px;">
-        CPU Temperature: <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>&#8451 <img src="Resources/x.png" title="Close CPU Temp Info" alt="Close CPU Temp Info" onclick="toggle_visibility1('cputemperatureGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
+        CPU Temperature: <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>&#8451 <img src="Resources/x.png" title="Close CPU Temp Info" alt="Close CPU Temp Info" onclick="toggle_visibility1('cpuTemperatureGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
         <div style="float: center;" id="cputempgaugeContainer"></div>
     </div>
 </div>
-<hr />
 </body>
 </html>

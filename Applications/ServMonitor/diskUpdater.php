@@ -18,23 +18,9 @@ if (file_exists($diskCacheFile)) {
   @unlink($diskCacheFile); }
 
 // / The following code caches the disk utilization statistics for all filesystems mounted to the server.
-exec('df', $diskDATA);
-$MAKEDiskCacheFile = file_put_contents($diskCacheFile, $diskDATA);
+exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f1', $diskName);
+exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f2', $diskTotal);
+exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f3', $diskUsed);
+exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f4', $diskFree);
+exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f5', $diskUsage);
 
-$CacheDATA = file_get_contents($diskCacheFile);
-$CacheDATAArr = explode('             ', $CacheDATA);
-foreach ($CacheDATAArr as $diskDATA) {
-  if ($diskDATA == '.' or $diskDATA == '..') die('ERROR!!! HRC2ServMonitorAppDiskUpdater27, There was a critical security fault on'.$Time.'.');
-  if (strpos($diskDATA, 'Filesystem')) continue;
-  if (!is_array($diskDATA)) continue;  
-  // / The following code separates the values returned into useful data.
-  $diskDATA1 = explode('        ', $diskDATA);
-  $diskCapacity = $diskDATA1[0];
-  if (!is_array($networkDATA1)) continue;  
-  $diskDATA2 = explode('   ', $diskDATA1);
-  $diskUsed = $diskDATA2[0];
-  $diskUnused = $diskDATA2[1];
-  if (!is_array($networkDATA2)) continue;  
-  $diskDATA3 = explode(' ', $diskDATA2);
-  $diskUsage = $diskDATA3[0];
-  $diskName = $diskDATA3[1]; }
