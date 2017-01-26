@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.8.6
-WRITTEN ON : 1/18/2017
+THIS VERSION : v0.9,9.9
+WRITTEN ON : 1/25/2017
 */
 
 echo ('<div style="margin-left:15px;">');
@@ -459,8 +459,10 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/adminLogin.php'); } 
   if (file_exists($InstLoc.'/AdminLogin.php')) {
     @unlink($InstLoc.'/AdminLogin.php'); } 
-  if (file_exists($InstLoc.'/Applocatopms/HRAI/awake.php')) {
-    @unlink($InstLoc.'/Applocatopms/HRAI/awake.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/awake.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
+    @unlink($InstLoc.'/Applications/wordpress_11416.zip'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 

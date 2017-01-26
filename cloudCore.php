@@ -70,13 +70,12 @@ if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST["upload"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
-  if (!is_array($_FILES["filesToUpload"])) {
-    $_FILES["filesToUpload"] = array($_FILES["filesToUpload"]); }
+  if (!is_array($_FILES["filesToUpload"]['name'])) {
+    $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
-    if ($file !== '.' or $file !== '..' or $file == 'index.html') {
+    if ($file == '.' or $file == '..' or $file == 'index.html') continue;
       $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);      
       $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-      $file = str_replace(" ", "_", $file);
       $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
       $DangerousFiles = array('js', 'php', 'html', 'css');
       $F0 = pathinfo($file, PATHINFO_EXTENSION);
@@ -87,12 +86,12 @@ if(isset($_POST["upload"])) {
       if($file == "") {
         $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-        die("ERROR!!! HRC2160, No file specified on $Time."); }
+        echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); }
       $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
-      echo nl2br ('OP-Act: '."Uploaded $file to on $Time".'.'.'.'."\n".'--------------------'."\n");
+      echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
-      chmod($F3, 0755); } } 
+      chmod($F3, 0755); } 
       // / The following code checks the Cloud Location with ClamAV before copying, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$CloudDir.' | grep FOUND >> '.$ClamLogDir); 
@@ -920,12 +919,10 @@ if (isset($_POST['streamSelected'])) {
           if(isset($id3Tags['comments']['picture'][0])) {
             $PLSongImage = 'data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); } 
             $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
-            
             $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
             $fo1 = fopen($SongImageFile, 'w');
             $MAKECacheImageFile = file_put_contents($SongImageFile, $PLSongImageDATA);
             fclose($fo1);
-            
             $SongImageFile2 = $CloudTmpDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
             $fo2 = fopen($SongImageFile2, 'w');
             $MAKECacheImageFileRAW = file_put_contents($SongImageFile2, $PLSongImageDATA);
@@ -1164,9 +1161,9 @@ if (isset($SearchRAW)) {
               new \RecursiveDirectoryIterator($ResultFile, \RecursiveDirectoryIterator::SKIP_DOTS),
               \RecursiveIteratorIterator::SELF_FIRST) as $item) {
               if ($item->isDir()) {
-                @mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
+                @mkdir($F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); }   
               else {
-                @copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } 
+                @copy($item, $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } 
         $ResultURL = 'cloudCore.php?UserDirPOST='.$ResultFile0 ; }
       if (!is_dir($ResultFile)) {  
           @copy($ResultFile, $ResultTmpFile); } 
