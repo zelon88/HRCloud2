@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Executor
-App Version: 1.1 (12-25-2016 09:35)
+App Version: 1.2 (1-26-2017 10:45)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 command-line for using PHP like it were Bash.
@@ -34,7 +34,7 @@ $initData = file_get_contents('Executor.php');
       document.getElementById("executorInput").value= ""; }
 </script>
 <div id='executorAPP' name='executorAPP' align='center'><h3>Executor</h3><hr />
-<div align="left"><p>Executor is a server-side command-line interpreter for remotely executing bash and PHP code by the server. 
+<div align="left"><p>Executor is a server-side command-line interpreter for remotely executing bash code on the server. 
   In addition to executing your commands, this tool is also the fastest way to "Execute" (<i>kill/destroy</i>) your server.</p>
 <p>Please use this tool with extreme care! Serious server filesystem damage could result!</p></div>
 <?php 
@@ -47,30 +47,16 @@ if (isset($_POST['executorInput'])) {
   $executorValue = $_POST['executorInput']; }
 ?>
 <form action="Executor.php" method="POST">
-<p><select name="interpreterInput" id="interpreterInput">
-  <option value="bash">bash</option>
-  <option value="PHP">PHP</option>
-</select>
-<?php
-if ($_POST['interpreterInput'] == 'bash') { ?>
 <p style="text-align:left; margin:15px;"><strong>www-data@www-data-<?php echo $UniqueServerName.':'.$cd; ?>$ </strong></p>
-<?php }
-if ($_POST['interpreterInput'] == 'PHP') { ?>
-<p style="text-align:left; margin:15px;"><strong><?php echo '<?php'; ?> </strong></p>
-}
-<p><textarea id="executorInput" name="executxecorInput" value="<?php echo $executorValue; ?>" cols="40" rows="5"></textarea></p>
+<p><textarea id="executorInput" name="executorInput" value="<?php echo $executorValue; ?>" cols="40" rows="5"></textarea></p>
 <p><input type="submit" id="executorSubmit" name="executorSubmit" title="Execute" alt="Execute" value="Execute"></p>
 </form>
 </div>
 <div id="executorOutput" name="executorOutput" align="left" style="margin:15px;">
 <hr />
 <?php 
-if (!isset($_POST['executorInput'])) {
-  $txt = ('Note: There was no input expression to execute on '.$Time.'!');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die('NOTICE!!! HRC2ExecutorApp70, '.$txt); }
 if ($_POST['executorInput'] == '') {
-  $txt = ('ERROR!!! HRC2ExecutorApp55: Executor input cannot be blank.');
+  $txt = ('Notice: Executor input cannot be blank. HRC2ExecutorApp69');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die($txt); }
 $safeArr1 = array('.','..','tmp','dev','run','sys','etc','boot','sbin','bin','lib','opt','usr',
@@ -89,7 +75,7 @@ if (strpos($executorInput, 'sudo') == 'false') {
     $txt1 = ('ERROR!!! HRC2ExecutorApp75: Could not execute "'.$executorInput.'" on '.$Time.'! Please specify a password with " echo \'password\' | sudo -S " to perform this operation.'); 
     $txt2 = ('ERROR!!! HRC2ExecutorApp75: Please specify a password with <p><i><strong>"echo \'password\' | sudo -S"</i></strong></p> to perform this operation.');
     $MAKELogFile = file_put_contents($LogFile, $txt1.PHP_EOL, FILE_APPEND); 
-    die($txt2); } }     
+    die($txt2); } }
 // / Display the selected directory when the user inputs a lonely cd command.
 if (strpos($executorInput, 'cd ') == 'true') { 
   $executorInput1 = str_replace('cd ', 'pwd ', $executorInput); 
