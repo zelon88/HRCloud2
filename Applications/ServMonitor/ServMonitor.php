@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 1.4 (1-16-2017 00:00)
+App Version: 1.5 (1-26-2017 00:00)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -41,10 +41,8 @@ if (!is_dir('Cache/')) {
   // / This cache file will store user-specific data relating to ServMonitor settings and preferences.
 $ServMonUserCache = $CloudTmpDir.'/.AppData/ServMon.php';
 if (!file_exists($ServMonUserCache)) {
-  
-
-}
-
+$txt = '';
+file_put_contents($ServMonUserCache, $txt); }
 
 // / The following code will return the server's CPU load percentage average for the past 5 minutes.
 require('cpuUpdater.php');
@@ -165,8 +163,11 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
 <?php } ?>
 <a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> <?php echo $basicMonitorCounter; ?>. Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
 <a style="padding-left:5px;" onclick="toggle_visibility('adpterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> <?php echo $basicMonitorCounter; ?>. Power Status: </strong>  <i><?php echo $adapterSensorArr[0]; ?></i></a><hr />
-
 </div>
+
+<div id="basicstatisticsMonitors" name="basicstatisticsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
+</div>
+
 </div>
 </div>
 <hr />
