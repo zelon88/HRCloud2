@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.1 (1-15-2017 00:00)
+App Version: 2.2 (1-26-2017 01:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.1 | Virus Definition v1.6, 1/16/2017';
+$versions = 'PHP-AV App v2.2 | Virus Definition v1.6, 1/16/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -27,18 +27,17 @@ $versions = 'PHP-AV App v2.1 | Virus Definition v1.6, 1/16/2017';
     </script>
 <div align="center"><h3>PHP-AV</h3><hr /></div>
 <?php
-// PHP ANTI-VIRUS v2.1
+// PHP ANTI-VIRUS v2.2
 // Written by FujitsuBoy (aka Keyboard Artist)
 // Modified by zelon88
 
-// / PHP-AV 
+$initData = file_get_contents('PHP-AV.php');
 
 // / The following code loads needed HRCloud2 features and functions.
 require('/var/www/html/HRProprietary/HRCloud2/config.php');
 require('/var/www/html/HRProprietary/HRCloud2/commonCore.php');
 
 // / The following code checks if App permission is set to '1' and if the user is an administrator or not.
-$initData = file_get_contents('PHP-AV.php');
 
 if ($UserIDRAW !== 1) {
   $txt = ('ERROR!!! HRC2PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!'); 
