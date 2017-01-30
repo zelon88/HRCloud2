@@ -119,57 +119,6 @@ $installedApps = array_diff($Apps, $defaultApps);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code checks for the existence of an Admin cache file. The Admin cache file contains more information
-  // / than a standard user's cache file. Information like DataCompression, VirusScanning, and customized defaults for 
-  // / standard users.
-if (file_exists($AdminConfig)) {
-  include($AdminConfig); }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code checks to see if compression is enabled. 
-  // / The CloudDir is appended with an archive extension accordingly.
-  // / Existing CloudDirs are converted to archives if they still exist.
-  // / If "High Performance" is enabled, the .zip archive will be larger, but will require less computational power to work with.
-  // / If "High Capacity" is enabled, the .zip archive will be smaller, but will require more computational power to work with.
-    // / Users can select EITHER "High Performance" or "High Capacity" but not both at the same time. 
-if (isset($DataCompression) && $DataCompression !== '') {
-  if ($DataCompression == '1') {
-      $CloudArch = $CloudDir.'.zip'; }
-    if ($DataCompressionMethod == '1') {
-      $perf = ' '; }
-    if ($DataCompressionMethod == '2') {
-      $perf = ' -1 '; }
-    if ($DataCompressionMethod == '3') {
-      $perf = ' -9 '; }
-    if (isset($DataCompressionMethod)) {
-      if ($DataCompressionMethod !== '' && $DataCompressionMethod !== '0' && $DataCompressionMethod !== '1' && $DataCompressionMethod !== '2' 
-        && $DataCompressionMethod !== '3') {  
-          $txt = ('ERROR!!! HRC2CommonCore122, The DataCompressionMethod was invalid on '.$Time.'!'); 
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-          die ($txt); } }
-    if (is_dir($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
-      $exec = 'zip -j'.$perf.$CloudArch.' '.$CloudDir;
-      $txt = ('OP-Act: Executing \''.$exec.'\' on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      shell_exec($exec); }
-    if (file_exists($CloudArch) && strpos($CloudArch, '.zip') == 'true') {
-      $CleanDir = $CloudDir;
-      $CleanFiles = scandir($CloudDir);
-      include('janitor.php'); }
-      if (is_dir($CloudDir)) {
-        $junkCloudFiles = scandir($CloudDir);
-        foreach($junkCloudFiles as $junkCloudFile) {
-          if ($junkCloudFile == '.' or $junkCloudFile == '..') continue;
-          if (!is_dir($CloudDir.$junkCloudFile)) {
-            $CleanDir = $junkCloudFile;
-            if (!is_dir($CloudDir.$junkCloudFile)) continue;
-            $CleanFiles = scandir($CloudDir.$junkCloudFile);
-            include('janitor.php'); } } } 
-  $CloudDir = $CloudArch; }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
 $UserDirPOST = '/';

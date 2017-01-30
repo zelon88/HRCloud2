@@ -119,16 +119,6 @@ if ($UserIDRAW == 1) { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
-<p alt="Compress user data in the CloudLoc. May reduce file sizes 10-30%. May decrease server performance." title="Compress user data in the CloudLoc. May reduce file sizes 10-30%. May decrease server performance." style="padding-left:15px;"><strong>5.</strong> Data Compression: </p>
-  <p><select id="NEWDataCompression" name="NEWDataCompression" style="width:100%;"><p>
-  <option value="<?php echo $DataCompression; ?>">Current (<?php echo $DCEcho; ?>)</option>
-  <option value="0">Disabled</option>
-  <option value="1">Enabled (Automatic)</option>
-  <option value="2">Enabled (Maximum Performance)</option>
-  <option value="3">Enabled (Maximum Capacity)</option>  
-</select>
-</p>
-
 <p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"><strong>4.</strong> System Update </p>
  <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
  <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>

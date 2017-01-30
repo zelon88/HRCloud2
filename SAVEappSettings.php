@@ -72,7 +72,7 @@ if (isset($_POST['Save'])) {
       $NEWVirusScan = $_POST['NEWWordPressIntegration'];
       $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New WordPress Integration Settings.'."\n"); } }
+      //echo nl2br('Saved New WordPress Integration Settings.'."\n"); } }
 ?>
 <hr />
 <?php
