@@ -1,6 +1,7 @@
 <?php
 
-// / The following code will retrieve information regarding the server's network performance and statistics.
+// / This file will retrieve information regarding the server's network performance and statistics.
+
 $networkCacheFile = 'Cache/networkCACHE.php';
 $networkCacheFile1 = 'Cache/networkCACHE1.php';
 $integerArr = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
@@ -31,9 +32,9 @@ $CacheDATA = file_get_contents($networkCacheFile);
 $networkDeviceData = $CacheDATA;
 
 // / The following code retrievs statistics related to the server's network connections.
-exec('netstat -s', $networkDATA);
-$MAKENetworkCacheFile1 = file_put_contents($networkCacheFile1, $networkDATA);
-$CacheDATA = file_get_contents($networkCacheFile1);
-$networkConnectionData = $CacheDATA;
+exec('netstat -s', $networkDATA1);
+$MAKENetworkCacheFile1 = file_put_contents($networkCacheFile1, $networkDATA1);
+$CacheDATA1 = file_get_contents($networkCacheFile1);
+$networkConnectionData = $CacheDATA1;
 
 ?>

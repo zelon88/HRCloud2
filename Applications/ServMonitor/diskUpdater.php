@@ -1,6 +1,6 @@
 <?php
 
-// / The following code will retrieve information regarding the server's network performance and statistics.
+// / This file will retrieve information regarding the server's disk performance and statistics.
 $diskCacheFile = 'Cache/diskCACHE.php';
 
 // / The following code sets the POST and GET variables for the session, if there were any.

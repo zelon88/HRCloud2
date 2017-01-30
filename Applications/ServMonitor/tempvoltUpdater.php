@@ -1,6 +1,6 @@
 <?php
+// / This file will retrieve information regarding the server's tempvolt.
 
-// / The following code will retrieve information regarding the server's tempvolt.
 $tempvoltCacheFile = 'Cache/tempvoltCACHE.php';
 $tempvoltCacheFile1 = 'Cache/tempvoltCACHE1.php';
 

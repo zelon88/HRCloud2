@@ -1,5 +1,6 @@
 <?php
-// / The following will reurn the servers current RAM usage percentage.
+// / This file will reurn the servers current RAM usage percentage.
+
 $exec_free = explode("\n", trim(shell_exec('free')));
 $get_mem = preg_split("/[\s]+/", $exec_free[1]);
 $ram = round($get_mem[2]/$get_mem[1]*100, 0);

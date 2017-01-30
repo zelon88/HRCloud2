@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 1.5 (1-26-2017 00:00)
+App Version: 1.7 (1-30-2017 00:10)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -54,6 +54,8 @@ require('networkUpdater.php');
 require('diskUpdater.php');
 // / The following code will return the server's temperature and voltage information.
 require('tempvoltUpdater.php');
+// / The following code will return the server's hardware specification information.
+require('specUpdater.php');
 
 ?>
 <!DOCTYPE html>
@@ -143,29 +145,34 @@ require('tempvoltUpdater.php');
 // / The following code displays the basic monitoring analytics for the session.
 ?>
 <div id="basicMonitors" name="basicMonitors" align="center" style="float:center; clear:both; display:block; float:center;">
-<p><a style="margin-left:5%;"><strong>Basic Server Monitors</strong></a><a onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></p></a>
+<p><a style="margin-left:5%;"><strong>Basic Server Monitors</strong></a><a onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="float:right; margin-right:1%;"><i>Hide</i></p></a>
 <hr />
-<div align="center" id="basicMonitorsheader" name="basicMonitorsheader" style="clear:both"><p><a onclick="toggle_visibility1('basicutilizationMonitors');">Utilization</a> | <a onclick="toggle_visibility1('basictemperatureMonitors');">Status</a> | <a>Specifications</a></p></div>
+<div align="center" id="basicMonitorsheader" name="basicMonitorsheader" style="clear:both"><p><a onclick="toggle_visibility1('basicutilizationMonitors');">Utilization</a> | <a onclick="toggle_visibility1('basictemperatureMonitors');">Status</a> | <a onclick="toggle_visibility1('basicspecificationsMonitors');">Specifications</a></p></div>
 
-<div id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
-<a style="padding-left:5px;" onclick="toggle_visibility('cpuGauge');"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  1. CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('ramGauge');"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  2. RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('diskGauge');"><strong><img src="Resources/gauge.png" title="More DISK Info" alt="More RAM Info">  3. Disk Usage: </strong>  <i><?php echo $diskUsage[0]; ?></i></a><hr />
+<div id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
+<a style="padding-left:5px;" onclick="toggle_visibility('cpuGauge');"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  • CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('ramGauge');"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  • RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('diskGauge');"><strong><img src="Resources/gauge.png" title="More DISK Info" alt="More RAM Info">  • Disk Usage: </strong>  <i><?php echo $diskUsage[0]; ?></i></a><hr />
 </div>
 
-<div id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
-<a style="padding-left:5px;" onclick="toggle_visibility('cpuTemperatureGauge');"><strong><img src="Resources/gauge.png" title="CPU Temperature" alt="CPU Temperature">  1. CPU Temperature: </strong>  <i><?php echo $thermalSensorArr[0]; ?> </i></a><hr />
+<div id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
+<a style="padding-left:5px;" onclick="toggle_visibility('cpuTemperatureGauge');"><strong><img src="Resources/gauge.png" title="CPU Temperature" alt="CPU Temperature">  • CPU Temperature: </strong>  <i><?php echo $thermalSensorArr[0]; ?> </i></a><hr />
 <?php
 foreach ($thermalSensorArr as $thermalSensorDATA) { 
-  if ($thermalSensorDATA == $thermalSensorArr[0]) continue; 
-  $basicMonitorCounter++; ?>
-<a style="padding-left:5px;" onclick="toggle_visibility('acc<?php echo $basicMonitorCounter; ?>TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Accessory <?php echo $basicMonitorCounter; ?> Temperature" alt="Accessory <?php echo $basicMonitorCounter; ?> Temperature">  <?php echo $basicMonitorCounter; ?>. Accessory Temperature: </strong>  <i><?php echo implode(', ', explode('   ,   ', $thermalSensorDATA)); ?></i></a><hr />
+  if ($thermalSensorDATA == $thermalSensorArr[0]) continue; ?>
+<a style="padding-left:5px;" onclick="toggle_visibility('acc<?php echo $basicMonitorCounter; ?>TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Accessory Temperature" alt="Accessory Temperature"> • Accessory Temperature: </strong>  <i><?php echo $thermalSensorDATA; ?></i></a><hr />
 <?php } ?>
-<a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> <?php echo $basicMonitorCounter; ?>. Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('adpterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> <?php echo $basicMonitorCounter; ?>. Power Status: </strong>  <i><?php echo $adapterSensorArr[0]; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> • Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('adpterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> • Power Status: </strong>  <i><?php echo $adapterSensorArr[0]; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('adpterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> • Network Status: </strong>  <i><?php echo $networkDeviceData; ?></i></a><hr />
 </div>
 
-<div id="basicstatisticsMonitors" name="basicstatisticsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:3%;">
+<div id="basicspecificationsMonitors" name="basicspecificationsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $HardwareDATA; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $StorageDATA; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="CPU Specs" alt="CPU Specs"> • CPU Specs: </strong>  <i><?php echo $CPUSpecDATA; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="USB Specs" alt="USB Specs"> • USB Specs: </strong>  <i><?php echo $USBDATA; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $PCIDATA; ?></i></a><hr />
 </div>
 
 </div>
