@@ -120,6 +120,8 @@ Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
 Exploit CVE-2016-7200.2.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
+Trojan	W32.Adware.Gen!c	471f0993ccf1c5cb3c715740141b6d49	2d02ddb75f42e67f76da4df375834c7e79a62a5828875870d23b236a1d7ae19c
+Trojan	chaqiriq.doc	c9d2eac2c5c415f94ad599d1327f1e8f	e1e5bdecaa621a45c97fc732917c1c36bfd8d83158c88a3f444536c3e2bd389b
 Trojan	Zeus Panda
 Trojan	Sednit	f1d3447a2bff56646478b0adb7d0451c
 Trojan	Minzen	B469B78CA04E8FDAD957CCC68B5B1C3D
