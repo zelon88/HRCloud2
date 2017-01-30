@@ -38,27 +38,41 @@ else {
 
 <br>
 <?php
+// / The following code is performed whenever a user selects to save new settings to their user cache file.
 if (isset($_POST['Save'])) {
+  // / The following code is sets the users color scheme.
   if (isset($_POST['NEWColorScheme'])) {
     $NEWColorScheme = $_POST['NEWColorScheme'];
     $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
+  // / The following code sets the users HRAI display preference.
   if (isset($_POST['NEWShowHRAI'])) {
     $NEWShowHRAI = $_POST['NEWShowHRAI'];
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
-  if (isset($_POST['NEWVirusScan'])) {
-    $NEWVirusScan = $_POST['NEWVirusScan'];
-    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+
+  // / The following settings area only set or displayed when the user is an authentiacted administrator.
+  if ($UserIDRAW == '1') {
+    // / The following code is sets the server's Data Compression settings. 
+    if (isset($_POST['NEWDataCompression'])) {
+      $NEWDataCompression = $_POST['NEWDataCompression'];
+      $txt = ('$DataCompression = \''.$NEWDataCompression.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Data Compression Settings.'."\n"); }
+    // / The following code is sets the server's Virus Scanning setting.
+    if (isset($_POST['NEWVirusScan'])) {
+      $NEWVirusScan = $_POST['NEWVirusScan'];
+      $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
-  if (isset($_POST['NEWWordPressIntegration'])) {
-    $NEWVirusScan = $_POST['NEWWordPressIntegration'];
-    $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New WordPress Integration Settings.'."\n"); }
+    // / The following code is sets the server's WordPress Integration setting,
+    if (isset($_POST['NEWWordPressIntegration'])) {
+      $NEWVirusScan = $_POST['NEWWordPressIntegration'];
+      $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New WordPress Integration Settings.'."\n"); } }
 ?>
 <hr />
 <?php

@@ -1,5 +1,6 @@
 
 <?php
+// / -----------------------------------------------------------------------------------
 // / APPLICATION INFORMATION ...
 // / HRCloud2, Copyright on 7/12/2016 by Justin Grimes, www.github.com/zelon88
 // / 
@@ -21,50 +22,60 @@
 // / 
 // / DEPENDENCY REQUIREMENTS ... 
 // / This application requires Debian Linux (w/3rd Party audio license), 
-// / Apache 2.4, PHP 7.0, MySQL, JScript, WordPress, LibreOffice, Unoconv, 
-// / Python 2.7 and 3, ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG,  
-// / PyGames Rect, NumPy, setuptools for Python 2 and 3, Python-Pip, thetaexif,
-// / OpenCV, Scikit, Scypy, and ImageMagick.
+// / Apache 2.4, PHP 7.0+, MySQL, JScript, WordPress, LibreOffice, Unoconv, 
+// / ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG, and ImageMagick.
 // / -----------------------------------------------------------------------------------
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
+
+// / -----------------------------------------------------------------------------------
+// / The following code will check for and initialize required HRCloud2 Core files.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-// / The follwoing code checks if the securityCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
   echo nl2br('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
   die (); }
 else {
   require ('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is perfomed whenever a user POSTs an input directory.
+// / This code is also used in some cases to create intermediate directories that are required for delivering data to the user.
 if (isset($_POST['dirToMake'])) {
   $MAKEUserDir = $_POST['dirToMake'];
+  // / If no UserDir exists, silently create one.
   if (!file_exists($CloudDir.'/'.$MAKEUserDir)) {
     @mkdir ($CloudDir.'/'.$MAKEUserDir, 0755); 
+      // / Log the attempt.
       $txt = ('OP-Act: Created '.$CloudDir.'/'.$MAKEUserDir.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  // / If no CloudTempDir exists, silently create one.
   if (!file_exists($CloudTempDir.'/'.$MAKEUserDir)) {    
     @mkdir ($CloudTempDir.'/'.$MAKEUserDir, 0755); 
+      // / Log the attempt.
       $txt = ('OP-Act: Created '.$CloudTempDir.'/'.$MAKEUserDir.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   // / The following code double checks that the specified directory were created and returns an error if it was not.
+  // / If no UserDir exists, silently create one. 
   if (!file_exists($CloudDir.'/'.$MAKEUserDir)) {
+      // / Log the attempt.
       $txt = ('ERROR!!! HRC265, Could not create '.$CloudDir.'/'.$MAKEUserDir.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  // / If no CloudTempDir exists, silently create one.  
   if (!file_exists($CloudTempDir.'/'.$MAKEUserDir)) {    
+      // / Log the attempt.
       $txt = ('ERROR!!! HRC265, Could not create '.$CloudTempDir.'/'.$MAKEUserDir.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user initiates a file upload.
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
@@ -102,6 +113,9 @@ if(isset($_POST["upload"])) {
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
           unlink($F3);
           die($txt); } } } 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user downloads a selection of files.
 if (isset($_POST["download"])) {
   $txt = ('OP-Act: Initiated Downloader on '.$Time.'.');
@@ -136,6 +150,9 @@ if (isset($_POST["download"])) {
               mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
             else {
     copy($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
@@ -168,6 +185,9 @@ if (isset($_POST['copy'])) {
         $txt = ('OP-Act: '."Copied $CFile to $newCopyFilename on $Time".'.');
         echo nl2br ($txt."\n".'--------------------'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects a file to rename.
 if (isset($_POST['rename'])) {
   $txt = ('OP-Act: Initiated Renamer on '.$Time.'.');
@@ -190,6 +210,9 @@ if (isset($_POST['rename'])) {
         $txt = ('OP-Act: '."Copied $ReNFile to $renameFilename on $Time".'.');
         echo nl2br ($txt."\n".'--------------------'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects a file to delete.
 if (isset($_POST['deleteconfirm'])) {
   $txt = ('OP-Act: Initiated Deleter on '.$Time.'.');
@@ -497,7 +520,9 @@ if (isset($_POST["dearchiveButton"])) {
       $txt = ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
       echo nl2br ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
-  
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset( $_POST['convertSelected'])) {
   $txt = ('OP-Act: Initiated HRConvert2 on '.$Time.'.');
@@ -833,6 +858,9 @@ if (isset($_POST['pdfworkSelected'])) {
           $txt = ('ERROR!!! HRC2620, '."Could not convert $pathname to $newPathname on $Time".'!'); 
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
            die(); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
   // / Define the and sanitize global .Playlist environment variables.
@@ -991,6 +1019,9 @@ if (isset($_POST['streamSelected'])) {
           shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); }  
         if (in_array($oldExtension, $PLAudioOGGArr)) {
           copy ($oldPathname, $playlistDir.'/'.$StreamFile); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to share.
   if (isset($_POST['shareConfirm'])) {
     $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
@@ -1008,6 +1039,9 @@ if (isset($_POST['streamSelected'])) {
       if (!file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to unshare.
   if (isset($_POST['unshareConfirm'])) {
     $txt = ('OP-Act: Initiated UnShare on '.$Time.'.');
@@ -1025,6 +1059,9 @@ if (isset($_POST['streamSelected'])) {
       if (file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code controls the creation and management of a users clipboard cache file.
 if (isset($_POST['clipboardCopy'])) {
   if (!is_array($_POST['clipboardSelected'])) {
@@ -1078,7 +1115,6 @@ if (isset($_POST['clipboardCopy'])) {
         $txt = 'ERROR!!! HRC2937, No file exists while copying '.$clipboardSelected1.' to '.$PasteDir.' on '.$Time.'.';
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n"); }
- 
       if (file_exists($CloudDir.'/'.$clipboardSelected1)) { 
         if (is_file($CloudDir.'/'.$clipboardSelected1)) {
           copy($CloudDir.'/'.$clipboardSelected1, $CloudDir.'/'.$PasteDir.$clipboardSelected1); 
@@ -1089,8 +1125,10 @@ if (isset($_POST['clipboardCopy'])) {
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
             echo nl2br($txt."\n"); } }
         if (is_dir($CloudDir.'/'.$clipboardSelected1)) {
-        }
-           } } }
+        } } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTempDir)) {
   $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
@@ -1177,8 +1215,12 @@ $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } ?>
 <hr />
 
 <?php }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
 include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
 die(); } 
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); 
+// / -----------------------------------------------------------------------------------
 ?>

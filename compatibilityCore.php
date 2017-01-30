@@ -2,28 +2,36 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9,9.9.1
-WRITTEN ON : 1/26/2017
+THIS VERSION : v0.9,9.9.2
+WRITTEN ON : 1/30/2017
 */
 
-echo ('<div style="margin-left:15px;">');
+// / -----------------------------------------------------------------------------------
+// / This file is the HRCloud2 Compatibility Core! It is responsible for making sure HRCloud2 works. It will also
+  // / keep HRCloud2 up-to-date, and remove deprecated files that could pose security risks. Lastly, this file will
+  // / clean and regenerate HRCloud2 cache files.
+// / -----------------------------------------------------------------------------------
 
-// / The follwoing code checks if the CommonCore.php file exists and 
-// / terminates if it does not.
+// / -----------------------------------------------------------------------------------
+// / The following code opens an HTML Div element to contain the output from our compatibility operations.
+echo ('<div style="margin-left:15px;">');
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The follwoing code checks for required core files and terminates if they are missing.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2CompatCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('ERROR!!! HRC2CompatCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code sets the global variables for the session.
 $ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); 
 $AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); 
@@ -37,8 +45,10 @@ $UpdatedZIP1 = $ResourceDir.'/HRC2UPDATE1.zip';
 $UpdatedZIPURL = 'https://github.com/zelon88/HRCloud2/archive/master.zip';
 $HRC2Config = $InstLoc.'/config.php';
 $HRAIConfig = $InstLoc.'/Applications/HRAI/adminINFO.php';
+// / -----------------------------------------------------------------------------------
 
-// / The following code is performed whenever an admin selects to 
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to clear their user cache.
 if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'Clear User Cache') {
   $txt = ('OP_Act: Initiated User Cache Cleaner on '.$Time.'.');
   echo nl2br ($txt.'<hr />');
@@ -60,7 +70,9 @@ if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'C
     echo nl2br($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     require ($UserConfig); } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user requests that HRCloud2 Auto-Update to the latest version.
 // / Will establish a CuRL connection to Github and download the latest Master commit in .zip form and unpack it
   // / to the $InstLoc. Temporary files will then be deleted.
@@ -80,7 +92,9 @@ if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true'  or $AutoUpdatePOST == '
     mkdir($ResourceDir, 0755); 
     $txt = ('OP-Act: Created a TEMP directory in /Resources to store pending updates on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to download an update package.
 if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST == 'Download Update') {
   $txt = ('OP-Act: Initiating Update-Downloader on '.$Time.'.'); 
@@ -104,7 +118,9 @@ if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST 
     $txt = ('OP-Act: The latest version of HRCloud2 was sucessfully downloaded on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to install an update package.
 if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST == 'Install Update') {
   $txt = ('OP-Act: Initiating Update-Installer on '.$Time.'.'); 
@@ -197,7 +213,6 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                           copy ($UFSrcDir6, $UFDstDir6); } } } } } } } } } } } }   
         $txt = ('OP-Act: Copied update data on '.$Time.'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-
   // / The following code checks the HRCloud2 version and stops the update process if an old version was prepared.
   require ($ResourceDir1.'/versionInfo.php'); 
   $Version1 = $Version;
@@ -206,7 +221,6 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
-
   // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
   $txt = ('OP-Act: Preserving server configuration data on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -216,7 +230,6 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   copy ($InstLoc.'/config.php', $InstLoc.'/BACKUP/configBACKUP'.$BAKinc.'.php'); 
   rename ($ResourceDir1.'/config.php', $ResourceDir1.'/configLATEST.php');
   copy ($InstLoc.'/config.php', $ResourceDir1.'/config.php');
-
   // / The following code preserves HRAI configuration files to be restored after the update.
     $BAKinc1 = 0;
   while (file_exists($InstLoc.'Applications/HRAI/adminINFOBACKUP'.$BAKinc1.'.php')) {
@@ -224,7 +237,6 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $InstLoc.'/Applications/HRAI/adminINFO'.$BAKinc.'.php'); 
   rename ($ResourceDir1.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFOLATEST.php');
   copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFO.php'); 
-
   // / The following code checks that HRCloud2 was sucessfully updated..
   require ($ResourceDir1.'/versionInfo.php'); 
   $Version1 = $Version;
@@ -239,7 +251,9 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
       $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects to Clean temporary update package files.
 if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clean Update') {
   $txt = ('OP-Act: Initiating Update-Cleaner on '.$Time.'.'); 
@@ -266,7 +280,6 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
       $txt = ('OP-Act: Deleted update packages on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
-
   if (is_dir($ResourceDir1)) {
     $ResourceDirFiles = scandir($ResourceDir1); 
     $CleanFiles = $ResourceDirFiles;
@@ -285,8 +298,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
         @unlink($CleanDir.'/index.html');
         @chmod($CleanDir.'/jquery-3.1.0.min.js');
         @unlink($CleanDir.'/jquery-3.1.0.min.js');
-        @chmod($CleanDir.'/wordpress_11717.zip');
-        @unlink($CleanDir.'/wordpress_11717.zip');
+        @chmod($CleanDir.'/wordpress_1-28-17.zip');
+        @unlink($CleanDir.'/wordpress_1-28-17.zip');
         @chmod($CleanDir.'/Database/Words/index.html');
         @unlink($CleanDir.'/Database/Words/index.html');
         @chmod($CleanDir.'/Words/index.html');
@@ -329,8 +342,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
             @unlink($CleanDir.'/index.html');
             @chmod($CleanDir.'/jquery-3.1.0.min.js');
             @unlink($CleanDir.'/jquery-3.1.0.min.js');
-            @chmod($CleanDir.'/wordpress_11717.zip');
-            @unlink($CleanDir.'/wordpress_11717.zip');
+            @chmod($CleanDir.'/wordpress_1-28-17.zip');
+            @unlink($CleanDir.'/wordpress_1-28-17.zip');
             @chmod($CleanDir.'/Database/Words/index.html');
             @unlink($CleanDir.'/Database/Words/index.html');
             @chmod($CleanDir.'/Words/index.html');
@@ -361,7 +374,6 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
             @rmdir($CleanDir.'/HRStreamer');
             @chmod($CleanDir);
             @rmdir($CleanDir); 
-
         foreach ($CleanFiles as $ResourceDirFile3) {
           if ($ResourceDirFile3 == '.' or $ResourceDirFile4 == '..') continue;
             $CleanDir = $ResourceDir1.'/'.$ResourceDirFile.'/'.$ResourceDirFile2.'/'.$ResourceDirFile3;
@@ -374,8 +386,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
               @unlink($CleanDir.'/index.html');
               @chmod($CleanDir.'/jquery-3.1.0.min.js');
               @unlink($CleanDir.'/jquery-3.1.0.min.js');
-              @chmod($CleanDir.'/wordpress_11717.zip');
-              @unlink($CleanDir.'/wordpress_11717.zip');
+              @chmod($CleanDir.'/wordpress_1-28-17.zip');
+              @unlink($CleanDir.'/wordpress_1-28-17.zip');
               @chmod($CleanDir.'/Database/Words/index.html');
               @unlink($CleanDir.'/Database/Words/index.html');
               @chmod($CleanDir.'/Words/index.html');
@@ -420,7 +432,9 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
   copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code cleans and deletes old, unused, or otherwise deprecated files from HRCloud2.
 if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST == 'Compat Check') {
   $txt = ('OP-Act: Initiating Compatibility Checker on '.$Time.'.'); 
@@ -462,7 +476,7 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
     @unlink($InstLoc.'/Applications/HRAI/awake.php'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
-    @unlink($InstLoc.'/Applications/wordpress_11416.zip'); } 
+    @unlink($InstLoc.'/Applications/wordpress_1-28-17.zip'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -497,9 +511,13 @@ $AutoDownloadPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoD
 $AutoInstallPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall']); 
 $AutoCleanPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoClean']); 
 $CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); 
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
+// / The following code displays the navigation buttons for when a user selects a compatibility related operation that this page has satisfied.
 if (isset($_POST['ClearCache']) or isset($_POST['AutoUpdate']) or isset($_POST['AutoDownload']) or isset($_POST['AutoInstall']) or 
   isset($_POST['AutoClean']) or isset($_POST['CheckCompatibility'])) {
   echo ('<div align="center"><form target ="_parent" action="settings.php" method="get"><button id="button" name="home" value="1">Settings</button></form>
     <br><form target ="_parent" action="index1.php" method="get"><button id="button" name="home" value="1">Home</button></form></div>'); }
 echo ('</div>');
+// / -----------------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 <?php
+// / -----------------------------------------------------------------------------------
 // / This file is intended to be included in PHP files that require safe sanitization of 
 // / supported POST and GET inputs. 
 
@@ -7,24 +8,26 @@
 // / If you're looking to add code to sanitize additional 
 // / POST or GET inputs, you should put it in this file and then require this file into
 // / your code project, or app.
+// / -----------------------------------------------------------------------------------
 
 
-// / -----------------------------
 
+// / -----------------------------------------------------------------------------------
 // / Developers add your code between the following comment lines.....
+
 
 
 $your_code_here = null;
 
 
 
-
-
-
 // / Developers DO NOT add your code below this comment line.
-set_time_limit(0);
-// / -----------------------------
+// / -----------------------------------------------------------------------------------
 
+
+
+// / -----------------------------------------------------------------------------------
+set_time_limit(0);
 // / OFFICIAL HRCLOUD2 SANITIZED API INPUTS
 
 // / The following blocks of code each represent a distnct HRCloud2 API input.
@@ -34,6 +37,21 @@ set_time_limit(0);
 // / Can be used to clear the USER SPECIFIC HRCloud2 cache files. Accepts a value of '1' or 'true'.
   // / THIS WILL ONLY AFFECT THE LOGGED-IN USER !!!
 
+  // / ONLY ADMINISTRATORS CAN SET COMPRESSION SETTINGS !!!
+// / Can be used by administrators to set data compression settings for user uploaded content.
+  // / "DataCompressionPOST" can be set to 0 for "disabled" or 1 for "enabled".
+// / "DataCompressionMethod" can be set to 0, 1, or 2. 
+  // / 0 = Disabled.
+  // / 1 = Automatic.
+  // / 2 = Maximum performance.
+  // / 3 = Maximum storage capacity.
+if (isset($_POST['DataCompression'])) {
+  $DataCompression = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['DataCompression']); }
+
+if (isset($_POST['DataCompressionMethod'])) {
+  $DataCompressionMethod = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['DataCompressionMethod']); }
+
+  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
 // / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
   // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
 if (isset($_POST['ClearCachePOST'])) {
@@ -231,6 +249,6 @@ if (isset($_POST['grabberFilename'])) {
 // / / There is an API input for creating playlists, but it sucks and I'm still working on HRStreamer. When it's ready, or
    // / if the date is later than February of 2017, plaease open a support ticket and tell me to update this code. 
   // / HRC2SanCore139.
-
 set_time_limit(0);
+// / -----------------------------------------------------------------------------------
 ?>

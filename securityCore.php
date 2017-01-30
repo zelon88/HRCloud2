@@ -27,34 +27,34 @@ else {
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 
 // / The following code changes the ownership of certain directories to the www-data user,
-chown('/var/www/html', 'www-data');
-chown('/var/www/html/HRProprietary', 'www-data');
-chown($InstLoc, 'www-data');
-chown($InstLoc.'/Applications', 'www-data');
-chown($InstLoc.'/Resources', 'www-data');
-chown($InstLoc.'/DATA', 'www-data');
-chown($InstLoc.'/Screenshots', 'www-data');
-@chown($UserConfig, 'www-data');
+@chown('/var/www/html', 'www-data');
+@chown('/var/www/html/HRProprietary', 'www-data');
+@chown($InstLoc, 'www-data');
+@chown($InstLoc.'/Applications', 'www-data');
+@chown($InstLoc.'/Resources', 'www-data');
+@chown($InstLoc.'/DATA', 'www-data');
+@chown($InstLoc.'/Screenshots', 'www-data');
+@@chown($UserConfig, 'www-data');
 
 // / The following code changes the permission of certain directories to 0755,
-chmod('/var/www/html', 0755);
-chmod('/var/www/html/HRProprietary', 0755);
-chmod($InstLoc, 0755);
-chmod($InstLoc.'/Applications', 0755);
-chmod($InstLoc.'/Resources', 0755);
-chmod($InstLoc.'/DATA', 0755);
-chmod($InstLoc.'/Screenshots', 0755);
-@chmod($UserConfig, 0755);
+@chmod('/var/www/html', 0755);
+@chmod('/var/www/html/HRProprietary', 0755);
+@chmod($InstLoc, 0755);
+@chmod($InstLoc.'/Applications', 0755);
+@chmod($InstLoc.'/Resources', 0755);
+@chmod($InstLoc.'/DATA', 0755);
+@chmod($InstLoc.'/Screenshots', 0755);
+@@chmod($UserConfig, 0755);
 
 // / The following code changes the group of certain directories to the www-data group,
-chgrp('/var/www/html', 'www-data');
-chgrp('/var/www/html/HRProprietary', 'www-data');
-chgrp($InstLoc, 'www-data');
-chgrp($InstLoc.'/Applications', 'www-data');
-chgrp($InstLoc.'/Resources', 'www-data');
-chgrp($InstLoc.'/DATA', 'www-data');
-chgrp($InstLoc.'/Screenshots', 'www-data');
-@chgrp($UserConfig, 'www-data');
+@chgrp('/var/www/html', 'www-data');
+@chgrp('/var/www/html/HRProprietary', 'www-data');
+@chgrp($InstLoc, 'www-data');
+@chgrp($InstLoc.'/Applications', 'www-data');
+@chgrp($InstLoc.'/Resources', 'www-data');
+@chgrp($InstLoc.'/DATA', 'www-data');
+@chgrp($InstLoc.'/Screenshots', 'www-data');
+@@chgrp($UserConfig, 'www-data');
 
 // / Secutity related processing.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);

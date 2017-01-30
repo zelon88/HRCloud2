@@ -29,9 +29,20 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php')) 
 else {
   require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
 
-// / Prepare the echo value for the color input field.
+// / Prepare the $SaltHash.
 $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 
+// / Set the echo value for the "Data Comrpession" option.
+if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) {
+  $DCEcho = 'Disabled'; }
+if ($DataCompression == '1') {
+  $DCEcho = 'Enabled (Automatic)'; }
+if ($DataCompression == '2') {
+  $DCEcho = 'Enabled (High Performance)'; }
+if ($DataCompression == '3') {
+  $DCEcho = 'Enabled (High Capacity)'; }  
+
+// / Set the echo value for the "Color Scheme" option.
 if ($ColorScheme == '1') {
   $CSEcho = 'Blue (Default)'; }
 if ($ColorScheme == '2') {
@@ -42,18 +53,21 @@ if ($ColorScheme == '4') {
   $CSEcho = 'Grey'; }
 if ($ColorScheme == '5') {
   $CSEcho = 'Black'; }
+
 // / Prepare the echo value for the show HRAI input field.
 if ($ShowHRAI == '1') {
   $SHRAIEcho = 'Enabled'; }
 if ($ShowHRAI !== '1') {
   $SHRAIEcho = 'Disabled'; }
+
 // / Prepare the echo value for the virus input field.
 if ($VirusScan == '1') {
   $VSEcho = 'Enabled'; }
 if ($VirusScan !== '1') {
   $VSEcho = 'Disabled'; }
+
 // / Prepare the echo value for the WordPress Integration input field.
-if ($ShowHRAI == '1') {
+if ($WordPressIntegration == '1') {
   $WPIEcho = 'Enabled'; }
 if ($ShowHRAI == '0') {
   $WPIEcho = 'Disabled'; }
@@ -79,7 +93,7 @@ if ($ShowHRAI == '0') {
 <div align='left'>
 <form action="SAVEappSettings.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
-<p style="padding-left:15px;"><strong>1.</strong> Color Scheme: </p>
+<p alt="Change the HRCloud2 color scheme." title="Change the HRCloud2 color scheme." style="padding-left:15px;"><strong>1.</strong> Color Scheme: </p>
   <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;"></p>
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
   <option value="1">Blue (Default)</option>
@@ -89,14 +103,14 @@ if ($ShowHRAI == '0') {
   <option value="5">Black</option>
 </select></p>
 
-<p style="padding-left:15px;"><strong>2.</strong> HRAI Load Balancing Personal Assistant: </p>
+<p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong>2.</strong> HRAI Load Balancing Personal Assistant: </p>
   <p><select id="NEWShowHRAI" name="NEWShowHRAI" style="padding-left:30px; width:100%;">
   <option value="<?php echo $ShowHRAI; ?>">Current (<?php echo $SHRAIEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
 
-<p style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
+<p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
   <a style="padding-left:10%;">
     <input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
@@ -105,7 +119,17 @@ if ($UserIDRAW == 1) { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
-<p style="padding-left:15px;"><strong>4.</strong> System Update </p>
+<p alt="Compress user data in the CloudLoc. May reduce file sizes 10-30%. May decrease server performance." title="Compress user data in the CloudLoc. May reduce file sizes 10-30%. May decrease server performance." style="padding-left:15px;"><strong>5.</strong> Data Compression: </p>
+  <p><select id="NEWDataCompression" name="NEWDataCompression" style="width:100%;"><p>
+  <option value="<?php echo $DataCompression; ?>">Current (<?php echo $DCEcho; ?>)</option>
+  <option value="0">Disabled</option>
+  <option value="1">Enabled (Automatic)</option>
+  <option value="2">Enabled (Maximum Performance)</option>
+  <option value="3">Enabled (Maximum Capacity)</option>  
+</select>
+</p>
+
+<p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"><strong>4.</strong> System Update </p>
  <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
  <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
  <p style="float:center; padding-left:10%;">Manual Update Options: </p>
@@ -115,7 +139,7 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
-<p style="padding-left:15px;"><strong>5.</strong> Virus Scanning (Requires ClamAV on server): </p>
+<p alt="Options for performing security scans on the server with ClamAV." title="Options for performing security scans on the server with ClamAV." style="padding-left:15px;"><strong>5.</strong> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;"><p>
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>

@@ -1,40 +1,38 @@
 <?php
 
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
+// / -----------------------------------------------------------------------------------
+// / The follwoing code checks for required core files and terminates if they are missing.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppCore5, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2AppCore13, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-
-// / The follwoing code checks if the securityCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
   echo nl2br('ERROR!!! HRC2AppCore21, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
-  
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code sets the global variables for the session.
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_11717.zip', 'wordpress_11416.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_1-28-17.zip', 'wordpress_1-28-17.zip');
 $installedApps = array_diff($Apps, $defaultApps);
 if (isset($_POST['uninstallApplication'])) { 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code will be performed when an administrator selects to install an HRCloud2 App..
 if (isset($_POST['installApplication'])) {
   // / Perform security check (UserID).
@@ -64,14 +62,14 @@ if (isset($_FILES["appToUpload"])) {
     $appToInstall = str_replace('.'.$appExt, '', $appToInstallRAW);
     $appInstallDir = $InstLoc.'/Applications/'.$appToInstall;
     $appInstallDir0 = $InstLoc.'/Applications/'.$appToInstallRAW;
-      $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);      
-      $file = str_replace(" ", "_", $file);
-      $DangerousFiles = array('js', 'php', 'html', 'css');
-      $F0 = pathinfo($file, PATHINFO_EXTENSION);
-      if (in_array($F0, $DangerousFiles)) { 
-        $file = str_replace($F0, $F0.'SAFE', $file); }
+    $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);      
+    $file = str_replace(" ", "_", $file);
+    $DangerousFiles = array('js', 'php', 'html', 'css');
+    $F0 = pathinfo($file, PATHINFO_EXTENSION);
+    if (in_array($F0, $DangerousFiles)) { 
+      $file = str_replace($F0, $F0.'SAFE', $file); }
       $F2 = pathinfo($file, PATHINFO_BASENAME);
-      if($file == "") {
+    if($file == "") {
         $txt = ("ERROR!!! HRC2AppCore160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
         die("ERROR!!! HRC2AppCore160, No file specified on $Time."); }
@@ -79,8 +77,8 @@ if (isset($_FILES["appToUpload"])) {
       echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $COPY_TEMP = copy($_FILES['appToUpload']['tmp_name'][$key], $appInstallDir0); 
-    $txt = ('OP-Act: Initiated AppCore Dearchiver on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      $txt = ('OP-Act: Initiated AppCore Dearchiver on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $allowed =  $installableArr;
       $archarray = $installableArr;
       $rararr = array('rar');
@@ -98,7 +96,6 @@ if (isset($_FILES["appToUpload"])) {
       // / Create the new App directory in Applications/
       if (!file_exists($appInstallDir)) {
         mkdir($appInstallDir); }
-
       echo nl2br ('OP-Act: Dearchiving '.$appToInstallRAW.' to '.$filename2.' on '.$Time.'.'."\n".'--------------------'."\n"); 
       // / Handle dearchiving of rar compatible files.
       if(in_array($ext,$rararr)) {
@@ -115,8 +112,7 @@ if (isset($_FILES["appToUpload"])) {
         shell_exec('7z e'.$AppDir.'.'.$ext.' '.$appInstallDir0); 
         $txt = ('OP-Act: '."Installed $appInstallDir0. to $appInstallDir on $Time".'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-
-            // / Check the Cloud Location with ClamAV before archiving, just in case.
+      // / Check the Cloud Location with ClamAV before archiving, just in case.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$appInstallDir0.' | grep FOUND >> '.$ClamLogDir); 
       if (filesize($ClamLogDir > 1)) {
@@ -147,8 +143,10 @@ if (isset($_FILES["appToUpload"])) {
       $txt = ('ERROR!!! HRC2AppCore142, There was a problem cleaning up '.$appToInstallRAW.' on '.$Time.'.'); 
       echo nl2br ($txt."\n".'--------------------'."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }} } }
-  
-// / The following code is perofmed whenever an administrator selects to uninstall a new App.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is perofmed whenever an administrator selects to uninstall an App.
 if (isset($_POST['uninstallApplication'])) {
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']);
   // / Check that the user is an administrator.
@@ -167,7 +165,7 @@ if (isset($_POST['uninstallApplication'])) {
   $txt = ('OP-Act: Initiated AppCore Uninstaller on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']);
-    // / Sets the CleanDir and CleanFiles variables for the Janitor.
+  // / Sets the CleanDir and CleanFiles variables for the Janitor.
   $CleanDir = $InstLoc.'/Applications/'.$uninstallApp;
   @chmod($CleanDir, 0755);
   // / Tests for an errant file instead of a directory, and deletes the file if possible.
@@ -183,25 +181,27 @@ if (isset($_POST['uninstallApplication'])) {
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n".'--------------------'."\n"); } } }
   if (is_dir($CleanDir)) {
-  echo nl2br('OP-Act: Executing Janitor on Target: '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
-  // / Includes the janitor to delete the target App.
-  $CleanFiles = scandir($CleanDir);
-  include ('janitor.php');
-  $CleanFiles = scandir($CleanDir);
-  include ('janitor.php');
-  @unlink ($CleanDir.'/index.html');
-  @unlink ($CleanDir.'/'.$uninstallApp.'.php');
-  @rmdir ($CleanDir);
-  // / Check that the Janitor suceeded in deleting the target App.
-  if (!file_exists($CleanDir)) {
-    $txt = ('OP-Act: Uninstalled App '.$uninstallApp.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($txt."\n".'--------------------'."\n"); }
-  if (file_exists($CleanDir)) {
-    $txt = ('ERROR!!! HRC2AppCore183 Could not uninstall App '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    echo nl2br($txt."\n".'--------------------'."\n"); } } }
+    echo nl2br('OP-Act: Executing Janitor on Target: '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
+    // / Includes the janitor to delete the target App.
+    $CleanFiles = scandir($CleanDir);
+    include ('janitor.php');
+    $CleanFiles = scandir($CleanDir);
+    include ('janitor.php');
+    @unlink ($CleanDir.'/index.html');
+    @unlink ($CleanDir.'/'.$uninstallApp.'.php');
+    @rmdir ($CleanDir);
+    // / Check that the Janitor suceeded in deleting the target App.
+    if (!file_exists($CleanDir)) {
+      $txt = ('OP-Act: Uninstalled App '.$uninstallApp.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br($txt."\n".'--------------------'."\n"); }
+    if (file_exists($CleanDir)) {
+      $txt = ('ERROR!!! HRC2AppCore183 Could not uninstall App '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      echo nl2br($txt."\n".'--------------------'."\n"); } } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code gets the App information, like official name, description, 
 // / author, and license.
 if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'])) {
@@ -236,7 +236,9 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
           $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
           $ApplicationIntegration = trim($ApplicationIntegration); } 
         $lineCounter++; } } } 
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code returns the random file or folder for each Cloud module. 
 $files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);
 $random_file = array_rand($files, 1);
@@ -251,7 +253,9 @@ if ($random_file == '.' or $random_file == '..') {
   $random_file = 'No files to show!'; } 
 if ($random_file == '') {
   $random_file = 'No files to show!'; } 
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / The following code sets a random App to echo for some home screens and GUI's.
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 $random_app = array_rand($apps);
@@ -276,7 +280,7 @@ if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultA
   $random_app = $apps[$random_app]; }
 if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
   $random_app = 'No apps to show!'; }
-
+// / -----------------------------------------------------------------------------------
 
 // / --------------------------------------------------
 // / Integrated App-Specific Code
@@ -295,7 +299,6 @@ if ($random_contact == '.' or $random_contact == '..' or in_array($random_contac
 if ($random_contact == 'contacts.php') { 
   $random_contact = 'No contacts to show!'; }
 $random_contact = str_replace('.php', '', $random_contact);
-
 // / The following code sets a random Note to echo for some home screens and GUI's.
 if (!is_dir($NotesDir)) {
   mkdir($NotesDir, 0755);
@@ -320,4 +323,5 @@ $random_note = str_replace('.txt', '', $random_note);
 if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or $random_note == '' 
   or strpos($random_note, '.txt') == 'true' or strpos($random_note, '.php') == 'true') {
   $random_note = 'No notes to show!'; } 
+// / -----------------------------------------------------------------------------------
 ?>

@@ -70,8 +70,9 @@ $appCounter = 0;
 <?php 
 // / The following code detects and displays each valid App in the "Applications" directory.
 foreach ($apps as $appName) {
+  if (in_array($appName, $defaultApps)) continue;
   if ($appName == '.' or $appName == '..' or in_array($appName, $defaultApps)) continue;
-  copy($InstLoc.'/index.html', $AppDir.$appName.'/index.html');
+  @copy($InstLoc.'/index.html', $AppDir.$appName.'/index.html');
   $appLoc = 'Applications/'.$appName.'/'.$appName.'.php';
   $appIcon = 'Applications/'.$appName.'/'.$appName.'.png';
   if (!file_exists($appIcon)) {
