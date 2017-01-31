@@ -117,11 +117,11 @@ if ($ColorScheme == '5') {
     if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
       or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true'
       or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true' 
-      or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true') continue;
+      or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true' or strpos($namehref, 'ServMon') == 'true') continue;
     if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
       or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
       or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
-      or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true') continue;	
+      or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true' or strpos($name, 'ServMon') == 'true') continue;	
     	
 	// Output
 	 echo("<tr class='$class'>
