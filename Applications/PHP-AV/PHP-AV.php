@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.2 (1-26-2017 01:00)
+App Version: 2.3 (1-31-2017 01:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.2 | Virus Definition v1.8, 1/30/2017';
+$versions = 'PHP-AV App v2.3 | Virus Definition v1.9, 1/31/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -110,11 +110,24 @@ function virus_check($file, $defs, $debug) {
 		$data2 = hash_file('sha256', $file);
 		$clean = 1;
 		foreach ($defs as $virus) {
-			if (strpos($data, $virus[1]) or strpos($data1, $virus[2]) or strpos($data2, $virus[3])) {
+			if ($virus[1] !== '') {
+			if (strpos($data, $virus[1])) {
 				// file matches virus defs
 				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
 				$infected++;
 				$clean = 0; } }
+			if ($virus[2] !== '') {
+              if (strpos($data1, $virus[2])) {
+				// file matches virus defs
+				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+				$infected++;
+				$clean = 0; } }
+			if ($virus[3] !== '') {
+              if (strpos($data2, $virus[3])) {
+				// file matches virus defs
+				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+				$infected++;
+				$clean = 0; } } }
 		if (($debug)&&($clean))
 			$report .= '<p class="g">Clean: ' . $file . '</p>'; } }
 

@@ -144,7 +144,7 @@ Trojan	Emotet.10	ac49e85de3fced88e3e4ef78af173b37
 Trojan	Emotet.11	c0f8b2e3f1989b93f749d8486ce6f609
 Trojan	Emotet.12	1561359c46a2df408f9860b162e7e13b
 Trojan	Emotet.13	a8ca1089d442543933456931240e6d45
-Trojan	Emotet.14	Trojan Nuclear Pack
+Trojan Emotet.14	Trojan Nuclear Pack
 Trojan	Emotet.15	177ae9a7fc02130009762858ad182678
 Trojan	Emotet.16	1a6fe1312339e26eb5f7444b89275ebf
 Trojan	Emotet.17	257e82d6c0991d8bd2d6c8eee4c672c7
@@ -167,14 +167,14 @@ Trojan	Emotet.33	e49c549b95dbd8ebc0930ad3f147a4b9
 Trojan	Emotet.34	ea804a986c02d734ad38ed0cb4d157a7
 Trojan	Terdot.A	 	151778e132753186eb8bb0dd5b6563a3d919af7e6bbdc4395e17442556021741
 Trojan	Terdot.A.1	 	61a3ece84544ab539e69156a882f49d1082555a48e77b3ffab0dd854b7bac8d3
-Trojan	Sundown	542.swf
-Trojan	Sundown.2	225.swf
-Trojan	Sundown.3	fvdvsdfv.png
-Trojan	Sundown.4	542.swf
-Trojan	Sundown.5	fvdvsdfv.png
-Trojan	Sundown.6	542.swf
-Trojan	Sundown.7	208.swf
-Trojan	Sundown.8	5421.swf
+Trojan Sundown	542.swf
+Trojan Sundown.2	225.swf
+Trojan Sundown.3	fvdvsdfv.png
+Trojan Sundown.4	542.swf
+Trojan Sundown.5	fvdvsdfv.png
+Trojan Sundown.6	542.swf
+Trojan Sundown.7	208.swf
+Trojan Sundown.8	5421.swf
 Trojan	Sagecrypt	4bbc2b40ca476c9d2dae44c86258ae80	50624b1338349dcab4ad8345e0100ea75d3b643ef1e3a487b32fd711418b281b
 Trojan	Kovter	6295e092bc3ce94e18aedc69bcfbbbda	51d57d7f8d68391c295f97f5ec01fa57cdba2454fc0864dd336fd5008fd6fb40
 Trojan	AgentNed	4b64dc7993800e0fb60410471356a976	4e7cc2c1b3e8bb6ed8d9016420daed0585d0cbd75d5616830a4c184024371a51
@@ -196,11 +196,11 @@ Trojan	Sundown.12	 	0744ba67c5f8210fcdcf4acb328df68780e96d10f2c68b8eddbb9a355bca
 Trojan	Sundown.13	 	fc4bb31eb4e3d533e369b3687d72abb263937c698019b4f50229a5ca2d083bbb
 Trojan	Sundown.14	 	112db20b0f6cbb39bd24dd2dbe121e62506c6862b1db1276b0219bda76a903dd
 Trojan	Sundown.15	 	c4b894094c08ea234a2a2652f77383f4a22c5402918c330a7ad6f39520dcc53c
-Trojan	Sundown.16	etgerf.exe
-Trojan	Sundown.17	rgfrf.exe
-Trojan	Sundown.18	radEF99C.tmp.exe
+Trojan Sundown.16	etgerf.exe
+Trojan Sundown.17	rgfrf.exe
+Trojan Sundown.18	radEF99C.tmp.exe
 Trojan	Sundown.19	 	9ee649300ee66768afdb2b8866d504e802bd40fd8e4125667bb0f0e2bb6d339f
-Trojan	Sundown.	z.tmp
+Trojan Sundown.	z.tmp
 Trojan Emotet.35	188.166.118.34
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
@@ -245,8 +245,10 @@ Ransomware	RigEK.8	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365
 Ransomware	RigEK.9	 	6ca263b7d150b820c5f13458d1ceaaf0360ac401779379bcec77a99f2bf8e5ce
 Ransomware	RigEK.10	 	6993b911a6310ff7097105922de714d7a070c13633e79c36701d3cccf4086719
 Ransomware	RigEK.11	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365847cd
-Ransomware	RigEK.12	krp3cmg
-Ransomware	RigEK.13	381m6bv285.exe
+Ransomware RigEK.12	krp3cmg
+Ransomware RigEK.13	381m6bv285.exe
+Ransomware RigEK.Cerber	radF22EA.tmp.exe		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
+Ransomware RigEK.Cerber.1	Rig-EK.swf		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
 Ransomware	CryptXXX	a89f7c458d358615f2d3f0642141febb	fdbeed00cacca229607aa70ee3538c92d57bab7b29cbce0f1c05c1f84c68aa20
 Ransomware	CrytXXX.1	41706d9153eef3a2f5795e58a334b00fa3f40e8d	d9888e38a2f813139331dbac1f07fede19c784a4c2212cff8c17c83a40a2f84d
 Ransomware	CryptXXX.2	 	275ebe2a72951737a3502d00f967c87d4f2fba03c4828d27270ab0f88a4d8f65
@@ -269,19 +271,19 @@ Ransomware	Locky.1	74dde1905eff75cf3328832988a785de
 Ransomware	Locky.2	d9df60c24ceca5c4d623ff48ccd4e9b9
 Ransomware	Locky.3	c5ad81d8d986c92f90d0462bc06ac9c6
 Ransomware	Locky.4	357c162a35c3623d1a1791c18e9f56e7
-Ransomware	Locky.5	7b45833d87d8bd38c44cbaeece65dbbd04e12b8c1ef81a383cf7f0fce9832660
-Ransomware	Locky.6	357c162a35c3623d1a1791c18e9f56e72bcd76f6ef9f4cbcf5952f62b9bc8a08
+Ransomware	Locky.5		7b45833d87d8bd38c44cbaeece65dbbd04e12b8c1ef81a383cf7f0fce9832660
+Ransomware	Locky.6		357c162a35c3623d1a1791c18e9f56e72bcd76f6ef9f4cbcf5952f62b9bc8a08
 Ransomware	Locky.7	b0ca8c5881c1d27684c23db7a88d11e1
 Ransomware	Locky.8	c325dcf4c6c1e2b62a7c5b1245985083
-Ransomware	Locky.9	mrsweeter.ru/87h78rf33g
-Ransomware	Locky.10	185.130.7.22
-Ransomware	Locky.11	sBpFSa.exe
-Ransomware	Locky.12	WRwe3X.exe
-Ransomware	Locky.13	gvtg77996
-Ransomware	Locky.14	buhjolk.at
-Ransomware	Locky.15	dIseJh.exe
-Ransomware	Locky.16	aY5TFn.exe
-Ransomware	Locky.17	buhjolk.at
+Ransomware Locky.9	mrsweeter.ru/87h78rf33g
+Ransomware Locky.10	185.130.7.22
+Ransomware Locky.11	sBpFSa.exe
+Ransomware Locky.12	WRwe3X.exe
+Ransomware Locky.13	gvtg77996
+Ransomware Locky.14	buhjolk.at
+Ransomware Locky.15	dIseJh.exe
+Ransomware Locky.16	aY5TFn.exe
+Ransomware Locky.17	buhjolk.at
 Known Spyware Host	dreampark.co.jp
 Known Spyware Host	enigmasoftwaregroup.com
 Known Spyware Host	healthycomputerclub.com
@@ -1120,3 +1122,7 @@ Known Ransomware Host: Rig.Eitest.TeamViewer	verawqamscomtrue.com
 Known Ransomware Host: Rig.Eitest.TeamViewer	95.163.127.190
 Known Ransomware Host: Rig.Eitest.TeamViewer	ddreamonline.site GET /forum/ajax/out.dat
 Known Ransomware Host: Rig.Eitest.TeamViewer	95.163.127.190
+Known Ransomware Host Host: RigV.Cerber	betongstudio.no
+Known Ransomware Host Host: RigV.Cerber.1	109.234.35.244
+Known Ransomware Host Host: RigV.Cerber.2	84.200.4.70
+Known Ransomware Host Host: RigV.Cerber.3	109.234.35.244
