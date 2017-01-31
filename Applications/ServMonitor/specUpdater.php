@@ -18,35 +18,35 @@ if (file_exists($specCacheFile)) {
 exec('lshw', $HardwareDATA);
 $MAKESpecCacheFile = file_put_contents($specCacheFile, $HardwareDATA);
 $HardwareDATA = file_get_contents($specCacheFile);
-$specHardwareDeviceData = $HardwareDATA;
+$specHardwareDeviceData = $HardwareDATA.PHP_EOL;
 
 // / The following code retrievs statistics related to the server's basic storage devices.
 exec('lsblk', $StorageDATA);
 $MAKEStorageCacheFile = file_put_contents($storageCacheFile, $StorageDATA);
 $StorageDATA = file_get_contents($storageCacheFile);
-$specStorageDeviceData = $StorageDATA;
+$specStorageDeviceData = $StorageDATA.PHP_EOL;
 
 // / The following code retrievs statistics related to the server's basic CPU information.
 exec('cat /proc/cpuinfo', $CPUSpecDATA);
 $MAKECPUSpecCacheFile = file_put_contents($cpuSpecCacheFile, $CPUSpecDATA);
 $CPUSpecDATA = file_get_contents($cpuSpecCacheFile);
-$specCPUDeviceData = $CPUDATA;
+$specCPUDeviceData = $CPUSpecDATA.PHP_EOL;
 
 // / The following code retrievs statistics related to the server's basic USB devices.
 exec('lsusb', $USBDATA);
 $MAKEUSBCacheFile = file_put_contents($usbCacheFile, $USBDATA);
 $USBDATA = file_get_contents($usbCacheFile);
-$specUSBDeviceData = $USBDATA;
+$specUSBDeviceData = $USBDATA.PHP_EOL;
 
 // / The following code retrievs statistics related to the server's basic PCI devices.
 exec('lspci', $PCIDATA);
 $MAKEPCICacheFile = file_put_contents($pciCacheFile, $PCIDATA);
 $PCIDATA = file_get_contents($pciCacheFile);
-$specPCIDeviceData = $PCIDATA;
+$specPCIDeviceData = $PCIDATA.PHP_EOL;
 
 // / The following code retrievs statistics related to the server's uptime.
 exec('lspci', $UptimeDATA);
 $MAKEUptimeCacheFile = file_put_contents($uptimeCacheFile, $UptimeDATA);
 $UptimeDATA = file_get_contents($uptimeCacheFile);
-$specUptimeData = $UptimeDATA;
+$specUptimeData = $UptimeDATA.PHP_EOL;
 

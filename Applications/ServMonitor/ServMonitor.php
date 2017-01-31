@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 1.7 (1-30-2017 00:10)
+App Version: 1.8 (1-30-2017 00:10)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -168,11 +168,11 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
 </div>
 
 <div id="basicspecificationsMonitors" name="basicspecificationsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $HardwareDATA; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $StorageDATA; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="CPU Specs" alt="CPU Specs"> • CPU Specs: </strong>  <i><?php echo $CPUSpecDATA; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="USB Specs" alt="USB Specs"> • USB Specs: </strong>  <i><?php echo $USBDATA; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $PCIDATA; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $specHardwareDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $specStorageDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="CPU Specs" alt="CPU Specs"> • CPU Specs: </strong>  <i><?php echo $specCPUDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="USB Specs" alt="USB Specs"> • USB Specs: </strong>  <i><?php echo $specPCIDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $specUptimeData; ?></i></a><hr />
 </div>
 
 </div>
