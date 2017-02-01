@@ -136,7 +136,6 @@ while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
 <img id="imgeditButton" name="imgeditButtin" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
 <img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/share.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
 </div>
-</div>
 
 <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
   <p><input type='submit' name="newFolder" id="newFolder" value='New Folder' onclick="toggle_visibility('makedirDiv'); toggle_visibility('makedir'); toggle_visibility('dirToMake');">
@@ -153,7 +152,6 @@ while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
 <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple style="display:none;">
 <input type='submit' name="upload" id="upload" value='&#x21E7' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');"></div>
 </form>
-
 <div align="center" id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
 <input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo $Udir.'Scanned-Document_'.$Date; ?>'> 
 <select id='outputtopdf' name='outputtopdf'> 
@@ -267,8 +265,7 @@ Are you sure?
 <p><input type='submit' id='clipboardCopy' name='clipboardCopy' value='Copy' onclick="toggle_visibility('loadingCommandDiv');">
   | <input type='submit' id='clipboardPaste' name='clipboardPaste' value='Paste' onclick="toggle_visibility('loadingCommandDiv');"></p>
 </div>
-<div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
-</div>
+<div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="display:none;"><img src='Resources/logoSmall.gif' style="max-width:64px; max-height:64px;"/></div>
   <table class="sortable">
     <thead>
     <tr>
