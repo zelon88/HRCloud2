@@ -5,33 +5,30 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCLoud2 | Application Settings</title>
 <?php
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
+// / -----------------------------------------------------------------------------------
+// / The follwoing code checks for required core files and terminates if they are missing.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppSettings11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppSettings19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppSettings19, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
 
+// / -----------------------------------------------------------------------------------
 // / Prepare the $SaltHash.
 $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
 if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) {
   $DCEcho = 'Disabled'; }
@@ -41,7 +38,9 @@ if ($DataCompression == '2') {
   $DCEcho = 'Enabled (High Performance)'; }
 if ($DataCompression == '3') {
   $DCEcho = 'Enabled (High Capacity)'; }  
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Color Scheme" option.
 if ($ColorScheme == '1') {
   $CSEcho = 'Blue (Default)'; }
@@ -53,37 +52,32 @@ if ($ColorScheme == '4') {
   $CSEcho = 'Grey'; }
 if ($ColorScheme == '5') {
   $CSEcho = 'Black'; }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the show HRAI input field.
 if ($ShowHRAI == '1') {
   $SHRAIEcho = 'Enabled'; }
 if ($ShowHRAI !== '1') {
   $SHRAIEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the virus input field.
 if ($VirusScan == '1') {
   $VSEcho = 'Enabled'; }
 if ($VirusScan !== '1') {
   $VSEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the WordPress Integration input field.
 if ($WordPressIntegration == '1') {
   $WPIEcho = 'Enabled'; }
 if ($ShowHRAI == '0') {
   $WPIEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
 ?>
-    <script type="text/javascript">
-    function Clear() {    
-      document.getElementById("search").value= ""; }
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-         e.style.display = 'none';
-      else
-         e.style.display = 'block'; }
-    function goBack() {
-      window.history.back(); }
-    </script>
 </head>
 <body>
 <div align="center">
@@ -141,23 +135,30 @@ if ($UserIDRAW == 1) { ?>
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>
   <script type="text/javascript">
     function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block'; }
-    function reload() {
-    window.history.back(); }
+      var e = document.getElementById(id);
+      if(e.style.display == 'block')
+         e.style.display = 'none';
+      else
+         e.style.display = 'block'; }
+    function goBack() {
+      window.history.back(); }
+    function toggle_visibility(id) {
+      var e = document.getElementById(id);
+      if(e.style.display == 'block')
+        e.style.display = 'none';
+      else
+        e.style.display = 'block'; }
 </script>
 <hr />
 
 <div align='center'>
   <p><input type='submit' name='Save' id='Save' value='Save Changes' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='LoadDefaults' id='LoadDefaults' value='Load Defaults' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
-  <input type="hidden" name='YUMMYSaltHash' id='YUMMYSaltHash' value="<?php echo $SaltHash; ?>">
-
+  <input type="hidden" name='YUMMYSaltHash' id='YUMMYSaltHash' value="<?php echo $SaltHash; ?>"></p>
 </form>
-  <input type='submit' name='Clear' id='Clear' value='Clear Changes' style="padding: 2px; border: 1px solid black" onclick="reload();"/></p>
+<form action="appSettings.php">
+  <p><input type='submit'  name='Clear' id='Clear' value='Clear Changes' style="padding: 2px; border: 1px solid black"></p>
+</form>
 <div id='end' name='end' class='end'>
 </div>
 <hr />

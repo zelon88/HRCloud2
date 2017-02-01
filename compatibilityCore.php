@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9.9.9.6
+THIS VERSION : v0.9.9.9.7
 WRITTEN ON : 1/31/2017
 */
 
@@ -477,6 +477,8 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/Applications/HRAI/awake.php'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
     @unlink($InstLoc.'/Applications/wordpress_1-28-17.zip'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/wordpress_11416.zip')) {
+    @unlink($InstLoc.'/Applications/wordpress_11416.zip'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 

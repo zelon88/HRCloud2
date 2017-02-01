@@ -12,32 +12,28 @@ function goBack() {
 <div style="margin-left:15px;">
 <?php
 
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
+// / -----------------------------------------------------------------------------------
+// / The follwoing code checks for required core files and terminates if they are missing.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SAS10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-
-// / The follwoing code checks if the securityCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SAS10, Cannot process the HRCloud2 Secutity Core file (securityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SAS19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); } ?>
-
+  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+// / -----------------------------------------------------------------------------------
+?>
 <br>
 <?php
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to save new settings to their user cache file.
 if (isset($_POST['Save'])) {
   // / The following code is sets the users color scheme.
@@ -45,35 +41,36 @@ if (isset($_POST['Save'])) {
     $NEWColorScheme = $_POST['NEWColorScheme'];
     $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Saved "Color Scheme" setting: "'.$NEWColorScheme.'" to the user cache file on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
   // / The following code sets the users HRAI display preference.
   if (isset($_POST['NEWShowHRAI'])) {
     $NEWShowHRAI = $_POST['NEWShowHRAI'];
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'"" to the user cache file on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
 
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
-  if ($UserIDRAW == '1') {
+  if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
     if (isset($_POST['NEWDataCompression'])) {
       $NEWDataCompression = $_POST['NEWDataCompression'];
       $txt = ('$DataCompression = \''.$NEWDataCompression.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'"" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Data Compression Settings.'."\n"); }
     // / The following code is sets the server's Virus Scanning setting.
     if (isset($_POST['NEWVirusScan'])) {
       $NEWVirusScan = $_POST['NEWVirusScan'];
       $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
-    // / The following code is sets the server's WordPress Integration setting,
-    if (isset($_POST['NEWWordPressIntegration'])) {
-      $NEWVirusScan = $_POST['NEWWordPressIntegration'];
-      $txt = ('$WordPressIntegration = \''.$NEWWordPressIntegration.'\';') ;
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      //echo nl2br('Saved New WordPress Integration Settings.'."\n"); 
-    } }
+      $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'"" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Anti-Virus Settings.'."\n"); } }
 ?>
 <hr />
 <?php
@@ -86,14 +83,25 @@ sleep(3);
 <form target ="_parent" action="index1.php" method="get"><button id='button' name='home' value="1">Home</button></form>
 </div>
 <?php }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to
 if (isset($_POST['LoadDefaults'])) {
   require('config.php');
   $NEWColorScheme = $ColorScheme; 
-  $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
+  $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-  $NEWVirusScan = $VirusScan; 
-  $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
+  $NEWShowHRAI = $ShowHRAI; 
+  $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+  if ($UserIDRAW == 1) {
+    $NEWVirusScan = $VirusScan; 
+    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+    $NEWVirusScan = $VirusScan; 
+    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); } ?></div>
 <br>
 <hr />
