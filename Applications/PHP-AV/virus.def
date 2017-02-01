@@ -165,6 +165,7 @@ Trojan	Emotet.31	ddd7cdbc60bd0cdf4c6d41329b43b4ce
 Trojan	Emotet.32	e01954ac6d0009790c66b943e911063e
 Trojan	Emotet.33	e49c549b95dbd8ebc0930ad3f147a4b9
 Trojan	Emotet.34	ea804a986c02d734ad38ed0cb4d157a7
+Trojan Emotet.35	188.166.118.34
 Trojan	Terdot.A	 	151778e132753186eb8bb0dd5b6563a3d919af7e6bbdc4395e17442556021741
 Trojan	Terdot.A.1	 	61a3ece84544ab539e69156a882f49d1082555a48e77b3ffab0dd854b7bac8d3
 Trojan Sundown	542.swf
@@ -175,6 +176,18 @@ Trojan Sundown.5	fvdvsdfv.png
 Trojan Sundown.6	542.swf
 Trojan Sundown.7	208.swf
 Trojan Sundown.8	5421.swf
+Trojan	Sundown.9	 	4fe30eb4fd3c1e54b58f901e94e36fc1a8c7a514bf827e7611740d260dd73f4b
+Trojan	Sundown.10	 	cf730db69db781c515919b26ac46698c5249a62a5413edd11e1dd92fd3a44acb
+Trojan	Sundown.11	 	67d598c6acbd6545ab24bbd44cedcb825657746923f47473dc40d0d1f122abb6
+Trojan	Sundown.12	 	0744ba67c5f8210fcdcf4acb328df68780e96d10f2c68b8eddbb9a355bca213e
+Trojan	Sundown.13	 	fc4bb31eb4e3d533e369b3687d72abb263937c698019b4f50229a5ca2d083bbb
+Trojan	Sundown.14	 	112db20b0f6cbb39bd24dd2dbe121e62506c6862b1db1276b0219bda76a903dd
+Trojan	Sundown.15	 	c4b894094c08ea234a2a2652f77383f4a22c5402918c330a7ad6f39520dcc53c
+Trojan Sundown.16	etgerf.exe
+Trojan Sundown.17	rgfrf.exe
+Trojan Sundown.18	radEF99C.tmp.exe
+Trojan	Sundown.19	 	9ee649300ee66768afdb2b8866d504e802bd40fd8e4125667bb0f0e2bb6d339f
+Trojan Sundown.	z.tmp
 Trojan	Sagecrypt	4bbc2b40ca476c9d2dae44c86258ae80	50624b1338349dcab4ad8345e0100ea75d3b643ef1e3a487b32fd711418b281b
 Trojan	Kovter	6295e092bc3ce94e18aedc69bcfbbbda	51d57d7f8d68391c295f97f5ec01fa57cdba2454fc0864dd336fd5008fd6fb40
 Trojan	AgentNed	4b64dc7993800e0fb60410471356a976	4e7cc2c1b3e8bb6ed8d9016420daed0585d0cbd75d5616830a4c184024371a51
@@ -189,19 +202,6 @@ Trojan	zd1.2	ebc51f6facae5d8bb3d41bc3eca56f67	c20fff01ea21b78ae29f417934a9da2eaf
 Trojan	Zbot ba5cd871e53b6808b3b404b49c9b5ead	f54ca0492592d6e910fc4f17cbb5096f3e0ecda437a717e50de90f0b60e64195
 Trojan	Zbot.1	4b96cdeac867a0ac5d853f678feb0c4b	8eb282d2a6720a73e09282875cbdfce5fd78122797484023883db2257fb35a9c
 Trojan	Zbot.2	c619412f0d38b3ea41ea865c3c94b331	27c85756c2cbdd89674c50868d2f8127025cd740f24c888e6d9b047ff6cc2a4e
-Trojan	Sundown.9	 	4fe30eb4fd3c1e54b58f901e94e36fc1a8c7a514bf827e7611740d260dd73f4b
-Trojan	Sundown.10	 	cf730db69db781c515919b26ac46698c5249a62a5413edd11e1dd92fd3a44acb
-Trojan	Sundown.11	 	67d598c6acbd6545ab24bbd44cedcb825657746923f47473dc40d0d1f122abb6
-Trojan	Sundown.12	 	0744ba67c5f8210fcdcf4acb328df68780e96d10f2c68b8eddbb9a355bca213e
-Trojan	Sundown.13	 	fc4bb31eb4e3d533e369b3687d72abb263937c698019b4f50229a5ca2d083bbb
-Trojan	Sundown.14	 	112db20b0f6cbb39bd24dd2dbe121e62506c6862b1db1276b0219bda76a903dd
-Trojan	Sundown.15	 	c4b894094c08ea234a2a2652f77383f4a22c5402918c330a7ad6f39520dcc53c
-Trojan Sundown.16	etgerf.exe
-Trojan Sundown.17	rgfrf.exe
-Trojan Sundown.18	radEF99C.tmp.exe
-Trojan	Sundown.19	 	9ee649300ee66768afdb2b8866d504e802bd40fd8e4125667bb0f0e2bb6d339f
-Trojan Sundown.	z.tmp
-Trojan Emotet.35	188.166.118.34
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -284,6 +284,8 @@ Ransomware Locky.14	buhjolk.at
 Ransomware Locky.15	dIseJh.exe
 Ransomware Locky.16	aY5TFn.exe
 Ransomware Locky.17	buhjolk.at
+Ransomware	Ransom!Gen7		1e6353973206502c55d6f1a2370d8a0a50cc2946f88e033fa580f88df52f6cfd
+Ransomware	Ransom!Gen7.1		1e6353973206502c55d6f1a2370d8a0a50cc2946f88e033fa580f88df52f6cfd 
 Known Spyware Host	dreampark.co.jp
 Known Spyware Host	enigmasoftwaregroup.com
 Known Spyware Host	healthycomputerclub.com
