@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9.9.9.7
-WRITTEN ON : 1/31/2017
+THIS VERSION : v0.9.9.9.8
+WRITTEN ON : 2/2/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -447,6 +447,10 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
       $txt = ('OP-Act: Copied the backup file "'.$ChkFileIsBACKUP1.'" to the Backup Directory on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+  if (file_exists($InstLoc.'/appSettings.php')) {
+    @unlink($InstLoc.'/appSettings.php'); }
+  if (file_exists($InstLoc.'/SAVEappSettings.php')) {
+    @unlink($InstLoc.'/SAVEappSettings.php'); }
   if (file_exists($InstLoc.'/search2.php')) {
     @unlink($InstLoc.'/search2.php'); }
   if (file_exists($InstLoc.'/createUserFiles.php')) {
