@@ -85,7 +85,12 @@ foreach ($CleanFilesRAW as $CleanFile) {
     if ($CleanFile == '.' or $CleanFile == '..' or $CleanFile == '' or $CleanFile == ' '
       or in_array($CleanFile, $SAFEArr) or in_array($CleanFile, $defaultApps)) continue;
         if (is_dir($CleanDir.'/'.$CleanFile)) {
-          @rmdir($CleanDir.'/'.$CleanFile.'/'.$object1.'/'.$object2.'/'.$object3.'/'.$object4); 
-          $txt = ('OP-Act: Janitor Cleaned directory '.$object4.' on '.$Time.'.');
+          @unlink($CleanDir.'/'.$CleanFile.'/index.html');
+          @rmdir($CleanDir.'/'.$CleanFile); 
+          $txt = ('OP-Act: Janitor Cleaned directory '.$CleanDir.'/'.$CleanFile.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+        if (is_file($CleanDir.'/'.$CleanFile)) {
+          @unlink($CleanDir.'/'.$CleanFile); 
+          $txt = ('OP-Act: Janitor Cleaned '.$CleanDir.'/'.$CleanFile.' on '.$Time.'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 ?>
