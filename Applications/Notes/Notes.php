@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.3 (11-26-2016 00:16)
+App Version: 1.4 (2-5-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -56,8 +56,8 @@ if (!file_exists($NotesDir)) {
 
 // / The following code is performed whenever a user selects to edit a Note.
 if (isset($_GET['editNote'])) {
-  $noteToEdit = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
-  $noteName = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
+  $noteToEdit = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
+  $noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   $noteToEdit = $noteToEdit.'.txt';
   $noteData = @file_get_contents($NotesDir.$noteToEdit);
   $noteData = str_replace('<br />', '', $noteData);
@@ -69,7 +69,7 @@ if (isset($_GET['editNote'])) {
 
 // / The following code is performed whenever a user selects to delete a Note.
 if (isset($_GET['deleteNote'])) {
-  $noteToDelete = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
+  $noteToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
   $noteToDelete = $noteToDelete;
   unlink($NotesDir.$noteToDelete.'.txt'); 
   $txt = ('OP-Act: Deleting Note '.$noteToDelete.' on '.$Time.'!');
@@ -80,7 +80,7 @@ if (isset($_GET['deleteNote'])) {
 if (is_dir($NotesDir)) {
   // / If the input POSTS are set, we turn them into a note.
   if (isset($_POST['newNote'])) {
-  	$noteName = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['newNote']);
+  	$noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['newNote']);
     if (!isset($_POST['note'])) {
       $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
