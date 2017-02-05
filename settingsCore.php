@@ -111,8 +111,13 @@ if (isset($_POST['LoadDefaults'])) {
 sleep(1); } ?>
 </div>
 <?php
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
+// / Include the user's configuration data.
 require($UserConfig);
+// / -----------------------------------------------------------------------------------
+
 // / -----------------------------------------------------------------------------------
 // / Prepare the $SaltHash.
 $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
@@ -167,6 +172,9 @@ if ($WordPressIntegration == '1') {
 if ($ShowHRAI == '0') {
   $WPIEcho = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following is displayed to all users.
 ?>
 <div align='left'>
 <form action="settingsCore.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
@@ -191,8 +199,11 @@ if ($ShowHRAI == '0') {
 <p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
   <a style="padding-left:10%;">
     <input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
-
 <?php
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following is displayed if the user is an administrator.
 if ($UserIDRAW == 1) { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
@@ -214,27 +225,11 @@ if ($UserIDRAW == 1) { ?>
   <option value="0">Disabled</option>
 </select>
 <p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
-<?php } ?>
-
+<?php } 
+// / -----------------------------------------------------------------------------------
+?>
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>
-  <script type="text/javascript">
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-         e.style.display = 'none';
-      else
-         e.style.display = 'block'; }
-    function goBack() {
-      window.history.back(); }
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-        e.style.display = 'none';
-      else
-        e.style.display = 'block'; }
-</script>
 <hr />
-
 <div align='center'>
   <p><input type='submit' name='Save' id='Save' value='Save Changes' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='LoadDefaults' id='LoadDefaults' value='Load Defaults' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
@@ -246,5 +241,15 @@ if ($UserIDRAW == 1) { ?>
 <div id='end' name='end' class='end'>
 </div>
 <hr />
+  <script type="text/javascript">
+    function toggle_visibility(id) {
+      var e = document.getElementById(id);
+      if(e.style.display == 'block')
+         e.style.display = 'none';
+      else
+         e.style.display = 'block'; }
+    function goBack() {
+      window.history.back(); }
+</script>
 </body>
 </html>

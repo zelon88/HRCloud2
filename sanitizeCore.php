@@ -111,17 +111,17 @@ if (isset($_POST['shareConfirm'])) {
   // / This can be used to create a directory or retreive the contents of an existing directory.
   // / Example: 'Pictures/' needs to exist before 'Pictures/Flowers' can be created.
 if (isset($_POST['dirToMake'])) {
-  $_POST['dirToMake'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dirToMake']); }
+  $_POST['dirToMake'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_POST['dirToMake']); }
 
 // / UserDir's can be POSTed or GETed using the "UserDIR" or "UserDirPOST" variables.
   // / Must specify either UserDir or UserDirPOST as a POST or GET variable.
 if (isset($_GET['UserDirPOST'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+  $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
   $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
   $_POST['UserDir'] = $_GET['UserDirPOST']; }
 // / I realize this looks strange, but it's valid and intensional. DO NOT MODIFY IT !!!
 if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
+  $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDir']);
   $_POST['UserDirPOST'] = $_GET['UserDir'];
   $_POST['UserDir'] = $_GET['UserDir']; }
 

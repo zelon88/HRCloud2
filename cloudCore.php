@@ -86,7 +86,7 @@ if(isset($_POST["upload"])) {
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;
       $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);      
-      $_GET['UserDirPOST'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+      $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
       $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
       $DangerousFiles = array('js', 'php', 'html', 'css');
       $F0 = pathinfo($file, PATHINFO_EXTENSION);
@@ -130,17 +130,19 @@ if (isset($_POST["download"])) {
       $file = $CloudUsrDir.$file;
       $F2 = pathinfo($file, PATHINFO_BASENAME);
       $F3 = $CloudTmpDir.$F2;
-      $F4 = pathinfo($file, PATHINFO_FILENAME);
-      $F5 = pathinfo($file, PATHINFO_EXTENSION);
-      $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-        if($file == "") {
-          $txt = ("ERROR!!! HRC2187, No file specified on $Time".'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-          echo nl2br("ERROR!!! HRC2187, No file specified"."\n");
-          die(); }
+      if($file == "") {
+        $txt = ("ERROR!!! HRC2187, No file specified on $Time".'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        echo nl2br("ERROR!!! HRC2187, No file specified"."\n");
+        die(); }
+      if (file_exists($F3)) { 
+        @touch($F3); }
       if (!file_exists($F3)) { 
-      $COPY_TEMP = copy($file, $F3); }
+        $COPY_TEMP = copy($file, $F3); 
+        $F4 = pathinfo($file, PATHINFO_FILENAME);
+        $F5 = pathinfo($file, PATHINFO_EXTENSION);
+        $txt = ('OP-Act: '."Submitted $file to $CloudTmpDir on $Time".'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
       if (is_dir($file)) { 
         mkdir($F3, 0755);
           foreach ($iterator = new \RecursiveIteratorIterator(
@@ -593,7 +595,7 @@ if (isset( $_POST['convertSelected'])) {
               $stopper++;
               if ($stopper == 10) {
                 die('ERROR!!! HRC2425, The converter timed out while copying your file.'); }
-              sleep(2); } }
+              sleep(1); } }
         
           // / Code to convert and manipulate image files.
           if (in_array($oldExtension,$imgarray) ) {
@@ -865,7 +867,7 @@ if (isset($_POST['pdfworkSelected'])) {
 if (isset($_POST['streamSelected'])) {
   // / Define the and sanitize global .Playlist environment variables.
   $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
-  $PlaylistName = str_replace(str_split('\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
+  $PlaylistName = str_replace(str_split('.\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
   $PLVideoArr =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');    
   $PLVideoArr2 =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');    
   $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
@@ -944,9 +946,9 @@ if (isset($_POST['streamSelected'])) {
           if(!isset($id3Tags['tags']['id3v2']['album'])) {
             $PLSongAlbum = ''; }
           // / If id3v2 image tags are set, return it as an image data variable as well as a .jpg file in the .Cache directory..
-          if(isset($id3Tags['comments']['picture'][0])) {
-            $PLSongImage = 'data:'.$id3Tags['comments']['picture'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['comments']['picture'][0]['data']); } 
-            $PLSongImageDATA = $id3Tags['comments']['picture']['0']['data'];
+          if(isset($id3Tags['id3v2']['APIC'][0]['data']) && $id3Tags['id3v2']['APIC'][0]['data'] !== '') {
+            $PLSongImage = 'data:'.$id3Tags['id3v2']['APIC'][0]['image_mime'].';charset=utf-8;base64,'.base64_encode($id3Tags['id3v2']['APIC'][0]['data']); } 
+            $PLSongImageDATA = $id3Tags['id3v2']['APIC'][0]['data'];
             $SongImageFile = $CloudUsrDir.$PlaylistName.'.Playlist/.Cache/'.$MediaFileCount.'.jpg';
             $fo1 = fopen($SongImageFile, 'w');
             $MAKECacheImageFile = file_put_contents($SongImageFile, $PLSongImageDATA);
@@ -963,7 +965,7 @@ if (isset($_POST['streamSelected'])) {
             $fo4 = fopen($SongImageFile2, 'w');
             $MAKECacheImageFile2 = file_put_contents($SongImageFile2, $PLSongImageDATA);
             fclose($fo4);
-          if(!isset($id3Tags['comments']['picture'][0])) {
+          if(!isset($id3Tags['id3v2']['APIC'][0]['data']) or $id3Tags['id3v2']['APIC'][0]['data'] == '') {
             $PLSongImage = ''; }
             // / If the audio count is one, this code will open tags within our XML cache file for the tracklist.
             if ($MediaFileCount == 1) {
@@ -1138,17 +1140,23 @@ if (file_exists($CloudTempDir)) {
   foreach ($DFiles as $DFile) {
     if (in_array($DFile, $defaultApps)) continue;
     if ($DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
-    if (($now - filemtime($DFile)) >= 60 * 60) { // Time to keep files.
-    if (is_file($DFile)) {
-      @chmod ($DFile, 0755);
-      unlink($DFile); 
-      $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    if (is_dir($DFile)) {
-      $CleanDir = $DFile;
-      @chmod ($CleanDir, 0755);
-      $CleanFiles = scandir($DFile);
-      include('/var/www/html/HRProprietary/HRCloud2/janitor.php'); } } } }
+    if (($now - filemtime($DFile)) >= 900) { // Time to keep files.
+      if (is_file($DFile)) {
+        @chmod ($DFile, 0755);
+        unlink($DFile); 
+        $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+      if (is_dir($DFile)) {
+        $CleanDir = $DFile;
+        @chmod ($CleanDir, 0755);
+        $CleanFiles = scandir($DFile);
+        include('/var/www/html/HRProprietary/HRCloud2/janitor.php'); 
+        @unlink($DFile.'/index.html');
+        @rmdir($DFile); } } } }
+// / copy a fresh index file to the Temp Cloud directory.        
+if (!file_exists($CloudTempDir.'/index.html')) {
+  copy('index.html', $CloudTempDir.'/index.html'); }
+// / Display appropriate filesizes.
 $bytes = sprintf('%u', filesize($DisplayFile));
 if ($bytes > 0) {
   $unit = intval(log($bytes, 1024));
@@ -1156,6 +1164,9 @@ if ($bytes > 0) {
   if (array_key_exists($unit, $units) === true) { 
     $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }
 $DisplayFileCon = scandir($CloudLoc.'/'.$UserID.$UserDirPOST);
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / Code to search a users Cloud Drive and return the results.
 if (isset($_POST['search'])) { 
   $txt = ('OP-Act: '."User initiated Cloud Search on $Time".'.');
@@ -1218,6 +1229,7 @@ $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } ?>
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code handles which UI will be displayed for the selected operation.
 if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
 include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
 die(); } 

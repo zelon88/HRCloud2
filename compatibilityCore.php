@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9.9.9.8
-WRITTEN ON : 2/2/2017
+THIS VERSION : v0.9.9.9.9
+WRITTEN ON : 2/5/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -53,10 +53,6 @@ if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'C
   $txt = ('OP_Act: Initiated User Cache Cleaner on '.$Time.'.');
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  if ($UserIDRAW !== 1) {
-    $txt = ('ERROR!!! HRC2CompatCore51, A non-administrator attempted to clear the global system cache on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die($txt.'<hr />'); }
   unlink($UserConfig); 
   if (!file_exists($UserConfig)) { 
     copy($LogInstallDir.'.config.php', $UserConfig); }
@@ -523,7 +519,6 @@ $CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckC
 // / The following code displays the navigation buttons for when a user selects a compatibility related operation that this page has satisfied.
 if (isset($_POST['ClearCache']) or isset($_POST['AutoUpdate']) or isset($_POST['AutoDownload']) or isset($_POST['AutoInstall']) or 
   isset($_POST['AutoClean']) or isset($_POST['CheckCompatibility'])) {
-  echo ('<div align="center"><form target ="_parent" action="settings.php" method="get"><button id="button" name="home" value="1">Settings</button></form>
-    <br><form target ="_parent" action="index1.php" method="get"><button id="button" name="home" value="1">Home</button></form></div>'); }
+  echo ('<div align="center"><form target ="_parent" action="index1.php" method="get"><button id="button" name="home" value="1">Home</button></form></div>'); }
 echo ('</div>');
 // / -----------------------------------------------------------------------------------
