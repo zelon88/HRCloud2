@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.2 (1-3-2017 21:45)
+App Version: 1.3 (2-5-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -65,7 +65,7 @@ if (!file_exists($ContactsDir)) {
 
 // / The following code is performed whenever a user selects to edit a Contact.
 if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
-  $ContactToEdit = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['editContact']);
+  $ContactToEdit = str_replace(str_split('.//[]{};:$!#^&%@>*<'), '', $_GET['editContact']);
   $ContactToEdit = str_replace(' ', '_', $ContactToEdit);
   $ContactToEdit = $ContactToEdit.'.php';
   $ContactFile = $ContactsDir.$ContactToEdit;
@@ -84,7 +84,7 @@ if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
 
 // / The following code is performed whenever a user selects to delete a Contact.
 if (isset($_GET['deleteContact'])) {
-  $contactToDelete = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_GET['deleteContact']);
+  $contactToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteContact']);
   $ContactToDelete = str_replace(' ', '_', $ContactToDelete);
   if (file_exists($ContactsDir.$contactToDelete.'.php')) {
     @unlink($ContactsDir.$contactToDelete.'.php'); }
@@ -97,7 +97,7 @@ if (isset($_GET['deleteContact'])) {
 // / If the input POSTS are set, we turn them into a contact.
 if (isset($_POST['newContact'])) {
   $_POST['newContact'] = str_replace(' ', '_', $_POST['newContact']);
-  $contactName = str_replace(str_split('[]{};:$!#^&%>*<'), '', $_POST['newContact']);
+  $contactName = str_replace(str_split('./[]{};:$!#^&%>*<'), '', $_POST['newContact']);
   $ContactFile = $ContactsDir.$contactName.'.php'; 
   $ContactSyntaxStart = file_put_contents($ContactFile, '<?php'.PHP_EOL, FILE_APPEND);
   $contact = file_put_contents($ContactFile, '$contact = \''.str_replace(str_split('[]{};:$!#^&%>*<'), '', $_POST['newContact']).'\';'.PHP_EOL, FILE_APPEND); 
