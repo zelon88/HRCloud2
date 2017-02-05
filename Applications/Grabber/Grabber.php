@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.1 (12-25-2016 09:35)
+App Version: 1.2 (2-5-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
@@ -17,7 +17,13 @@ if (isset($_POST['grabberURL'])) {
 
 // / The following code sanitizes the user input filename. 
 if (isset($_POST['grabberFilename'])) { 
-  $GrabberFilenamePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['grabberFilename']); }
+  $_POST['grabberFilename'] = str_replace('./', '', $_POST['grabberFilename']); 
+  $_POST['grabberFilename'] = str_replace('../', '', $_POST['grabberFilename']);
+  $_POST['grabberFilename'] = str_replace('..', '', $_POST['grabberFilename']); 
+  $GrabberFilenamePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['grabberFilename']);
+  $GrabberFilenamePOST = str_replace('./', '', $GrabberFilenamePOST); 
+  $GrabberFilenamePOST = str_replace('../', '', $GrabberFilenamePOST);
+  $GrabberFilenamePOST = str_replace('..', '', $GrabberFilenamePOST); }
 
 ?>
 <script type="text/javascript">
@@ -59,7 +65,7 @@ if ($UserIDRAW == 0) {
 $ERROR = 0;
 $YouTubeArr = array('youtube', 'youtu.be', 'googlevideo', 'googleusercontent', 'gstatic');
 $DangerArr = array('<script ', '<?', '?>');
-$DangerExtArr = array('.php', '.html', '.js', '.a');  
+$DangerExtArr = array('..', './', '.php', '.html', '.js', '.a');  
 $txt = ('OP-Act: Initiating Grabber App on '.$Time.'.');
 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   
