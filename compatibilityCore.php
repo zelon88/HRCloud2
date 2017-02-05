@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9.9.9.9
+THIS VERSION : v0.9.9.9.9.1
 WRITTEN ON : 2/5/2017
 */
 
@@ -50,6 +50,10 @@ $HRAIConfig = $InstLoc.'/Applications/HRAI/adminINFO.php';
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to clear their user cache.
 if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'Clear User Cache') {
+  if ($UserIDRAW == 0) {
+    $txt = 'ERROR!!! HRC2CompatCore54, A non-logged-in user attempted to Clear the User Cache on '.$Time.'.';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt.'<hr />'); }
   $txt = ('OP_Act: Initiated User Cache Cleaner on '.$Time.'.');
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
