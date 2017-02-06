@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v0.9.9.9.9.5
+THIS VERSION : v0.9.9.9.9.6
 WRITTEN ON : 2/5/2017
 */
 
@@ -33,12 +33,12 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the global variables for the session.
-$ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); 
-$AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); 
-$AutoDownloadPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoDownload']); 
-$AutoInstallPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall']); 
-$AutoCleanPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoClean']); 
-$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); 
+$ClearCachePOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); 
+$AutoUpdatePOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); 
+$AutoDownloadPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoDownload']); 
+$AutoInstallPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall']); 
+$AutoCleanPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoClean']); 
+$CheckCompatPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); 
 $ResourceDir = $InstLoc.'/Resources/TEMP';
 $ResourceDir1 = $ResourceDir.'/HRCloud2-master';
 $UpdatedZIP1 = $ResourceDir.'/HRC2UPDATE1.zip';
@@ -471,6 +471,8 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/TEST3.php'); }
   if (file_exists($InstLoc.'/TEST4.php')) {
     @unlink($InstLoc.'/TEST4.php'); } 
+  if (file_exists($InstLoc.'/search.php')) {
+    @unlink($InstLoc.'/search.php'); } 
   if (file_exists($InstLoc.'/coreCOMMANDS.php')) {
     @unlink($InstLoc.'/coreCOMMANDS.php'); } 
   if (file_exists($InstLoc.'/adminLogin.php')) {
@@ -479,7 +481,7 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/AdminLogin.php'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
     @unlink($InstLoc.'/Applications/HRAI/awake.php'); } 
-  if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
+  if (file_exists($InstLoc.'/Applications/HRAI/wordpress_1-28-17.zip')) {
     @unlink($InstLoc.'/Applications/wordpress_1-28-17.zip'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/wordpress_11416.zip')) {
     @unlink($InstLoc.'/Applications/wordpress_11416.zip'); } 
@@ -510,13 +512,7 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     require ($InstLoc.'/versionInfo.php');  
       $txt = ('OP-Act: This server is running HRCloud2 '.$Version.'.'); 
       echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
-$ClearCachePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['ClearCache']); 
-$AutoUpdatePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate']); 
-$AutoDownloadPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoDownload']); 
-$AutoInstallPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall']); 
-$AutoCleanPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AutoClean']); 
-$CheckCompatPOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
