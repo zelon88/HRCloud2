@@ -97,8 +97,8 @@ require('specUpdater.php');
 
     <script type="text/javascript">
     // / The following code handles automatic page refresh.
-    setTimeout(function() {
-      location.reload(); }, <?php echo $UpdateInterval; ?>);
+//    setTimeout(function() {
+//      location.reload(); }, <?php echo $UpdateInterval; ?>);
     // / The following code handles the scroll level of the page upon refresh.
     document.addEventListener("DOMContentLoaded", function(event) { 
       var scrollpos = localStorage.getItem('scrollpos');
