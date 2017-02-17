@@ -1,6 +1,14 @@
-<?php
-// / This file will reurn the servers current RAM usage percentage.
+<?php if ($UpdateInt !== '0' or $UpdateInt !== 0 or $UpdateInt !== '') { ?>
+<script>
+    $(document).ready(function(){
+        setInterval(function() {
+            $("#cpuGauge").load("cpuUpdate.php #cpuGauge");
+        }, <?php echo $UpdateInt; ?>);
+    });
+</script>
+<?php }
 
+// / This file will reurn the servers current RAM usage percentage.
 $exec_free = explode("\n", trim(shell_exec('free')));
 $get_mem = preg_split("/[\s]+/", $exec_free[1]);
 $ram = round($get_mem[2]/$get_mem[1]*100, 0);

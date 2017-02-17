@@ -1,11 +1,19 @@
-<?php
+<?php if ($UpdateInt !== '0' or $UpdateInt !== 0 or $UpdateInt !== '') { ?>
+<script>
+    $(document).ready(function(){
+        setInterval(function() {
+            $("#cpuGauge").load("cpuUpdate.php #cpuGauge");
+        }, <?php echo $UpdateInt; ?>);
+    });
+</script>
+<?php }
 
 // / This file will retrieve information regarding the server's disk performance and statistics.
 $diskCacheFile = 'Cache/diskCACHE.php';
 
 // / The following code sets the POST and GET variables for the session, if there were any.
 if (!isset($diskID) or !isset($_GET['diskID']) or !isset($_POST['diskID'])) {
-  $diskID = "eth0"; }
+  $diskID = ""; }
 if (isset($_GET['diskID'])) {
   $diskID = $_GET['diskID']; }
 if (isset($_POST['diskID'])) {

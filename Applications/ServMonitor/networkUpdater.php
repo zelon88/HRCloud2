@@ -1,7 +1,14 @@
-<?php
+<?php if ($UpdateInt !== '0' or $UpdateInt !== 0 or $UpdateInt !== '') { ?>
+<script>
+    $(document).ready(function(){
+        setInterval(function() {
+            $("#cpuGauge").load("cpuUpdate.php #cpuGauge");
+        }, <?php echo $UpdateInt; ?>);
+    });
+</script>
+<?php }
 
 // / This file will retrieve information regarding the server's network performance and statistics.
-
 $networkCacheFile = 'Cache/networkCACHE.php';
 $networkCacheFile1 = 'Cache/networkCACHE1.php';
 $integerArr = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');

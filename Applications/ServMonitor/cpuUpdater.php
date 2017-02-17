@@ -1,7 +1,14 @@
-<?php
+<?php if ($UpdateInt !== '0' or $UpdateInt !== 0 or $UpdateInt !== '') { ?>
+<script>
+    $(document).ready(function(){
+        setInterval(function() {
+            $("#cpuGauge").load("cpuUpdate.php #cpuGauge");
+        }, <?php echo $UpdateInt; ?>);
+    });
+</script>
+<?php }
 
 // / This file will retrieve information regarding the server's CPU performance and statistics.
-
 $cpuCacheFile = 'Cache/cpuCACHE.php';
 $cpuCacheFile1 = 'Cache/cpuCACHE1.php';
 
