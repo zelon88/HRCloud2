@@ -33,8 +33,6 @@ else {
     function Clear() {    
       document.getElementById("input").value= ""; }
     </script>
-</head>
-<body>
 
 <?php include('header.php'); ?>
 

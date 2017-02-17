@@ -138,10 +138,10 @@ if (isset($_POST['playlistSelected'])) {
   // / Must specify upload as a POST variable.
   // / Must specify $_FILES['filesToUpload'] as an array of files from the client's device.
 if (isset($_POST['filesToUpload'])) {
-  $_POST['filesToUpload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUpload']); 
+  $_POST['filesToUpload'] = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $_POST['filesToUpload']); 
   if (!is_array($_POST['filesToUpload'])) {
     $_FILES['filesToUpload'] = array($_FILES['filesToUpload']); 
-    $_FILES['filesToUpload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_FILES['filesToUpload']); } }
+    $_FILES['filesToUpload'] = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $_FILES['filesToUpload']); } }
 
 // / Can be used to download multiple files.
   // / must specify download as a POST variable.

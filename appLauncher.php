@@ -31,9 +31,6 @@ else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
 ?>
-</head>
-<body>
-
 <?php include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">

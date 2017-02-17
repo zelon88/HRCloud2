@@ -36,8 +36,6 @@ else {
     function Clear() {    
       document.getElementById("search").value= ""; }
     </script>
-</head>
-<body>
 
 <?php include('header.php'); ?>
 

@@ -80,12 +80,11 @@ if (isset($_POST['dirToMake'])) {
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST["upload"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
+  $_POST["upload"] = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
   if (!is_array($_FILES["filesToUpload"]['name'])) {
     $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
-    if ($file == '.' or $file == '..' or $file == 'index.html') continue;
-      $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);      
+    if ($file == '.' or $file == '..' or $file == 'index.html') continue;     
       $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
       $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
       $DangerousFiles = array('js', 'php', 'html', 'css');
@@ -286,10 +285,6 @@ if (isset($_POST['deleteconfirm'])) {
     $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir from User directory on $Time".'.');
     echo nl2br ('OP-Act: '."Deleted $DFile on $Time".'.'."\n".'--------------------'."\n");   
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
-// / -----------------------------------------------------------------------------------
-
-
-// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
   $txt = ('OP-Act: Initiated Archiver on '.$Time.'.');
@@ -358,10 +353,7 @@ if(in_array($UserExt, $tararr)) {
   shell_exec('7z a '.$CloudUsrDir.$UserFileName.'.'.$UserExt.' '.$CloudTmpDir.$TFile1); 
   $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }  
 // / The following code will be performed when a user selects archives to extract.
 if (isset($_POST["dearchiveButton"])) {
   // / The following code sets the global dearchive variables for the session.
@@ -476,6 +468,7 @@ if (isset($_POST["dearchiveButton"])) {
         if (!is_dir($dearchUserDir)) {
           $txt = ('ERROR!!! HRC2404, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+      
       // / The following code checks that the source files exist and are valid, and returns any errors that occur.
       if (file_exists($dearchUserDir)) {
         if (is_dir($dearchUserDir)) {
@@ -713,9 +706,6 @@ if (!file_exists($newPathname)) {
 if (file_exists($newPathname)) {
   $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
@@ -766,7 +756,7 @@ if (isset($_POST['pdfworkSelected'])) {
           if (in_array($oldExtension, $pdf1array)) {
             if (in_array($extension, $doc1array)) {
               $pathnameTEMP = str_replace('.'.$oldExtension, '.txt', $pathname);
-  
+    
             $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
               if (($_POST['method1'] == '0')) {
                 shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
@@ -1136,7 +1126,6 @@ if (isset($_POST['clipboardCopy'])) {
             echo nl2br($txt."\n"); } }
         if (is_dir($CloudDir.'/'.$clipboardSelected1)) {
         } } } }
-
 // / -----------------------------------------------------------------------------------
 // / Here is the fix for symlink date. --theo546 (source: http://stackoverflow.com/questions/34512105/php-check-how-old-a-symlink-file-is)
 function symlinkmtime($symlinkPath)
@@ -1144,8 +1133,6 @@ function symlinkmtime($symlinkPath)
     $stat = lstat($symlinkPath);
     return isset($stat['mtime']) ? $stat['mtime'] : null;
 }
-// / -----------------------------------------------------------------------------------
-
 // / -----------------------------------------------------------------------------------
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
 if (file_exists($CloudTempDir)) {
