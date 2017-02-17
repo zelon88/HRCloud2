@@ -36,7 +36,7 @@ else {
 // / The follwoing code checks if the appCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('appCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2AppIndex34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once ('appCore.php'); } 
@@ -44,7 +44,7 @@ else {
 // / The follwoing code checks if the securityCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('securityCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL47, Cannot process the HRCloud2 App Core file (securityCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2AppIndex47, Cannot process the HRCloud2 Security file (securityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once ('securityCore.php'); } ?>
@@ -80,7 +80,7 @@ foreach ($apps as $appName) {
   // / The folloiwing code declares the AppInfo for the app being displayed by scanning for the 
     // / HRCLOUD2-PLUGIN declaration contained within each HRC2 App.
     if (!file_exists($appLoc)) {
-      $txt = ('ERROR!!! HRC2AppIndex82, There was a problem validating '.$appName.' on '.$Time.'!');
+      $txt = ('WARNING!!! HRC2AppIndex82, There was a problem validating '.$appName.' on '.$Time.'!');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       continue; }
     $lines = file($appLoc);
