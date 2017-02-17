@@ -136,7 +136,7 @@ foreach ($apps as $appName) {
     echo ('<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"></form><br></div>'); }
   
   // / The followind code displays the App image and Launch button to all users.
-  echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="display:none; onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
+  echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="display:none;" onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
   echo ('<div align="center" id="appSelector'.$appCounter.'"><a onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
   
   // / The following code displays the Basic App information, when clicked.
@@ -150,7 +150,7 @@ foreach ($apps as $appName) {
   echo ('</div>');
 
   // / The following code displays the App description, when clicked.
-  echo ('<div align="left"id="appDescription'.$appCounter.'" name="appDescription'.$appCounter.'" style="display:none;"><hr />');
+  echo ('<div align="left" id="appDescription'.$appCounter.'" name="appDescription'.$appCounter.'" style="display:none;"><hr />');
   echo ('<div align="center"><strong>App Description</strong></div>');
   echo ('<p><i>'.$ApplicationDescription.'</i></p>');
   echo ('</div></div>');
