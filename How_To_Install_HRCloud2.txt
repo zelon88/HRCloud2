@@ -106,6 +106,7 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
                -sudo chmod -R 0755 /var/www/html
                -sudo chown -R www-data /var/www/html
                -sudo chgrp -R www-data /var/www/html
+--------------------------------------------------
 
 -----STEP 6 - CONFIGURE WORDPRESS-----
 **NAVIGATE TO "/var/www/html"**
@@ -115,11 +116,13 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
   -define('DB_PASSWORD', 'YOURPASSWORD');
 **VISIT "http://localhost" IN  A BROWSER AND YOU SHOULD BE GREETED BY THE WORDPRESS INSTALLATION PAGE**
 **COMPLETELY READ AND FILL OUT THE WORDPRESS INSTALLATION PAGE**
+--------------------------------------------------
 
 -----STEP 7 - VISIT YOUR CLOUD!!!-----
 Go to http://localhost/HRProprietary/HRCloud2 to view your Cloud Drive! The computer you install HRCloud2 onto
 should be considered a staitionary NAS device that you can safely point your "Static NAT" at and access from anywhere. To accomplish
 these things, follow the additional steps below. 
+--------------------------------------------------
 
 -----STEP 8 - ADD FIREWALL EXCEPTIONS AND SETUP STATIC NAT ON YOUR ROUTER-----
 -According to the manual for the manufacturer of your broadband router, find the local IP address where you can make changes to it's
@@ -137,6 +140,7 @@ these things, follow the additional steps below.
 -HRCloud2 will create and maintain complete segregation of user Cloud files during operation, and will not impose restrictions on user uploads
   (however PHP will, so verify that your php.ini file is set correctly!!!).
 -You and your users should now be able to access your server via any standard web browser by entering the IPv4 from your ISP into the address bar. Alternatively you can purchase a domain name and point it at the IPv4 instead to obtain a ".com" (or similar) address for your new Cloud.
+--------------------------------------------------
 
 If you have any problems with HRCloud2 please create an issue on http://github.com/zelon88/HRCloud2
 
