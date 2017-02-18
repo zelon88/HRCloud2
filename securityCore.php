@@ -56,6 +56,10 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chgrp($InstLoc.'/Screenshots', 'www-data');
 @@chgrp($UserConfig, 'www-data');
 
+// / The following code purges old index.html files from the HRProprietary directory directory daily.
+if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
+  copy ('index.html', '/var/www/html/HRProprietary/index.html'); }
+
 // / Secutity related processing.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 if (isset($_POST['YUMMYSaltHash'])) {

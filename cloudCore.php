@@ -661,7 +661,7 @@ if (isset( $_POST['convertSelected'])) {
                   @rmdir($delFile); } }    
                   @rmdir($safedir2); }
             elseif (in_array($extension,$arrayzipo) ) {
-              shell_exec("zip -r $safedir4 $safedir2");
+              shell_exec("zip -r -j $safedir4 $safedir2");
               @copy($safedir4, $newPathname); } 
               if (file_exists($safedir4) ) {
                 @chmod($safedir4, 0755); 
