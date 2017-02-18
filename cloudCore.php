@@ -1143,7 +1143,7 @@ if (file_exists($CloudTempDir)) {
   foreach ($DFiles as $DFile) {
     if (in_array($DFile, $defaultApps)) continue;
     if ($DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
-    if (($now - symlinkmtime($DFile)) >= 5) { // Time to keep files.
+    if (($now - symlinkmtime($DFile)) >= 600) { // Time to keep files.
       if (is_file($DFile)) {
         @chmod ($DFile, 0755);
         unlink($DFile); 
