@@ -26,13 +26,13 @@ if (!file_exists($WPFile)) {
 $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
-$DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods');
+$DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
 $ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
 $MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog');
 // / Set all secondary array data.
 $archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
-$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
-$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
+$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
 $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $fileArray1 = array();
@@ -207,8 +207,18 @@ Are you sure?
   <option value="zip">Zip</option>
   <option value="rar">Rar</option>
   <option value="tar">Tar</option>
-  <option value="tar.bz2">Tar.bz2</option>
   <option value="7z">7z</option>
+    <option value="zip">--Presentation Formats--</option>
+  <option value="pages">Pages</option>
+  <option value="pptx">Pptx</option>
+  <option value="ppt">Ppt</option>
+  <option value="xps">Xps</option>
+  <option value="potx">Potx</option>
+  <option value="pot">Pot</option>
+  <option value="ppa">Ppa</option>
+  <option value="ppt">Ppt</option>
+  <option value="pptx">Pptx</option>
+  <option value="odp">Odp</option>
 </select>
 <input type="submit" id="convertSubmit" name="convertSubmit" value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
@@ -230,7 +240,7 @@ Are you sure?
 <p><a id='makePDFbutton' name='makePDF' value='makePDF' ></a></p> 
 <p><select id='method1' name='method1'>   
   <option value="0">Select Method</option>  
-  <option value="0">Automatic</option>  
+  <option value="1">Automatic</option>  
   <option value="1">Method 1 (Simple)</option>
   <option value="2">Method 2 (Advanced)</option>
 </select></p>
