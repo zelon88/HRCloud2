@@ -122,7 +122,14 @@ Exploit CVE-2016-7200.2.1	<SessionFlag N="x-responsebodytransferlength" V="7,757
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
 Trojan	W32.Adware.Gen!c	471f0993ccf1c5cb3c715740141b6d49	2d02ddb75f42e67f76da4df375834c7e79a62a5828875870d23b236a1d7ae19c
 Trojan	chaqiriq.doc	c9d2eac2c5c415f94ad599d1327f1e8f	e1e5bdecaa621a45c97fc732917c1c36bfd8d83158c88a3f444536c3e2bd389b
-Trojan	Zeus Panda
+Trojan	Zeuss Panda		6dc0bd77e51eb9af143c749539bd638020d557083479bcd4c4b9639fe61eb0f8
+Trojan	Zeuss Panda.1		1cccc844fcdb255f833a9ef36c2d3c690557b828ed5d0a45d068aeb2af1faac7
+Trojan	Zeuss Panda.2		0fd5413365f474b99f4a49560e20c5e97418d09a2f53e5e7436b88e3f5c16668
+Trojan	Zeuss Panda.3		a395357a9012b0a4087e0878e7d642877d3b856de53c71cb9805f806dc958264
+Trojan	Zeuss Panda.4		fa867ddf9f3116da75b62a1bf8007410ac0d3adf7a92e7f3d2effeef982ad73d
+Trojan	Zeuss Panda.5		bdc912caf9b9e078bc7bd331deacae9c460c8e8893442048b9474790c52e1ab9
+Trojan	Zeuss Panda.6		6dc0bd77e51eb9af143c749539bd638020d557083479bcd4c4b9639fe61eb0f8
+Trojan	Zeuss Panda.7		8d381ee21b6cbc7d3ae0e503ab7b05235eb31594d2810e67093c5e9a51437992
 Trojan	Sednit	f1d3447a2bff56646478b0adb7d0451c
 Trojan	Minzen	B469B78CA04E8FDAD957CCC68B5B1C3D
 Trojan	Dreambot
@@ -1145,7 +1152,10 @@ Known Ransomware Host: Rig.Eitest.TeamViewer	verawqamscomtrue.com
 Known Ransomware Host: Rig.Eitest.TeamViewer	95.163.127.190
 Known Ransomware Host: Rig.Eitest.TeamViewer	ddreamonline.site GET /forum/ajax/out.dat
 Known Ransomware Host: Rig.Eitest.TeamViewer	95.163.127.190
-Known Ransomware Host Host: RigV.Cerber	betongstudio.no
-Known Ransomware Host Host: RigV.Cerber.1	109.234.35.244
-Known Ransomware Host Host: RigV.Cerber.2	84.200.4.70
-Known Ransomware Host Host: RigV.Cerber.3	109.234.35.244
+Known Ransomware Host: RigV.Cerber	betongstudio.no
+Known Ransomware Host: RigV.Cerber.1	109.234.35.244
+Known Ransomware Host: RigV.Cerber.2	84.200.4.70
+Known Ransomware Host: RigV.Cerber.3	109.234.35.244
+Known Trojan Host: Zeuss Panda	secpressnetwork.com
+Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
+Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
