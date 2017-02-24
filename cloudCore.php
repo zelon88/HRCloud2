@@ -80,7 +80,7 @@ if (isset($_POST['dirToMake'])) {
 if(isset($_POST["upload"])) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST["upload"] = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
+  $_POST["upload"] = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
   if (!is_array($_FILES["filesToUpload"]['name'])) {
     $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
@@ -96,7 +96,8 @@ if(isset($_POST["upload"])) {
       if($file == "") {
         $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-        echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); }
+        echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); 
+        die(); }
       $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
       echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
