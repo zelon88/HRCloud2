@@ -1,4 +1,4 @@
-<?php if ($UpdateInt !== '0' or $UpdateInt !== 0 or $UpdateInt !== '') { ?>
+<?php if ($UpdateInterval !== '0' or $UpdateInterval !== 0 or $UpdateInterval !== '') { ?>
 <script>
     $(document).ready(function(){
         setInterval(function() {

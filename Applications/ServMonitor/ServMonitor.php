@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.0 (2-16-2017 11:30)
+App Version: 2.1 (2-25-2017 01:30)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -36,15 +36,15 @@ $basicMonitorCounter = 0;
 
 // / -----------------------------------------------------------------------------------
 // / The following code ensures a valid update interval is specified.
-if (isset($_POST['UpdateInt']) && $_POST['UpdateInt'] !== '') {
-  $UpdateInt = str_replace(str_split('_[]{};:$!#^&%@>*<'), '', $_POST['UpdateInt']); }
-if (!isset($_POST['UpdateInt']) or $_POST['UpdateInt'] == '') {
-  $UpdateInt = 5000; }
-if ($UpdateInt <= 2000) {
+if (isset($_POST['UpdateInterval']) && $_POST['UpdateInterval'] !== '') {
+  $UpdateInterval = str_replace(str_split('_[]{};:$!#^&%@>*<'), '', $_POST['UpdateInterval']); }
+if (!isset($_POST['UpdateInterval']) or $_POST['UpdateInterval'] == '') {
+  $UpdateInterval = 5000; }
+if ($UpdateInterval <= 2000) {
   $txt = ('WARNING!!! HRC2ServMonitorApp32, The "Update Interval" must be greater than 2000ms on '.$Time.'! Please increase the "Update Interval" to a value greater than 2000ms (or 2s).'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $UpdateInt = 2000; }
-if ($UpateInt == '' or !(isset($UpdateInt))) {
+  $UpdateInterval = 2000; }
+if ($UpateInt == '' or !(isset($UpdateInterval))) {
   $UpateInt = 5000; }
 // / -----------------------------------------------------------------------------------
 
@@ -64,24 +64,13 @@ if (!is_dir('Cache/')) {
   // / This cache file will store user-specific data relating to ServMonitor settings and preferences.
 $ServMonUserCache = $CloudTmpDir.'/.AppData/ServMon.php';
 if (!file_exists($ServMonUserCache)) {
-$txt = '';
-file_put_contents($ServMonUserCache, $txt); }
+  $txt = '';
+  file_put_contents($ServMonUserCache, $txt); }
+$txt = '<?php $UpdateInterval = '.$UpdateInterval.' ?>';
+file_put_contents($ServMonUserCache, $txt.PHP_EOL, FILE_APPEND);
+require($ServMonUserCache);
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------
-// / The following code will return the server's CPU load percentage average for the past 5 minutes.
-require('cpuUpdater.php');
-// / The following will reurn the servers current RAM usage percentage and current RAM usage in gigabytes (GB).
-require('ramUpdater.php');
-// / The following code will return the server's network load information.
-require('networkUpdater.php');
-// / The following code will return the server's disk load information.
-require('diskUpdater.php');
-// / The following code will return the server's temperature and voltage information.
-require('tempvoltUpdater.php');
-// / The following code will return the server's hardware specification information.
-require('specUpdater.php');
-// / -----------------------------------------------------------------------------------
 ?>
     <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
 
@@ -93,9 +82,6 @@ require('specUpdater.php');
     <script type="text/css" src="jqwidgets/styles/jqx.gaugeValue.js"></script>
 
     <script type="text/javascript">
-    // / The following code handles automatic page refresh.
-    //setTimeout(function() {
-      //location.reload(); }, '<?php echo $UpdateInterval; ?>');
     // / The following code handles the scroll level of the page upon refresh.
     document.addEventListener("DOMContentLoaded", function(event) { 
       var scrollpos = localStorage.getItem('scrollpos');
@@ -189,27 +175,13 @@ require('specUpdater.php');
 // / The following code displays the basic monitoring analytics for the session.
 ?>
 <div id="basicMonitors" name="basicMonitors" align="center" style="float:center; clear:both; display:block; float:center;">
-<p><a style="margin-left:5%;"><strong>Basic Server Monitors</strong></a><a onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></a></p>
+<a style="margin-left:5%;"><strong>Basic Server Monitors</strong></a><a onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></a>
 <hr />
 <div align="center" id="basicMonitorsheader" name="basicMonitorsheader" style="clear:both"><p><a onclick="toggle_visibility1('basicutilizationMonitors');">Utilization</a> | <a onclick="toggle_visibility1('basictemperatureMonitors');">Status</a> | <a onclick="toggle_visibility1('basicspecificationsMonitors');">Specifications</a></p></div>
 
-<div id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
-<a style="padding-left:5px;" onclick="toggle_visibility('cpuGauge');"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  • CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('ramGauge');"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  • RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('diskGauge');"><strong><img src="Resources/gauge.png" title="More DISK Info" alt="More RAM Info">  • Disk Usage: </strong>  <i><?php echo $diskUsage[0]; ?></i></a><hr />
-</div>
+<iframe id="basicutilizationMonitors" name="basicutilizationMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;" src="butil.php?UpdateInterval=$UpdateInterval"></iframe>
 
-<div id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
-<a style="padding-left:5px;" onclick="toggle_visibility('cpuTemperatureGauge');"><strong><img src="Resources/gauge.png" title="CPU Temperature" alt="CPU Temperature">  • CPU Temperature: </strong>  <i><?php echo $thermalSensorArr[0]; ?> </i></a><hr />
-<?php
-foreach ($thermalSensorArr as $thermalSensorDATA) { 
-  if ($thermalSensorDATA == $thermalSensorArr[0]) continue; ?>
-<a style="padding-left:5px;" onclick="toggle_visibility('acc<?php echo $basicMonitorCounter; ?>TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Accessory Temperature" alt="Accessory Temperature"> • Accessory Temperature: </strong>  <i><?php echo $thermalSensorDATA; ?></i></a><hr />
-<?php } ?>
-<a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> • Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('poweradapterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> • Power Status: </strong>  <i><?php echo $adapterSensorArr[0]; ?></i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('networkadapterGauge');"><strong><img src="Resources/gauge.png" title="Network Status" alt="Network Status"> • Network Status: </strong>  <i><?php echo $networkDeviceData; ?></i></a><hr />
-</div>
+<iframe id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;" src="btemp.php?UpdateInterval=$UpdateInterval"></iframe>
 
 <div id="basicspecificationsMonitors" name="basicspecificationsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $specHardwareDeviceData; ?></i></a><hr />
