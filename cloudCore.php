@@ -595,7 +595,6 @@ if (isset( $_POST['convertSelected'])) {
               $stopper++;
               if ($stopper == 10) {
                 die('ERROR!!! HRC2425, The converter timed out while copying your file.'); } } }
-        
           // / Code to convert and manipulate image files.
           if (in_array($oldExtension,$imgarray) ) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
@@ -707,6 +706,7 @@ if (!file_exists($newPathname)) {
 if (file_exists($newPathname)) {
   $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+  
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
