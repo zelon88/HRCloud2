@@ -85,13 +85,19 @@ foreach ($apps as $appName) {
       continue; }
     $lines = file($appLoc);
     $lineCounter = 0;
+    $ApplicationName = ''; 
+    $ApplicationVersion = '';
+    $ApplicationLicense = '';
+    $ApplicationAuthor = '';
+    $ApplicationDescription = '';
+    $ApplicationWebsite = '';
+    $ApplicationIntegration = '';
       foreach ($lines as $line) {
         if (strpos($line, 'App Name: ') == 'true') {
           $ApplicationName = str_replace('App Name: ', '', $line); 
           $ApplicationName = trim($ApplicationName); } 
         if (strpos($line, 'App Version: ') == 'true') {
-          $ApplicationVersion = str_replace('App Version: ', '', $line); 
-          $ApplicationVersion = trim($ApplicationVersion); } 
+          $ApplicationVersion = str_replace('App Version: ', '', $line);  } 
         if (strpos($line, 'App License: ') == 'true') {
           $ApplicationLicense = str_replace('App License: ', '', $line);  
           $ApplicationLicense = trim($ApplicationLicense); }
@@ -103,7 +109,7 @@ foreach ($apps as $appName) {
           $ApplicationDescription = trim($ApplicationDescription); } 
         if (strpos($line, 'App Website: ') == 'true') { 
           $ApplicationWebsite = str_replace('App Website: ', '', $line); 
-          $ApplicationAWebsite = trim($ApplicationWebsite); } 
+          $ApplicationWebsite = trim($ApplicationWebsite); } 
         if (strpos($line, 'App Integration: ') == 'true') {
           $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
           $ApplicationIntegration = trim($ApplicationIntegration); }
@@ -137,7 +143,7 @@ foreach ($apps as $appName) {
   
   // / The followind code displays the App image and Launch button to all users.
   echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="display:none;" onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
-  echo ('<div align="center" id="appSelector'.$appCounter.'"><a onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
+  echo ('<div align="center"><a onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
   
   // / The following code displays the Basic App information, when clicked.
   echo ('<div align="left" id="appBasic'.$appCounter.'" name="appBasic'.$appCounter.'" style="display:none;"><hr />');

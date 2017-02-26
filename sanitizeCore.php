@@ -67,8 +67,8 @@ if (isset($_POST['ClearCache'])) {
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify a specific file or directory within a users Cloud to scan for viruses with ClamAV.
-if (isset($_POST['userscanFilename'])) { 
-  $userScanFilename = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['userScanFilename']); }
+if (isset($_POST['userscanfilename'])) { 
+  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['userscanfilename']); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

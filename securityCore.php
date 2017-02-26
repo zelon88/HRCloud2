@@ -26,7 +26,19 @@ else {
 
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 
+// / The following code changes the group of certain directories to the www-data group,
+@chgrp('/var/www', 'www-data');
+@chgrp('/var/www/html', 'www-data');
+@chgrp('/var/www/html/HRProprietary', 'www-data');
+@chgrp($InstLoc, 'www-data');
+@chgrp($InstLoc.'/Applications', 'www-data');
+@chgrp($InstLoc.'/Resources', 'www-data');
+@chgrp($InstLoc.'/DATA', 'www-data');
+@chgrp($InstLoc.'/Screenshots', 'www-data');
+@chgrp($UserConfig, 'www-data');
+
 // / The following code changes the ownership of certain directories to the www-data user,
+@chown('/var/www', 'www-data');
 @chown('/var/www/html', 'www-data');
 @chown('/var/www/html/HRProprietary', 'www-data');
 @chown($InstLoc, 'www-data');
@@ -37,6 +49,7 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chown($UserConfig, 'www-data');
 
 // / The following code changes the permission of certain directories to 0755,
+@chmod('/var/www', 0755);
 @chmod('/var/www/html', 0755);
 @chmod('/var/www/html/HRProprietary', 0755);
 @chmod($InstLoc, 0755);
@@ -45,16 +58,6 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chmod($InstLoc.'/DATA', 0755);
 @chmod($InstLoc.'/Screenshots', 0755);
 @chmod($UserConfig, 0755);
-
-// / The following code changes the group of certain directories to the www-data group,
-@chgrp('/var/www/html', 'www-data');
-@chgrp('/var/www/html/HRProprietary', 'www-data');
-@chgrp($InstLoc, 'www-data');
-@chgrp($InstLoc.'/Applications', 'www-data');
-@chgrp($InstLoc.'/Resources', 'www-data');
-@chgrp($InstLoc.'/DATA', 'www-data');
-@chgrp($InstLoc.'/Screenshots', 'www-data');
-@chgrp($UserConfig, 'www-data');
 
 // / The following code purges old index.html files from the HRProprietary directory directory daily.
 if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
