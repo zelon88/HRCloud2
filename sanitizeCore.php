@@ -66,6 +66,12 @@ if (isset($_POST['ClearCache'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Can be used to specify a specific file or directory within a users Cloud to scan for viruses with ClamAV.
+if (isset($_POST['userscanFilename'])) { 
+  $userScanFilename = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['userScanFilename']); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / Can be used to automatically download and install the latest HRCloud2 update from Github. 
 // / Will perform "AutoDownload", "AutoInstall", "AutoClean", and "CompatCheck" consecutively. 
   // / Accepts a value of '1' or 'true'.

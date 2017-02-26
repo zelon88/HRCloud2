@@ -34,7 +34,7 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chown($InstLoc.'/Resources', 'www-data');
 @chown($InstLoc.'/DATA', 'www-data');
 @chown($InstLoc.'/Screenshots', 'www-data');
-@@chown($UserConfig, 'www-data');
+@chown($UserConfig, 'www-data');
 
 // / The following code changes the permission of certain directories to 0755,
 @chmod('/var/www/html', 0755);
@@ -44,7 +44,7 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chmod($InstLoc.'/Resources', 0755);
 @chmod($InstLoc.'/DATA', 0755);
 @chmod($InstLoc.'/Screenshots', 0755);
-@@chmod($UserConfig, 0755);
+@chmod($UserConfig, 0755);
 
 // / The following code changes the group of certain directories to the www-data group,
 @chgrp('/var/www/html', 'www-data');
@@ -54,7 +54,7 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chgrp($InstLoc.'/Resources', 'www-data');
 @chgrp($InstLoc.'/DATA', 'www-data');
 @chgrp($InstLoc.'/Screenshots', 'www-data');
-@@chgrp($UserConfig, 'www-data');
+@chgrp($UserConfig, 'www-data');
 
 // / The following code purges old index.html files from the HRProprietary directory directory daily.
 if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
@@ -69,7 +69,7 @@ if ($YUMMYSaltHash !== $SaltHash) {
   die("Application was halted on $Time".'.'); } }
 
 // / The following code is performend when an admin selects to scan the Cloud with ClamAV.
-if (isset($_POST['Scan'])) { 
+if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) { 
 // / To detect viruses, we have ClamAV add specific results to the logfile. By reading the filesize immediately 
 // / before and after the scans we can see if ClamAV found anything. If it did, we alert the user to an infection.
 ?>
@@ -80,30 +80,56 @@ $LogFile0 = $SesLogDir.'/VirusLog_'.$Date.'.txt';
 $LogFile1 = $SesLogDir.'/VirusLog1_'.$Date.'.txt';
 $LogFile2 = $SesLogDir.'/VirusLog2_'.$Date.'.txt';
 $LogFileInc = 0;
+$LogFileInc1 = 0;
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
 if(file_exists($LogFile0)) {
   while (file_exists($LogFile0)) {
   $LogFileInc++;
   $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc.'_'.$Date.'.txt'; } }
-// / Update anti-virus definitions from ClamAV.
-@shell_exec('sudo freshclam');
-echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
-?><hr /><?php
-// / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
-shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
-$LogTXT = file_get_contents($LogFile1);
-$WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
-$WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
-echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n");
-?><hr /><?php
-// / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
-shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.$LogFile2);
-$LogTXT = file_get_contents($LogFile2);
-$WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
-$WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
-echo nl2br('<a style="padding-left:15px;">Scanned HRCloud2 Installation Directory.</a>'."\n");
+if(!file_exists($LogFile0)) {
+  $WriteClamLogFile0 = file_put_contents($LogFile0, ''.PHP_EOL); }
+if(file_exists($LogFile1)) {
+  while (file_exists($LogFile1)) {
+  $LogFileInc++;
+  $LogFile1 = $SesLogDir.'/VirusLog_'.$LogFileInc1.'_'.$Date.'.txt'; } }
+if(!file_exists($LogFile1)) {
+  $WriteClamLogFile1 = file_put_contents($LogFile1, ''.PHP_EOL); }
+
+if (isset($_POST['scanSelected'])) {
+  if (isset($_POST['userscanfilename'])) {
+    $userscanfilename = $_POST['userscanfilename'];
+    // / Update anti-virus definitions from ClamAV.
+    @shell_exec('sudo freshclam');
+    echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
+    ?><hr /><?php
+    // / Perform a ClamScan on the supplied user file and cache the results.
+    shell_exec('clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.$LogFile1);
+    $LogTXT = file_get_contents($LogFile1);
+    $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
+    $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
+    echo nl2br('<a style="padding-left:15px;">Scanned Supplied File.</a>'."\n");
+    ?><hr /><?php } }
+
+if (!isset($_POST['scanSelected'])) {
+  // / Update anti-virus definitions from ClamAV.
+  @shell_exec('sudo freshclam');
+  echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
+  ?><hr /><?php
+  // / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
+  shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
+  $LogTXT = file_get_contents($LogFile1);
+  $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
+  $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
+  echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n");
+  ?><hr /><?php
+  // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
+  shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.$LogFile2);
+  $LogTXT = file_get_contents($LogFile2);
+  $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
+  $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
+  echo nl2br('<a style="padding-left:15px;">Scanned HRCloud2 Installation Directory.</a>'."\n"); }
 // / Gather results from scans.
-if (!is_file($LogFile0) or !is_file($LogFile1) or !is_file($LogFile2)) {
+if (!is_file($LogFile0) or !is_file($LogFile1)) {
   $txt = ('ERROR!!! HRC2SecCore101, Could not generate scan results on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die('<a style="padding-left:15px;">'.$txt.'</a>'); }
@@ -116,9 +142,6 @@ $LogFileDATA2 = file_get_contents($LogFile2);
 // / Infection handler will throw the $INFECTION variable to '1' if potential infections were found.
 if ($LogFileSize0 > 2 or $LogFileSize1 > 2 or $LogFileSize2 > 2) {
   $INFECTION_DETECTED = 1; }
-// / Delete temporary scan cache data.
-@unlink ($LogFile1);
-@unlink ($LogFile2);
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
   if ($LogFileInc == 0) {
@@ -142,4 +165,8 @@ if ($INFECTION_DETECTED !== 1) {
     <br>
     <button id='button' name='button' onclick="goBack()">Go Back</button>
     <br>
-    <?php } }  ?> 
+    <?php } } 
+// / Delete temporary scan cache data.
+@unlink ($LogFile1);
+@unlink ($LogFile2);
+  ?> 

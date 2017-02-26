@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.2.1
+THIS VERSION : v1.2.2
 WRITTEN ON : 2/25/2017
 */
 
@@ -491,6 +491,8 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/Applications/ServMonitor/cpuUpdate.php'); } 
   if (file_exists($InstLoc.'/Applications/ServMonitor/ramUpdate.php')) {
     @unlink($InstLoc.'/Applications/ServMonitor/ramUpdate.php'); } 
+    if (file_exists($InstLoc.'/Applications/HRConvert2/uploaderNOGUI.php')) {
+    @unlink($InstLoc.'/Applications/HRConvert2/uploaderNOGUI.php'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
