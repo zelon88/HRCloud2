@@ -24,11 +24,11 @@ if (!file_exists($WPFile)) {
     require_once($WPFile); } 
 // / Set all primary array data.
 $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-$ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
+$ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd', 'vdi');
 $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
 $DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
 $ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
-$MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog');
+$MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog', 'wma', 'mp2', 'flac');
 // / Set all secondary array data.
 $archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
 $pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
@@ -178,7 +178,6 @@ Are you sure?
   <option value="rar">Rar</option>
   <option value="tar">Tar</option>
   <option value="7z">7z</option>
-  <option value="tar.bz2">Tar.bz2</option> 
 </select>
 <input type="submit" id="archiveFileSubmit" name="archiveFileSubmit" value='Archive Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
@@ -187,10 +186,18 @@ Are you sure?
 <select id='extension' name='extension'> 
   <option value="">Select Format</option>
     <option value="mp3">--Audio Formats--</option>
+  <option value="mp2">Mp2</option>  
   <option value="mp3">Mp3</option>
+  <option value="acc">Acc</option>
   <option value="avi">Avi</option>
   <option value="wav">Wav</option>
+  <option value="wma">Wma</option>
   <option value="ogg">Ogg</option>
+    <option value="mp3">--Image Formats--</option>
+  <option value="jpg">Jpg</option>  
+  <option value="bmp">Bmp</option>
+  <option value="png">Png</option>
+  <option value="gif">Gif</option>
     <option value="txt">--Document Formats--</option>
   <option value="doc">Doc</option>
   <option value="docx">Docx</option>
