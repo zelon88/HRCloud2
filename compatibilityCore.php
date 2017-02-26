@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.2.3
+THIS VERSION : v1.2.4
 WRITTEN ON : 2/27/2017
 */
 
@@ -105,7 +105,11 @@ if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   set_time_limit(0);
-  $MAKEUpdatedZIP = file_put_contents($UpdatedZIP1, fopen($UpdatedZIPURL, 'r')); 
+  $MAKEUpdatedZIP = file_put_contents($UpdatedZIP1, @fopen($UpdatedZIPURL, 'r')); 
+  if (!file_exists($UpdatedZIP1)) {
+    $txt = ('ERROR!!! HRC2CompatCore110, Could not open a connection to Github on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    die ($txt.'<hr />'); }
   $txt = ('OP-Act: Opened a connection to Github and downloading data on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   set_time_limit(0); 
@@ -214,6 +218,10 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
         $txt = ('OP-Act: Copied update data on '.$Time.'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   // / The following code checks the HRCloud2 version and stops the update process if an old version was prepared.
+  if (!file_exists($ResourceDir1.'/versionInfo.php')) {
+    $txt = ('ERROR!!! HRC2CompatCore223, Could not verify the latest "versionInfo.php" on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt.'<hr />');  }
   require ($ResourceDir1.'/versionInfo.php'); 
   $Version1 = $Version;
   require ($InstLoc.'/versionInfo.php'); 
