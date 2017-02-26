@@ -1,6 +1,6 @@
 <!doctype HTML>
 <html>
-<title>Basic Utilization Monitors</title>
+<title>Basic Specification Monitors</title>
 <head></head>
 <?php
 // / -----------------------------------------------------------------------------------
@@ -19,24 +19,20 @@ require($ServMonUserCache);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code will return the server's CPU load percentage average for the past 5 minutes.
-require('cpuUpdater.php');
-// / The following code will return the server's RAM usage percentage.
-require('ramUpdater.php');
-// / The following code will return the server's network load information.
-require('networkUpdater.php');
-// / The following code will return the server's disk load information.
-require('diskUpdater.php');
+// / The following code will return the server's specifications.
+require('specUpdater.php');
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code displays the HTML body for the Basic Utilization Iframer.
  ?>
 <body>
-<div id='butils' name='butils'>
-<a style="padding-left:5px;" onclick="parent.toggle_visibility('cpuGauge');" target="_parent"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  • CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="parent.toggle_visibility('ramGauge');" target="_parent"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  • RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
-<a style="padding-left:5px;" onclick="parent.toggle_visibility('diskGauge'); " target="_parent"><strong><img src="Resources/gauge.png" title="More DISK Info" alt="More RAM Info">  • Disk Usage: </strong>  <i><?php echo $diskUsage[0]; ?></i></a><hr />
+<div>
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $specHardwareDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $specStorageDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="CPU Specs" alt="CPU Specs"> • CPU Specs: </strong>  <i><?php echo $specCPUDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="USB Specs" alt="USB Specs"> • USB Specs: </strong>  <i><?php echo $specPCIDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $specUptimeData; ?></i></a><hr />
 </div>
 </body>
 <?php
@@ -46,7 +42,7 @@ require('diskUpdater.php');
 // / The following code handles automatic page refresh.
 ?>
 <script type="text/javascript">
-    setTimeout(function() {
-      location.reload(); }, '<?php echo $UpdateInterval; ?>');
+//    setTimeout(function() {
+  //    location.reload(); }, '<?php echo $UpdateInterval; ?>');
 </script>
 <html>

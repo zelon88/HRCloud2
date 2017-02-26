@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.1 (2-25-2017 01:30)
+App Version: 2.1.5 (2-26-2017 01:30)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -161,7 +161,7 @@ require($ServMonUserCache);
             $('#diskusagegaugeContainer').on('valueChanging', function (e) {
                 $('#gaugeValue').text(Math.round(e.args.value) + 'Disk Usage %');
             });
-            $('#diskusagegaugeContainer').jqxGauge('value', '<?php echo round(str_replace(' % Disk Usage', '', $diskUsage)); ?>');
+            $('#diskusagegaugeContainer').jqxGauge('value', '<?php echo round(str_replace('%', '', $diskUsage[0])); ?>');
         });
 </script>
 
@@ -183,13 +183,7 @@ require($ServMonUserCache);
 
 <iframe id="basictemperatureMonitors" name="basictemperatureMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;" src="btemp.php?UpdateInterval=$UpdateInterval"></iframe>
 
-<div id="basicspecificationsMonitors" name="basicspecificationsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;">
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $specHardwareDeviceData; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $specStorageDeviceData; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="CPU Specs" alt="CPU Specs"> • CPU Specs: </strong>  <i><?php echo $specCPUDeviceData; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="USB Specs" alt="USB Specs"> • USB Specs: </strong>  <i><?php echo $specPCIDeviceData; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $specUptimeData; ?></i></a><hr />
-</div>
+<iframe id="basicspecificationsMonitors" name="basicspecificationsMonitors" style="overflow:scroll; float:left; display:none; width:30%; height:300px; border:inset; margin-left:1%;" src="bspec.php"></iframe>
 <?php
 // / -----------------------------------------------------------------------------------
 
@@ -215,6 +209,11 @@ require($ServMonUserCache);
     <div align="center" id="cpuTemperatureGauge" name="cpuTemperatureGauge" style="border:inset; float:left; width:355px; height:365px;">
         CPU Temperature: <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>&#8451; <img src="Resources/x.png" title="Close CPU Temp Info" alt="Close CPU Temp Info" onclick="toggle_visibility1('cpuTemperatureGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
         <div style="float: center;" id="cputempgaugeContainer"></div>
+    </div>
+
+    <div align="center" id="diskGauge" name="diskGauge" style="border:inset; float:left; width:355px; height:365px;">
+        Disk Usage: <?php echo round(str_replace('%', '', $diskUsage[0])); ?>% <img src="Resources/x.png" title="Close Disk Usage Info" alt="Close Disk Usage Info" onclick="toggle_visibility1('diskGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
+        <div style="float: center;" id="diskusagegaugeContainer"></div>
     </div>
 </div>
 <?php

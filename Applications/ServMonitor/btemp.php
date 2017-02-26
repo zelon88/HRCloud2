@@ -1,6 +1,6 @@
 <!doctype HTML>
 <html>
-<title>Basic Utilization Monitors</title>
+<title>Basic Status Monitors</title>
 <head></head>
 <?php
 // / -----------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ require($ServMonUserCache);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code will return the server's CPU load percentage average for the past 5 minutes.
+// / The following code will return the server's temperature, power, and battery status.
 require('tempvoltUpdater.php');
 // / -----------------------------------------------------------------------------------
 
