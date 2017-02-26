@@ -16,7 +16,6 @@ if ($user_ID > '0') {  ?>
 <p>Step 1 of 2  |  <a id="nextbutton" name="nextbutton" href="#top" target="HRAIMini" style="max-width:100px; border-style: solid; border-color: MidnightBlue;" onclick="toggle_visibility('HRAIConvertSubmit'); toggle_visibility('HRAIConvertOptions1'); toggle_visibility('HRAIConvertOptions0');">Next &#x2192</a></p>
   <p>Please enter a Cloud directory/filename to convert:</p>
   <p><input type="text" name='convertSelected' id='convertSelected' value=""></p> 
-<?php } ?>
   <div align="center">
   </div>
   </div>
@@ -44,6 +43,17 @@ if ($user_ID > '0') {  ?>
     <option value="xls">Xls</option>
     <option value="xlsx">Xlsx</option>
     <option value="pdf">Pdf</option>
+      <option value="zip">--Presentation Formats--</option>
+    <option value="pages">Pages</option>
+    <option value="pptx">Pptx</option>
+    <option value="ppt">Ppt</option>
+    <option value="xps">Xps</option>
+    <option value="potx">Potx</option>
+    <option value="pot">Pot</option>
+    <option value="ppa">Ppa</option>
+    <option value="ppt">Ppt</option>
+    <option value="pptx">Pptx</option>
+    <option value="odp">Odp</option>
       <option value="">--Archive Formats--</option>
     <option value="zip">Zip</option>
     <option value="rar">Rar</option>
@@ -54,6 +64,7 @@ if ($user_ID > '0') {  ?>
   </select></p>
   <p><input type="submit" id="HRAIConvertSubmit" style="display: none; border-style: solid; border-color: MidnightBlue;" value="Convert File" name='submit'></p>
   </div>
+<?php } ?>
 <script type="text/javascript">
 $(document).ready(function () {
 $("#HRAIConvertSubmit").click(function(){
