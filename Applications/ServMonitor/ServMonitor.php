@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.1.5 (2-26-2017 01:30)
+App Version: 2.2 (2-27-2017 23:30)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -167,7 +167,25 @@ require($ServMonUserCache);
 
 </head>
 <body style="background:white;">
-
+<div align="left" id="settingsGearDIV" name="settingsGearDIV" style="display:block;" ><img id="settingsGear" name="settingsGear" src="Resources/gear.png" onclick="toggle_visibility('settingsDisplay'); toggle_visibility('settingsXDIV'); toggle_visibility('settingsGearDIV');"></img></div>
+<div align="left" id="settingsXDIV" name="settingsXDIV" style="display:none;"><img id="settingsX" name="settingsX" src="Resources/x.png" onclick="toggle_visibility('settingsDisplay'); toggle_visibility('settingsXDIV'); toggle_visibility('settingsGearDIV');"></img></div>
+<div id="settingsDisplay" name="settingsDisplay" style="display:none;">
+<form enctype="multipart/form-data" method="post" action="ServMonitor.php">
+  <select id="UpdateInterval" name="UpdateInterval">
+    <option value="5000">Default (5s)</option>
+    <option value="2000">2s</option>
+    <option value="3000">3s</option>
+    <option value="4000">4s</option>
+    <option value="5000">5s</option>
+    <option value="7000">7s</option>
+    <option value="10000">10s</option>
+    <option value="15000">15s</option>
+    <option value="30000">30s</option>
+    <option value="60000">60s</option>
+    <option value="90000">90s</option>
+    <option value="120000">120s</option></select>
+    <input type="submit" value="Apply Settings">
+</div>
 <div align="center" id="basicMonitorsSHOWbutton" name="basicMonitorsSHOWbutton" onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="clear:both; display:none;">Show "Basic Monitors"</div>
 <div style="display:block; float:center;" id='basicMonitors' name="Monitors">  
 <?php
