@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.2 (2-27-2017 23:30)
+App Version: 2.3 (2-28-2017 24:00)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -66,9 +66,13 @@ $ServMonUserCache = $CloudTmpDir.'/.AppData/ServMon.php';
 if (!file_exists($ServMonUserCache)) {
   $txt = '';
   file_put_contents($ServMonUserCache, $txt); }
-$txt = '<?php $UpdateInterval = '.$UpdateInterval.' ?>';
-file_put_contents($ServMonUserCache, $txt.PHP_EOL, FILE_APPEND);
+if (isset($_POST['UpdateInterval'])) {
+  $txt = '<?php $UpdateInterval = '.$UpdateInterval.' ?>';
+  file_put_contents($ServMonUserCache, $txt.PHP_EOL, FILE_APPEND); }
 require($ServMonUserCache);
+$UpateInt = $UpdateInterval;
+$valueRAW = $UpdateInterval;
+$valuePretty = ($UpdateInterval / 1000).'s';
 // / -----------------------------------------------------------------------------------
 
 ?>
@@ -172,6 +176,7 @@ require($ServMonUserCache);
 <div id="settingsDisplay" name="settingsDisplay" style="display:none;">
 <form enctype="multipart/form-data" method="post" action="ServMonitor.php">
   <select id="UpdateInterval" name="UpdateInterval">
+    <option value="<?php echo $valueRAW; ?>">Current (<?php echo $valuePretty; ?>)</option>
     <option value="5000">Default (5s)</option>
     <option value="2000">2s</option>
     <option value="3000">3s</option>
