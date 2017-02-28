@@ -155,7 +155,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   // / It will recursively copy all update files and directories to a folder, and then zip that folder
     // / into an "installation image" that we can over-write the $InstLoc with.
   if (file_exists($ResourceDir1)) {
-    $txt = ('OP-Act: The update packages were unpacked sucessfulle on '.$Time.'.'); 
+    $txt = ('OP-Act: The update packages were unpacked sucessfully on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
     $UPDATEFiles = scandir($ResourceDir1);
     foreach($UPDATEFiles as $UF) {
@@ -163,8 +163,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
       $UFSrcDir = $ResourceDir1.'/'.$UF;
       $UFDstDir = $InstLoc.'/'.$UF;
       if (is_dir($ResourceDir1)) @mkdir($InstLoc, 0755);
-      if (is_file($UFSrcDir)) {
-        copy ($UFSrcDir, $UFDstDir); }
+      if (is_file($UFSrcDir)) @copy ($UFSrcDir, $UFDstDir);
       if (is_dir($UFSrcDir)) {
         @mkdir ($UFDstDir);
         $UPDATEFiles2 = scandir ($UFSrcDir);
@@ -173,8 +172,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
           $UFSrcDir2 = $ResourceDir1.'/'.$UF.'/'.$UF2;
           $UFDstDir2 = $InstLoc.'/'.$UF.'/'.$UF2;
           if (is_dir($ResourceDir1.'/'.$UF)) @mkdir($InstLoc.'/'.$UF, 0755);
-          if (is_file($UFSrcDir2)) {
-            copy ($UFSrcDir2, $UFDstDir2); }
+          if (is_file($UFSrcDir2)) @copy ($UFSrcDir2, $UFDstDir2);
             if (is_dir($UFSrcDir2)) {
               @mkdir ($UFDstDir2);
               $UPDATEFiles3 = scandir ($UFSrcDir2);
@@ -183,8 +181,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                 $UFSrcDir3 = $ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3;
                 $UFDstDir3 = $InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3;
                 if (is_dir($ResourceDir1.'/'.$UF.'/'.$UF2)) @mkdir($InstLoc.'/'.$UF.'/'.$UF2, 0755);
-                if (is_file($UFSrcDir3)) {
-                  copy ($UFSrcDir3, $UFDstDir3); }
+                if (is_file($UFSrcDir3)) @copy ($UFSrcDir3, $UFDstDir3);
                 if (is_dir($UFSrcDir3)) {
                   @mkdir ($UFDstDir3);
                   $UPDATEFiles4 = scandir ($UFSrcDir3);
@@ -193,8 +190,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                     $UFSrcDir4 = $ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4;
                     $UFDstDir4 = $InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4;
                     if (is_dir($ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3)) @mkdir($InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3, 0755);
-                    if (is_file($UFSrcDir4)) {
-                      copy ($UFSrcDir4, $UFDstDir4); }
+                    if (is_file($UFSrcDir4)) @copy ($UFSrcDir4, $UFDstDir4);
                     if (is_dir($UFSrcDir4)) {
                       @mkdir ($UFDstDir4);
                       $UPDATEFiles5 = scandir ($UFSrcDir4);
@@ -203,8 +199,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                         $UFSrcDir5 = $ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4.'/'.$UF5;
                         $UFDstDir5 = $InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4.'/'.$UF5; 
                       if (is_dir($ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4)) @mkdir($InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4, 0755);
-                      if (is_file($UFSrcDir5)) {
-                        copy ($UFSrcDir5, $UFDstDir5); }
+                      if (is_file($UFSrcDir5)) @copy ($UFSrcDir5, $UFDstDir5);
                       if (is_dir($UFSrcDir5)) {
                         @mkdir ($UFDstDir5);
                         $UPDATEFiles6 = scandir ($UFSrcDir5);
@@ -213,8 +208,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                           $UFSrcDir6 = $ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF5.'/'.$UF5.'/'.$UF6;
                           $UFDstDir6 = $InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF5.'/'.$UF5.'/'.$UF6; 
                         if (is_dir($ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4.'/'.$UF5)) @mkdir($InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4.'/'.$UF5, 0755);
-                        if (is_file($UFSrcDir6)) {
-                          copy ($UFSrcDir6, $UFDstDir6); } } } } } } } } } } } }   
+                        if (is_file($UFSrcDir6)) @copy ($UFSrcDir6, $UFDstDir6); } } } } } } } } } } }   
         $txt = ('OP-Act: Copied update data on '.$Time.'.'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   // / The following code checks the HRCloud2 version and stops the update process if an old version was prepared.
