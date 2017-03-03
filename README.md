@@ -70,15 +70,16 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Compatible with any storage medium. Including removable devices,  virtual machines (VM's), network storage (and NAS devices), RAID arrays, or conventional storage.
 
+-Clear user / master cache option.
+
+-Clipboard (copy/paste files, folders, items between locations)
+
 
 # FUTURE CORE FEATURES
 
 
 -MOAR Apps (like Gallery and HRStreamer2)!!!
 
--Clear user / master cache option.
-
--Clipboard (copy/paste files, folders, items between locations)
 
 ----------------------------
 
