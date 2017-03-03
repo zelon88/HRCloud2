@@ -194,7 +194,11 @@ Trojan Sundown.16	etgerf.exe
 Trojan Sundown.17	rgfrf.exe
 Trojan Sundown.18	radEF99C.tmp.exe
 Trojan	Sundown.19	 	9ee649300ee66768afdb2b8866d504e802bd40fd8e4125667bb0f0e2bb6d339f
-Trojan Sundown.	z.tmp
+Trojan Sundown.20	z.tmp
+Trojan	Sundown.21		67d598c6acbd6545ab24bbd44cedcb825657746923f47473dc40d0d1f122abb6
+Trojan	Sundown.22		04fb00bdd3d2c0667b18402323fe7cf495ace5e35a4562e1a30e14b26384f41c
+Trojan	Rammit		1a22211d01d2e8746efe0d14ab7e1e547c3e30863a83e0884a9d90325bd7b64b
+Trojan	DiamondFox		6764f98ba6509b3351ad2f960dcc47c27d0dc00d53d7e0ae132a7c1d15067f4a
 Trojan	Sagecrypt	4bbc2b40ca476c9d2dae44c86258ae80	50624b1338349dcab4ad8345e0100ea75d3b643ef1e3a487b32fd711418b281b
 Trojan	Kovter	6295e092bc3ce94e18aedc69bcfbbbda	51d57d7f8d68391c295f97f5ec01fa57cdba2454fc0864dd336fd5008fd6fb40
 Trojan	AgentNed	4b64dc7993800e0fb60410471356a976	4e7cc2c1b3e8bb6ed8d9016420daed0585d0cbd75d5616830a4c184024371a51
@@ -241,6 +245,10 @@ Santy Worm	NeverEverNoSanity
 Santy Worm	WebWorm
 StatCounter Exploit	stolen_cookie_file
 Traversal Exploit	...//etc/passwd
+Ransomware	Nebula.Gootkit	48ae9a5d10085e5f6a1221cd1eedade6	6fe13d913f4d3f2286f67fbde08ab17418ba8370410e52354ffa12a0aaf498f8
+Ransomware	Nebula.Pitou	6f9d71eebe319468927f74b93c820ce4	b976cf6fd583b349e51cb34b73de6ef3a5ee72f86849f847b9158b4a7fb2315c
+Ransomware	Nebula		f4627005c018071f8ec6b084eef3936e3a267660b0df99ffa0d27a8d943d1af5
+Ransomware	Nebula.1		be86dc88e6337f09999991c206f890e0d52959d41f2bb4c6515b5442b23f2ecc
 Ransomware	RigEK	0e78c0dc543ae85b59d60d6a0de3986cb4cab1640cb0809a3e9ce10657a71851
 Ransomware	RigEK.1	 	c9b281940374a6b02349c8804b6f58ae1faec061dccd346118acdf68c050824d
 Ransomware	RigEK.2	 	e5df732f8fca61061901a1f56cd7c2dbcb8bd2422ace9c2e9237250fc2179331
@@ -1134,6 +1142,51 @@ Known Ransomware Host: Rammit	nbngrdaairlbtvd.com
 Known Ransomware Host: Rammit	198.105.254.228
 Known Ransomware Host: Rammit	208.100.26.234
 Known Ransomware Host: Rammit	52.9.84.146
+Known Ransomware Host: Nebula	188.209.49.135
+Known Ransomware Host: Nebula	188.209.49.23
+Known Ransomware Host: Nebula	93.190.141.166
+Known Ransomware Host: Nebula	217.23.7.15
+Known Ransomware Host: Nebula	188.209.49.151
+Known Ransomware Host: Nebula	188.209.49.49
+Known Ransomware Host: Nebula	93.190.141.200
+Known Ransomware Host: Nebula	93.190.141.39
+Known Ransomware Host: Nebula	93.190.141.166
+Known Ransomware Host: Nebula	93.190.141.45
+Known Ransomware Host: Nebula	clickbarber.356020817786fb76e9361441800132c9.win
+Known Ransomware Host: Nebula	cityacoustic.textfatherfont.info
+Known Ransomware Host: Nebula	chargerule.textfatherfont.info
+Known Ransomware Host: Nebula	captaincertification.77e1084e.pro
+Known Ransomware Host: Nebula	buysummer.77e1084e.pro
+Known Ransomware Host: Nebula	buglecommand.textfatherfont.info
+Known Ransomware Host: Nebula	boydescription.356020817786fb76e9361441800132c9.win
+Known Ransomware Host: Nebula	borrowfield.77e1084e.pro
+Known Ransomware Host: Nebula	bombclick.
+Known Ransomware Host: Nebula	bakermagician.alvdxq1l6n0o.stream
+Known Ransomware Host: Nebula	approvepeak.knowledgedrugsaturday.club
+Known Ransomware Host: Nebula	applywholesaler.tboapfmsyu.stream
+Known Ransomware Host: Nebula	agesword.alvdxq1l6n0o.stream
+Known Ransomware Host: Nebula	rainstormpromotion.
+Known Ransomware Host: Nebula	marketsunday.deliverycutadvantage.info
+Known Ransomware Host: Nebula	goalpanda.retaileraugustplier.club
+Known Ransomware Host: Nebula	birthdayexperience.foundationspadeinventory.club
+Known Ransomware Host: Nebula	apologycattle
+Known Ransomware Host: Nebula	burglarsatin.jsffu2zkt5va.trade
+Known Ransomware Host: Nebula	certificationplanet.87692f31beea22522f1488df044e1dad.top
+Known Ransomware Host: Nebula	chooseravioli.87692f31beea22522f1488df044e1dad.top
+Known Ransomware Host: Nebula	coachadvantage.reportattackconifer.site
+Known Ransomware Host: Nebula	databasesilver.reportattackconifer.site
+Known Ransomware Host: Nebula	date-of-birthtrout.87692f31beea22522f1488df044e1dad.top
+Known Ransomware Host: Nebula	dependentswhorl.jsffu2zkt5va.trade
+Known Ransomware Host: Nebula	derpenquiry.87692f31beea22522f1488df044e1dad.top
+Known Ransomware Host: Nebula	domainconsider.mxkznekruoays.trade
+Known Ransomware Host: Nebula	agesword.alvdxq1l6n0o.stream
+Known Ransomware Host: Nebula	authorparticle.390a20778a68d056c40908025df2fc4e.site
+Known Ransomware Host: Nebula	bakermagician.alvdxq1l6n0o.stream
+Known Ransomware Host: Nebula	actressheight.knowledgedrugsaturday.club
+Known Ransomware Host: Nebula	tci.nhnph.com
+Known Ransomware Host: Nebula	gnd.lplwp.com
+Known Ransomware Host: Nebula	qcl.ylk8.xyz
+Known Ransomware Host: Nebula	losssubwayquilt.
 Known Ransomware Host: Rig.Eitest.TeamViewer	www.h2md.net
 Known Ransomware Host: Rig.Eitest.TeamViewer	192.95.15.211
 Known Ransomware Host: Rig.Eitest.TeamViewer	gl9q.s57ae8vl3.top

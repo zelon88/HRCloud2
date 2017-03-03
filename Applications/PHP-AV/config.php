@@ -1,5 +1,5 @@
 <?php
-// Example configuration file for PHP AntiVirus v1.0.2
+// Example configuration file for PHP AntiVirus v1.3
 // Please read INSTALL before editing this file.
 
 // DEBUG MODE
@@ -25,56 +25,4 @@ $CONFIG['debug'] = 0;
 
 $CONFIG['scanpath'] = $CONFIG['scanpath'];
 
-// SCANABLE FILES
-// --------------
-// The next few lines tell PHP AntiVirus what files to scan
-// within the directory set above. It does it by file
-// extension (the text after the period or dot in the file
-// name) - for example "htm", "html" or "php" files.
-// Default: None
-
-// Static files? This should be a comprehensive list, add
-// more if required.
-
-$CONFIG['extensions'][] = 'htm';
-$CONFIG['extensions'][] = 'html';
-$CONFIG['extensions'][] = 'shtm';
-$CONFIG['extensions'][] = 'shtml';
-$CONFIG['extensions'][] = 'css';
-$CONFIG['extensions'][] = 'js';
-$CONFIG['extensions'][] = 'vbs';
-
-// PHP files? This should be a comprehensive list, add more
-// if required.
-
-$CONFIG['extensions'][] = 'php';
-$CONFIG['extensions'][] = 'php3';
-$CONFIG['extensions'][] = 'php4';
-$CONFIG['extensions'][] = 'php5';
-
-// Text files? Virus code is harmless but invasive,
-// although uncommenting these lines may cause false
-// positives.
-
-$CONFIG['extensions'][] = 'txt';
-$CONFIG['extensions'][] = 'rtf';
-$CONFIG['extensions'][] = 'doc';
-$CONFIG['extensions'][] = 'conf';
-$CONFIG['extensions'][] = 'dat';
-
-// Flat file data? Only enable these if you regularly store
-// data in flat files.
-
-$CONFIG['extensions'][] = 'conf';
-$CONFIG['extensions'][] = 'config';
-$CONFIG['extensions'][] = 'csv';
-$CONFIG['extensions'][] = 'tab';
-$CONFIG['extensions'][] = 'sql';
-
-// CGI scripts? Unlikely but entirely possible.
-
-$CONFIG['extensions'][] = 'pl';
-$CONFIG['extensions'][] = 'perl';
-$CONFIG['extensions'][] = 'cgi';
-$CONFIG['extensions'][] = '';
 ?>

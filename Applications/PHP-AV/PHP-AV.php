@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.3 | Virus Definition v2.2, 2/23/2017';
+$versions = 'PHP-AV App v2.3 | Virus Definition v2.3, 3/2/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -55,7 +55,7 @@ if (!isset($_POST['AVScan'])) { ?>
 <form type="multipart/form-data" action="PHP-AV.php" method="POST">
 <div name="Options" id="Options" style="display:none;">
 <a style="max-width:75%;"><hr /></a>
-<p>Specify a Cloud directory/filename: </p><input type="text" name="AVScanTarget" id="AVScanTarget" value="">
+<p>Specify a server directory/filename: </p><input type="text" name="AVScanTarget" id="AVScanTarget" value="">
 <a style="max-width:75%;"><hr /></a>
 </div>
 <br>
@@ -65,21 +65,20 @@ if (!isset($_POST['AVScan'])) { ?>
 </div>
 <?php }
 if (isset($_POST['AVScan'])) {
-// default configuration
 $CONFIG = Array();
 $CONFIG['debug'] = 0;
 $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
 $CONFIG['extensions'] = Array();
 $debug = null;
+include('config.php');
 if (isset($_POST['AVScanTarget'])) {
 $CONFIG['scanpath'] = str_replace(' ', '\ ', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AVScanTarget'])); }
 if (!isset($_POST['AVScanTarget']) or $_POST['AVScanTarget'] == '') {
 $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT']; }
-// attempt to load configuration file
-include('config.php');
 
 function file_scan($folder, $defs, $debug) {
 	// hunts files/folders recursively for scannable items
+	$defData = hash_file('sha256', 'virus.def');
 	global $dircount, $report;
 	$dircount++;
 	if ($debug)
@@ -88,28 +87,22 @@ function file_scan($folder, $defs, $debug) {
 		while (false !== ($entry = $d->read())) {
 			$isdir = @is_dir($folder.'/'.$entry);
 			if (!$isdir and $entry!='.' and $entry!='..') {
-				virus_check($folder.'/'.$entry,$defs,$debug); } 
+				virus_check($folder.'/'.$entry, $defs, $debug, $defData); } 
 			elseif ($isdir  and $entry!='.' and $entry!='..') {
-				file_scan($folder.'/'.$entry,$defs,$debug); } }
+				file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
 		$d->close(); } }
 
-function virus_check($file, $defs, $debug) {
+function virus_check($file, $defs, $debug, $defData) {
 	global $filecount, $infected, $report, $CONFIG;
-	// find scannable files
-	$scannable = 0;
-	foreach ($CONFIG['extensions'] as $ext) {
-		if (substr($file,-3)==$ext)
-			$scannable = 1; }
-	// compare against defs
-	if ($scannable) {
-		// affectable formats
 		$filecount++;
+		if ($file !== 'virus.def') 
 		$data = file($file);
 		$data = implode('\r\n', $data);
 		$data1 = md5_file($file);
 		$data2 = hash_file('sha256', $file);
-		$clean = 1;
-		foreach ($defs as $virus) {
+		if ($defData !== $data2) {
+		  $clean = 1;
+		  foreach ($defs as $virus) {
 			if ($virus[1] !== '') {
 			if (strpos($data, $virus[1])) {
 				// file matches virus defs
