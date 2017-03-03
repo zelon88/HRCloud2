@@ -49,7 +49,7 @@ duties.
   -;Use 256 - 384M for Raspberry Pis
   -display_errors = On
   -;Leave display errors = Off if you're not debugging HRCloud2 youself
-  -post_max_size = 12M
+  -post_max_size = 3000M
   -upload_max_filesize = 3000M
   -max_file_uploads = 100
 **SAVE THE MODIFIED "php.ini" FILE AND EXIT LEAFPAD**
