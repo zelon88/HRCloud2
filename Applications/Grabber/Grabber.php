@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.2 (2-5-2017 12:30)
+App Version: 1.3 (3-2-2017 11:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
@@ -39,11 +39,11 @@ if (isset($_POST['grabberFilename'])) {
 <form action="Grabber.php" method="post" enctype="multipart/form-data">
 <?php 
 if (!isset($grabberURLPOST)) { 
-  echo ('<p align="left" style="padding-left:15px;"><strong>2. </strong>Enter a URL to download.</p>'); 
+  echo ('<p align="left" style="padding-left:15px;"><strong>1. </strong>Enter a URL to download.</p>'); 
 ?>
 <p align="left" style="padding-left:15px;"><input id="grabberURL" name="grabberURL" value="" type="text"></p>
 <?php 
-  echo ('<p align="left" style="padding-left:15px;"><strong>1. </strong>Enter a Cloud directory/filename for your downloaded file (w/ extension).</p>'); 
+  echo ('<p align="left" style="padding-left:15px;"><strong>2. </strong>Enter a Cloud directory/filename for your downloaded file (w/ extension).</p>'); 
   echo('<p align="left" style="padding-left:15px;"><input  id="grabberFilename" name="grabberFilename" value="" type="text"></p>'); 
   echo ('<p align="left" style="padding-left:15px;"><input type="submit" id="grabberSubmit" name="grabberSubmit" title="Grab Files" alt="Grab Files" value="Grab Files"></p><hr />'); } 
 ?>
