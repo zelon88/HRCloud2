@@ -106,7 +106,7 @@ if (isset($_POST['scanSelected'])) {
     echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
     ?><hr /><?php
     // / Perform a ClamScan on the supplied user file and cache the results.
-    shell_exec('clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.$LogFile1);
+    shell_exec('clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.'HRCloud2 Detected: '.$LogFile1);
     $LogTXT = file_get_contents($LogFile1);
     $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
     $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
@@ -119,14 +119,14 @@ if (!isset($_POST['scanSelected'])) {
   echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
-  shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
+  shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.'HRCloud2 Detected: '.$LogFile1);
   $LogTXT = file_get_contents($LogFile1);
   $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
   $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
   echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n");
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
-  shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.$LogFile2);
+  shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.'HRCloud2 Detected: '.$LogFile2);
   $LogTXT = file_get_contents($LogFile2);
   $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
   $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
@@ -136,14 +136,12 @@ if (!is_file($LogFile0) or !is_file($LogFile1)) {
   $txt = ('ERROR!!! HRC2SecCore101, Could not generate scan results on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die('<a style="padding-left:15px;">'.$txt.'</a>'); }
-$LogFileSize0 = filesize($LogFile0);
-$LogFileSize1 = filesize($LogFile1);
-$LogFileSize2 = filesize($LogFile2);
+// / Gather data from ClamAV generated log files.
 $LogFileDATA0 = file_get_contents($LogFile0);
 $LogFileDATA1 = file_get_contents($LogFile1);
 $LogFileDATA2 = file_get_contents($LogFile2);
-// / Infection handler will throw the $INFECTION variable to '1' if potential infections were found.
-if ($LogFileSize0 > 2 or $LogFileSize1 > 2 or $LogFileSize2 > 2) {
+// / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
+if (strpos($LogFileDATA0, 'HRClou2 Detected: ') == 'true' or strpos($LogFileDATA1, 'HRClou2 Detected: ') == 'true' or strpos($LogFileDATA2, 'HRClou2 Detected: ') == 'true') {
   $INFECTION_DETECTED = 1; }
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
