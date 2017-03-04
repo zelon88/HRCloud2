@@ -152,10 +152,10 @@ if (strpos($Current_URL, $UserID) == 'true' && strpos($Current_URL, '/Shared') =
       
   // Output
    echo("<tr class='$class'>
-      <td><a href='./$namehref/.index.php'$favicon class='name'>$name</a></td>
-      <td><a href='./$namehref/.index.php'>$extn</a></td>
-      <td sorttable_customkey='$sizekey'><a href='./$namehref/.index.php'>$size</a></td>
-      <td sorttable_customkey='$timekey'><a href='./$namehref/.index.php'>$modtime</a></td>
+      <td><a href='./$namehref'$favicon class='name'>$name</a></td>
+      <td><a href='./$namehref'>$extn</a></td>
+      <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
+      <td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td>
     </tr>"); } }
 // / -----------------------------------------------------------------------------------
   ?>
