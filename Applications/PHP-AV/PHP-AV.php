@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.3 (1-31-2017 01:00)
+App Version: 2.3.5 (3-3-2017 21:30)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.3 | Virus Definition v2.3, 3/2/2017';
+$versions = 'PHP-AV App v2.3.5 | Virus Definition v2.3, 3/2/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -65,85 +65,86 @@ if (!isset($_POST['AVScan'])) { ?>
 </div>
 <?php }
 if (isset($_POST['AVScan'])) {
-$CONFIG = Array();
-$CONFIG['debug'] = 0;
-$CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
-$CONFIG['extensions'] = Array();
-$debug = null;
-include('config.php');
-if (isset($_POST['AVScanTarget'])) {
-$CONFIG['scanpath'] = str_replace(' ', '\ ', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AVScanTarget'])); }
-if (!isset($_POST['AVScanTarget']) or $_POST['AVScanTarget'] == '') {
-$CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT']; }
+  $CONFIG = Array();
+  $CONFIG['debug'] = 0;
+  $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
+  $CONFIG['extensions'] = Array();
+  $debug = null;
+  include('config.php');
+  if (isset($_POST['AVScanTarget'])) {
+    $CONFIG['scanpath'] = str_replace(' ', '\ ', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AVScanTarget'])); }
+  if (!isset($_POST['AVScanTarget']) or $_POST['AVScanTarget'] == '') {
+    $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT']; }
 
 function file_scan($folder, $defs, $debug) {
-	// hunts files/folders recursively for scannable items
-	$defData = hash_file('sha256', 'virus.def');
-	global $dircount, $report;
-	$dircount++;
-	if ($debug)
-		$report .= '<p class="d">Scanning folder $folder ...</p>';
+  // Hunts files/folders recursively for scannable items.
+  $defData = hash_file('sha256', 'virus.def');
+  global $dircount, $report;
+  $dircount++;
+  if ($debug)
+	$report .= '<p class="d">Scanning folder $folder ...</p>';
 	if ($d = @dir($folder)) {
-		while (false !== ($entry = $d->read())) {
-			$isdir = @is_dir($folder.'/'.$entry);
-			if (!$isdir and $entry!='.' and $entry!='..') {
-				virus_check($folder.'/'.$entry, $defs, $debug, $defData); } 
-			elseif ($isdir  and $entry!='.' and $entry!='..') {
-				file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
-		$d->close(); } }
+	  while (false !== ($entry = $d->read())) {
+		$isdir = @is_dir($folder.'/'.$entry);
+		if (!$isdir and $entry!='.' and $entry!='..') {
+		  virus_check($folder.'/'.$entry, $defs, $debug, $defData); } 
+		elseif ($isdir  and $entry!='.' and $entry!='..') {
+		  file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
+	  $d->close(); } }
 
 function virus_check($file, $defs, $debug, $defData) {
-	global $filecount, $infected, $report, $CONFIG;
-		$filecount++;
-		if ($file !== 'virus.def') 
-		$data = file($file);
-		$data = implode('\r\n', $data);
-		$data1 = md5_file($file);
-		$data2 = hash_file('sha256', $file);
-		if ($defData !== $data2) {
-		  $clean = 1;
-		  foreach ($defs as $virus) {
-			if ($virus[1] !== '') {
-			if (strpos($data, $virus[1])) {
-				// file matches virus defs
-				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-				$infected++;
-				$clean = 0; } }
-			if ($virus[2] !== '') {
+  // Hashes and checks files/folders for viruses against static virus defs.
+  global $filecount, $infected, $report, $CONFIG;
+	$filecount++;
+	if ($file !== 'virus.def') 
+	  $data = file($file);
+	  $data = implode('\r\n', $data);
+	  $data1 = md5_file($file);
+	  $data2 = hash_file('sha256', $file);
+	  if ($defData !== $data2) {
+	    $clean = 1;
+	    foreach ($defs as $virus) {
+		  if ($virus[1] !== '') {
+		    if (strpos($data, $virus[1])) {
+			  // File matches virus defs.
+			  $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			  $infected++;
+			  $clean = 0; } }
+		    if ($virus[2] !== '') {
               if (strpos($data1, $virus[2])) {
-				// file matches virus defs
-				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-				$infected++;
-				$clean = 0; } }
-			if ($virus[3] !== '') {
+			  // File matches virus defs.
+			  $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			  $infected++;
+			  $clean = 0; } }
+		  if ($virus[3] !== '') {
               if (strpos($data2, $virus[3])) {
-				// file matches virus defs
-				$report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-				$infected++;
-				$clean = 0; } } }
-		if (($debug)&&($clean))
-			$report .= '<p class="g">Clean: ' . $file . '</p>'; } }
+			  // File matches virus defs.
+			  $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			  $infected++;
+			  $clean = 0; } } }
+	    if (($debug)&&($clean))
+		  $report .= '<p class="g">Clean: ' . $file . '</p>'; } }
 
 function load_defs($file, $debug) {
-	// reads tab-delimited defs file
-	$defs = file($file);
-	$counter = 0;
-	$counttop = sizeof($defs);
-	while ($counter < $counttop) {
-		$defs[$counter] = explode('	', $defs[$counter]);
-		$counter++; }
-	if ($debug)
-		echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
-	return $defs; }
+  // Reads tab-delimited defs file.
+  $defs = file($file);
+  $counter = 0;
+  $counttop = sizeof($defs);
+  while ($counter < $counttop) {
+	$defs[$counter] = explode('	', $defs[$counter]);
+	$counter++; }
+if ($debug)
+  echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
+  return $defs; }
 
 function check_defs($file) {
-	// check for >755 perms on virus defs
-	clearstatcache();
-	$perms = substr(decoct(fileperms($file)),-2);
-	if ($perms > 55)
-		return false;
-	else
-		return true; }
+  // Check for >755 perms on virus defs.
+  clearstatcache();
+  $perms = substr(decoct(fileperms($file)),-2);
+  if ($perms > 55)
+	return false;
+  else
+	return true; }
 
 function renderhead() {
 ?>
@@ -182,27 +183,26 @@ p {
 </head>
 <body>
 <?php }
-
-// declare variables
+// Declare variables.
 $report = '';
-// output html headers
+// Output html headers.
 renderhead();
-// set counters
+// Set counters.
 $dircount = 0;
 $filecount = 0;
 $infected = 0;
-// load virus defs from flat file
+// Load virus defs from flat file.
 $defs = load_defs('virus.def', $debug);
-// scan specified root for specified defs
+// Scan specified root for specified defs.
 file_scan($CONFIG['scanpath'], $defs, $CONFIG['debug']);
-// output summary
+// Output summary
 echo '<h2>Scan Completed</h2>';
 echo '<div id=summary>';
 echo '<p><strong>Scanned folders:</strong> ' . $dircount . '</p>';
 echo '<p><strong>Scanned files:</strong> ' . $filecount . '</p>';
 echo '<p class=r><strong>Infected files:</strong> ' . $infected . '</p>';
 echo '</div>';
-// output full report
+// Output full report.
 echo $report; } 
 ?>
 <hr />
