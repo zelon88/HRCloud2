@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.3 (2-5-2017 12:30)
+App Version: 1.4 (3-16-2017 11:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -114,9 +114,9 @@ if (isset($_POST['newContact'])) {
   $ContactPhone4 = file_put_contents($ContactFile, '$ContactPhone4 = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactPhone4']).'\';'.PHP_EOL, FILE_APPEND);
   $ContactPhone5 = file_put_contents($ContactFile, '$ContactPhone5 = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactPhone5']).'\';'.PHP_EOL, FILE_APPEND);
   $ContactPhone6 = file_put_contents($ContactFile, '$ContactPhone6 = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactPhone6']).'\';'.PHP_EOL, FILE_APPEND);
-  $ContactWebsite1 = file_put_contents($ContactFile, '$ContactWebsite1 = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactWebsite1']).'\';'.PHP_EOL, FILE_APPEND);
-  $ContactWebsite2 = file_put_contents($ContactFile, '$ContactWebsite2 = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactWebsite2']).'\';'.PHP_EOL, FILE_APPEND);
-  $ContactWebsite3 = file_put_contents($ContactFile, '$ContactWebsite3 = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactWebsite3']).'\';'.PHP_EOL, FILE_APPEND);
+  $ContactWebsite1 = file_put_contents($ContactFile, '$ContactWebsite1 = \''.str_replace(str_split('[]{};$!#^&%@>*<'), '', $_POST['editContactWebsite1']).'\';'.PHP_EOL, FILE_APPEND);
+  $ContactWebsite2 = file_put_contents($ContactFile, '$ContactWebsite2 = \''.str_replace(str_split('[]{};$!#^&%@>*<'), '', $_POST['editContactWebsite2']).'\';'.PHP_EOL, FILE_APPEND);
+  $ContactWebsite3 = file_put_contents($ContactFile, '$ContactWebsite3 = \''.str_replace(str_split('[]{};$!#^&%@>*<'), '', $_POST['editContactWebsite3']).'\';'.PHP_EOL, FILE_APPEND);
   $ContactFB = file_put_contents($ContactFile, '$ContactFB = \''.str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['editContactFB']).'\';'.PHP_EOL, FILE_APPEND);
   $ContactTwitter = file_put_contents($ContactFile, '$ContactTwitter = \''.str_replace(str_split('[]{};:$!#^&%>*<'), '', $_POST['editContactTwitter']).'\';'.PHP_EOL, FILE_APPEND);
   $ContactSnap = file_put_contents($ContactFile, '$ContactSnap = \''.str_replace(str_split('[]{};:$!#^&%>*<'), '', $_POST['editContactSnap']).'\';'.PHP_EOL, FILE_APPEND);
