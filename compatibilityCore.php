@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.3.1
-WRITTEN ON : 3/3/2017
+THIS VERSION : v1.3.2
+WRITTEN ON : 3/16/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -483,7 +483,7 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/AdminLogin.php'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
     @unlink($InstLoc.'/Applications/HRAI/awake.php'); } 
-  if (file_exists($InstLoc.'/Applications/HRAI/wordpress_1-28-17.zip')) {
+  if (file_exists($InstLoc.'/Applications/wordpress_1-28-17.zip')) {
     @unlink($InstLoc.'/Applications/wordpress_1-28-17.zip'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/wordpress_11416.zip')) {
     @unlink($InstLoc.'/Applications/wordpress_11416.zip'); } 
