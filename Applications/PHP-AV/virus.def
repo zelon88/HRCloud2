@@ -1,10 +1,6 @@
-Malware	Hancitor	f472c00abef3324460989972362458e1
-Malware	hancitor
-Malware	Chanitor	AllocHeapMemory(0x500000u);
-Malware	chanitor
+Malware Hanictor	hancitor.dll	f472c00abef3324460989972362458e1	420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Chanitor	chanitor.dll	AllocHeapMemory(0x500000u);
 Malware	Ruckguv	1c319670a717305f7373c8529092f8c3
-Malware	ruckguv
-Malware	tinyloader
 Malware	TinyLoader	0c77886a3ea42b75fcd860d4d97e72c5
 Malware	TinyLoader.1	a3ea1a008619687bdfef08d2af83f548
 Malware	TinyLoader.2	a53d8212a47bf25eeca87c1e27042686
@@ -54,7 +50,6 @@ Malware TinyLoader.45	id_1123.exe
 Malware TinyLoader.46	7777.exe
 Malware TinyLoader.47	c.work.exe
 Malware TinyLoader.48	40930.exe
-Malware	cryptowall
 Malware	CryptoWall	227e6b1f3e66f00a4fc683d4f39da904
 Malware	CryptoWall.1	2af149845f4d1ce8e712622d3f1ec46e
 Malware	AbaddonPOS	91992a1cac7f15e899b22d9a53cabf71
@@ -100,21 +95,25 @@ Malware	AbaddonPOS.39	6a6977ea317f0240a3dacc0753257518
 Malware	AbaddonPOS.40	5e06563f6303eab10c3cd46f0fd5c2d6
 Malware	AbaddonPOS.41	7ef654cdc7c2b54772400e26eb292caf
 Malware	AbaddonPOS.42	946be7ddd511ff9f49b5073896346eab
-Malware	Tordal
-Malware	tordal
-Malware	Theori
-Malware	theori
-Malware	PonyForx
-Malware	ponyforx
-Malware	Pony.exe	f6b398f96cc1bfb82246326e9b1ef6e6
-Malware	pony.exe
-Malware	PonyBuilder.exe
-Malware	masm32
-Malware	Gate.php
-Malware	gate.php
-Malware	DllTest.exe
-Malware	Pony.dll
-Malware	pony.dll
+Malware Pony	Pony.exe	f6b398f96cc1bfb82246326e9b1ef6e6
+Malware Pony.1	pony.exe
+Malware Pony.2	pm.exe
+Malware Pony.2	pm.dll		903345e2ccc6c0045de61d40c4c85dad625274b0cc7a4fc4e0c3813811e44495
+Malware Pony.3	wp-admin/inst.exe
+Malware Pony.4	PonyForx		cca1f8ba0be872ec86755e3defbb23c8fe4a272a6b4f7ec651302c5cddc5e183
+Malware Pony.5	ponyforx
+Malware Pony.6	PonyBuilder.exe
+Malware Pony.7	Pony.dll
+Malware Pony.8	pony.dll
+Malware Malspam	Malspam BNC967.tmp.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
+Malware Malspam.1	DekJanv.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
+Malware Malspam.2	contract_54262.doc		d84b585409fb4f538cde666cefc7980ba3a927dc292dfb391bdcd8765d4ce0c8
+Malware Malspam.3	CherryFramework/pm.dll
+Malware Malspam.4	zapoy/gate.php
+Malware SuperMulti	masm32
+Malware SuperMulti	Gate.php
+Malware SuperMulti	gate.php
+Malware SuperMulti	DllTest.exe
 Exploit CVE-2016-7200	188.165.163.226
 Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
@@ -213,6 +212,18 @@ Trojan	zd1.2	ebc51f6facae5d8bb3d41bc3eca56f67	c20fff01ea21b78ae29f417934a9da2eaf
 Trojan	Zbot ba5cd871e53b6808b3b404b49c9b5ead	f54ca0492592d6e910fc4f17cbb5096f3e0ecda437a717e50de90f0b60e64195
 Trojan	Zbot.1	4b96cdeac867a0ac5d853f678feb0c4b	8eb282d2a6720a73e09282875cbdfce5fd78122797484023883db2257fb35a9c
 Trojan	Zbot.2	c619412f0d38b3ea41ea865c3c94b331	27c85756c2cbdd89674c50868d2f8127025cd740f24c888e6d9b047ff6cc2a4e
+Trojan	Bedep		2af7a33ffd6755d6046112b33b9018b1c3bb012b332cda4b8b0a30759ec67a18
+Trojan	Bedep.1		13e62c23322cf915171d874f14ebfd21abf16e58270aff58316f624ad144a3a3
+Trojan	Bedep.2		ae295ee7804a316153434783d83c2fbc63954a9384e2343a349be88a84e4ffed
+Trojan	Bedep.3		c44b368f73ffc548e5253643a0c4d33fb8f0a91b5d7fd948bfb1f3ba9b204e1c
+Trojan	Bedep.4		60f049fd94527991fe7d6ab2a5c8b000cf88bc2b21ead056a53233b348b65458
+Trojan	Bedep.5		077545cf2c63cab61b5b49875027847a12e6f254f89a9cd8accc51b107688fcf
+Trojan	Bedep.6		0452cf22c867621c99a43564bef4d4cfe453c594b25667fc4d1fe412d0b335dc
+Trojan	Bedep.7		c9eaf3480afe4cbddcd9df13d8577bfa0cae52b647eeb81253d45d826a41bc92
+Trojan	Bedep.8		ce3a9bcdbfa2f76fea7f5a13bfe46e770ad5ab1b0ab224b7018ddd22aa9da026
+Trojan	Bedep.9		9ed422779f846be0e630c75a8eaf8a46909e9a72ec2e3477775d0ce9ae476540
+Trojan	Bedep.10		71b69881e549f6faaa82de459f3db239cebccea0e59f3447658ed4fd4c633ce4
+Trojan	Bedep.11		ba8ca1c7ba3b0d615c0b3957004cc5f16f8c0d77c5f65aed88e3157cdeec6db0	
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -1050,6 +1061,8 @@ Known Spyware Host	mailstat.us
 Known Spyware Host	via.intercom.io
 Known Spyware Host	hsms06.com
 Known Spyware Host	rjmetrics.com
+Known Spyware Host Malspam	46.105.218.106
+Known Spyware Host Malspam.1	185.75.46.13
 Known Ransomware Host	slater.chat.ru
 Known Ransomware Host	hundeschulegoerg.de
 Known Ransomware Host	capitalsend.info
@@ -1209,6 +1222,24 @@ Known Ransomware Host: RigV.Cerber	betongstudio.no
 Known Ransomware Host: RigV.Cerber.1	109.234.35.244
 Known Ransomware Host: RigV.Cerber.2	84.200.4.70
 Known Ransomware Host: RigV.Cerber.3	109.234.35.244
+Known Ransomware Host: Bedep	82.146.62.52
+Known Ransomware Host: Bedep.1	64.20.35.186
+Known Ransomware Host: Bedep.2	50.31.14.17
+Known Ransomware Host: Bedep.3	103.27.87.88
+Known Ransomware Host: Bedep.4	104.193.252.245
+Known Ransomware Host: Bedep.5	82.141.230.141
+Known Ransomware Host: Bedep.6	198.105.244.228
+Known Ransomware Host: Bedep.7	zmienna.machynllethfestival
+Known Ransomware Host: Bedep.8	diwali2k15.in
+Known Ransomware Host: Bedep.9	samuday.org
+Known Ransomware Host: Bedep.10	maxmpl.com
+Known Ransomware Host: Bedep.11	chunky.enchantingwedd
+Known Ransomware Host: Bedep.12	162.244.32.121
+Known Ransomware Host: Bedep.13	104.193.252.234
+Known Ransomware Host: Bedep.14	162.244.32.122
+Known Ransomware Host: Bedep.15	89.163.240.118
+Known Ransomware Host: Bedep.16	89.163.241.90
+Known Ransomware Host: Bedep.17	/ads.php?sid=1826
 Known Trojan Host: Zeuss Panda	secpressnetwork.com
 Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
 Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
