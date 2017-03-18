@@ -167,7 +167,7 @@ $.ajax( {
     url: '<?php echo $URL; ?>/HRProprietary/HRCloud2/cloudCore.php',
     data: { unshareConfirm : "1", filesToUnShare : unshareSelected},
     success: function(data) {
-        window.location.href = "<?php echo $URL; ?>/HRProprietary/HRCloud2/cloudCore.php";
+        window.location.href = "<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/displaydirectorycontents_shared/.index.php";
     }
 } );
 });
