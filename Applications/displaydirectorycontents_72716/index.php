@@ -188,7 +188,6 @@ Are you sure?
     <option value="mp3">--Audio Formats--</option>
   <option value="mp2">Mp2</option>  
   <option value="mp3">Mp3</option>
-  <option value="acc">Acc</option>
   <option value="avi">Avi</option>
   <option value="wav">Wav</option>
   <option value="wma">Wma</option>
