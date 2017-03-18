@@ -24,29 +24,40 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
+// / The following code sets the variables for the session.
+$SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
+$user = 'www-data';
+$LogFile0 = $SesLogDir.'/VirusLog_'.$Date.'.txt';
+$LogFile1 = $SesLogDir.'/VirusLog1_'.$Date.'.txt';
+$LogFile2 = $SesLogDir.'/VirusLog2_'.$Date.'.txt';
+$LogFileInc0 = 0;
+$LogFileInc1 = 0;
+$LogFileInc2 = 0;
 
 // / The following code changes the group of certain directories to the www-data group,
-@chgrp('/var/www', 'www-data');
-@chgrp('/var/www/html', 'www-data');
-@chgrp('/var/www/html/HRProprietary', 'www-data');
-@chgrp($InstLoc, 'www-data');
-@chgrp($InstLoc.'/Applications', 'www-data');
-@chgrp($InstLoc.'/Resources', 'www-data');
-@chgrp($InstLoc.'/DATA', 'www-data');
-@chgrp($InstLoc.'/Screenshots', 'www-data');
-@chgrp($UserConfig, 'www-data');
+@chgrp('/var/www', $user);
+@chgrp('/var/www/html', $user);
+@chgrp('/var/www/html/HRProprietary', $user);
+@chgrp($InstLoc, $user);
+@chgrp($InstLoc.'/Applications', $user);
+@chgrp($InstLoc.'/Resources', $user);
+@chgrp($InstLoc.'/DATA', $user);
+@chgrp($InstLoc.'/Screenshots', $user);
+@chgrp($UserConfig, $user);
+@system("/bin/chgrp -R $user $InstLoc");
 
 // / The following code changes the ownership of certain directories to the www-data user,
-@chown('/var/www', 'www-data');
-@chown('/var/www/html', 'www-data');
-@chown('/var/www/html/HRProprietary', 'www-data');
-@chown($InstLoc, 'www-data');
-@chown($InstLoc.'/Applications', 'www-data');
-@chown($InstLoc.'/Resources', 'www-data');
-@chown($InstLoc.'/DATA', 'www-data');
-@chown($InstLoc.'/Screenshots', 'www-data');
-@chown($UserConfig, 'www-data');
+@chown('/var/www', $user);
+@chown('/var/www/html', $user);
+@chown('/var/www/html/HRProprietary', $user);
+@chown($InstLoc, $user);
+@chown($InstLoc.'/Applications', $user);
+@chown($InstLoc.'/Resources', $user);
+@chown($InstLoc.'/DATA', $user);
+@chown($InstLoc.'/Screenshots', $user);
+@chown($UserConfig, $user);
+@system("/bin/chown -R $user $InstLoc");
 
 // / The following code changes the permission of certain directories to 0755,
 @chmod('/var/www', 0755);
@@ -58,13 +69,13 @@ $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 @chmod($InstLoc.'/DATA', 0755);
 @chmod($InstLoc.'/Screenshots', 0755);
 @chmod($UserConfig, 0755);
+@system("/bin/chmod -R 0755 $InstLoc");
 
 // / The following code purges old index.html files from the HRProprietary directory directory daily.
 if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
   copy ('index.html', '/var/www/html/HRProprietary/index.html'); }
 
 // / Secutity related processing.
-$SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 if (isset($_POST['YUMMYSaltHash'])) {
   $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
 if ($YUMMYSaltHash !== $SaltHash) {
@@ -79,24 +90,24 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
 <div align="center"><h3>Scan Complete!</h3></div>
 <hr />
 <?php
-$LogFile0 = $SesLogDir.'/VirusLog_'.$Date.'.txt';
-$LogFile1 = $SesLogDir.'/VirusLog1_'.$Date.'.txt';
-$LogFile2 = $SesLogDir.'/VirusLog2_'.$Date.'.txt';
-$LogFileInc = 0;
-$LogFileInc1 = 0;
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
-if(file_exists($LogFile0)) {
-  while (file_exists($LogFile0)) {
-  $LogFileInc++;
-  $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc.'_'.$Date.'.txt'; } }
+while (file_exists($LogFile0)) {
+  $LogFileInc0++;
+  $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc.'_'.$Date.'.txt'; } 
 if(!file_exists($LogFile0)) {
   $WriteClamLogFile0 = file_put_contents($LogFile0, ''.PHP_EOL); }
-if(file_exists($LogFile1)) {
-  while (file_exists($LogFile1)) {
-  $LogFileInc++;
-  $LogFile1 = $SesLogDir.'/VirusLog_'.$LogFileInc1.'_'.$Date.'.txt'; } }
+
+while (file_exists($LogFile1)) {
+  $LogFileInc1++;
+  $LogFile1 = $SesLogDir.'/VirusLog_'.$LogFileInc1.'_'.$Date.'.txt';  }
 if(!file_exists($LogFile1)) {
   $WriteClamLogFile1 = file_put_contents($LogFile1, ''.PHP_EOL); }
+
+while (file_exists($LogFile2)) {
+  $LogFileInc2++;
+  $LogFile2 = $SesLogDir.'/VirusLog_'.$LogFileInc2.'_'.$Date.'.txt';  }
+if(!file_exists($LogFile1)) {
+  $WriteClamLogFile2 = file_put_contents($LogFile2, ''.PHP_EOL); }
 
 if (isset($_POST['scanSelected'])) {
   if (isset($_POST['userscanfilename'])) {
@@ -119,15 +130,31 @@ if (!isset($_POST['scanSelected'])) {
   echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
-  shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.'HRCloud2 Detected: '.$LogFile1);
-  $LogTXT = file_get_contents($LogFile1);
+  $LogFileSize3 = @filesize($LogFile1);
+  if ($LogFileSize1 == '') {
+    $LogFileSize1 = 0; }
+  shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
+  $LogFileSize2 = filesize($LogFile1);
+  if (($LogFileSize2 - $LogFileSize1) >= 2 ) {
+    $WriteClamLogFile = file_put_contents($LogFile1, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); }
+  if (($LogFileSize2 - $LogFileSize1) < 2 ) {
+    $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } 
+  $LogTXT = @file_get_contents($LogFile1);
   $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
   $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
   echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n");
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
-  shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.'HRCloud2 Detected: '.$LogFile2);
-  $LogTXT = file_get_contents($LogFile2);
+  $LogFileSize3 = @filesize($LogFile2);
+  if ($LogFileSize3 == '') {
+    $LogFileSize3 = 0; }
+  shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.$LogFile2);
+  $LogFileSize4 = filesize($LogFile2);
+  if (($LogFileSize4 - $LogFileSize3) >= 2 ) {
+    $WriteClamLogFile = file_put_contents($LogFile2, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); } 
+  if (($LogFileSize4 - $LogFileSize3) < 2 ) {
+    $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); }
+  $LogTXT = @file_get_contents($LogFile2);
   $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
   $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
   echo nl2br('<a style="padding-left:15px;">Scanned HRCloud2 Installation Directory.</a>'."\n"); }
@@ -141,13 +168,13 @@ $LogFileDATA0 = file_get_contents($LogFile0);
 $LogFileDATA1 = file_get_contents($LogFile1);
 $LogFileDATA2 = file_get_contents($LogFile2);
 // / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
-if (strpos($LogFileDATA0, 'HRClou2 Detected: ') == 'true' or strpos($LogFileDATA1, 'HRClou2 Detected: ') == 'true' or strpos($LogFileDATA2, 'HRClou2 Detected: ') == 'true') {
+if (strpos($LogFileDATA0, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA1, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA2, 'Virus Detected!!!') == 'true') {
   $INFECTION_DETECTED = 1; }
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
-  if ($LogFileInc == 0) {
+  if ($LogFileInc0 == 0) {
     $incEcho = ''; }
-  if ($LogFileInc !== 0) {
+  if ($LogFileInc0 !== 0) {
     $incEcho = $LogFileInc.'_'; }
 $ClamURL = 'DATA/'.$UserID.'/.AppData/'.$Date.'/VirusLog_'.$incEcho.$Date.'.txt';
   ?><br><div align="center"><?php

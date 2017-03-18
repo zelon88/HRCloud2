@@ -142,7 +142,7 @@ $CloudUsrDir = str_replace('//', '/', $CloudUsrDir);
 // / -----------------------------------------------------------------------------------
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files the first time a new user logs in.
-if (!file_exists($CloudLoc)) {
+if (!is_dir($CloudLoc)) {
   echo ('ERROR!!! HRC2CommonCore59, There was an error verifying the CloudLoc as a valid directory. 
     Please check the config.php file and refresh the page.');
   die(); }

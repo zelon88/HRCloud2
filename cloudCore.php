@@ -85,34 +85,36 @@ if(isset($_POST["upload"])) {
     $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;     
-      $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-      $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
-      $DangerousFiles = array('js', 'php', 'html', 'css');
-      $F0 = pathinfo($file, PATHINFO_EXTENSION);
-      if (in_array($F0, $DangerousFiles)) { 
-        $file = str_replace($F0, $F0.'SAFE', $file); }
-      $F2 = pathinfo($file, PATHINFO_BASENAME);
-      $F3 = $CloudUsrDir.$F2;
-      if($file == "") {
-        $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-        echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); 
-        die(); }
-      $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
-      echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
+    $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
+    $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
+    $DangerousFiles = array('js', 'php', 'html', 'css');
+    $F0 = pathinfo($file, PATHINFO_EXTENSION);
+    if (in_array($F0, $DangerousFiles)) { 
+      $file = str_replace($F0, $F0.'SAFE', $file); }
+    $F2 = pathinfo($file, PATHINFO_BASENAME);
+    $F3 = $CloudUsrDir.$F2;
+    if($file == "") {
+      $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
-      chmod($F3, 0755); } 
-      // / The following code checks the Cloud Location with ClamAV before copying, just in case.
-      if ($VirusScan == '1') {
-        shell_exec('clamscan -r '.$CloudDir.' | grep FOUND >> '.$ClamLogDir); 
-        if (filesize($ClamLogDir >= 3)) {
-          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
-            transfer could not be completed at this time. Please check your file for viruses or
-            try again later.'."\n");
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
-          unlink($F3);
-          die($txt); } } } 
+      echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); 
+      die(); }
+    $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
+    echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
+    chmod($F3, 0755); } 
+    // / The following code checks the Cloud Location with ClamAV before copying, just in case.
+    if ($VirusScan == '1') {
+      shell_exec('clamscan -r '.$CloudDir.' | grep FOUND >> '.$ClamLogDir); 
+      $WriteClamLogFile = file_put_contents($ClamLogDir, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND);
+      $ClamLogFileDATA = file_get_contents($ClamLogDir);
+      if (filesize($ClamLogDir >= 3)) {
+        $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+          transfer could not be completed at this time. Please check your file for viruses or
+          try again later.'."\n");
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+        unlink($F3);
+        die($txt); } } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -152,20 +154,10 @@ if (isset($_POST["download"])) {
             if ($item->isDir()) {
               mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
             else {
-    symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } }
+    symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code checks the Cloud Temp Directory with ClamAV after copying, just in case.      
-      if ($VirusScan == '1') {
-        shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-        if (filesize($ClamLogDir >= 3)) {
-          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
-            transfer could not be completed at this time. Please check your file for viruses or
-            try again later.'."\n");
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   
-          unlink($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName());       
-          die($txt); } } } 
 // / The following code is performed whenever a user selects a file to copy.
 if (isset($_POST['copy'])) {
   $txt = ('OP-Act: Initiated Copier on '.$Time.'.');
@@ -184,7 +176,9 @@ if (isset($_POST['copy'])) {
       $cext = pathinfo($CloudUsrDir.$CFile, PATHINFO_EXTENSION);
       if ($copycount >= 2) {
         $newCopyFilename = $newCopyFilename.'_'.$copycount; }
-      copy($CloudUsrDir.$CFile, $CloudUsrDir.$newCopyFilename.'.'.$cext);
+      $copySrc = str_replace('//', '/', $CloudUsrDir.$CFile);
+      $copyDst = str_replace('//', '/', $CloudUsrDir.$newCopyFilename.'.'.$cext);
+      copy($copySrc, $copyDst);
         $txt = ('OP-Act: '."Copied $CFile to $newCopyFilename on $Time".'.');
         echo nl2br ($txt."\n".'--------------------'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
@@ -203,14 +197,16 @@ if (isset($_POST['rename'])) {
     $rencount = 0;
   foreach ($_POST['filesToRename'] as $key=>$ReNFile) { 
     $ReNFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $ReNFile);
-    $renameFilename = $_POST['renamefilename'];
+    $renameFilename = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['renamefilename']);
     $rencount++;
     if (isset($renameFilename)) {
       $renext = pathinfo($CloudUsrDir.$ReNFile, PATHINFO_EXTENSION);
       if ($rencount >= 2) {
         $renameFilename = $renameFilename.'_'.$rencount; }
-      rename($CloudUsrDir.$ReNFile, $CloudUsrDir.$renameFilename.'.'.$renext);
-        $txt = ('OP-Act: '."Copied $ReNFile to $renameFilename on $Time".'.');
+      $renSrc = str_replace('//', '/', $CloudUsrDir.$ReNFile);
+      $renDst = str_replace('//', '/', $CloudUsrDir.$renameFilename.'.'.$renext);
+      rename($renSrc, $renDst);
+        $txt = ('OP-Act: '."Renamed $ReNFile to $renameFilename on $Time".'.');
         echo nl2br ($txt."\n".'--------------------'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 // / -----------------------------------------------------------------------------------
@@ -286,6 +282,9 @@ if (isset($_POST['deleteconfirm'])) {
     $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir from User directory on $Time".'.');
     echo nl2br ('OP-Act: '."Deleted $DFile on $Time".'.'."\n".'--------------------'."\n");   
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files for archiving.
 if (isset($_POST['archive'])) {
   $txt = ('OP-Act: Initiated Archiver on '.$Time.'.');
@@ -310,7 +309,7 @@ $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd')
 $rararr = array('rar');
 $ziparr = array('zip');
 $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-$filename = $CloudUsrDir.$TFile1;
+$filename = str_replace('//', '/', $CloudUsrDir.$TFile1);
 $filename1 = pathinfo($filename, PATHINFO_BASENAME);
 $ext = pathinfo($filename, PATHINFO_EXTENSION);
 $_POST['archextension'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['archextension']);
@@ -319,8 +318,10 @@ $_POST['userfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['
 $UDP = '';
 if ($UserDirPOST !== '/') {
   $UDP = $UserDirPOST; }
-$UserFileName = $UDP.$_POST['userfilename'];
+$UserFileName = str_replace('//', '/', $UDP.$_POST['userfilename']);
 $UserFileName = str_replace(' ', '\ ', $UserFileName); 
+$archSrc = str_replace('//', '/', $CloudTmpDir.$TFile1);
+$archDst = str_replace('//', '/', $CloudUsrDir.$UserFileName);
 if (!is_dir($filename)) {
   if(!in_array($ext, $allowed)) { 
     echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
@@ -337,24 +338,27 @@ if (!is_dir($filename)) {
 // / Handle archiving of rar compatible files.
 if(in_array($UserExt, $rararr)) {
   copy ($filename, $CloudTmpDir.$TFile1); 
-  shell_exec('rar a -ep '.$CloudUsrDir.$UserFileName.' '.$CloudTmpDir.$TFile1); 
+  shell_exec('rar a -ep '.$archDst.' '.$archSrc); 
   $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
 // / Handle archiving of .zip compatible files.
 if(in_array($UserExt, $ziparr)) {
   copy ($filename, $CloudTmpDir.$TFile1); 
-  shell_exec('zip -j '.$CloudUsrDir.$UserFileName.'.zip '.$CloudTmpDir.$TFile1); 
+  shell_exec('zip -j '.$archDst.'.zip '.$archSrc); 
   $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
 // / Handle archiving of 7zipper compatible files.
 if(in_array($UserExt, $tararr)) {
   copy ($filename, $CloudTmpDir.$TFile1); 
-  shell_exec('7z a '.$CloudUsrDir.$UserFileName.'.'.$UserExt.' '.$CloudTmpDir.$TFile1); 
+  shell_exec('7z a '.$archDst.'.'.$UserExt.' '.$archSrc); 
   $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
   echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }  
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code will be performed when a user selects archives to extract.
 if (isset($_POST["dearchiveButton"])) {
   // / The following code sets the global dearchive variables for the session.
@@ -469,7 +473,6 @@ if (isset($_POST["dearchiveButton"])) {
         if (!is_dir($dearchUserDir)) {
           $txt = ('ERROR!!! HRC2404, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-      
       // / The following code checks that the source files exist and are valid, and returns any errors that occur.
       if (file_exists($dearchUserDir)) {
         if (is_dir($dearchUserDir)) {
@@ -538,7 +541,7 @@ if (isset( $_POST['convertSelected'])) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'acc', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
+    $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
       'avi', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp');
     $file1 = $CloudUsrDir.$file;
     $file2 = $CloudTmpDir.$file;
@@ -553,12 +556,12 @@ if (isset( $_POST['convertSelected'])) {
         Please rename your file or try again later.'."\n");
       die(); }
     $extension = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['extension']);
-    $pathname = $CloudTmpDir.$file;
-    $oldPathname = $CloudUsrDir.$file;
+    $pathname = str_replace('//', '/', $CloudTmpDir.$file);
+    $oldPathname = str_replace('//', '/', $CloudUsrDir.$file);
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
-    $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension);
-    $newPathname = $CloudUsrDir.$newFile;
+    $newFile = str_replace('//', '/', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension));
+    $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile);
     $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $pdfarray = array('pdf');
@@ -578,8 +581,7 @@ if (isset( $_POST['convertSelected'])) {
     // / Code to increment the conversion in the event that an output file already exists.    
     while(file_exists($newPathname)) {
       $convertcount++; 
-      $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension);
-      $newPathname = $CloudUsrDir.$newFile; }
+      $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension); }
     $convertcount++;
           // / Code to convert document files.
           // / Note: Some servers may experience a delay between the script finishing and the
@@ -706,7 +708,9 @@ if (!file_exists($newPathname)) {
 if (file_exists($newPathname)) {
   $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
-  
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects a document or PDF for manipulation.
 if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
@@ -737,12 +741,12 @@ if (isset($_POST['pdfworkSelected'])) {
       $extension = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfextension']); } 
     if (!isset($_POST['pdfextension'])) {
       $extension = 'pdf'; }
-    $pathname = $CloudTmpDir.$file; 
-    $oldPathname = $CloudUsrDir.$file;
+    $pathname = str_replace('//', '/', $CloudTmpDir.$file); 
+    $oldPathname = str_replace('//', '/', $CloudUsrDir.$file);
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
     $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension);
-    $newPathname = $CloudUsrDir.$newFile;
+    $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile);
     $doc1array =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
     $img1array = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $pdf1array = array('pdf');
@@ -752,14 +756,14 @@ if (isset($_POST['pdfworkSelected'])) {
         while(file_exists($newPathname)) {
           $pdfworkcount++; 
           $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userpdfconvertfilename'].'_'.$pdfworkcount.'.'.$extension);
-          $newPathname = $CloudUsrDir.$newFile; } } 
+          $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile); } } 
           // / Code to convert a PDF to a document.
           if (in_array($oldExtension, $pdf1array)) {
             if (in_array($extension, $doc1array)) {
               $pathnameTEMP = str_replace('.'.$oldExtension, '.txt', $pathname);
     
             $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
-              if (($_POST['method1'] == '0')) {
+              if ($_POST['method1'] == '0' or ($_POST['method1'] == '')) {
                 shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
                 $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathname on $Time".' using method 0.'); 
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -916,7 +920,7 @@ if (isset($_POST['streamSelected'])) {
     $_POST['streamSelected'] = array($_POST['streamSelected']); } 
   foreach (($_POST['streamSelected']) as $MediaFile) {
     // / The following code will only create cache data if the $MediaFile is in the $PLMediaArr.     
-        $pathname = $CloudUsrDir.$MediaFile;
+        $pathname = str_replace('//', '/', $CloudUsrDir.$MediaFile);
         $Scanfilename = pathinfo($pathname, PATHINFO_FILENAME);
         $ScanoldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
         $txt = ('OP-Act: Detected a '.$ScanoldExtension.' named '.$MediaFile.' on '.$Time.'.');
@@ -998,8 +1002,8 @@ if (isset($_POST['streamSelected'])) {
   foreach (($_POST['streamSelected']) as $StreamFile) {
     $txt = ('OP-Act: Initiated Streamer on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $pathname = $CloudTmpDir.'/'.$StreamFile;
-    $oldPathname = $CloudUsrDir.$StreamFile;
+    $pathname = str_replace('//', '/', $CloudTmpDir.'/'.$StreamFile);
+    $oldPathname = str_replace('//', '/', $CloudUsrDir.$StreamFile);
     copy ($oldPathname, $pathname);
     if ($StreamFile == '.' or $StreamFile == '..' or is_dir($pathname) or is_dir($oldPathname)) continue;
       $txt = ('OP-Act: User '.$UserID.' selected to StreamFile '.$StreamFile.' from CLOUD.');
@@ -1013,13 +1017,13 @@ if (isset($_POST['streamSelected'])) {
             $br = ' '; } 
           elseif ($bitrate != 'auto' ) {
             $br = (' -ab ' . $bitrate . ' '); }
-          $pathname = $CloudUsrDir.$StreamFile;
-          $newPathname = $playlistDir.'/'.$filename.'.ogg';
+          $pathname = str_replace('//', '/', $CloudUsrDir.$StreamFile);
+          $newPathname = str_replace('//', '/', $playlistDir.'/'.$filename.'.ogg');
           $txt = ("OP-Act, Executing ffmpeg -i $pathname$ext$br$newPathname on ".$Time.'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
           shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); }  
         if (in_array($oldExtension, $PLAudioOGGArr)) {
-          copy ($oldPathname, $playlistDir.'/'.$StreamFile); } } }
+          copy ($oldPathname, str_replace('//', '/', $playlistDir.'/'.$StreamFile)); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1033,7 +1037,9 @@ if (isset($_POST['streamSelected'])) {
       $_POST['filesToShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToShare'])); }
     foreach ($_POST['filesToShare'] as $FTS) {
       $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      copy($CloudUsrDir.$FTS, $CloudShareDir.'/'.$FTS); 
+      $copySrc = str_replace('//', '/', $CloudUsrDir.$FTS);
+      $copyDst = str_replace('//', '/', $CloudShareDir.'/'.$FTS);
+      copy($copySrc, $copyDst); 
       if (file_exists($CloudShareDir.'/'.$FTS)) {
         $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
