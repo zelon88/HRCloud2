@@ -99,22 +99,21 @@ if(isset($_POST["upload"])) {
       echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); 
       die(); }
     $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
-    echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
+    echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'."\n".'--------------------'."\n");
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
-    chmod($F3, 0755); } 
-    // / The following code checks the Cloud Location with ClamAV before copying, just in case.
+    chmod($F3, 0755); 
+    // / The following code checks the Cloud Location with ClamAV after copying, just in case.
     if ($VirusScan == '1') {
-      shell_exec('clamscan -r '.$CloudDir.' | grep FOUND >> '.$ClamLogDir); 
-      $WriteClamLogFile = file_put_contents($ClamLogDir, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND);
+      shell_exec('clamscan -r '.$F3.' | grep FOUND >> '.$ClamLogDir); 
       $ClamLogFileDATA = file_get_contents($ClamLogDir);
-      if (filesize($ClamLogDir >= 3)) {
+      if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
         $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
         unlink($F3);
-        die($txt); } } } 
+        die($txt); } } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -170,7 +169,9 @@ if (isset($_POST['copy'])) {
     $copycount = 0;
   foreach ($_POST['filesToCopy'] as $key=>$CFile) { 
     $CFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $CFile);
+    if ($CFile == '' or $CFile == null) continue;   
     $newCopyFilename = $_POST['newcopyfilename'];
+    if ($newCopyFilename == '' or $newCopyFilename == null) continue;  
     $copycount++;
     if (isset($newCopyFilename)) {
       $cext = pathinfo($CloudUsrDir.$CFile, PATHINFO_EXTENSION);
@@ -178,10 +179,25 @@ if (isset($_POST['copy'])) {
         $newCopyFilename = $newCopyFilename.'_'.$copycount; }
       $copySrc = str_replace('//', '/', $CloudUsrDir.$CFile);
       $copyDst = str_replace('//', '/', $CloudUsrDir.$newCopyFilename.'.'.$cext);
-      copy($copySrc, $copyDst);
-        $txt = ('OP-Act: '."Copied $CFile to $newCopyFilename on $Time".'.');
-        echo nl2br ($txt."\n".'--------------------'."\n");
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+      if (file_exists($copySrc)) {
+        // / The following code checks the Cloud Location with ClamAV before copying, just in case.
+        if ($VirusScan == '1') {
+          shell_exec('clamscan -r '.$copySrc.' | grep FOUND >> '.$ClamLogDir); 
+          $ClamLogFileDATA = file_get_contents($ClamLogDir);
+          if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
+            $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+              transfer could not be completed at this time. Please check your file for viruses or
+              try again later.'."\n");
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+            die($txt); } }
+          copy($copySrc, $copyDst);
+            $txt = ('OP-Act: '."Copied $CFile to $newCopyFilename".'.'."$cext on $Time".'.');
+            echo nl2br ($txt."\n".'--------------------'."\n");
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+          if (!file_exists($copyDst)) { 
+            $txt = ('ERROR!!! HRC2CloudCore198, '."Could not copy $CFile to $newCopyFilename".'.'."$cext on $Time".'!');
+            echo nl2br ($txt."\n".'--------------------'."\n");
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -197,7 +213,9 @@ if (isset($_POST['rename'])) {
     $rencount = 0;
   foreach ($_POST['filesToRename'] as $key=>$ReNFile) { 
     $ReNFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $ReNFile);
+    if ($ReNFile == '' or $ReNFile == null) continue;
     $renameFilename = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['renamefilename']);
+    if ($renameFilename == '' or $renameFilename == null) continue;    
     $rencount++;
     if (isset($renameFilename)) {
       $renext = pathinfo($CloudUsrDir.$ReNFile, PATHINFO_EXTENSION);
@@ -205,10 +223,25 @@ if (isset($_POST['rename'])) {
         $renameFilename = $renameFilename.'_'.$rencount; }
       $renSrc = str_replace('//', '/', $CloudUsrDir.$ReNFile);
       $renDst = str_replace('//', '/', $CloudUsrDir.$renameFilename.'.'.$renext);
-      rename($renSrc, $renDst);
-        $txt = ('OP-Act: '."Renamed $ReNFile to $renameFilename on $Time".'.');
-        echo nl2br ($txt."\n".'--------------------'."\n");
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+      if (file_exists($renSrc)) { 
+        // / The following code checks the Cloud Location with ClamAV before copying, just in case.
+        if ($VirusScan == '1') {
+          shell_exec('clamscan -r '.$renSrc.' | grep FOUND >> '.$ClamLogDir); 
+          $ClamLogFileDATA = file_get_contents($ClamLogDir);
+          if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
+            $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+              transfer could not be completed at this time. Please check your file for viruses or
+              try again later.'."\n");
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+            die($txt); } }
+          rename($renSrc, $renDst);
+            $txt = ('OP-Act: '."Renamed $ReNFile to $renameFilename".'.'."$renext on $Time".'.');
+            echo nl2br ($txt."\n".'--------------------'."\n");
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+          if (!file_exists($renDst)) { 
+            $txt = ('ERROR!!! HRC2CloudCore242, '."Could not rename $ReNFile to $renameFilename".'.'."$renext on $Time".'!');
+            echo nl2br ($txt."\n".'--------------------'."\n");
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -763,7 +796,7 @@ if (isset($_POST['pdfworkSelected'])) {
               $pathnameTEMP = str_replace('.'.$oldExtension, '.txt', $pathname);
     
             $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
-              if ($_POST['method1'] == '0' or ($_POST['method1'] == '')) {
+              if ($_POST['method1'] == '0' or $_POST['method1'] == '') {
                 shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
                 $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathname on $Time".' using method 0.'); 
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 

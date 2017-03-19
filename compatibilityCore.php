@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.3.4
-WRITTEN ON : 3/17/2017
+THIS VERSION : v1.3.5
+WRITTEN ON : 3/18/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -29,6 +29,22 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will check the PHP version installed on the server and return a warning message if anything less than 7.0 is detected.
+if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
+  $txt = 'WARNING!!! HRC2CompatCore35, This server is running PHP version '.PHP_VERSION.'. HRCloud2 performs best using PHP 7.0 or later!';
+  echo nl2br($txt.'</hr>');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will check the O/S installed on the server and return a warning message if Windows is detected.
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+  $txt = 'WARNING!!! HRC2CompatCore44, HRCloud2 was designed to be run on a Linux-based operating system!';
+  echo nl2br($txt.'</hr>');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

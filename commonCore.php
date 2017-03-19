@@ -91,7 +91,8 @@ $AdminCacheHash = hash('ripemd160', $AdminID.$Salts);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
+$ClamLogFileInc = 0;
+$ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt';
 $LogFile = $SesLogDir.'/HRC2-'.$Date.'.txt';
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
@@ -205,6 +206,13 @@ if (!file_exists($BackupDir)) {
   if (!file_exists($BackupDir)) {
     $txt = ('ERROR!!! HRC2CommonCore137, The Backup Directory does not exist and could not be created on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code creates a ClamLogFile if one does not exist.
+while (file_exists($ClamLogDir)) {
+  $ClamLogFileInc++;
+  $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt'; } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

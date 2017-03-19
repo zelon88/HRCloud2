@@ -168,7 +168,8 @@ $LogFileDATA0 = file_get_contents($LogFile0);
 $LogFileDATA1 = file_get_contents($LogFile1);
 $LogFileDATA2 = file_get_contents($LogFile2);
 // / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
-if (strpos($LogFileDATA0, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA1, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA2, 'Virus Detected!!!') == 'true') {
+if (strpos($LogFileDATA0, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA1, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA2, 'Virus Detected!!!') == 'true'
+  or strpos($LogFileDATA0, 'FOUND') == 'true' or strpos($LogFileDATA1, 'FOUND') == 'true' or strpos($LogFileDATA2, 'FOUND') == 'true') {
   $INFECTION_DETECTED = 1; }
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
