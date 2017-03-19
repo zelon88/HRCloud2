@@ -93,7 +93,7 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
 while (file_exists($LogFile0)) {
   $LogFileInc0++;
-  $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc.'_'.$Date.'.txt'; } 
+  $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc0.'_'.$Date.'.txt'; } 
 if(!file_exists($LogFile0)) {
   $WriteClamLogFile0 = file_put_contents($LogFile0, ''.PHP_EOL); }
 
@@ -117,7 +117,7 @@ if (isset($_POST['scanSelected'])) {
     echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
     ?><hr /><?php
     // / Perform a ClamScan on the supplied user file and cache the results.
-    shell_exec('clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.'HRCloud2 Detected: '.$LogFile1);
+    shell_exec('clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.'Virus Detected!!! '.$LogFile1);
     $LogTXT = file_get_contents($LogFile1);
     $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
     $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
@@ -169,7 +169,7 @@ $LogFileDATA1 = file_get_contents($LogFile1);
 $LogFileDATA2 = file_get_contents($LogFile2);
 // / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
 if (strpos($LogFileDATA0, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA1, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA2, 'Virus Detected!!!') == 'true'
-  or strpos($LogFileDATA0, 'FOUND') == 'true' or strpos($LogFileDATA1, 'FOUND') == 'true' or strpos($LogFileDATA2, 'FOUND') == 'true') {
+  or strpos($LogFileDATA0, 'FOUND') == 'true' or strpos($LogFileDATA1, 'FOUND') == 'true' or strpos($LogFileDATA3, 'FOUND') == 'true') {
   $INFECTION_DETECTED = 1; }
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
