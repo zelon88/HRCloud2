@@ -135,7 +135,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: <?php echo str_replace('\'', '', $cpuLAST); ?>,
+                value: <?php echo str_replace(str_split('~#[](){};:$!#^&%@>*<abcdefghijklmnopqrstuvwxyz ,'), '', strtolower(str_replace('\'', '', $cpuLAST))); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
@@ -154,7 +154,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: <?php echo str_replace('\'', '', $ramLAST); ?>,
+                value: <?php echo str_replace(str_split('~#[](){};:$!#^&%@>*<abcdefghijklmnopqrstuvwxyz ,'), '', strtolower(str_replace('\'', '', $ramLAST))); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
@@ -173,7 +173,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: <?php echo str_replace(' degrees C   ', '', str_replace('\'', '', $thermalSensorArr1LAST)); ?>,
+                value: <?php echo str_replace(str_split('~#[](){};:$!#^&%@>*<abcdefghijklmnopqrstuvwxyz ,'), '', strtolower(str_replace(' degrees C   ', '', str_replace('\'', '', $thermalSensorArr1LAST)))); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
@@ -192,7 +192,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: <?php echo str_replace('\'', '', $diskUsageLAST); ?>,
+                value: <?php echo str_replace(str_split('~#[](){};:$!#^&%@>*<abcdefghijklmnopqrstuvwxyz ,'), '', strtolower(str_replace('\'', '', $diskUsageLAST))); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
