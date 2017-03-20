@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.4 (3-10-2017 00:30)
+App Version: 2.5 (3-10-2017 01:15)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.

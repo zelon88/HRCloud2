@@ -31,4 +31,4 @@ exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f2', $diskName);
 exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f3', $diskUsed);
 exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f4', $diskFree);
 exec('df -k /tmp | tail -1 | tr -s \' \' | cut -d\' \' -f5', $diskUsage);
-$WRITEdiskIncludeFile = file_put_contents($diskIncludeFile, '<?php $diskName = \''.$diskName.'\'; $diskName = \''.$diskName.'\'; $diskUsed = \''.$diskUsed.'\'; $diskFree = \''.$diskFree.'\'; $diskUsage = \''.$diskUsage.'\'; ?>');
+$WRITEdiskIncludeFile = file_put_contents($diskIncludeFile, '<?php $diskName = \''.$diskName[0].'\'; $diskName = \''.$diskName[0].'\'; $diskUsed = \''.$diskUsed[0].'\'; $diskFree = \''.$diskFree[0].'\'; $diskUsage = \''.$diskUsage[0].'\'; ?>');

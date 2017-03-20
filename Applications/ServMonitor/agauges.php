@@ -37,41 +37,41 @@ if ($UpdateInterval !== '0' or $UpdateInterval !== 0 or $UpdateInterval !== '') 
 if (file_exists($IncludeCPUFile1)) {
   require $IncludeCPUFile1; 
   $cpuLAST = $cpu; }
-if (!file_exists($IncludeCPUFile1)) {
-  $cpuLAST = '0'; }
+if (!file_exists($IncludeCPUFile1) or $cpuLAST == '') {
+  $cpuLAST = 0; }
 if (file_exists($IncludeRAMFile1)) {
   require $IncludeRAMFile1; 
   $ramLAST = $ram; }
-if (!file_exists($IncludeRAMFile1)) {
-  $ramLAST = '0'; }
+if (!file_exists($IncludeRAMFile1) or $ramLAST == '') {
+  $ramLAST = 0; }
 if (file_exists($IncludeDiskFile1)) {
   require $IncludeDiskFile1;
   $diskUsageLAST = $diskUsage[0]; }
-if (!file_exists($IncludeDiskFile1)) {
-  $diskUsageLAST = '0'; }
+if (!file_exists($IncludeDiskFile1) or $diskUsageLAST == '') {
+  $diskUsageLAST = 0; }
 if (file_exists($IncludeTempVoltFile1)) {
   require $IncludeTempVoltFile1; 
   $thermalSensorArr1LAST = $thermalSensorArr1[1]; }
-if (!file_exists($IncludeTempVoltFile1)) {
-  $termalSensorArr1LAST = '0'; }
+if (!file_exists($IncludeTempVoltFile1) or $thermalSensorArr1LAST == '') {
+  $thermalSensorArr1LAST = 0; }
 
 // / The following code loads the data cache files, which set sensor data related variables for the session.
 if (file_exists($IncludeCPUFile)) {
   require $IncludeCPUFile; }
-if (!file_exists($IncludeCPUFile)) {
-  $cpu = '0'; }
+if (!file_exists($IncludeCPUFile) or $cpu == '') {
+  $cpu = 0; }
 if (file_exists($IncludeRAMFile)) {
   require $IncludeRAMFile; }
-if (!file_exists($IncludeRAMFile)) {
-  $ram = '0'; }
+if (!file_exists($IncludeRAMFile) or $ram == '') {
+  $ram = 0; }
 if (file_exists($IncludeDiskFile)) {
   require $IncludeDiskFile; }
-if (!file_exists($IncludeDiskFile)) {
-  $diskUsage[0] = '0'; }
+if (!file_exists($IncludeDiskFile) or $diskUsage == '') {
+  $diskUsage[0] = 0; }
 if (file_exists($IncludeTempVoltFile)) {
   require $IncludeTempVoltFile; }
-if (!file_exists($IncludeTempVoltFile)) {
-  $thermalSensorArr1[1] = '0'; }
+if (!file_exists($IncludeTempVoltFile) or $thermalSensorArr1[1] == '') {
+  $thermalSensorArr1[1] = 0; }
 
 // / The following code reads the contents of the Include files and copies them to the Include1 files.
   // / This is to facilitate the previous value in the cache structure, preventing the need for guages to
@@ -135,7 +135,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
+                value: <?php echo str_replace('\'', '', $cpuLAST); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
@@ -154,7 +154,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
+                value: <?php echo str_replace('\'', '', $ramLAST); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
@@ -173,7 +173,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
+                value: <?php echo str_replace(' degrees C   ', '', str_replace('\'', '', $thermalSensorArr1LAST)); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
@@ -192,7 +192,7 @@ $WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTe
                          { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
                 ticksMinor: { interval: 5, size: '5%' },
                 ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
+                value: <?php echo str_replace('\'', '', $diskUsageLAST); ?>,
                 colorScheme: 'scheme05',
                 animationDuration: 1200
             });
