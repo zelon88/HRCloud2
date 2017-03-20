@@ -87,13 +87,13 @@ if (!isset($UserIDRAW)) {
 // / The followind code hashes the user ID and sets the directory structure for the session.
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $AdminID = 1;
-$AdminCacheHash = hash('ripemd160', $AdminID.$Salts);
+$SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $LogInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
 $ClamLogFileInc = 0;
 $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt';
-$LogFile = $SesLogDir.'/HRC2-'.$Date.'.txt';
+$LogFile = $SesLogDir.'/HRC2-'.$SesHash.'-'.$Date.'.txt';
 $CloudDir = $CloudLoc.'/'.$UserID;
 $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
