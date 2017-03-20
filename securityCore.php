@@ -84,8 +84,8 @@ if ($YUMMYSaltHash !== $SaltHash) {
 
 // / The following code is performend when an admin selects to scan the Cloud with ClamAV.
 if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) { 
-// / To detect viruses, we have ClamAV add specific results to the logfile. By reading the filesize immediately 
-// / before and after the scans we can see if ClamAV found anything. If it did, we alert the user to an infection.
+// / To detect viruses HRCloud2 gathers calls ClamAV to scan a directory or user supplied file and calls grep to output 
+  // / the results to a txt file. HRCloud2 then reads the outputted file as a string to detect infections.
 ?>
 <div align="center"><h3>Scan Complete!</h3></div>
 <hr />
@@ -96,19 +96,17 @@ while (file_exists($LogFile0)) {
   $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc0.'_'.$Date.'.txt'; } 
 if(!file_exists($LogFile0)) {
   $WriteClamLogFile0 = file_put_contents($LogFile0, ''.PHP_EOL); }
-
 while (file_exists($LogFile1)) {
   $LogFileInc1++;
   $LogFile1 = $SesLogDir.'/VirusLog_'.$LogFileInc1.'_'.$Date.'.txt';  }
 if(!file_exists($LogFile1)) {
   $WriteClamLogFile1 = file_put_contents($LogFile1, ''.PHP_EOL); }
-
 while (file_exists($LogFile2)) {
   $LogFileInc2++;
   $LogFile2 = $SesLogDir.'/VirusLog_'.$LogFileInc2.'_'.$Date.'.txt';  }
 if(!file_exists($LogFile1)) {
   $WriteClamLogFile2 = file_put_contents($LogFile2, ''.PHP_EOL); }
-
+// / The following code can be used to scan user submitted files with ClamAV.
 if (isset($_POST['scanSelected'])) {
   if (isset($_POST['userscanfilename'])) {
     $userscanfilename = $_POST['userscanfilename'];
@@ -123,7 +121,7 @@ if (isset($_POST['scanSelected'])) {
     $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
     echo nl2br('<a style="padding-left:15px;">Scanned Supplied File.</a>'."\n");
     ?><hr /><?php } }
-
+// / The following code is used to scan the entire Cloud drive.
 if (!isset($_POST['scanSelected'])) {
   // / Update anti-virus definitions from ClamAV.
   @shell_exec('sudo freshclam');
@@ -135,9 +133,10 @@ if (!isset($_POST['scanSelected'])) {
     $LogFileSize1 = 0; }
   shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
   $LogFileSize2 = filesize($LogFile1);
-  if (($LogFileSize2 - $LogFileSize1) >= 2 ) {
+  $LogFileDATA1 = file_get_contents($LogFile1);
+  if (strpos($LogFileDATA1, 'FOUND') == 'true') {
     $WriteClamLogFile = file_put_contents($LogFile1, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); }
-  if (($LogFileSize2 - $LogFileSize1) < 2 ) {
+  if (strpos($LogFileDATA1, 'FOUND') == 'false') {
     $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } 
   $LogTXT = @file_get_contents($LogFile1);
   $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
@@ -150,9 +149,10 @@ if (!isset($_POST['scanSelected'])) {
     $LogFileSize3 = 0; }
   shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.$LogFile2);
   $LogFileSize4 = filesize($LogFile2);
-  if (($LogFileSize4 - $LogFileSize3) >= 2 ) {
+  $LogFileDATA2 = file_get_contents($LogFile2);
+  if (strpos($LogFileDATA2, 'FOUND') == 'true') {
     $WriteClamLogFile = file_put_contents($LogFile2, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); } 
-  if (($LogFileSize4 - $LogFileSize3) < 2 ) {
+  if (strpos($LogFileDATA2, 'FOUND') == 'false') {
     $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); }
   $LogTXT = @file_get_contents($LogFile2);
   $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
@@ -168,7 +168,7 @@ $LogFileDATA0 = file_get_contents($LogFile0);
 $LogFileDATA1 = file_get_contents($LogFile1);
 $LogFileDATA2 = file_get_contents($LogFile2);
 // / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
-if (strpos($LogFileDATA0, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA1, 'Virus Detected!!!') == 'true' or strpos($LogFileDATA2, 'Virus Detected!!!') == 'true'
+if (strpos($LogFileDATA0, 'Virus Detected') == 'true' or strpos($LogFileDATA1, 'Virus Detected') == 'true' or strpos($LogFileDATA2, 'Virus Detected') == 'true'
   or strpos($LogFileDATA0, 'FOUND') == 'true' or strpos($LogFileDATA1, 'FOUND') == 'true' or strpos($LogFileDATA3, 'FOUND') == 'true') {
   $INFECTION_DETECTED = 1; }
 // / If infections were dected, return scan results to the user.
