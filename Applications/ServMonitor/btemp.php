@@ -1,7 +1,6 @@
 <!doctype HTML>
 <html>
 <title>Basic Status Monitors</title>
-<head></head>
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
@@ -27,6 +26,10 @@ require('tempvoltUpdater.php');
 // / The following code displays the HTML body for the Basic Utilization Iframer.
  ?>
 <body>
+<script type="text/javascript">
+    setTimeout(function() {
+      location.reload(); }, '<?php echo $UpdateInterval; ?>');
+</script>
 <div>
 <a style="padding-left:5px;" onclick="toggle_visibility('cpuTemperatureGauge');"><strong><img src="Resources/gauge.png" title="CPU Temperature" alt="CPU Temperature">  • CPU Temperature: </strong>  <i><?php echo $thermalSensorArr[0]; ?> </i></a><hr />
 <?php
@@ -39,14 +42,4 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
 <a style="padding-left:5px;" onclick="toggle_visibility('networkadapterGauge');"><strong><img src="Resources/gauge.png" title="Network Status" alt="Network Status"> • Network Status: </strong>  <i><?php echo $networkDeviceData; ?></i></a><hr />
 </div>
 </body>
-<?php
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code handles automatic page refresh.
-?>
-<script type="text/javascript">
-    setTimeout(function() {
-      location.reload(); }, '<?php echo $UpdateInterval; ?>');
-</script>
-<html>
+</html>

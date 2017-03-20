@@ -1,7 +1,6 @@
 <!doctype HTML>
 <html>
 <title>Basic Specification Monitors</title>
-<head></head>
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
@@ -27,6 +26,10 @@ require('specUpdater.php');
 // / The following code displays the HTML body for the Basic Utilization Iframer.
  ?>
 <body>
+<script type="text/javascript">
+    setTimeout(function() {
+      location.reload(); }, '<?php echo $UpdateInterval; ?>');
+</script>
 <div>
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $specHardwareDeviceData; ?></i></a><hr />
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $specStorageDeviceData; ?></i></a><hr />
@@ -35,14 +38,4 @@ require('specUpdater.php');
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $specUptimeData; ?></i></a><hr />
 </div>
 </body>
-<?php
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code handles automatic page refresh.
-?>
-<script type="text/javascript">
-//    setTimeout(function() {
-  //    location.reload(); }, '<?php echo $UpdateInterval; ?>');
-</script>
-<html>
+</html>

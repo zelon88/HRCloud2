@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.3 (2-28-2017 24:00)
+App Version: 2.4 (3-10-2017 00:30)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -50,6 +50,7 @@ if ($UpateInt == '' or !(isset($UpdateInterval))) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code creates a cache dir, or returns an error if one cannot be created.
+@chmod('Cache/');
 if (!is_dir('Cache/')) {
   @mkdir('Cache/', 0755); 
   @copy($InstLoc.'/index.html', 'Cache/index.html'); }
@@ -74,101 +75,8 @@ $UpateInt = $UpdateInterval;
 $valueRAW = $UpdateInterval;
 $valuePretty = ($UpdateInterval / 1000).'s';
 // / -----------------------------------------------------------------------------------
-
 ?>
-    <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
-
-    <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxdraw.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxgauge.js"></script>
-    <script type="text/javascript" src="scripts/toggle.visibility.js"></script>
-    <script type="text/css" src="jqwidgets/styles/jqx.gaugeValue.js"></script>
-
-    <script type="text/javascript">
-    // / The following code handles the scroll level of the page upon refresh.
-    document.addEventListener("DOMContentLoaded", function(event) { 
-      var scrollpos = localStorage.getItem('scrollpos');
-    if (scrollpos) window.scrollTo(0, scrollpos); });
-      window.onbeforeunload = function(e) {
-      localStorage.setItem('scrollpos', window.scrollY); };
-        // / The following code displays the CPU gauge.
-         $(document).ready(function () {    
-            $('#cpugaugeContainer').jqxGauge({
-                ranges: [{ startValue: 0, endValue: 15, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
-                         { startValue: 15, endValue: 40, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
-                         { startValue: 40, endValue: 70, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
-                         { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
-                ticksMinor: { interval: 5, size: '5%' },
-                ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
-                colorScheme: 'scheme05',
-                animationDuration: 1200
-            });
-            $('#cpugaugeContainer').on('valueChanging', function (e) {
-                $('#gaugeValue').text(Math.round(e.args.value) + '% CPU');
-            });
-            $('#cpugaugeContainer').jqxGauge('value', '<?php echo $cpu; ?>');
-        });
-
-        // / The following code displays the RAM gauge.
-        $(document).ready(function () {
-            $('#ramgaugeContainer').jqxGauge({
-                ranges: [{ startValue: 0, endValue: 15, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
-                         { startValue: 15, endValue: 40, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
-                         { startValue: 40, endValue: 70, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
-                         { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
-                ticksMinor: { interval: 5, size: '5%' },
-                ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
-                colorScheme: 'scheme05',
-                animationDuration: 1200
-            });
-            $('#ramgaugeContainer').on('valueChanging', function (e) {
-                $('#gaugeValue').text(Math.round(e.args.value) + '% RAM');
-            });
-            $('#ramgaugeContainer').jqxGauge('value', '<?php echo $ram; ?>');
-        });
-
-        // / The following code displays the CPU temperature gauge.
-        $(document).ready(function () {    
-            $('#cputempgaugeContainer').jqxGauge({
-                ranges: [{ startValue: 0, endValue: 15, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
-                         { startValue: 15, endValue: 40, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
-                         { startValue: 40, endValue: 70, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
-                         { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
-                ticksMinor: { interval: 5, size: '5%' },
-                ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
-                colorScheme: 'scheme05',
-                animationDuration: 1200
-            });
-            $('#cputempgaugeContainer').on('valueChanging', function (e) {
-                $('#gaugeValue').text(Math.round(e.args.value) + 'CPU Degrees Celcius');
-            });
-            $('#cputempgaugeContainer').jqxGauge('value', '<?php echo round(str_replace(' Degrees C', '', $thermalSensorArr1[1])); ?>');
-        });
-
-        // / The following code displays the disk usage gauge.
-        $(document).ready(function () {    
-            $('#diskusagegaugeContainer').jqxGauge({
-                ranges: [{ startValue: 0, endValue: 15, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
-                         { startValue: 15, endValue: 40, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
-                         { startValue: 40, endValue: 70, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
-                         { startValue: 70, endValue: 100, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }],
-                ticksMinor: { interval: 5, size: '5%' },
-                ticksMajor: { interval: 10, size: '9%' },
-                value: 0,
-                colorScheme: 'scheme05',
-                animationDuration: 1200
-            });
-            $('#diskusagegaugeContainer').on('valueChanging', function (e) {
-                $('#gaugeValue').text(Math.round(e.args.value) + 'Disk Usage %');
-            });
-            $('#diskusagegaugeContainer').jqxGauge('value', '<?php echo round(str_replace('%', '', $diskUsage[0])); ?>');
-        });
-</script>
-
+<script type="text/javascript" src="scripts/toggle.visibility.js"></script>
 </head>
 <body style="background:white;">
 <div align="left" id="settingsGearDIV" name="settingsGearDIV" style="display:block;" ><img id="settingsGear" name="settingsGear" src="Resources/gear.png" onclick="toggle_visibility('settingsDisplay'); toggle_visibility('settingsXDIV'); toggle_visibility('settingsGearDIV');"></img></div>
@@ -189,7 +97,7 @@ $valuePretty = ($UpdateInterval / 1000).'s';
     <option value="60000">60s</option>
     <option value="90000">90s</option>
     <option value="120000">120s</option></select>
-    <input type="submit" value="Apply Settings">
+    <input type="submit" value="Apply Settings"></form>
 </div>
 <div align="center" id="basicMonitorsSHOWbutton" name="basicMonitorsSHOWbutton" onclick="toggle_visibility1('basicMonitors'); toggle_visibility1('basicMonitorsSHOWbutton');" style="clear:both; display:none;">Show "Basic Monitors"</div>
 <div style="display:block; float:center;" id='basicMonitors' name="Monitors">  
@@ -213,35 +121,16 @@ $valuePretty = ($UpdateInterval / 1000).'s';
 // / -----------------------------------------------------------------------------------
 // / The following code displays the basic monitoring analytics for the session.
 ?>
-</div>
+</div></div>
 <hr />
 <div align="center" id="advancedMonitorsSHOWbutton" name="advancedMonitorsSHOWbutton" onclick="toggle_visibility1('advancedMonitors'); toggle_visibility1('advancedMonitorsSHOWbutton');" style="clear:both; display:none;">Show "Advanced Monitors"</div>
 <div id="advancedMonitors" name="advancedMonitors" align="center" style="clear:both; display:block; float:center;">
     <p><a style="margin-left:5%;"><strong>Advanced Server Monitors</strong></a><a onclick="toggle_visibility1('advancedMonitors'); toggle_visibility1('advancedMonitorsSHOWbutton');" style="float:right; margin-right:3%;"><i>Hide</i></a></p>
     <hr />
-    <div align="center" id="cpuGauge" name="cpuGauge" style="border:inset; float:left; width:355px; height:365px;">
-        CPU Usage: <?php echo $cpu; ?>% <img src="Resources/x.png" title="Close CPU Info" alt="Close CPU Info" onclick="toggle_visibility1('cpuGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
-        <div style="float: center;" id="cpugaugeContainer"></div>
-    </div>
-
-    <div align="center" id="ramGauge" name="ramGauge" style="border:inset; float:left; width:355px; height:365px;">
-        RAM Usage: <?php echo $ram; ?>% <img src="Resources/x.png" title="Close RAM Info" alt="Close RAM Info" onclick="toggle_visibility1('ramGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
-        <div style="float: center;" id="ramgaugeContainer"></div>
-    </div>
-
-    <div align="center" id="cpuTemperatureGauge" name="cpuTemperatureGauge" style="border:inset; float:left; width:355px; height:365px;">
-        CPU Temperature: <?php echo round(str_replace(' degrees C', '', $thermalSensorArr1[1])); ?>&#8451; <img src="Resources/x.png" title="Close CPU Temp Info" alt="Close CPU Temp Info" onclick="toggle_visibility1('cpuTemperatureGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
-        <div style="float: center;" id="cputempgaugeContainer"></div>
-    </div>
-
-    <div align="center" id="diskGauge" name="diskGauge" style="border:inset; float:left; width:355px; height:365px;">
-        Disk Usage: <?php echo round(str_replace('%', '', $diskUsage[0])); ?>% <img src="Resources/x.png" title="Close Disk Usage Info" alt="Close Disk Usage Info" onclick="toggle_visibility1('diskGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
-        <div style="float: center;" id="diskusagegaugeContainer"></div>
-    </div>
+<iframe id="advancedMonitors" name="advancedMonitors" style="overflow:scroll; float:left; width:98%; height:750px; border:inset; margin-left:1%;" src="agauges.php"></iframe>
 </div>
 <?php
 // / -----------------------------------------------------------------------------------
 ?>
-</div>
 </body>
 </html>

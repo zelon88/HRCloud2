@@ -9,16 +9,16 @@
 <?php }
 // / This file will retrieve information regarding the server's tempvolt.
 
+// / The following code sets the variables for the session.
 $tempvoltCacheFile = 'Cache/tempvoltCACHE.php';
 $tempvoltCacheFile1 = 'Cache/tempvoltCACHE1.php';
+$tempvoltIncludeFile = 'Cache/tempvoltINCLUDE.php';
 
-// / The following code creates a cache file, or returns an error if one cannot be created
+// / The following code resets the cache file.
 if (file_exists($tempvoltCacheFile)) {
-  @chmod('Cache/');
   @chmod($tempvoltCacheFile, 0755);
   @unlink($tempvoltCacheFile); }
 if (file_exists($tempvoltCacheFile1)) {
-  @chmod('Cache/');
   @chmod($tempvoltCacheFile1, 0755);
   @unlink($tempvoltCacheFile1); }
 
@@ -53,10 +53,12 @@ foreach ($tempvoltCacheDATA as $cacheDATALine) {
     array_push($batterySensorArr, $cacheDATALine); }
   if (strpos($cacheDATALine, 'Adapter') == 'true') {
     array_push($adapterSensorArr, $cacheDATALine); } }
-
 $thermalSensorArr1 = explode(', ', $thermalSensorArr[0]);
 $batterySensorArr1 = explode(', ', $batterySensorArr[0]);
 $adapterSensorArr1 = explode(', ', $adapterSensorArr[0]);
+
+// / The following code creates the include file required for the advanced thermal monitors.
+$WRITEtempvoltIncludeFile = file_put_contents($tempvoltIncludeFile, '<?php $thermalSensorArr1[1] = \''.$thermalSensorArr1[1].'\'; ?>');
 
 // / The following code retrieves advanced statistics related to the server's temps and voltages using lm-sensors, if it is available.
 // / The following code parses the output of sensors for Basic Temp information.
@@ -114,21 +116,4 @@ $MAKETempvoltCacheFile15 = file_put_contents($tempvoltCacheFile1, implode(',', $
 exec('sensors | awk -v ORS=, \'/Other/ {sub("°C", "", $2); print($2)}\' | sed \'s/,$//\'', $tempvoltDATA16);
 $tempvoltDATA16 = str_replace(array("\r", "\n"), '', $tempvoltDATA16);
 $MAKETempvoltCacheFile16 = file_put_contents($tempvoltCacheFile1, implode(',', $tempvoltDATA16).PHP_EOL, FILE_APPEND);
-
-/*
-WORK STUFF 
-sensors | awk -v ORS=, '/temp/ {sub("°C", "", $2); print($2)}' | sed 's/,$//'
-CPU
-SODIMM
-CORE #
-GPU
-
-sudo apt-get install acpi
-acpi -t
-
-lm-sensors
-sudo apt-get install acpi sensors-detect
-sensors
-*/
-
 ?>

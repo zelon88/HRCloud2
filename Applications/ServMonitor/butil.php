@@ -1,7 +1,6 @@
 <!doctype HTML>
 <html>
 <title>Basic Utilization Monitors</title>
-<head></head>
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
@@ -33,20 +32,14 @@ require('diskUpdater.php');
 // / The following code displays the HTML body for the Basic Utilization Iframer.
  ?>
 <body>
+<script type="text/javascript">
+    setTimeout(function() {
+      location.reload(); }, '<?php echo $UpdateInterval; ?>');
+</script>
 <div id='butils' name='butils'>
 <a style="padding-left:5px;" onclick="parent.toggle_visibility('cpuGauge');" target="_parent"><strong><img src="Resources/gauge.png" title="More CPU Info" alt="More CPU Info">  • CPU Usage: </strong>  <i><?php echo $cpu; ?>% </i></a><hr />
 <a style="padding-left:5px;" onclick="parent.toggle_visibility('ramGauge');" target="_parent"><strong><img src="Resources/gauge.png" title="More RAM Info" alt="More RAM Info">  • RAM Usage: </strong>  <i><?php echo $ram; ?>% </i></a><hr />
 <a style="padding-left:5px;" onclick="parent.toggle_visibility('diskGauge'); " target="_parent"><strong><img src="Resources/gauge.png" title="More DISK Info" alt="More RAM Info">  • Disk Usage: </strong>  <i><?php echo $diskUsage[0]; ?></i></a><hr />
 </div>
 </body>
-<?php
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code handles automatic page refresh.
-?>
-<script type="text/javascript">
-    setTimeout(function() {
-      location.reload(); }, '<?php echo $UpdateInterval; ?>');
-</script>
-<html>
+</html>
