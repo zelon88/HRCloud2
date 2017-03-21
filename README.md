@@ -1,4 +1,4 @@
-**[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!] (https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
+**[FOLLOW THE OFFICIAL YOUTUBE CHANNEL FOR REGULAR UPDATES!](https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
 # HRCloud2
 A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assistant** that **Converts files, OCR's images & documents, Creates archives, Scans for viruses, Protects your server, Keeps itself up-to-date,** and **Runs your own AppLauncher!** 
