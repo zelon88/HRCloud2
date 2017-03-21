@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-<head>
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCLoud2 | Application Settings</title>
@@ -29,8 +28,6 @@ else {
   require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
 // / -----------------------------------------------------------------------------------
 ?>
-</head>
-<body>
 <div align="center">
 <h3>HRCloud2 Settings</h3>
 <hr />
@@ -75,7 +72,15 @@ if (isset($_POST['Save'])) {
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'"" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Anti-Virus Settings.'."\n"); } }
+      echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
+    // / The following code is sets the server's High Performance AV setting.
+    if (isset($_POST['NEWHighPerformanceAV'])) {
+      $NEWHighPerformanceAV = $_POST['NEWHighPerformanceAV'];
+      $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'"" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New High Performance AV Settings.'."\n"); } }
 ?>
 <hr />
 <?php
@@ -103,7 +108,15 @@ if (isset($_POST['LoadDefaults'])) {
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
     $NEWVirusScan = $VirusScan; 
     $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+    if (isset($HighPerformanceAV)) {
+      $NEWHighPerformanceAV = $HighPerformanceAV; 
+      $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } 
+    if (!isset($HighPerformanceAV)) { 
+      $NEWHighPerformanceAV = '0'; 
+      $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } }
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); 
   ?>
 <hr /></div>
@@ -158,11 +171,19 @@ if ($ShowHRAI !== '1') {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / Prepare the echo value for the virus input field.
+// / Prepare the echo value for the Anti-Virus input field.
 if ($VirusScan == '1') {
   $VSEcho = 'Enabled'; }
 if ($VirusScan !== '1') {
   $VSEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the High Performance AV input field.
+if ($HighPerformanceAV == '1') {
+  $HPAVEcho = 'Enabled'; }
+if ($HighPerformanceAV !== '1') {
+  $HPAVEcho = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -180,7 +201,7 @@ if ($ShowHRAI == '0') {
 <form action="settingsCore.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
 <p alt="Change the HRCloud2 color scheme." title="Change the HRCloud2 color scheme." style="padding-left:15px;"><strong>1.</strong> Color Scheme: </p>
-  <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;"></p>
+  <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;">
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
   <option value="1">Blue (Default)</option>
   <option value="2">Red</option>
@@ -197,8 +218,7 @@ if ($ShowHRAI == '0') {
 </select></p>
 
 <p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
-  <a style="padding-left:10%;">
-    <input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+    <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php
 // / -----------------------------------------------------------------------------------
 
@@ -219,11 +239,18 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"><strong>5.</strong> Virus Scanning (Requires ClamAV on server): </p>
-  <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;"><p>
+  <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;">
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
-</select>
+</select></p>
+
+<p alt="Options to enable high performance (multithreaded) A/V scanning." title="Options to enable high performance (multithreaded) A/V scanning." style="padding-left:15px;"><strong>6.</strong> High Performance Scanning (Multi-threading): </p>
+  <p><select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="width:100%;">
+  <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVEcho; ?>)</option>
+  <option value="1">Enabled</option>
+  <option value="0">Disabled</option>
+</select></p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php } 
 // / -----------------------------------------------------------------------------------
@@ -234,11 +261,15 @@ if ($UserIDRAW == 1) { ?>
   <p><input type='submit' name='Save' id='Save' value='Save Changes' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='LoadDefaults' id='LoadDefaults' value='Load Defaults' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type="hidden" name='YUMMYSaltHash' id='YUMMYSaltHash' value="<?php echo $SaltHash; ?>"></p>
+</div>
 </form>
+<div align='center'>
 <form action="settingsCore.php">
   <p><input type='submit'  name='Clear' id='Clear' value='Clear Changes' style="padding: 2px; border: 1px solid black"></p>
 </form>
+</div>
 <div id='end' name='end' class='end'>
+</div>
 </div>
 <hr />
   <script type="text/javascript">
@@ -251,5 +282,4 @@ if ($UserIDRAW == 1) { ?>
     function goBack() {
       window.history.back(); }
 </script>
-</body>
 </html>

@@ -48,6 +48,10 @@ $ShowHRAI = '1';
   // / Scan for viruses during directory scan. Use 1 for true or leave blank for false. 
    // / (ClamAV MUST be installed on the localhost!!!).
   $VirusScan = '0';
+  // / Use multi-threaded virus scanning. Virus scanning is extremely resource intensive. 
+    // / If you are running an older machine (Rpi, CoreDuo, or any single-core CPU) leave 
+    // / this setting disabled.
+  $HighPerformanceAV = '0';
 // / ------------------------------
 
 // / ------------------------------ 

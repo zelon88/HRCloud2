@@ -798,7 +798,7 @@ if (isset($_POST['pdfworkSelected'])) {
             $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
               if ($_POST['method1'] == '0' or $_POST['method1'] == '') {
                 shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
-                $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathname on $Time".' using method 0.'); 
+                $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 0.'); 
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
                 if ((!file_exists($pathnameTEMP) or filesize($pathnameTEMP) < '5')) { 
                   $txt = ('Warning!!! HRC2591, There was a problem using the selected method to convert your file. Switching to 

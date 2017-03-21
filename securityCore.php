@@ -35,31 +35,8 @@ $LogFileInc0 = 0;
 $LogFileInc1 = 0;
 $LogFileInc2 = 0;
 
-// / The following code changes the group of certain directories to the www-data group,
-@chgrp('/var/www', $user);
-@chgrp('/var/www/html', $user);
-@chgrp('/var/www/html/HRProprietary', $user);
-@chgrp($InstLoc, $user);
-@chgrp($InstLoc.'/Applications', $user);
-@chgrp($InstLoc.'/Resources', $user);
-@chgrp($InstLoc.'/DATA', $user);
-@chgrp($InstLoc.'/Screenshots', $user);
-@chgrp($UserConfig, $user);
-@system("/bin/chgrp -R $user $InstLoc");
-
-// / The following code changes the ownership of certain directories to the www-data user,
-@chown('/var/www', $user);
-@chown('/var/www/html', $user);
-@chown('/var/www/html/HRProprietary', $user);
-@chown($InstLoc, $user);
-@chown($InstLoc.'/Applications', $user);
-@chown($InstLoc.'/Resources', $user);
-@chown($InstLoc.'/DATA', $user);
-@chown($InstLoc.'/Screenshots', $user);
-@chown($UserConfig, $user);
-@system("/bin/chown -R $user $InstLoc");
-
 // / The following code changes the permission of certain directories to 0755,
+@chmod($CloudLoc, 0755);
 @chmod('/var/www', 0755);
 @chmod('/var/www/html', 0755);
 @chmod('/var/www/html/HRProprietary', 0755);
@@ -69,7 +46,36 @@ $LogFileInc2 = 0;
 @chmod($InstLoc.'/DATA', 0755);
 @chmod($InstLoc.'/Screenshots', 0755);
 @chmod($UserConfig, 0755);
+@system("/bin/chmod -R 0755 $CloudLoc");
 @system("/bin/chmod -R 0755 $InstLoc");
+
+// / The following code changes the group of certain directories to the www-data group,
+@chgrp($CloudLoc, $user);
+@chgrp('/var/www', $user);
+@chgrp('/var/www/html', $user);
+@chgrp('/var/www/html/HRProprietary', $user);
+@chgrp($InstLoc, $user);
+@chgrp($InstLoc.'/Applications', $user);
+@chgrp($InstLoc.'/Resources', $user);
+@chgrp($InstLoc.'/DATA', $user);
+@chgrp($InstLoc.'/Screenshots', $user);
+@chgrp($UserConfig, $user);
+@system("/bin/chgrp -R $user $CloudLoc");
+@system("/bin/chgrp -R $user $InstLoc");
+
+// / The following code changes the ownership of certain directories to the www-data user,
+@chown($CloudLoc, $user);
+@chown('/var/www', $user);
+@chown('/var/www/html', $user);
+@chown('/var/www/html/HRProprietary', $user);
+@chown($InstLoc, $user);
+@chown($InstLoc.'/Applications', $user);
+@chown($InstLoc.'/Resources', $user);
+@chown($InstLoc.'/DATA', $user);
+@chown($InstLoc.'/Screenshots', $user);
+@chown($UserConfig, $user);
+@system("/bin/chown -R $user $CloudLoc");
+@system("/bin/chown -R $user $InstLoc");
 
 // / The following code purges old index.html files from the HRProprietary directory directory daily.
 if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
@@ -90,22 +96,23 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
 <div align="center"><h3>Scan Complete!</h3></div>
 <hr />
 <?php
+// / Set whether ClamAV will use multi-threaded capibility or not.
+if ($HighPerformanceAV == 1) {
+  $HighPerf = '-m'; }
+if (!isset($HighPerformanceAV) or $HighPerformanceAV == '0') {
+  $HighPerf = ''; }
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
 while (file_exists($LogFile0)) {
   $LogFileInc0++;
   $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc0.'_'.$Date.'.txt'; } 
-if(!file_exists($LogFile0)) {
-  $WriteClamLogFile0 = file_put_contents($LogFile0, ''.PHP_EOL); }
 while (file_exists($LogFile1)) {
+  unlink($LogFile1);
   $LogFileInc1++;
   $LogFile1 = $SesLogDir.'/VirusLog_'.$LogFileInc1.'_'.$Date.'.txt';  }
-if(!file_exists($LogFile1)) {
-  $WriteClamLogFile1 = file_put_contents($LogFile1, ''.PHP_EOL); }
 while (file_exists($LogFile2)) {
+  unlink($LogFile2);
   $LogFileInc2++;
   $LogFile2 = $SesLogDir.'/VirusLog_'.$LogFileInc2.'_'.$Date.'.txt';  }
-if(!file_exists($LogFile1)) {
-  $WriteClamLogFile2 = file_put_contents($LogFile2, ''.PHP_EOL); }
 // / The following code can be used to scan user submitted files with ClamAV.
 if (isset($_POST['scanSelected'])) {
   if (isset($_POST['userscanfilename'])) {
@@ -124,62 +131,87 @@ if (isset($_POST['scanSelected'])) {
 // / The following code is used to scan the entire Cloud drive.
 if (!isset($_POST['scanSelected'])) {
   // / Update anti-virus definitions from ClamAV.
-  @shell_exec('sudo freshclam');
+  shell_exec('sudo freshclam');
   echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
-  $LogFileSize3 = @filesize($LogFile1);
-  if ($LogFileSize1 == '') {
-    $LogFileSize1 = 0; }
-  shell_exec('clamscan -r '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
-  $LogFileSize2 = filesize($LogFile1);
-  $LogFileDATA1 = file_get_contents($LogFile1);
-  if (strpos($LogFileDATA1, 'FOUND') == 'true') {
-    $WriteClamLogFile = file_put_contents($LogFile1, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); }
-  if (strpos($LogFileDATA1, 'FOUND') == 'false') {
-    $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } 
-  $LogTXT = @file_get_contents($LogFile1);
-  $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
-  $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
-  echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n");
+  $LogFileSize3 = 0;
+  shell_exec('clamscan -r -fdpass '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
+  sleep(1);
+  if (!file_exists($LogFile1)) {
+    $txt = ('ERROR!!! HRC2SecCore136, Could not generate scan results on '.$Time.'! Continuing...');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br('<a style="padding-left:15px;">'.$txt.'</a>'."\n"); }
+  if (file_exists($LogFile1)) {  
+    $LogFileSize2 = @filesize($LogFile1);
+    $LogFileDATA1 = file($LogFile1);
+    foreach ($LogFileDATA1 as $LogDATA1) {
+      if (strpos($LogDATA1, 'FOUND') == 'true') {
+        $WriteClamLogFile = file_put_contents($LogFile1, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); }
+      if (strpos($LogDATA1, 'FOUND') == 'false') {
+        $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } }
+    $LogTXT = @file_get_contents($LogFile1);
+    $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
+    $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
+    echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n"); }
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
-  $LogFileSize3 = @filesize($LogFile2);
-  if ($LogFileSize3 == '') {
-    $LogFileSize3 = 0; }
-  shell_exec('clamscan -r '.$InstLoc.' | grep FOUND >> '.$LogFile2);
-  $LogFileSize4 = filesize($LogFile2);
-  $LogFileDATA2 = file_get_contents($LogFile2);
-  if (strpos($LogFileDATA2, 'FOUND') == 'true') {
-    $WriteClamLogFile = file_put_contents($LogFile2, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); } 
-  if (strpos($LogFileDATA2, 'FOUND') == 'false') {
-    $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); }
-  $LogTXT = @file_get_contents($LogFile2);
-  $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
-  $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
-  echo nl2br('<a style="padding-left:15px;">Scanned HRCloud2 Installation Directory.</a>'."\n"); }
+  $LogFileSize3 = 0;
+  shell_exec('clamscan -r -fdpass '.$HighPerf.' '.$InstLoc.' | grep FOUND >> '.$LogFile2);
+  sleep(1);
+  if (!file_exists($LogFile2)) {
+    $txt = ('ERROR!!! HRC2SecCore166, Could not generate scan results on '.$Time.'! Continuing...');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br('<a style="padding-left:15px;">'.$txt.'</a>'."\n"); }
+  if (file_exists($LogFile2)) { 
+    $LogFileSize4 = @filesize($LogFile2);
+    $LogFileDATA2 = file($LogFile2);
+    foreach ($LogFileDATA2 as $LogDATA2) {
+      if (strpos($LogDATA2, 'FOUND') == 'true') {
+        $WriteClamLogFile = file_put_contents($LogFile2, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); } 
+      if (strpos($LogDATA2, 'FOUND') == 'false') {
+        $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } }
+    $LogTXT = @file_get_contents($LogFile2);
+    $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
+    $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
+    echo nl2br('<a style="padding-left:15px;">Scanned HRCloud2 Installation Directory.</a>'."\n"); } }
 // / Gather results from scans.
-if (!is_file($LogFile0) or !is_file($LogFile1)) {
+if (!is_file($LogFile0) or !is_file($LogFile1) or !is_file($LogFile2)) {
   $txt = ('ERROR!!! HRC2SecCore101, Could not generate scan results on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die('<a style="padding-left:15px;">'.$txt.'</a>'); }
 // / Gather data from ClamAV generated log files.
 $LogFileDATA0 = file_get_contents($LogFile0);
+$LogFileDATA00 = file($LogFile0);
 $LogFileDATA1 = file_get_contents($LogFile1);
+$LogFileDATA11 = file($LogFile1);
 $LogFileDATA2 = file_get_contents($LogFile2);
+$LogFileDATA22 = file($LogFile2);
 // / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
 if (strpos($LogFileDATA0, 'Virus Detected') == 'true' or strpos($LogFileDATA1, 'Virus Detected') == 'true' or strpos($LogFileDATA2, 'Virus Detected') == 'true'
   or strpos($LogFileDATA0, 'FOUND') == 'true' or strpos($LogFileDATA1, 'FOUND') == 'true' or strpos($LogFileDATA3, 'FOUND') == 'true') {
   $INFECTION_DETECTED = 1; }
+foreach ($LogFileDATA00 as $LogDATA00) {
+  if (strpos($LogDATA00, 'Virus Detected') == 'true' or strpos($LogDATA00, 'FOUND') == 'true') {
+    $INFECTION_DETECTED = 1; } }
+foreach ($LogFileDATA11 as $LogDATA11) {
+  if (strpos($LogDATA11, 'Virus Detected') == 'true' or strpos($LogDATA11, 'FOUND') == 'true') {
+    $INFECTION_DETECTED = 1; } }
+foreach ($LogFileDATA22 as $LogDATA22) {
+  if (strpos($LogDATA22, 'Virus Detected') == 'true' or strpos($LogDATA22, 'FOUND') == 'true') {
+    $INFECTION_DETECTED = 1; } }
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
+  $ThreatCount = substr_count($LogFileDATA0, 'FOUND');
+  if ($ThreadCount == '') {
+    $ThreadCount = 0; }
   if ($LogFileInc0 == 0) {
     $incEcho = ''; }
   if ($LogFileInc0 !== 0) {
     $incEcho = $LogFileInc.'_'; }
 $ClamURL = 'DATA/'.$UserID.'/.AppData/'.$Date.'/VirusLog_'.$incEcho.$Date.'.txt';
   ?><br><div align="center"><?php
-  echo nl2br('WARNING!!! HRC2SecCore76, Potentially infected files found!'."\n");
+  echo nl2br('WARNING!!! HRC2SecCore76, '.$ThreadCount.' Potentially infected files found!'."\n");
   echo nl2br('HRCloud2 DID NOT remove any files. Please see the report below or 
     the logs and verify each file before continuing to use HRCloud2.'."\n");
     ?><p><a href="<?php echo $ClamURL; ?>" target="cloudContents">View logfile</a></p> 
