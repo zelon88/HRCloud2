@@ -98,9 +98,14 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
 <?php
 // / Set whether ClamAV will use multi-threaded capibility or not.
 if ($HighPerformanceAV == 1) {
-  $HighPerf = '-m'; }
+  $HighPerf = '-m '; }
 if (!isset($HighPerformanceAV) or $HighPerformanceAV == '0') {
   $HighPerf = ''; }
+if ($ThoroughAVAV == 1) {
+  $Thorough = '-fdpass'; }
+if (!isset($ThoroughAV) or $ThouroughAV == '0') {
+  $Thorough = ''; }
+
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
 while (file_exists($LogFile0)) {
   $LogFileInc0++;
@@ -136,8 +141,19 @@ if (!isset($_POST['scanSelected'])) {
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
   $LogFileSize3 = 0;
-  shell_exec('clamscan -r -fdpass '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1);
+  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1)));
   sleep(1);
+  if (!file_exists($LogFile1)) {
+    if ($PersistentAV !== '1') {
+      $PersistenceEcho = 'Stopping.'; }
+    if ($PersistentAV == '1') {
+      $PersistenceEcho = 'Continuing...'; 
+      $ThoroughRAW = $Thorough;
+      if ($ThoroughRAW == '0') {
+        $Thorough = '-fdpass'; } 
+      if ($ThoroughRAW !== '0') {
+        $Thorough = ''; } }
+  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (!file_exists($LogFile1)) {
     $txt = ('ERROR!!! HRC2SecCore136, Could not generate scan results on '.$Time.'! Continuing...');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -157,12 +173,19 @@ if (!isset($_POST['scanSelected'])) {
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
   $LogFileSize3 = 0;
-  shell_exec('clamscan -r -fdpass '.$HighPerf.' '.$InstLoc.' | grep FOUND >> '.$LogFile2);
+  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$InstLoc.' | grep FOUND >> '.$LogFile2)));
   sleep(1);
-  if (!file_exists($LogFile2)) {
-    $txt = ('ERROR!!! HRC2SecCore166, Could not generate scan results on '.$Time.'! Continuing...');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('<a style="padding-left:15px;">'.$txt.'</a>'."\n"); }
+  if (!file_exists($LogFile1)) {
+    if ($PersistentAV !== '1') {
+      $PersistenceEcho = 'Stopping.'; }
+    if ($PersistentAV == '1') {
+      $PersistenceEcho = 'Continuing...'; 
+      $ThoroughRAW = $Thorough;
+      if ($ThoroughRAW == '0') {
+        $Thorough = '-fdpass'; } 
+      if ($ThoroughRAW !== '0') {
+        $Thorough = ''; } }
+  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (file_exists($LogFile2)) { 
     $LogFileSize4 = @filesize($LogFile2);
     $LogFileDATA2 = file($LogFile2);
@@ -177,7 +200,8 @@ if (!isset($_POST['scanSelected'])) {
     echo nl2br('<a style="padding-left:15px;">Scanned HRCloud2 Installation Directory.</a>'."\n"); } }
 // / Gather results from scans.
 if (!is_file($LogFile0) or !is_file($LogFile1) or !is_file($LogFile2)) {
-  $txt = ('ERROR!!! HRC2SecCore101, Could not generate scan results on '.$Time.'!');
+  $txt = ('ERROR!!! HRC2SecCore185, There was a problem generating scan results on '.$Time.'! 
+    Try adding user exceptions for ClamAV to the CloudLoc and InstLoc, or disable "ThoroughScanning" in the Settings page.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die('<a style="padding-left:15px;">'.$txt.'</a>'); }
 // / Gather data from ClamAV generated log files.
@@ -203,15 +227,15 @@ foreach ($LogFileDATA22 as $LogDATA22) {
 // / If infections were dected, return scan results to the user.
 if ($INFECTION_DETECTED == 1) {
   $ThreatCount = substr_count($LogFileDATA0, 'FOUND');
-  if ($ThreadCount == '') {
-    $ThreadCount = 0; }
+  if ($ThreatCount == '') {
+    $ThreatCount = 0; }
   if ($LogFileInc0 == 0) {
     $incEcho = ''; }
   if ($LogFileInc0 !== 0) {
     $incEcho = $LogFileInc.'_'; }
 $ClamURL = 'DATA/'.$UserID.'/.AppData/'.$Date.'/VirusLog_'.$incEcho.$Date.'.txt';
   ?><br><div align="center"><?php
-  echo nl2br('WARNING!!! HRC2SecCore76, '.$ThreadCount.' Potentially infected files found!'."\n");
+  echo nl2br('WARNING!!! HRC2SecCore76, '.$ThreatCount.' Potentially infected files found!'."\n");
   echo nl2br('HRCloud2 DID NOT remove any files. Please see the report below or 
     the logs and verify each file before continuing to use HRCloud2.'."\n");
     ?><p><a href="<?php echo $ClamURL; ?>" target="cloudContents">View logfile</a></p> 

@@ -50,8 +50,20 @@ $ShowHRAI = '1';
   $VirusScan = '0';
   // / Use multi-threaded virus scanning. Virus scanning is extremely resource intensive. 
     // / If you are running an older machine (Rpi, CoreDuo, or any single-core CPU) leave 
-    // / this setting disabled.
+    // / this setting disabled ('0').
   $HighPerformanceAV = '0';
+  // / Thorough A/V scanning requires stricter permissions, and may require additional 
+    // / ClamAV user, usergroup, and permissions configuration.
+    // / Disable ('0') if you experience errors.
+    // / Enable ('0') if you experiencfalse-negatives.
+  $ThoroughAV = '0';
+  // / Persistent A/V scanning will try to achieve the highest level of scanning that is
+    // / possible with available permissions. 
+    // / When enabled; If errors are encountered ANY AND EVERY attempt to recover from the 
+      // / error will be made. No expense will be spared to complete the operation.
+    // / When disabled; If errors are encountered, NO ATTEMPTS to recover from the error
+      // / will be made. The operation will be abandoned and abort after reasonable effort.
+  $PersistentAV = '1';
 // / ------------------------------
 
 // / ------------------------------ 

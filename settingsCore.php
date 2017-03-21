@@ -52,7 +52,7 @@ if (isset($_POST['Save'])) {
     $NEWShowHRAI = $_POST['NEWShowHRAI'];
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-    $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'"" to the user cache file on '.$Time.'!'); 
+    $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
@@ -62,7 +62,7 @@ if (isset($_POST['Save'])) {
       $NEWDataCompression = $_POST['NEWDataCompression'];
       $txt = ('$DataCompression = \''.$NEWDataCompression.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'"" to the user cache file on '.$Time.'!'); 
+      $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Data Compression Settings.'."\n"); }
     // / The following code is sets the server's Virus Scanning setting.
@@ -70,7 +70,7 @@ if (isset($_POST['Save'])) {
       $NEWVirusScan = $_POST['NEWVirusScan'];
       $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'"" to the user cache file on '.$Time.'!'); 
+      $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
     // / The following code is sets the server's High Performance AV setting.
@@ -78,12 +78,29 @@ if (isset($_POST['Save'])) {
       $NEWHighPerformanceAV = $_POST['NEWHighPerformanceAV'];
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'"" to the user cache file on '.$Time.'!'); 
+      $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New High Performance AV Settings.'."\n"); } }
+      echo nl2br('Saved New High Performance AV Settings.'."\n"); }
+    // / The following code is sets the server's High Performance AV setting.
+    if (isset($_POST['NEWThoroughAV'])) {
+      $NEWThoroughAV = $_POST['NEWThoroughAV'];
+      $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Thorough AV" setting: "'.$NEWThoroughAV.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Thorough AV Settings.'."\n"); } 
+    // / The following code is sets the server's Persistence AV setting.
+    if (isset($_POST['NEWPersistentAV'])) {
+      $NEWPersistentAV = $_POST['NEWPersistentAV'];
+      $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Persistent AV Settings.'."\n"); } }
 ?>
 <hr />
 <?php
+sleep(1);
 echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 ?></div>
 <div align="center">   
@@ -116,6 +133,14 @@ if (isset($_POST['LoadDefaults'])) {
     if (!isset($HighPerformanceAV)) { 
       $NEWHighPerformanceAV = '0'; 
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($ThoroughAV)) { 
+      $NEWThoroughAV = '0'; 
+      $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($ThoroughAV)) { 
+      $NEWPersistentAV = '0'; 
+      $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } }
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); 
   ?>
@@ -187,6 +212,22 @@ if ($HighPerformanceAV !== '1') {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Thorough AV input field.
+if ($ThoroughAV == '1') {
+  $TAVEcho = 'Enabled'; }
+if ($ThoroughAV !== '1') {
+  $TAVEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Persistent AV input field.
+if ($PersistentAV == '1') {
+  $PAVEcho = 'Enabled'; }
+if ($PersistentAV !== '1') {
+  $PAVEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the WordPress Integration input field.
 if ($WordPressIntegration == '1') {
   $WPIEcho = 'Enabled'; }
@@ -245,14 +286,28 @@ if ($UserIDRAW == 1) { ?>
   <option value="0">Disabled</option>
 </select></p>
 
-<p alt="Options to enable high performance (multithreaded) A/V scanning." title="Options to enable high performance (multithreaded) A/V scanning." style="padding-left:15px;"><strong>6.</strong> High Performance Scanning (Multi-threading): </p>
+<p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:15px;"><strong>6.</strong> High Performance A/V Scanning (Multi-threading): </p>
   <p><select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="width:100%;">
   <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
+
+<p alt="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." title="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." style="padding-left:15px;"><strong>7.</strong> Thorough A/V Scanning: </p>
+  <p><select id="NEWThoroughAV" name="NEWThoroughAV" style="width:100%;">
+  <option value="<?php echo $ThoroughAV; ?>">Current (<?php echo $TAVEcho; ?>)</option>
+  <option value="1">Enabled</option>
+  <option value="0">Disabled</option>
+</select></p>
+
+<p alt="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." title="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." style="padding-left:15px;"><strong>8.</strong> Persistent A/V Scanning: </p>
+  <p><select id="NEWPersistentAV" name="NEWPersistentAV" style="width:100%;">
+  <option value="<?php echo $PersistentAV; ?>">Current (<?php echo $PAVEcho; ?>)</option>
+  <option value="1">Enabled</option>
+  <option value="0">Disabled</option>
+</select></p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
-<?php } 
+<?php }
 // / -----------------------------------------------------------------------------------
 ?>
 <div align="center" id="loading" name="loading" style="display:none;"><p><img src="Resources/logosmall.gif" /></p></div>
