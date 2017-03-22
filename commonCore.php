@@ -25,13 +25,7 @@ else {
 // / The following code verifies and cleans the config file.    
 if ($Accept_GPLv3_OpenSource_License !== '1') {
   die ('ERROR!!! HRC2CommonCore124, You must read and completely fill out the config.php file located in your
-    HRCloud2 installation directory before you can use this software!'); } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code checks that the user has agreed to the terms of the GPLv3 before cleaning the config variables.
-// / If the user has not read the GPLv3 the script will die!!!
-if ($Accept_GPLv3_OpenSource_License == '1') { 
+    HRCloud2 installation directory before you can use this software!'); 
   $CleanConfig = '1';
   $INTIP = 'localhost';
   $EXTIP = 'localhost'; }
@@ -47,7 +41,8 @@ $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
   $WPArch  = $InstLoc.'/Applications/wordpress_3-16-17.zip';
   $VARDir = '/var/www/html';
-  echo nl2br('</head>WARNING!!! HRC2CommonCore27, WordPress was not detected on the server.'."\n");
+  echo nl2br('</head>Notice!!! HRC2CommonCore27, WordPress was not detected on the server. 
+    Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'."\n");
   echo nl2br('OP-Act: Installing WordPress.'."\n");
   shell_exec('unzip '.$WPArch.' -d '.$VARDir); 
   if (file_exists($WPFile)) {
@@ -151,7 +146,7 @@ if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
   @mkdir($CloudDir, 0755); }
 if(!file_exists($CloudTemp)) {
   mkdir($CloudTemp);
-  copy($InstLoc.'/index.html',$CloudTemp.'index.html'); }
+  copy($InstLoc.'/index.html', $CloudTemp.'index.html'); }
 if (!file_exists($CloudTempDir)) { 
   mkdir($CloudTempDir, 0755); 
   copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
@@ -159,14 +154,14 @@ copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
 // / The following code checks if the TempResources directory exists, and creates one if it does not.
 if (!file_exists($TempResourcesDir)) {
   mkdir($TempResourcesDir, 0755); }
-copy($InstLoc.'/index.html',$TempResourcesDir.'/index.html');
+copy($InstLoc.'/index.html', $TempResourcesDir.'/index.html');
 // / The following code checks if the CloudUsrDir exists, and creates one if it does not.
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
 // / The following code checks if the CloudTmpDir exists, and creates one if it does not.
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
-copy($InstLoc.'/index.html',$CloudTmpDir.'/index.html');
+copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
 // / The following code checks if the LogLoc exists, and creates one if it does not.
 // / Also creates the file strucutre needed for the Logs to display content and store cache data.
 if (!file_exists($LogLoc)) {
@@ -236,14 +231,14 @@ if (file_exists($UserConfig)) {
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="style.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="Styles/style.css">'); }
 if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleRED.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleRED.css">'); }
 if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREEN.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleGREEN.css">'); }
 if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleGREY.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleGREY.css">'); }
 if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="styleBLACK.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleBLACK.css">'); }
 // / -----------------------------------------------------------------------------------
 ?>
