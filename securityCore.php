@@ -118,6 +118,7 @@ while (file_exists($LogFile2)) {
   unlink($LogFile2);
   $LogFileInc2++;
   $LogFile2 = $SesLogDir.'/VirusLog_'.$LogFileInc2.'_'.$Date.'.txt';  }
+
 // / The following code can be used to scan user submitted files with ClamAV.
 if (isset($_POST['scanSelected'])) {
   if (isset($_POST['userscanfilename'])) {
@@ -133,8 +134,9 @@ if (isset($_POST['scanSelected'])) {
     $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
     echo nl2br('<a style="padding-left:15px;">Scanned Supplied File.</a>'."\n");
     ?><hr /><?php } }
+
 // / The following code is used to scan the entire Cloud drive.
-if (!isset($_POST['scanSelected'])) {
+if (!isset($_POST['scanSelected']) && isset($_POST['Scan'])) {
   // / Update anti-virus definitions from ClamAV.
   shell_exec('sudo freshclam');
   echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
@@ -149,9 +151,9 @@ if (!isset($_POST['scanSelected'])) {
     if ($PersistentAV == '1') {
       $PersistenceEcho = 'Continuing...'; 
       $ThoroughRAW = $Thorough;
-      if ($ThoroughRAW == '0') {
+      if ($ThoroughRAW == '1') {
         $Thorough = '-fdpass'; } 
-      if ($ThoroughRAW !== '0') {
+      if ($ThoroughRAW !== '1') {
         $Thorough = ''; } }
   shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (!file_exists($LogFile1)) {
@@ -162,7 +164,7 @@ if (!isset($_POST['scanSelected'])) {
     $LogFileSize2 = @filesize($LogFile1);
     $LogFileDATA1 = file($LogFile1);
     foreach ($LogFileDATA1 as $LogDATA1) {
-      if (strpos($LogDATA1, 'FOUND') == 'true') {
+      if (strpos($LogDATA1, 'FOUND') == 'true' or $LogFileSize2 >= 3) {
         $INFECTION_DETECTED = 1;
         $WriteClamLogFile = file_put_contents($LogFile1, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); }
       if (strpos($LogDATA1, 'FOUND') == 'false') {
@@ -182,16 +184,16 @@ if (!isset($_POST['scanSelected'])) {
     if ($PersistentAV == '1') {
       $PersistenceEcho = 'Continuing...'; 
       $ThoroughRAW = $Thorough;
-      if ($ThoroughRAW == '0') {
+      if ($ThoroughRAW == '1') {
         $Thorough = '-fdpass'; } 
-      if ($ThoroughRAW !== '0') {
+      if ($ThoroughRAW !== '1') {
         $Thorough = ''; } }
   shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (file_exists($LogFile2)) { 
     $LogFileSize4 = @filesize($LogFile2);
     $LogFileDATA2 = file($LogFile2);
     foreach ($LogFileDATA2 as $LogDATA2) {
-      if (strpos($LogDATA2, 'FOUND') == 'true') {
+      if (strpos($LogDATA2, 'FOUND') == 'true' or $LogFileSize4 >= 3) {
         $INFECTION_DETECTED = 1;
         $WriteClamLogFile = file_put_contents($LogFile2, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); } 
       if (strpos($LogDATA2, 'FOUND') == 'false') {

@@ -567,21 +567,27 @@ if (isset( $_POST['convertSelected'])) {
   $txt = ('OP-Act: Initiated HRConvert2 on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST['convertSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']);
-    if (!is_array($_POST['convertSelected'])) {
-      $_POST['convertSelected'] = array($_POST['convertSelected']); } 
+  if (!is_array($_POST['convertSelected'])) {
+    $_POST['convertSelected'] = array($_POST['convertSelected']); } 
   $convertcount = 0;
+  // / The following code checks to see if Unoconv is in memory.
+  exec("pgrep soffice.bin", $ConversionEnginePID, $Status);
+  if ($Status == 1) {
+    exec('/usr/bin/unoconv -l &', $ConversionEnginePID1); 
+    $txt = ('OP-Act: Starting the Unoconv listener (PID '.$ConversionEnginePID[1].') on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   foreach ($_POST['convertSelected'] as $key => $file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
       'avi', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp');
-    $file1 = $CloudUsrDir.$file;
-    $file2 = $CloudTmpDir.$file;
+    $file1 = str_replace('//', '/', $CloudUsrDir.$file);
+    $file2 = str_replace('//', '/', $CloudTmpDir.$file);
     copy($file1, $file2); 
     if (file_exists($file2)) {
-    $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+      $txt = ('OP-Act: '."Copied $file1 to $file2 on $Time".'.'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if (!file_exists($file2)) {
       $txt = ('ERROR!!! HRC2381, '."Could not copy $file1 to $file2 on $Time".'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -629,7 +635,9 @@ if (isset( $_POST['convertSelected'])) {
             while(!file_exists($newPathname)) {
               $stopper++;
               if ($stopper == 10) {
-                die('ERROR!!! HRC2425, The converter timed out while copying your file.'); } } }
+                $txt = 'ERROR!!! HRC2425, The converter timed out while copying your file.';
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+                die($txt); } } }
           // / Code to convert and manipulate image files.
           if (in_array($oldExtension,$imgarray) ) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
