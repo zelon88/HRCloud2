@@ -151,9 +151,9 @@ if (!isset($_POST['scanSelected']) && isset($_POST['Scan'])) {
     if ($PersistentAV == '1') {
       $PersistenceEcho = 'Continuing...'; 
       $ThoroughRAW = $Thorough;
-      if ($ThoroughRAW == '1') {
+      if ($ThoroughRAW == '') {
         $Thorough = '-fdpass'; } 
-      if ($ThoroughRAW !== '1') {
+      if ($ThoroughRAW !== '-fdpass') {
         $Thorough = ''; } }
   shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (!file_exists($LogFile1)) {
@@ -184,9 +184,9 @@ if (!isset($_POST['scanSelected']) && isset($_POST['Scan'])) {
     if ($PersistentAV == '1') {
       $PersistenceEcho = 'Continuing...'; 
       $ThoroughRAW = $Thorough;
-      if ($ThoroughRAW == '1') {
+      if ($ThoroughRAW == '') {
         $Thorough = '-fdpass'; } 
-      if ($ThoroughRAW !== '1') {
+      if ($ThoroughRAW !== '-fdpass') {
         $Thorough = ''; } }
   shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (file_exists($LogFile2)) { 
@@ -245,8 +245,8 @@ if ($INFECTION_DETECTED == 1) {
     $ThreatCount = 0; }
   if ($LogFileInc0 == 0) {
     $incEcho = ''; }
-  if ($LogFileInc0 !== 0) {
-    $incEcho = $LogFileInc.'_'; }
+  if ($LogFileInc0 !== 0 && $LogFileInc0 !== '') {
+    $incEcho = $LogFileInc0.'_'; }
 $ClamURL = 'DATA/'.$UserID.'/.AppData/'.$Date.'/VirusLog_'.$incEcho.$Date.'.txt';
   ?><br><div align="center"><?php
   echo nl2br('WARNING!!! HRC2SecCore76, '.$ThreatCount.' Potentially infected files found!'."\n");
