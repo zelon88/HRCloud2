@@ -92,7 +92,7 @@ if(isset($_POST["upload"])) {
     if (in_array($F0, $DangerousFiles)) { 
       $file = str_replace($F0, $F0.'SAFE', $file); }
     $F2 = pathinfo($file, PATHINFO_BASENAME);
-    $F3 = $CloudUsrDir.$F2;
+    $F3 = str_replace('//', '/', $CloudUsrDir.$F2);
     if($file == "") {
       $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -105,7 +105,7 @@ if(isset($_POST["upload"])) {
     chmod($F3, 0755); 
     // / The following code checks the Cloud Location with ClamAV after copying, just in case.
     if ($VirusScan == '1') {
-      shell_exec('clamscan -r '.$F3.' | grep FOUND >> '.$ClamLogDir); 
+      shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$F3.' | grep FOUND >> '.$LogFile1)));
       $ClamLogFileDATA = file_get_contents($ClamLogDir);
       if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
         $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -182,7 +182,7 @@ if (isset($_POST['copy'])) {
       if (file_exists($copySrc)) {
         // / The following code checks the Cloud Location with ClamAV before copying, just in case.
         if ($VirusScan == '1') {
-          shell_exec('clamscan -r '.$copySrc.' | grep FOUND >> '.$ClamLogDir); 
+          shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$copySrc.' | grep FOUND >> '.$LogFile1)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
           if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
             $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -190,6 +190,7 @@ if (isset($_POST['copy'])) {
               try again later.'."\n");
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
             die($txt); } }
+          // / Copy the files.
           copy($copySrc, $copyDst);
             $txt = ('OP-Act: '."Copied $CFile to $newCopyFilename".'.'."$cext on $Time".'.');
             echo nl2br ($txt."\n".'--------------------'."\n");
@@ -226,7 +227,7 @@ if (isset($_POST['rename'])) {
       if (file_exists($renSrc)) { 
         // / The following code checks the Cloud Location with ClamAV before copying, just in case.
         if ($VirusScan == '1') {
-          shell_exec('clamscan -r '.$renSrc.' | grep FOUND >> '.$ClamLogDir); 
+          shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$renSrc.' | grep FOUND >> '.$LogFile1)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
           if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
             $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -234,6 +235,7 @@ if (isset($_POST['rename'])) {
               try again later.'."\n");
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
             die($txt); } }
+          // / Rename the files.
           rename($renSrc, $renDst);
             $txt = ('OP-Act: '."Renamed $ReNFile to $renameFilename".'.'."$renext on $Time".'.');
             echo nl2br ($txt."\n".'--------------------'."\n");
@@ -360,14 +362,15 @@ if (!is_dir($filename)) {
     echo nl2br("ERROR!!! HRC2290, Unsupported File Format\n");
     die(); } }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
-      if ($VirusScan == '1') {
-        shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-        if (filesize($ClamLogDir >= 3)) {
-          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
-            transfer could not be completed at this time. Please check your file for viruses or
-            try again later.'."\n");
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
-          die($txt); } }
+    if ($VirusScan == '1') {
+      shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$archSrc.' | grep FOUND >> '.$LogFile1)));
+      $ClamLogFileDATA = file_get_contents($ClamLogDir);
+      if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
+        $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+          transfer could not be completed at this time. Please check your file for viruses or
+          try again later.'."\n");
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+        die($txt); } }
 // / Handle archiving of rar compatible files.
 if(in_array($UserExt, $rararr)) {
   copy ($filename, $CloudTmpDir.$TFile1); 
@@ -415,8 +418,7 @@ if (isset($_POST["dearchiveButton"])) {
       // / The following code sets variables for each archive being extracted.
       $File = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $File); 
       $File = str_replace(' ', '\ ', $File); 
-      $File = str_replace('//', '/', $File);   
-      $File = str_replace('//', '/', $File);      
+      $File = str_replace('//', '/', str_replace('//', '/', $File));   
       $File = ltrim($UDP.$File, '/'); 
       // / The following code sets and detects the USER directory and filename variables to be used for the operation.
       $dearchUserPath = str_replace('//', '/', $CloudDir.'/'.$File);

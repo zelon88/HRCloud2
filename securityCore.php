@@ -99,7 +99,12 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
 <div align="center"><h3>Scan Complete!</h3></div>
 <hr />
 <?php
-// / Set whether ClamAV will use multi-threaded capibility or not.
+// / "High-Performance" sets whether ClamAV will use multi-threaded capibility or not.
+// / "Thorough" sets whether ClamAV will scan an entire file or simply it's file-descriptor.
+// / "Persistence" will force HRCloud2 to scan for viruses normally under most conditions. However, 
+  // / if errors are generated or a scan does not complete sucessfully HRCloud2 will scan again 
+  // / using alternate methods (ignoring it's settings configuration). With Persistence enabled 
+  // / HRCloud2 will spare no expense to complete a sucessful scan on it's target.
 if ($HighPerformanceAV == 1) {
   $HighPerf = '-m '; }
 if (!isset($HighPerformanceAV) or $HighPerformanceAV == '0') {
@@ -108,6 +113,15 @@ if ($ThoroughAVAV == 1) {
   $Thorough = ''; }
 if (!isset($ThoroughAV) or $ThouroughAV == '0') {
   $Thorough = '-fdpass'; }
+if ($PersistentAV !== '1') {
+  $PersistenceEcho = 'Stopping.'; }
+if ($PersistentAV == '1') {
+  $PersistenceEcho = 'Continuing...'; 
+  $ThoroughRAW = $Thorough;
+  if ($ThoroughRAW == '') {
+    $Thorough = '-fdpass'; } 
+  if ($ThoroughRAW !== '-fdpass') {
+    $Thorough = ''; } }
 
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
 while (file_exists($LogFile0)) {
@@ -149,16 +163,7 @@ if (!isset($_POST['scanSelected']) && isset($_POST['Scan'])) {
   shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1)));
   sleep(1);
   if (!file_exists($LogFile1)) {
-    if ($PersistentAV !== '1') {
-      $PersistenceEcho = 'Stopping.'; }
-    if ($PersistentAV == '1') {
-      $PersistenceEcho = 'Continuing...'; 
-      $ThoroughRAW = $Thorough;
-      if ($ThoroughRAW == '') {
-        $Thorough = '-fdpass'; } 
-      if ($ThoroughRAW !== '-fdpass') {
-        $Thorough = ''; } }
-  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
+    shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (!file_exists($LogFile1)) {
     $txt = ('ERROR!!! HRC2SecCore136, Could not generate scan results on '.$Time.'! Continuing...');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -172,26 +177,17 @@ if (!isset($_POST['scanSelected']) && isset($_POST['Scan'])) {
         $WriteClamLogFile = file_put_contents($LogFile1, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); }
       if (strpos($LogDATA1, 'FOUND') == 'false') {
         $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } }
-    $LogTXT = @file_get_contents($LogFile1);
-    $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
-    $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
-    echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n"); }
-  ?><hr /><?php
+     $LogTXT = @file_get_contents($LogFile1);
+     $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
+     $WriteClamLogFile = file_put_contents($LogFile0, $LogTXT.PHP_EOL, FILE_APPEND);
+     echo nl2br('<a style="padding-left:15px;">Scanned Cloud Directory.</a>'."\n"); }
+   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
   $LogFileSize3 = 0;
   shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$InstLoc.' | grep FOUND >> '.$LogFile2)));
   sleep(1);
   if (!file_exists($LogFile1)) {
-    if ($PersistentAV !== '1') {
-      $PersistenceEcho = 'Stopping.'; }
-    if ($PersistentAV == '1') {
-      $PersistenceEcho = 'Continuing...'; 
-      $ThoroughRAW = $Thorough;
-      if ($ThoroughRAW == '') {
-        $Thorough = '-fdpass'; } 
-      if ($ThoroughRAW !== '-fdpass') {
-        $Thorough = ''; } }
-  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
+    shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (file_exists($LogFile2)) { 
     $LogFileSize4 = @filesize($LogFile2);
     $LogFileDATA2 = file($LogFile2);
@@ -267,7 +263,7 @@ if ($INFECTION_DETECTED !== 1) {
     <br>
     <button id='button' name='button' onclick="goBack()">Go Back</button>
     <br>
-    <?php } } 
+    <?php } }
 // / Delete temporary scan cache data.
 @unlink ($LogFile1);
 @unlink ($LogFile2);

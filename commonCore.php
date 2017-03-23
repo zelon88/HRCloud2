@@ -48,7 +48,8 @@ if (!file_exists($WPFile)) {
   if (file_exists($WPFile)) {
     echo nl2br('OP-Act: Sucessfully installed WordPress!'."\n"); }
   $VARDir = null;
-  unset($VARDir); }
+  unset($VARDir); 
+  die(); }
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server. And could not be installed.</body></html>'."\n"); }
 else {
