@@ -572,7 +572,7 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { convertSelected : convertSelected,
       userconvertfilename : $("#userconvertfilename").val(),
-      extension : $("#extension").val()},
+      extension : $("#extension").val(), width : 0, height : 0, rotate : 0},
     success: function(data) {
         window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
     }
