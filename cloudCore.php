@@ -431,15 +431,6 @@ if (isset($_POST["dearchiveButton"])) {
       $dearchTempDir = str_replace('.'.$ext, '', $dearchTempPath);
       $dearchTempFile = $dearchUserFile;
       $dearchTempFilename = $dearchUserFile.'.'.$ext;
-      // / Check the Cloud Location with ClamAV before dearchiving, just in case.
-      if ($VirusScan == '1') {
-        shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-        if (filesize($ClamLogDir >= 3)) {
-          $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
-            transfer could not be completed at this time. Please check your file for viruses or
-            try again later.'."\n");
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
-          die($txt); } } 
       // / The following code creates all of the temporary directories and file copies needed for the operation.
       // / The following code is performed when a dearchTempDir already exists.
       if (file_exists($dearchTempDir)) {
@@ -518,7 +509,18 @@ if (isset($_POST["dearchiveButton"])) {
             die($txt); } 
           if (file_exists($dearchTempPath)) { 
             $txt = ('OP-Act, Copied '.$dearchUserPath.' to '.$dearchTempPath.' on '.$Time.'.');
-            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+            // / Check the Cloud Location with ClamAV before dearchiving, just in case.
+            if ($VirusScan == '1') {
+              shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$dearchTempPath.' | grep FOUND >> '.$LogFile1)));
+              $ClamLogFileDATA = file_get_contents($ClamLogDir);
+              if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
+                $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+                  transfer could not be completed at this time. Please check your file for viruses or
+                  try again later.'."\n");
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
+                unlink($dearchTempPath);
+                die($txt); } } } }
         if (!is_dir($dearchUserDir)) {
           $txt = ('ERROR!!! HRC2419, Discrepency detected! The dearchive directory supplied is not a directory on '.$Time.'!');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
@@ -572,12 +574,6 @@ if (isset( $_POST['convertSelected'])) {
   if (!is_array($_POST['convertSelected'])) {
     $_POST['convertSelected'] = array($_POST['convertSelected']); } 
   $convertcount = 0;
-  // / The following code checks to see if Unoconv is in memory.
-  exec("pgrep soffice.bin", $ConversionEnginePID, $Status);
-  if ($Status == 1) {
-    exec('/usr/bin/unoconv -l &', $ConversionEnginePID1); 
-    $txt = ('OP-Act: Starting the Unoconv listener (PID '.$ConversionEnginePID[1].') on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   foreach ($_POST['convertSelected'] as $key => $file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
@@ -629,9 +625,19 @@ if (isset( $_POST['convertSelected'])) {
             // / converted file being placed into their Cloud drive. If your files do not immediately
             // / appear, simply refresh the page.
           if (in_array($oldExtension, $docarray)) {
+          // / The following code performs several compatibility checks before copying or converting anything.
+            if (!file_exists('/usr/bin/unoconv')) {
+              $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+            // / The following code checks to see if Unoconv is in memory.
+              exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
+              if ($DocEngineStatus == 1) {
+                exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
+                $txt = ('OP-Act: Starting the Unoconv listener (PID '.$DocEnginePID[1].') on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
             $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pathname\" on ".$Time.'.');
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-            shell_exec ("unoconv -o $newPathname -f $extension $pathname");
+            system("/usr/bin/unoconv -o $newPathname -f $extension $pathname");
             // / For some reason files take a moment to appear after being created with Unoconv.
             $stopper = 0;
             while(!file_exists($newPathname)) {
@@ -641,7 +647,7 @@ if (isset( $_POST['convertSelected'])) {
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
                 die($txt); } } }
           // / Code to convert and manipulate image files.
-          if (in_array($oldExtension,$imgarray) ) {
+          if (in_array($oldExtension, $imgarray)) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['width']);
             $_POST["rotate"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rotate']);
@@ -650,28 +656,28 @@ if (isset( $_POST['convertSelected'])) {
             if ($wxh == '0x0' or $wxh =='x0' or $wxh == '0x' or $wxh == '0' or $wxh == '00' or $wxh == '' or $wxh == ' ') {       
               $txt = ("OP-Act, Executing \"convert -background none $pathname $rotate $newPathname\" on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-              shell_exec ("convert -background none $pathname $rotate $newPathname"); } 
+              shell_exec("convert -background none $pathname $rotate $newPathname"); } 
             else {
               $txt = ("OP-Act, Executing \"convert -background none -resize $wxh $rotate $pathname $newPathname\" on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-              shell_exec ("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
+              shell_exec("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
           // / Code to convert and manipulate audio, video, and multi-media files.
-          if (in_array($oldExtension,$audioarray) ) { 
+          if (in_array($oldExtension, $audioarray)) { 
             $ext = (' -f ' . $extension);
               if (isset($_POST['bitrate'])) {
                 $bitrate = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['bitrate']); }
               if (!isset($_POST['bitrate'])) {
                 $bitrate = 'auto'; }                  
-            if ($bitrate = 'auto' ) {
+            if ($bitrate = 'auto') {
               $br = ' '; } 
             elseif ($bitrate != 'auto' ) {
               $br = (' -ab ' . $bitrate . ' '); } 
               $txt = ("OP-Act, Executing \"ffmpeg -i $pathname$ext$br$newPathname\" on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-            shell_exec ("ffmpeg -y -i $pathname$ext$br$newPathname"); } 
+            shell_exec("ffmpeg -y -i $pathname$ext$br$newPathname"); } 
           // / Code to detect and extract an archive, and then re-archive the extracted
             // / files using a different method.
-          if (in_array($oldExtension,$archarray) ) {
+          if (in_array($oldExtension, $archarray)) {
             $safedir1 = $CloudTmpDir;
             $safedirTEMP = $CloudTmpDir.$filename;
             $safedirTEMP2 = pathinfo($safedirTEMP, PATHINFO_EXTENSION);
@@ -680,20 +686,20 @@ if (isset( $_POST['convertSelected'])) {
             mkdir("$safedir2", 0755);
             $safedir3 = ($safedir2.'.7z');
             $safedir4 = ($safedir2.'.zip');
-          if(in_array($oldExtension, $arrayzipo) ) {
+          if(in_array($oldExtension, $arrayzipo)) {
             shell_exec("unzip $pathname -d $safedir2"); } 
-          if(in_array($oldExtension, $array7zo) ) {
+          if(in_array($oldExtension, $array7zo)) {
             shell_exec("7z e $pathname -o$safedir2"); } 
-          if(in_array($oldExtension, $array7zo2) ) {
+          if(in_array($oldExtension, $array7zo2)) {
             shell_exec("7z e $pathname -o$safedir2"); } 
-          if(in_array($oldExtension, $arrayraro) ) {
+          if(in_array($oldExtension, $arrayraro)) {
             shell_exec("unrar e $pathname $safedir2"); } 
-          if(in_array($oldExtension, $arraytaro) ) {
+          if(in_array($oldExtension, $arraytaro)) {
             shell_exec("7z e $pathname -o$safedir2"); } 
-            if (in_array($extension,$array7zo) ) {
+            if (in_array($extension,$array7zo)) {
               shell_exec("7z a -t$extension $safedir3 $safedir2");
               copy($safedir3, $newPathname); } 
-            if (file_exists($safedir3) ) {
+            if (file_exists($safedir3)) {
               @chmod($safedir3, 0755); 
               @unlink($safedir3);
               $delFiles = glob($safedir2 . '/*');
@@ -705,37 +711,37 @@ if (isset( $_POST['convertSelected'])) {
                   @chmod($delFile, 0755);
                   @rmdir($delFile); } }    
                   @rmdir($safedir2); }
-            elseif (in_array($extension,$arrayzipo) ) {
+            elseif (in_array($extension,$arrayzipo)) {
               shell_exec("zip -r -j $safedir4 $safedir2");
               @copy($safedir4, $newPathname); } 
-              if (file_exists($safedir4) ) {
+              if (file_exists($safedir4)) {
                 @chmod($safedir4, 0755); 
                 @unlink($safedir4);
                 $delFiles = glob($safedir2 . '/*');
                   foreach($delFiles as $delFile){
-                    if(is_file($delFile) ) {
+                    if(is_file($delFile)) {
                       @chmod($delFile, 0755);  
                       @unlink($delFile); }
-                    elseif(is_dir($delFile) ) {
+                    elseif(is_dir($delFile)) {
                       @chmod($delFile, 0755);
                       @rmdir($delFile); } }    
                       @rmdir($safedir2); }
-                    elseif (in_array($extension, $arraytaro) ) {
-                      shell_exec ("tar czf $newPathname $safedir2");
+                    elseif (in_array($extension, $arraytaro)) {
+                      shell_exec("tar czf $newPathname $safedir2");
                       $delFiles = glob($safedir2 . '/*');
                     foreach($delFiles as $delFile){
-                      if(is_file($delFile) ) {
+                      if(is_file($delFile)) {
                         @chmod($delFile, 0755);  
                         @unlink($delFile); }
-                      elseif(is_dir($delFile) ) {
+                      elseif(is_dir($delFile)) {
                         @chmod($delFile, 0755);
                         @rmdir($delFile); } }     
                         @rmdir($safedir2); } 
-                      elseif(in_array($extension, $arrayraro) ) {
+                      elseif(in_array($extension, $arrayraro)) {
                         shell_exec("rar a -ep ".$newPathname.' '.$safedir2);
                         $delFiles = glob($safedir2 . '/*');
                           foreach($delFiles as $delFile){
-                            if(is_file($delFile) ) {
+                            if(is_file($delFile)) {
                               @chmod($delFile, 0755);  
                               unlink($delFile); }
                             elseif(is_dir($delFile) ) {
@@ -807,7 +813,7 @@ if (isset($_POST['pdfworkSelected'])) {
     
             $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
               if ($_POST['method1'] == '0' or $_POST['method1'] == '') {
-                shell_exec ("pdftotext -layout $pathname $pathnameTEMP"); 
+                shell_exec("pdftotext -layout $pathname $pathnameTEMP"); 
                 $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 0.'); 
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
                 if ((!file_exists($pathnameTEMP) or filesize($pathnameTEMP) < '5')) { 
@@ -823,7 +829,7 @@ if (isset($_POST['pdfworkSelected'])) {
               
               if ($_POST['method1'] == '1') {
                 $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
-                shell_exec ("convert $pathname $pathnameTEMP1");
+                shell_exec("convert $pathname $pathnameTEMP1");
                 if (!file_exists($pathnameTEMP1)) {
                   $PagedFilesArrRAW = scandir($CloudTmpDir);
                   foreach ($PagedFilesArrRAW as $PagedFile) {
@@ -844,7 +850,7 @@ if (isset($_POST['pdfworkSelected'])) {
                       $pathnameTEMPTesseract = str_replace('.'.$oldExtension, '-'.$PageNumber, $pathname); 
                       $pathnameTEMP0 = str_replace('-'.$PageNumber.'.txt', '.txt', $pathnameTEMP); 
                       echo nl2br("\n".$pathnameTEMP."\n");
-                      shell_exec ("tesseract $pathnameTEMP1 $pathnameTEMPTesseract");
+                      shell_exec("tesseract $pathnameTEMP1 $pathnameTEMPTesseract");
                       $READPAGEDATA = file_get_contents($pathnameTEMP);
                       $WRITEDOCUMENT = file_put_contents($pathnameTEMP0, $READPAGEDATA.PHP_EOL, FILE_APPEND);
                       $multiple = '1'; 
@@ -857,14 +863,14 @@ if (isset($_POST['pdfworkSelected'])) {
                         echo ($txt."\n".'--------------------'."\n"); } } } }
                     if ($multiple !== '1') {
                     $pathnameTEMPTesseract = str_replace('.'.$txt, '', $pathnameTEMP);
-                    shell_exec ("tesseract $pathnameTEMP1 $pathnameTEMPTesseract");
+                    shell_exec("tesseract $pathnameTEMP1 $pathnameTEMPTesseract");
                     $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 1.'); 
                     echo ($txt."\n".'--------------------'."\n");    
                     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } } 
             // / Code to convert a document to a PDF.
             if (in_array($oldExtension, $doc1array)) {                
               if (in_array($extension, $pdf1array)) {
-                shell_exec ("unoconv -o $newPathname -f pdf $pathname"); 
+                system("/usr/bin/unoconv -o $newPathname -f pdf $pathname"); 
                 $txt = ('OP-Act: '."Converted $pathname to $newPathname on $Time".' using method 2.'); 
                 echo ('OP-Act: '."Performed PDFWork on $Time".' using method 2.'."\n".'--------------------'."\n"); 
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
@@ -873,32 +879,32 @@ if (isset($_POST['pdfworkSelected'])) {
             $pathnameTEMP = str_replace('.'.$oldExtension, '.txt' , $pathname);
             $pathnameTEMPTesseract = str_replace('.'.$oldExtension, '', $pathname);
             $imgmethod = '1';
-            shell_exec ("tesseract $pathname $pathnameTEMPTesseract"); 
+            shell_exec("tesseract $pathname $pathnameTEMPTesseract"); 
             if (!file_exists($pathnameTEMP)) {
               $imgmethod = '2';
               $pathnameTEMP3 = str_replace('.'.$oldExtension, '.pdf' , $pathname);
-              shell_exec ("unoconv -o $pathnameTEMP3 -f pdf $pathname");
-              shell_exec ("pdftotext -layout $pathnameTEMP3 $pathnameTEMP"); } 
+              system("/usr/bin/unoconv -o $pathnameTEMP3 -f pdf $pathname");
+              shell_exec("pdftotext -layout $pathnameTEMP3 $pathnameTEMP"); } 
             if (file_exists($pathnameTEMP)) {
               $txt = ('OP-Act: '."Converted $pathname to $pathnameTEMP1 on $Time".' using method '.$imgmethod.'.'); 
-              echo ('OP-Act: '."Performed PDFWork on $Time".' using method '.$imgmethod.'.'."\n".'--------------------'."\n");
+              echo('OP-Act: '."Performed PDFWork on $Time".' using method '.$imgmethod.'.'."\n".'--------------------'."\n");
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
             if (!file_exists($pathnameTEMP)) {
               $txt = ('ERROR!!! HRC2667, '."An internal error occured converting $pathname to $pathnameTEMP1 on $Time".' using method '.$imgmethod.'.'); 
-              echo ('ERROR!!! HRC2667, '."An internal error occured converting your file on $Time".' using method '.$imgmethod.'.'."\n".'--------------------'."\n");
+              echo('ERROR!!! HRC2667, '."An internal error occured converting your file on $Time".' using method '.$imgmethod.'.'."\n".'--------------------'."\n");
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
           // / If the output file is a txt file we leave it as-is.
         if (!file_exists($newPathname)) {                    
           if ($extension == 'txt') { 
             if (file_exists($pathnameTEMP)) {
-              rename ($pathnameTEMP, $newPathname); 
+              rename($pathnameTEMP, $newPathname); 
               $txt = ('OP-Act: HRC2613, '."Renamed $pathnameTEMP to $pathname on $Time".'.'); 
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
           // / If the output file is not a txt file we convert it with Unoconv.
           if ($extension !== 'txt') {
-            shell_exec ("unoconv -o $newPathname -f $extension $pathnameTEMP");
+            system("/usr/bin/unoconv -o $newPathname -f $extension $pathnameTEMP");
             $txt = ('OP-Act: '."Converted $pathnameTEMP to $newPathname on $Time".'.'); 
-            echo nl2br ('OP-Act: '."Performing finishing touches on $Time".'.');
+            echo nl2br('OP-Act: '."Performing finishing touches on $Time".'.');
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
         // / Error handler for if the output file does not exist.
         if (!file_exists($newPathname)) {
@@ -1064,7 +1070,7 @@ if (isset($_POST['streamSelected'])) {
           $newPathname = str_replace('//', '/', $playlistDir.'/'.$filename.'.ogg');
           $txt = ("OP-Act, Executing ffmpeg -i $pathname$ext$br$newPathname on ".$Time.'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-          shell_exec ("ffmpeg -i $pathname$ext$br$newPathname"); }  
+          shell_exec("ffmpeg -i $pathname$ext$br$newPathname"); }  
         if (in_array($oldExtension, $PLAudioOGGArr)) {
           copy ($oldPathname, str_replace('//', '/', $playlistDir.'/'.$StreamFile)); } } }
 // / -----------------------------------------------------------------------------------
