@@ -110,6 +110,16 @@ Malware Malspam.1	DekJanv.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961a
 Malware Malspam.2	contract_54262.doc		d84b585409fb4f538cde666cefc7980ba3a927dc292dfb391bdcd8765d4ce0c8
 Malware Malspam.3	CherryFramework/pm.dll
 Malware Malspam.4	zapoy/gate.php
+Malware Malspam.5	24c887f5dd.html
+Malware Malspam.6	42e955644c.html
+Malware Malspam.7	20e18f23d2.html
+Malware Malspam.8	42e955644c.html
+Malware Malspam.9	24c887f5dd.html
+Malware Malspam.10	3dbee7b9f0.html
+Malware Malspam.11	20e18f23d2.html
+Malware Malspam.12	Unedrcovertoolz0.exe		631a104bf3af15a447c19bf57a2144956c435037b0dcb035a27dbacddfdcb75b
+Malware Malspam.13			d1bef41cd683e345052aca32cc43941dd529f16994233de984a2941c82f992a2
+Malware Malspam.14	Completa.exe		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
 Malware SuperMulti	masm32
 Malware SuperMulti	Gate.php
 Malware SuperMulti	gate.php
@@ -274,7 +284,17 @@ Ransomware	RigEK.11	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf031136
 Ransomware RigEK.12	krp3cmg
 Ransomware RigEK.13	381m6bv285.exe
 Ransomware RigEK.Cerber	radF22EA.tmp.exe		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
-Ransomware RigEK.Cerber.1	Rig-EK.swf		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
+Ransomware RigEK.Cerber.1	Rig-EK.swf
+Ransomware	Cerber.1		e9e8510d4ae6d8b2498079ec3100452dc78dbec24b10bf0fcaac84538f5d412a
+Ransomware	Cerber.2		748a3c119026f2579867763c33f6fd16375e8f62a38be580654c726709484b94
+Ransomware	Cerber.3		8745da2b43f07167e6f2c2eb84a646c0feb236671f206047fc2cdc1081b3f982
+Ransomware	Cerber.4		b36bb18faa7adea81436651e6062df0200dca5a578842dc5d6ea03377c4775e9
+Ransomware	Cerber.5		aeab730e99827a820e318f43a57463f3dcdcb5182b4e41e71a4d5f436623e792
+Ransomware	Cerber.6		4fb39a97721f066af6a551274550461874138683977bf5e52acd937ea19bfc0c
+Ransomware Cerber.7	19206_ZIP.zip	b8658a91138b7be842293612c1c1d9dad873ed4638f84262cb58fcee60eab8a4
+Ransomware Cerber.8	19206.doc		03aa2410d07ea49dd6f05f2e0b0815ad400a83725ac88281b5f85ee7a7314bc7
+Ransomware	Cerber.9		ccd2a5c27c92ed489287d7c9d48c42c8c0c12902ad598ac51458e388e22c4385
+Ransomware Cerber.10	4tjgwc3p.exe		1c693f3448d0bd9f300f9f8d752f50db352aea7a8c1961f369291d8e6010fd0d
 Ransomware	CryptXXX	a89f7c458d358615f2d3f0642141febb	fdbeed00cacca229607aa70ee3538c92d57bab7b29cbce0f1c05c1f84c68aa20
 Ransomware	CrytXXX.1	41706d9153eef3a2f5795e58a334b00fa3f40e8d	d9888e38a2f813139331dbac1f07fede19c784a4c2212cff8c17c83a40a2f84d
 Ransomware	CryptXXX.2	 	275ebe2a72951737a3502d00f967c87d4f2fba03c4828d27270ab0f88a4d8f65
@@ -1063,6 +1083,14 @@ Known Spyware Host	hsms06.com
 Known Spyware Host	rjmetrics.com
 Known Spyware Host Malspam	46.105.218.106
 Known Spyware Host Malspam.1	185.75.46.13
+Known Spyware Host Malspam.2	104.27.188.52
+Known Spyware Host Malspam.3	54.192.130.188
+Known Spyware Host Malspam.4	?xml-andre.ffranco@uol.com.br%0D
+Known Spyware Host Malspam.5	Unedrcovertoolz0.zip
+Known Spyware Host Malspam.6	sempre/notify.php
+Known Spyware Host Malspam.7	com=0D
+Known Spyware Host Malspam.8	pdf-douglassantos@detran.es.gov.br=0D
+Known Spyware Host Malspam.9	xml-douglassantos@detran.es.gov.br=0D
 Known Ransomware Host	slater.chat.ru
 Known Ransomware Host	hundeschulegoerg.de
 Known Ransomware Host	capitalsend.info
@@ -1222,6 +1250,11 @@ Known Ransomware Host: RigV.Cerber	betongstudio.no
 Known Ransomware Host: RigV.Cerber.1	109.234.35.244
 Known Ransomware Host: RigV.Cerber.2	84.200.4.70
 Known Ransomware Host: RigV.Cerber.3	109.234.35.244
+Known Ransomware Host: Cerber.1	15.44.20.0
+Known Ransomware Host: Cerber.2	randoz-pandom.wang
+Known Ransomware Host: Cerber.3	91.239.24.0
+Known Ransomware Host: Cerber.4	91.239.25.255
+Known Ransomware Host: Cerber.5	91.134.123.56
 Known Ransomware Host: Bedep	82.146.62.52
 Known Ransomware Host: Bedep.1	64.20.35.186
 Known Ransomware Host: Bedep.2	50.31.14.17
