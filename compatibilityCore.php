@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.4.5.5
+THIS VERSION : v1.4.5.6
 WRITTEN ON : 3/24/2017
 */
 
@@ -55,6 +55,7 @@ $AutoDownloadPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['Aut
 $AutoInstallPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall']); 
 $AutoCleanPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoClean']); 
 $CheckCompatPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility']); 
+$CheckPermsPOST = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['CheckPermissions']); 
 $ResourceDir = $InstLoc.'/Resources/TEMP';
 $ResourceDir1 = $ResourceDir.'/HRCloud2-master';
 $UpdatedZIP1 = $ResourceDir.'/HRC2UPDATE1.zip';
@@ -261,7 +262,8 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   require ($InstLoc.'/versionInfo.php'); 
   if ($Version1 !== $Version) {
     $txt = ('ERROR!!! HRC2CompatCore94, Version discrepency detected after unpacking the installation image on '.$Time.'!'."\n".
-      '    Important Note: Manual install reccomended! If problem persists, use a terminal window or file manager to update.'); 
+      '    Important Note: Manual install reccomended! Try using "Clean Update" and "Check Compatibility." If problem persists, 
+      check permissions to all HRC2 directories and use a terminal window or file manager to update.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
   if ($Version1 == $Version) {
@@ -543,6 +545,35 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
       $txt = ('OP-Act: This server is running HRCloud2 '.$Version.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code attempts to correct file permissions for HRCloud2 controlled directories.
+if ($CheckPermsPOST == '1' or $CheckPermsPOST == 'true'  or $CheckPermsPOST == 'Perms Check') {
+  @system("/bin/chmod -R 0755 $CloudLoc");
+  $txt = 'Op-Act: The current permission level of the CloudLoc is "'.substr(sprintf('%o', fileperms($CloudLoc)), -4).'".' ;
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  @system("/bin/chmod -R 0755 $InstLoc");
+  $txt = 'Op-Act: The current permission level of the InstLoc is "'.substr(sprintf('%o', fileperms($InstLoc)), -4).'".' ;
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  @system("/bin/chgrp -R $user $CloudLoc");
+  $txt = 'Op-Act: The current user-group of the InstLoc is "'.posix_getpwuid(filegroup($InstLoc)).'".' ;
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   
+  @system("/bin/chgrp -R $user $InstLoc");
+  $txt = 'Op-Act: The current user-group of the InstLoc is "'.posix_getpwuid(filegroup($InstLoc)).'".' ;
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  @system("/bin/chown -R $user $CloudLoc");
+  $txt = 'Op-Act: The current owner of the CloudLoc is "'.posix_getpwuid(fileowner($CloudLoc)).'".' ;
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  @system("/bin/chown -R $user $InstLoc"); 
+  $txt = 'Op-Act: The current owner of the InstLoc is "'.posix_getpwuid(fileowner($InstLoc)).'".' ;
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
