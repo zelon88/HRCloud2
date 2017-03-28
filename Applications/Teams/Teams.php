@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.5 (3-24-2017 12:30)
+App Version: 0.6 (3-24-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -13,11 +13,11 @@ HRCLOUD2-PLUGIN-END
 //*/
 
 ?>
-<script src="Scripts/sorttable.js"></script>
+<script src="_SCRIPTS/sorttable.js"></script>
 <script type="text/javascript">
-// / Javascript to clear the newNote text input field onclick.
+// / Javascript to clear the messenger text input field onclick.
     function Clear() {    
-      document.getElementById("messangeInput").value= ""; }
+      document.getElementById("messengerInput").value= ""; }
 </script>
 <?php
 // / The follwoing code checks if the sanitizeCore.php file exists and 
@@ -54,58 +54,51 @@ if ($currentUserTeams == '') {
     or <a href=\'/?newTeamGUI=1\'>Create A New Team.</a>'; }
 
 // / The following code represents the graphical user-interface (GUI).
-?>
-<div id='TeamsAPP' name='TeamsAPP' align='center'><h3>Teams</h3><hr />
+if ($teamsHeaderDivNeeded == 'true') {
+  echo nl2br('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\'><h3>Teams</h3><hr /></div>'); }
+
+if ($teamsGreetingDivNeeded == 'true') {
+  echo nl2br('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
+  echo nl2br('<p>'.$emptyTeamsECHO.'</p></div>'); }
+
+if ($newTeamDivNeeded == 'true') {
+  echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
+  echo nl2br('<input type="text" id="newTeam" name="newTeam" value="'.$teamName.'" onclick="Clear();">'."\n");
+  echo ('<textarea id="teamDescription" name="teamDescription" cols="40" rows="5">'.$noteData.'</textarea>'."\n");
+  echo nl2br('<select id="newTeamVisibility" name="newTeamVisibility">
+    <option value="0">Public</option>
+    <option value="1">Private</option>
+    </select>'."\n");
+  echo nl2br("\n".'<input type="submit" id="newTeamButton" name="newTeamButton" value="New Team"></form></div>'); }
+
+if ($myTeamsDivNeeded == 'true') {
+  echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
+  echo nl2br("\n".'<div id="myTeamsList" name="myTeamsList" align="center"><strong>My Teams</strong><hr /></div>');
+  echo nl2br('<div align="center">
+    <table class="sortable">
+    <thead><tr>
+    <th>Team</th>
+    <th>Delete</th>
+    </tr></thead><tbody>'); 
+  $myTeamCounter = 0;
+  foreach ($teamList as $myTeam) {
+    if ($myTeam == '.' or $myTeam == '..' or strpos($myTeam, '.php') == 'false' 
+      or $myTeam == '' or $myTeam == '.php') continue; 
+    $teamCounter++;
+    $myTeamFile = $TeamsDir.$myTeam; 
+    $myTeamEcho = str_replace('php', '', $myTeam);
+    $myTeamTime = date("F d Y H:i:s.",filemtime($myTeamFile));
+    echo nl2br ('<tr><td><strong>'.$myTeamCounter.'. </strong><a href="Teams.php?viewTeam='.$myTeamEcho.'">'.$myTeamEcho.'</a></td>');
+    echo nl2br('<td><a href="Notes.php?deleteNote='.$myTeamEcho.'"><img id="delete'.$myTeamCounter.'" name="'.$myTeam.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
+    echo nl2br('</tr><tbody></table></table>'); } } ?>
+
 <?php
-if (!isset($newTeamGUI)) {
- }
-?>
-<h2><?php echo $teamsGreetings[$greetingKey]; ?></h2>
-<br />
-<p><?php echo nl2br($emptyTeamsECHO); ?><p>
-
-
-
-
-<?php
-
-// / The following code is performed whenever a user selects to delete a Note.
-if (isset($_GET['deleteNote'])) {
-  $noteToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
-  $noteToDelete = $noteToDelete;
-  unlink($NotesDir.$noteToDelete.'.txt'); 
-  $txt = ('OP-Act: Deleting Note '.$noteToDelete.' on '.$Time.'!');
-  echo 'Deleted <i>'.$noteToDelete.'</i>'; 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-
-// / If the Notes directory exists we check that the API POST variables were set.  
-if (is_dir($NotesDir)) {
-  // / If the input POSTS are set, we turn them into a note.
-  if (isset($_POST['newNote'])) {
-    $noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['newNote']);
-    if (!isset($_POST['note'])) {
-      $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-      die ($txt); } 
-    $note = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['note']); 
-    $NoteFile = $NotesDir.$noteName.'.txt'; 
-    $MAKENoteFile = file_put_contents($NoteFile, $note.PHP_EOL); 
-    $txt = ('OP-Act: Note '.$noteName.' created sucessfully on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-    echo nl2br('Created <i>'.$noteName.'</i>'); } 
-  // / If the input POSTS are NOT set, we present the user with a New Note form.
-    echo nl2br('<form method="post" action="Notes.php" type="multipart/form-data">'."\n");
-    echo nl2br('<input type="text" id="newNote" name="newNote" value="'.$noteTitle.'" onclick="Clear();">'."\n");
-    echo ('<textarea id="note" name="note" cols="40" rows="5">'.$noteData.'</textarea>');
-    echo nl2br("\n".'<input type="submit" value="'.$noteButtonEcho.'"></form>'); 
-     }
-?>
-<br>
-</div><div id="notesList" name="notesList" align="center"><strong>My Notes</strong><hr /></div>
+/*
+</div><div id="TeamsList" name="TeamsList" align="center"><strong>Teams</strong><hr /></div>
 <div align="center">
 <table class="sortable">
 <thead><tr>
-<th>Note</th>
+<th>Team</th>
 <th>Edit</th>
 <th>Delete</th>
 <th>Last Modified</th>
@@ -126,5 +119,6 @@ foreach ($notesList2 as $note) {
   echo nl2br('<td><a><i>'.$noteTime.'</i></a></td></tr>'); } ?>
 <tbody>
 </table>
-</div><?php
+</div>
+*/
 
