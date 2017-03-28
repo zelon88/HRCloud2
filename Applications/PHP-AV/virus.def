@@ -105,7 +105,7 @@ Malware Pony.5	ponyforx
 Malware Pony.6	PonyBuilder.exe
 Malware Pony.7	Pony.dll
 Malware Pony.8	pony.dll
-Malware Malspam	Malspam BNC967.tmp.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
+Malware Malspam	BNC967.tmp.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
 Malware Malspam.1	DekJanv.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
 Malware Malspam.2	contract_54262.doc		d84b585409fb4f538cde666cefc7980ba3a927dc292dfb391bdcd8765d4ce0c8
 Malware Malspam.3	CherryFramework/pm.dll
@@ -120,6 +120,42 @@ Malware Malspam.11	20e18f23d2.html
 Malware Malspam.12	Unedrcovertoolz0.exe		631a104bf3af15a447c19bf57a2144956c435037b0dcb035a27dbacddfdcb75b
 Malware Malspam.13			d1bef41cd683e345052aca32cc43941dd529f16994233de984a2941c82f992a2
 Malware Malspam.14	Completa.exe		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
+Malware Malspam.15	209ed48e0b.html		e5dbc3c109c84ac06b0c487032cfca6cf84179f683bc058376ad0cd2cc78b5c2
+Malware Malspam.16	61dce701ce.html		4e9d3523997d3a6b25bb5c0732f3a47d993710caaf3090d721ea653148befac0
+Malware Malspam.17	39b82e3c4a.html		f50996eb0968d0fbdcd5b465a142e735a799081c4354fbce235fbc1f08ae304e
+Malware Malspam.18	a6bc762d20.html		d5bdfa631d94f45efaf017c323e562cf2e2c235307069eb855e4f68593a5f81b
+Malware Malspam.19	5a0ae501f1.html		d63403e44c8589682262808c1b309492f832975118d7b5eda99f57dec7e040d1
+Malware Malspam.20	23c5d28ce6.html		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
+Malware Malspam.21	8882a75410.html		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
+Malware Malspam.22	a6bc762d20.html		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
+Malware Malspam.23	3dbee7b9f0.html		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
+Malware Malspam.24	20e18f23d2.html		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
+Malware Malspam.25	gooolgeremf.top		4e9d3523997d3a6b25bb5c0732f3a47d993710caaf3090d721ea653148befac0
+Malware Malspam.26	voperforseanx.top		abb20f55faf4a7db51d19466ad4a27d4b13c8bdfe376ccce3cf61137501dd6d8
+Malware Malspam.27	chromebewfk.top		cda35229006a6555e4cf439130b1a5b97d41e2bab3726658dee97c6da8d6de97
+Malware Malspam.28	www.chromebewfk.top		4e9d3523997d3a6b25bb5c0732f3a47d993710caaf3090d721ea653148befac0
+Malware Malspam.29	user.php?f=2.gif		a8a50eac46c95dd806c1e0a8d416636b7c9ada51ce5040d09845c0bd002b8f52
+Malware Malspam.30	site/chrome_update.html		1b1ea158a58da8cffbaa7b7cc26b5fb5bc5451016f0c8aa5fdf44c9db3ba9283
+Malware Malspam.31	094462420.zip		198814e7e979098a2992b10479b2a1551fb6030ce8124411dbfeb602a2e6f1c8
+Malware Malspam.32	0950250846227.zip		c9c3cb47cd132ade95a5fb99b53a0f32da21e2c1e69890fc8201d179026aa146
+Malware Malspam.33	1982540972482.zip		b31975437de87e43f5b1546f8f787ee95ed8353181ad3306a2c932dbe47cf5c6
+Malware Malspam.34			d6fecbe3efbe2a10fa517600a07f0b0a2938c8f12e283b39376069f7da9a08f3
+Malware Malspam.35	259332453915547.zip		dc473f4c12899141567b60bc352d4884e6a7c66bafc9b6000d65dc6662761d22
+Malware Malspam.36	31783714.zip		fc9674dfadaff53a759316e0e3959bfd74d44f7158d2b0b996d677ce2feb22c5
+Malware Malspam.37	340629280871042.zip		1deb727ed389a37a83a04ca1fa6c5350dbba840bfc521b7abcce905c7a1f3d2c
+Malware Malspam.38	409570.zip		c20a3dfdf51ca43b2ea6cf6065a473b49c41ce9aea7a5bba4c3a70fd3aabc7dd
+Malware Malspam.39	596511736539557.zip		b45eed71cb31ca1c04433874a0ca471364353ed7193d963c2541b4ee66700a1b
+Malware Malspam.40			d896e8d6516b6fe3f2d36bdd2abc3af1db222dfdcffc0a37cd1ea3c46d68f27e
+Malware Malspam.41	69765.zip
+Malware Malspam.42	87716771007.zip
+Malware Malspam.43	15639.js
+Malware Malspam.44	16184.js
+Malware Malspam.45	18957.js
+Malware Malspam.46	23177.js
+Malware Malspam.47	27945.js
+Malware Malspam.48	27961.js
+Malware Malspam.49	31702.js
+Malware Malspam.50	7374.js
 Malware SuperMulti	masm32
 Malware SuperMulti	Gate.php
 Malware SuperMulti	gate.php
