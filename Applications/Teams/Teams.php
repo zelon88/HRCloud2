@@ -14,11 +14,8 @@ HRCLOUD2-PLUGIN-END
 
 ?>
 <script src="_SCRIPTS/sorttable.js"></script>
-<script type="text/javascript">
-// / Javascript to clear the messenger text input field onclick.
-    function Clear() {    
-      document.getElementById("messengerInput").value= ""; }
-</script>
+<script src="_SCRIPTS/clearField1.js"></script>
+<script src="_SCRIPTS/common.js"></script>
 <?php
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
@@ -49,23 +46,22 @@ if ($teamsHeaderDivNeeded == 'true') {
   echo ('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\'><h3>Teams</h3><hr /></div>'); }
 
 if ($teamsGreetingDivNeeded == 'true') {
-  echo ('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
-  echo ('<p>'.$emptyTeamsECHO.'</p></div>'); }
-
-if (count($myTeamsList) > 1) {
-  $emptyTeamsECHO = 'It looks like you aren\'t a part of any Teams yet! Let\'s fix that...'."\n\n".'Check out some of the Teams below,
-    or <a href=\'/?newTeamGUI=1\'>Create A New Team.</a>'; 
-  $myTeamsDivNeeded = 'false'; }
+  $emptyTeamsECHO = '<p>It looks like you aren\'t a part of any Teams yet! Let\'s fix that...</p>'."\n\n".'<p>Check out some of the Teams below,
+    or <a>Create A Team.</a></p>'; 
+  $myTeamsDivNeeded = 'false'; 
+  echo ('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv" align="center"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
+    if (count($myTeamsList) < 1) {
+  echo ('<div style="width:90%; float:center;">'.$emptyTeamsECHO.'</div></div>'); } }
 
 if ($newTeamDivNeeded == 'true') {
-  echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
-  echo nl2br('<input type="text" id="newTeam" name="newTeam" value="'.$newTeamNameEcho.'" onclick="Clear();">'."\n");
-  echo ('<textarea id="teamDescription" name="teamDescription" cols="40" rows="5">'.$newTeamDescriptionEcho.'</textarea>'."\n");
+  echo ('<div id="newTeamsDiv" name="newTeamsDiv" align="center"><form method="post" action="Teams.php" type="multipart/form-data">');
+  echo nl2br('<input type="text" id="newTeam" name="newTeam" value="'.$newTeamNameEcho.'" onclick="Clear1();">'."\n");
+  echo nl2br('<textarea id="teamDescription" name="teamDescription" cols="40" rows="5" onclick="Clear2();">'.$newTeamDescriptionEcho.'</textarea>'."\n");
   echo nl2br('<select id="newTeamVisibility" name="newTeamVisibility">
     <option value="0">Public</option>
     <option value="1">Private</option>
     </select>'."\n");
-  echo nl2br("\n".'<input type="submit" id="newTeamButton" name="newTeamButton" value="New Team"></form></div>'); }
+  echo nl2br('<input type="submit" id="newTeamButton" name="newTeamButton" value="New Team"></form></div>'."\n"); }
 
 if ($myTeamsDivNeeded == 'true') {
   echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
