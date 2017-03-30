@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.6 (3-24-2017 12:30)
+App Version: 0.65 (3-24-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -44,27 +44,23 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsC
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsCore.php'); }
 
-// / The following code sets variables for the GUI now that the core and cache files have loaded.
-if ($currentUserTeams == '') {
-  $teamsGreetings = array('Hi There!', 'Hello!');
-  $teamsGreetingsInternational = array('Hi There!', 'Hello!', 'Bonjour!', 'Hola!', 'Namaste!', 'Salutations!', 'Konnichiwa!', 'Bienvenidos!', 'Guten Tag!');
-  if ($settingsInternationalGreetings = '1' or $settingsInternationalGreetings == 1) $teamsGreetings = $teamsGreetingsInternational;
-  $greetingKey = array_rand($teamsGreetings);
-  $emptyTeamsECHO = 'It looks like you aren\'t a part of any Teams yet! Let\'s fix that...'."\n\n".'Check out some of the Teams below,
-    or <a href=\'/?newTeamGUI=1\'>Create A New Team.</a>'; }
-
 // / The following code represents the graphical user-interface (GUI).
 if ($teamsHeaderDivNeeded == 'true') {
-  echo nl2br('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\'><h3>Teams</h3><hr /></div>'); }
+  echo ('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\'><h3>Teams</h3><hr /></div>'); }
 
 if ($teamsGreetingDivNeeded == 'true') {
-  echo nl2br('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
-  echo nl2br('<p>'.$emptyTeamsECHO.'</p></div>'); }
+  echo ('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
+  echo ('<p>'.$emptyTeamsECHO.'</p></div>'); }
+
+if (count($myTeamsList) > 1) {
+  $emptyTeamsECHO = 'It looks like you aren\'t a part of any Teams yet! Let\'s fix that...'."\n\n".'Check out some of the Teams below,
+    or <a href=\'/?newTeamGUI=1\'>Create A New Team.</a>'; 
+  $myTeamsDivNeeded = 'false'; }
 
 if ($newTeamDivNeeded == 'true') {
   echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
-  echo nl2br('<input type="text" id="newTeam" name="newTeam" value="'.$teamName.'" onclick="Clear();">'."\n");
-  echo ('<textarea id="teamDescription" name="teamDescription" cols="40" rows="5">'.$noteData.'</textarea>'."\n");
+  echo nl2br('<input type="text" id="newTeam" name="newTeam" value="'.$newTeamNameEcho.'" onclick="Clear();">'."\n");
+  echo ('<textarea id="teamDescription" name="teamDescription" cols="40" rows="5">'.$newTeamDescriptionEcho.'</textarea>'."\n");
   echo nl2br('<select id="newTeamVisibility" name="newTeamVisibility">
     <option value="0">Public</option>
     <option value="1">Private</option>
@@ -74,23 +70,25 @@ if ($newTeamDivNeeded == 'true') {
 if ($myTeamsDivNeeded == 'true') {
   echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
   echo nl2br("\n".'<div id="myTeamsList" name="myTeamsList" align="center"><strong>My Teams</strong><hr /></div>');
-  echo nl2br('<div align="center">
+  echo ('<div align="center">
     <table class="sortable">
     <thead><tr>
     <th>Team</th>
     <th>Delete</th>
     </tr></thead><tbody>'); 
   $myTeamCounter = 0;
-  foreach ($teamList as $myTeam) {
-    if ($myTeam == '.' or $myTeam == '..' or strpos($myTeam, '.php') == 'false' 
-      or $myTeam == '' or $myTeam == '.php') continue; 
+  foreach ($myTeamList as $myTeam) {
+    if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//') continue; 
     $teamCounter++;
-    $myTeamFile = $TeamsDir.$myTeam; 
-    $myTeamEcho = str_replace('php', '', $myTeam);
+    $myTeamFile = $TeamsDir.'/'.$myTeam.'/'.$myTeam.'.php';
+    include($myTeamFile);
+    $myTeamEcho = $TEAM_NAME;
     $myTeamTime = date("F d Y H:i:s.",filemtime($myTeamFile));
-    echo nl2br ('<tr><td><strong>'.$myTeamCounter.'. </strong><a href="Teams.php?viewTeam='.$myTeamEcho.'">'.$myTeamEcho.'</a></td>');
-    echo nl2br('<td><a href="Notes.php?deleteNote='.$myTeamEcho.'"><img id="delete'.$myTeamCounter.'" name="'.$myTeam.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
-    echo nl2br('</tr><tbody></table></table>'); } } ?>
+    echo ('<tr><td><strong>'.$myTeamCounter.'. </strong><a href="Teams.php?viewTeam='.$myTeam.'">'.$myTeamEcho.'</a></td>');
+    echo ('<td><a href="Teams.php?deleteTeam='.$myTeam.'"><img id="delete'.$myTeamCounter.'" name="'.$myTeam.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
+    echo ('</tr><tbody></table></table>'); } } ?>
+
+
 
 <?php
 /*
