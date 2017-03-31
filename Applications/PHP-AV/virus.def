@@ -1,4 +1,12 @@
 Malware Hanictor	hancitor.dll	f472c00abef3324460989972362458e1	420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Hanictor.1	42239.exe		9041418337322cbdf1f6105d4ade74110b25675f00c72b0728f66faa56a73f05
+Malware Hanictor.2	BN53F9.tmp		63733fe624b6e2ca7941a30e33f2e664a973d91c5a28abe6204aab4a0062d917
+Malware Hanictor.3	Ticket_shaun.michaels6.doc		7e059267c64b5740672872c4f860f685a9eafbc605319dbb65b45eea7359d338
+Malware Hanictor.4	epposi.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Hanictor.5	s5/forum.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Hanictor.6	d1/about.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Hanictor.7	slx.exe?showforum=14.0		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Hanictor.8			420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
 Malware Chanitor	chanitor.dll	AllocHeapMemory(0x500000u);
 Malware	Ruckguv	1c319670a717305f7373c8529092f8c3
 Malware	TinyLoader	0c77886a3ea42b75fcd860d4d97e72c5
@@ -269,7 +277,42 @@ Trojan	Bedep.7		c9eaf3480afe4cbddcd9df13d8577bfa0cae52b647eeb81253d45d826a41bc92
 Trojan	Bedep.8		ce3a9bcdbfa2f76fea7f5a13bfe46e770ad5ab1b0ab224b7018ddd22aa9da026
 Trojan	Bedep.9		9ed422779f846be0e630c75a8eaf8a46909e9a72ec2e3477775d0ce9ae476540
 Trojan	Bedep.10		71b69881e549f6faaa82de459f3db239cebccea0e59f3447658ed4fd4c633ce4
-Trojan	Bedep.11		ba8ca1c7ba3b0d615c0b3957004cc5f16f8c0d77c5f65aed88e3157cdeec6db0	
+Trojan	Bedep.11		ba8ca1c7ba3b0d615c0b3957004cc5f16f8c0d77c5f65aed88e3157cdeec6db0
+Trojan Disttrak	pdwmtphw.exe	
+Trojan Disttrak.1	caiaw00a.exe		010d4517c81bcdc438cb36fdf612274498d08db19bba174462ecbede7d9ce6bb
+Trojan Disttrak.2	sdwprint.exe		efd2f4c3fe4e9f2c9ac680a9c670cca378cef6b8776f2362ed278317bfb1fca8
+Trojan Disttrak.3	caiaw00d.exe		113525c6bea55fa2a2c6cf406184092d743f9d099535923a12cdd9b9192009c4
+Trojan Disttrak.4	kyiaw002.exe		5a826b4fa10891cf63aae832fc645ce680a483b915c608ca26cedbb173b1b80a
+Trojan Disttrak.5	sdwscdrv.exe	
+Trojan Disttrak.6	briaw00a.exe	
+Trojan Disttrak.7	saiaw002.exe	
+Trojan Disttrak.8	_mvscdsc.exe	
+Trojan Disttrak.9	hdvmp32.exe	
+Trojan Disttrak.10	_s3wcap32.exe	
+Trojan Disttrak.11	hpiaw001.exe	
+Trojan Disttrak.12	lxiaw004.exe	
+Trojan Disttrak.13	cniaw001.exe	
+Trojan Disttrak.14	lxiaw006.exe	
+Trojan Disttrak.15	caiaw00f.exe	
+Trojan Disttrak.16	newtvsc.exe	
+Trojan Disttrak.17	sbuvideo.exe	
+Trojan Disttrak.18	caiaw00e.exe
+Trojan Disttrak.19	caiaw00i.exe
+Trojan Disttrak.20	olvume.exe
+Trojan Disttrak.21	usinwb2.exe
+Trojan Disttrak.22	briaw005.exe
+Trojan Disttrak.23	fpwwlwf.exe
+Trojan Disttrak.24	epiaw003.exe
+Trojan Disttrak.25	briaw002.exe
+Trojan Disttrak.26	olvsnap.exe
+Trojan Disttrak.27	dmwaudio.exe
+Trojan Disttrak.28	briaw006.exe
+Trojan Disttrak.29	miWApRpl.exe
+Trojan Disttrak.30	caiaw00b.exe
+Trojan Disttrak.31	lxiaw003.exe
+Trojan Disttrak.31	vdsk911.sys
+Trojan Disttrak.32	ntertmgr32.exe
+Trojan Disttrak.33	ntertmgr64.exe 
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -319,6 +362,8 @@ Ransomware	RigEK.10	 	6993b911a6310ff7097105922de714d7a070c13633e79c36701d3cccf4
 Ransomware	RigEK.11	 	49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365847cd
 Ransomware RigEK.12	krp3cmg
 Ransomware RigEK.13	381m6bv285.exe
+Ransomware RigEK.14			8411ffb402372f51fbcc5f4d80f23eaf79871650d5cbbac8597c3667a49870b6
+Ransomware RigEK.15			25b36b3ae96b38259cb473df2b0d02fe94135b8d53b960dc95315567590c683c
 Ransomware RigEK.Cerber	radF22EA.tmp.exe		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
 Ransomware RigEK.Cerber.1	Rig-EK.swf
 Ransomware	Cerber.1		e9e8510d4ae6d8b2498079ec3100452dc78dbec24b10bf0fcaac84538f5d412a
@@ -1309,6 +1354,8 @@ Known Ransomware Host: Bedep.14	162.244.32.122
 Known Ransomware Host: Bedep.15	89.163.240.118
 Known Ransomware Host: Bedep.16	89.163.241.90
 Known Ransomware Host: Bedep.17	/ads.php?sid=1826
+Known Ransomware Host: Zeuss Rig.EK	help.whatizzzit.com
+Known Ransomware Host: Zeuss Rig.EK.2	stat2.s76.r53.com.ua
 Known Trojan Host: Zeuss Panda	secpressnetwork.com
 Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
 Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
