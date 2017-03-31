@@ -11,7 +11,7 @@ The only output a client should ever see from this file are success or error mes
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.65';
+$TeamsAppVersion = 'v0.66';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_FILES', '_USERS', '_TEAMS');

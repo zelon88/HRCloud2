@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.65 (3-24-2017 12:30)
+App Version: 0.66 (3-30-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -41,20 +41,36 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsC
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsCore.php'); }
 
+// / The following code sets the color scheme for the session.
+if ($ColorScheme == '1') {
+  $color = 'blue'; }
+if ($ColorScheme == '2') {
+  $color = 'red'; }
+if ($ColorScheme == '3') {
+  $color = 'green'; }
+if ($ColorScheme == '4') {
+  $color = 'grey'; }
+if ($ColorScheme == '5') {
+  $color = 'black'; }
+if ($ColorScheme == '6') {
+  $color = ''; }
+
 // / The following code represents the graphical user-interface (GUI).
 if ($teamsHeaderDivNeeded == 'true') {
   echo ('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\'><h3>Teams</h3><hr /></div>'); }
 
 if ($teamsGreetingDivNeeded == 'true') {
-  $emptyTeamsECHO = '<p>It looks like you aren\'t a part of any Teams yet! Let\'s fix that...</p>'."\n\n".'<p>Check out some of the Teams below,
-    or <a>Create A Team.</a></p>'; 
+  $emptyTeamsECHO = '<p>It looks like you aren\'t a part of any Teams yet! Let\'s fix that...</p>'."\n\n".'<p>Check out some of the Teams below,or 
+    <a id="showNewTeams1" name="showNewTeams1" style="border: 1px solid '.$color.'; border-radius: 6px;" onclick="toggle_visibility(\'xNewTeams1\'); toggle_visibility(\'newTeamsDiv\');">Create A New Team</a></p>'; 
   $myTeamsDivNeeded = 'false'; 
   echo ('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv" align="center"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
     if (count($myTeamsList) < 1) {
-  echo ('<div style="width:90%; float:center;">'.$emptyTeamsECHO.'</div></div>'); } }
+  echo ('<div align="center" style="width:90%; float:center; cursor:pointer;">'.$emptyTeamsECHO.'</div></div>'); } }
 
 if ($newTeamDivNeeded == 'true') {
-  echo ('<div id="newTeamsDiv" name="newTeamsDiv" align="center"><form method="post" action="Teams.php" type="multipart/form-data">');
+  echo ('<div id="newTeamsDiv" name="newTeamsDiv" align="center" style="width:65%; float:center; display:none; border: 1px solid '.$color.'; border-radius: 6px;">
+    <img title="Close \'New Teams\'" alt="Close \'New Teams\'" id="xNewTeams1" name="xNewTeams1" style="float:right; display:none;" onclick="toggle_visibility(\'newTeamsDiv\'); toggle_visibility(\'xNewTeams1\');" src="_RESOURCES/x.png">
+    <form method="post" action="Teams.php" type="multipart/form-data"><h4>New Team</h4>');
   echo nl2br('<input type="text" id="newTeam" name="newTeam" value="'.$newTeamNameEcho.'" onclick="Clear1();">'."\n");
   echo nl2br('<textarea id="teamDescription" name="teamDescription" cols="40" rows="5" onclick="Clear2();">'.$newTeamDescriptionEcho.'</textarea>'."\n");
   echo nl2br('<select id="newTeamVisibility" name="newTeamVisibility">
