@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.3 (3-2-2017 11:00)
+App Version: 1.4 (4-4-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
@@ -84,6 +84,7 @@ function does_url_exist($url) {
   curl_close($ch);
   return $stat; }
 
+// / The following code was designed by zelon88 and grabs a target file for storage on the server.
 function grab_simple_file($url, $filename) {
   set_time_limit(0);
   $fp = fopen ($filename, 'w+');
@@ -95,6 +96,7 @@ function grab_simple_file($url, $filename) {
   curl_close($ch);
   fclose($fp); }
 
+// / The following code handles errors and echos the result of the operation to the user.
 if (isset($grabberURLPOST)) {
   $GrabberFile = $CloudUsrDir.$GrabberFilenamePOST;  
   $GrabberTmpFile = $CloudTmpDir.$GrabberFilenamePOST;  
@@ -121,14 +123,15 @@ if (isset($grabberURLPOST)) {
       if (does_url_exist($grabberURLPOST) == 'true') {
         $GRABData1 = grab_simple_file($grabberURLPOST, $GrabberFile); 
         $GRABData2 = grab_simple_file($grabberURLPOST, $GrabberTmpFile); 
-      // / Check the Cloud Location with ClamAV before archiving, just in case.
+      // / Check the Cloud Location with ClamAV if VirusScanning is enabled in Admin Settings.
       if ($VirusScan == '1') {
         shell_exec('clamscan -r '.$GrabberFile.' | grep FOUND >> '.$ClamLogDir); 
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
-        if (filesize($ClamLogDir > 10)) {
+        $VirusScanDATA = file_get_contents($ClamLogDir);
+        if (filesize($ClamLogDir > 3) or strpos($ClamLogDir, 'FOUND') == 'true') {
           echo nl2br('WARNING!!! HRC2GrabberApp124, There were potentially infected files detected. The file
-            transfer could not be completed at this time. Please check your file for viruses or
-            try again later.'."\n");
+            transfer could not be completed at this time. Please check your file for viruses, check your HRC2 AV logs, 
+            or try again later.'."\n");
             die(); } }
         if (!file_exists($GrabberFile)) {
           $txt = ('ERROR!!! HRC2GrabberApp115, There was a problem creating '.$GrabberFilenamePOST.' on '.$Time.'!'); 
@@ -139,13 +142,11 @@ if (isset($grabberURLPOST)) {
           $txt = ('OP-Act: Created '.$GrabberFilenamePOST.' on '.$Time.'!'); 
           echo ($txt.'<hr />');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
-
       if (does_url_exist($grabberURLPOST) == 'false') {
         $txt = ('ERROR!!! HRC2GrabberApp70, The supplied URL contains reference to a file that does not exist on '.$Time.'!');
         $ERROR = 1;
         echo ($txt.'<hr />');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
-  
   $txt1 = ('<p><form action="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$GrabberFilenamePOST.'"><input type="submit" id="downloadGrabbed" name="downloadGrabbed" value="Download Grabbed File"></form></p>');
   if (!file_exists($GrabberFile) or $ERROR == 1) {
     $txt1 = ''; }
