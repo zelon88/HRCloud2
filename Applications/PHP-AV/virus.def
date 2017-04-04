@@ -303,16 +303,16 @@ Trojan Dridex			1814d47adfe7a34cd2e5b2a9d6841a32677764c8498012f3ff13a5772ba9107e
 Trojan Dridex			6adda664e3ab2936a8dbe8e95e10d33e34d13fbe375123c69abf3ac5fbf52fcd
 Trojan Dridex			898e44e0ebb73dcf8fc3b667baa6db930119d1979d8269437ab89e49633ff983
 Trojan Dridex			ac4d02637e1e01b16062f368658275cb8400b21f6592819d3a09dbee31cb5cc1
-Trojan Cerber.BS	/__files__/1			66fc3e7027cabc29c6ef9bcd40eb92e36530175a89c33dfb4a210ef868af13e0
-Trojan Cerber.BS.1	user.php?f=2.gif			59118ff55d6c20a08c6d4422972f9741de8b77755695cef9bc95126d46fb0026
+Trojan Cerber.BS	/__files__/1		66fc3e7027cabc29c6ef9bcd40eb92e36530175a89c33dfb4a210ef868af13e0
+Trojan Cerber.BS.1	user.php?f=2.gif		59118ff55d6c20a08c6d4422972f9741de8b77755695cef9bc95126d46fb0026
 Trojan Cerber.BS.2	site/chrome_update.html		d4dbc24e07aca11e53f1bb733852e4416a8fc7db1c0c947994ec271895fdb0a4
-Trojan Cerber.BS.3			8ea494bd84bea2617922a9ed488db44937199b3764ab6cb9f64e49d7e6945a3b
-Trojan Cerber.BS.4			07be83b0e9ed748c11d16afbd42b5582f192539706f3996a6debebdb575ad259
-Trojan Cerber.BS.5			b0e6d0e366494f94fd05756ec4b6245c74eee8f1c0ea65b21ba5e5f1c79d69c8
-Trojan Cerber.BS.6			2e3652afd5d79020dd5aa1d95a61fa6c8e67271f16ccb15aacf11accdd9cc790
-Trojan Cerber.BS.7			434d95079877a99fc7cf9c01faabe37c185656bd5ffebe627a756641e41e1f5b
-Trojan Cerber.BS.8			5bcb16e6dd8a023f7daef3cf2193ec4d8b911e3af677be3ebfbe58dbaf6e6d41
-Trojan Cerber.BS.9			0a7786e86d3df2548e12176b5d8aa6db0de9e556450a90f7c36fdbab1392b48f
+Trojan	Cerber.BS.3		8ea494bd84bea2617922a9ed488db44937199b3764ab6cb9f64e49d7e6945a3b
+Trojan	Cerber.BS.4		07be83b0e9ed748c11d16afbd42b5582f192539706f3996a6debebdb575ad259
+Trojan	Cerber.BS.5		b0e6d0e366494f94fd05756ec4b6245c74eee8f1c0ea65b21ba5e5f1c79d69c8
+Trojan	Cerber.BS.6		2e3652afd5d79020dd5aa1d95a61fa6c8e67271f16ccb15aacf11accdd9cc790
+Trojan	Cerber.BS.7		434d95079877a99fc7cf9c01faabe37c185656bd5ffebe627a756641e41e1f5b
+Trojan	Cerber.BS.8		5bcb16e6dd8a023f7daef3cf2193ec4d8b911e3af677be3ebfbe58dbaf6e6d41
+Trojan	Cerber.BS.9		0a7786e86d3df2548e12176b5d8aa6db0de9e556450a90f7c36fdbab1392b48f
 Trojan	TerrorEK.1		88cdbf79aba30f553a949fc281baaa5d2e5f887d6c3f05b617c4712a709d47a9
 Trojan	TerrorEK.2		71ea85fd9a93949b4a22ed0ac43caebf991f9c046318bf6a490fe1ecb95537fe
 Trojan Disttrak	pdwmtphw.exe
@@ -1398,14 +1398,14 @@ Known Ransomware Host: Zeuss Rig.EK.2	stat2.s76.r53.com.ua
 Known Trojan Host: Zeuss Panda	secpressnetwork.com
 Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
 Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
-Known Ransomware Host: Cerber.BS chromefastl.top
-Known Ransomware Host: Cerber.BS.1 fffgooaldq.top
-Known Ransomware Host: Cerber.BS.2 ffjoleedas.top
-Known Ransomware Host: Cerber.BS.3 newsectorbs.top
-Known Ransomware Host: Cerber.BS.4 polkiuj.bid
-Known Ransomware Host: Cerber.BS.5 jhdgh.site
-Known Ransomware Host: Cerber.BS.6 jhdgh.trade
-Known Ransomware Host: Cerber.BS.7 newsectorbs.top
-Known Ransomware Host: Cerber.BS.8 hoopcinezc.top
-Known Ransomware Host: Cerber.BS.9 chromehakc.top
-Known Ransomware Host: Cerber.BS.10 truemityunituistep.top
+Known Ransomware Host: Cerber.BS	dchromefastl.top
+Known Ransomware Host: Cerber.BS.1	dfffgooaldq.top
+Known Ransomware Host: Cerber.BS.2	dffjoleedas.top
+Known Ransomware Host: Cerber.BS.3	dnewsectorbs.top
+Known Ransomware Host: Cerber.BS.4	dpolkiuj.bid
+Known Ransomware Host: Cerber.BS.5	djhdgh.site
+Known Ransomware Host: Cerber.BS.6	djhdgh.trade
+Known Ransomware Host: Cerber.BS.7	dnewsectorbs.top
+Known Ransomware Host: Cerber.BS.8	dhoopcinezc.top
+Known Ransomware Host: Cerber.BS.9	dchromehakc.top
+Known Ransomware Host: Cerber.BS.10	dtruemityunituistep.top
