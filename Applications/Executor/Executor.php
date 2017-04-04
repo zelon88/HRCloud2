@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Executor
-App Version: 1.2 (1-26-2017 10:45)
+App Version: 1.3 (4-4-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 command-line for using PHP like it were Bash.
@@ -47,7 +47,7 @@ if (isset($_POST['executorInput'])) {
   $executorValue = $_POST['executorInput']; }
 ?>
 <form action="Executor.php" method="POST">
-<p style="text-align:left; margin:15px;"><strong>www-data@www-data-<?php echo $UniqueServerName.':'.$cd; ?>$ </strong></p>
+<p style="text-align:left; margin:15px;"><strong>www-data@www-data-<?php echo gethostname().':'.$cd; ?>$ </strong></p>
 <p><textarea id="executorInput" name="executorInput" value="<?php echo $executorValue; ?>" cols="40" rows="5"></textarea></p>
 <p><input type="submit" id="executorSubmit" name="executorSubmit" title="Execute" alt="Execute" value="Execute"></p>
 </form>
@@ -55,10 +55,7 @@ if (isset($_POST['executorInput'])) {
 <div id="executorOutput" name="executorOutput" align="left" style="margin:15px;">
 <hr />
 <?php 
-if ($_POST['executorInput'] == '') {
-  $txt = ('Notice: Executor input cannot be blank. HRC2ExecutorApp69');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die($txt); }
+if ($_POST['executorInput'] == '') die();
 $safeArr1 = array('.','..','tmp','dev','run','sys','etc','boot','sbin','bin','lib','opt','usr',
   'var','root','home','cdrom','lost+found','srv','mnt','media','mysql');
 $executorInput = $_POST['executorInput'];
@@ -82,7 +79,7 @@ if (strpos($executorInput, 'cd ') == 'true') {
   $exec1 = shell_exec($executorInput1);
   echo nl2br('Note: When using "cd" the current directory is NOT maintained between page refreshes.'."\n".'To effectively use "cd", consider using "|" or "&&" in your code.'."\n\n");
   echo nl2br($exec1."\n"); }
-
+// / Execute the users command.
   $exec = shell_exec($executorInput); 
   echo nl2br($exec."\n");
   $txt = ('OP-Act: Executed "'.$exec.'" on '.$Time.'.'); 
