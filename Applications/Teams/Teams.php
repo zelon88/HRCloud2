@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.66 (3-30-2017 12:30)
+App Version: 0.67 (3-30-2017 12:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -60,7 +60,7 @@ if ($teamsHeaderDivNeeded == 'true') {
   echo ('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\'><h3>Teams</h3><hr /></div>'); }
 
 if ($teamsGreetingDivNeeded == 'true') {
-  $emptyTeamsECHO = '<p>It looks like you aren\'t a part of any Teams yet! Let\'s fix that...</p>'."\n\n".'<p>Check out some of the Teams below,or 
+  $emptyTeamsECHO = '<p>It looks like you aren\'t a part of any Teams yet! Let\'s fix that...</p>'."\n\n".'<p>Check out some of the Teams below, or 
     <a id="showNewTeams1" name="showNewTeams1" style="border: 1px solid '.$color.'; border-radius: 6px;" onclick="toggle_visibility(\'xNewTeams1\'); toggle_visibility(\'newTeamsDiv\');">Create A New Team</a></p>'; 
   $myTeamsDivNeeded = 'false'; 
   echo ('<div id="TeamsGreetingDiv" name="TeamsGreetingDiv" align="center"><h2>'.$teamsGreetings[$greetingKey].'</h2>');
@@ -91,15 +91,35 @@ if ($myTeamsDivNeeded == 'true') {
   $myTeamCounter = 0;
   foreach ($myTeamList as $myTeam) {
     if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//') continue; 
-    $teamCounter++;
+    $myTeamCounter++;
     $myTeamFile = $TeamsDir.'/'.$myTeam.'/'.$myTeam.'.php';
     include($myTeamFile);
     $myTeamEcho = $TEAM_NAME;
     $myTeamTime = date("F d Y H:i:s.",filemtime($myTeamFile));
     echo ('<tr><td><strong>'.$myTeamCounter.'. </strong><a href="Teams.php?viewTeam='.$myTeam.'">'.$myTeamEcho.'</a></td>');
     echo ('<td><a href="Teams.php?deleteTeam='.$myTeam.'"><img id="delete'.$myTeamCounter.'" name="'.$myTeam.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
-    echo ('</tr><tbody></table></table>'); } } ?>
+    echo ('</tr><tbody></table></table>'); } }
 
+if ($teamsDivNeeded == 'true') {
+  echo nl2br("\n".'<div id="myTeamsList" name="myTeamsList" align="center"><strong>Available Teams</strong><hr /></div>');
+  echo ('<div align="center">
+    <table class="sortable">
+    <thead><tr>
+    <th>Team</th>
+    <th>Delete</th>
+    </tr></thead><tbody>'); 
+  $teamCounter = 0;
+  foreach ($tamsList as $team) {
+    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//') continue; 
+    $team1Counter++;
+    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'.php';
+    $teamTime = date("F d Y H:i:s.",filemtime($teamFile));
+    include($myTeamFile);
+    if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
+      $teamEcho = $TEAM_NAME;
+      echo ('<tr><td><strong>'.$teamCounter.'. </strong><a href="Teams.php?viewTeam='.$team.'">'.$teamEcho.'</a></td>');
+      echo ('<td><a href="Teams.php?deleteTeam='.$team.'"><img id="delete'.$teamCounter.'" name="'.$team.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
+      echo ('</tr><tbody></table></table>'); } } } ?>
 
 
 <?php

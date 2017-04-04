@@ -11,7 +11,7 @@ The only output a client should ever see from this file are success or error mes
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.66';
+$TeamsAppVersion = 'v0.67';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_FILES', '_USERS', '_TEAMS');
@@ -27,7 +27,7 @@ $teamDir = '';
 $teamFile = '';
 $newTeamFileDATA = '';
 $requiredTeamVars = array('$TEAM_CACHE_VERSION', '$TEAM_NAME', '$TEAM_OWNER', '$TEAM_CREATED_BY', '$TEAM_ALIAS', '$TEAM_USERS', 
-  '$TEAM_ADMINS', '$TEAM_VISIBILITY', '$TEAM_ALIAS');
+  '$TEAM_ADMINS', '$TEAM_VISIBILITY', '$TEAM_ALIAS', '$BANNED_USERS');
 $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER_TITLE', '$USER_TOKEN', '$USER_PHOTO_FILENAME', '$USER_ALIAS', 
   '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_EMAIL_1',
   '$USER_EMAIL_2', '$USER_EMAIL_3', '$USER_PHONE_1', '$USER_PHONE_2', '$USER_PHONE_3', '$ACCOUNT_NOTES_USER', '$ACCOUNT_NOTES_ADMIN');
@@ -83,7 +83,7 @@ if (isset($_POST['editTeamPermissions'])) {
   $newTeamPermissions = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeamPermissions']); }
   // / -Delete Team inputs.
 if (isset($_GET['deleteTeam'])) { 
-  $_POST['editTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['editTeam']); }
+  $_POST['deleteTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['deleteTeam']); }
 if (!isset($_POST['deleteTeam'])) {
   $teamToDelete = ''; }
 if (isset($_POST['deleteTeam'])) {
@@ -226,7 +226,7 @@ if (isset($_GET['newTeam']) or isset($_POST['newTeam'])) {
     mkdir($newTeamDir); }
   if (!file_exists($newTeamFile)) { 
     $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
-      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'1\'; ?>');
+      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'1\'; $BANNED_USERS = array(); ?>');
     $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL , FILE_APPEND); 
     $txt = ('OP-Act: Creating new Team file "'.$newTeamFile.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
@@ -263,7 +263,7 @@ if (isset($_POST['editTeam']) or isset($_POST['editTeam'])) {
   $teamAlias = $TEAM_NAME;
 if (in_array($_POST['editTeam'], $currentUserTeams)) {
   $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
-    $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM ALIAS = \''.$teamAlias.'\'; ?>');
+    $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM ALIAS = \''.$teamAlias.'\'; $BANNED_USERS = array(); ?>');
   $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL , FILE_APPEND); 
   echo nl2br('Edited <i>'.$teamName.'</i>'."\n"); } 
 if (!in_array($teamToEdit, $currentUserTeams)) {
@@ -306,7 +306,7 @@ if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a validated user selects to edit their account.
-if (isset($_POST['editUser']) or isset($_POST['editUser'])) {
+if (isset($_GET['editUser']) or isset($_POST['editUser'])) {
   $txt = ('OP-Act: Opening User "'.$teamToEdit.'" for editing on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   $userFile = $UserDir.'/'.$userToEdit.'.php';
@@ -315,13 +315,12 @@ if (isset($_POST['editUser']) or isset($_POST['editUser'])) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
     echo nl2br($txt."\n"); 
     die(); }
-  include($teamFile);
-if (in_array($_POST['editUser'], $currentUserTeams)) {
+  include($userFile);
+if ($_POST['editUser'] == $currentUserID) {
     $newUserFileDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
     $USER_PHOTO_FILENAME = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
     $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; 
-    $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; 
-    $ACCOUNT_NOTES_USER = \'\'; ?>');
+    $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; $ACCOUNT_NOTES_USER = \'\'; ?>');
   $MAKEnewUserFile = file_put_contents($newUserFile, $newUserFileDATA.PHP_EOL , FILE_APPEND); 
   echo nl2br('Edited <i>'.$userName.'</i>'."\n"); } 
 if (!in_array($userToEdit, $currentUserTeams)) {
@@ -329,6 +328,16 @@ if (!in_array($userToEdit, $currentUserTeams)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   echo nl2br($txt."\n"); 
   die(); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to create a new Team.
+if (isset($_GET['joindeleteTeam']) or isset($_POST['joindeleteTeam'])) {
+  // do stuff here to authenticate users to the team they're trying to join.
+  // and make sure they're not banned.
+
+  // / Also make TeamCache and put the user count into it. Also tracked logged-in/awake/asleep users.
+}
 // / -----------------------------------------------------------------------------------
 
 ?>
