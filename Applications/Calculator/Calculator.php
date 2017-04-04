@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calculator
-App Version: 1.4 (1-16-2017 22:45)
+App Version: 1.5 (4-4-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for doing math.
@@ -76,16 +76,16 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
     $calculatorInput = str_replace(')'.$number, ')*'.$number, $calculatorInput); }
   if ($calculatorInput == '') {
     echo ('There was no equation to calculate!'); }
-
   $priorityFunctions = get_string_between($calculatorInput, '(', ')');
   $priorityFunctions = str_replace(str_split('()'), '', $priorityFunctions);
+  // / The following code prepares ONLY ONE (the first encountered) nested equation before proceeding.  
   if ($priorityFunctions !== '') {
     $counter++;
     echo ('<i>'.$calculatorInput.'</i>');
     eval('$priorityTotal = ('.$priorityFunctions.');');
     echo ('<p><strong>'.$counter.'.</strong> <i>('.$priorityFunctions.')</i> = <strong>'.$priorityTotal.'</strong></p>');
     $calculatorInput = str_replace($priorityFunctions, $priorityTotal, $calculatorInput); }
-
+// / The following code parses upper-level equations.
 if ($calculatorInput !== '') {
   $counter++;
   eval('$total = ('.$calculatorInput.');');
