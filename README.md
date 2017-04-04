@@ -11,13 +11,13 @@ A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assis
 
 # A Secure, Private Cloud Storage Platform for your Home Server!
 
-HRCloud2 is a personal Cloud CMS Platform similar to ownCloud but with far greater capability that includes all the same functionality as a commercial end-user based Cloud platform. Functions like file conversion, OCR, archiving, dearchiving, A/V scanning, sharing and more. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and cliking buttons, from anywhere. 
+HRCloud2 is a personal Cloud CMS Platform similar to ownCloud but with far greater capability that includes all the same functionality as a commercial end-user based Cloud platform. Functions like file conversion, OCR, archiving, dearchiving, A/V scanning, sharing and more. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and clicking buttons, from anywhere. 
 
-HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it needs from WordPress when it does not exist. HRCloud2 uses user accounts created by WordPress, but does not itself use a database for anything other than user authentication. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between youe other HRAI nodes.
+HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it needs from WordPress when it does not exist. HRCloud2 uses user accounts created by WordPress, but does not itself use a database for anything other than user authentication. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between your other HRAI nodes.
 
 # CURRENT CORE FEATURES
 
--HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory and are cleaned up every 15 minutes. 
+-HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are either temporarily moved to a user-specific hosted directory (or symlinks are created, where possible) and cleaned every 10 minutes. 
 
 -Non-hosted permanent files remain until deleted by the end-user.
 
@@ -54,15 +54,19 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 -Includes "Notes", "Contacts", and "Calculator" apps by zelon88.
 
--Includes "Grabber" App by zelon88 for downloading URL's straight to your Cloud Drive.
+-Includes "Grabber" App by zelon88 for downloading files from URL straight to your Cloud Drive.
 
 -Includes "ServStat" App for admins that allows monitoring of local or remote servers.
+
+-Includes "ServMonitor" App for real-time monitoring of server utilization, status, and specs (including CPU, RAM, Temp(s), Battery, Power Status, and more specs than your device manager could shake a stick at!
+
+-Includes "PHP-AV" App, a server-side anti-virus, anti-malware app that admins can use to scan their server. Written in PHP, this app can target ANY file or folder on the server, or intelligently scans HRCloud2-related files with a single click.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
 -Clear user / master cache option.
 
--Clipboard (copy/paste files, folders, items between locations)
+-Clipboard ((BETA) copy/paste files, folders, items between locations)
 
 # RUNS ON
 
@@ -76,8 +80,8 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 
 # FUTURE CORE FEATURES
 
-
--MOAR Apps (like Gallery and HRStreamer2)!!!
+-New features, bug fixes, and improvements several times weekly!!!
+-Working on "Teams" App so you can finally uninstall Slack!
 
 
 ----------------------------
