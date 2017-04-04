@@ -6,8 +6,17 @@ Malware Hanictor.4	epposi.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620
 Malware Hanictor.5	s5/forum.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
 Malware Hanictor.6	d1/about.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
 Malware Hanictor.7	slx.exe?showforum=14.0		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
-Malware Hanictor.8			420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
-Malware Chanitor	chanitor.dll	AllocHeapMemory(0x500000u);
+Malware Hanictor.8	46353.exe		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
+Malware Hanictor.8	BN692D.tmp		0a6b1ac5472a554e6d72bee875b7b7cdf85c9c1c8765b4f395c8847f47cc5043
+Malware Hanictor.8	Ringcentral_renya.glendayle.doc		14b45db836ff1c0d7e283d0ff824013d7a48c59d3805c20cf9a4c61106256fe4
+Malware Hanictor.8	ring/getnum.php		fc8e08d0c0039b9fad3a1d0138dafe9428f06fbdc6096292edeae123a9fb7c65
+Malware Hanictor.8	ls5/forum.php
+Malware Hanictor.8	d1/about.php
+Malware Hanictor.8	mlu/forum.php
+Malware Hanictor.8	wp-content/plugins/widget-context
+Malware Hanictor.8	sugar-modal-windows/slx.exe?showforum
+Malware Chanitor	chanitor.dll
+Malware Chanitor.1	AllocHeapMemory(0x500000u);
 Malware	Ruckguv	1c319670a717305f7373c8529092f8c3
 Malware	TinyLoader	0c77886a3ea42b75fcd860d4d97e72c5
 Malware	TinyLoader.1	a3ea1a008619687bdfef08d2af83f548
@@ -164,10 +173,19 @@ Malware Malspam.47	27945.js
 Malware Malspam.48	27961.js
 Malware Malspam.49	31702.js
 Malware Malspam.50	7374.js
+Malware Malspam.51	Commercial_CVS_inv.03.04.2017.zip		1b402c3ccfe5380425023022614abc4af53369536bda9c70b3074e50484bb340
+Malware Malspam.52	img-20170403-0014,jpeg.zip		ef3bbbace6eeaf06c2101612d45d694f734b6759ec89b83db0e3d07ea5c49f57
+Malware Malspam.53	img-20170403-0015,jpeg.zip		faad4f8730db9825cfc5fd29f105a16849c83e61e836d68b2e3eff55fe0f1ec5
+Malware Malspam.54	img-20170403-0089,jpeg.zip		a62712ff422477b15e512d3d83285d61c760c468e8f8bae26a7e5f0174e57db9
+Malware Malspam.55	img-20170403-0054.jpeg.js		94380803ac48bec2ca431f968240f4444fdc3a30bd04dbc62bf099bf0ece01f8
+Malware Malspam.56	462137.exe		d26161bc381625ade7fb51db987f2e69c244acc642911948b1507860e90fd3f9
+Malware Malspam.57	Balt.dll		7b1bcab8e3aa932c6ebac8df67d0797b0c8aaa3a7870408085341500687720a6
+Malware Malspam.58	33521.exe		
+Malware Malspam.59	usdelcar.txt
 Malware SuperMulti	masm32
-Malware SuperMulti	Gate.php
-Malware SuperMulti	gate.php
-Malware SuperMulti	DllTest.exe
+Malware SuperMulti.1	Gate.php
+Malware SuperMulti.2	gate.php
+Malware SuperMulti.3	DllTest.exe
 Exploit CVE-2016-7200	188.165.163.226
 Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
@@ -278,24 +296,43 @@ Trojan	Bedep.8		ce3a9bcdbfa2f76fea7f5a13bfe46e770ad5ab1b0ab224b7018ddd22aa9da026
 Trojan	Bedep.9		9ed422779f846be0e630c75a8eaf8a46909e9a72ec2e3477775d0ce9ae476540
 Trojan	Bedep.10		71b69881e549f6faaa82de459f3db239cebccea0e59f3447658ed4fd4c633ce4
 Trojan	Bedep.11		ba8ca1c7ba3b0d615c0b3957004cc5f16f8c0d77c5f65aed88e3157cdeec6db0
-Trojan Disttrak	pdwmtphw.exe	
+Trojan Dridex	uk_confirmation_ph954869378.exe		34884ec18d6bbc8262812ee5ecc8803b771fcd4c554d76bee9254278effe0b48
+Trojan Dridex.1	1530219.vbs		84c9028a1d25e5f171c170179f2f1ea3e1eab9514812ab9e4b617de822b46e69
+Trojan Dridex	/76gbce?		d21c83b527627d0a64beb28a5a72ca21228c438861de893618ffdf46d7ef8d1c
+Trojan Dridex			1814d47adfe7a34cd2e5b2a9d6841a32677764c8498012f3ff13a5772ba9107e
+Trojan Dridex			6adda664e3ab2936a8dbe8e95e10d33e34d13fbe375123c69abf3ac5fbf52fcd
+Trojan Dridex			898e44e0ebb73dcf8fc3b667baa6db930119d1979d8269437ab89e49633ff983
+Trojan Dridex			ac4d02637e1e01b16062f368658275cb8400b21f6592819d3a09dbee31cb5cc1
+Trojan Cerber.BS	/__files__/1			66fc3e7027cabc29c6ef9bcd40eb92e36530175a89c33dfb4a210ef868af13e0
+Trojan Cerber.BS.1	user.php?f=2.gif			59118ff55d6c20a08c6d4422972f9741de8b77755695cef9bc95126d46fb0026
+Trojan Cerber.BS.2	site/chrome_update.html		d4dbc24e07aca11e53f1bb733852e4416a8fc7db1c0c947994ec271895fdb0a4
+Trojan Cerber.BS.3			8ea494bd84bea2617922a9ed488db44937199b3764ab6cb9f64e49d7e6945a3b
+Trojan Cerber.BS.4			07be83b0e9ed748c11d16afbd42b5582f192539706f3996a6debebdb575ad259
+Trojan Cerber.BS.5			b0e6d0e366494f94fd05756ec4b6245c74eee8f1c0ea65b21ba5e5f1c79d69c8
+Trojan Cerber.BS.6			2e3652afd5d79020dd5aa1d95a61fa6c8e67271f16ccb15aacf11accdd9cc790
+Trojan Cerber.BS.7			434d95079877a99fc7cf9c01faabe37c185656bd5ffebe627a756641e41e1f5b
+Trojan Cerber.BS.8			5bcb16e6dd8a023f7daef3cf2193ec4d8b911e3af677be3ebfbe58dbaf6e6d41
+Trojan Cerber.BS.9			0a7786e86d3df2548e12176b5d8aa6db0de9e556450a90f7c36fdbab1392b48f
+Trojan	TerrorEK.1		88cdbf79aba30f553a949fc281baaa5d2e5f887d6c3f05b617c4712a709d47a9
+Trojan	TerrorEK.2		71ea85fd9a93949b4a22ed0ac43caebf991f9c046318bf6a490fe1ecb95537fe
+Trojan Disttrak	pdwmtphw.exe
 Trojan Disttrak.1	caiaw00a.exe		010d4517c81bcdc438cb36fdf612274498d08db19bba174462ecbede7d9ce6bb
 Trojan Disttrak.2	sdwprint.exe		efd2f4c3fe4e9f2c9ac680a9c670cca378cef6b8776f2362ed278317bfb1fca8
 Trojan Disttrak.3	caiaw00d.exe		113525c6bea55fa2a2c6cf406184092d743f9d099535923a12cdd9b9192009c4
 Trojan Disttrak.4	kyiaw002.exe		5a826b4fa10891cf63aae832fc645ce680a483b915c608ca26cedbb173b1b80a
-Trojan Disttrak.5	sdwscdrv.exe	
-Trojan Disttrak.6	briaw00a.exe	
-Trojan Disttrak.7	saiaw002.exe	
-Trojan Disttrak.8	_mvscdsc.exe	
-Trojan Disttrak.9	hdvmp32.exe	
-Trojan Disttrak.10	_s3wcap32.exe	
-Trojan Disttrak.11	hpiaw001.exe	
-Trojan Disttrak.12	lxiaw004.exe	
-Trojan Disttrak.13	cniaw001.exe	
-Trojan Disttrak.14	lxiaw006.exe	
-Trojan Disttrak.15	caiaw00f.exe	
-Trojan Disttrak.16	newtvsc.exe	
-Trojan Disttrak.17	sbuvideo.exe	
+Trojan Disttrak.5	sdwscdrv.exe
+Trojan Disttrak.6	briaw00a.exe
+Trojan Disttrak.7	saiaw002.exe
+Trojan Disttrak.8	_mvscdsc.exe
+Trojan Disttrak.9	hdvmp32.exe
+Trojan Disttrak.10	_s3wcap32.exe
+Trojan Disttrak.11	hpiaw001.exe
+Trojan Disttrak.12	lxiaw004.exe
+Trojan Disttrak.13	cniaw001.exe
+Trojan Disttrak.14	lxiaw006.exe
+Trojan Disttrak.15	caiaw00f.exe
+Trojan Disttrak.16	newtvsc.exe
+Trojan Disttrak.17	sbuvideo.exe
 Trojan Disttrak.18	caiaw00e.exe
 Trojan Disttrak.19	caiaw00i.exe
 Trojan Disttrak.20	olvume.exe
@@ -312,7 +349,7 @@ Trojan Disttrak.30	caiaw00b.exe
 Trojan Disttrak.31	lxiaw003.exe
 Trojan Disttrak.31	vdsk911.sys
 Trojan Disttrak.32	ntertmgr32.exe
-Trojan Disttrak.33	ntertmgr64.exe 
+Trojan Disttrak.33	ntertmgr64.exe
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -364,6 +401,8 @@ Ransomware RigEK.12	krp3cmg
 Ransomware RigEK.13	381m6bv285.exe
 Ransomware RigEK.14			8411ffb402372f51fbcc5f4d80f23eaf79871650d5cbbac8597c3667a49870b6
 Ransomware RigEK.15			25b36b3ae96b38259cb473df2b0d02fe94135b8d53b960dc95315567590c683c
+Ransomware RigEK.15			9c18ef0d4b441cdcefcdbaceeb111a207dc1460ac2a082785cc028551606a5de
+Ransomware RigEK.15			e7b3102e3e49c6c3611353d704aae797923b699227df92d97987a2e012ba3f25
 Ransomware RigEK.Cerber	radF22EA.tmp.exe		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
 Ransomware RigEK.Cerber.1	Rig-EK.swf
 Ransomware	Cerber.1		e9e8510d4ae6d8b2498079ec3100452dc78dbec24b10bf0fcaac84538f5d412a
@@ -1359,3 +1398,14 @@ Known Ransomware Host: Zeuss Rig.EK.2	stat2.s76.r53.com.ua
 Known Trojan Host: Zeuss Panda	secpressnetwork.com
 Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
 Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
+Known Ransomware Host: Cerber.BS chromefastl.top
+Known Ransomware Host: Cerber.BS.1 fffgooaldq.top
+Known Ransomware Host: Cerber.BS.2 ffjoleedas.top
+Known Ransomware Host: Cerber.BS.3 newsectorbs.top
+Known Ransomware Host: Cerber.BS.4 polkiuj.bid
+Known Ransomware Host: Cerber.BS.5 jhdgh.site
+Known Ransomware Host: Cerber.BS.6 jhdgh.trade
+Known Ransomware Host: Cerber.BS.7 newsectorbs.top
+Known Ransomware Host: Cerber.BS.8 hoopcinezc.top
+Known Ransomware Host: Cerber.BS.9 chromehakc.top
+Known Ransomware Host: Cerber.BS.10 truemityunituistep.top
