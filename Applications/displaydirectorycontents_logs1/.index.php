@@ -70,7 +70,7 @@ if ($ColorScheme == '5') {
 
 // / -----------------------------------------------------------------------------------
 // / The following code will verify the user ID and the directory being accessed before continuing.
-if (strpos($Current_URL, $UserID) == 'true' && strpos($Current_URL, '/Shared') == 'false') {
+if (strpos($Current_URL, $UserID) == 'false') {
   $txt = ('ERROR!!! HRC2LogsIndex74, Could not verify the user '.$UserID.' on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die($txt); }
