@@ -11,10 +11,15 @@ The only output a client should ever see from this file are success or error mes
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.67';
+$TeamsAppVersion = 'v0.68';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
-$defaultDirs = array('index.html', '_FILES', '_USERS', '_TEAMS');
+$defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
+$ResourcesDir = $TeamsDir.'/_RESOURCES';
+$ScriptsDir = $TeamsDir.'/_SCRIPTS';
+$CacheDir = $TeamsDir.'/_CACHE';
+$TeamsCoreCacheFile = $CacheDir.'/_coreCACHE.php';
+$safeTeamFile = $ResourcesDir.'/SAFETeam.php';
 $UsersDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS');
 $UserRootDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'');
 $UserFilesDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'/FILES');
@@ -87,8 +92,16 @@ if (isset($_GET['deleteTeam'])) {
 if (!isset($_POST['deleteTeam'])) {
   $teamToDelete = ''; }
 if (isset($_POST['deleteTeam'])) {
-  $_POST['deleteTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['deleteTeam']); 
   $teamToDelete = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['deleteTeam']); }
+  // / -Join Team inputs-
+if (isset($_GET['joinTeam'])) {
+  $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['joinTeam']); }
+if (!isset($_GET['joinTeam'])) {
+  $teamToJoin = ''; }
+if (isset($_POST['joinTeam'])) {
+  $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinTeam']); }
+if (isset($_POST['joinTeam'])) {
+  $teamToJoin = ''; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -116,7 +129,7 @@ if (!file_exists($UserFilesDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code creates that the user cache files if they do not exist.
+// / The following code creates the user cache files if they do not exist.
 if (!file_exists($UserCacheFile)) {
   $cacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_ID = '.$UserID.';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
     $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
@@ -188,20 +201,46 @@ foreach ($teamsList as $myTeamFinder) {
 $teamsCounter = 0;
 foreach ($myTeamsList as $teamID) {
   if ($teamID == '' or $teamID == '.' or $teamID == '..' or $teamID == '/' or $teamID == '//') continue;
-  if (is_dir($TeamsDir.$teamName)) {
-    $teamFileTESTER = $TeamsDir.$teamID.'/'.$teamID.'.php';
+  if (is_dir($TeamsDir.'/'.$teamName)) {
+    $teamFileTESTER = $TeamsDir.'/'.$teamID.'/'.$teamID.'.php';
     if (file_exists($teamFileTESTER)) { 
+      $teamCacheFile = $TeamsDir.'/'.$teamID.'/_CACHE/_'.$teamID.'_CACHE.php';
+      if (!is_dir($teamCacheDir)) {
+        @mkdir($teamCacheDir); 
+        copy ($InstLoc.'/index.html', $teamCacheDir.'/index.html'); }
+        if (is_dir($teamCacheDir)) {  
+          $txt = ('Op-Act: Created the directory "'.$teamCacheDir.'" on '.$Time.'!'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        if (!is_dir($teamCacheDir)) {
+          $txt = ('ERROR!!! HRC2TeamsApp210, Could not create the directory "'.$UserCacheDir.'" on '.$Time.'!'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+          die(); }     
+      if (!file_exists($teamCacheFile)) {
+        $txt = (''); 
+        $MAKECacheFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+        if (file_exists($teamCacheFile))
+          $txt = ('Op-Act: Created a new Team Cache file on '.$Time.'!'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
+        if (!file_exists($teamCacheFile)) {
+          $txt = ('ERROR!!! HRC2TeamsApp220, Could not create a new Team Cache file on '.$Time.'!'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+          die(); }
+      include($teamCacheFile);
       include($teamFileTESTER);
-      $teamsCounter++;
       $teamIDTESTER = hash('sha256', $TEAM_NAME.$Salts);
       if ($teamIDTESTER == $teamFileTESTER) {
         $teamArray = array_push($teamArray, $TEAM_NAME); }
       if ($teamNameTESTER !== $teamFileTESTER) {
-        $teamsCounter--;
+        foreach ($requiredTeamVars as $reqVar) {
+
+        }
+        include ($safeTeamFile);
         $txt = ('Warning!!! HRC2TeamsApp51, There was a problem validating Team "'.$teamFileTESTER.'"" on '.$Time.'!'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
         echo nl2br($txt."\n");
-        continue; } }
+        continue; } 
+      $teamsCounter++;
+      $UserCount_Team[$teamsCounter] = count($TEAM_USERS); }
     if (!file_exists($teamFileTESTER) or $teamID == '') { 
       $teamsCounter--;      
       $txt = ('Warning!!! HRC2TeamsApp179, There was a problem validating Team "'.$teamFileTESTER.'"" on '.$Time.'!'); 
@@ -212,7 +251,7 @@ foreach ($myTeamsList as $teamID) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new Team.
-if (isset($_GET['newTeam']) or isset($_POST['newTeam'])) {
+if (isset($newTeamName) && $newTeamName !== '') {
   $txt = ('OP-Act: Creating Team "'.$teamToEdit.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   if (file_exists($newTeamDir)) {
@@ -223,7 +262,8 @@ if (isset($_GET['newTeam']) or isset($_POST['newTeam'])) {
   if (!file_exists($newTeamDir)) { 
     $txt = ('OP-Act: Creating new Team directory "'.$newTeamDir.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-    mkdir($newTeamDir); }
+    mkdir($newTeamDir); 
+    copy ('/index.html', $newTeamDir.'/index.html'); }
   if (!file_exists($newTeamFile)) { 
     $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
       $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'1\'; $BANNED_USERS = array(); ?>');
@@ -232,6 +272,7 @@ if (isset($_GET['newTeam']) or isset($_POST['newTeam'])) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (!file_exists($newTeamDataDir)) { 
     mkdir($newTeamDataDir);
+    copy ('/index.html', $teamCacheDir.'/index.html'); 
     $txt = ('OP-Act: Creating new Team DATA directory "'.$newTeamDataDir.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (!file_exists($newTeamDir) or !file_exists($newTeamFile)) { 
@@ -250,7 +291,7 @@ if (isset($_GET['newTeam']) or isset($_POST['newTeam'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a validated user selects to edit a Team.
-if (isset($_POST['editTeam']) or isset($_POST['editTeam'])) {
+if (isset($teamToEdit) && $teamToEdit !== '') {
   $txt = ('OP-Act: Opening Team "'.$teamToEdit.'" for editing on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   $teamFile = $TeamsDir.'/'.$teamToEdit.'.php';
@@ -306,8 +347,8 @@ if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a validated user selects to edit their account.
-if (isset($_GET['editUser']) or isset($_POST['editUser'])) {
-  $txt = ('OP-Act: Opening User "'.$teamToEdit.'" for editing on '.$Time.'!');  
+if (isset($userToEdit) && $userToEdit !== '') {
+  $txt = ('OP-Act: Opening User "'.$userToEdit.'" for editing on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   $userFile = $UserDir.'/'.$userToEdit.'.php';
   if (!file_exists($userFile)) {
@@ -321,23 +362,35 @@ if ($_POST['editUser'] == $currentUserID) {
     $USER_PHOTO_FILENAME = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
     $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; 
     $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; $ACCOUNT_NOTES_USER = \'\'; ?>');
-  $MAKEnewUserFile = file_put_contents($newUserFile, $newUserFileDATA.PHP_EOL , FILE_APPEND); 
+  $MAKEnewUserFile = file_put_contents($userFile, $newUserFileDATA.PHP_EOL , FILE_APPEND); 
+  include($userFile);  
   echo nl2br('Edited <i>'.$userName.'</i>'."\n"); } 
 if (!in_array($userToEdit, $currentUserTeams)) {
-  $txt = ('ERROR!!! HRC2TeamsApp151, The current user "'.$UserID.'" does not have permission to edit the User "'.$userToEdit.'" on '.$Time.'!');  
+  $txt = ('ERROR!!! HRC2TeamsApp336, The current user "'.$UserID.'" does not have permission to join the tean "'.$teamToJoin.'" because they have been banned on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   echo nl2br($txt."\n"); 
   die(); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code is performed whenever a user selects to create a new Team.
-if (isset($_GET['joindeleteTeam']) or isset($_POST['joindeleteTeam'])) {
+// / The following code is performed whenever a user selects to join a Team.
+if (isset($teamToJoin) && $teamToJoin !== '') {
   // do stuff here to authenticate users to the team they're trying to join.
   // and make sure they're not banned.
+  if(in_array($UserID, $BANNED_USERS)) {
+    $txt = ('');  
+    $prettyTxt = '';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    echo nl2br($prettyTxt."\n"); }
+  if(!in_array($UserID, $TEAM_USERS)) { 
+    $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the tean "'.$teamToJoin.'" because they are not a member of it on '.$Time.'!');  
+    $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    echo nl2br($prettyTxt."\n"); }
 
   // / Also make TeamCache and put the user count into it. Also tracked logged-in/awake/asleep users.
-}
+
+} 
 // / -----------------------------------------------------------------------------------
 
 ?>
