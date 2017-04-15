@@ -11,7 +11,7 @@ The only output a client should ever see from this file are success or error mes
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.68';
+$TeamsAppVersion = 'v0.69';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -19,7 +19,7 @@ $ResourcesDir = $TeamsDir.'/_RESOURCES';
 $ScriptsDir = $TeamsDir.'/_SCRIPTS';
 $CacheDir = $TeamsDir.'/_CACHE';
 $TeamsCoreCacheFile = $CacheDir.'/_coreCACHE.php';
-$safeTeamFile = $ResourcesDir.'/SAFETeam.php';
+$safeTeamFile = $ResourcesDir.'/_TEAMS/SAFETeam.php';
 $UsersDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS');
 $UserRootDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'');
 $UserFilesDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'/FILES');
@@ -31,11 +31,16 @@ $fileArray = array();
 $teamDir = '';
 $teamFile = '';
 $newTeamFileDATA = '';
+$cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_ID = '.$UserID.';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
+  $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
+  $USER_PERMISSIONS = 0; $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; $USER_STATUS = \'\';
+  $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; 
+  $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
 $requiredTeamVars = array('$TEAM_CACHE_VERSION', '$TEAM_NAME', '$TEAM_OWNER', '$TEAM_CREATED_BY', '$TEAM_ALIAS', '$TEAM_USERS', 
   '$TEAM_ADMINS', '$TEAM_VISIBILITY', '$TEAM_ALIAS', '$BANNED_USERS');
 $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER_TITLE', '$USER_TOKEN', '$USER_PHOTO_FILENAME', '$USER_ALIAS', 
-  '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_EMAIL_1',
-  '$USER_EMAIL_2', '$USER_EMAIL_3', '$USER_PHONE_1', '$USER_PHONE_2', '$USER_PHONE_3', '$ACCOUNT_NOTES_USER', '$ACCOUNT_NOTES_ADMIN');
+  '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_STATUS',
+  '$USER_EMAIL_1', '$USER_EMAIL_2', '$USER_EMAIL_3', '$USER_PHONE_1', '$USER_PHONE_2', '$USER_PHONE_3', '$ACCOUNT_NOTES_USER', '$ACCOUNT_NOTES_ADMIN');
 // / -----------------------------------------------------------------------------------
 
 // / ----------------------------------------------------------------------------------- 
@@ -105,7 +110,7 @@ if (isset($_POST['joinTeam'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code creates the required CloudLoc directories if they do not exist.
+// / The following code creates required directories if they do not exist.
 if (!file_exists($TeamsDir)) {
   mkdir($TeamsDir);
   copy('index.html', $TeamsDir.'/index.html');
@@ -129,14 +134,9 @@ if (!file_exists($UserFilesDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code creates the user cache files if they do not exist.
+// / The following code creates new user cache files if they do not exist.
 if (!file_exists($UserCacheFile)) {
-  $cacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_ID = '.$UserID.';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
-    $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
-    $USER_PERMISSIONS = 0; $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; $USER_EMAIL_1 = \'\'; 
-    $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; $USER_PHONE_1 = \'\'; $USER_PHONE_W = \'\'; $USER_PHONE_3 = \'\'; 
-    $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
-  $MAKECacheFile = file_put_contents($UserCacheFile, $cacheDATA.PHP_EOL , FILE_APPEND);
+  $MAKECacheFile = file_put_contents($UserCacheFile, $cleanCacheDATA.PHP_EOL , FILE_APPEND);
   $txt = ('Op-Act: Created a new User Cache File '.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 if (!file_exists($UserCacheFile)) {
@@ -170,13 +170,23 @@ foreach ($usersList as $usersIDTestRAW) {
         echo nl2br($txt."\n");
         continue; } }
       if ($userIDTestTESTER == $userFileTESTER && $userFileTESTER == $UserCacheFile) {
-        $userArray = array_push($userArray, $USER_ID);
+        if (!is_array($USER_TEAMS)) {
+          $USER_TEAMS = array($USER_TEAMS); }
         $currentUserID = $USER_ID; 
         $currentUserName = $USER_NAME; 
         $currentUserTeams = $USER_TEAMS; 
+        $settingsUpdateInterval = $UPDATE_INTERVAL; 
         $currentUserPermissions = $USER_PERMISSIONS; 
+        $userArray = array_push($userArray, $USER_ID);
         $settingsInternationalGreetings = $INTERNATIONAL_GREETINGS; 
-        $settingsUpdateInterval = $UPDATE_INTERVAL; }
+        if ($USER_STATUS == '0' or $USER_STATUS == '') {
+          $USER_STATUS = '1'; }
+        if ($USER_STATUS == '1') {
+          $USER_STATUS = '1'; } 
+        if ($USER_STATUS == '2') {
+          $USER_STATUS = '1'; } 
+        if ($USER_STATUS == '3' or $USER_STATUS == '4') {
+          $USER_STATUS = $USER_STATUS; } }
     if (!file_exists($userFileTESTER)) { 
       $txt = ('Warning!!! HRC2TeamsApp49, There was a problem validating User "'.$userFileTESTER.'"" on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
@@ -232,8 +242,8 @@ foreach ($myTeamsList as $teamID) {
         $teamArray = array_push($teamArray, $TEAM_NAME); }
       if ($teamNameTESTER !== $teamFileTESTER) {
         foreach ($requiredTeamVars as $reqVar) {
-
-        }
+          $safeTeamFileDATA = '<?php '.$reqVar.' = \'\';';
+          $MAKESafeTeamFile = file_put_contents($safeTeamFile, $safeTeamFileDATA); }
         include ($safeTeamFile);
         $txt = ('Warning!!! HRC2TeamsApp51, There was a problem validating Team "'.$teamFileTESTER.'"" on '.$Time.'!'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
@@ -256,14 +266,15 @@ if (isset($newTeamName) && $newTeamName !== '') {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   if (file_exists($newTeamDir)) {
     $txt = ('ERROR!!! HRC2TeamsApp134, Unable to create the directory "'.$newTeamDir.'" because it already exists on '.$Time.'!'); 
+    $prettyTxt = 'Ooops! That Team already exists. Try a different name for your Team!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-    echo nl2br($txt."\n");
+    echo nl2br($prettyTxt."\n");
     die (); }  
   if (!file_exists($newTeamDir)) { 
     $txt = ('OP-Act: Creating new Team directory "'.$newTeamDir.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
     mkdir($newTeamDir); 
-    copy ('/index.html', $newTeamDir.'/index.html'); }
+    copy ('index.html', $newTeamDir.'/index.html'); }
   if (!file_exists($newTeamFile)) { 
     $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
       $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'1\'; $BANNED_USERS = array(); ?>');
@@ -272,13 +283,14 @@ if (isset($newTeamName) && $newTeamName !== '') {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (!file_exists($newTeamDataDir)) { 
     mkdir($newTeamDataDir);
-    copy ('/index.html', $teamCacheDir.'/index.html'); 
+    copy ('index.html', $newTeamDataDir.'/index.html'); 
     $txt = ('OP-Act: Creating new Team DATA directory "'.$newTeamDataDir.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (!file_exists($newTeamDir) or !file_exists($newTeamFile)) { 
-    $txt = ('ERROR!!! HRC2TeamsApp186 There was a problem creating the new Team "'.$_POST['newTeam'].'"on '.$Time.'!'); 
+    $txt = ('ERROR!!! HRC2TeamsApp186 There was a problem creating the new Team "'.$_POST['newTeam'].'" on '.$Time.'!'); 
+    $prettyTxt = 'Ooops! There was a problem creating your new Team. Please try again later.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    echo nl2br($txt."\n");
+    echo nl2br($prettyTxt."\n");
     die (); }
   if (file_exists($newTeamFile)) { 
     $teamName = $newTeamName;
@@ -375,8 +387,6 @@ if (!in_array($userToEdit, $currentUserTeams)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to join a Team.
 if (isset($teamToJoin) && $teamToJoin !== '') {
-  // do stuff here to authenticate users to the team they're trying to join.
-  // and make sure they're not banned.
   if(in_array($UserID, $BANNED_USERS)) {
     $txt = ('');  
     $prettyTxt = '';
@@ -386,11 +396,10 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
     $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the tean "'.$teamToJoin.'" because they are not a member of it on '.$Time.'!');  
     $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-    echo nl2br($prettyTxt."\n"); }
-
-  // / Also make TeamCache and put the user count into it. Also tracked logged-in/awake/asleep users.
-
-} 
+    echo nl2br($prettyTxt."\n"); 
+  if(in_array($UserID, $TEAM_USERS) && !in_array($UserID, $BANNED_USERS)) {
+    array_push($currentUserTeams, $teamToJoin);
+     } } } 
 // / -----------------------------------------------------------------------------------
 
 ?>
