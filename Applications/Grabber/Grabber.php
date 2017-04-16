@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.4 (4-4-2017 00:00)
+App Version: 1.5 (4-15-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
@@ -128,7 +128,7 @@ if (isset($grabberURLPOST)) {
         shell_exec('clamscan -r '.$GrabberFile.' | grep FOUND >> '.$ClamLogDir); 
         shell_exec('clamscan -r '.$CloudTempDir.' | grep FOUND >> '.$ClamLogDir); 
         $VirusScanDATA = file_get_contents($ClamLogDir);
-        if (filesize($ClamLogDir > 3) or strpos($ClamLogDir, 'FOUND') == 'true') {
+        if (filesize($ClamLogDir > 3) or strpos($VirusScanDATA, 'FOUND') == 'true') {
           echo nl2br('WARNING!!! HRC2GrabberApp124, There were potentially infected files detected. The file
             transfer could not be completed at this time. Please check your file for viruses, check your HRC2 AV logs, 
             or try again later.'."\n");
