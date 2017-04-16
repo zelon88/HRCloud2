@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.3.5 (3-3-2017 21:30)
+App Version: 2.3.6 (4-15-2017 21:30)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.3.5 | Virus Definition v3.0, 4/4/2017';
+$versions = 'PHP-AV App v2.3.6 | Virus Definition v3.0, 4/4/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -30,8 +30,6 @@ $versions = 'PHP-AV App v2.3.5 | Virus Definition v3.0, 4/4/2017';
 // PHP ANTI-VIRUS v2.2
 // Written by FujitsuBoy (aka Keyboard Artist)
 // Modified by zelon88
-
-$initData = file_get_contents('PHP-AV.php');
 
 // / The following code loads needed HRCloud2 features and functions.
 require('/var/www/html/HRProprietary/HRCloud2/config.php');
@@ -92,6 +90,27 @@ function file_scan($folder, $defs, $debug) {
 		  file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
 	  $d->close(); } }
 
+function load_defs($file, $debug) {
+  // Reads tab-delimited defs file.
+  $defs = file($file);
+  $counter = 0;
+  $counttop = sizeof($defs);
+  while ($counter < $counttop) {
+	$defs[$counter] = explode('	', $defs[$counter]);
+	$counter++; }
+if ($debug)
+  echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
+  return $defs; }
+
+function check_defs($file) {
+  // Check for >755 perms on virus defs.
+  clearstatcache();
+  $perms = substr(decoct(fileperms($file)),-2);
+  if ($perms > 55)
+	return false;
+  else
+	return true; }
+
 function virus_check($file, $defs, $debug, $defData) {
   // Hashes and checks files/folders for viruses against static virus defs.
   global $filecount, $infected, $report, $CONFIG;
@@ -124,27 +143,6 @@ function virus_check($file, $defs, $debug, $defData) {
 			  $clean = 0; } } }
 	    if (($debug)&&($clean))
 		  $report .= '<p class="g">Clean: ' . $file . '</p>'; } }
-
-function load_defs($file, $debug) {
-  // Reads tab-delimited defs file.
-  $defs = file($file);
-  $counter = 0;
-  $counttop = sizeof($defs);
-  while ($counter < $counttop) {
-	$defs[$counter] = explode('	', $defs[$counter]);
-	$counter++; }
-if ($debug)
-  echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
-  return $defs; }
-
-function check_defs($file) {
-  // Check for >755 perms on virus defs.
-  clearstatcache();
-  $perms = substr(decoct(fileperms($file)),-2);
-  if ($perms > 55)
-	return false;
-  else
-	return true; }
 
 function renderhead() {
 ?>
