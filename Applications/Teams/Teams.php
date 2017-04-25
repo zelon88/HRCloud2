@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.69 (4-14-2017 11:30)
+App Version: 0.70 (4-24-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -17,21 +17,6 @@ HRCLOUD2-PLUGIN-END
 <script src="_SCRIPTS/clearField1.js"></script>
 <script src="_SCRIPTS/common.js"></script>
 <?php
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2TeamsApp27, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
 // / The follwoing code checks if the teamsCore.php file exists and 
 // / terminates if it does not.
@@ -40,20 +25,6 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsC
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsCore.php'); }
-
-// / The following code sets the color scheme for the session.
-if ($ColorScheme == '1') {
-  $color = 'blue'; }
-if ($ColorScheme == '2') {
-  $color = 'red'; }
-if ($ColorScheme == '3') {
-  $color = 'green'; }
-if ($ColorScheme == '4') {
-  $color = 'grey'; }
-if ($ColorScheme == '5') {
-  $color = 'black'; }
-if ($ColorScheme == '6') {
-  $color = ''; }
 
 // / The following code represents the graphical user-interface (GUI).
 if ($teamsHeaderDivNeeded == 'true') {
@@ -80,46 +51,11 @@ if ($newTeamDivNeeded == 'true') {
   echo nl2br('<input type="submit" id="newTeamButton" name="newTeamButton" value="New Team"></form></div>'."\n"); }
 
 if ($myTeamsDivNeeded == 'true') {
-  echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
-  echo nl2br("\n".'<div id="myTeamsList" name="myTeamsList" align="center"><strong>My Teams</strong><hr /></div>');
-  echo ('<div align="center">
-    <table class="sortable">
-    <thead><tr>
-    <th>Team</th>
-    <th>Delete</th>
-    </tr></thead><tbody>'); 
-  $myTeamCounter = 0;
-  foreach ($myTeamList as $myTeam) {
-    if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//') continue; 
-    $myTeamCounter++;
-    $myTeamFile = $TeamsDir.'/'.$myTeam.'/'.$myTeam.'.php';
-    include($myTeamFile);
-    $myTeamEcho = $TEAM_NAME;
-    $myTeamTime = date("F d Y H:i:s.",filemtime($myTeamFile));
-    echo ('<tr><td><strong>'.$myTeamCounter.'. </strong><a href="Teams.php?viewTeam='.$myTeam.'">'.$myTeamEcho.'</a></td>');
-    echo ('<td><a href="Teams.php?deleteTeam='.$myTeam.'"><img id="delete'.$myTeamCounter.'" name="'.$myTeam.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
-    echo ('</tr><tbody></table></table>'); } }
+  getMyTeams($myTeamsList); }
 
 if ($teamsDivNeeded == 'true') {
-  echo nl2br("\n".'<div id="myTeamsList" name="myTeamsList" align="center"><strong>Available Teams</strong><hr /></div>');
-  echo ('<div align="center">
-    <table class="sortable">
-    <thead><tr>
-    <th>Team</th>
-    <th>Delete</th>
-    </tr></thead><tbody>'); 
-  $teamCounter = 0;
-  foreach ($tamsList as $team) {
-    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//') continue; 
-    $team1Counter++;
-    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'.php';
-    $teamTime = date("F d Y H:i:s.",filemtime($teamFile));
-    include($myTeamFile);
-    if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
-      $teamEcho = $TEAM_NAME;
-      echo ('<tr><td><strong>'.$teamCounter.'. </strong><a href="Teams.php?viewTeam='.$team.'">'.$teamEcho.'</a></td>');
-      echo ('<td><a href="Teams.php?deleteTeam='.$team.'"><img id="delete'.$teamCounter.'" name="'.$team.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
-      echo ('</tr><tbody></table></table>'); } } } ?>
+  getPublicTeams($teamsList); } 
+?>
 
 
 <?php
