@@ -93,3 +93,8 @@ Think HRCloud2 is neat? Support us on Flattr!
 
 
 <3 Open-Source.
+
+
+# Want more?
+
+-Check out the official [Wiki](https://github.com/zelon88/HRCloud2/wiki).
