@@ -83,6 +83,9 @@ HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it nee
 -New features, bug fixes, and improvements several times weekly!!!
 -Working on "Teams" App so you can finally uninstall Slack!
 
+# Want more?
+
+Check out the official [Wiki](https://github.com/zelon88/HRCloud2/wiki).
 
 ----------------------------
 
@@ -93,8 +96,3 @@ Think HRCloud2 is neat? Support us on Flattr!
 
 
 <3 Open-Source.
-
-
-# Want more?
-
--Check out the official [Wiki](https://github.com/zelon88/HRCloud2/wiki).
