@@ -184,7 +184,7 @@ if (file_exists($UserCacheFile)) {
   $cacheDATA = file_get_contents($UserCacheFile);
   foreach ($requiredUserVars as $requiredVar) {
     if (strpos($requiredVar, $cacheDATA) == 'false') {
-      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php $requiredVar = \'\';'.PHP_EOL, FILE_APPEND); } } } 
+      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php '.$requiredVar.' = \'\';'.PHP_EOL, FILE_APPEND); } } } 
 $usersList = scandir($UsersDir, SCANDIR_SORT_DESCENDING);
 foreach ($usersList as $usersIDTestRAW) {
   if (is_dir($UsersDir.$userIDTestRAW) && $UserID == $userIDTestRAW) {
@@ -275,8 +275,10 @@ foreach ($myTeamsList as $teamID) {
       if ($teamNameTESTER !== $teamFileTESTER) {
         foreach ($requiredTeamVars as $reqVar) {
           $safeTeamFileDATA = '<?php '.$reqVar.' = \'\';';
+          if (file_exists($safeTeamFile)) unlink($safeTeamFile);
           $MAKESafeTeamFile = file_put_contents($safeTeamFile, $safeTeamFileDATA); }
         include ($safeTeamFile);
+        unlink($safeTeamFile);
         $txt = ('Warning!!! HRC2TeamsApp51, There was a problem validating Team "'.$teamFileTESTER.'"" on '.$Time.'!'); 
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n");
@@ -497,7 +499,8 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
   $teamCacheFile = $TeamsDir.'/'.$teamToJoin.'/_CACHE/_'.$teamToJoin.'_CACHE.php';
   $teamDir = $TeamsDir.'/'.$teamToJoin; 
   $teamFile = $teamDir.'/'.$teamToJoin.'.php';
-  include($teamToJoin);
+  include($teamFile);
+  include($teamCacheFile);
   if(in_array($UserID, $BANNED_USERS)) {
     $txt = ('');  
     $prettyTxt = '';
@@ -513,9 +516,11 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
     $USER_STATUS = 1;
     $userCacheDATA0 = implode(',', $currentUserTeams);
     $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_TEAM = array('.$userCacheDATA0.'); ?>';
-    $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA); 
+    $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
     $teamCacheDATA = '';
-    $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA);
+// / Add an array to teamcache, then include it and push the user onto it. Then scan the array and remove users who are inactive or logged out.
+
+    $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
     $chatDivNeeded = 'true'; } } } 
 // / -----------------------------------------------------------------------------------
 
