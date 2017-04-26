@@ -51,7 +51,8 @@ if (!file_exists($WPFile)) {
   unset($VARDir); 
   die(); }
 if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server. And could not be installed.</body></html>'."\n"); }
+  echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server. 
+   And could not be installed.</body></html>'."\n"); }
 else {
   require_once ($WPFile); } 
 // / -----------------------------------------------------------------------------------
@@ -106,7 +107,12 @@ $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
 $SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
 $SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
-$TempResourcesDir = $InstLoc.'/Resources/TEMP';
+$ResourcesDir = $InstLoc.'/Resources';
+$TempResourcesDir = $ResourcesDir.'/TEMP';
+$appDataInstDir = $InstLoc.'/DATA/'.$UserID.'/.AppData';
+$appDataCloudDir = $CloudLoc.'/'.$UserID.'/.AppData';
+$appDataBackupFileCount = 0;
+$appDataBackupFileCount1 = 0;
 $BackupDir = $InstLoc.'/BACKUP';
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
@@ -152,18 +158,22 @@ if(!file_exists($CloudTemp)) {
 if (!file_exists($CloudTempDir)) { 
   mkdir($CloudTempDir, 0755); 
   copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
-copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
+@copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
+// / The following code checks if the TempResources directory exists, and creates one if it does not.
+if (!file_exists($ResourcesDir)) {
+  mkdir($TempResourcesDir, 0755); }
+@copy($InstLoc.'/index.html', $ResourcesDir.'/index.html');
 // / The following code checks if the TempResources directory exists, and creates one if it does not.
 if (!file_exists($TempResourcesDir)) {
   mkdir($TempResourcesDir, 0755); }
-copy($InstLoc.'/index.html', $TempResourcesDir.'/index.html');
+@copy($InstLoc.'/index.html', $TempResourcesDir.'/index.html');
 // / The following code checks if the CloudUsrDir exists, and creates one if it does not.
 if (!file_exists($CloudUsrDir)) {
   mkdir($CloudUsrDir, 0755); }
 // / The following code checks if the CloudTmpDir exists, and creates one if it does not.
 if (!file_exists($CloudTmpDir)) { 
   mkdir($CloudTmpDir, 0755); }
-copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
+@copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
 // / The following code checks if the LogLoc exists, and creates one if it does not.
 // / Also creates the file strucutre needed for the Logs to display content and store cache data.
 if (!file_exists($LogLoc)) {
@@ -225,6 +235,42 @@ if (!file_exists($UserConfig)) {
   die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
   require ($UserConfig); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sync's the users AppData between the CloudLoc and the InstLoc.
+if (!file_exists($appDataCloudDir)) {
+  @mkdir($appDataCloudDir); }
+if (!file_exists($appDataCloudDir)) {
+  $txt = ('WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData 
+   directory in the CloudLoc on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  echo nl2br($txt."\n".'Most likely the server\'s permissions are incorrect. 
+   Make sure the www-data usergroup and user have R/W access to ALL folders in the /var/www/html directory. '); }
+foreach ($iterator = new \RecursiveIteratorIterator (
+  new \RecursiveDirectoryIterator ($appDataInstDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+    @chmod($item, 0755);
+    if ($item->isDir()) {
+      if (!file_exists($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+        mkdir($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
+        $appDataBackupFileCount++; } }
+    else {
+        if (!is_link($item)) {
+          copy($item, $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
+          $appDataBackupFileCount++; } } }
+foreach ($iterator = new \RecursiveIteratorIterator (
+  new \RecursiveDirectoryIterator ($appDataCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+    @chmod($item, 0755);
+    if ($item->isDir()) {
+      if (!file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+        mkdir($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
+        $appDataBackupFileCount1++; } }
+    else {
+        if (!is_link($item)) {
+          copy($item, $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
+          $appDataBackupFileCount1++; } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
