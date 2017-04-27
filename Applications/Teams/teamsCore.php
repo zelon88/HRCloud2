@@ -66,11 +66,12 @@ $teamsGreetingsInternational = array('Hi There!', 'Hello!', 'Bonjour!', 'Hola!',
 if ($settingsInternationalGreetings = '1' or $settingsInternationalGreetings == 1) {
   $teamsGreetings = $teamsGreetingsInternational; }
 $greetingKey = array_rand($teamsGreetings);
+$newTeamNameEcho = 'New Team Name...';
+$newTeamDescriptionEcho = 'New Team Description...';
 $teamsHeaderDivNeeded = 'true';
 $teamsGreetingDivNeeded = 'true';
 $newTeamDivNeeded = 'true';
-$newTeamNameEcho = 'New Team Name...';
-$newTeamDescriptionEcho = 'New Team Description...';
+$chatDivNeeded = 'false';
 // / ----------------------------------------------------------------------------------- 
 
 // / ----------------------------------------------------------------------------------- 
@@ -258,8 +259,8 @@ foreach ($myTeamsList as $teamID) {
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
           die(); }     
       if (!file_exists($teamCacheFile)) {
-        $txt = (''); 
-        $MAKECacheFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        $cacheDATA = ('<?php $ACTIVE_USERS = array(); $INACTIVE_USERS = array(); ?>'); 
+        $MAKECacheFile = file_put_contents($teamCacheFile, $cacheDATA.PHP_EOL, FILE_APPEND);
         if (file_exists($teamCacheFile))
           $txt = ('Op-Act: Created a new Team Cache file on '.$Time.'!'); 
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -292,7 +293,6 @@ foreach ($myTeamsList as $teamID) {
       echo nl2br($txt."\n");
       continue; } } }
 // / -----------------------------------------------------------------------------------
-
 
 // / -----------------------------------------------------------------------------------
 // / The following code will echo a table of the users Teams when called.
@@ -502,8 +502,8 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
   include($teamFile);
   include($teamCacheFile);
   if(in_array($UserID, $BANNED_USERS)) {
-    $txt = ('');  
-    $prettyTxt = '';
+    $txt = ('ERROR!!! HRC2TeamsApp505, The current user "'.$UserID.'" does not have permission to join the team "'.$teamToJoin.'" because they have been banned on '.$Time.'!');  
+    $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($prettyTxt."\n"); }
   if(!in_array($UserID, $TEAM_USERS) && $TEAM_VISIBILITY == '0') { 
@@ -517,10 +517,14 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
     $userCacheDATA0 = implode(',', $currentUserTeams);
     $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_TEAM = array('.$userCacheDATA0.'); ?>';
     $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
-    $teamCacheDATA = '';
-// / Add an array to teamcache, then include it and push the user onto it. Then scan the array and remove users who are inactive or logged out.
-
+    if (!isset($ACTIVE_USERS) or !isset($INACTIVE_USERS)) {
+      $teamCacheDATA = ''; }
+    if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
+      $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
+      $UPDATEInactiveUsers = unset($INACTIVE_USERS[$UserID]);
+      $teamCacheDATA = '<?php $ACTIVE_USERS = array(implode(\',\', $ACTIVE_USERS)); $INACTIVE_USERS = array(implode(\',\', $INACTIVE_USERS));?>'; }
     $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
+    $teamsGreetingDivNeeded = 'false';
     $chatDivNeeded = 'true'; } } } 
 // / -----------------------------------------------------------------------------------
 
