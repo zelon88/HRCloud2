@@ -27,7 +27,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.70';
+$TeamsAppVersion = 'v0.7.3';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -44,6 +44,7 @@ $myTeamsList = array();
 $teamArray = array();
 $userArray = array();
 $fileArray = array();
+$allowPosting = 'false';
 $teamDir = '';
 $teamFile = '';
 $newTeamFileDATA = '';
@@ -230,6 +231,14 @@ unset ($usersList);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code will verify the friends defined in the user cache file.
+/* foreach ($FRIENDS as $friend) { 
+if ! }
+*/
+// / -----------------------------------------------------------------------------------
+
+
+// / -----------------------------------------------------------------------------------
 // / The following code verifies the Teams files contained in the CloudLoc are valid.
 $teamsList = scandir($TeamsDir, SCANDIR_SORT_DESCENDING);
 foreach ($teamsList as $myTeamFinder) {
@@ -371,7 +380,7 @@ function getPublicTeamsQuietly($teamsList) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new Team.
 if (isset($newTeamName) && $newTeamName !== '') {
-  $txt = ('OP-Act: Creating Team "'.$teamToEdit.'" on '.$Time.'!');  
+  $txt = ('OP-Act: Creating Team "'.$newTeamName.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   if (file_exists($newTeamDir)) {
     $txt = ('ERROR!!! HRC2TeamsApp134, Unable to create the directory "'.$newTeamDir.'" because it already exists on '.$Time.'!'); 
@@ -424,8 +433,8 @@ if (isset($teamToEdit) && $teamToEdit !== '') {
   include($teamFile);
   $teamAlias = $TEAM_NAME;
 if (in_array($_POST['editTeam'], $currentUserTeams)) {
-  $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
-    $TEAM_USERS = array(\''.$UserID.'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM ALIAS = \''.$teamAlias.'\'; $BANNED_USERS = array(); ?>');
+  $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$editTeamName.'\'; $TEAM_OWNER = \''.$editTeamOwner.'\' ; $TEAM_USERS = array(\''.$editTeamUsers.'\'); 
+    $TEAM_ADMINS = array(\''.$editTeamAdmins.'\'); $TEAM ALIAS = \''.$editTeamAlias.'\'; $BANNED_USERS = array(); ?>');
   $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
   echo nl2br('Edited <i>'.$teamName.'</i>'."\n"); } 
 if (!in_array($teamToEdit, $currentUserTeams)) {
@@ -480,8 +489,8 @@ if (isset($userToEdit) && $userToEdit !== '') {
   include($userFile);
 if ($_POST['editUser'] == $currentUserID) {
     $newUserFileDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
-    $USER_PHOTO_FILENAME = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
-    $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; 
+    $USER_PHOTO_FILENAME = \'\'; $USER_TEAMS_OWNED = \'\'; $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; 
+    $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; 
     $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; $ACCOUNT_NOTES_USER = \'\'; ?>');
   $MAKEnewUserFile = file_put_contents($userFile, $newUserFileDATA.PHP_EOL, FILE_APPEND); 
   include($userFile);  
@@ -496,6 +505,14 @@ if (!in_array($userToEdit, $currentUserTeams)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to join a Team.
 if (isset($teamToJoin) && $teamToJoin !== '') {
+  if (is_array($teamToJoin)) {
+    if (count($teamToJoin) > 1) {
+      $txt = ('ERROR!!! HRC2TeamsApp501, Only one Team can be joined per request. '.$UserID.' Attempted to upload a multi-dimensional array as the "teamToJoin" on '.$Time);  
+      $prettyTxt = 'Whoa, somehow you managed to submit an invalid multi-dimensional array to the server in a POST request! :o
+       Whatever that means, you should tell your Teams App administrator to check the logs.';
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
+      echo nl2br($prettyTxt."\n"); } }
+    $teamToJoin = $teamToJoin[0];
   $teamCacheFile = $TeamsDir.'/'.$teamToJoin.'/_CACHE/_'.$teamToJoin.'_CACHE.php';
   $teamDir = $TeamsDir.'/'.$teamToJoin; 
   $teamFile = $teamDir.'/'.$teamToJoin.'.php';
@@ -510,7 +527,7 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
     $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the team "'.$teamToJoin.'" because they are not a member of it on '.$Time.'!');  
     $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($prettyTxt."\n"); 
+    echo nl2br($prettyTxt."\n"); }
   if(in_array($UserID, $TEAM_USERS) && !in_array($UserID, $BANNED_USERS)) {
     $currentUserTeams = array_push($currentUserTeams, $teamToJoin);
     $USER_STATUS = 1;
@@ -521,20 +538,127 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
       $teamCacheDATA = ''; }
     if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
       $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
-      $UPDATEInactiveUsers = unset($INACTIVE_USERS[$UserID]);
       $teamCacheDATA = '<?php $ACTIVE_USERS = array(implode(\',\', $ACTIVE_USERS)); $INACTIVE_USERS = array(implode(\',\', $INACTIVE_USERS));?>'; }
     $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
-    $chatDivNeeded = 'true'; } } } 
+    $allowPosting = $teamToJoin;
+    $chatDivNeeded = 'true'; } }
+// / -----------------------------------------------------------------------------------
+
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to create a new SubTeam (Private Team within a Team).
+  // / Must be performed AFTER teamToJoin.
+if (isset($newSubTeam) && $newSubTeam !== '' && isset($teamToJoin)) {
+  // / Add subteam users to the array.
+  $txt = ('OP-Act: Creating SubTeam "'.$newSubTeam.'" on '.$Time.'!');  
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+
+if (!is_array($subTeamUsers)) {
+  $subTeamUsers = array($_POST['subTeamUsers']); }
+  $EmrgcCtr = 0;
+foreach($subTeamUsers as $subTeamUser) {
+  $EmrgcCtr++;
+  if ($EmrgcCtr == 1000) continue;
+  include($teamFile);
+  if (in_array($UserID, $TEAM_USERS) && !in_array($User, $BANNED_USERS)) {
+    $USER_SUBTEAM = '';
+  }
+}
+
+
+  if (!file_exists($newSubTeamFile)) { 
+    $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
+      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.', '.implode(', ', $FriendArr).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
+    $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Creating new Team file "'.$newTeamFile.'" on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (file_exists($teamFile)) { 
+  
+
+    $teamFile = $newTeamFile;
+    $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');    $teamDir = $newTeamDir;     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
+// / -----------------------------------------------------------------------------------
+
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to join a Sub-Team.
+if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin)) {
+  if (is_array($subTeamToJoin)) {
+    if (count($subTeamToJoin) > 1) {
+      $txt = ('ERROR!!! HRC2TeamsApp546, Only one Sub-Team can be joined per request. '.$UserID.' Attempted to upload a multi-dimensional array as the "teamToJoin" on '.$Time);  
+      $prettyTxt = 'Whoa, somehow you managed to submit an invalid multi-dimensional array to the server in a POST request! :0 
+       Whatever that means, you should tell your Teams App administrator to double check the logs.';
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
+      echo nl2br($prettyTxt."\n"); }
+    $subTeamToJoin = $subTeamToJoin[0]; }
+  $teamDir = $TeamsDir.'/'.$teamToJoin; 
+  $teamFile = $teamDir.'/'.$teamToJoin.'.php';
+  $subTeamFile = $TeamsDir.'/'.$subTeamToJoin.'.php';
+  $subTeamCacheFile = $TeamsDir.'/'.$teamToJoin.'/_CACHE/_'.$subTeamToJoin.'_CACHE.php';
+  include($subTeamFile);
+  include($subTeamCacheFile);
+  if(in_array($UserID, $BANNED_USERS)) {
+    $txt = ('ERROR!!! HRC2TeamsApp505, The current user "'.$UserID.'" does not have permission to join the team "'.$teamToJoin.'" because they have been banned on '.$Time.'!');  
+    $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($prettyTxt."\n"); }
+  if(!in_array($UserID, $TEAM_USERS) && $TEAM_VISIBILITY == '0') { 
+    $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the team "'.$teamToJoin.'" because they are not a member of it on '.$Time.'!');  
+    $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($prettyTxt."\n"); 
+  if(in_array($UserID, $TEAM_USERS) && !in_array($UserID, $BANNED_USERS)) {
+    $currentUserSubTeams = array_push($currentUserSubTeams, $subTeamToJoin);
+    $USER_STATUS = 1;
+    $userCacheDATA0 = implode(',', $currentUserSubTeams);
+    $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_SUBTEAM = array('.$userCacheDATA0.'); ?>';
+    $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
+    if (!isset($ACTIVE_USERS) or !isset($INACTIVE_USERS)) {
+      $teamCacheDATA = ''; }
+    if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
+      $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
+      $subTeamCacheDATA = '<?php $ACTIVE_USERS = array(implode(\',\', $ACTIVE_USERS)); $INACTIVE_USERS = array(implode(\',\', $INACTIVE_USERS));?>'; }
+    $WRITETeamCacheDATA = file_put_contents($subTeamCacheFile, $subTeamCacheDATA.PHP_EOL, FILE_APPEND);
+    $teamsGreetingDivNeeded = 'false';
+    $allowPosting = $subTeamToJoin;
+    $chatDivNeeded = 'true'; } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever an admin selects to kick an active user from a Team.
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever an admin selects to tempBan a user from a Team.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever an admin selects to permBan a user from a Team.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an authenticated user selects to submit a text post to a Team.
+if (isset($textTeamPost) && isset($teamToJoin) && $allowPosting == $teamToJoin) {
+  if (isset($subTeamID)) {
 
+  }
+
+  $conversationData = $Time.' '.$USER_NAME.'- '.$textTeamPost;
+  
+  $MAKEConversationFile = '';
+}
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an authenticated user selects to submit a file post to a Team.
+if (isset($fileTeamPost) && $allowPosting == $teamToJoin) {
+
+}
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code reads the selected conversation file and returns it's contents.
 // / -----------------------------------------------------------------------------------
 
 ?>
