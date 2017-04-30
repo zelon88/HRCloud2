@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.4 (3-16-2017 11:00)
+App Version: 1.5 (4-29-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -49,8 +49,6 @@ else {
 // / The following code ensures the Contacts directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
-$contactsList = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
-$newest_contact = $contactsList[0];
 $contactData = '';
 $contactButtonEcho = 'New Contact';
 $contactTitle = 'New Contact...';
@@ -62,6 +60,8 @@ if (!file_exists($ContactsDir)) {
   $txt = ('ERROR!!! HRC2ContactsApp19, There was a problem creating the user contacts directory on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die ($txt); } 
+$contactsList = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
+$newest_contact = $contactsList[0];
 
 // / The following code is performed whenever a user selects to edit a Contact.
 if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
