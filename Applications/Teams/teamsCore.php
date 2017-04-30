@@ -45,6 +45,8 @@ $teamArray = array();
 $userArray = array();
 $fileArray = array();
 $allowPosting = 'false';
+$serverKEY = hash('sha256', $URL.$Salts.$Date);
+$adminKEY = hash('sha256', $UserID.$Salts.$Date);
 $teamDir = '';
 $teamFile = '';
 $newTeamFileDATA = '';
@@ -94,10 +96,10 @@ if ($ColorScheme == '6') {
 // / -----------------------------------------------------------------------------------
 // / The following code represents the Teams API handler, sanitizing and consolidating inputs.
   // / -New Team inputs.
-if (isset($_GET['newTeam'])) {
-  $_POST['newTeam'] = $_GET['newTeam']; }
 if (!isset($_POST['newTeam'])) {
   $newTeamName = ''; }
+if (isset($_GET['newTeam'])) {
+  $_POST['newTeam'] = $_GET['newTeam']; }
 if (isset($_POST['newTeam'])) {
   $_POST['newTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newTeam']);
   $newTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newTeam']); 
@@ -105,6 +107,20 @@ if (isset($_POST['newTeam'])) {
   $newTeamDir = str_replace('//', '/', $TeamsDir.'/'.$newTeamID);
   $newTeamFile = str_replace('//', '/', $newTeamDir.'/'.$newTeamID.'.php');
   $newTeamDataDir = str_replace('//', '/', $newTeamDir.'/_DATA'); }
+  // / -New SubTeam inputs.
+if (!isset($_POST['newSubTeam'])) {
+  $newTeamName = ''; }
+if (isset($_GET['newSubTeam']) && isset($_GET['joinTeam'])) {
+  $_POST['newSubTeam'] = $_GET['joinSubTeam']; 
+  $_POST['baseTeamID'] = $_GET['joinTeam']; }
+if (isset($_POST['newSubTeam'])) {
+  $_POST['newSubTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newSubTeam']);
+  $newSubTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newSubTeam']); 
+  $baseTeamDir = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinTeam']);
+  $newSubTeamID = hash('sha256', $newSubTeamName.$SALTS);
+  $newSubTeamDir = str_replace('//', '/', $TeamsDir.'/'.$baseTeamID);
+  $newSubTeamFile = str_replace('//', '/', $baseTeamDir.'/'.$newSubTeamID.'.php');
+  $newSubTeamDataDir = str_replace('//', '/', $baseTeamDir.'/_DATA'); }
   // / -Edit Team inputs.
 if (isset($_GET['editTeam'])) {
   $_POST['editTeam'] = $_GET['editTeam']; }
@@ -141,6 +157,15 @@ if (isset($_POST['joinTeam'])) {
   $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinTeam']); }
 if (isset($_POST['joinTeam'])) {
   $teamToJoin = ''; }
+  // / -Join Sub-Team inputs- 
+if (isset($_GET['joinSubTeam'])) {
+  $subTeamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['joinSubTeam']); }
+if (!isset($_GET['joinSubTeam'])) {
+  $subTeamToJoin = ''; }
+if (isset($_POST['joinSubTeam'])) {
+  $subTeamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinSubTeam']); }
+if (isset($_POST['joinSubTeam'])) {
+  $subTeamToJoin = ''; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -236,7 +261,6 @@ unset ($usersList);
 if ! }
 */
 // / -----------------------------------------------------------------------------------
-
 
 // / -----------------------------------------------------------------------------------
 // / The following code verifies the Teams files contained in the CloudLoc are valid.
@@ -351,7 +375,7 @@ function getPublicTeams($teamsList) {
     </tr></thead><tbody>'); 
   foreach ($teamsList as $team) {
     if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//') continue; 
-    $team1Counter++;
+    $teamCounter++;
     $teamFile = $TeamsDir.'/'.$team.'/'.$team.'.php';
     $teamTime = date("F d Y H:i:s.",filemtime($teamFile));
     include($teamFile);
@@ -369,7 +393,6 @@ function getPublicTeamsQuietly($teamsList) {
   $publicTeamArr = array();
   foreach ($teamsList as $team) {
     if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//') continue; 
-    $team1Counter++;
     $teamFile = $TeamsDir.'/'.$team.'/'.$team.'.php';
     include($teamFile);
     if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
@@ -476,6 +499,14 @@ if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code is performed when an admin adds a user to a Team.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed when an admin removes a user from a Team.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a validated user selects to edit their account.
 if (isset($userToEdit) && $userToEdit !== '') {
   $txt = ('OP-Act: Opening User "'.$userToEdit.'" for editing on '.$Time.'!');  
@@ -545,7 +576,6 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
     $chatDivNeeded = 'true'; } }
 // / -----------------------------------------------------------------------------------
 
-
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new SubTeam (Private Team within a Team).
   // / Must be performed AFTER teamToJoin.
@@ -580,7 +610,6 @@ foreach($subTeamUsers as $subTeamUser) {
     $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');    $teamDir = $newTeamDir;     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
 // / -----------------------------------------------------------------------------------
-
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to join a Sub-Team.
