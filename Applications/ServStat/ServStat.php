@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: aServStat
-App Version: 1.0 (12-21-2016 12:15)
+App Version: 1.1 (4-29-2017 11:30)
 App License: GPLv3
 App Author: avignat & zelon88
 App Description: A simple HRCloud2 App for keeping tabs on servers. 
