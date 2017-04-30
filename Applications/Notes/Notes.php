@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.4 (2-5-2017 12:30)
+App Version: 1.5 (4-29-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -40,8 +40,6 @@ else {
 // / The following code ensures the Notes directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
-$notesList = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
-$newest_note = $notesList[0];
 $noteData = '';
 $noteTitle = 'New Note...';
 $noteButtonEcho = 'Create Note';
@@ -53,6 +51,8 @@ if (!file_exists($NotesDir)) {
   $txt = ('ERROR!!! HRC2N19, There was a problem creating the user notes directory on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   die ($txt); } 
+$notesList = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
+$newest_note = $notesList[0];
 
 // / The following code is performed whenever a user selects to edit a Note.
 if (isset($_GET['editNote'])) {
@@ -63,7 +63,7 @@ if (isset($_GET['editNote'])) {
   $noteData = str_replace('<br />', '', $noteData);
   $noteTitle = $_GET['editNote'];
   $noteButtonEcho = 'Edit Note';
-  $txt = ('OP-Act: Opening Note '.$noteToDelete.' for editing on '.$Time.'!'); 
+  $txt = ('OP-Act: Opening Note '.$noteToEdit.' for editing on '.$Time.'!'); 
   echo 'Editing <i>'.$noteName.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
 
@@ -95,8 +95,7 @@ if (is_dir($NotesDir)) {
   	echo nl2br('<form method="post" action="Notes.php" type="multipart/form-data">'."\n");
   	echo nl2br('<input type="text" id="newNote" name="newNote" value="'.$noteTitle.'" onclick="Clear();">'."\n");
   	echo ('<textarea id="note" name="note" cols="40" rows="5">'.$noteData.'</textarea>');
-    echo nl2br("\n".'<input type="submit" value="'.$noteButtonEcho.'"></form>'); 
-     }
+    echo nl2br("\n".'<input type="submit" value="'.$noteButtonEcho.'"></form>'); }
 ?>
 <br>
 </div><div id="notesList" name="notesList" align="center"><strong>My Notes</strong><hr /></div>
