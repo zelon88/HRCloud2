@@ -101,12 +101,12 @@ if (isset($_POST['Save'])) {
 <hr />
 <?php
 sleep(1);
+include('/var/www/html/HRProprietary/HRCloud2/commonCore.php');
 echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 ?></div>
 <div align="center">   
 <hr /></div>
-<?php 
-sleep(1); }
+<?php }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

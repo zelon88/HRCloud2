@@ -234,7 +234,7 @@ if (!file_exists($UserConfig)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
-  require ($UserConfig); }
+  include ($UserConfig); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
