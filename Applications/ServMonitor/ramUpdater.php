@@ -1,12 +1,4 @@
-<?php if ($UpdateInterval !== '0' or $UpdateInterval !== 0 or $UpdateInterval !== '') { ?>
-<script>
-    $(document).ready(function(){
-        setInterval(function() {
-            $("#cpuGauge").load("cpuUpdate.php #cpuGauge");
-        }, <?php echo $UpdateInt; ?>);
-    });
-</script>
-<?php }
+<?php 
 
 // / This file will retrieve information regarding the server's memory performance and statistics.
 $ramCacheFile = 'Cache/ramCACHE.php';

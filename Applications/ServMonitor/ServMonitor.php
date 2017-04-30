@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.6 (3-10-2017 01:25)
+App Version: 2.7 (4-28-2017 11:30)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -19,6 +19,7 @@ HRCLOUD2-PLUGIN-END
   // / 2. IconArchive.com (https://iconarchive.com)
   // / 3. Itzik Gur (http://www.iconarchive.com/artist/itzikgur.html)
   // / 4. StackExchange user "dhaupin" (http://stackoverflow.com/users/2418655/dhaupin), (http://stackoverflow.com/questions/4705759/how-to-get-cpu-usage-and-ram-usage-without-exec/29669238)
+  // / 5. Also check out the ICON_CREDITS.txt for more props to amazing designers and developers!!!
 
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
