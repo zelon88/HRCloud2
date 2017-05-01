@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Executor
-App Version: 1.3 (4-4-2017 00:00)
+App Version: 1.4 (4-29-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 command-line for using PHP like it were Bash.
