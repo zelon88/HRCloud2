@@ -27,7 +27,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.7.3';
+$TeamsAppVersion = 'v0.7.4';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -500,10 +500,32 @@ if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an admin adds a user to a Team.
+if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
+  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminAddUserToTeam.'/'.$adminAddUserToTeam.'.php');
+  $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToAdd.'/'.$adminTeamToAdd);
+  include($userModFile);
+  $USER_TEAMS = array_push($USER_TEAMS, $adminTeamToAdd);
+  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS.'\');'); 
+  $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
+  include($teamdModFile);
+  $TEAM_USERS = array_push($TEAM_USERS, $adminAddUserToTeam);
+  $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
+  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an admin removes a user from a Team.
+if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
+  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminAddUserToTeam.'/'.$adminAddUserToTeam.'.php');
+  $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToAdd.'/'.$adminTeamToAdd);
+  include($userModFile);
+  $USER_TEAMS = unset($USER_TEAMS[$adminTeamToAdd]);
+  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS.'\');'); 
+  $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
+  include($teamdModFile);
+  $TEAM_USERS = unset($TEAM_USERS[$adminAddUserToTeam]);
+  $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
+  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -562,14 +584,14 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
   if(in_array($UserID, $TEAM_USERS) && !in_array($UserID, $BANNED_USERS)) {
     $currentUserTeams = array_push($currentUserTeams, $teamToJoin);
     $USER_STATUS = 1;
-    $userCacheDATA0 = implode(',', $currentUserTeams);
-    $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_TEAM = array('.$userCacheDATA0.'); ?>';
+    $userCacheDATA0 = implode('\',\'', $currentUserTeams);
+    $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_TEAM = array(\''.$userCacheDATA0.'\'); ?>';
     $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
     if (!isset($ACTIVE_USERS) or !isset($INACTIVE_USERS)) {
       $teamCacheDATA = ''; }
     if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
       $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
-      $teamCacheDATA = '<?php $ACTIVE_USERS = array(implode(\',\', $ACTIVE_USERS)); $INACTIVE_USERS = array(implode(\',\', $INACTIVE_USERS));?>'; }
+      $teamCacheDATA = '<?php $ACTIVE_USERS = array(\''.implode('\',\'', $ACTIVE_USERS).'\''); $INACTIVE_USERS = array(\''.implode('\',\'', $INACTIVE_USERS).'\');?>'; }
     $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
     $allowPosting = $teamToJoin;
@@ -599,7 +621,7 @@ foreach($subTeamUsers as $subTeamUser) {
 
   if (!file_exists($newSubTeamFile)) { 
     $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
-      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.', '.implode(', ', $FriendArr).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
+      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.'\',\''.implode('\',\'', $FriendArr).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
     $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Creating new Team file "'.$newTeamFile.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -607,7 +629,9 @@ foreach($subTeamUsers as $subTeamUser) {
   
 
     $teamFile = $newTeamFile;
-    $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');    $teamDir = $newTeamDir;     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');    
+    $teamDir = $newTeamDir;     
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
 // / -----------------------------------------------------------------------------------
 
@@ -641,14 +665,14 @@ if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin)) {
   if(in_array($UserID, $TEAM_USERS) && !in_array($UserID, $BANNED_USERS)) {
     $currentUserSubTeams = array_push($currentUserSubTeams, $subTeamToJoin);
     $USER_STATUS = 1;
-    $userCacheDATA0 = implode(',', $currentUserSubTeams);
-    $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_SUBTEAM = array('.$userCacheDATA0.'); ?>';
+    $userCacheDATA0 = implode('\',\'', $currentUserSubTeams);
+    $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_SUBTEAM = array(\''.$userCacheDATA0.'\'); ?>';
     $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
     if (!isset($ACTIVE_USERS) or !isset($INACTIVE_USERS)) {
       $teamCacheDATA = ''; }
     if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
       $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
-      $subTeamCacheDATA = '<?php $ACTIVE_USERS = array(implode(\',\', $ACTIVE_USERS)); $INACTIVE_USERS = array(implode(\',\', $INACTIVE_USERS));?>'; }
+      $subTeamCacheDATA = '<?php $ACTIVE_USERS = array(\''.implode('\',\'', $ACTIVE_USERS).'); $INACTIVE_USERS = array(\''.implode('\',\'', $INACTIVE_USERS).'\');?>'; }
     $WRITETeamCacheDATA = file_put_contents($subTeamCacheFile, $subTeamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
     $allowPosting = $subTeamToJoin;
