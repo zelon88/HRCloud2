@@ -27,7 +27,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.7.4';
+$TeamsAppVersion = 'v0.7.5';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -505,7 +505,7 @@ if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
   $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToAdd.'/'.$adminTeamToAdd);
   include($userModFile);
   $USER_TEAMS = array_push($USER_TEAMS, $adminTeamToAdd);
-  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS.'\');'); 
+  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS).'\');'); 
   $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
   include($teamdModFile);
   $TEAM_USERS = array_push($TEAM_USERS, $adminAddUserToTeam);
@@ -515,15 +515,15 @@ if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an admin removes a user from a Team.
-if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
-  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminAddUserToTeam.'/'.$adminAddUserToTeam.'.php');
-  $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToAdd.'/'.$adminTeamToAdd);
+if (isset($adminRemoveUserFromTeam) && isset($adminTeamToRemove)) {
+  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminRemoveUserFromTeam.'/'.$adminRemoveUserFromTeam.'.php');
+  $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToRemove.'/'.$adminTeamToRemove);
   include($userModFile);
-  $USER_TEAMS = unset($USER_TEAMS[$adminTeamToAdd]);
-  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS.'\');'); 
+  $USER_TEAMS[$adminTeamToRemove] = null;
+  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS).'\');'); 
   $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
   include($teamdModFile);
-  $TEAM_USERS = unset($TEAM_USERS[$adminAddUserToTeam]);
+  $TEAM_USERS[$adminRemoveUserFromTeam] = null;
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
@@ -591,7 +591,7 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
       $teamCacheDATA = ''; }
     if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
       $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
-      $teamCacheDATA = '<?php $ACTIVE_USERS = array(\''.implode('\',\'', $ACTIVE_USERS).'\''); $INACTIVE_USERS = array(\''.implode('\',\'', $INACTIVE_USERS).'\');?>'; }
+      $teamCacheDATA = '<?php $ACTIVE_USERS = array(\''.implode('\',\'', $ACTIVE_USERS).'\'); $INACTIVE_USERS = array(\''.implode('\',\'', $INACTIVE_USERS).'\');?>'; }
     $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
     $allowPosting = $teamToJoin;
