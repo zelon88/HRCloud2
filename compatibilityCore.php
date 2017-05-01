@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.5.1
-WRITTEN ON : 4/29/2017
+THIS VERSION : v1.5.2
+WRITTEN ON : 5/1/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -320,6 +320,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
         @unlink($CleanDir.'/jquery-3.1.0.min.js');
         @chmod($CleanDir.'/wordpress_1-28-17.zip');
         @unlink($CleanDir.'/wordpress_1-28-17.zip');
+        @chmod($CleanDir.'/wordpress_3-16-17.zip');
+        @unlink($CleanDir.'/wordpress_3-16-17.zip');
         @chmod($CleanDir.'/Database/Words/index.html');
         @unlink($CleanDir.'/Database/Words/index.html');
         @chmod($CleanDir.'/Words/index.html');
@@ -364,6 +366,8 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
             @unlink($CleanDir.'/jquery-3.1.0.min.js');
             @chmod($CleanDir.'/wordpress_1-28-17.zip');
             @unlink($CleanDir.'/wordpress_1-28-17.zip');
+            @chmod($CleanDir.'/wordpress_3-16-17.zip');
+            @unlink($CleanDir.'/wordpress_3-16-17.zip');
             @chmod($CleanDir.'/Database/Words/index.html');
             @unlink($CleanDir.'/Database/Words/index.html');
             @chmod($CleanDir.'/Words/index.html');

@@ -573,7 +573,6 @@ if (isset( $_POST['convertSelected'])) {
   $_POST['convertSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']);
   if (!is_array($_POST['convertSelected'])) {
     $_POST['convertSelected'] = array($_POST['convertSelected']); } 
-  $convertcount = 0;
   foreach ($_POST['convertSelected'] as $key => $file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
@@ -592,6 +591,7 @@ if (isset( $_POST['convertSelected'])) {
       echo nl2br('ERROR!!! HRC2381, There was a problem copying your file between internal HRCloud directories.
         Please rename your file or try again later.'."\n");
       die(); }
+    $convertcount = 0;
     $extension = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['extension']);
     $pathname = str_replace('//', '/', $CloudTmpDir.$file);
     $oldPathname = str_replace('//', '/', $CloudUsrDir.$file);
@@ -599,7 +599,7 @@ if (isset( $_POST['convertSelected'])) {
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
     $newFile = str_replace('//', '/', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension));
     $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile);
-    $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp');
+    $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp', 'odf');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $pdfarray = array('pdf');
     $abwarray = array('abw');
@@ -617,33 +617,47 @@ if (isset( $_POST['convertSelected'])) {
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile;
     // / Code to increment the conversion in the event that an output file already exists.    
     while(file_exists($newPathname)) {
-      $convertcount++; 
-      $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension); }
-    $convertcount++;
+      $convertcount++;
+      $newFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['userconvertfilename'].'_'.$convertcount.'.'.$extension);
+      $newPathname = $CloudUsrDir.$newFile; }
           // / Code to convert document files.
           // / Note: Some servers may experience a delay between the script finishing and the
             // / converted file being placed into their Cloud drive. If your files do not immediately
             // / appear, simply refresh the page.
           if (in_array($oldExtension, $docarray)) {
           // / The following code performs several compatibility checks before copying or converting anything.
-            if (!file_exists('/usr/bin/unoconv')) {
+            if (file_exists('/usr/bin/unoconv')) {
               $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
-              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
             // / The following code checks to see if Unoconv is in memory.
               exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
-              if ($DocEngineStatus == 1) {
+              if (count($DocEnginePID) < 1) {
                 exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
-                $txt = ('OP-Act: Starting the Unoconv listener (PID '.$DocEnginePID[1].') on '.$Time.'.');
+                $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID[1].') on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+                exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus); } }
+            if (count($DocEnginePID) >= 1) {
+              $txt = ('OP-Act, The document conversion engine PID is '.$DocEnginePID[1]);
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+              $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pathname\" on ".$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
+              exec("unoconv -o $newPathname -f $extension $pathname", $returnDATA); 
+              if (!is_array($returnDATA)) {
+                $txt = ('OP-Act, Unoconv returned '.$returnDATA.' on '.$Time.'.');
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-            $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pathname\" on ".$Time.'.');
-            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-            system("/usr/bin/unoconv -o $newPathname -f $extension $pathname");
+              if (is_array($returnDATA)) {
+                $txt = ('OP-Act, Unoconv returned the following on '.$Time.':');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }                
+                foreach($returnDATA as $returnDATALINE) {
+                  $txt = ($returnDATALINE);
+                  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
             // / For some reason files take a moment to appear after being created with Unoconv.
             $stopper = 0;
             while(!file_exists($newPathname)) {
+              exec("unoconv -o $newPathname -f $extension $pathname");
               $stopper++;
               if ($stopper == 10) {
-                $txt = 'ERROR!!! HRC2425, The converter timed out while copying your file.';
+                $txt = 'ERROR!!! HRC2425, The converter timed out while copying your file. ';
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
                 die($txt); } } }
           // / Code to convert and manipulate image files.
