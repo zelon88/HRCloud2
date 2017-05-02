@@ -29,12 +29,6 @@ function toggle_visibility(id) {
 <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
 </div>
 <?php
-// / Verify that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! HRC2SharedIndex27, WordPress was not detected on the server.'."\n"); }
-  else {
-    require_once($WPFile); } 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
