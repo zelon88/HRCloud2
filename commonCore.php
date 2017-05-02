@@ -308,13 +308,6 @@ if ($Udir == '//') {
   $Udir = '/'; }
 if ($Udir == '//') {
   $Udir = '/'; }
-// / User directory cleaner.
-$Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
-$Udir = ltrim(rtrim($Udir,'//'),'/').'/';
-$Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
-$CleanUdir = str_replace('//', '/', $Udir.$name);
-$CleanUdir = str_replace('//', '/', $CleanUdir);
-$CleanUdir = str_replace('//', '/', $CleanUdir);
-$CleanDir = rtrim($CleanUdir, '/');
 // / -----------------------------------------------------------------------------------
+
 ?>
