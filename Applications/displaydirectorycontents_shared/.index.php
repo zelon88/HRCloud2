@@ -1,27 +1,6 @@
 <!doctype html>
 <html>
 <head>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="./.favicon.ico">
-   <title>HRCLoud2 | Shared Files Viewer</title>
-
-   <link rel="stylesheet" href="./.style.css">
-   <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-   <script src="./.sorttable.js"></script>
-<script type="text/javascript">
-function goBack() {
-  window.history.back(); }
-function refresh() {
-  window.location.reload(); }
-function toggle_visibility(id) {
-    var e = document.getElementById(id);
-    if(e.style.display == 'block')
-      e.style.display = 'none';
-    else
-      e.style.display = 'block'; }
-</script>
-</head>
-<body>
 <?php
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -38,7 +17,39 @@ $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
 $fileCounter = 0;
+// / Color scheme handler.
+if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+  $ColorScheme = '1'; }
+if ($ColorScheme == '1') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
+if ($ColorScheme == '2') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
+if ($ColorScheme == '3') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
+if ($ColorScheme == '4') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
+if ($ColorScheme == '5') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 ?>
+   <meta charset="UTF-8">
+   <link rel="shortcut icon" href="./.favicon.ico">
+   <title>HRCLoud2 | Shared Files Viewer</title>
+   <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+   <script src="./.sorttable.js"></script>
+<script type="text/javascript">
+function goBack() {
+  window.history.back(); }
+function refresh() {
+  window.location.reload(); }
+function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if(e.style.display == 'block')
+      e.style.display = 'none';
+    else
+      e.style.display = 'block'; }
+</script>
+</head>
+<body>
 <div align="center" id="container">
 <div align="center"><h3>Shared Files</h3></div>
 <div align="center" style="margin-bottom:10px;">
