@@ -39,7 +39,7 @@ if (isset ($ExternalIP)) {
 // / The following code verifies that WordPress is installed.
 $WPFile = '/var/www/html/wp-load.php';
 if (!file_exists($WPFile)) {
-  $WPArch  = $InstLoc.'/Applications/wordpress_3-16-17.zip';
+  $WPArch  = $InstLoc.'/Applications/wordpress.zip';
   $VARDir = '/var/www/html';
   echo nl2br('</head>Notice!!! HRC2CommonCore27, WordPress was not detected on the server. 
     Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'."\n");
@@ -105,6 +105,7 @@ $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
+$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
 $SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
 $SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
 $ResourcesDir = $InstLoc.'/Resources';
@@ -116,9 +117,11 @@ $appDataBackupFileCount1 = 0;
 $BackupDir = $InstLoc.'/BACKUP';
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_3-16-17.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip');
 $installedApps = array_diff($Apps, $defaultApps);
 // / -----------------------------------------------------------------------------------
 
@@ -279,14 +282,39 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="Styles/style.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/style.css">'); }
 if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleRED.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); }
 if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleGREEN.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); }
 if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleGREY.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
 if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="Styles/styleBLACK.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code represents the user directory handler.
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
+  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
+    $_POST['UserDir'] = '/'; 
+    $_POST['UserDirPOST'] = '/'; } 
+  $Udir = $_POST['UserDirPOST'].'/'; }
+if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+// / User directory cleaner.
+$Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
+$Udir = ltrim(rtrim($Udir,'//'),'/').'/';
+$Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir))); 
+$CleanUdir = str_replace('//', '/', $Udir.$name);
+$CleanUdir = str_replace('//', '/', $CleanUdir);
+$CleanUdir = str_replace('//', '/', $CleanUdir);
+$CleanDir = rtrim($CleanUdir, '/');
 // / -----------------------------------------------------------------------------------
 ?>
