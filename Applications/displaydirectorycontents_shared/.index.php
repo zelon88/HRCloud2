@@ -52,7 +52,6 @@ $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
 if (!file_exists($UserConfig)) {
   @chmod($UserConfig, 0755); }
