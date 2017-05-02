@@ -38,7 +38,6 @@ $ConvertInc = 0;
 $RenameInc = 0;
 $ConvertInc = 0;
 $EditInc = 0;
-
 // / GUI specific resources.
   function pretty_filesize($file) {
     $size=filesize($file);
@@ -327,6 +326,10 @@ Are you sure?
           $extn = "Playlist"; } 
         $size = pretty_filesize($CloudUsrDir.$dirArray[$index]);
         $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
+$CleanUdir = str_replace('//', '/', $Udir.$name);
+$CleanUdir = str_replace('//', '/', $CleanUdir);
+$CleanUdir = str_replace('//', '/', $CleanUdir);
+$CleanDir = rtrim($CleanUdir, '/');
 if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
 $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
