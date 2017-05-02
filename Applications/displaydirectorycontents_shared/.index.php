@@ -11,6 +11,8 @@
 <script type="text/javascript">
 function goBack() {
   window.history.back(); }
+function refresh() {
+  window.location.reload(); }
 function toggle_visibility(id) {
     var e = document.getElementById(id);
     if(e.style.display == 'block')
@@ -20,14 +22,6 @@ function toggle_visibility(id) {
 </script>
 </head>
 <body>
-<div align="center" id="container">
-<div align="center"><h3>Shared Files</h3></div>
-<div align="center" style="margin-bottom:10px;">
-<input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
-<input type='submit' name="refresh" id="refresh" value='&#x21BA' href="#" class="submitsmall" onclick="toggle_visibility('loadingCommandDiv');"></div>
-<div align="center" name="unshareButton" id="unshareButton" style="margin-bottom:10px;"><img src="/HRProprietary/HRCloud2/Resources/deletesmall.png" title="Remove Shared File" alt="Remove Shared File" onclick="toggle_visibility('loadingCommandDiv');"></div>
-<div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
-</div>
 <?php
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -43,9 +37,16 @@ $convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', '
 $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
-
 $fileCounter = 0;
 ?>
+<div align="center" id="container">
+<div align="center"><h3>Shared Files</h3></div>
+<div align="center" style="margin-bottom:10px;">
+<input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+<input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refresh();"></div>
+<div align="center" name="unshareButton" id="unshareButton" style="margin-bottom:10px;"><img src="/HRProprietary/HRCloud2/Resources/deletesmall.png" title="Remove Shared File" alt="Remove Shared File" onclick="toggle_visibility('loadingCommandDiv');"></div>
+<div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
+</div>
 <table class="sortable">
   <thead>
 	<tr>
@@ -136,7 +137,7 @@ $.ajax( {
     url: '<?php echo $URL; ?>/HRProprietary/HRCloud2/cloudCore.php',
     data: { unshareConfirm : "1", filesToUnShare : unshareSelected},
     success: function(data) {
-        window.location.href = "<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/displaydirectorycontents_shared/.index.php";
+        window.location.href = "<?php echo $UserSharedIndex; ?>";
     }
 } );
 });
