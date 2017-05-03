@@ -97,6 +97,7 @@ $CloudTemp = $InstLoc.'/DATA/';
 $CloudTempDir = $CloudTemp.$UserID;
 $CloudShareDir = $LogLoc.'/Shared';
 $AppDir = $InstLoc.'/Applications/';
+$CloudAppDir = $CloudLoc.'/Apps';
 $ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
 $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
@@ -148,64 +149,89 @@ $CloudUsrDir = str_replace('//', '/', $CloudUsrDir);
 
 // / -----------------------------------------------------------------------------------
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
-// / specific files the first time a new user logs in.
+// / specific files and new index files as needed.
 if (!is_dir($CloudLoc)) {
   echo ('ERROR!!! HRC2CommonCore59, There was an error verifying the CloudLoc as a valid directory. 
     Please check the config.php file and refresh the page.');
   die(); }
 if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
   @mkdir($CloudDir, 0755); }
+// / -----
 if(!file_exists($CloudTemp)) {
-  mkdir($CloudTemp);
-  copy($InstLoc.'/index.html', $CloudTemp.'index.html'); }
+  mkdir($CloudTemp); 
+  if (file_exists($CloudDir)) {
+    $txt = ('OP-Act: Created a Cloud Temp BaseDirectory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp BaseDirectory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $CloudTemp.'index.html');
+// / -----
 if (!file_exists($CloudTempDir)) { 
   mkdir($CloudTempDir, 0755); 
-  copy($InstLoc.'/index.html',$CloudTempDir.'index.html'); }
+  if (file_exists($CloudTempDir)) {
+    $txt = ('OP-Act: Created a Cloud Temp Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudTempDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 @copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
-// / The following code checks if the TempResources directory exists, and creates one if it does not.
-if (!file_exists($ResourcesDir)) {
-  mkdir($TempResourcesDir, 0755); }
-@copy($InstLoc.'/index.html', $ResourcesDir.'/index.html');
-// / The following code checks if the TempResources directory exists, and creates one if it does not.
-if (!file_exists($TempResourcesDir)) {
-  mkdir($TempResourcesDir, 0755); }
-@copy($InstLoc.'/index.html', $TempResourcesDir.'/index.html');
-// / The following code checks if the CloudUsrDir exists, and creates one if it does not.
-if (!file_exists($CloudUsrDir)) {
-  mkdir($CloudUsrDir, 0755); }
+// / -----
 // / The following code checks if the CloudTmpDir exists, and creates one if it does not.
 if (!file_exists($CloudTmpDir)) { 
-  mkdir($CloudTmpDir, 0755); }
+  mkdir($CloudTmpDir, 0755); 
+  if (file_exists($CloudTmpDir)) {
+    $txt = ('OP-Act: Created a Cloud Temp SubDirectory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudTmpDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp SubDirectory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 @copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
-// / The following code checks if the LogLoc exists, and creates one if it does not.
-// / Also creates the file strucutre needed for the Logs to display content and store cache data.
-if (!file_exists($LogLoc)) {
-  $JICInstallLogs = @mkdir($LogLoc, 0755); 
-  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
-    foreach ($LogInstallFiles as $LIF) {
-      if (in_array($LIF, $installedApps)) continue;
-      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
-      @copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } }
-copy($InstLoc.'/'.$LogInstallDir.'.index.php',$LogLoc.'/.index.php');
-// / The following code checks if the SesLogDir exists, and creates one if it does not.
-// / Also creates the file strucutre needed for the sesLog to display content.
-if (!file_exists($SesLogDir)) {
-  $JICInstallLogs = @mkdir($SesLogDir, 0755);
-  @copy($InstLoc.'/index.html', $SesLogDir.'/index.html');
-    foreach ($LogInstallFiles1 as $LIF1) {
-      if (in_array($LIF1, $installedApps)) continue;
-      if ($LIF1 == '.' or $LIF1 == '..') continue;
-        @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
-@copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
-// / The following code checks if the CloudShareDir exists, and creates one if it does not.
-if (!file_exists($CloudShareDir)) {
-  $JICInstallShared = @mkdir($CloudShareDir, 0755); 
-  @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html');
-    foreach ($SharedInstallFiles as $SIF) {
-      if (in_array($SIF, $installedApps)) continue;
-      if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
-      @copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } }
-@copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
+// / -----
+// / The following code checks if the Resources directory exists, and creates one if it does not.
+if (!file_exists($ResourcesDir)) {
+  mkdir($TempResourcesDir, 0755); 
+  if (file_exists($ResourcesDir)) {
+    $txt = ('OP-Act: Created a Resources Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($ResourcesDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Resources Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $ResourcesDir.'/index.html');
+// / -----
+// / The following code checks if the TempResources directory exists, and creates one if it does not.
+if (!file_exists($TempResourcesDir)) {
+  mkdir($TempResourcesDir, 0755); 
+  if (file_exists($TempResourcesDir)) {
+    $txt = ('OP-Act: Created a Temp Resources Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($TempResourcesDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Temp Resources Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $TempResourcesDir.'/index.html');
+// / -----
+// / The following code checks if the CloudUsrDir exists, and creates one if it does not.
+if (!file_exists($CloudUsrDir)) {
+  mkdir($CloudUsrDir, 0755); 
+  if (file_exists($CloudUsrDir)) {
+    $txt = ('OP-Act: Created a Cloud User Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudUsrDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud User Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $CloudUsrDir.'index.html');
+// / -----
+// / The following code checks if the CloudAppDir exists, and creates one if it does not.
+if (!file_exists($CloudAppDir)) { 
+  mkdir($CloudAppDir, 0755); 
+  if (file_exists($CloudAppDir)) {
+    $txt = ('OP-Act: Created a CloudLoc Apps Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudAppDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The CloudLoc Apps Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $CloudAppDir.'/index.html');
+// / -----
 // / The following code will create a backup directory for restoration data.
   // / NO USER DATA IS STORED IN THE BACKUP DIRECTORY!!! Only server configuration data.
 if (!file_exists($BackupDir)) {
@@ -216,6 +242,39 @@ if (!file_exists($BackupDir)) {
   if (!file_exists($BackupDir)) {
     $txt = ('ERROR!!! HRC2CommonCore137, The Backup Directory does not exist and could not be created on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $BackupDir.'/index.html');
+// / -----
+// / The following code checks if the LogLoc exists, and creates one if it does not.
+// / Also creates the file strucutre needed for the Logs to display content and store cache data.
+if (!file_exists($LogLoc)) {
+  $JICInstallLogs = @mkdir($LogLoc, 0755); 
+  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
+    foreach ($LogInstallFiles as $LIF) {
+      if (in_array($LIF, $installedApps)) continue;
+      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
+      @copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } }
+copy($InstLoc.'/'.$LogInstallDir.'.index.php',$LogLoc.'/.index.php');
+// / -----
+// / The following code checks if the SesLogDir exists, and creates one if it does not.
+// / Also creates the file strucutre needed for the sesLog to display content.
+if (!file_exists($SesLogDir)) {
+  $JICInstallLogs = @mkdir($SesLogDir, 0755);
+  @copy($InstLoc.'/index.html', $SesLogDir.'/index.html');
+    foreach ($LogInstallFiles1 as $LIF1) {
+      if (in_array($LIF1, $installedApps)) continue;
+      if ($LIF1 == '.' or $LIF1 == '..') continue;
+        @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
+@copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
+// / -----
+// / The following code checks if the CloudShareDir exists, and creates one if it does not.
+if (!file_exists($CloudShareDir)) {
+  $JICInstallShared = @mkdir($CloudShareDir, 0755); 
+  @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html');
+    foreach ($SharedInstallFiles as $SIF) {
+      if (in_array($SIF, $installedApps)) continue;
+      if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
+      @copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } }
+@copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -226,7 +285,7 @@ while (file_exists($ClamLogDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code verifies that a user config file exists and creates one if it does not.
+// / The following code loads the user config file exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   @chmod($UserConfig, 0755); 
   @chown($UserConfig, 'www-data'); } 

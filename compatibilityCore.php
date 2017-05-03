@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.5.2.7
+THIS VERSION : v1.5.2.8
 WRITTEN ON : 5/2/2017
 */
 
@@ -261,11 +261,11 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   $Version1 = $Version;
   require ($InstLoc.'/versionInfo.php'); 
   if ($Version1 !== $Version) {
-    $txt = ('ERROR!!! HRC2CompatCore94, Version discrepency detected after unpacking the installation image on '.$Time.'!'."\n".
+    $txt = ('WARNING!!! HRC2CompatCore94, Version discrepency detected after unpacking the installation image on '.$Time.'!'."\n".
       '    Important Note: Manual install reccomended! Try using "Clean Update" and "Check Compatibility." If problem persists, 
       check permissions to all HRC2 directories and use a terminal window or file manager to update.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die ($txt.'<hr />'); }
+    echo($txt.'<hr />'); }
   if ($Version1 == $Version) {
     if ($Version1 == $Version) {
       $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
