@@ -11,10 +11,10 @@ if (!isset($noMINICore)) {
 $includeMINIIframerURL = 'core.php#end';  
 if (!isset($includeMINIIframer)) {
   $includeMINIIframer = '1';
-  $includeMINIIframerURL = 'Applications/HRAI/core.php#end'; }
+  $includeMINIIframerURL = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/core.php#end'; }
 
 if ($noMINICore == '0') {
-  require('Applications/HRAI/core.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/core.php'); }
 if ($includeMINIIframer == '1') { ?>
   <div align="center" id='HRAIButtons2' name='HRAIButtons2'>
   <hr />
