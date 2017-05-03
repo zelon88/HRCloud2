@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.5.2.8
+THIS VERSION : v1.5.2.9
 WRITTEN ON : 5/2/2017
 */
 
@@ -265,7 +265,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
       '    Important Note: Manual install reccomended! Try using "Clean Update" and "Check Compatibility." If problem persists, 
       check permissions to all HRC2 directories and use a terminal window or file manager to update.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo($txt.'<hr />'); }
+    echo nl2br($txt.'<hr />'); }
   if ($Version1 == $Version) {
     if ($Version1 == $Version) {
       $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
@@ -497,6 +497,8 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/TEST4.php'); } 
   if (file_exists($InstLoc.'/search.php')) {
     @unlink($InstLoc.'/search.php'); } 
+  if (file_exists($InstLoc.'/HRAIMiniGui.php')) {
+    @unlink($InstLoc.'/HRAIMiniGui.php'); } 
   if (file_exists($InstLoc.'/coreCOMMANDS.php')) {
     @unlink($InstLoc.'/coreCOMMANDS.php'); } 
   if (file_exists($InstLoc.'/adminLogin.php')) {
@@ -510,7 +512,7 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
   if (file_exists($InstLoc.'/Applications/HRAI/wordpress_11416.zip')) {
     @unlink($InstLoc.'/Applications/wordpress_11416.zip'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/HRAIMiniGui.php')) {
-    @unlink($InstLoc.'/Applications/HRAIMiniGui.php'); } 
+    @unlink($InstLoc.'/Applications/HRAI/HRAIMiniGui.php'); } 
   if (file_exists($InstLoc.'/Applications/ServMonitor/cpuUpdate.php')) {
     @unlink($InstLoc.'/Applications/ServMonitor/cpuUpdate.php'); } 
   if (file_exists($InstLoc.'/Applications/ServMonitor/ramUpdate.php')) {
