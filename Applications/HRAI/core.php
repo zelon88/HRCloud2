@@ -10,12 +10,12 @@
 if (isset($_POST['display_name'])) {
   $_POST['display_name'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['display_name']); }
 if (!isset($_POST['input'])) { ?>
-<div id="HRAITop" align='center'><img id='logo' src='<?php echo $InstLoc.'/Resources/logoslowbreath.gif'; ?>'/></div>
+<div id="HRAITop" align='center'><img id='logo' src='<?php echo $InstLoc.'/HRProprietary/HRCloud2/Resources/logoslowbreath.gif'; ?>'/></div>
 <?php } 
 if (isset($_POST['input'])) {
   $_POST['input'] = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['input']); ?>
 <div id="HRAITop" style="float: left; margin-left: 15px;">
-<img id='logo' src='Resources/logo.gif'/>
+<img id='logo' src='<?php echo $InstLoc.'/HRProprietary/HRCloud2/Resources/logo.gif'; ?>'/>
 </div>
 <?php } 
 if (!isset($_POST['input'])) { ?>
