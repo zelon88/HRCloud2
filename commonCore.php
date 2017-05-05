@@ -83,6 +83,7 @@ if (!isset($UserIDRAW)) {
 
 // / -----------------------------------------------------------------------------------
 // / The followind code hashes the user ID and sets the directory structure for the session.
+$ServerID = hash('ripemd160', $UniqueServerName);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $AdminID = 1;
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
