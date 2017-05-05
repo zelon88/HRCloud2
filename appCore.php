@@ -185,8 +185,6 @@ if (isset($_POST['uninstallApplication'])) {
     // / Includes the janitor to delete the target App.
     $CleanFiles = scandir($CleanDir);
     include ('janitor.php');
-    $CleanFiles = scandir($CleanDir);
-    include ('janitor.php');
     @unlink ($CleanDir.'/index.html');
     @unlink ($CleanDir.'/'.$uninstallApp.'.php');
     @rmdir ($CleanDir);
