@@ -58,7 +58,7 @@ $cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_I
 $requiredTeamVars = array('$TEAM_CACHE_VERSION', '$TEAM_NAME', '$TEAM_OWNER', '$TEAM_CREATED_BY', '$TEAM_ALIAS', '$TEAM_USERS', 
   '$TEAM_ADMINS', '$TEAM_VISIBILITY', '$TEAM_ALIAS', '$BANNED_USERS');
 $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER_TITLE', '$USER_TOKEN', '$USER_PHOTO_FILENAME', '$USER_ALIAS', 
-  '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_STATUS',
+  '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_STATUS', '$FRIENDS',
   '$USER_EMAIL_1', '$USER_EMAIL_2', '$USER_EMAIL_3', '$USER_PHONE_1', '$USER_PHONE_2', '$USER_PHONE_3', '$ACCOUNT_NOTES_USER', '$ACCOUNT_NOTES_ADMIN');
 // / -----------------------------------------------------------------------------------
 
@@ -257,9 +257,32 @@ unset ($usersList);
 
 // / -----------------------------------------------------------------------------------
 // / The following code will verify the friends defined in the user cache file.
-/* foreach ($FRIENDS as $friend) { 
-if ! }
-*/
+if (!is_array($FRIENDS)) {
+  $FRIENDS = array('\''.$FRIENDS.'\''); }
+foreach ($FRIENDS as $friend) { 
+  $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friend.'/'.$friend.'.php');
+  if (file_exists($FriendCacheFile)) {
+    include($FriendCacheFile);
+    if (in_array($UserID, $FRIENDS)) {
+      $friendCounter++;
+      include($UserCacheFile); }
+    if (!in_array($UserID, $FRIENDS)) {
+      $FRIENDS[$friendCounter] = null;
+      unset($FRIENDS[$friendCounter]);
+        if (count($FRIENDS > 1)) {
+          $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); ?>'); 
+          $MAKECacheFile = file_put_contents($UserCacheFile, $cacheDATA.PHP_EOL, FILE_APPEND); } }
+$friendCounterTotal = $friendCounter;
+$friendCounter = 0;
+include($UserCacheFile); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will add a friend to a users pending and/or confirm active friends list.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will remove a friend to a users pending and/or confirm active friends list.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
