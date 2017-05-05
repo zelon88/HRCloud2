@@ -7,6 +7,9 @@
 <body>
   <div name="top"></div>
 <?php 
+
+$HRAI_VERSION = 'v3.0';
+
 if (isset($_POST['display_name'])) {
   $_POST['display_name'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['display_name']); }
 if (!isset($_POST['input'])) { ?>
@@ -133,13 +136,13 @@ $txt = ('CoreAI: Loaded nodeCache, nodeCount is '.$nodeCount.'.');
 $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
 $txt = ('CoreAI: Server status is '.$serverStat.'.');
 $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
+
+// / The following code checks if the server is busy, and attempts to redirect the session to an idle node.
+// / EXPERIMENTAL !!!!! Regular users should not try to use this feature.
 $cpuUseNow = getServCPUUseNow();
 $servMemUse = getServMemUse();
 $servPageUse = getServPageUse();
 $getServBusy = getServBusy();
-
-// / The following code checks if the server is busy, and attempts to redirect the session to an idle node.
-// / EXPERIMENTAL !!!!! Regular users should not try to use this feature.
 if ($getServBusy == 1) {
   $serverIDCFH = hash('sha1', $serverID.$sesID.$day); 
   echo nl2br("This server reports it is busy! \r"); 
