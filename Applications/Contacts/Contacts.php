@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.5 (4-29-2017 11:30)
+App Version: 1.6 (5-6-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -154,8 +154,8 @@ if (!isset($_POST['newContact']) && !isset($_GET['editContact'])) {
   $ContactsNotes = '';  }
 
 
-echo('<div id="showDetailsButton1" name="showDetailsButton" style="display:block;"><button class="button" onclick="toggle_visibility(\'contactInfo\'); toggle_visibility(\'showDetailsButton1\'); toggle_visibility(\'showDetailsButton2\');">Show Details</button></div>');
-echo('<div id="showDetailsButton2" name="showDetailsButton" style="display:none;"><button class="button" onclick="toggle_visibility(\'contactInfo\'); toggle_visibility(\'showDetailsButton1\'); toggle_visibility(\'showDetailsButton2\');">Hide Details</button></div>');
+echo('<div id="showDetailsButton1" name="showDetailsButton" style="display:block;"><input type="submit" value="Show Details" class="button" onclick="toggle_visibility(\'contactInfo\'); toggle_visibility(\'showDetailsButton1\'); toggle_visibility(\'showDetailsButton2\');"></div>');
+echo('<div id="showDetailsButton2" name="showDetailsButton" style="display:none;"><input type="submit" value="Hide Details" class="button" onclick="toggle_visibility(\'contactInfo\'); toggle_visibility(\'showDetailsButton1\'); toggle_visibility(\'showDetailsButton2\');"></div>');
 
 // / The following code presents the user with a fresh Contact form after all other operations 
 
