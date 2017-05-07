@@ -27,7 +27,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.7.5';
+$TeamsAppVersion = 'v0.7.8';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -50,15 +50,17 @@ $adminKEY = hash('sha256', $UserID.$Salts.$Date);
 $teamDir = '';
 $teamFile = '';
 $newTeamFileDATA = '';
-$cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_ID = '.$UserID.';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
+$friendCounter = 0;
+$pendingFriendCounter = 0;
+$cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_ID = \''.$UserID.'\';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
   $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
-  $USER_PERMISSIONS = 0; $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; $USER_STATUS = \'\';
+  $USER_PERMISSIONS = \'0\'; $INTERNATIONAL_GREETINGS = \'1\'; UPDATE_INTERVAL = \'2000\'; $USER_STATUS = \'\'; $PENDING_FRIENDS = \'\';
   $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; 
   $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
 $requiredTeamVars = array('$TEAM_CACHE_VERSION', '$TEAM_NAME', '$TEAM_OWNER', '$TEAM_CREATED_BY', '$TEAM_ALIAS', '$TEAM_USERS', 
   '$TEAM_ADMINS', '$TEAM_VISIBILITY', '$TEAM_ALIAS', '$BANNED_USERS');
 $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER_TITLE', '$USER_TOKEN', '$USER_PHOTO_FILENAME', '$USER_ALIAS', 
-  '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_STATUS', '$FRIENDS',
+  '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_STATUS', '$FRIENDS', '$PENDING_FRIENDS',
   '$USER_EMAIL_1', '$USER_EMAIL_2', '$USER_EMAIL_3', '$USER_PHONE_1', '$USER_PHONE_2', '$USER_PHONE_3', '$ACCOUNT_NOTES_USER', '$ACCOUNT_NOTES_ADMIN');
 // / -----------------------------------------------------------------------------------
 
@@ -206,59 +208,94 @@ if (!file_exists($UserCacheFile)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code verifies that the User files contained in the CloudLoc are valid.
+// / The following code verifies that the User files contained in the CloudLoc are valid, and retrievs their information.
 if (file_exists($UserCacheFile)) {
   $cacheDATA = file_get_contents($UserCacheFile);
   foreach ($requiredUserVars as $requiredVar) {
     if (strpos($requiredVar, $cacheDATA) == 'false') {
-      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php '.$requiredVar.' = \'\';'.PHP_EOL, FILE_APPEND); } } } 
-$usersList = scandir($UsersDir, SCANDIR_SORT_DESCENDING);
-foreach ($usersList as $usersIDTestRAW) {
-  if (is_dir($UsersDir.$userIDTestRAW) && $UserID == $userIDTestRAW) {
-    $userFileTESTER = $UsersDir.$userIDTestRAW.'/'.$userIDTestRAW.'.php';
-    if (file_exists($userFileTESTER)) { 
-      include($userFileTESTER);
-      $userIDTestTESTER = hash('sha256', $USER_ID.$Salts);
-      if ($userIDTestTESTER !== $UserCacheFile) {
-        $txt = ('Warning!!! HRC2TeamsApp96, There was a problem validating User "'.$UserCacheFile.'"" on '.$Time.'!'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-        continue; }
-      if ($userIDTestTESTER !== $userFileTESTER) {
-        $txt = ('Warning!!! HRC2TeamsApp51, There was a problem validating User "'.$UserFileTESTER.'"" on '.$Time.'!'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-        echo nl2br($txt."\n");
-        continue; } }
-      if ($userIDTestTESTER == $userFileTESTER && $userFileTESTER == $UserCacheFile) {
-        if (!is_array($USER_TEAMS)) {
-          $USER_TEAMS = array($USER_TEAMS); }
-        $currentUserID = $USER_ID; 
-        $currentUserName = $USER_NAME; 
-        $currentUserTeams = $USER_TEAMS; 
-        $settingsUpdateInterval = $UPDATE_INTERVAL; 
-        $currentUserPermissions = $USER_PERMISSIONS; 
-        $userArray = array_push($userArray, $USER_ID);
-        $settingsInternationalGreetings = $INTERNATIONAL_GREETINGS; 
-        if ($USER_STATUS == '0' or $USER_STATUS == '') {
-          $USER_STATUS = '1'; }
-        if ($USER_STATUS == '1') {
-          $USER_STATUS = '1'; } 
-        if ($USER_STATUS == '2') {
-          $USER_STATUS = '1'; } 
-        if ($USER_STATUS == '3' or $USER_STATUS == '4') {
-          $USER_STATUS = $USER_STATUS; } }
-    if (!file_exists($userFileTESTER)) { 
-      $txt = ('Warning!!! HRC2TeamsApp49, There was a problem validating User "'.$userFileTESTER.'"" on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br($txt."\n");
-      continue; } } }
-$userslist = null;
-unset ($usersList);
+      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php '.$requiredVar.' = \'\';'.PHP_EOL, FILE_APPEND); } }
+      include ($UserCacheFile);
+      if (!is_array($USER_TEAMS)) {
+        $USER_TEAMS = array($USER_TEAMS); }
+      $currentUserID = $USER_ID; 
+      $currentUserName = $USER_NAME; 
+      $currentUserTeams = $USER_TEAMS; 
+      $settingsUpdateInterval = $UPDATE_INTERVAL; 
+      $currentUserPermissions = $USER_PERMISSIONS; 
+      $userArray = array_push($userArray, $USER_ID);
+      $settingsInternationalGreetings = $INTERNATIONAL_GREETINGS; 
+      if ($USER_STATUS == '0' or $USER_STATUS == '') {
+        $USER_STATUS = '1'; }
+      if ($USER_STATUS == '1') {
+        $USER_STATUS = '1'; } 
+      if ($USER_STATUS == '2') {
+        $USER_STATUS = '1'; } 
+      if ($USER_STATUS == '3' or $USER_STATUS == '4') {
+        $USER_STATUS = $USER_STATUS; }
+      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php $USER_STATUS=\''.$USER_STATUS.'\';'.PHP_EOL, FILE_APPEND); } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code will verify the friends defined in the user cache file.
+// / The following code will add a friend to both users pending and/or confirm active friends list.
+// / Puts the client UserID into the FriendCacheFile and the friend into the UserCacheFile as PENDING_FRIENDS.
+// / once a client approves a PENDING_FRIEND the UserID gets moved into FRIENDS, but also STAYS in PENDING 
+  // / until the other user also approves.
+// / Once both users are approved the friendship addition is complete, and PENDING_FRIENDS arrays are purged.
+if (isset($friendToAdd) && $friendToAdd !== '') {
+  $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friendToAdd.'/'.$friendToAdd.'.php');  
+  if (!file_exists($FriendCacheFile)) {
+    $txt = ('ERROR!!! HRC2TeamsApp247, the file '.$FriendCacheFile.' is not a valid friend-user cache file on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($txt);
+    die(); }
+  if (!in_array($friendToAdd, $PENDING_FRIENDS) && !in_array($friendToAdd, $FRIENDS)) {  
+    $PENDING_FRIENDS = array_push($PENDING_FRIENDS, $friendToAdd);
+    $cacheDATA = ('<?php $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+    $MAKECacheFile = file_put_contents($UserCacheFile, $txt.PHP_EOL, FILE_APPEND); }
+  include($FriendCacheFile);
+  if (!in_array($UserID, $PENDING_FRIENDS) && !in_array($UserID, $FRIENDS)) {  
+    $PENDING_FRIENDS = array_push($PENDING_FRIENDS, $UserID);
+    $cacheDATA = ('<?php $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+    $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); }
+  include($UserCacheFile);
+  // / This code will detect and handle if the friendship is pending for the either party.
+  if (in_array($friendToAdd, $PENDING_FRIENDS)) {
+    include($FriendCacheFile);
+    if (in_array($UserID, $FRIENDS)) {
+      $FRIENDS = array_push($FRIENDS, $UserID);
+      $PENDING_FRIENDS[$UserID] = null;
+      unset($PENDING_FRIENDS[$FRIENDS]);
+      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); 
+      $FriendshipConfirmed = 1; }
+    include($UserCacheFile); 
+    if (!in_array($friendToAdd, $FRIENDS) && $FriendshipConfirmed = 1) {
+      $FRIENDS = array_push($FRIENDS, $UserID);
+      $PENDING_FRIENDS[$UserID] = null;
+      unset($PENDING_FRIENDS[$FRIENDS]);
+      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); 
+      if (!in_array($UserID, $FRIENDS)) {
+        $FRIENDS = array_push($FRIENDS, $UserID); 
+        $FriendAdded = 1; }
+      if (in_array($UserID, $FRIENDS)) {
+        $PENDING_FRIENDS[$UserID] = null;
+        unset($PENDING_FRIENDS[$FRIENDS]); }
+
+      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will remove a friend from both users pending and/or confirm active friends list.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will verify the friends defined in the user cache file are valid.
 if (!is_array($FRIENDS)) {
   $FRIENDS = array('\''.$FRIENDS.'\''); }
+if (!is_array($PRENDING_FRIENDS)) {
+  $PENDING_FRIENDS = array('\''.$PENDING_FRIENDS.'\''); }
 foreach ($FRIENDS as $friend) { 
   $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friend.'/'.$friend.'.php');
   if (file_exists($FriendCacheFile)) {
@@ -267,22 +304,17 @@ foreach ($FRIENDS as $friend) {
       $friendCounter++;
       include($UserCacheFile); }
     if (!in_array($UserID, $FRIENDS)) {
+      include($FriendCacheFile);
       $FRIENDS[$friendCounter] = null;
       unset($FRIENDS[$friendCounter]);
         if (count($FRIENDS > 1)) {
           $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); ?>'); 
           $MAKECacheFile = file_put_contents($UserCacheFile, $cacheDATA.PHP_EOL, FILE_APPEND); } }
+$pendingFriendTotal = $pendingFriendCounter;
+$pendingFriendCounter = 0;
 $friendCounterTotal = $friendCounter;
 $friendCounter = 0;
 include($UserCacheFile); } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will add a friend to a users pending and/or confirm active friends list.
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will remove a friend to a users pending and/or confirm active friends list.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -729,8 +761,8 @@ if (isset($textTeamPost) && isset($teamToJoin) && $allowPosting == $teamToJoin) 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an authenticated user selects to submit a file post to a Team.
 if (isset($fileTeamPost) && $allowPosting == $teamToJoin) {
-
-}
+  
+} 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
