@@ -27,7 +27,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.7.8';
+$TeamsAppVersion = 'v0.7.9';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -150,6 +150,15 @@ if (!isset($_POST['deleteTeam'])) {
   $teamToDelete = ''; }
 if (isset($_POST['deleteTeam'])) {
   $teamToDelete = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['deleteTeam']); }
+  // / -Add Friend inputs-
+if (isset($_GET['addFriend'])) {
+  $friendToAdd = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['addFriend']); }
+if (!isset($_GET['addFriend'])) {
+  $friendToAdd = ''; }
+if (isset($_POST['addFriend'])) {
+  $friendToAdd = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['addFriend']); }
+if (isset($_POST['addFriend'])) {
+  $friendToAdd = ''; }
   // / -Join Team inputs-
 if (isset($_GET['joinTeam'])) {
   $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['joinTeam']); }
@@ -233,57 +242,6 @@ if (file_exists($UserCacheFile)) {
       if ($USER_STATUS == '3' or $USER_STATUS == '4') {
         $USER_STATUS = $USER_STATUS; }
       $MAKECacheFile = file_put_contents($UserCacheFile, '<?php $USER_STATUS=\''.$USER_STATUS.'\';'.PHP_EOL, FILE_APPEND); } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will add a friend to both users pending and/or confirm active friends list.
-// / Puts the client UserID into the FriendCacheFile and the friend into the UserCacheFile as PENDING_FRIENDS.
-// / once a client approves a PENDING_FRIEND the UserID gets moved into FRIENDS, but also STAYS in PENDING 
-  // / until the other user also approves.
-// / Once both users are approved the friendship addition is complete, and PENDING_FRIENDS arrays are purged.
-if (isset($friendToAdd) && $friendToAdd !== '') {
-  $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friendToAdd.'/'.$friendToAdd.'.php');  
-  if (!file_exists($FriendCacheFile)) {
-    $txt = ('ERROR!!! HRC2TeamsApp247, the file '.$FriendCacheFile.' is not a valid friend-user cache file on '.$Time.'!');  
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($txt);
-    die(); }
-  if (!in_array($friendToAdd, $PENDING_FRIENDS) && !in_array($friendToAdd, $FRIENDS)) {  
-    $PENDING_FRIENDS = array_push($PENDING_FRIENDS, $friendToAdd);
-    $cacheDATA = ('<?php $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
-    $MAKECacheFile = file_put_contents($UserCacheFile, $txt.PHP_EOL, FILE_APPEND); }
-  include($FriendCacheFile);
-  if (!in_array($UserID, $PENDING_FRIENDS) && !in_array($UserID, $FRIENDS)) {  
-    $PENDING_FRIENDS = array_push($PENDING_FRIENDS, $UserID);
-    $cacheDATA = ('<?php $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
-    $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); }
-  include($UserCacheFile);
-  // / This code will detect and handle if the friendship is pending for the either party.
-  if (in_array($friendToAdd, $PENDING_FRIENDS)) {
-    include($FriendCacheFile);
-    if (in_array($UserID, $FRIENDS)) {
-      $FRIENDS = array_push($FRIENDS, $UserID);
-      $PENDING_FRIENDS[$UserID] = null;
-      unset($PENDING_FRIENDS[$FRIENDS]);
-      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
-      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); 
-      $FriendshipConfirmed = 1; }
-    include($UserCacheFile); 
-    if (!in_array($friendToAdd, $FRIENDS) && $FriendshipConfirmed = 1) {
-      $FRIENDS = array_push($FRIENDS, $UserID);
-      $PENDING_FRIENDS[$UserID] = null;
-      unset($PENDING_FRIENDS[$FRIENDS]);
-      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
-      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); 
-      if (!in_array($UserID, $FRIENDS)) {
-        $FRIENDS = array_push($FRIENDS, $UserID); 
-        $FriendAdded = 1; }
-      if (in_array($UserID, $FRIENDS)) {
-        $PENDING_FRIENDS[$UserID] = null;
-        unset($PENDING_FRIENDS[$FRIENDS]); }
-
-      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
-      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -608,6 +566,58 @@ if (!in_array($userToEdit, $currentUserTeams)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br($txt."\n"); 
   die(); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will add a friend to both users pending and/or confirm active friends list.
+// / Puts the client UserID into the FriendCacheFile and the friend into the UserCacheFile as PENDING_FRIENDS.
+// / once a client approves a PENDING_FRIEND the UserID gets moved into FRIENDS, but also STAYS in PENDING 
+  // / until the other user also approves.
+// / Once both users are approved the friendship addition is complete, and PENDING_FRIENDS arrays are purged.
+function addFriend($friendToAdd) {
+  $friendCounter = 0;
+  $pendingFriendCounter = 0;
+  $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friendToAdd.'/'.$friendToAdd.'.php');  
+  if (!file_exists($FriendCacheFile)) {
+    $txt = ('ERROR!!! HRC2TeamsApp247, the file '.$FriendCacheFile.' is not a valid friend-user cache file on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($txt);
+    die(); }
+  if (!in_array($friendToAdd, $PENDING_FRIENDS) && !in_array($friendToAdd, $FRIENDS)) {  
+    $PENDING_FRIENDS = array_push($PENDING_FRIENDS, $friendToAdd);
+    $cacheDATA = ('<?php $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+    $MAKECacheFile = file_put_contents($UserCacheFile, $txt.PHP_EOL, FILE_APPEND); }
+  include($FriendCacheFile);
+  if (!in_array($UserID, $PENDING_FRIENDS) && !in_array($UserID, $FRIENDS)) {  
+    $PENDING_FRIENDS = array_push($PENDING_FRIENDS, $UserID);
+    $cacheDATA = ('<?php $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+    $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); }
+  include($UserCacheFile);
+  // / This code will detect and handle if the friendship is pending for the either party.
+  if (in_array($friendToAdd, $PENDING_FRIENDS)) {
+    include($FriendCacheFile);
+    if (in_array($UserID, $FRIENDS)) {
+      $FRIENDS = array_push($FRIENDS, $UserID);
+      $PENDING_FRIENDS[$UserID] = null;
+      unset($PENDING_FRIENDS[$FRIENDS]);
+      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); 
+      $FriendshipConfirmed = 1; }
+    include($UserCacheFile); 
+    if (!in_array($friendToAdd, $FRIENDS) && $FriendshipConfirmed = 1) {
+      $FRIENDS = array_push($FRIENDS, $UserID);
+      $PENDING_FRIENDS[$UserID] = null;
+      unset($PENDING_FRIENDS[$FRIENDS]);
+      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); 
+      if (!in_array($UserID, $FRIENDS)) {
+        $FRIENDS = array_push($FRIENDS, $UserID); 
+        $FriendAdded = 1; }
+      if (in_array($UserID, $FRIENDS)) {
+        $PENDING_FRIENDS[$UserID] = null;
+        unset($PENDING_FRIENDS[$FRIENDS]); }
+      $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

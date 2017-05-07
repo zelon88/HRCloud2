@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.7.6 (5-4-2017 17:55)
+App Version: 0.7.9 (5-6-2017 17:55)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -50,6 +50,9 @@ if ($newTeamDivNeeded == 'true') {
     </select>'."\n");
   echo nl2br('<input type="submit" id="newTeamButton" name="newTeamButton" value="New Team"></form></div>'."\n"); }
 
+if (isset($friendToAdd) && $friendToAdd !== '') {
+  addFriend($friendToAdd); }
+
 if (isset($userToEdit) && $userToEdit !== '') {
   editUser($userToEdit); }
 
@@ -59,7 +62,7 @@ if (isset($newTeamName) && $newTeamName !== '') {
 if (isset($teamToEdit) && $teamToEdit !== '') {
   editTeam($teamToEdit); }
 
-if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
+if (isset($teamToDelete) {
   deleteTeam($teamToDelete); }
 
 if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
