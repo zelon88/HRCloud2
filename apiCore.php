@@ -99,6 +99,27 @@ if ($SFTP == '1') {
     $UKPDATA = base64_decode($UserKeyPOST); 
     if ($UserKeyDATA == $UKPDATA) { 
       $ApprovedUserAPI_[$UserID] = 1; } } 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code handles creation, deletion and management of custom user SFTP & app authentication & resource allocation.
+if ($SFTP == '1') { 
+  $UserSFTPDir = $SFTPDir.'/'.$UserID
+  $sshConfigFile = '/etc/ssh/sshd_config';
+if (file_exists($sshConfigFile)) {
+  $sshConfigDATA = 
+    'Match Group sftponly
+    ChrootDirectory %h
+    ForceCommand internal-sftp
+    AllowTcpForwarding no';
+  $MAKEsshConfigFile = file_put_contents($LogFile, $sshConfigDATA.PHP_EOL, FILE_APPEND); }
+exec('groupadd sftponly');
+exec('usermod '.$UserID.' -g sftponly');
+exec('usermod '.$UserID.' -s /bin/false');
+exec('usermod '.$UserID.' -d '.$UserSFTPDir);
+}
+
+// / -----------------------------------------------------------------------------------
 
 
 

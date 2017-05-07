@@ -79,10 +79,7 @@ foreach ($apps as $appName) {
     $appIcon = 'Resources/appicon.png'; }
   // / The folloiwing code declares the AppInfo for the app being displayed by scanning for the 
     // / HRCLOUD2-PLUGIN declaration contained within each HRC2 App.
-    if (!file_exists($appLoc)) {
-      $txt = ('WARNING!!! HRC2AppIndex82, There was a problem validating '.$appName.' on '.$Time.'!');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      continue; }
+    if (!file_exists($appLoc)) continue;
     $lines = file($appLoc);
     $lineCounter = 0;
     $ApplicationName = ''; 
