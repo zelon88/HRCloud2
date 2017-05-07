@@ -29,6 +29,29 @@ $UserKeyFile = $UserKeyDir.'/'.$UserID.'/key';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code checks that required encryption key files exist when they are necessary.
+if ($SFTP == '1') {
+  // -----
+  // / Make a new server Key directory.
+  if (!file_exists($ServerKeyDir)) {
+    mkdir($ServerKeyDir, 0755);
+    $txt = ('OP-Act: Created a new Server Key Directory at "'.$ServerKeyDir.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  // -----
+  // / Make a new server Key file.  
+  if (file_exists($ServerKeyFile)) {
+}
+  // -----
+  // / Make a new user Key directory.  
+  if (!file_exists($UserKeyDir)) {
+    mkdir($ServerKeyDir, 0755);
+    $txt = ('OP-Act: Created a new User Key Directory at "'.$UserKeyDir.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  // -----
+  // / Make a new User Key file.  
+  if (file_exists($UserKeyFile)) {
+} }
+// / -----------------------------------------------------------------------------------
 
 
 // / Add sudo apt-get install ssh to the readme.md file and dependency requirements.
