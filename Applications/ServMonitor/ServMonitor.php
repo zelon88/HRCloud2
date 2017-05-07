@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: 2.7 (4-28-2017 11:30)
+App Version: v2.8 (5-6-2017 11:30)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -51,10 +51,17 @@ if ($UpateInt == '' or !(isset($UpdateInterval))) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code creates a cache dir, or returns an error if one cannot be created.
-@chmod('Cache/');
+// / -Take ownership of cache files
+@chown('Cache/', 'www-data');
+// / -Change the group of cache files-
+@chgrp('Cache', 'www-data');
+// / -Restrict cache files-
+@chmod('Cache/', 0755);
+// / -Check for the existence of required dirs and files. Copy a new index if needed-
 if (!is_dir('Cache/')) {
   @mkdir('Cache/', 0755); 
   @copy($InstLoc.'/index.html', 'Cache/index.html'); }
+// / -Report erros-
 if (!is_dir('Cache/')) {
   $txt = ('ERROR!!! HRC2ServMonitorApp16, Could not create a Cache directory on '.$Time.'! Check permission and ownership of the HRC2 $InstLoc foun in "config.php!"'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);

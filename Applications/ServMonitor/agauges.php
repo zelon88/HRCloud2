@@ -77,13 +77,13 @@ if (!file_exists($IncludeTempVoltFile) or $thermalSensorArr1[1] == '') {
   // / This is to facilitate the previous value in the cache structure, preventing the need for guages to
   // / begin at zero upon each refresh.
 $IncludeCPUDATA1 = file_get_contents($IncludeCPUFile);
-$WRITEIncludeCPUDATA1 = file_put_contents($IncludeCPUFile1, $IncludeCPUDATA1);
+$WRITEIncludeCPUDATA1 = @file_put_contents($IncludeCPUFile1, $IncludeCPUDATA1);
 $IncludeRAMDATA1 = file_get_contents($IncludeRAMFile);
-$WRITEIncludeRAMDATA1 = file_put_contents($IncludeRAMFile1, $IncludeRAMDATA1);
+$WRITEIncludeRAMDATA1 = @file_put_contents($IncludeRAMFile1, $IncludeRAMDATA1);
 $IncludeDiskDATA1 = file_get_contents($IncludeDiskFile);
-$WRITEIncludeDiskDATA1 = file_put_contents($IncludeDiskFile1, $IncludeDiskDATA1);
+$WRITEIncludeDiskDATA1 = @file_put_contents($IncludeDiskFile1, $IncludeDiskDATA1);
 $IncludeTempVoltDATA1 = file_get_contents($IncludeTempVoltFile);
-$WRITEIncludeTempVoltDATA1 = file_put_contents($IncludeTempVoltFile1, $IncludeTempVoltDATA1);
+$WRITEIncludeTempVoltDATA1 = @file_put_contents($IncludeTempVoltFile1, $IncludeTempVoltDATA1);
 ?>
     <div align="center" id="cpuGauge" name="cpuGauge" style="border:inset; float:left; width:355px; height:365px;">
         CPU Usage: <?php echo $cpu; ?>% <img src="Resources/x.png" title="Close CPU Info" alt="Close CPU Info" onclick="toggle_visibility1('cpuGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
