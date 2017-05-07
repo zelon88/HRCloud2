@@ -25,33 +25,82 @@ $ServerKeyDir = $CloudLoc.'/Keys/'.$ServerID;
 $ServerKeyFile = $ServerKeyDir.'/'.$ServerID.'.key';
 $UserKey = $Salts.$UserID;
 $UserKeyDir = $CloudDir.'/Keys';
-$UserKeyFile = $UserKeyDir.'/'.$UserID.'/key';
+$UserKeyFile = $UserKeyDir.'/'.$UserID.'.key';
 // / -----------------------------------------------------------------------------------
+
+
 
 // / -----------------------------------------------------------------------------------
 // / The following code checks that required encryption key files exist when they are necessary.
 if ($SFTP == '1') {
+  if ($_POST['RegenServerKey'] == 'Regenerate Server Key' && $UserIDRAW == 1) {
+    @unlink($ServerKeyFile); 
+    $txt = ('OP-Act: Deleted the Server Key Directory at "'.$ServerKeyFile.' on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if ($_POST['RegenUserKey'] == 'Regenerate User Key' && $UserIDRAW == 1) {
+    @unlink($UserKeyFile);
+    $txt = ('OP-Act: Deleted the User Key Directory at "'.$UserKeyFile.' on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);  }
   // -----
   // / Make a new server Key directory.
   if (!file_exists($ServerKeyDir)) {
     mkdir($ServerKeyDir, 0755);
-    $txt = ('OP-Act: Created a new Server Key Directory at "'.$ServerKeyDir.'" on '.$Time.'!');  
+    $txt = ('OP-Act: Created a new Server Key Directory at "'.$ServerKeyFile.'" on '.$Time.'!');  
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   // -----
   // / Make a new server Key file.  
-  if (file_exists($ServerKeyFile)) {
-}
+  if (!file_exists($ServerKeyFile)) {
+    $ServerKeyDATA = hash('sha256', $ServerID.$Salts.$CloudLoc);
+    $MAKECacheFile = file_put_contents($ServerKeyFile, $ServerKeyDATA); 
+    $txt = ('OP-Act: Created a new Server Key File at "'.$ServerKeyFile.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL); }
   // -----
   // / Make a new user Key directory.  
   if (!file_exists($UserKeyDir)) {
     mkdir($ServerKeyDir, 0755);
     $txt = ('OP-Act: Created a new User Key Directory at "'.$UserKeyDir.'" on '.$Time.'!');  
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL); }
   // -----
   // / Make a new User Key file.  
-  if (file_exists($UserKeyFile)) {
-} }
+  if (!file_exists($UserKeyFile)) { 
+    $UserKeyDATA = hash('sha256', $UserID.$Salts.$CloudLoc);
+    $MAKECacheFile = file_put_contents($UserKeyFile, $UserKeyDATA); 
+    $txt = ('OP-Act: Created a new User Key File at "'.$UserKeyFile.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL); } }
 // / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code reads the required encryption keys when they are necessary.
+if ($SFTP == '1') {
+  // / Server Key input POST handler.
+  if (file_exists($ServerKeyFile)) {
+    $ServerKeyDATA = file_get_contents($ServerKeyFile); 
+    $txt = ('ERROR!!! HRC2ApiCore68, Could not verify the ServerKey file at "'.$ServerKeyFile.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (isset($_POST['ServerKeyPOST'])) {
+    $SKPDATA = base64_decode($ServerKeyPOST); 
+    if ($ServerKeyDATA == $SKPDATA) { 
+      $ApprovedServerAPI_[$ServerID] = 1; }
+  // / Server Key input POST handler.
+  if (file_exists($ServerKeyFile)) {
+    $ServerKeyDATA = file_get_contents($ServerKeyFile); 
+    $txt = ('ERROR!!! HRC2ApiCore68, Could not verify the ServerKey file at "'.$ServerKeyFile.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (isset($_POST['ServerKeyPOST'])) {
+    $SKPDATA = base64_decode($ServerKeyPOST); 
+    if ($ServerKeyDATA == $SKPDATA) { 
+      $ApprovedServerAPI_[$ServerID] = 1; } \
+  // / User Key input POST handler.
+  if (file_exists($UserKeyFile)) {
+    $UserKeyDATA = file_get_contents($UserKeyFile); 
+    $txt = ('ERROR!!! HRC2ApiCore68, Could not verify the UserKey file at "'.$UserKeyFile.'" on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (isset($_POST['UserKeyPOST'])) {
+    $UKPDATA = base64_decode($UserKeyPOST); 
+    if ($UserKeyDATA == $UKPDATA) { 
+      $ApprovedUserAPI_[$UserID] = 1; } } 
+
+
 
 
 // / Add sudo apt-get install ssh to the readme.md file and dependency requirements.

@@ -287,7 +287,7 @@ while (file_exists($ClamLogDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code loads the user config file exists and creates one if it does not.
+// / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   @chmod($UserConfig, 0755); 
   @chown($UserConfig, 'www-data'); } 
