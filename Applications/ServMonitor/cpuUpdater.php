@@ -4,6 +4,12 @@
 $cpuCacheFile = 'Cache/cpuCACHE.php';
 $cpuCacheFile1 = 'Cache/cpuCACHE1.php';
 $cpuIncludeFile = 'Cache/cpuINCLUDE.php';
+@chmod($cpuCacheFile, 0755);
+@chown($cpuCacheFile, 'www-data');
+@chgrp($cpuCacheFile, 'www-data');
+@chmod($cpuCacheFile1, 0755);
+@chown($cpuCacheFile1, 'www-data');
+@chgrp($cpuCacheFile1, 'www-data');
 
 // / The following code resets the cache file.
 if (file_exists($cpuCacheFile)) {
@@ -14,7 +20,7 @@ if (file_exists($cpuCacheFile)) {
 $exec_loads = sys_getloadavg();
 $exec_cores = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
 $cpu = round($exec_loads[0]/($exec_cores + 1)*100, 0);
-$WRITEcpuIncludeFile = file_put_contents($cpuIncludeFile, '<?php $cpu = \''.$cpu.'\'; ?>');
+$WRITEcpuIncludeFile = @file_put_contents($cpuIncludeFile, '<?php $cpu = \''.$cpu.'\'; ?>');
 
 // / The following code caches the CPU statistics for all filesystems mounted to the server.
 $file = file('/proc/cpuinfo');

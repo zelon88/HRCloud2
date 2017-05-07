@@ -7,6 +7,24 @@ $cpuSpecCacheFile = 'Cache/cpuSpecCACHE.php';
 $usbCacheFile = 'Cache/usbCACHE.php';
 $pciCacheFile = 'Cache/pciCACHE.php';
 $uptimeCacheFile = 'Cache/uptimeCACHE.php';
+@chmod($specCacheFile, 0755);
+@chown($specCacheFile, 'www-data');
+@chgrp($specCacheFile, 'www-data');
+@chmod($storageCacheFile, 0755);
+@chown($storageCacheFile, 'www-data');
+@chgrp($storageCacheFile, 'www-data');
+@chmod($cpuCacheFile, 0755);
+@chown($cpuCacheFile, 'www-data');
+@chgrp($cpuCacheFile, 'www-data');
+@chmod($usbCacheFile, 0755);
+@chown($usbCacheFile, 'www-data');
+@chgrp($usbCacheFile, 'www-data');
+@chmod($pciCacheFile, 0755);
+@chown($pciCacheFile, 'www-data');
+@chgrp($pciCacheFile, 'www-data');
+@chmod($uptimeCacheFile, 0755);
+@chown($uptimeCacheFile, 'www-data');
+@chgrp($uptimeCacheFile, 'www-data');
 
 // / The following code creates a cache file, or returns an error if one cannot be created
 if (file_exists($specCacheFile)) {
