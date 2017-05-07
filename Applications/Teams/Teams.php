@@ -50,6 +50,35 @@ if ($newTeamDivNeeded == 'true') {
     </select>'."\n");
   echo nl2br('<input type="submit" id="newTeamButton" name="newTeamButton" value="New Team"></form></div>'."\n"); }
 
+if (isset($userToEdit) && $userToEdit !== '') {
+  editUser($userToEdit); }
+
+if (isset($newTeamName) && $newTeamName !== '') {
+  createNewTeam($newTeamName); }
+
+if (isset($teamToEdit) && $teamToEdit !== '') {
+  editTeam($teamToEdit); }
+
+if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
+  deleteTeam($teamToDelete); }
+
+if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
+  adminAddUserToTeam($adminAddUser, $adminTeamToAdd); }
+
+if (isset($adminRemoveUserFromTeam) && isset($adminTeamToRemove)) {
+  adminRemoveUserFromTeam($adminRemoveUser, $adminTeamToRemove); }
+
+if (isset($newSubTeam) && $newSubTeam !== '' && isset($teamToJoin)) {
+  createNewSubTeam($newSubTeam); }
+
+if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin)) {
+  joinSubTeam($teamToJoin, $subTeamToJoin); }
+
+if (isset($teamToJoin) && $teamToJoin !== '') {
+  joinTeam($teamToJoin); }
+
+
+
 if ($myTeamsDivNeeded == 'true') {
   getMyTeams($myTeamsList); }
 

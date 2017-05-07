@@ -457,7 +457,7 @@ function getPublicTeamsQuietly($teamsList) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new Team.
-if (isset($newTeamName) && $newTeamName !== '') {
+function createNewTeam($newTeamName) {
   $txt = ('OP-Act: Creating Team "'.$newTeamName.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   if (file_exists($newTeamDir)) {
@@ -499,7 +499,7 @@ if (isset($newTeamName) && $newTeamName !== '') {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a validated user selects to edit a Team.
-if (isset($teamToEdit) && $teamToEdit !== '') {
+function editTeam($teamToEdit) {
   $txt = ('OP-Act: Opening Team "'.$teamToEdit.'" for editing on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   $teamFile = $TeamsDir.'/'.$teamToEdit.'.php';
@@ -524,7 +524,7 @@ if (!in_array($teamToEdit, $currentUserTeams)) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to delete a Team.
-if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
+function deleteTeam($teamToDelete) {
   $txt = ('OP-Act: Opening Team "'.$teamToDelete.'" for validation on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $teamDir = $TeamsDir.'/'.$teamToDelete; 
@@ -555,37 +555,37 @@ if (isset($_GET['deleteTeam']) or isset($_POST['deleteTeam'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an admin adds a user to a Team.
-if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
-  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminAddUserToTeam.'/'.$adminAddUserToTeam.'.php');
+function adminAddUserToTeam($adminAddUser, $adminTeamToAdd) {
+  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminAddUser.'/'.$adminAddUserToTeam.'.php');
   $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToAdd.'/'.$adminTeamToAdd);
   include($userModFile);
   $USER_TEAMS = array_push($USER_TEAMS, $adminTeamToAdd);
   $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS).'\');'); 
   $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
   include($teamdModFile);
-  $TEAM_USERS = array_push($TEAM_USERS, $adminAddUserToTeam);
+  $TEAM_USERS = array_push($TEAM_USERS, $adminAddUser);
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an admin removes a user from a Team.
-if (isset($adminRemoveUserFromTeam) && isset($adminTeamToRemove)) {
-  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminRemoveUserFromTeam.'/'.$adminRemoveUserFromTeam.'.php');
+function adminRemoveUserFromTeam($adminRemoveUserFromTeam, $adminTeamToRemove) {
+  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminRemoveUser.'/'.$adminRemoveUser.'.php');
   $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToRemove.'/'.$adminTeamToRemove);
   include($userModFile);
   $USER_TEAMS[$adminTeamToRemove] = null;
   $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS).'\');'); 
   $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
   include($teamdModFile);
-  $TEAM_USERS[$adminRemoveUserFromTeam] = null;
+  $TEAM_USERS[$adminRemoveUser] = null;
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a validated user selects to edit their account.
-if (isset($userToEdit) && $userToEdit !== '') {
+function editUser($userToEdit) {
   $txt = ('OP-Act: Opening User "'.$userToEdit.'" for editing on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   $userFile = $UserDir.'/'.$userToEdit.'.php';
@@ -612,7 +612,7 @@ if (!in_array($userToEdit, $currentUserTeams)) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to join a Team.
-if (isset($teamToJoin) && $teamToJoin !== '') {
+function joinTeam($teamToJoin) {
   if (is_array($teamToJoin)) {
     if (count($teamToJoin) > 1) {
       $txt = ('ERROR!!! HRC2TeamsApp501, Only one Team can be joined per request. '.$UserID.' Attempted to upload a multi-dimensional array as the "teamToJoin" on '.$Time);  
@@ -656,7 +656,7 @@ if (isset($teamToJoin) && $teamToJoin !== '') {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new SubTeam (Private Team within a Team).
   // / Must be performed AFTER teamToJoin.
-if (isset($newSubTeam) && $newSubTeam !== '' && isset($teamToJoin)) {
+function createNewSubTeam($newSubTeam) {
   // / Add subteam users to the array.
   $txt = ('OP-Act: Creating SubTeam "'.$newSubTeam.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -687,12 +687,12 @@ foreach($subTeamUsers as $subTeamUser) {
     $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');    
     $teamDir = $newTeamDir;     
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
+  echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to join a Sub-Team.
-if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin)) {
+function joinSubTeam($teamToJoin, $subTeamToJoin) {
   if (is_array($subTeamToJoin)) {
     if (count($subTeamToJoin) > 1) {
       $txt = ('ERROR!!! HRC2TeamsApp546, Only one Sub-Team can be joined per request. '.$UserID.' Attempted to upload a multi-dimensional array as the "teamToJoin" on '.$Time);  
