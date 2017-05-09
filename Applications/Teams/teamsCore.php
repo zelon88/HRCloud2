@@ -6,6 +6,9 @@ This file represents the core logic functions for the HRCloud2 Teams App.
 This file outputs (almost) all of it's activity to the logged-in HRCloud2 users standard 
 log directories. This script will very minimal output during normal operation. 
 The only output a client should ever see from this file are success or error messages.
+
+$txt is written to the logs.
+$PrettyTxt is displayed in the Teams Console.
 */
 // / -----------------------------------------------------------------------------------
 
@@ -33,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.0';
+$TeamsAppVersion = 'v0.8.1'
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -754,7 +757,6 @@ function joinSubTeam($teamToJoin, $subTeamToJoin) {
       $subTeamCacheDATA = '<?php $ACTIVE_USERS = array(\''.implode('\',\'', $ACTIVE_USERS).'); $INACTIVE_USERS = array(\''.implode('\',\'', $INACTIVE_USERS).'\');?>'; }
     $WRITETeamCacheDATA = file_put_contents($subTeamCacheFile, $subTeamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
-    $allowPosting = $subTeamToJoin;
     $chatDivNeeded = 'true'; 
     $txt = ('OP-Act: User joined subTeam "'.$subTeamToJoin.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -794,7 +796,14 @@ function verifyConversation($teamToVerify, $subTeamToVerify) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an authenticated user selects to submit a text post to a Team.
-if (isset($textTeamPost) && isset($teamToJoin) && $allowPosting == $teamToJoin) {
+  // / $allowPosting is the sha256 hash of the $UserID.$textsubTeamPost.$textSubTeamPost.$Date
+function textTeamPost($textTeamPost, $textSubTeamPost, $textTeamPost, $allowPosting) {
+  $CHECKallowPosting = hash($UserID.$textsubTeamPost.$textSubTeamPost.$Date);
+  if ($allowPosting !== $CHECKallowPosting) {
+    $txt = ('ERROR!!! HRC2TeamsApp505, The current user "'.$UserID.'" does not have permission to submit a text post to the selected Team on '.$Time.'!');  
+    $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($prettyTxt."\n"); } }
   if (isset($subTeamID)) {
 
   }
