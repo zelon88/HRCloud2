@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.5.4.2
-WRITTEN ON : 5/6/2017
+THIS VERSION : v1.5.4.4
+WRITTEN ON : 5/8/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -253,7 +253,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $BAKinc1 = 0;
   while (file_exists($InstLoc.'Applications/HRAI/adminINFOBACKUP'.$BAKinc1.'.php')) {
     $BAKinc1++; }
-  copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $InstLoc.'/Applications/HRAI/adminINFO'.$BAKinc.'.php'); 
+  @copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $InstLoc.'/Applications/HRAI/adminINFO'.$BAKinc.'.php'); 
   rename ($ResourceDir1.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFOLATEST.php');
   copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFO.php'); 
   // / The following code checks that HRCloud2 was sucessfully updated..
@@ -455,7 +455,7 @@ if ($AutoCleanPOST == '1' or $AutoCleanPOST == 'true' or $AutoCleanPOST == 'Clea
       $txt = ('OP-Act: Deleted temporary update data on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-  copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); } }
+  @copy ($InstLoc.'/index.html', $ResourceDir.'/index.html'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
