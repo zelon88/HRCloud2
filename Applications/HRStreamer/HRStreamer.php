@@ -23,31 +23,39 @@
 <body>
 
 <?php 
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRS10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  include ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRS18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-
-// / The following code gets global variables.
+// / Detect WordPress.
+$WPFile = '/var/www/html/wp-load.php';
+if (!file_exists($WPFile)) {
+  echo nl2br('ERROR!!! HRS26, WordPress was not detected on the server.'."\n");
+  die('ERROR!!! HRS26, WordPress was not detected on the server.'); }
+  else {
+    require($WPFile); } 
+// / Detect WordPress and set global variables.
+$hrstreamerAppVersion = 'v0.6.5';
 $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
+$Date = date("m_d_y");
+$Time = date("F j, Y, g:i a"); 
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
+$LogInc = 0;
+$SesLogDir = $LogLoc.'/'.$Date;
+$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
+$LogFile = ($SesLogDir.'/'.$Date.'.txt');
+$CloudDir = $CloudLoc.'/'.$UserID;
+$CloudTemp = $InstLoc.'/DATA/';
+$CloudTempDir = $CloudTemp.$UserID;
+if ($UserIDRAW == '0' or $UserIDRAW == '') {
+  $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
+  die('ERROR!!! HRS43, You are not logged in on '.$Time.'!'); }
 if (file_exists($getID3File)) {
   require($getID3File); }
 if (!file_exists($getID3File)) {
   $txt = ('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   die('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!'); }
-// / The following code gets POST variables.-
+// / Set POST variables.-
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $_POST['playlistSelected'] = $_GET['playlistSelected']; }
 // / The following code is performed whnenever there is a playlistSelected.
@@ -95,6 +103,7 @@ if (file_exists($PlaylistDir)) {
   $PlaylistCacheDir = $PlaylistDir.'/.Cache';
   $PlaylistCacheFile = $PlaylistCacheDir.'/cache.php';
   $PlaylistFiles = scandir($PlaylistDir); 
+
   require($PlaylistCacheFile);
   if (!file_exists($PlaylisrCacheFile)) {
     @mkdir($PlaylistCacheDir, 0755); 
@@ -146,13 +155,19 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
     <div id="PlaylistSongInfo<?php echo $SongCount; ?>" name="PlaylistSongInfo<?php echo $SongCount; ?>" style="display:none;"><?php 
     echo nl2br('<div align="center"><p onclick="toggle_visibility(\'PlaylistSongInfo'.$SongCount.'\'); toggle_visibility(\'moreInfoLink'.$SongCount.'\');"><i>Less Info</i></p></div>');
     echo nl2br('<a id="moreInfo" name="moreInfo"><i>Artist: </i>'.${'PLSongArtist'.$SongCount}."\n".'<i>Title: </i>'.${'PLSongTitle'.$SongCount}."\n".'<i>Album: </i>'.${'PLSongAlbum'.$SongCount}.'</a>'); ?>
+
+<div align="center"><img id="FileImage" src="<?php echo ${'PLSongImage'.$SongCount};?>" style="max-width:100px; max-height:100px;" onclick="document.getElementById('AlbumImage').src='<?php echo ${'PLSongImage'.$SongCount};?>'"></div>
+
 </div></div>
 <?php }
 $RandomImageFile = 'Applications/HRStreamer/Resources/RandomImageFile.png'; ?>
+
 <div id="artwork" name="artwork" align="center" style="max-width:65%;">
-<div align="center"><p><strong>Artwork</strong></p>
-<img id="AlbumImage" name="AlbumImage" style="max-width:400px; padding-left:15px; padding-top:15px;" src="<?php echo $RandomImageFile; ?>">
-</div></div>
+  <div align="center"><strong>Artwork</strong>
+  <hr />
+  <img id="AlbumImage" name="AlbumImage" style="max-width:400px; padding-left:15px; padding-top:15px;" src="<?php echo $RandomImageFile; ?>"></div>
+</div> 
+
 <div id="media" name="media" align="center" style="max-width:65%;">
 <?php  
 $SongCount = 0;    
@@ -161,20 +176,33 @@ foreach ($PlaylistFiles as $PlaylistFile) {
   $SongCount++; 
   $pathname = $PlaylistDir.'/'.$PlaylistFile; ?>
 <script type="text/javascript">
-var aud<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
-aud.onended = function() {
-    toggle_visibility(songDiv<?php echo $SongCount; ?>);
-    toggle_visibility(songDiv<?php echo ($SongCount + 1); ?>);
-    aud<?php echo ($SongCount + 1); ?>.play;
-};
+    function vidplay<?php echo $SongCount; ?>() {
+       var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
+       var button<?php echo $SongCount; ?> = document.getElementById("play<?php echo $SongCount; ?>");
+       if (audio<?php echo $SongCount; ?>.paused) {
+          audio<?php echo $SongCount; ?>.play<?php echo $SongCount; ?>();
+          button<?php echo $SongCount; ?>.textContent = "||"; } 
+       else {
+          audio<?php echo $SongCount; ?>.pause<?php echo $SongCount; ?>();
+          button<?php echo $SongCount; ?>.textContent = ">"; } }
+    function restart<?php echo $SongCount; ?>() {
+        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
+        audio<?php echo $SongCount; ?>.currentTime = 0; }
+    function skip<?php echo $SongCount; ?>(value) {
+        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
+        audio<?php echo $SongCount; ?>.currentTime += value; 
+        songsrc.push("<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>"); }      
 </script>
 <div align="center" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar<?php echo $SongCount; ?>" style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
-<div align="center" id="songDiv<?php echo $SongCount; ?>" name="songDiv<?php echo $SongCount; ?>">
-  <audio id="song<?php echo $SongCount; ?>" name="song<?php echo $SongCount; ?>" preload="auto" controls="true" onended="audio<?php echo $SongCount++; ?>.play;" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
+<div align="center" id="autosong" name="autosong">
+  <audio id="song<?php echo $SongCount; ?>" name="song<?php echo $SongCount; ?>" preload="auto" controls="true" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
 <hr />
 </div> 
 </div>        
 <?php } ?> 
 </div>
+
+
+owE
