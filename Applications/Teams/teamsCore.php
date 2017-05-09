@@ -16,7 +16,6 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
@@ -24,10 +23,17 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+// / The follwoing code checks if the Teams App markdownCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/_SCRIPTS/markdownCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRC2 Teams App Markdown Core file (Applications/Teams/_SCRIPTS/markdownCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require_once ('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/_SCRIPTS/markdownCore.php'); }
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.7.9';
+$TeamsAppVersion = 'v0.8.0';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -452,7 +458,35 @@ function createNewTeam($newTeamName) {
     $teamFile = $newTeamFile;
     $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');  
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
+    echo nl2br('Created <i>'.$teamName.'</i>'."\n"); 
+    return 'true'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to create a new SubTeam (Private Team within a Team).
+function createNewSubTeam($teamToJoin, $subTeamUsers) {
+  // / Add subteam users to the array.
+  $txt = ('OP-Act: Creating SubTeam "'.$newSubTeam.'" on '.$Time.'!');  
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  if (!is_array($subTeamUsers)) { 
+    $subTeamUsers = array($subTeamUsers); }
+  foreach($subTeamUsers as $subTeamUser) {
+    if (!in_array($subTeamUser, $FRIENDS)) {
+      $txt = ('ERROR!!! HRC2TeamsApp676, Cannot add user to subTeam because they are not in your Friends list on '.$Time); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+  if (!file_exists($newSubTeamFile)) { 
+    $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
+      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.implode('\',\'', $subTeamUsers).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
+    $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Creating new Team file "'.$newTeamFile.'" on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (file_exists($teamFile)) { 
+    $teamFile = $newTeamFile;
+    $txt = ('OP-Act: Sucessfully created the new Team "'.$TEAM_NAME.'" on '.$Time.'!');    
+    $teamDir = $newTeamDir;     
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  echo nl2br('Created <i>'.$TEAM_NAME.'</i>'."\n"); 
+  return 'true'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -472,12 +506,17 @@ if (in_array($_POST['editTeam'], $currentUserTeams)) {
   $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$editTeamName.'\'; $TEAM_OWNER = \''.$editTeamOwner.'\' ; $TEAM_USERS = array(\''.$editTeamUsers.'\'); 
     $TEAM_ADMINS = array(\''.$editTeamAdmins.'\'); $TEAM ALIAS = \''.$editTeamAlias.'\'; $BANNED_USERS = array(); ?>');
   $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
-  echo nl2br('Edited <i>'.$teamName.'</i>'."\n"); } 
+  echo nl2br('Edited <i>'.$teamName.'</i>'."\n"); 
+  return 'true'; } 
 if (!in_array($teamToEdit, $currentUserTeams)) {
   $txt = ('ERROR!!! HRC2TeamsApp151, The current user "'.$UserID.'" does not have permission to edit the Team "'.$teamToEdit.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br($txt."\n"); 
   die(); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed when a validated user selects to edit a subTeam.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -506,9 +545,14 @@ function deleteTeam($teamToDelete) {
     echo nl2br($txt."\n");
     die (); }
   if (!file_exists($teamDir)) { 
-    $txt = ('OP-Act: Deleting Team '.$teamToDelete.' on '.$Time.'!');
+    $txt = ('OP-Act: Deleted Team '.$teamToDelete.' on '.$Time.'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Deleted <i>'.$teamToDelete.'</i>'."\n"); } }
+    echo nl2br('Deleted <i>'.$teamToDelete.'</i>'."\n"); }   
+  return 'true'; } 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to delete a subTeam.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -523,7 +567,8 @@ function adminAddUserToTeam($adminAddUser, $adminTeamToAdd) {
   include($teamdModFile);
   $TEAM_USERS = array_push($TEAM_USERS, $adminAddUser);
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
-  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
+  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
+  return 'true'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -538,7 +583,8 @@ function adminRemoveUserFromTeam($adminRemoveUserFromTeam, $adminTeamToRemove) {
   include($teamdModFile);
   $TEAM_USERS[$adminRemoveUser] = null;
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
-  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
+  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
+  return 'true'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -560,7 +606,8 @@ if ($_POST['editUser'] == $currentUserID) {
     $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; $ACCOUNT_NOTES_USER = \'\'; ?>');
   $MAKEnewUserFile = file_put_contents($userFile, $newUserFileDATA.PHP_EOL, FILE_APPEND); 
   include($userFile);  
-  echo nl2br('Edited <i>'.$userName.'</i>'."\n"); } 
+  echo nl2br('Edited <i>'.$userName.'</i>'."\n"); 
+  return 'true'; } 
 if (!in_array($userToEdit, $currentUserTeams)) {
   $txt = ('ERROR!!! HRC2TeamsApp336, The current user "'.$UserID.'" does not have permission to join the team "'.$teamToJoin.'" because they have been banned on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -617,7 +664,8 @@ function addFriend($friendToAdd) {
         $PENDING_FRIENDS[$UserID] = null;
         unset($PENDING_FRIENDS[$FRIENDS]); }
       $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); $PENDING_FRIENDS = array(\''.implode('\',\'',$PENDING_FRIENDS).'\'); ?>'); 
-      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); } } }
+      $MAKECacheFile = file_put_contents($FriendCacheFile, $txt.PHP_EOL, FILE_APPEND); } } 
+return 'true'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -660,33 +708,10 @@ function joinTeam($teamToJoin) {
     $WRITETeamCacheDATA = file_put_contents($teamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
     $allowPosting = $teamToJoin;
-    $chatDivNeeded = 'true'; } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code is performed whenever a user selects to create a new SubTeam (Private Team within a Team).
-function createNewSubTeam($teamToJoin, $subTeamUsers) {
-  // / Add subteam users to the array.
-  $txt = ('OP-Act: Creating SubTeam "'.$newSubTeam.'" on '.$Time.'!');  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  if (!is_array($subTeamUsers)) { 
-    $subTeamUsers = array($subTeamUsers); }
-  foreach($subTeamUsers as $subTeamUser) {
-    if (!in_array($subTeamUser, $FRIENDS)) {
-      $txt = ('ERROR!!! HRC2TeamsApp676, Cannot add user to subTeam because they are not in your Friends list on '.$Time); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-  if (!file_exists($newSubTeamFile)) { 
-    $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
-      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.implode('\',\'', $subTeamUsers).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
-    $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
-    $txt = ('OP-Act: Creating new Team file "'.$newTeamFile.'" on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  if (file_exists($teamFile)) { 
-    $teamFile = $newTeamFile;
-    $txt = ('OP-Act: Sucessfully created the new Team "'.$TEAM_NAME.'" on '.$Time.'!');    
-    $teamDir = $newTeamDir;     
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  echo nl2br('Created <i>'.$TEAM_NAME.'</i>'."\n"); }
+    $chatDivNeeded = 'true'; 
+    $txt = ('OP-Act: User joined Team "'.$teamToJoin.'" on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    return 'true'; } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -730,7 +755,30 @@ function joinSubTeam($teamToJoin, $subTeamToJoin) {
     $WRITETeamCacheDATA = file_put_contents($subTeamCacheFile, $subTeamCacheDATA.PHP_EOL, FILE_APPEND);
     $teamsGreetingDivNeeded = 'false';
     $allowPosting = $subTeamToJoin;
-    $chatDivNeeded = 'true'; } } }
+    $chatDivNeeded = 'true'; 
+    $txt = ('OP-Act: User joined subTeam "'.$subTeamToJoin.'" on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    return 'true'; } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code verifies that a MAIN conversation file exists in the specified Team.
+function verifyConversation($teamToVerify, $subTeamToVerify) {
+  if ($teamToVerify !== !$subTeamToVerify) {
+    $subTeamHandler1 = '/'.$teamToVerify;
+    $subTeamHandler2 = '/'.$subTeamToVerify; }
+  if ($teamToVerify == $subTeamToVerify) {
+    $subTeamHandler1 = '';
+    $subTeamHandler2 = '/'.$teamToVerify; }
+  $conversationFile = $teamToVerify.$subTeamHandler1.$subTeamHandler2.'.php'; 
+  if (!file_exists($conversationFile)) {
+    $newConversationDATA = 'Welcome! You probably want to <a>Add members to this Team</a>.';
+    $MAKEConvFile = file_put_contents($conversationFile, $txt.PHP_EOL, FILE_APPEND); 
+    include($conversationFile); 
+    return 'new'; }
+  if (file_exists($conversationFile)) {
+    include($conversationFile);
+    return 'existing'; } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
