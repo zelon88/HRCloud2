@@ -62,7 +62,7 @@ if (isset($newTeamName) && $newTeamName !== '') {
 if (isset($teamToEdit) && $teamToEdit !== '') {
   editTeam($teamToEdit); }
 
-if (isset($teamToDelete) {
+if (isset($teamToDelete)) {
   deleteTeam($teamToDelete); }
 
 if (isset($adminAddUserToTeam) && isset($adminTeamToAdd)) {
@@ -72,7 +72,7 @@ if (isset($adminRemoveUserFromTeam) && isset($adminTeamToRemove)) {
   adminRemoveUserFromTeam($adminRemoveUser, $adminTeamToRemove); }
 
 if (isset($newSubTeam) && $newSubTeam !== '' && isset($teamToJoin)) {
-  createNewSubTeam($newSubTeam); }
+  createNewSubTeam($newSubTeam, $subTeamUsers); }
 
 if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin)) {
   joinSubTeam($teamToJoin, $subTeamToJoin); }

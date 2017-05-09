@@ -665,39 +665,28 @@ function joinTeam($teamToJoin) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new SubTeam (Private Team within a Team).
-  // / Must be performed AFTER teamToJoin.
-function createNewSubTeam($newSubTeam) {
+function createNewSubTeam($teamToJoin, $subTeamUsers) {
   // / Add subteam users to the array.
   $txt = ('OP-Act: Creating SubTeam "'.$newSubTeam.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-
-if (!is_array($subTeamUsers)) {
-  $subTeamUsers = array($_POST['subTeamUsers']); }
-  $EmrgcCtr = 0;
-foreach($subTeamUsers as $subTeamUser) {
-  $EmrgcCtr++;
-  if ($EmrgcCtr == 1000) continue;
-  include($teamFile);
-  if (in_array($UserID, $TEAM_USERS) && !in_array($User, $BANNED_USERS)) {
-    $USER_SUBTEAM = '';
-  }
-}
-
-
+  if (!is_array($subTeamUsers)) { 
+    $subTeamUsers = array($subTeamUsers); }
+  foreach($subTeamUsers as $subTeamUser) {
+    if (!in_array($subTeamUser, $FRIENDS)) {
+      $txt = ('ERROR!!! HRC2TeamsApp676, Cannot add user to subTeam because they are not in your Friends list on '.$Time); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
   if (!file_exists($newSubTeamFile)) { 
     $newTeamFileDATA = ('<?php $TEAM_NAME = \''.$_POST['newTeam'].'\'; $TEAM_OWNER = \''.$UserID.'\' ; $TEAM_CREATED_BY = \''.$UserID.'\'; 
-      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.$UserID.'\',\''.implode('\',\'', $FriendArr).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
+      $TEAM_ALIAS = array(\'\'); $TEAM_USERS = array(\''.implode('\',\'', $subTeamUsers).'\'); $TEAM_ADMINS = array(\''.$UserID.'\'); $TEAM_VISIBILITY=\'0\'; $BANNED_USERS = array(); ?>');
     $MAKEnewTeamFile = file_put_contents($newTeamFile, $newTeamFileDATA.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Creating new Team file "'.$newTeamFile.'" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   if (file_exists($teamFile)) { 
-  
-
     $teamFile = $newTeamFile;
-    $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');    
+    $txt = ('OP-Act: Sucessfully created the new Team "'.$TEAM_NAME.'" on '.$Time.'!');    
     $teamDir = $newTeamDir;     
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
+  echo nl2br('Created <i>'.$TEAM_NAME.'</i>'."\n"); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
