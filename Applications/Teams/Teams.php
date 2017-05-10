@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: 0.8.2 (5-9-2017 23:35)
+App Version: 0.8.2.1 (5-10-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.

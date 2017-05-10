@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.2';
+$TeamsAppVersion = 'v0.8.2.1';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -68,7 +68,7 @@ $cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_I
   $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
 $requiredTeamVars = array('$TEAM_CACHE_VERSION', '$TEAM_NAME', '$TEAM_OWNER', '$TEAM_CREATED_BY', '$TEAM_ALIAS', '$TEAM_USERS', 
   '$TEAM_ADMINS', '$TEAM_VISIBILITY', '$TEAM_ALIAS', '$BANNED_USERS');
-$requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER_TITLE', '$USER_TOKEN', '$USER_PHOTO_FILENAME', '$USER_ALIAS', 
+$requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER_TITLE', '$USER_TOKEN', '$USER_PHOTO_FILENAME', '$USER_ALIAS', '$USER_KICKED_TEAMS',
   '$USER_TEAMS_OWNED', '$USER_TEAMS', '$USER_PERMISSIONS', '$INTERNATIONAL_GREETINGS', 'UPDATE_INTERVAL', '$USER_STATUS', '$FRIENDS', '$PENDING_FRIENDS',
   '$USER_EMAIL_1', '$USER_EMAIL_2', '$USER_EMAIL_3', '$USER_PHONE_1', '$USER_PHONE_2', '$USER_PHONE_3', '$ACCOUNT_NOTES_USER', '$ACCOUNT_NOTES_ADMIN');
 // / -----------------------------------------------------------------------------------
@@ -220,6 +220,7 @@ if (!file_exists($UserCacheFile)) {
 // / -----------------------------------------------------------------------------------
 // / The following code verifies that the User files contained in the CloudLoc are valid, and retrievs their information.
 if (file_exists($UserCacheFile)) {
+  // / Update the user cache file to the latest version before loading it.
   $cacheDATA = file_get_contents($UserCacheFile);
   foreach ($requiredUserVars as $requiredVar) {
     if (strpos($requiredVar, $cacheDATA) == 'false') {
@@ -234,6 +235,14 @@ if (file_exists($UserCacheFile)) {
       $currentUserPermissions = $USER_PERMISSIONS; 
       $userArray = array_push($userArray, $USER_ID);
       $settingsInternationalGreetings = $INTERNATIONAL_GREETINGS; 
+      // / Handle if the user has been kicked from a Team.
+      if (!is_array($USER_KICKED_TEAMS)) {
+        $USER_KICKED_TEAMS = array($USER_KICKED_TEAMS); } 
+      foreach ($USER_KICKED_TEAMS as $kickedTeam) {
+        if (in_array($kickedTeam, $USER_TEAMS)) { 
+          $USER_TEAMS[$kickedTeam] = null; 
+          unset($USER_TEAMS[$kickedTeam]); } }
+      // / Bring the user back from sleep or away upon any activity.
       if ($USER_STATUS == '0' or $USER_STATUS == '') {
         $USER_STATUS = '1'; }
       if ($USER_STATUS == '1') {
@@ -261,14 +270,19 @@ foreach ($FRIENDS as $friend) {
     include($FriendCacheFile);
     if (in_array($UserID, $FRIENDS)) {
       $friendCounter++;
-      include($UserCacheFile); }
+      include($UserCacheFile); 
+      continue; }
     if (!in_array($UserID, $FRIENDS)) {
-      include($FriendCacheFile);
-      $FRIENDS[$friendCounter] = null;
-      unset($FRIENDS[$friendCounter]);
+      include($UserCacheFile);
+      $FRIENDS[$friend] = null;
+      unset($FRIENDS[$friend]);
         if (count($FRIENDS > 1)) {
           $cacheDATA = ('<?php $FRIENDS = array(\''.implode('\',\'',$FRIENDS).'\'); ?>'); 
           $MAKECacheFile = file_put_contents($UserCacheFile, $cacheDATA.PHP_EOL, FILE_APPEND); } }
+
+
+
+
 $pendingFriendTotal = $pendingFriendCounter;
 $pendingFriendCounter = 0;
 $friendCounterTotal = $friendCounter;
@@ -604,7 +618,7 @@ function adminAddUserToTeam($adminAddUser, $adminTeamToAdd) {
   $TEAM_USERS = array_push($TEAM_USERS, $adminAddUser);
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($TeamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
-  $txt = ('OP-Act: Added '.$adminAddUser.' to '.$adminTeamToAdd.' on '.$Time.'');
+  $txt = ('OP-Act: Added '.$adminAddUser.' to '.$adminTeamToAdd.' on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br('Added <i>'.$adminAddUser.' to '.$adminTeamToAdd.'.</i>'."\n");
   return 'true'; }
@@ -629,9 +643,34 @@ function adminRemoveUserFromTeam($adminRemoveUser, $adminTeamToRemove) {
   $TEAM_USERS[$adminRemoveUser] = null;
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
-  $txt = ('OP-Act: Removed '.$adminRemoteUser.' to '.$adminTeamToRemove.' on '.$Time.'');
+  $txt = ('OP-Act: Removed '.$adminRemoteUser.' to '.$adminTeamToRemove.' on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br('Removed <i>'.$adminRemoveUser.' to '.$adminTeamToRemove.'.</i>'."\n");
+  return 'true'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever an admin selects to permBan a user from a Team.
+function adminBanUserFromTeam($adminBanUser, $adminTeamToBan) {
+  global $Time;
+  global $LogFile;
+  global $TeamsDir;
+  global $CloudLoc;
+  global $UserCacheFile;
+  global $TeamCacheFile;
+  $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminBanUser.'/'.$adminBanUser.'.php');
+  $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToBan.'/'.$adminTeamToBan);
+  include($UserCacheFile);
+  $USER_TEAMS[$adminTeamToBan] = null;
+  $userCacheDATA = ('$USER_TEAMS = array(\''.implode('\',\'', $USER_TEAMS).'\');'); 
+  $MAKECacheFile = file_put_contents($userModFile, $userCacheDATA.PHP_EOL, FILE_APPEND);
+  include($TeamCacheFile);
+  $TEAM_USERS[$adminBanUser] = null;
+  $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
+  $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
+  $txt = ('OP-Act: Banned '.$adminRemoteUser.' to '.$adminTeamToBan.' on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  echo nl2br('Banned <i>'.$adminBanUser.' to '.$adminTeamToBan.'.</i>'."\n");
   return 'true'; }
 // / -----------------------------------------------------------------------------------
 
@@ -761,7 +800,7 @@ function joinTeam($teamToJoin) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($prettyTxt."\n"); }
   if(!in_array($UserID, $TEAM_USERS) && $TEAM_VISIBILITY == '0') { 
-    $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the team "'.$teamToJoin.'" because they are not a member of it on '.$Time.'!');  
+    $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the team "'.$teamToJoin.'" because they are not a member on '.$Time.'!');  
     $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($prettyTxt."\n"); }
@@ -817,7 +856,7 @@ function joinSubTeam($teamToJoin, $subTeamToJoin) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($prettyTxt."\n"); }
   if(!in_array($UserID, $TEAM_USERS) && $TEAM_VISIBILITY == '0') { 
-    $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the team "'.$teamToJoin.'" because they are not a member of it on '.$Time.'!');  
+    $txt = ('ERROR!!! HRC2TeamsApp353, The current user "'.$UserID.'" does not have permission to to join the team "'.$teamToJoin.'" because they are not a member on '.$Time.'!');  
     $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($prettyTxt."\n"); 
@@ -859,17 +898,6 @@ function verifyConversation($teamToVerify, $subTeamToVerify) {
   if (file_exists($conversationFile)) {
     file_get_contents($conversationFile);
     return $subTeamToVerify; } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code is performed whenever an admin selects to kick an active user from a Team.
-
-// / -----------------------------------------------------------------------------------
-// / The following code is performed whenever an admin selects to tempBan a user from a Team.
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code is performed whenever an admin selects to permBan a user from a Team.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
