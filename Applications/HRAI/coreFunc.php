@@ -202,7 +202,7 @@ function detectWordPress() {
 function LOCALreadOutputOfPHPfile($aPHPfileORurl) {
   // / This function executes a PHP file and returns the output as the return variable.
   ob_start(); // begin collecting output
-  include "$aPHPfileORurl";
+  include($aPHPfileORurl);
   $result = ob_get_clean(); // retrieve output from myfile.php, stop buffering
   $varCache0 = '/var/www/html/HRProprietary/HRAI/Cache/varCache.php';
     $varCache1 = fopen("$varCache0", "a+");
