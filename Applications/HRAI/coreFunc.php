@@ -68,16 +68,16 @@ function forceCreateSesID() {
   if(isset($_POST['sesID'])){
     $sesID = str_replace(str_split('[]{};:$!#^&%@>*\'<'), '', $_POST['sesID']); 
       if (empty($sesID)) {
-        $sesIDhash = hash('sha256', $display_name.$day);
+        $sesIDhash = hash('sha256', $Salts.$display_name.$day);
         $sesID = substr($sesIDhash, -7); } }
   if(!isset($_POST['sesID'])){
-    $sesIDhash = hash('sha256', $display_name.$day);
+    $sesIDhash = hash('sha256', $Salts.$display_name.$day);
     $sesID = substr($sesIDhash, -7);  
   $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); }
-    $sesIDhashAuth = hash('sha256', $display_name.$day);
+    $sesIDhashAuth = hash('sha256', $Salts.$display_name.$day);
     $sesIDAuth = substr($sesIDhashAuth, -7);  
   if($sesID !== $sesIDAuth){
-    $sesIDhash = hash('sha256', $display_name.$day);
+    $sesIDhash = hash('sha256', $Salts.$display_name.$day);
     $sesID = substr($sesIDhash, -7); } 
   $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
   return ($sesID); }
@@ -90,16 +90,16 @@ function authSesID() {
   if(isset($_POST['sesID'])){
     $sesID = $_POST['sesID']; 
       if (empty($sesID)) {
-        $sesIDhash = hash('sha256', $display_name.$day);
+        $sesIDhash = hash('sha256', $Salts.$display_name.$day);
         $sesID = substr($sesIDhash, -7); } }
   if(!isset($_POST['sesID'])){
-    $sesIDhash = hash('sha256', $display_name.$day);
+    $sesIDhash = hash('sha256', $Salts.$display_name.$day);
     $sesID = substr($sesIDhash, -7); } 
   $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
-    $sesIDhashAuth = hash('sha256', $display_name.$day);
+    $sesIDhashAuth = hash('sha256', $Salts.$display_name.$day);
     $sesIDAuth = substr($sesIDhashAuth, -7);  
   if($sesID !== $sesIDAuth){
-    $sesIDhash = hash('sha256', $display_name.$day);
+    $sesIDhash = hash('sha256', $Salts.$display_name.$day);
     $sesID = substr($sesIDhash, -7); } 
   $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
   return ($sesID); }
@@ -117,7 +117,7 @@ function loadAdminInfo() {
     $display_name = $_POST['display_name']; }
     $input = defineUserInput(); 
     $inputServerID = defineInputServerID();
-    $sesIDhash = hash('sha256', $display_name.$day);
+    $sesIDhash = hash('sha256', $Salts.$display_name.$day);
     $sesID = substr($sesIDhash, -7); 
   if(isset($_POST['sesID'])) {
     $sesID = $_POST['sesID']; }
@@ -151,7 +151,7 @@ function forceCreateSesDir() {
   $display_name = defineDisplay_Name();
   $input = defineUserInput();
   $day = date("d"); 
-  $sesIDhash = hash('sha256', $display_name.$day);
+  $sesIDhash = hash('sha256', $Salts.$display_name.$day);
   $sesID = substr($sesIDhash, -7); 
   $date = date("F j, Y, g:i a");
   $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt');

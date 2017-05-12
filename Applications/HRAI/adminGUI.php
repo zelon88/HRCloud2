@@ -52,7 +52,7 @@ $detectWordPress = detectWordPress();
 $verifyUser = verifyUser();
 $loadAdminInfo = loadAdminInfo();
 $input = defineUserInput();
-$sesIDhash = hash('sha256', $Salts.$display_name.$day);
+$sesIDhash = hash('sha256', $Salts.$Salts.$display_name.$day);
 $sesID = substr($sesIDhash, -7);
 $CreateSesDir = forceCreateSesDir(); 
 if ($user_ID == 1) {

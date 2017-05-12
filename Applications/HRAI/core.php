@@ -67,7 +67,7 @@ $input = defineUserInput();
 $user_IDRAW = get_current_user_id();
 $user_ID = hash('ripemd160', $user_IDRAW.$Salts);
 if (!isset($_POST['sesID'])) {
-  $sesIDhash = hash('sha256', $display_name.$day);
+  $sesIDhash = hash('sha256', $Salts.$display_name.$day);
   $sesID = substr($sesIDhash, -7); }
 
 // / The following code creates the session directory and session log files.
