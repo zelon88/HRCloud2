@@ -23,7 +23,7 @@ else {
 // / The following code sets the global variables for the session.
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
-$defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'HRAI', 'HRConvert2', 'HRScan2', 
+$defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'HRAI', 'HRConvert2', 'HRScan2', 'HRAIMiniGui.php',
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
   'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_3-16-17.zip', 'wordpress_3-16-17.zip');
 $installedApps = array_diff($Apps, $defaultApps);
