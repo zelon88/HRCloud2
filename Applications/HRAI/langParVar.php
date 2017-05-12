@@ -21,8 +21,16 @@ $sentPlural = 0;
 $sentGreeting = 0;
 $sentStatement = 0;
 $sentQuestion = 0;
-$sentAttitude = 0;$sentMood = 0;$sentHappy = 0;$sentSad = 0;$sentAngry = 0;$sentSubmissive = 0;$sentDominant = 0;$sentConfidence = 0;
+$sentAttitude = 0;
+$sentMood = 0;
+$sentHappy = 0;
+$sentSad = 0;
+$sentAngry = 0;
+$sentSubmissive = 0;
+$sentDominant = 0;
+$sentConfidence = 0;
 $sentPositive = 0;
-$sentNegative = 0;$sentSorry = 0;
+$sentNegative = 0;
+$sentSorry = 0;
 
 $baseSentHash =  ("$sentNoun$sentPronoun$sentVerb$sentAdverb$sentAdj$sentPreposition$sentConjunction$sentInterjection$sentTense$sentPerson$sentPlural$sentGreeting$sentStatement$sentQuestion$sentAttitude$sentMood$sentHappy$sentSad$sentAngry$sentSubmissive$sentDominant$sentConfidence$sentPositive$sentNegative$sentSorry");

@@ -13,129 +13,24 @@ session_start();
 // / resources. Because the language parser only receives and sends data to the userGUI, we don't
 // / are able to POST data to and from scripts as many times as we like before giving a response
 // / to the user.
-$coreVarfile = '/var/www/html/HRProprietary/HRAI/coreVar.php';
-$coreFuncfile = '/var/www/html/HRProprietary/HRAI/coreFunc.php';
-$CallForHelpURL = '/var/www/html/HRProprietary/HRAI/CallForHelp.php';
-$coreFile = 'http://localhost/HRProprietary/HRAI/core.php';
-$nodeCache = 'http://localhost/HRProprietary/HRAI/Cache/nodeCache.php';
-
-require_once($coreFuncfile);
-  $user_ID = defineUser_ID();
-if (file_exists($wpfile)){
-require_once($wpfile);
-global $current_user;
-get_currentuserinfo();
-$user_ID = get_current_user_id();
-if ($user_ID == 1) {
-include '/var/www/html/HRProprietary/HRAI/adminINFO.php'; }
-if ($user_ID !== 1) {
-$display_name = get_currentuserinfo() ->$display_name; } }
-if ($user_ID == 0) {
-  $display_name = $_POST['display_name']; }
-  $input = defineUserInput(); 
-  $inputServerID = defineInputServerID();
-  $sesIDhash = hash('sha1', $display_name.$day);
-  $sesID = substr($sesIDhash, -7); 
-if(isset($_POST['sesID'])) {
-  $sesID = $_POST['sesID']; }
-  if(isset($_POST['user_ID'])) {
-  $user_ID = $_POST['user_ID']; }
-  if(isset($_POST['sesID'])) {
-  $display_name = $_POST['display_name']; }
-
-$ForceCreateSesDir = forceCreateSesDir();
-
 $sesLogfile = ('/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt');
-require_once ($coreVarfile);
-require_once ($onlineFile);
+
+require_once('/var/www/html/HRProprietary/HRAI/coreVar.php');
+require_once($onlineFile);
+require_once($coreFuncfile);
+
+// / Load WordPress.
+$detectWordPress = detectWordPress();
+// / Detect the user and generate their UserID.
+$verifyUser = verifyUser();
+// / If the user is an administrator, load their credentials from AdminInfo.
+$loadAdminInfo = loadAdminInfo();
+// / Create a session directory if none exists.
+$ForceCreateSesDir = forceCreateSesDir();
 // / We call this function now because it gathers fresh info about the network and stores it in the nodeCache.
 $n0stat = getNetStat();
 // / Now that the nodeCache is up-to-date we can include it.
-include_once ($nodeCache);
 $serverID = getServIdent();
-$dataArr = array('user_ID' =>  "$user_ID",
-            'input' => "$input",
-            'display_name' =>  '$display_name',
-            'sesID' => '$sesID',
-            'serverID' => '$serverID');
-// / If we have a logfile we continue the script. If not we pass the variables we've got to core.php
-// / to establish a session. 
-if (!file_exists($sesLogfile)) {
-// / We can POST a file by prefixing with an @ (for <input type="file"> fields)
-  $handle = curl_init($coreFile);
-  curl_setopt($handle, CURLOPT_POST, true);
-  curl_setopt($handle, CURLOPT_POSTFIELDS, $dataArr);
-  curl_exec($handle); 
-  if (!file_exists($sesLogfile)) {
-  echo nl2br('The core is not synced!'."\r"); } 
-  die ('Sent data to coreFile to generate a session ID.'); }
-
-// / Node0 is the server currently running this script. If it reports that it is busy from we will
-// / check for other nodes to handle our request, and gather if they are busy or not. If they are 
-// / also busy we skip them and remove them from the nodeCache.
-include($nodeCache);
-if ($node0Busy == 1) {
-  // / Check to see if our nodes are busy. If they are we drop the nodeCount and try again.
-  if ($nodeCount <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; }
-  if ($nodeCache <= 1) {
-    $useNodeBusy = ${"node" . $nodeCount. "Busy"};
-      if ($useNodeBusy = 1) {
-        $nodeCount = ($nodeCount - 1);
-        $useNodeBusy = ${"node" . $nodeCount. "Busy"}; 
-    // / Now that we've eliminated servers that are busy, we send the request to the next available node.
-    $useNode = ${"node" . $nodeCount. "URL"};
-    $handle = curl_init($useNode.'/langPar.php');
-    curl_setopt($handle, CURLOPT_POST, true);
-    curl_setopt($handle, CURLOPT_POSTFIELDS, $dataArr);
-    curl_exec($handle); 
-    // / And write an entry to the sesLog.
-    $sesLogfile0 = fopen("$sesLogfile", "a+");
-    $txt = ('LangPar: '."User $display_name".','." $user_ID during $sesID on $date".'. Node0 is busy. 
-      Sending request to node '.$useNode.'. NodeCount is '.$nodeCount.'.');
-    $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
-    // / Before we kill the script on this server we update our nodeCache file.
-    $n0stat = getNetStat();
-    // / And finally we can give this server a break to finish doing what it's doing.
-    die ('This request was sent to node '.$useNode.' for processing. '); } } } } } } } } } } }  
 
 // / Before we begin, we define and create a convCache.php file in the sesDir to store our input hash 
 // / variables. The lines below create a blank cacheFile and makes sure it begins with <?php.
@@ -208,8 +103,6 @@ print_r($WordOfSentArr);
     $convCache0 = fopen("$convCachefile", "a+");
     $txt = ('$sentHash = '."$sentHash".';'."\r");
     $compConvCachefile = file_put_contents($convCachefile, $txt.PHP_EOL , FILE_APPEND); }    
-
-
 
 elseif (!strpos($input, '.') !== false) {
   $sentence = $input; 

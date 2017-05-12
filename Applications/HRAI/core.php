@@ -7,18 +7,23 @@
 <body>
   <div name="top"></div>
 <?php 
+session_start();
 
-$HRAI_VERSION = 'v3.0';
+// / The following code loads core AI files. Write an entry to the log if successful.
+require_once('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreVar.php');
+require_once($coreArrfile);
+require_once($coreFuncfile);
+require_once($onlineFile);
+require_once($HRC2SecurityCoreFile);
+require_once($InstLoc.'/config.php');
 
-if (isset($_POST['display_name'])) {
-  $_POST['display_name'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['display_name']); }
 if (!isset($_POST['input'])) { ?>
-<div id="HRAITop" align='center'><img id='logo' src='/HRProprietary/HRCloud2/Resources/logoslowbreath.gif'/></div>
+<div id="HRAITop" align='center'><img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logoslowbreath.gif'/></div>
 <?php } 
 if (isset($_POST['input'])) {
   $_POST['input'] = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['input']); ?>
 <div id="HRAITop" style="float: left; margin-left: 15px;">
-<img id='logo' src='/HRProprietary/HRCloud2/Resources/logo.gif>'/>
+<img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logo.gif'/>
 </div>
 <?php } 
 if (!isset($_POST['input'])) { ?>
@@ -27,6 +32,7 @@ if (!isset($_POST['input'])) { ?>
 if (isset($_POST['input'])) { ?>
 <div style="float: right; padding-right: 50px;">
 <?php } ?>
+
 <script>
 jQuery('#input').on('input', function() {
   $("#logo").attr("src","Resources/logo.gif");
@@ -35,56 +41,21 @@ jQuery('#submitHRAI').on('submit', function() {
   $("#logo").attr("src","Resources/logo.gif");
 });
 </script>
+
 <?php
-session_start();
 
-// / The following code sets the variables for the session.
-$InstLoc = '/var/www/html/HRProprietary/HRCloud2';
-$langParserfile = $InstLoc.'/Applications/HRAI/langPar.php';
-$onlineFile = $InstLoc.'/Applications/HRAI/online.php';
-$coreVarfile = $InstLoc.'/Applications/HRAI/coreVar.php';
-$coreFuncfile = $InstLoc.'/Applications/HRAI/coreFunc.php';
-$coreArrfile = $InstLoc.'/Applications/HRAI/coreArr.php';
-$nodeCache = $InstLoc.'/Applications/HRAI/Cache/nodeCache.php';
-$HRAIMiniGUIFile = $InstLoc.'/HRAIMiniGui.php';
-$CallForHelpURL = $InstLoc.'/Applications/HRAI/CallForHelp.php';
-$HRC2ConfigFile = $InstLoc.'/config.php';
-$HRC2SecurityCoreFile = $InstLoc.'/securityCore.php';
-$wpfile = '/var/www/html/wp-load.php';
-$date = date("F j, Y, g:i a");
-$hour = date("g:i a");
-$day = date("d");
+// / The following code takes ownership of required HRAI directories for the www-data usergroup.
+system('chown -R www-data '.$InstLoc);
+system('chown -R www-data '.$InstLoc.'/Applications/HRAI');
 
-// / The following code specifies if HRAI is required in an Iframer (Tells HRAI to shrink it's footprint).
-if (isset($_POST['HRAIMiniGUIPost'])) {
-  $noMINICore = '1';
-  $includeMINIIframer = '1'; }
-if (!isset($_POST['HRAIMiniGUIPost'])) {
-  $noMINICore = '1'; 
-  $includeMINIIFramer = '0'; }
+// / The following code cleans up and maintains the server.
+$performMaintanence = performMaintanence();
 
-// / The following code loads core AI files. Write an entry to the log if successful.
-require_once($coreVarfile);
-require_once($coreArrfile);
-require_once($coreFuncfile);
-require_once($onlineFile);
-require_once($HRC2ConfigFile);
-require_once($HRC2SecurityCoreFile);
-require_once($InstLoc.'/config.php');
-if (isset($includeMINIIframer)) {
-  include_once($HRAIMiniGUIFile); }
-
-// / The following code is used to clean up old files from previous versions of HRCloud2.
-// / This code last updated on 11/30/16 23:18.
-if (file_exists($InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php')) {
-  unlink ($InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'); }
-if (file_exists($InstLoc.'/Applications/HRAI/CoreCommands/CMDsendafile.php')) {
-  unlink ($InstLoc.'/Applications/HRAI/CoreCommands/CMDsendafile.php'); }
-if (file_exists($InstLoc.'/Applications/HRAI/HRAIHelper.php')) {
-  unlink ($InstLoc.'/Applications/HRAI/HRAIHelper.php'); }
+// / The following code displays the MiniGui if needed.
+$displayMiniGui = displayMiniGui();
 
 // / The following code starts WordPress.
-$DetectWordPress = detectWordPress();
+$detectWordPress = detectWordPress();
 
 // / The followind code handles POSTED variables from other HRAI nodes.
 $display_name = defineDisplay_Name();
@@ -96,7 +67,7 @@ $input = defineUserInput();
 $user_IDRAW = get_current_user_id();
 $user_ID = hash('ripemd160', $user_IDRAW.$Salts);
 if (!isset($_POST['sesID'])) {
-  $sesIDhash = hash('sha1', $display_name.$day);
+  $sesIDhash = hash('sha256', $display_name.$day);
   $sesID = substr($sesIDhash, -7); }
 
 // / The following code creates the session directory and session log files.
@@ -113,7 +84,7 @@ if (!file_exists($sesLogfile)) {
 // / The following code verifies that a POSTED HRAI request came from a node with similar Salts.
 if (isset ($_POST['inputServerIDHash'])) {
   $inputServerID = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['inputServerID']);
-  $inputServerIDHash = hash ('sha1',$inputServerID.$networkSalts);
+  $inputServerIDHash = hash ('sha256',$inputServerID.$networkSalts);
   $txt = ('CoreAI: Server '.$inputServerID.', connecting with '.$inputServerIDHash.' using sesID: '.$sesIDPOST.' and user_ID: '.$user_IDPOST.' on '.$date.'.');
   $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND);
   if ($inputServerIDHash !== $_POST['inputServerIDHash']) {
@@ -130,32 +101,23 @@ if (!file_exists($coreVarfile)){
   $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
 
 // / Check how many other HRAI servers are in the vicinity. Returns the number of servers.
+$nodeCount = getNetStat();
 $serverStat = getServStat();
 include($nodeCache); 
 $txt = ('CoreAI: Loaded nodeCache, nodeCount is '.$nodeCount.'.');
 $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
 $txt = ('CoreAI: Server status is '.$serverStat.'.');
 $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
+$cpuUseNow = getServCPUUseNow();
+$servMemUse = getServMemUse();
+$getServBusy = getServBusy();
 
 // / The following code checks if the server is busy, and attempts to redirect the session to an idle node.
 // / EXPERIMENTAL !!!!! Regular users should not try to use this feature.
-$cpuUseNow = getServCPUUseNow();
-$servMemUse = getServMemUse();
-$servPageUse = getServPageUse();
-$getServBusy = getServBusy();
 if ($getServBusy == 1) {
-  $serverIDCFH = hash('sha1', $serverID.$sesID.$day); 
+  $serverIDCFH = hash('sha256', $serverID.$sesID.$day); 
   echo nl2br("This server reports it is busy! \r"); 
-  $CallForHelpURL = $InstLoc.'/Applications/HRAI/CallForHelp.php';
-  $dataArr = array('user_ID' => "$user_ID",
-    'display_name' => "$display_name",
-    'serverIDCFH' => "$serverIDCFH",
-    'sesID' => "$sesID", 
-    'serverID' => "$serverID"); 
-  $handle = curl_init($CallForHelpURL);
-  curl_setopt($handle, CURLOPT_POST, true);
-  curl_setopt($handle, CURLOPT_POSTFIELDS, $dataArr);
-  curl_exec($handle);
+  include($CallForHelp);
   $txt = ('CoreAI: Sent a CallForHelp request on '.$date.'. Continuing the script. ');
   $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
   echo nl2br("   Activating CallForHelp! Continuing... \r");  
@@ -177,11 +139,7 @@ if ($getServBusy == 1) {
 
 // / The following code prunes the user's input before loading the CoreCommands to execute matches.
 $inputRAW = $input;
-$input = str_replace(',','',$input); 
-$input = str_replace('.','',$input);
-$input = str_replace('!','',$input); 
-$input = str_replace('?','',$input);
-$input = str_replace(',',"\'",$input); 
+$input = str_replace(str_split(',.!?'), '', $_POST['input']);
 $input = strtolower ($input);
 
 ?>

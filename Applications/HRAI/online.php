@@ -33,19 +33,6 @@ function getServMemUse() {
       // / Returns human readable memory usage in Kb, Mb, or Gb respective
       // / to the amount of RAM being used.
         $mem_usage = memory_get_usage(true); 
-        
-        if ($mem_usage < 1024) {
-            $mem = $mem_usage." bytes"; }
-        elseif ($mem_usage < 1048576) {
-            $mem =  round($mem_usage/1024,2)." kilobytes"; }
-        else {
-            $mem = round($mem_usage/1048576,2)." megabytes"; }
-        return ($mem."\r"); }
-
-function getServPageUse() {
-    // / Returns human readable memory usage in Kb, Mb, or Gb respective
-    // / to the amount of RAM being used.
-        $mem_usage = (memory_get_usage(true) - memory_get_usage(true)); 
         if ($mem_usage < 1024) {
             $mem = $mem_usage." bytes"; }
         elseif ($mem_usage < 1048576) {
@@ -74,7 +61,6 @@ function getServCPUUseAvg10() {
     $load = sys_getloadavg();
     return $load[600]; }
 
-
 function getServUptime() {
 	// / Returns custom CPU usage from post data.
 	exec("uptime", $system); // get the uptime stats 
@@ -85,7 +71,7 @@ function getServUptime() {
 	$up_hours = $hours[0]; // grab the hours 
 	$mins = $hours[1]; // get the mins 
 	$up_mins = str_replace(",", "", $mins); // strip the comma from the mins 
-    return ("echo $up_days;".', '."echo $up_hours;".', '."echo $up_mins;"); }
+    return ("echo $up_days;".','."echo $up_hours;".','."echo $up_mins;"); }
 
 function getServBusy() {
   // / Determine if the server is busy by looking at average CPU usage.
@@ -128,16 +114,15 @@ if (file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/core.php
       $node0 = '1'; } 
     elseif (getServStat() !== $node0ServerID.'1'.'1') {
       $node0 = '0'; } 
-
-    $nodeCache0 = fopen("$nodeCache", "a+");    
-    $txt = ('$node0ServerID = \''.$node0ServerID.'\'; $node0OnlineStatus = '.$node0OnlineStatus.'; $node0Busy = '.$node0Busy.'; $node0URL = \''.$node0URL.'\'; ');
-    $compLogfile = file_put_contents($nodeCache, $txt.PHP_EOL , FILE_APPEND); } 
+    if (is_writable($nodeCache)) {
+      $txt = ('$node0ServerID = \''.$node0ServerID.'\'; $node0OnlineStatus = '.$node0OnlineStatus.'; $node0Busy = '.$node0Busy.'; $node0URL = \''.$node0URL.'\'; ');
+      $compCachefile = file_put_contents($nodeCache, $txt.PHP_EOL , FILE_APPEND); } }
     // / Count the number of active nodes and total it up. Use this to determine if the server is alone on a network. 
 	$nodeCount = $node0OnlineStatus+$node1OnlineStatus+$node2OnlineStatus+$node3OnlineStatus+$node4OnlineStatus+$node5OnlineStatus+
                  $node6OnlineStatus+$node7OnlineStatus+$node8OnlineStatus+$node9OnlineStatus;
-  $nodeCache0 = fopen("$nodeCache", "a+");
-  $txt = ('$nodeCount = '.$nodeCount.'; ');
-  $compLogfile = file_put_contents($nodeCache, $txt.PHP_EOL , FILE_APPEND); 
+  if (is_writable($nodeCache0)) {
+    $txt = ('$nodeCount = '.$nodeCount.'; ');
+    $compCachefile = file_put_contents($nodeCache, $txt.PHP_EOL , FILE_APPEND); } 
 	if ($nodeCount <= 1){
 	  $alone = 1;
 	  return $nodeCount; }
@@ -175,7 +160,6 @@ function getNode($nodeToTestURL) {
   include_once ($mynodeCache);
   $nodeNum = $nodeCount+1;
   // / If the target URL contains a nodeCache, we open it's contents and save them in our own temp location. 
-    $TMPnodeCache0 = fopen("$mytmpnodeCache", "w"); 
     $Data = getRemoteData($nodeURLCachefile); // / Here we get the contents from the target.
     $Data = preg_replace('/\<\?php/', ' ', $Data);
     $tmpnodeCachedat2 = file_put_contents("$mytmpnodeCachephp", $Data.PHP_EOL , FILE_APPEND); // / Here we put the files in a temp cache.
@@ -187,7 +171,6 @@ function getNode($nodeToTestURL) {
       $newNodeServerID = "$node0ServerID";
       if ("$newNodeServerID" !== $serverID) { // / If the server we snooped is this server, we drop the nodeCount back to 0.
         if (!empty($node0ServerID)) {
-    $nodeCache0 = fopen("$mynodeCache", "a+");    
     $txt = ('$node'.$nodeNum.'ServerID = \''.$node0ServerID.'\'; $node'.$nodeNum.'OnlineStatus = '.$node0OnlineStatus.'; $node'.$nodeNum.'Busy = '.$node0Busy.'; $node'.$nodeNum.'URL = \''.$node0URL.'\'; ');
     $compLogfile = file_put_contents("$mynodeCache", $txt.PHP_EOL , FILE_APPEND);  
       // / If the supplied URL is part of the HRAI network, we return the nodeNumber. If it is not, we return 0.
