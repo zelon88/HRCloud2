@@ -122,7 +122,7 @@ $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
-$defaultApps = array('.', '..', '', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'index.html', 'HRAI', 'HRConvert2', 
+$defaultApps = array('.', '..', '', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'index.html', 'HRAIMiniGui.php', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getID3-1.9.12', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
   'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip');
 $installedApps = array_diff($Apps, $defaultApps);
