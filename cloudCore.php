@@ -96,16 +96,16 @@ if(isset($_POST["upload"])) {
     if($file == "") {
       $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      echo nl2br("ERROR!!! HRC2160, No file specified on $Time.".'.'.'.'."\n".'--------------------'."\n"); 
+      echo nl2br("ERROR!!! HRC2160, No file specified on $Time."."\n".'--------------------'."\n"); 
       die(); }
+    $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
     $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
     echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'."\n".'--------------------'."\n");
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
     chmod($F3, 0755); 
     // / The following code checks the Cloud Location with ClamAV after copying, just in case.
     if ($VirusScan == '1') {
-      shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$F3.' | grep FOUND >> '.$LogFile1)));
+      shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$F3.' | grep FOUND >> '.$ClamLogDir)));
       $ClamLogFileDATA = file_get_contents($ClamLogDir);
       if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
         $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -182,7 +182,7 @@ if (isset($_POST['copy'])) {
       if (file_exists($copySrc)) {
         // / The following code checks the Cloud Location with ClamAV before copying, just in case.
         if ($VirusScan == '1') {
-          shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$copySrc.' | grep FOUND >> '.$LogFile1)));
+          shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$copySrc.' | grep FOUND >> '.$ClamLogDir)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
           if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
             $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -227,7 +227,7 @@ if (isset($_POST['rename'])) {
       if (file_exists($renSrc)) { 
         // / The following code checks the Cloud Location with ClamAV before copying, just in case.
         if ($VirusScan == '1') {
-          shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$renSrc.' | grep FOUND >> '.$LogFile1)));
+          shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$renSrc.' | grep FOUND >> '.$ClamLogDir)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
           if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
             $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -363,7 +363,7 @@ if (!is_dir($filename)) {
     die(); } }
 // / Check the Cloud Location with ClamAV before archiving, just in case.
     if ($VirusScan == '1') {
-      shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$archSrc.' | grep FOUND >> '.$LogFile1)));
+      shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$archSrc.' | grep FOUND >> '.$ClamLogDir)));
       $ClamLogFileDATA = file_get_contents($ClamLogDir);
       if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
         $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
@@ -512,7 +512,7 @@ if (isset($_POST["dearchiveButton"])) {
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
             // / Check the Cloud Location with ClamAV before dearchiving, just in case.
             if ($VirusScan == '1') {
-              shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$dearchTempPath.' | grep FOUND >> '.$LogFile1)));
+              shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$dearchTempPath.' | grep FOUND >> '.$ClamLogDir)));
               $ClamLogFileDATA = file_get_contents($ClamLogDir);
               if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
                 $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
