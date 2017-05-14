@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>HRCloud2 | HRAIMini </title>
+
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-</head>
-<body>
+
   <?php 
 include('/var/www/html/HRProprietary/HRCloud2/config.php');
 // / This file serves as the mini GUI for the HRAI module of HRCloud2. It was not intended to be used outside of 
@@ -32,6 +28,3 @@ if ($includeMINIIframer == '1') { ?>
   <input id='submitHRAI' type="submit" value="Hello HRAI"></form>
   </div>
 <?php } ?>
-
-</body>
-</html>
