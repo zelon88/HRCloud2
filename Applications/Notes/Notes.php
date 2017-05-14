@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.5 (4-29-2017 11:30)
+App Version: 1.6 (5-13-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -51,6 +51,7 @@ if (!file_exists($NotesDir)) {
   $txt = ('ERROR!!! HRC2N19, There was a problem creating the user notes directory on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
   die ($txt); } 
+copy($InstLoc.'/index.html', $NotesDir.'index.html'); 
 $notesList = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $newest_note = $notesList[0];
 
@@ -58,6 +59,8 @@ $newest_note = $notesList[0];
 if (isset($_GET['editNote'])) {
   $noteToEdit = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   $noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
+  if ($noteToEdit = '') $noteToEdit = 'New Note-'.$Date;
+  if ($noteName = '') $noteName = 'New Note-'.$Date;
   $noteToEdit = $noteToEdit.'.txt';
   $noteData = @file_get_contents($NotesDir.$noteToEdit);
   $noteData = str_replace('<br />', '', $noteData);
@@ -84,7 +87,9 @@ if (is_dir($NotesDir)) {
     if (!isset($_POST['note'])) {
       $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-      die ($txt); } 
+      die ($txt); }
+    if ($noteName = '' or $_POST['newNote'] == '') { 
+      $noteName = 'New Note-'.$Date; }
   	$note = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['note']); 
     $NoteFile = $NotesDir.$noteName.'.txt'; 
     $MAKENoteFile = file_put_contents($NoteFile, $note.PHP_EOL); 
@@ -110,9 +115,9 @@ if (is_dir($NotesDir)) {
  <?php 
 $notesList2 = scandir($NotesDir); 
 $noteCounter = 0;
-foreach ($notesList2 as $note) {
-  if ($note == '.' or $note == '..' or strpos($note, '.txt') == 'false' 
-    or $note == '' or $note == '.txt') continue; 
+foreach ($notesList2 as $note) { 
+  if ($note == '.' or $note == '..' or strpos($note, '.txt') == 'false' or $note == 'index.html'
+    or strpos($note, '.html') == 'true' or $note == '' or $note == '.txt') continue; 
   $noteCounter++;
   $noteFile = $NotesDir.$note; 
   $noteEcho = str_replace('.txt', '', $note);
