@@ -13,7 +13,7 @@ session_start();
 // / resources. Because the language parser only receives and sends data to the userGUI, we don't
 // / are able to POST data to and from scripts as many times as we like before giving a response
 // / to the user.
-$sesLogfile = ('/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt');
+$sesLogfile = ('/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/HRAI-'.$sesID.'.txt');
 
 require_once('/var/www/html/HRProprietary/HRAI/coreVar.php');
 require_once($onlineFile);
@@ -71,7 +71,7 @@ if (strpos($input, '.') !== false) {
       $WordOfSentArr = str_word_count($sentence, 1, 'àáãç3');  
 print_r($WordOfSentArr);  
   foreach($WordOfSentArr as $word) {
-    $wordFile = "/var/www/html/HRProprietary/HRAI/Databse/Words/$word.php";
+    $wordFile = "/var/www/html/HRProprietary/HRAI/Database/Words/$word.php";
     include ($wordFile);
     $sentHash = ("$sentNoun,$sentPronoun,$sentVerb,$sentAdverb,$sentAdj,$sentPreposition,$sentConjunction,$sentInterjection,$sentTense,$sentPerson,$sentPlural,$sentGreeting,$sentStatement,$sentQuestion,$sentAttitude,$sentMood,$sentHappy,$sentSad,$sentAngry,$sentSubmissive,$sentDominant,$sentConfidence,$sentPositive,$sentNegative,$sentSorry.");
     $convCachefile = ('/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.'convCache.php');

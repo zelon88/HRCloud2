@@ -34,7 +34,7 @@ $coreArrfile = '/var/www/html/HRProprietary/HRAI/coreArr.php';
 $nodeCache = '/var/www/html/HRProprietary/HRAI/Cache/nodeCache.php';
 $varCache = '/var/www/html/HRProprietary/HRAI/Cache/varCache.php';
 $coreArrfile = '/var/www/html/HRProprietary/HRAI/coreArr.php';
-$CallForHelpURL = '/var/www/html/HRProprietary/HRAI/CallForHelp.php';
+$CallForHelp = '/var/www/html/HRProprietary/HRAI/CallForHelp.php';
 $wpfile = '/var/www/html/wp-load.php';
 $date = date("F j, Y, g:i a");
 $day = date("d");
@@ -52,7 +52,7 @@ $detectWordPress = detectWordPress();
 $verifyUser = verifyUser();
 $loadAdminInfo = loadAdminInfo();
 $input = defineUserInput();
-$sesIDhash = hash('sha256', $Salts.$Salts.$display_name.$day);
+$sesIDhash = hash('sha256', $Salts.$Salts.$user_ID.$day);
 $sesID = substr($sesIDhash, -7);
 $CreateSesDir = forceCreateSesDir(); 
 if ($user_ID == 1) {

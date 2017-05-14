@@ -16,7 +16,7 @@ if (isset($_POST['serverIDCFH'])) {
   $user_ID = $_POST['user_ID'];
   $sesID = $_POST['sesID'];
   $day = date("d");
-  $sesLogfile = ('/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
+  $sesLogfile = ('/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/HRAI-'.$sesID.'.txt'); 
   $serverIDCFH = $_POST['serverIDCFH'];
   $date = date("F j, Y, g:i a");
 // SECRET: If the server ID hash matches the sha256 hash of the current server ID + the sesID + the day of the month, 

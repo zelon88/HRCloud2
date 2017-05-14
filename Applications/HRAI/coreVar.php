@@ -1,9 +1,9 @@
 <?php
-$HRAI_VERSION = 'v4.1';
-include_once('/var/www/html/HRProprietary/HRCloud2/config.php');
+include_once('/var/www/html/HRProprietary/HRCloud2/config.php'); 
+$HRAI_VERSION = 'v4.3';
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
-$CallForHelpURL = $InstLoc.'/Applications/HRAI/CallForHelp.php';
+$CallForHelp = $InstLoc.'/Applications/HRAI/CallForHelp.php';
 $HRC2SecurityCoreFile = $InstLoc.'/securityCore.php';
 $langParserfile = $InstLoc.'/Applications/HRAI/langPar.php';
 $onlineFile = $InstLoc.'/Applications/HRAI/online.php';

@@ -22,9 +22,9 @@ if ($user_ID == 0) {
 	$display_name = $_POST['display_name']; } 
 if ($user_ID == 1) {
   include '/var/www/html/HRProprietary/HRAI/adminINFO.php'; }
-$sesIDhash = hash('sha256', $Salts.$display_name.$day);
+$sesIDhash = hash('sha256', $Salts.$user_ID.$day);
 $sesID = substr($sesIDhash, -7);
-$sesLogfile = ('/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt');
+$sesLogfile = ('/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/HRAI-'.$sesID.'.txt');
 $CreateSesDir = forceCreateSesDir(); 
 $DetectWordPress = DetectWordPress(); ?> 
 <form action="/HRProprietary/HRAI/adminGUI.php" method="post">

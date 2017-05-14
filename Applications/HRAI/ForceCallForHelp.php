@@ -16,12 +16,12 @@ if (isset($_POST['serverIDCFH'])) {
   $user_ID = $_POST['user_ID'];
   $sesID = $_POST['sesID'];
   $day = date("d");
-  $sesLogfile = ('/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/'.$sesID.'.txt'); 
+  $sesLogfile = ('/HRCloud2/Applications/HRAI/sesLogs/'.$user_ID.'/'.$sesID.'/HRAI-'.$sesID.'.txt'); 
   $serverIDCFH = $_POST['serverIDCFH'];
   $date = date("F j, Y, g:i a");
-// SECRET: If the server ID hash matches the sha1 hash of the current server ID + the sesID + the day of the month, 
+// SECRET: If the server ID hash matches the sha256 hash of the current server ID + the sesID + the day of the month, 
 // SECRET: we continue processing the call for help request.
-if ($serverIDCFH == hash('sha1', $serverID.$sesID.$day)) {
+if ($serverIDCFH == hash('sha256', $serverID.$sesID.$day)) {
   include ($coreFuncFile);
 echo nl2br("This server has requested assistance. Searching for online nodes... \r");
   $sesLogfileO = fopen("$sesLogfile", "a+");
