@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.2.2';
+$TeamsAppVersion = 'v0.8.2.3';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
@@ -112,8 +112,8 @@ if (!isset($_POST['newTeam'])) {
 if (isset($_GET['newTeam'])) {
   $_POST['newTeam'] = $_GET['newTeam']; }
 if (isset($_POST['newTeam'])) {
-  $_POST['newTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newTeam']); 
-  $newTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newTeam']); }
+  $_POST['newTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['newTeam']); 
+  $newTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['newTeam']); }
   // / -New SubTeam inputs.
 if (!isset($_POST['newSubTeam'])) {
   $newTeamName = ''; }
@@ -121,87 +121,93 @@ if (isset($_GET['newSubTeam']) && isset($_GET['joinTeam'])) {
   $_POST['newSubTeam'] = $_GET['joinSubTeam']; 
   $_POST['baseTeamID'] = $_GET['joinTeam']; }
 if (isset($_POST['newSubTeam'])) {
-  $_POST['newSubTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newSubTeam']); 
-  $newSubTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['newSubTeam']); 
-  $baseTeamDir = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinTeam']); }
+  $_POST['newSubTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['newSubTeam']); 
+  $newSubTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['newSubTeam']); 
+  $baseTeamDir = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['joinTeam']); }
   // / -Edit Team inputs.
 if (isset($_GET['editTeam'])) {
   $_POST['editTeam'] = $_GET['editTeam']; }
 if (!isset($_POST['editTeam'])) {
   $teamToEdit = ''; }
 if (isset($_POST['editTeam'])) {
-  $_POST['editTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeam']); 
-  $teamToEdit = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeam']); }
+  $_POST['editTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeam']); 
+  $teamToEdit = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeam']); }
 if (isset($_POST['editTeamTitle'])) {
-  $newTeamTitle = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeam']); }
+  $newTeamTitle = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeam']); }
 if (isset($_POST['editTeamDescription'])) {
-  $newTeamDescription = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeamDescription']); }
+  $newTeamDescription = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeamDescription']); }
 if (isset($_POST['editTeamAdmins'])) {
-  $newTeamAdmins = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeamAdmins']); }
+  $newTeamAdmins = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeamAdmins']); }
 if (isset($_POST['editTeamOwner'])) {
-  $newTeamOwner = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeamOwner']); }
+  $newTeamOwner = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeamOwner']); }
 if (isset($_POST['editTeamPrivacy'])) {  
-  $newTeamPrivacy = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeamPrivacy']); }
+  $newTeamPrivacy = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeamPrivacy']); }
 if (isset($_POST['editTeamPermissions'])) {
-  $newTeamPermissions = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['editTeamPermissions']); }
+  $newTeamPermissions = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['editTeamPermissions']); }
   // / -Delete Team inputs.
 if (isset($_GET['deleteTeam'])) { 
-  $_POST['deleteTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['deleteTeam']); }
+  $_POST['deleteTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_GET['deleteTeam']); }
 if (!isset($_POST['deleteTeam'])) {
   $teamToDelete = ''; }
 if (isset($_POST['deleteTeam'])) {
-  $teamToDelete = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['deleteTeam']); }
+  $teamToDelete = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['deleteTeam']); }
   // / -Add Friend inputs-
 if (isset($_GET['addFriend'])) {
-  $friendToAdd = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['addFriend']); }
+  $friendToAdd = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_GET['addFriend']); }
 if (!isset($_GET['addFriend'])) {
   $friendToAdd = ''; }
   // / -Remove Friend inputs-
 if (isset($_POST['removeFriend'])) {
-  $friendToRemove = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['removeFriend']); }
+  $friendToRemove = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['removeFriend']); }
 if (isset($_POST['removeFriend'])) {
   $friendToRemove = ''; }
   // / -Join Team inputs-
 if (isset($_GET['joinTeam'])) {
-  $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['joinTeam']); }
+  $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_GET['joinTeam']); }
 if (!isset($_GET['joinTeam'])) {
   $teamToJoin = ''; }
 if (isset($_POST['joinTeam'])) {
-  $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinTeam']); }
+  $teamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['joinTeam']); }
 if (isset($_POST['joinTeam'])) {
   $teamToJoin = ''; }
   // / -Join Sub-Team inputs- 
 if (isset($_GET['joinSubTeam'])) {
-  $subTeamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_GET['joinSubTeam']); }
+  $subTeamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_GET['joinSubTeam']); }
 if (!isset($_GET['joinSubTeam'])) {
   $subTeamToJoin = ''; }
 if (isset($_POST['joinSubTeam'])) {
-  $subTeamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<'), '', $_POST['joinSubTeam']); }
+  $subTeamToJoin = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['joinSubTeam']); }
 if (isset($_POST['joinSubTeam'])) {
   $subTeamToJoin = ''; }
   // / -New text post-
 if (isset($_POST['textTeamPost']) && isset($_POST['textPost'])) {
-  $textPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST['textPost']);
-  $textTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST['textTeamPost']);
+  $textPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST['textPost']);
+  $textTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST['textTeamPost']);
+  $teamToJoin = $textTeamPost;
+  if (isset($_POST['textSubTeamPost'])) {
+    $textSubTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST['textSubTeamPost']);
+    $subTeamToJoin = $textSubTeamPost; }
   if (!isset($_POST['textSubTeamPost'])) {
     $textSubTeamPost = $textTeamPost; } }
   // / -New file post-
 if (isset($_FILES["filesToUpload"]["name"]) && isset($_POST['fileTeamPost'])) {
-  $fileTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST['fileTeamPost']);
-  if ($isset($_POST['fileSubTeamPost'])) {
-    $fileSubTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST['fileSubTeamPost']); }
-  if (!$isset($fileSubTeamPost)) {
+  $fileTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST['fileTeamPost']);
+  $teamToJoin = $fileTeamPost;
+  if (isset($_POST['fileSubTeamPost'])) {
+    $fileSubTeamPost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST['fileSubTeamPost']); 
+    $subTeamToJoin = $fileSubTeamPost; }
+  if (!isset($fileSubTeamPost)) {
     $fileSubTeamPost = $fileTeamPost; }
   if (!isset($_POST['uploadFileName'])) {
      $uploadFileName = $_FILES["filesToUpload"]["name"]; } 
   if (isset($_FILES["filesToUpload"]['name'])) {
     if (is_array($_FILES["filesToUpload"]["name"])) {
       $fileCount = count($_FILES["filesToUpload"]["name"]);
-      $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_FILES["filesToUpload"]["name"]); } 
+      $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_FILES["filesToUpload"]["name"]); } 
     if (!is_array($_FILES["filesToUpload"]["name"])) {
       $fileCount = 1;
-      $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_FILES["filesToUpload"]["name"]); } }
-  $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST["uploadFileName"]); }
+      $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_FILES["filesToUpload"]["name"]); } }
+  $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST["uploadFileName"]); }
 
 // / -----------------------------------------------------------------------------------
 
