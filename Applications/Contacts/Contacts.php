@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.6 (5-6-2017 11:30)
+App Version: 1.7 (5-13-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -60,6 +60,7 @@ if (!file_exists($ContactsDir)) {
   $txt = ('ERROR!!! HRC2ContactsApp19, There was a problem creating the user contacts directory on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die ($txt); } 
+copy($InstLoc.'/index.html', $ContactsDir.'index.html'); 
 $contactsList = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $newest_contact = $contactsList[0];
 
@@ -67,6 +68,7 @@ $newest_contact = $contactsList[0];
 if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
   $ContactToEdit = str_replace(str_split('.//[]{};:$!#^&%@>*<'), '', $_GET['editContact']);
   $ContactToEdit = str_replace(' ', '_', $ContactToEdit);
+  if ($contactToEdit = '') $contactToEdit = 'New Contact-'.$Date;
   $ContactToEdit = $ContactToEdit.'.php';
   $ContactFile = $ContactsDir.$ContactToEdit;
   if (!file_exists($ContactFile)) {
@@ -98,6 +100,8 @@ if (isset($_GET['deleteContact'])) {
 if (isset($_POST['newContact'])) {
   $_POST['newContact'] = str_replace(' ', '_', $_POST['newContact']);
   $contactName = str_replace(str_split('./[]{};:$!#^&%>*<'), '', $_POST['newContact']);
+  if ($contactName = '' or $_POST['newContact'] == '') { 
+    $contactName = 'New Contact-'.$Date; }
   $ContactFile = $ContactsDir.$contactName.'.php'; 
   $ContactSyntaxStart = file_put_contents($ContactFile, '<?php'.PHP_EOL, FILE_APPEND);
   $contact = file_put_contents($ContactFile, '$contact = \''.str_replace(str_split('[]{};:$!#^&%>*<'), '', $_POST['newContact']).'\';'.PHP_EOL, FILE_APPEND); 
@@ -240,8 +244,8 @@ echo nl2br('</div></form>');
 $contactsList2 = scandir($ContactsDir); 
 $contactCounter = 0;
 foreach ($contactsList2 as $contact) {
-  if ($contact == '.' or $contact == '..' or strpos($contact, '.php') == 'false' 
-    or $contact == '' or $contact == '.php') continue; 
+  if ($contact == '.' or $contact == '..' or strpos($contact, '.php') == 'false' or $contact == 'index.html' 
+    or strpos($contact, '.html') == 'true' or $contact == '' or $contact == '.php') continue; 
   $contactCounter++;
   $contactFile = $ContactsDir.$contact; 
   $contactEcho = str_replace('.php', '', $contact);
