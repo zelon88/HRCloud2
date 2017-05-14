@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Bookmarks	
-App Version: 1.0 (4-29-2017 11:30)
+App Version: 1.1 (5-13-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for saving your favorite URL's.
@@ -49,7 +49,8 @@ if (!file_exists($BookmarksDir)) {
 if (!file_exists($BookmarksDir)) { 
   $txt = ('ERROR!!! HRC2N19, There was a problem creating the user bookmarks directory on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-  die ($txt); } 
+  die ($txt); }
+copy($InstLoc.'/index.html', $BookmarksDir.'index.html'); 
 $bookmarksList = scandir($BookmarksDir, SCANDIR_SORT_DESCENDING);
 $newest_bookmark = $bookmarksList[0];
 
@@ -57,6 +58,8 @@ $newest_bookmark = $bookmarksList[0];
 if (isset($_GET['editBookmark'])) {
   $bookmarkToEdit = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editBookmark']);
   $bookmarkName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editBookmark']);
+  if ($bookmarkToEdit = '') $bookmarkToEdit = 'New Bookmark-'.$Date;
+  if ($bookmarkName = '') $bookmarkName = 'New Bookmark-'.$Date;
   $bookmarkToEdit = $bookmarkToEdit.'.txt';
   $bookmarkData = @file_get_contents($BookmarksDir.$bookmarkToEdit);
   $bookmarkTitle = $_GET['editBookmark'];
@@ -83,6 +86,8 @@ if (is_dir($BookmarksDir)) {
       $txt = ('ERROR!!! HRC2N26, There was no Bookmark content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); } 
+    if ($bookmarkName = '' or $_POST['newBookmark'] == '') { 
+      $bookmarkName = 'New Bookmark-'.$Date; }
   	$bookmark = str_replace(str_split('[]{};$!#^&%@>*<'), '', $_POST['bookmark']); 
     $BookmarkFile = $BookmarksDir.$bookmarkName.'.txt'; 
     $MAKEBookmarkFile = file_put_contents($BookmarkFile, $bookmark); 
@@ -109,8 +114,8 @@ if (is_dir($BookmarksDir)) {
 $bookmarksList2 = scandir($BookmarksDir); 
 $bookmarkCounter = 0;
 foreach ($bookmarksList2 as $bookmark) {
-  if ($bookmark == '.' or $bookmark == '..' or strpos($bookmark, '.txt') == 'false' 
-    or $bookmark == '' or $bookmark == '.txt') continue; 
+  if ($bookmark == '.' or $bookmark == '..' or strpos($bookmark, '.txt') == 'false' or $bookmark == 'index.html' 
+    or strpos($bookmark, '.html') == 'true' or $bookmark == '' or $bookmark == '.txt') continue; 
   $bookmarkCounter++;
   $bookmarkFile = $BookmarksDir.$bookmark;
   $bookmarkDATA = file_get_contents($bookmarkFile); 
