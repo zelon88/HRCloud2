@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.6 (5-13-2017 11:30)
+App Version: 1.7 (5-13-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -59,8 +59,8 @@ $newest_note = $notesList[0];
 if (isset($_GET['editNote'])) {
   $noteToEdit = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   $noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
-  if ($noteToEdit = '') $noteToEdit = 'New Note-'.$Date;
-  if ($noteName = '') $noteName = 'New Note-'.$Date;
+  if ($noteToEdit == '') $noteToEdit = 'New Note-'.$Date;
+  if ($noteName == '') $noteName = 'New Note-'.$Date;
   $noteToEdit = $noteToEdit.'.txt';
   $noteData = @file_get_contents($NotesDir.$noteToEdit);
   $noteData = str_replace('<br />', '', $noteData);
@@ -88,7 +88,7 @@ if (is_dir($NotesDir)) {
       $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); }
-    if ($noteName = '' or $_POST['newNote'] == '') { 
+    if ($noteName == '' or $_POST['newNote'] == '') { 
       $noteName = 'New Note-'.$Date; }
   	$note = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['note']); 
     $NoteFile = $NotesDir.$noteName.'.txt'; 
