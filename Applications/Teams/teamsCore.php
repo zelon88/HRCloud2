@@ -36,24 +36,27 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.2.3';
+$TeamsAppVersion = 'v0.8.2.4';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
-$defaultDirs = array('index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS');
+$defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
 $ResourcesDir = $TeamsDir.'/_RESOURCES';
-$ScriptsDir = $TeamsDir.'/_SCRIPTS';
+$ScriptsDir = $InstLoc.'/Applications/Teams/_SCRIPTS';
+$headerFile = $ScriptsDir.'/header.php';
 $CacheDir = $TeamsDir.'/_CACHE';
 $TeamsCoreCacheFile = $CacheDir.'/_coreCACHE.php';
 $safeTeamFile = $ResourcesDir.'/_TEAMS/SAFETeam.php';
 $TeamsHostedDir = $InstLoc.'/Applications/Teams/_TEMP';
+$HRC2JanitorFile = $InstLoc.'/janitor.php';
 $UsersDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS');
 $UserRootDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'');
-$UserFilesDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'/FILES');
+$UserFilesDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'/_FILES');
 $UserCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'/'.$UserID.'.php');
 $myTeamsList = array();
 $teamArray = array();
 $userArray = array();
 $fileArray = array();
+$notificationArray = array();
 $allowPosting = 'false';
 $serverKEY = hash('sha256', $URL.$Salts.$Date);
 $adminKEY = hash('sha256', $UserID.$Salts.$Date);
@@ -62,9 +65,11 @@ $teamFile = '';
 $newTeamFileDATA = '';
 $friendCounter = 0;
 $pendingFriendCounter = 0;
-$cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_ID = \''.$UserID.'\';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
+$notificationCounter = 0;
+$notificationCounter1 = 0;
+$cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\'; $USER_ID = \''.$UserID.'\';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
   $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
-  $USER_PERMISSIONS = \'0\'; $INTERNATIONAL_GREETINGS = \'1\'; UPDATE_INTERVAL = \'2000\'; $USER_STATUS = \'\'; $PENDING_FRIENDS = \'\';
+  $USER_PERMISSIONS = \'0\'; $INTERNATIONAL_GREETINGS = \'1\'; $UPDATE_INTERVAL = \'2000\'; $USER_STATUS = \'\'; $PENDING_FRIENDS = \'\';
   $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; 
   $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
 $requiredTeamVars = array('$TEAM_CACHE_VERSION', '$TEAM_NAME', '$TEAM_OWNER', '$TEAM_CREATED_BY', '$TEAM_ALIAS', '$TEAM_USERS', 
@@ -85,6 +90,10 @@ $teamsHeaderDivNeeded = 'true';
 $teamsGreetingDivNeeded = 'true';
 $newTeamDivNeeded = 'true';
 $chatDivNeeded = 'false';
+$headerDivNeeded = 'true';
+$teamsDivNeeded = 'true';
+$friendsDivNeeded = 'true';
+$filesDivNeeded = 'true';
 if ($settingsInternationalGreetings = '1' or $settingsInternationalGreetings == 1) {
   $teamsGreetings = $teamsGreetingsInternational; }
 // / ----------------------------------------------------------------------------------- 
@@ -260,7 +269,7 @@ if (file_exists($UserCacheFile)) {
   $cacheDATA = file_get_contents($UserCacheFile);
   foreach ($requiredUserVars as $requiredVar) {
     if (strpos($requiredVar, $cacheDATA) == 'false') {
-      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php '.$requiredVar.' = \'\';'.PHP_EOL, FILE_APPEND); } }
+      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php '.$requiredVar.' = \'\'; ?>'.PHP_EOL, FILE_APPEND); } }
       include ($UserCacheFile);
       if (!is_array($USER_TEAMS)) {
         $USER_TEAMS = array($USER_TEAMS); }
@@ -287,7 +296,7 @@ if (file_exists($UserCacheFile)) {
         $USER_STATUS = '1'; } 
       if ($USER_STATUS == '3' or $USER_STATUS == '4') {
         $USER_STATUS = $USER_STATUS; }
-      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php $USER_STATUS=\''.$USER_STATUS.'\';'.PHP_EOL, FILE_APPEND); } 
+      $MAKECacheFile = file_put_contents($UserCacheFile, '<?php $USER_STATUS=\''.$USER_STATUS.'\'; ?>'.PHP_EOL, FILE_APPEND); } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -328,7 +337,7 @@ $teamsList = scandir($TeamsDir, SCANDIR_SORT_DESCENDING);
 foreach ($teamsList as $myTeamFinder) {
   if ($myTeamFinder == '' or $myTeamFinder == '.' or $myTeamFinder == '..' or in_array($myTeamFinder, $defaultDirs)
     or $myTeamFinder == '/' or $myTeamFinder == '//') continue;  
-  $finderFile = $TeamsDir.'/'.$myTeamFinder.'/'.$myTeamFinder.'.php';
+  $finderFile = $TeamsDir.'/'.$myTeamFinder.'/'.$myTeamFinder.'_DATA.php';
   include ($finderFile);
   if (!is_array($currentUserTeams)) {
     $currentUserTeams = array($currentUserTeams); }
@@ -339,7 +348,7 @@ foreach ($myTeamsList as $teamID) {
   if ($teamID == '' or $teamID == '.' or $teamID == '..' or $teamID == '/' or $teamID == '//') continue;
   if (is_dir($TeamsDir.'/'.$teamName)) {
     $teamFilesDir = $TeamsDir.'/'.$teamID.'/_FILES';
-    $teamFileTESTER = $TeamsDir.'/'.$teamID.'/'.$teamID.'.php';    
+    $teamFileTESTER = $TeamsDir.'/'.$teamID.'/'.$teamID.'_DATA.php';    
     if (file_exists($teamFileTESTER)) { 
       if (!is_dir($teamFilesDir)) {
         @mkdir($teamFilesDir); 
@@ -373,7 +382,7 @@ foreach ($myTeamsList as $teamID) {
         $teamArray = array_push($teamArray, $TEAM_NAME); }
       if ($teamNameTESTER !== $teamFileTESTER) {
         foreach ($requiredTeamVars as $reqVar) {
-          $safeTeamFileDATA = '<?php '.$reqVar.' = \'\';';
+          $safeTeamFileDATA = '<?php '.$reqVar.' = \'\'; ?>';
           if (file_exists($safeTeamFile)) unlink($safeTeamFile);
           $MAKESafeTeamFile = file_put_contents($safeTeamFile, $safeTeamFileDATA); }
         include ($safeTeamFile);
@@ -395,7 +404,7 @@ foreach ($myTeamsList as $teamID) {
 // / -----------------------------------------------------------------------------------
 // / The following code will echo a table of the users Teams when called.
 function getMyTeams($myTeamsList) {  
-  global $TeamsDir;
+  global $TeamsDir, $defaultDirs;
   $myTeamCounter = 0;
   echo nl2br('<div id="newTeamsDiv" name="newTeamsDiv"><form method="post" action="Teams.php" type="multipart/form-data">'."\n");
   echo nl2br("\n".'<div id="myTeamsList" name="myTeamsList" align="center"><strong>My Teams</strong><hr /></div>');
@@ -406,7 +415,7 @@ function getMyTeams($myTeamsList) {
     <th>Delete</th>
     </tr></thead><tbody>'); 
   foreach ($myTeamsList as $myTeam) {
-    if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//') continue; 
+    if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//' or in_array($myTeam, $defaultDirs)) continue; 
     $myTeamCounter++;
     $myTeamFile = $TeamsDir.'/'.$myTeam.'/'.$myTeam.'.php';
     include($myTeamFile);
@@ -421,9 +430,10 @@ function getMyTeams($myTeamsList) {
 // / -----------------------------------------------------------------------------------
 // / The following code will return the current users Teams in CSV format within it's return value when called.
 function getMyTeamsQuietly($myTeamsList) {
+  global $defaultDirs;
   $myTeamArr = array();
   foreach ($myTeamsList as $myTeam) {
-    if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//') continue; 
+    if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//' or in_array($myTeam, $defaultDirs)) continue; 
     $myTeamArr = array_push($myTeamArr, $myTeam); }
   return(implode(',', $myTeamArr)); }
 // / -----------------------------------------------------------------------------------
@@ -431,7 +441,7 @@ function getMyTeamsQuietly($myTeamsList) {
 // / -----------------------------------------------------------------------------------
 // / The following code will return a table of Publicly visible Teams when called.
 function getPublicTeams($teamsList) {
-  global $UserID, $TeamsDir;
+  global $UserID, $TeamsDir, $defaultDirs;
   $teamCounter = 0;
   echo nl2br("\n".'<div id="TeamsList" name="TeamsList" align="center"><strong>Available Teams</strong><hr /></div>');
   echo ('<div align="center">
@@ -441,10 +451,10 @@ function getPublicTeams($teamsList) {
     <th>Delete</th>
     </tr></thead><tbody>'); 
   foreach ($teamsList as $team) {
-    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//') continue; 
+    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//' or in_array($team, $defaultDirs)) continue; 
     $teamCounter++;
-    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'.php';
-    $teamTime = date("F d Y H:i:s.",filemtime($teamFile));
+    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'_DATA.php';
+    $teamTime = date("F d Y H:i:s.", filemtime($teamFile));
     include($teamFile);
     if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
       $teamEcho = $TEAM_NAME;
@@ -457,11 +467,11 @@ function getPublicTeams($teamsList) {
 // / -----------------------------------------------------------------------------------
 // / The following code will return publicly visible Teams in CSV format within it's return value when called.
 function getPublicTeamsQuietly($teamsList) {
-  global $UserID, $TeamsDir;
+  global $UserID, $TeamsDir, $defaultDirs;
   $publicTeamArr = array();
   foreach ($teamsList as $team) {
-    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//') continue; 
-    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'.php';
+    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//' or in_array($team, $defaultDirs)) continue; 
+    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'_DATA.php';
     include($teamFile);
     if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
       $publicTeamArr = array_push($publicTeamArr, $team); } } 
@@ -474,7 +484,7 @@ function createNewTeam($newTeamName) {
   global $UserID, $Time, $LogFile, $Salts, $TeamsDir, $newTeamName;
   $newTeamID = hash('sha256', $newTeamName.$Salts);
   $newTeamDir = str_replace('//', '/', $TeamsDir.'/'.$newTeamID);
-  $newTeamFile = str_replace('//', '/', $newTeamDir.'/'.$newTeamID.'.php');
+  $newTeamFile = str_replace('//', '/', $newTeamDir.'/'.$newTeamID.'_DATA.php');
   $newTeamDataDir = str_replace('//', '/', $newTeamDir.'/_DATA'); 
   $txt = ('OP-Act: Creating Team "'.$newTeamName.'" on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -522,7 +532,7 @@ function createNewSubTeam($teamToJoin, $subTeamUsers) {
   global $UserID, $Time, $LogFile, $Salts, $TeamsDir, $newSubTeamName, $baseTeamDir;
   $newSubTeamID = hash('sha256', $newSubTeamName.$Salts);
   $newSubTeamDir = str_replace('//', '/', $TeamsDir.'/'.$baseTeamID);
-  $newSubTeamFile = str_replace('//', '/', $baseTeamDir.'/'.$newSubTeamID.'.php');
+  $newSubTeamFile = str_replace('//', '/', $baseTeamDir.'/'.$newSubTeamID.'_DATA.php');
   $newSubTeamDataDir = str_replace('//', '/', $baseTeamDir.'/_DATA');
   // / Add subteam users to the array.
   $txt = ('OP-Act: Creating SubTeam "'.$newSubTeam.'" on '.$Time.'!');  
@@ -554,7 +564,7 @@ function editTeam($teamToEdit) {
   global $UserID, $Time, $LogFile, $TeamsDir, $currentUserTeams;
   $txt = ('OP-Act: Opening Team "'.$teamToEdit.'" for editing on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  $teamFile = $TeamsDir.'/'.$teamToEdit.'.php';
+  $teamFile = $TeamsDir.'/'.$teamToEdit.'_DATA.php';
   if (!file_exists($teamFile)) {
     $txt = ('ERROR!!! HRC2TeamsApp164 There was a problem validating the files for Team "'.$teamToEdit.'"on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -582,11 +592,11 @@ if (!in_array($teamToEdit, $currentUserTeams)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to delete a Team.
 function deleteTeam($teamToDelete) {
-  global $UserID, $Time, $LogFile, $TeamsDir;
+  global $UserID, $Time, $LogFile, $TeamsDir, $HRC2JanitorFile;
   $txt = ('OP-Act: Opening Team "'.$teamToDelete.'" for validation on '.$Time.'!');  
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $teamDir = $TeamsDir.'/'.$teamToDelete; 
-  $teamFile = $teamDir.'/'.$teamToDelete.'.php';
+  $teamFile = $teamDir.'/'.$teamToDelete.'_DATA.php';
   if (!file_exists($teamFile)) {
     $txt = ('ERROR!!! HRC2TeamsApp212 There was a problem validating the files for Team "'.$teamToDelete.'"on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -608,7 +618,10 @@ function deleteTeam($teamToDelete) {
   if (!file_exists($teamDir)) { 
     $txt = ('OP-Act: Deleted Team '.$teamToDelete.' on '.$Time.'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Deleted <i>'.$teamToDelete.'</i>'."\n"); }   
+    echo nl2br('Deleted <i>'.$teamToDelete.'</i>'."\n"); 
+  $CleanDir = $teamDir; 
+  $CleanFiles = scandir($CleanDir); 
+  include($HRC2JanitorFile); }   
   return 'true'; } 
 // / -----------------------------------------------------------------------------------
 
@@ -650,7 +663,7 @@ function adminRemoveUserFromTeam($adminRemoveUser, $adminTeamToRemove) {
   $TEAM_USERS[$adminRemoveUser] = null;
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
-  $txt = ('OP-Act: Removed '.$adminRemoteUser.' to '.$adminTeamToRemove.' on '.$Time.'.');
+  $txt = ('OP-Act: Removed '.$adminRemoveUser.' to '.$adminTeamToRemove.' on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br('Removed <i>'.$adminRemoveUser.' to '.$adminTeamToRemove.'.</i>'."\n");
   $teamUserCount = count($TEAM_USERS);
@@ -660,7 +673,7 @@ function adminRemoveUserFromTeam($adminRemoveUser, $adminTeamToRemove) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever an admin selects to permBan a user from a Team.
 function adminBanUserFromTeam($adminBanUser, $adminTeamToBan) {
-  global $Time, $LogFile, $TeamsDir, $CloudLoc, $UserCacheFile;, $TeamCacheFile;
+  global $Time, $LogFile, $TeamsDir, $CloudLoc, $UserCacheFile, $TeamCacheFile;
   $userModFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$adminBanUser.'/'.$adminBanUser.'.php');
   $teamdModFile = str_replace('//', '/', $TeamsDir.'/'.$adminTeamToBan.'/'.$adminTeamToBan);
   include($UserCacheFile);
@@ -692,8 +705,8 @@ function editUser($userToEdit) {
     die(); }
   include($userFile);
 if ($_POST['editUser'] == $currentUserID) {
-    $newUserFileDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
-    $USER_PHOTO_FILENAME = \'\'; $USER_TEAMS_OWNED = \'\'; $INTERNATIONAL_GREETINGS = 1; UPDATE_INTERVAL = 2000; 
+    $newUserFileDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\'; $USER_NAME = \'\'; $USER_TITLE = \'\'; 
+    $USER_PHOTO_FILENAME = \'\'; $USER_TEAMS_OWNED = \'\'; $INTERNATIONAL_GREETINGS = 1; $UPDATE_INTERVAL = 2000; 
     $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; 
     $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; $ACCOUNT_NOTES_USER = \'\'; ?>');
   $MAKEnewUserFile = file_put_contents($userFile, $newUserFileDATA.PHP_EOL, FILE_APPEND); 
@@ -913,8 +926,8 @@ function verifyConversation($teamToVerify, $subTeamToVerify) {
     $newConversationDATA = 'Welcome! You probably want to <a>Add members to this Team</a>.';
     $MAKEConvFile = file_put_contents($conversationFile, $txt.PHP_EOL, FILE_APPEND); }
   if (file_exists($conversationFile) && $visible == 1) {
-    file_get_contents($conversationFile);
-    return($conversationFile); } }
+    $conversationData = file_get_contents($conversationFile);
+    return array($conversationFile, $conversationData); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -970,17 +983,17 @@ function fileTeamPost($fileTeamPost, $fileSubTeamPost, $filePost, $allowPosting)
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($prettyTxt."\n"); 
     $error++; }
-  $mainFileDir = $TeamsDir.'/'.$fileTeamPost;
+  $mainFileDir = $TeamsDir.'/'.$fileTeamPost.'/_FILES';
   $mainConvFile = $postDir.'/'.$fileTeamPost.'.php';
   $subConvFile = $postDir.'/'.$fileSubTeamPost.'.php';
   if ($fileTeamPost == $fileSubTeamPost && $error == 0) {
     $convData = file_get_contents($mainConvFile);
     $cacheFile = $TeamCacheFile;
-    $fileDir = ''; }
+    $fileDir = $postDir.'/_FILES'; }
   if ($fileTeamPost !== $fileSubTeamPost && $error == 0) {
     $convData = file_get_contents($subConvFile);
     $cacheFile = $subTeamCacheFile; 
-    $fileDir = ''; } 
+    $fileDir = $postDir.'/_FILES'; } 
   $txt = ('OP-Act: Initiated Teams App File Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   if (!is_array($_FILES["filesToUpload"]['name'])) {
@@ -1017,8 +1030,8 @@ function fileTeamPost($fileTeamPost, $fileSubTeamPost, $filePost, $allowPosting)
   $MAKEConversationFile = file_put_contents($convFile, $newConvLine.PHP_EOL, FILE_APPEND); 
   $filesizeAfter = @filesize($convFile);
   if ($filesizeAfter == $filesizeBefore) {
-    $txt = ('ERROR!!! HRC2TeamsApp933, The file post could not be submitted to the selected Team on '.$Time.'!');  
-    $prettyTxt = 'Ooops, looks like the something failed while processing your post! Check the logs for more information.';
+    $txt = ('ERROR!!! HRC2TeamsApp933, The could not be notified of your file post on '.$Time.'!');  
+    $prettyTxt = 'Ooops, looks like the something failed while to send a notification to your team about your post! Check the logs for more information.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     $error++; } 
   return array($error, $postFileDir, $convFile, $newConvLine, $filesizeAfter, $fileDir); } }
@@ -1063,50 +1076,9 @@ function getFile($fileToGet) {
         $fileURL = $URL.'/HRPropeitary/HRCloud2/Applications/Teams/Teams.php';
         $txt = ('ERROR!!! HRC2TeamsApp1145, The current user "'.$UserID.'" requested to download the file "'.$fileToGet.'" but it does not exist on '.$Time.'!');  
         $prettyTxt = 'Hmmm... Ok, so something bad happened and a temp file could not be created for you. Please check the logs or try again later.';
-        echo nl2br($prettyTxt."\n"); } } } } 
-  return($error, $fileURL); }
+        echo nl2br($prettyTxt."\n"); } } } 
+  return array($error, $fileURL); }
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------
-// / The following code reads the selected conversation file and returns it's contents.
-function getConversation($conversationToGet) { 
-  global $URL, $Salts, $postDir, $UserID, $TeamsDir, $UserCacheFile, $TeamCacheFile, $subTeamCacheFile, $LogFile, $ClamLogDir, $VirusScan;
-  $error = 0;
-  if (!isset($postDir) or $postDir == '') {
-    $error++;
-    $txt = ('ERROR!!! HRC2TeamsApp1070, The $postDir was not set on '.$Time.'! Please ensure the teamToJoin() function is called before the conversationToGet() function is called ');  
-    $prettyTxt = 'Ooops, looks like the selected file doesn\'t exist!';
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($prettyTxt."\n"); }
-  include $UserCacheFile;
-  $CHECKallowPosting = hash('sha256', $Salts.$fileTeamPost.$fileSubTeamPost);
-  if ($allowPosting !== $CHECKallowPosting) {
-    $txt = ('ERROR!!! HRC2TeamsApp505, The current user "'.$UserID.'" does not have permission to request to view a conversation from the selected Team on '.$Time.'!');  
-    $prettyTxt = 'Ooops, looks like you don\'t have permission to view conversations within this Team!';
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($prettyTxt."\n"); 
-    $error++; }
-  $mainConvFile = $postDir.'/'.$fileTeamPost.'.php';
-  $subConvFile = $postDir.'/'.$fileSubTeamPost.'.php';
-  if ($error = 0) {
-    if (!file_exists($mainConvFile) or !file_exists($subConvFile)) {
-      $txt = ('ERROR!!! HRC2TeamsApp1076, The current user "'.$UserID.'" requested to view the conversation file "'.$conversationToGet.'" but it does not exist on '.$Time.'!');  
-      $prettyTxt = 'Ooops, looks like the selected file doesn\'t exist!';
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br($prettyTxt."\n"); }
-    if (file_exists($TeamsDir)) { 
-      $txt = ('OP-Act, Providing the current user "'.$UserID.'" with access to the conversation file "'.$conversationToGet.'" on '.$Time.'!');  
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-// / FIX THIS!!! SET selectedConvFile
-      $fileURL = $URL.'/HRPropeitary/HRCloud2/Applications/Teams/'.$hashedLinkName; 
-      
-      if (!file_exists($selectedConvFile)) {
-        $error++;
-        $fileURL = $URL.'/HRPropeitary/HRCloud2/Applications/Teams/Teams.php';
-        $txt = ('ERROR!!! HRC2TeamsApp1145, The current user "'.$UserID.'" requested access to the conversation file "'.$conversationToGet.'" but it does not exist on '.$Time.'!');  
-        $prettyTxt = 'Hmmm... Ok, so something bad happened and the conversation file you asked for isn\'t available. Please check the logs or try again later.';
-        echo nl2br($prettyTxt."\n"); } } } } 
-  return($error, $fileURL); }
-// / -----------------------------------------------------------------------------------
 
 ?>
