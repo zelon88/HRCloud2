@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Bookmarks	
-App Version: 1.1 (5-13-2017 11:30)
+App Version: 1.2 (5-13-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for saving your favorite URL's.
@@ -58,8 +58,8 @@ $newest_bookmark = $bookmarksList[0];
 if (isset($_GET['editBookmark'])) {
   $bookmarkToEdit = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editBookmark']);
   $bookmarkName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editBookmark']);
-  if ($bookmarkToEdit = '') $bookmarkToEdit = 'New Bookmark-'.$Date;
-  if ($bookmarkName = '') $bookmarkName = 'New Bookmark-'.$Date;
+  if ($bookmarkToEdit == '') $bookmarkToEdit = 'New Bookmark-'.$Date;
+  if ($bookmarkName == '') $bookmarkName = 'New Bookmark-'.$Date;
   $bookmarkToEdit = $bookmarkToEdit.'.txt';
   $bookmarkData = @file_get_contents($BookmarksDir.$bookmarkToEdit);
   $bookmarkTitle = $_GET['editBookmark'];
@@ -86,7 +86,7 @@ if (is_dir($BookmarksDir)) {
       $txt = ('ERROR!!! HRC2N26, There was no Bookmark content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); } 
-    if ($bookmarkName = '' or $_POST['newBookmark'] == '') { 
+    if ($bookmarkName == '' or $_POST['newBookmark'] == '') { 
       $bookmarkName = 'New Bookmark-'.$Date; }
   	$bookmark = str_replace(str_split('[]{};$!#^&%@>*<'), '', $_POST['bookmark']); 
     $BookmarkFile = $BookmarksDir.$bookmarkName.'.txt'; 
