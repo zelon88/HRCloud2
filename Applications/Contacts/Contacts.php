@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.7 (5-13-2017 11:30)
+App Version: 1.8 (5-13-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -68,7 +68,7 @@ $newest_contact = $contactsList[0];
 if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
   $ContactToEdit = str_replace(str_split('.//[]{};:$!#^&%@>*<'), '', $_GET['editContact']);
   $ContactToEdit = str_replace(' ', '_', $ContactToEdit);
-  if ($contactToEdit = '') $contactToEdit = 'New Contact-'.$Date;
+  if ($contactToEdit == '') $contactToEdit = 'New Contact-'.$Date;
   $ContactToEdit = $ContactToEdit.'.php';
   $ContactFile = $ContactsDir.$ContactToEdit;
   if (!file_exists($ContactFile)) {
@@ -100,7 +100,7 @@ if (isset($_GET['deleteContact'])) {
 if (isset($_POST['newContact'])) {
   $_POST['newContact'] = str_replace(' ', '_', $_POST['newContact']);
   $contactName = str_replace(str_split('./[]{};:$!#^&%>*<'), '', $_POST['newContact']);
-  if ($contactName = '' or $_POST['newContact'] == '') { 
+  if ($contactName == '' or $_POST['newContact'] == '') { 
     $contactName = 'New Contact-'.$Date; }
   $ContactFile = $ContactsDir.$contactName.'.php'; 
   $ContactSyntaxStart = file_put_contents($ContactFile, '<?php'.PHP_EOL, FILE_APPEND);
