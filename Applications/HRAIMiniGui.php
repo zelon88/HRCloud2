@@ -9,10 +9,10 @@ include('/var/www/html/HRProprietary/HRCloud2/config.php');
 if (!isset($noMINICore)) {
   $noMINICore = '0'; }
 
-$includeMINIIframerURL = $URL.'/HRProprietary/HRCloud2/Applications/HRAI/core.php#end';  
+$includeMINIIframerURL = 'HRAI/core.php#end';  
 if (!isset($includeMINIIframer)) {
   $includeMINIIframer = '1';
-  $includeMINIIframerURL = $URL.'/HRProprietary/HRCloud2/Applications/HRAI/core.php#end'; }
+  $includeMINIIframerURL = 'HRAI/core.php#end'; }
 
 if ($noMINICore == '0') {
   require($InstLoc.'/Applications/HRAI/core.php'); }
