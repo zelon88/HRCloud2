@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.3.7 | Virus Definition v3.1, 5/1/2017';
+$versions = 'PHP-AV App v2.3.7 | Virus Definition v3.2, 5/15/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    
@@ -27,7 +27,7 @@ $versions = 'PHP-AV App v2.3.7 | Virus Definition v3.1, 5/1/2017';
     </script>
 <div align="center"><h3>PHP-AV</h3><hr /></div>
 <?php
-// PHP ANTI-VIRUS v2.2
+// PHP ANTI-VIRUS v2.3.7
 // Written by FujitsuBoy (aka Keyboard Artist)
 // Modified by zelon88
 

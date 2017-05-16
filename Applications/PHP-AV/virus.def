@@ -7,14 +7,19 @@ Malware Hanictor.5	s5/forum.php		420b028db779bdee1355b568fd1757a579505df41a1f3f6
 Malware Hanictor.6	d1/about.php		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
 Malware Hanictor.7	slx.exe?showforum=14.0		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
 Malware Hanictor.8	46353.exe		420b028db779bdee1355b568fd1757a579505df41a1f3f620954a34d2b49a926
-Malware Hanictor.8	BN692D.tmp		0a6b1ac5472a554e6d72bee875b7b7cdf85c9c1c8765b4f395c8847f47cc5043
-Malware Hanictor.8	Ringcentral_renya.glendayle.doc		14b45db836ff1c0d7e283d0ff824013d7a48c59d3805c20cf9a4c61106256fe4
-Malware Hanictor.8	ring/getnum.php		fc8e08d0c0039b9fad3a1d0138dafe9428f06fbdc6096292edeae123a9fb7c65
-Malware Hanictor.8	ls5/forum.php
-Malware Hanictor.8	d1/about.php
-Malware Hanictor.8	mlu/forum.php
-Malware Hanictor.8	wp-content/plugins/widget-context
-Malware Hanictor.8	sugar-modal-windows/slx.exe?showforum
+Malware Hanictor.9	BN692D.tmp		0a6b1ac5472a554e6d72bee875b7b7cdf85c9c1c8765b4f395c8847f47cc5043
+Malware Hanictor.10	Ringcentral_renya.glendayle.doc		14b45db836ff1c0d7e283d0ff824013d7a48c59d3805c20cf9a4c61106256fe4
+Malware Hanictor.11	ring/getnum.php		fc8e08d0c0039b9fad3a1d0138dafe9428f06fbdc6096292edeae123a9fb7c65
+Malware Hanictor.12	ls5/forum.php
+Malware Hanictor.13	d1/about.php
+Malware Hanictor.14	mlu/forum.php
+Malware Hanictor.15	wp-content/plugins/widget-context
+Malware Hanictor.16	sugar-modal-windows/slx.exe?showforum
+Malware WhatsAppMS.9	uweewnwebmn		ccd600d5ebb12770bad5a60e61bd4ff12c10dcec675d97343c8774f1ce40c443
+Malware WhatsAppMS.10	ehjwehjhjwehjej		3e1fa8d0cbe73caf572cd186e72b1aee8e734d055e7da6fa6c1945fb2e7423a8
+Malware WhatsAppMS.11	hcamp1.gif		01ecf50b51f0d8d9d9b28c5ad4628dbfbf4fe2cb4c04c5bbef54834d7fee27dd
+Malware WhatsAppMS.12	klo5.exe
+Malware SmokeLoader	flashplayer24pp_id_install
 Malware Chanitor	chanitor.dll
 Malware Chanitor.1	AllocHeapMemory(0x500000u);
 Malware	Ruckguv	1c319670a717305f7373c8529092f8c3
@@ -22,7 +27,7 @@ Malware	TinyLoader	0c77886a3ea42b75fcd860d4d97e72c5
 Malware	TinyLoader.1	a3ea1a008619687bdfef08d2af83f548
 Malware	TinyLoader.2	a53d8212a47bf25eeca87c1e27042686
 Malware	TinyLoader.3	a7a666ab9548fd1f0a8eb8050d8ca483
-Malware	TinyLoader.4	a9cc6736e573ad9e77359062e88114e2
+Malware	TinyLoader.4	a9cc6736e573ad977359062e88114e2
 Malware	TinyLoader.5	aaac35389c9be79c67c4f5c4c630e5d5
 Malware	TinyLoader.6	b3a057f55a8fa2aad5b8d212a42b4a88
 Malware	TinyLoader.7	bcf271e83c964eb1fd89e6f1a7b7a62f
@@ -267,6 +272,15 @@ Trojan	Vawtrak	5238cd34caae600b3f592e2595aa6949
 Trojan	Vawtrak.1	6fad86a0fcc912f32474f6c7a86fe37a
 Trojan	vawtrak
 Trojan	emotet
+Trojan	ZeroT.1		3124fcb79da0bdf9d0d1995e37b06f7929d83c1c4b60e38c104743be71170efe
+Trojan ZeroT.2	0228.doc		b5c208e4fb8ba255883f771d384ca85566c7be8adcf5c87114a62efb53b73fda
+Trojan ZeroT.3	0228.exe		bc2246813d7267608e1a80a04dac32da9115a15b1550b0c4842b9d6e2e7de374
+Trojan ZeroT.4	news.php?id=7557		a64ea888d412fd406392985358a489955b0f7b27da70ff604e827df86d2ca2aa
+Trojan ZeroT.5			868ee879ca843349bfa3d200f858654656ec3c8128113813cd7e481a37dcc61a
+Trojan ZeroT.6			4601133e94c4bc74916a9d96a5bc27cc3125cdc0be7225b2c7d4047f8506b3aa
+Trojan ZeroT.7			5fd61793d498a395861fa263e4438183a3c4e6f1e4f098ac6e97c9d0911327bf
+Trojan ZeroT.8			ab4cbfb1468dd6b0f09f6e74ac7f0d31a001d396d8d03f01bceb2e7c917cf565
+Trojan ZeroT.9			79bd109dc7c35f45b781978436a6c2b98a5df659d09dee658c2daa4f1984a04e
 Trojan	Emotet	7c401bde8cafc5b745b9f65effbd588f
 Trojan	Emotet.1	34c10ae0b87e3202fea252e25746c32d
 Trojan	Emotet.2	9ab7b38da6eee714680adda3fdb08eb6
@@ -532,6 +546,15 @@ Ransomware Locky.37	details_zZcSMY.js	d2096cc86d4d89904316caca5b2242f9
 Ransomware Locky.38	doc-details_cLOFYn.js	doc-details_cLOFYn.js
 Ransomware	Ransom!Gen7		1e6353973206502c55d6f1a2370d8a0a50cc2946f88e033fa580f88df52f6cfd
 Ransomware	Ransom!Gen7.1		1e6353973206502c55d6f1a2370d8a0a50cc2946f88e033fa580f88df52f6cfd 
+Ransomware Mordor	/admin.php?f=404		83b435bb1349e8676f671505c4850ef2be1dbc4da27adf246c8452553096a5ea
+Ransomware Mordor.2	1327.doc		7f2335466ecca7be6888f92b5ba260780ce0a38039ceb54ac99b0485b3b086de
+Ransomware Mordor.3	20780.doc		5be2c27d9ad2bf91b8263273e992744e074fcce7767643bd9bab8c05622583c0
+Ransomware Mordor.4	4033.doc		74616a15e77b58e1dc6fac225865fb0fdd6470e76bbf358260317cba44ee9636
+Ransomware Mordor.5			3c858a40d94d1c9ba1b3d9d637b295eaa48f491dc24eb2e43f964cac518270fb
+Ransomware Mordor.6			dd24b0eb3b2126683c961731244ccee63e0b25c26186811da33be0d7ff1f98c3
+Ransomware Mordor.7			f853d76ad14ffec2779706a9861d79ba37d5ebb7c494b88d735330d571caa54d
+Ransomware Mordor.8			15d5f8faf33a50a973ec36f70c69459c3bdcac27b929a6a76d5a9dac50e4cc27
+Ransomware Mordor.9			0b58b14a4f500314414bb793aacd00336a454f3543e0c126a86544f823aabbfa
 Known Spyware Host	dreampark.co.jp
 Known Spyware Host	enigmasoftwaregroup.com
 Known Spyware Host	healthycomputerclub.com
@@ -1270,6 +1293,9 @@ Known Spyware Host Malspam.6	sempre/notify.php
 Known Spyware Host Malspam.7	com=0D
 Known Spyware Host Malspam.8	pdf-douglassantos@detran.es.gov.br=0D
 Known Spyware Host Malspam.9	xml-douglassantos@detran.es.gov.br=0D
+Known Spyware Host Malspam.10	muabantiengame.com
+Known Spyware Host Malspam.11	www.security-support.tech
+Known Spyware Host Malspam.12	47.91.76.69
 Known Ransomware Host	slater.chat.ru
 Known Ransomware Host	hundeschulegoerg.de
 Known Ransomware Host	capitalsend.info
@@ -1457,6 +1483,7 @@ Known Ransomware Host: Zeuss Rig.EK.2	stat2.s76.r53.com.ua
 Known Trojan Host: Zeuss Panda	secpressnetwork.com
 Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
 Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
+Known Trojan Host: RigEK, SmokeLoader	162.220.246.254
 Known Ransomware Host: Cerber.BS	dchromefastl.top
 Known Ransomware Host: Cerber.BS.1	dfffgooaldq.top
 Known Ransomware Host: Cerber.BS.2	dffjoleedas.top
