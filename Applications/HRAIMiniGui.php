@@ -12,7 +12,7 @@ if (!isset($noMINICore)) {
 $includeMINIIframerURL = 'core.php#end';  
 if (!isset($includeMINIIframer)) {
   $includeMINIIframer = '1';
-  $includeMINIIframerURL = $URL.'/HRProprietary/HRCloud2/Applications/HRAI/core.php#end'; }
+  $includeMINIIframerURL = 'HRAI/core.php#end'; }
 
 if ($noMINICore == '0') {
   require($InstLoc.'/Applications/HRAI/core.php'); }
