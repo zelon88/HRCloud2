@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.2.4';
+$TeamsAppVersion = 'v0.8.2.5';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
@@ -402,6 +402,47 @@ foreach ($myTeamsList as $teamID) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code will return a table of Publicly visible Teams when called.
+function getPublicTeams($teamsList) {
+  global $UserID, $TeamsDir, $defaultDirs;
+  $teamCounter = 0;
+  echo nl2br("\n".'<div id=\'TeamsList\' name=\'TeamsList\' align="center"><strong>Available Teams</strong><hr /></div>');
+  echo ('<div align=\'center\'>
+    <table class=\'sortable\'>
+    <thead><tr></tr></thead><tbody>'); 
+  foreach ($teamsList as $team) {
+    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//' or in_array($team, $defaultDirs)) continue; 
+    $teamCounter++;
+    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'_DATA.php';
+    $teamTime = date("F d Y H:i:s.", filemtime($teamFile));
+    include($teamFile);
+    if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
+      $teamEcho = $TEAM_NAME;
+      echo ('<tr><td><strong>'.$teamCounter.'. </strong><a href=\'Teams.php?viewTeam='.$team.'\'>'.$teamEcho.'</a></td>');
+      echo ('</tr><tbody></table>'); } } 
+  echo ('</table></div>');
+  return('true'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will return publicly visible Teams in array format within it's return value when called.
+function getPublicTeamsQuietly($teamsList) {
+  global $UserID, $TeamsDir, $defaultDirs;
+  $PTQCounter = 0;
+  $publicTeamArr = array();
+  foreach ($teamsList as $team) {
+    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//' or in_array($team, $defaultDirs)) continue; 
+    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'_DATA.php';
+    include($teamFile);
+    if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
+      $puclicTeamArr[$PTQCounter]['id'] = $team;
+      $publicTeamArr[$PTQCounter]['name'] = $TEAM_NAME; 
+      $publicTeamArr[$PTQCounter]['description'] = $TEAM_DESCRIPTION; 
+      $PTQCounter++; } } 
+  return($publicTeamArr); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code will echo a table of the users Teams when called.
 function getMyTeams($myTeamsList) {  
   global $TeamsDir, $defaultDirs;
@@ -423,59 +464,27 @@ function getMyTeams($myTeamsList) {
     $myTeamTime = date("F d Y H:i:s.",filemtime($myTeamFile));
     echo ('<tr><td><strong>'.$myTeamCounter.'. </strong><a href="Teams.php?viewTeam='.$myTeam.'">'.$myTeamEcho.'</a></td>');
     echo ('<td><a href="Teams.php?deleteTeam='.$myTeam.'"><img id="delete'.$myTeamCounter.'" name="'.$myTeam.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
-    echo ('</tr><tbody></table></table>'); }
+    echo ('</tr><tbody></table>'); }
+  echo ('</div>');
   return('true'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code will return the current users Teams in CSV format within it's return value when called.
+// / The following code will return the current users Teams in array format within it's return value when called.
 function getMyTeamsQuietly($myTeamsList) {
   global $defaultDirs;
   $myTeamArr = array();
+  $MYTCounter = 0;
   foreach ($myTeamsList as $myTeam) {
     if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//' or in_array($myTeam, $defaultDirs)) continue; 
-    $myTeamArr = array_push($myTeamArr, $myTeam); }
-  return(implode(',', $myTeamArr)); }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will return a table of Publicly visible Teams when called.
-function getPublicTeams($teamsList) {
-  global $UserID, $TeamsDir, $defaultDirs;
-  $teamCounter = 0;
-  echo nl2br("\n".'<div id="TeamsList" name="TeamsList" align="center"><strong>Available Teams</strong><hr /></div>');
-  echo ('<div align="center">
-    <table class="sortable">
-    <thead><tr>
-    <th>Team</th>
-    <th>Delete</th>
-    </tr></thead><tbody>'); 
-  foreach ($teamsList as $team) {
-    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//' or in_array($team, $defaultDirs)) continue; 
-    $teamCounter++;
-    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'_DATA.php';
-    $teamTime = date("F d Y H:i:s.", filemtime($teamFile));
-    include($teamFile);
-    if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
-      $teamEcho = $TEAM_NAME;
-      echo ('<tr><td><strong>'.$teamCounter.'. </strong><a href="Teams.php?viewTeam='.$team.'">'.$teamEcho.'</a></td>');
-      echo ('<td><a href="Teams.php?deleteTeam='.$team.'"><img id="delete'.$teamCounter.'" name="'.$team.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>'); 
-      echo ('</tr><tbody></table></table>'); } } 
-  return('true'); }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will return publicly visible Teams in CSV format within it's return value when called.
-function getPublicTeamsQuietly($teamsList) {
-  global $UserID, $TeamsDir, $defaultDirs;
-  $publicTeamArr = array();
-  foreach ($teamsList as $team) {
-    if ($myTeam == '.' or $team == '..' or $team == '' or $team == '/' or $team == '//' or in_array($team, $defaultDirs)) continue; 
-    $teamFile = $TeamsDir.'/'.$team.'/'.$team.'_DATA.php';
-    include($teamFile);
-    if ($TEAM_VISIBILITY == '1' && !in_array($UserID, $BANNED_USERS)) {
-      $publicTeamArr = array_push($publicTeamArr, $team); } } 
-  return(implode(',', $publicTeamArr)); }
+    $myTeamArr = array_push($myTeamArr, $myTeam);
+    $myTeamFile = $TeamsDir.'/'.$myTeam.'/'.$myTeam.'.php';
+    include($myTeamFile);
+    $myTeamArr[$MYTCounter]['id'] = $myTeam;
+    $myTeamArr[$MYTCounter]['name'] = $TEAM_NAME; }
+    $myTeamArr[$MYTCounter]['description'] = $TEAM_DESCRIPTION;
+    $MYTCounter++;
+  return($myTeamArr); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -630,6 +639,10 @@ function deleteTeam($teamToDelete) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to remove themselves from a team or subTeam.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code is performed when an admin adds a user to a Team.
 function adminAddUserToTeam($adminAddUser, $adminTeamToAdd) {
   global $Time, $LogFile, $TeamsDir, $CloudLoc, $UserCacheFile, $TeamCacheFile;
@@ -663,9 +676,9 @@ function adminRemoveUserFromTeam($adminRemoveUser, $adminTeamToRemove) {
   $TEAM_USERS[$adminRemoveUser] = null;
   $teamCacheDATA = ('$TEAM_USERS = array(\''.implode('\',\'', $TEAM_USERS).'\');'); 
   $MAKECacheFile = file_put_contents($teamModFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); 
-  $txt = ('OP-Act: Removed '.$adminRemoveUser.' to '.$adminTeamToRemove.' on '.$Time.'.');
+  $txt = ('OP-Act: Removed '.$adminRemoveUser.' from '.$adminTeamToRemove.' on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  echo nl2br('Removed <i>'.$adminRemoveUser.' to '.$adminTeamToRemove.'.</i>'."\n");
+  echo nl2br('Removed <i>'.$adminRemoveUser.' from '.$adminTeamToRemove.'.</i>'."\n");
   $teamUserCount = count($TEAM_USERS);
   return array('true', $teamUserCount); }
 // / -----------------------------------------------------------------------------------

@@ -1,0 +1,22 @@
+-------------------------------------------------------
+5-14-2017
+Make a bunch of functions work with subteams, so we don't need duplicate functions for subteams.
+  Pretty much any of them that involve teams.
+  Come up with a format for ommitting the subTeam if it isn't neccesary to a function.
+
+Make the sidebars overlay the main divs (easier, better looking).
+
+Continue making sidebars, testing logic.
+
+Make settings page.
+
+Make logic to delete cache files before 8.0.0.
+
+Finalize directory structure for Teams (decide where PHP file should go. Distinguish from cache file, data file, and conversation file)
+
+Update PHP-AV.
+
+Update WP package.
+
+Test a bunch of features to make sure you didn't break anything lately.
+-------------------------------------------------------
