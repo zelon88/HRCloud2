@@ -2,7 +2,7 @@
 echo ('<div id="nav" align="center">
     <div class="nav">
       <ul style="padding-left:115px;">
-        <li class="Teams"><a onclick="toggle_visibility(\'t\eamsDiv\');">Teams</a></li>
+        <li class="Teams"><a onclick="toggle_visibility(\'teamsSidebarDiv\'); toggle_visibility(\'xteamsSidebarDiv1\');">Teams</a></li>
         <li class="Friends"><a onclick="toggle_visibility(\'friendsDiv\');">Friends</a></li>
         <li class="Files"><a onclick="toggle_visibility(\'filesDiv\');">Files</a></li>
         <li class="dropbtn" style="float:right;" onclick="toggle_visibility(\'hamburgerDropdown\');">&#9776;</li>

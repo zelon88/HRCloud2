@@ -28,6 +28,33 @@
 
 .dropdown a:hover {background-color: #f1f1f1}
 
+.sidebar {
+    float: left;
+    position: relative;
+    display: inline-block;
+    
+}
+
+.sidebar-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    left: 0;
+    z-index: 1;
+}
+
+.sidebar-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar a:hover {background-color: #f1f1f1}
+
 .show {display:block;}
 
 <?php 
