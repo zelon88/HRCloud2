@@ -13,7 +13,7 @@ $PrettyTxt is displayed in the Teams Console.
 // / -----------------------------------------------------------------------------------
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
+// / terminates if it does not.v
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2TeamsApp27, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
@@ -36,17 +36,17 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.2.5';
+$TeamsAppVersion = 'v0.8.2.6';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
 $ResourcesDir = $TeamsDir.'/_RESOURCES';
 $ScriptsDir = $InstLoc.'/Applications/Teams/_SCRIPTS';
-$headerFile = $ScriptsDir.'/header.php';
 $CacheDir = $TeamsDir.'/_CACHE';
 $TeamsCoreCacheFile = $CacheDir.'/_coreCACHE.php';
 $safeTeamFile = $ResourcesDir.'/_TEAMS/SAFETeam.php';
 $TeamsHostedDir = $InstLoc.'/Applications/Teams/_TEMP';
+$TeamsFilesDir = $InstLoc.'/Applications/Teams/_FILES';
 $HRC2JanitorFile = $InstLoc.'/janitor.php';
 $UsersDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS');
 $UserRootDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$UserID.'');
@@ -81,6 +81,8 @@ $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER
 
 // / ----------------------------------------------------------------------------------- 
 // / The following code sets the default variables for the GUI. These values may be modified later in the script.
+$headerFile = $ScriptsDir.'/header.php';
+$teamsSidebarFile = $ScriptsDir.'/teamsSidebar.php';
 $teamsGreetings = array('Hi There!', 'Hello!');
 $teamsGreetingsInternational = array('Hi There!', 'Hello!', 'Bonjour!', 'Hola!', 'Namaste!', 'Salutations!', 'Konnichiwa!', 'Bienvenidos!', 'Guten Tag!');
 $greetingKey = array_rand($teamsGreetings);
