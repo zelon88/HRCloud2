@@ -13,6 +13,14 @@ function toggle_visibility(id) {
     else
       e.style.display = 'block'; }
 
+// / Toggle hide a Div regardless of current visibility.
+function hide_visibility(id) {
+  var e = document.getElementById(id);
+  if(e.style.display == 'block')
+    e.style.display = 'none';
+    else
+      e.style.display = 'none'; }
+
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function openDropdown() {
@@ -22,7 +30,6 @@ function openDropdown() {
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
-
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -36,8 +43,7 @@ window.onclick = function(event) {
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
-  if (!event.target.matches('.Teams')) {
-
+  if (!event.target.matches('.dropbtn')) {
     var dropdowns = document.getElementsByClassName("sidebar-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {

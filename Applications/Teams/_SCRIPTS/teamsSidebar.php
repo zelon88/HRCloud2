@@ -1,7 +1,6 @@
 <?php
   // / The following code represents the "All Teams" sidebar section.
-  echo ('<div class=\'sidebar\'>
-    <div id=\'teamsSidebarDiv\' style=\'display:none;\' class=\'sidebar-content\'>');
+  echo (' <div id=\'teamsSidebarDiv\' style=\'display:none;\' class=\'sidebar-content\'>');
   $publicTeams = getPublicTeamsQuietly($teamsList);
   $publicTeamCounter = count($publicTeams);
   $publicTeamCounter1 = 0;
@@ -25,4 +24,4 @@
     $myTeamCounter1++; }
   if ($myTeamCounter == 0 or $myTeamCounter1 == 0) {
     echo ('<a href=\'?joinTeam=null\'>Nothing to show!</a>'); } 
-  echo('</div></div>'); 
+  echo('</div>'); 
