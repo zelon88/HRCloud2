@@ -18,25 +18,25 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2TeamsApp27, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+  require_once('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 // / The follwoing code checks if the Teams App markdownCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/_SCRIPTS/markdownCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRC2 Teams App Markdown Core file (Applications/Teams/_SCRIPTS/markdownCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/_SCRIPTS/markdownCore.php'); }
+  require_once('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/_SCRIPTS/markdownCore.php'); }
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.2.6';
+$TeamsAppVersion = 'v0.8.3';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
@@ -68,7 +68,7 @@ $pendingFriendCounter = 0;
 $notificationCounter = 0;
 $notificationCounter1 = 0;
 $cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\'; $USER_ID = \''.$UserID.'\';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
-  $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); 
+  $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); $FRIENDS \'\'; 
   $USER_PERMISSIONS = \'0\'; $INTERNATIONAL_GREETINGS = \'1\'; $UPDATE_INTERVAL = \'2000\'; $USER_STATUS = \'\'; $PENDING_FRIENDS = \'\';
   $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; 
   $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
@@ -83,6 +83,7 @@ $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER
 // / The following code sets the default variables for the GUI. These values may be modified later in the script.
 $headerFile = $ScriptsDir.'/header.php';
 $teamsSidebarFile = $ScriptsDir.'/teamsSidebar.php';
+$friendsSidebarFile = $ScriptsDir.'/friendsSidebar.php';
 $teamsGreetings = array('Hi There!', 'Hello!');
 $teamsGreetingsInternational = array('Hi There!', 'Hello!', 'Bonjour!', 'Hola!', 'Namaste!', 'Salutations!', 'Konnichiwa!', 'Bienvenidos!', 'Guten Tag!');
 $greetingKey = array_rand($teamsGreetings);
@@ -309,7 +310,7 @@ if (file_exists($UserCacheFile)) {
 // / The following code will verify the friends defined in the user cache file are valid.
 if (!is_array($FRIENDS)) {
   $FRIENDS = array($FRIENDS); }
-if (!is_array($PRENDING_FRIENDS)) {
+if (!is_array($PENDING_FRIENDS)) {
   $PENDING_FRIENDS = array($PENDING_FRIENDS); }
 foreach ($FRIENDS as $friend) { 
   $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friend.'/'.$friend.'.php');
