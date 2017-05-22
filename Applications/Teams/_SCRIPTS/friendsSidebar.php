@@ -6,7 +6,7 @@ echo ('<div id=\'friendsSidebarDiv\' style=\'display:none;\' class=\'sidebar-con
   $myFriendCounter1 = 0;
   echo ('<a href=\'?showFriends=1\'><strong>My Friends</strong></a>');
   foreach ($myFriends as $myFriend) { 
-  if ($myFriendCounter1 >= $myFriendCounter or $myFriendCounter == 0 or $myFriend['name'] == '') continue;
+  if ($myFriendCounter1 >= $myFriendCounter or $myFriendCounter == 0 or $myFriend == '') continue;
     $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$myFriend.'/'.$myFriend.'.php');
     if (file_exists($FriendCacheFile)) {
       include($FriendCacheFile);
@@ -14,7 +14,7 @@ echo ('<div id=\'friendsSidebarDiv\' style=\'display:none;\' class=\'sidebar-con
       $friendStatusEcho = '';
       if ($STATUS = 1) {
         $friendStatus = 1; 
-        $friendStatusEcho = $ResourcesDir.'/online.png'; }
+        $friendStatusEcho = '<img src=\''.$ResourcesDir.'/online.png'.'\' alt=\''.$friendName.$friendStatusEcho.'\' title=\''.$friendName.$friendStatusEcho.'\'>'; }
       echo ('<a href=\'?viewFriend='.$myFriend.'\'>'.$friendName.$friendStatusEcho.'</a>'); 
     $myFriendCounter1++; } }
   if ($myFriendCounter == 0 or $myFriendCounter1 == 0) {
