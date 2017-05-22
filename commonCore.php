@@ -346,6 +346,12 @@ if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
   $Udir = $_POST['UserDirPOST'].'/'; }
 if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
   $Udir = '/'; }
+if (strpos($Udir, '//') == 'true') {
+  $Udir = str_replace('//', '/', $Udir); }
+if (strpos($Udir, '//') == 'true') {
+  $Udir = str_replace('//', '/', $Udir); }
+if (strpos($Udir, '//') == 'true') {
+  $Udir = str_replace('//', '/', $Udir); }
 if ($Udir == '//') {
   $Udir = '/'; }
 if ($Udir == '//') {
