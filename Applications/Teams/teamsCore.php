@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.3';
+$TeamsAppVersion = 'v0.8.3.5';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
@@ -748,7 +748,7 @@ function addFriend($friendToAdd) {
   $pendingFriendCounter = 0;
   $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friendToAdd.'/'.$friendToAdd.'.php');  
   if (!file_exists($FriendCacheFile)) {
-    $txt = ('ERROR!!! HRC2TeamsApp247, the file '.$FriendCacheFile.' is not a valid friend-user cache file on '.$Time.'!');  
+    $txt = ('ERROR!!! HRC2TeamsApp247, the file "'.$friendToAdd.'" is not a valid friend-user cache file on '.$Time.'!');  
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt);
     die(); }
@@ -800,7 +800,7 @@ function removeFriend($friendToRemove) {
   $pendingFriendCounter = 0;
   $FriendCacheFile = str_replace('//', '/', $CloudLoc.'/Apps/Teams/_USERS/'.$friendToRemove.'/'.$friendToRemove.'.php');  
   if (!file_exists($FriendCacheFile)) {
-    $txt = ('ERROR!!! HRC2TeamsApp247, the file '.$FriendCacheFile.' is not a valid friend-user cache file on '.$Time.'!');  
+    $txt = ('ERROR!!! HRC2TeamsApp247, the file "'.$friendToRemove.'" is not a valid friend-user cache file on '.$Time.'!');  
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt);
     die(); }
@@ -832,11 +832,16 @@ function joinTeam($teamToJoin) {
       $prettyTxt = 'Whoa, somehow you managed to submit an invalid multi-dimensional array to the server in a POST request! :o
        Whatever that means, you should tell your Teams App administrator to check the logs.';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
-      echo nl2br($prettyTxt."\n"); } }
-    $teamToJoin = $teamToJoin[0];
+      echo nl2br($prettyTxt."\n"); } 
+    $teamToJoin = $teamToJoin[0]; }
   $TeamCacheFile = $TeamsDir.'/'.$teamToJoin.'/_CACHE/_'.$teamToJoin.'_CACHE.php';
   $teamDir = $TeamsDir.'/'.$teamToJoin; 
   $teamFile = $teamDir.'/'.$teamToJoin.'.php';
+  if (!file_exists($teamFile)) {
+    $txt = ('ERROR!!! HRC2TeamsApp841, the file "'.$teamToJoin.'" is not a valid Team file on '.$Time.'!');  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($txt);
+    die(); }
   include($teamFile);
   include($TeamCacheFile);
   if(in_array($UserID, $BANNED_USERS)) {
