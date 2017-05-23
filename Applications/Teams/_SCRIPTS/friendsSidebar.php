@@ -18,5 +18,5 @@ echo ('<div id=\'friendsSidebarDiv\' style=\'display:none;\' class=\'sidebar-con
       echo ('<a href=\'?viewFriend='.$myFriend.'\'>'.$friendName.$friendStatusEcho.'</a>'); 
     $myFriendCounter1++; } }
   if ($myFriendCounter == 0 or $myFriendCounter1 == 0) {
-    echo ('<a href=\'?addFriend=null\'>Nothing to show!</a>'); } 
+    echo ('<a href=\'?addFriend=view\'>Nothing to show!</a>'); } 
   echo('</div>'); 

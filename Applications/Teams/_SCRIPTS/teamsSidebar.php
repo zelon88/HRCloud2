@@ -11,7 +11,7 @@
     echo ('<a href=\'?joinTeam='.$publicTeam['id'].'\'><i>'.$publicTeam['description'].'</i></a>'); 
     $publicTeamCounter1++; } 
   if ($publicTeamCounter == 0 or $publicTeamCounter1 == 0) {
-    echo ('<a href=\'?joinTeam=null\'>Nothing to show!</a>'); }
+    echo ('<a href=\'?joinTeam=view\'>Nothing to show!</a>'); }
   // / The following code represents the "My Teams" sidebar section.
   $myTeams = getMyTeamsQuietly($teamsList);
   $myTeamCounter = count($myTeams);
@@ -23,5 +23,5 @@
     echo ('<a href=\'?joinTeam='.$myTeam['id'].'\'><i>'.$myTeam['description'].'</i></a>'); 
     $myTeamCounter1++; }
   if ($myTeamCounter == 0 or $myTeamCounter1 == 0) {
-    echo ('<a href=\'?joinTeam=null\'>Nothing to show!</a>'); } 
+    echo ('<a href=\'?joinTeam=view\'>Nothing to show!</a>'); } 
   echo('</div>'); 

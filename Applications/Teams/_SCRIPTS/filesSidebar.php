@@ -1,14 +1,14 @@
 <?php
-  // / The following code represents the "My Friends" sidebar section.
-  $myFriends = getMyFriendsQuietly($FriendsList);
-  $myFriendCounter = count($myFriends);
-  $myFriendCounter1 = 0;
-  echo ('<a href=\'?showFriends=1\'><strong>My Friendss</strong></a>');
-  foreach ($myFriends as $myFriend) { 
-  if ($myFriendCounter1 >= $myFriendCounter or $myFriendCounter == 0 or $myFriend['name'] == '') continue;
-    echo ('<a href=\'?viewFriend='.$myFriend['id'].'\'>'.$myFriend['name'].'</a>'); 
-    echo ('<a href=\'?viewFriend='.$myFriend['id'].'\'><i>'.$myFriend['description'].'</i></a>'); 
-    $myFriendCounter1++; }
-  if ($myFriendCounter == 0 or $myFriendCounter1 == 0) {
-    echo ('<a href=\'?addFriend=null\'>Nothing to show!</a>'); } 
-  echo('</div></div>'); 
+  // / The following code represents the "My Files" sidebar section.
+echo ('<div id=\'filesSidebarDiv\' style=\'display:none;\' class=\'sidebar-content\'>');
+  $myFiles = scandir($UserFilesDir);
+  $myFileCounter = count($myFiles);
+  $myFileCounter1 = 0;
+  echo ('<a href=\'?showFiles=1\'><strong>My Files</strong></a>');
+  foreach ($myFiles as $myFile) { 
+  if ($myFileCounter1 >= $myFileCounter or $myFileCounter == 0 or $myFile == '' or in_array($myFile, $dangerArr)) continue;
+    echo ('<a href=\'?viewFile='.$myFile.'\'>'.$myFile.'</a>'); 
+    $myFileCounter1++; }
+  if ($myFileCounter == 0 or $myFileCounter1 == 0) {
+    echo ('<a href=\'?addFile=view\'>Nothing to show!</a>'); } 
+  echo('</div>'); 
