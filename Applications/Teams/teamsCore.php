@@ -36,10 +36,12 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.3.5';
+$TeamsAppVersion = 'v0.8.3.6';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
+$dangerArr = array('/', '//', '.', '..', 'index.html', '', ' ');
+$DangerousFiles = array('js', 'php', 'html', 'css');
 $ResourcesDir = $TeamsDir.'/_RESOURCES';
 $ScriptsDir = $InstLoc.'/Applications/Teams/_SCRIPTS';
 $CacheDir = $TeamsDir.'/_CACHE';
@@ -84,38 +86,8 @@ $requiredUserVars = array('$USER_CACHE_VERSION', '$USER_ID', 'USER_NAME', '$USER
 $headerFile = $ScriptsDir.'/header.php';
 $teamsSidebarFile = $ScriptsDir.'/teamsSidebar.php';
 $friendsSidebarFile = $ScriptsDir.'/friendsSidebar.php';
-$teamsGreetings = array('Hi There!', 'Hello!');
-$teamsGreetingsInternational = array('Hi There!', 'Hello!', 'Bonjour!', 'Hola!', 'Namaste!', 'Salutations!', 'Konnichiwa!', 'Bienvenidos!', 'Guten Tag!');
-$greetingKey = array_rand($teamsGreetings);
-$newTeamNameEcho = 'New Team Name...';
-$newTeamDescriptionEcho = 'New Team Description...';
-$teamsHeaderDivNeeded = 'true';
-$teamsGreetingDivNeeded = 'true';
-$newTeamDivNeeded = 'true';
-$chatDivNeeded = 'false';
-$headerDivNeeded = 'true';
-$teamsDivNeeded = 'true';
-$friendsDivNeeded = 'true';
-$filesDivNeeded = 'true';
-if ($settingsInternationalGreetings = '1' or $settingsInternationalGreetings == 1) {
-  $teamsGreetings = $teamsGreetingsInternational; }
+$filesSidebarFile = $ScriptsDir.'/filesSidebar.php';
 // / ----------------------------------------------------------------------------------- 
-
-// / ----------------------------------------------------------------------------------- 
-// / The following code sets the color scheme for the session.
-if ($ColorScheme == '1') {
-  $color = 'blue'; }
-if ($ColorScheme == '2') {
-  $color = 'red'; }
-if ($ColorScheme == '3') {
-  $color = 'green'; }
-if ($ColorScheme == '4') {
-  $color = 'grey'; }
-if ($ColorScheme == '5') {
-  $color = 'black'; }
-if ($ColorScheme == '6') {
-  $color = ''; }
-// / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code represents the Teams API handler, sanitizing and consolidating inputs.
@@ -221,6 +193,54 @@ if (isset($_FILES["filesToUpload"]["name"]) && isset($_POST['fileTeamPost'])) {
       $fileCount = 1;
       $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_FILES["filesToUpload"]["name"]); } }
   $filePost = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<\''), '', $_POST["uploadFileName"]); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code controls which GUI elements to load for the session.
+$teamsGreetings = array('Hi There!', 'Hello!');
+$teamsGreetingsInternational = array('Hi There!', 'Hello!', 'Bonjour!', 'Hola!', 'Namaste!', 'Salutations!', 'Konnichiwa!', 'Bienvenidos!', 'Guten Tag!');
+$newTeamNameEcho = 'New Team Name...';
+$newTeamDescriptionEcho = 'New Team Description...';
+$teamsHeaderDivNeeded = 'true';
+$teamsGreetingDivNeeded = 'true';
+$newTeamDivNeeded = 'true';
+$chatDivNeeded = 'false';
+$headerDivNeeded = 'true';
+$teamsDivNeeded = 'true';
+$friendsDivNeeded = 'true';
+$filesDivNeeded = 'true';
+$teamViewerNeeded = 'false';
+$friendViewerNeeded = 'false';
+$fileViewerNeeded = 'false';
+if ($settingsInternationalGreetings == 1) {
+  $teamsGreetings = $teamsGreetingsInternational; }
+$greetingKey = array_rand($teamsGreetings);
+if ($teamToJoin == 'view') {
+  $newTeamDivNeeded = 'false';
+  $teamViewerNeeded == 'true'; 
+  $teamToJoin == null; 
+  unset($teamToJoin); }
+if ($friendToAdd == 'view') {
+  $newTeamDivNeeded = 'false';
+  $friendViewerNeeded == 'true'; 
+  $friendToAdd = null;
+  unset($friendToAdd); }
+// / -----------------------------------------------------------------------------------
+
+// / ----------------------------------------------------------------------------------- 
+// / The following code sets the color scheme for the session.
+if ($ColorScheme == '1') {
+  $color = 'blue'; }
+if ($ColorScheme == '2') {
+  $color = 'red'; }
+if ($ColorScheme == '3') {
+  $color = 'green'; }
+if ($ColorScheme == '4') {
+  $color = 'grey'; }
+if ($ColorScheme == '5') {
+  $color = 'black'; }
+if ($ColorScheme == '6') {
+  $color = ''; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -988,7 +1008,7 @@ function textTeamPost($textTeamPost, $textSubTeamPost, $textPost, $allowPosting)
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when an authenticated user selects to submit a file post to a Team.
 function fileTeamPost($fileTeamPost, $fileSubTeamPost, $filePost, $allowPosting) {
-  global $Salts, $postDir, $UserID, $TeamsDir, $UserCacheFile, $TeamCacheFile, $subTeamCacheFile, $LogFile, $ClamLogDir, $VirusScan;
+  global $Salts, $postDir, $UserID, $TeamsDir, $UserCacheFile, $TeamCacheFile, $subTeamCacheFile, $LogFile, $ClamLogDir, $VirusScan, $DangerousFiles;
   $error = 0;  
   if (!isset($postDir) or $postDir == '') {
     $error++;
@@ -1022,7 +1042,6 @@ function fileTeamPost($fileTeamPost, $fileSubTeamPost, $filePost, $allowPosting)
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;     
     $file = str_replace(str_split('\\/[]{};:$!#^&%@>*\'"<'), '', $file);
-    $DangerousFiles = array('js', 'php', 'html', 'css');
     $F0 = pathinfo($file, PATHINFO_EXTENSION);
     $F2 = pathinfo($file, PATHINFO_BASENAME);
     $F3 = str_replace('//', '/', $CloudUsrDir.$F2);

@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: v0.8.3.5 (5-21-2017 00:00)
+App Version: v0.8.3.6 (5-22-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -39,7 +39,10 @@ if ($teamsDivNeeded == 'true') {
 // / The following code represents the "Friends" Sidebar."
 if ($friendsDivNeeded == 'true') { 
   require($friendsSidebarFile); }
-echo('</div>');
+// / The following code represents the "Files" Sidebar."
+if ($filesDivNeeded == 'true') { 
+  require($filesSidebarFile); }
+echo ('</div>');
 
 if ($teamsHeaderDivNeeded == 'true') {
   echo ('<div id=\'TeamsHeaderDiv\' name=\'TeamsHeaderDiv\' align=\'center\' style=\'overflow:hidden;\'><h3>Teams</h3><hr /></div>'); }
@@ -64,17 +67,19 @@ if ($newTeamDivNeeded == 'true') {
     </select>'."\n");
   echo nl2br('<input type=\'submit\' id=\'newTeamButton\' name=\'newTeamButton\' value=\'New Team\'></form></div></div>'."\n"); }
 
-
-
-if ($filesDivNeeded == 'true') { 
-
-}
-
 if (isset($friendToAdd) && $friendToAdd !== '') {
-  addFriend($friendToAdd); }
+  if ($friendToAdd !== 'view') {
+    addFriend($friendToAdd); }
+  if ($friendToAdd == 'view') {
+
+  } }
 
 if (isset($userToEdit) && $userToEdit !== '') {
-  editUser($userToEdit); }
+  if ($userToEdit !== 'view') {
+    editUser($userToEdit); }
+  if ($userToEdit == 'view') {
+
+  } }
 
 if (isset($newTeamName) && $newTeamName !== '') {
   createNewTeam($newTeamName); }
@@ -92,13 +97,21 @@ if (isset($adminRemoveUser) && isset($adminTeamToRemove)) {
   adminRemoveUser($adminRemoveUser, $adminTeamToRemove); }
 
 if (isset($teamToJoin) && $teamToJoin !== '') {
-  joinTeam($teamToJoin); }
+  if ($teamToJoin !== 'view') {
+    joinTeam($teamToJoin); }
+  if ($teamToJoin == 'view') {
+
+ } } 
 
 if (isset($newSubTeam) && $newSubTeam !== '' && isset($teamToJoin) && $teamToJoin !== '') {
   createNewSubTeam($newSubTeam, $subTeamUsers); }
 
 if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin) && $teamToJoin !== '') {
-  joinSubTeam($teamToJoin, $subTeamToJoin); }
+  if ($teamToJoin !== 'view') {
+    joinSubTeam($teamToJoin, $subTeamToJoin); }
+  if (($teamToJoin == 'view')) {
+
+  } }
 
 
 
