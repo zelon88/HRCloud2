@@ -15,23 +15,23 @@ A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assis
 
 HRCloud2 is a personal Cloud CMS Platform similar to ownCloud but with far greater capability that includes all the same functionality as a commercial end-user based Cloud platform. Functions like file conversion, OCR, archiving, dearchiving, A/V scanning, sharing and more. With HRCloud2 you can perform all your favorite bash and command line tools just by selecting checkboxes and clicking buttons, from anywhere. 
 
-HRCloud2 can integrate with WordPress, althogh HRCloud2 will install what it needs from WordPress when it does not exist. HRCloud2 uses user accounts created by WordPress, but does not itself use a database for anything other than user authentication. All log and cache files are internally controlled. HRCloud2 includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between your other HRAI nodes.
+HRCloud2 can integrate with WordPress, althogh it will install what it needs from WordPress when it does not exist. It uses user accounts created by WordPress, but does not itself use a database for anything other than user authentication. All log and cache files are internally controlled. HRCloud2 also includes a modified version of HRAI, which is still being fully ported to the HRCloud2 platform. When complete, HRAI will be able to load balance (under dev) it's workload between your other HRAI nodes.
 
 # CURRENT CORE FEATURES
 
--HRCloud2 takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are either temporarily moved to a user-specific hosted directory (or symlinks are created, where possible) and cleaned every 10 minutes. 
+-Takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are either temporarily moved to a user-specific hosted directory (or symlinks are created, where possible) and cleaned every 10 minutes. 
 
 -Non-hosted permanent files remain until deleted by the end-user.
 
--HRCloud2 can upload and manipulate multiple files per request. To download multiple files the user can select files and the archive format of their choosing.
+-Can upload and manipulate multiple files per request. To download multiple files the user can select files and the archive format of their choosing.
 
--HRCloud2 can implement various levels of virus scanning depending on server performance and capability. ClamAV is required for A/V support.
+-Can implement various levels of virus scanning depending on server performance and capability. ClamAV is required for A/V support.
 
 -Can archive and dearchive appropriate filetypes (various dependencies to enable support).
 
 -Can convert document, image, audio, and archive filetypes to other filetypes (various dependencies to enable support).
 
--Image editing features.
+-Image editing features (rotate, resize, convert. API for maintain A/R).
 
 -Copy multiple files.
 
