@@ -1,7 +1,9 @@
 <?php
-
+// / -----------------------------------------------------------------------------------
 // / This file serves as the Common Core file which can be required by projects that need HRCloud2 to load it's config
 // / file, authenticate user storage, and define variables for the session.
+// / -----------------------------------------------------------------------------------
+
 
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the sanitizeCore.php file exists and 
@@ -83,7 +85,7 @@ if (!isset($UserIDRAW)) {
 
 // / -----------------------------------------------------------------------------------
 // / The followind code hashes the user ID and sets the directory structure for the session.
-$ServerID = hash('ripemd160', $UniqueServerName);
+$ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $AdminID = 1;
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
@@ -99,10 +101,7 @@ $CloudTempDir = $CloudTemp.$UserID;
 $CloudShareDir = $LogLoc.'/Shared';
 $AppDir = $InstLoc.'/Applications/';
 $CloudAppDir = $CloudLoc.'/Apps';
-$ContactsDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Contacts/';
-$NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
-$AdminConfig = $InstLoc.'/DATA/'.$AdminCacheHash.'/.AppData/.config.php';
+//$AdminConfig = $InstLoc.'/DATA/'.$AdminCacheHash.'/.AppData/.config.php';
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
@@ -115,6 +114,9 @@ $ResourcesDir = $InstLoc.'/Resources';
 $TempResourcesDir = $ResourcesDir.'/TEMP';
 $appDataInstDir = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $appDataCloudDir = $CloudLoc.'/'.$UserID.'/.AppData';
+$ContactsDir = $appDataInstDir.'/Contacts/';
+$NotesDir = $appDataInstDir.'/Notes/';
+$UserConfig = $appDataInstDir.'/.config.php';
 $appDataBackupFileCount = 0;
 $appDataBackupFileCount1 = 0;
 $BackupDir = $InstLoc.'/BACKUP';
