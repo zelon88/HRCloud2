@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.3.6';
+$TeamsAppVersion = 'v0.8.3.7';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
@@ -203,7 +203,8 @@ $newTeamNameEcho = 'New Team Name...';
 $newTeamDescriptionEcho = 'New Team Description...';
 $teamsHeaderDivNeeded = 'true';
 $teamsGreetingDivNeeded = 'true';
-$newTeamDivNeeded = 'true';
+$newTeamDivNeeded0 = 'true';
+$newTeamDivNeeded1 = 'true';
 $chatDivNeeded = 'false';
 $headerDivNeeded = 'true';
 $teamsDivNeeded = 'true';
@@ -212,19 +213,27 @@ $filesDivNeeded = 'true';
 $teamViewerNeeded = 'false';
 $friendViewerNeeded = 'false';
 $fileViewerNeeded = 'false';
+$filePostDivNeeded = 'false';
+$textTeamPostDivNeeded = 'false';
+$filePostDivNeeded = 'false';
 if ($settingsInternationalGreetings == 1) {
   $teamsGreetings = $teamsGreetingsInternational; }
 $greetingKey = array_rand($teamsGreetings);
 if ($teamToJoin == 'view') {
-  $newTeamDivNeeded = 'false';
+  $newTeamDivNeeded1 = 'false';
   $teamViewerNeeded == 'true'; 
   $teamToJoin == null; 
   unset($teamToJoin); }
 if ($friendToAdd == 'view') {
-  $newTeamDivNeeded = 'false';
+  $newTeamDivNeeded1 = 'false';
   $friendViewerNeeded == 'true'; 
   $friendToAdd = null;
   unset($friendToAdd); }
+if ($textPostDivNeeded == 'true' or $filePostDivNeeded == 'true' or $conversationDivNeeded == 'true' 
+  && (isset($teamToJoin) or isset($subTeamToJoin))) { 
+  $teamsGreetingDivNeeded = 'false';
+  $newTeamDivNeeded1 = 'false'; }
+
 // / -----------------------------------------------------------------------------------
 
 // / ----------------------------------------------------------------------------------- 

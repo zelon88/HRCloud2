@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: v0.8.3.6 (5-22-2017 00:00)
+App Version: v0.8.3.7 (5-27-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -51,11 +51,12 @@ if ($teamsGreetingDivNeeded == 'true') {
   $emptyTeamsECHO = '<p>It looks like you aren\'t a part of any Teams yet! Let\'s fix that...</p>'."\n\n".'<p>Check out some of the Teams below, or 
     <a id=\'showNewTeams1\' name=\'showNewTeams1\' style=\'border: 1px solid '.$color.'; border-radius: 6px;\' onclick="toggle_visibility(\'xNewTeams1\'); toggle_visibility(\'newTeamsDiv\');">Create A New Team</a></p>'; 
   $myTeamsDivNeeded = 'false'; 
+  $newTeamDivNeeded1 == 'true';
   echo ('<div id=\'TeamsGreetingDiv\' name=\'TeamsGreetingDiv\' align=\'center\'><h2>'.$teamsGreetings[$greetingKey].'</h2>');
     if (count($myTeamsList) < 1) {
   echo ('<div align=\'center\' style=\'width:90%; float:center; cursor:pointer;\'>'.$emptyTeamsECHO.'</div></div>'); } }
 
-if ($newTeamDivNeeded == 'true') {
+if ($newTeamDivNeeded1 == 'true') {
   echo ('<div align=\'center\'><div id=\'newTeamsDiv\' name=\'newTeamsDiv\' align=\'center\' style=\'width:65%; display:none; border: 1px solid '.$color.'; border-radius: 6px;\'>
     <img title=\'Close "New Teams"\' alt=\'Close "New Teams"\' id=\'xNewTeams1\' name=\'xNewTeams1\' style=\'float:right; display:none;\' onclick=\'toggle_visibility("newTeamsDiv"); toggle_visibility("xNewTeams1");\' src=\'_RESOURCES/x.png\'>
     <form method=\'post\' action=\'Teams.php\' type=\'multipart/form-data\'><h4>New Team</h4>');
