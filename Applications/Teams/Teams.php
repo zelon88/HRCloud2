@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: v0.8.3.7 (5-27-2017 00:00)
+App Version: v0.8.3.8 (5-27-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -114,6 +114,7 @@ if (isset($subTeamToJoin) && $subTeamToJoin !== '' && isset($teamToJoin) && $tea
 
   } }
 
-
+if ($conversationDivNeeded == 'true') {
+  verifyConversation($teamToJoin, $subTeamToJoin); }
 
 

@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.3.7';
+$TeamsAppVersion = 'v0.8.3.8';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
@@ -230,6 +230,8 @@ if ($friendToAdd == 'view') {
   $friendToAdd = null;
   unset($friendToAdd); }
 if ($textPostDivNeeded == 'true' or $filePostDivNeeded == 'true' or $conversationDivNeeded == 'true' 
+  && ($textTeamPost !== '' or $textTeamPost !== 'view' or $fileTeamPost !== '' or $fileTeamPost !== 'view') 
+  && (isset($teamToJoin) or isset($subTeamToJoin))
   && (isset($teamToJoin) or isset($subTeamToJoin))) { 
   $teamsGreetingDivNeeded = 'false';
   $newTeamDivNeeded1 = 'false'; }
