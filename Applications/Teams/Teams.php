@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Teams
-App Version: v0.8.3.8 (5-27-2017 00:00)
+App Version: v0.8.3.9 (5-28-2017 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for communicating with team-mates.
@@ -25,7 +25,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsC
   echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRCloud2 Teams Core file (teamsCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsCore.php'); }
+  require('/var/www/html/HRProprietary/HRCloud2/Applications/Teams/teamsCore.php'); }
 
 // / The following code represents the graphical user-interface (GUI).
 if ($headerDivNeeded == 'true') {
@@ -68,6 +68,12 @@ if ($newTeamDivNeeded1 == 'true') {
     </select>'."\n");
   echo nl2br('<input type=\'submit\' id=\'newTeamButton\' name=\'newTeamButton\' value=\'New Team\'></form></div></div>'."\n"); }
 
+if (isset($newTeamName) && $newTeamName !== '') { 
+  createNewTeam($newTeamName); }
+
+if (isset($newSubTeamName) && $newSubTeamName !== '') { 
+  createNewSubTeam($newSubTeamName); }
+
 if (isset($friendToAdd) && $friendToAdd !== '') {
   if ($friendToAdd !== 'view') {
     addFriend($friendToAdd); }
@@ -81,9 +87,6 @@ if (isset($userToEdit) && $userToEdit !== '') {
   if ($userToEdit == 'view') {
 
   } }
-
-if (isset($newTeamName) && $newTeamName !== '') {
-  createNewTeam($newTeamName); }
 
 if (isset($teamToEdit) && $teamToEdit !== '') {
   editTeam($teamToEdit); }

@@ -36,17 +36,18 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.3.8';
+$TeamsAppVersion = 'v0.8.3.9';
+$securityCore = '/var/www/html/HRProprietary/HRCloud2/securityCore.php';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
+$CacheDir = $TeamsDir.'/_CACHE';
+$ResourcesDir = $TeamsDir.'/_RESOURCES';
+$safeTeamFile = $ResourcesDir.'/_TEAMS/SAFETeam.php';
 $defaultDirs = array('.', '..', '/', '//', 'index.html', '_CACHE', '_FILES', '_USERS', '_TEAMS', '_DATA');
 $dangerArr = array('/', '//', '.', '..', 'index.html', '', ' ');
 $DangerousFiles = array('js', 'php', 'html', 'css');
-$ResourcesDir = $TeamsDir.'/_RESOURCES';
 $ScriptsDir = $InstLoc.'/Applications/Teams/_SCRIPTS';
-$CacheDir = $TeamsDir.'/_CACHE';
 $TeamsCoreCacheFile = $CacheDir.'/_coreCACHE.php';
-$safeTeamFile = $ResourcesDir.'/_TEAMS/SAFETeam.php';
 $TeamsHostedDir = $InstLoc.'/Applications/Teams/_TEMP';
 $TeamsFilesDir = $InstLoc.'/Applications/Teams/_FILES';
 $HRC2JanitorFile = $InstLoc.'/janitor.php';
@@ -70,7 +71,7 @@ $pendingFriendCounter = 0;
 $notificationCounter = 0;
 $notificationCounter1 = 0;
 $cleanCacheDATA = ('<?php $USER_CACHE_VERSION = \''.$TeamsAppVersion.'\'; $USER_ID = \''.$UserID.'\';'.' $USER_NAME = \'\'; $USER_TITLE = \'\'; 
-  $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); $FRIENDS \'\'; 
+  $USER_TOKEN = \'\'; $USER_PHOTO_FILENAME = \'\'; $USER_ALIAS = \'\'; $USER_TEAMS_OWNED = \'\'; $USER_TEAMS = array(); $FRIENDS = \'\'; 
   $USER_PERMISSIONS = \'0\'; $INTERNATIONAL_GREETINGS = \'1\'; $UPDATE_INTERVAL = \'2000\'; $USER_STATUS = \'\'; $PENDING_FRIENDS = \'\';
   $USER_EMAIL_1 = \'\'; $USER_EMAIL_2 = \'\'; $USER_EMAIL_3 = \'\'; $USER_PHONE_1 = \'\'; $USER_PHONE_2 = \'\'; $USER_PHONE_3 = \'\'; 
   $ACCOUNT_NOTES_USER = \'\'; $ACCOUNT_NOTES_ADMIN = \'\'; ?>');
@@ -231,7 +232,6 @@ if ($friendToAdd == 'view') {
   unset($friendToAdd); }
 if ($textPostDivNeeded == 'true' or $filePostDivNeeded == 'true' or $conversationDivNeeded == 'true' 
   && ($textTeamPost !== '' or $textTeamPost !== 'view' or $fileTeamPost !== '' or $fileTeamPost !== 'view') 
-  && (isset($teamToJoin) or isset($subTeamToJoin))
   && (isset($teamToJoin) or isset($subTeamToJoin))) { 
   $teamsGreetingDivNeeded = 'false';
   $newTeamDivNeeded1 = 'false'; }
@@ -256,30 +256,32 @@ if ($ColorScheme == '6') {
 
 // / -----------------------------------------------------------------------------------
 // / The following code creates required directories if they do not exist.
-if (!file_exists($TeamsDir)) {
+if (!is_writable($TeamsDir)) {
+  require ($securityCore); }
+if (!is_dir($TeamsDir)) {
   mkdir($TeamsDir);
   copy('index.html', $TeamsDir.'/index.html');
   $txt = ('Op-Act: Created the directory "'.$TeamsDir.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-if (!file_exists($UsersDir)) {
+if (!is_dir($TeamsHostedDir)) {
+  mkdir($TeamsHostedDir);
+  copy('index.html', $TeamsHostedDir.'/index.html');
+  $txt = ('Op-Act: Created the directory "'.$TeamsHostedDir.'" on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+if (!is_dir($UsersDir)) {
   mkdir($UsersDir);
   copy('index.html', $UsersDir.'/index.html');
   $txt = ('Op-Act: Created the directory "'.$UsersDir.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-if (!file_exists($UserRootDir)) {
+if (!is_dir($UserRootDir)) {
   mkdir($UserRootDir);
   copy('index.html', $UserRootDir.'/index.html');
   $txt = ('Op-Act: Created the directory "'.$UserRootDir.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-if (!file_exists($UserFilesDir)) {
+if (!is_dir($UserFilesDir)) {
   mkdir($UserFilesDir);
   copy('index.html', $UserFilesDir.'/index.html');
   $txt = ('Op-Act: Created the directory "'.$UserFilesDir.'" on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-if (!file_exists($TeamsHostedDir)) {
-  mkdir($TeamsHostedDir);
-  copy('index.html', $TeamsHostedDir.'/index.html');
-  $txt = ('Op-Act: Created the directory "'.$TeamsHostedDir.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
 
@@ -518,7 +520,7 @@ function getMyTeamsQuietly($myTeamsList) {
     $myTeamArr[$MYTCounter]['name'] = $TEAM_NAME; }
     $myTeamArr[$MYTCounter]['description'] = $TEAM_DESCRIPTION;
     $MYTCounter++;
-  return($myTeamArr); }
+  return($myTeamArr); } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
