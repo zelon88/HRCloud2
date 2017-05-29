@@ -29,7 +29,7 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Can archive and dearchive appropriate filetypes (various dependencies to enable support).
 
--Can convert document, image, audio, and archive filetypes to other filetypes (various dependencies to enable support).
+-Can convert document, image, audio, 3d model, presentation (slideshow/pages), and archive filetypes to other filetypes (various dependencies to enable support).
 
 -Image editing features (rotate, resize, convert. API for maintain A/R).
 
