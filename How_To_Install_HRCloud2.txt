@@ -72,6 +72,7 @@ duties.
 -sudo apt-get install ffmpeg
 -sudo apt-get install id3
 -sudo apt-get install tesseract
+-sudo apt-get install meshlab
 --------------------------------------------------
 
 -----STEP 5 - INSTALL HRCLOUD2-----
