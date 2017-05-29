@@ -184,6 +184,17 @@ Are you sure?
   <option value="ppt">Ppt</option>
   <option value="pptx">Pptx</option>
   <option value="odp">Odp</option>
+    <option value="zip">--3D Model Formats--</option>
+  <option value="3ds">3ds</option>
+  <option value="collata">Collada</option>
+  <option value="obj">Obj</option>
+  <option value="off">Off</option>
+  <option value="ply">Ply</option>
+  <option value="stl">Stl</option>
+  <option value="ptx">Ptx</option>
+  <option value="dxf">Dxf</option>
+  <option value="u3d">U3d</option>
+  <option value="vrml">Vrml</option>
 </select>
 <input type="submit" id="convertSubmit" name="convertSubmit" value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
@@ -324,6 +335,20 @@ Are you sure?
           $extn = "Playlist"; } 
         $size = pretty_filesize($CloudUsrDir.$dirArray[$index]);
         $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
+// / The following code represents the user directory handler.
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
+  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
+    $_POST['UserDir'] = '/'; 
+    $_POST['UserDirPOST'] = '/'; } 
+  $Udir = $_POST['UserDirPOST'].'/'; }
+if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
+if ($Udir == '//') {
+  $Udir = '/'; }
 $CleanUdir = str_replace('//', '/', $Udir.$name);
 $CleanUdir = str_replace('//', '/', $CleanUdir);
 $CleanUdir = str_replace('//', '/', $CleanUdir);
@@ -369,7 +394,7 @@ $.ajax( {
 // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
 if ($extn == 'Playlist' or $extn == 'PLAYLIST') { 
 if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
-  $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; 
+  $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST;
 } else {
   $PLSpecialEcho = ''; } ?>
 <script type="text/javascript">
