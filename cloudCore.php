@@ -577,7 +577,8 @@ if (isset( $_POST['convertSelected'])) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
+    $allowed =  array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 
+      'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
       'avi', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp');
     $file1 = str_replace('//', '/', $CloudUsrDir.$file);
     $file2 = str_replace('//', '/', $CloudTmpDir.$file);
@@ -601,6 +602,7 @@ if (isset( $_POST['convertSelected'])) {
     $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile);
     $docarray =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'ppt',' pptx', 'odp', 'odf');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
+    $modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
     $pdfarray = array('pdf');
     $abwarray = array('abw');
     $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd',);
@@ -675,6 +677,11 @@ if (isset( $_POST['convertSelected'])) {
               $txt = ("OP-Act, Executing \"convert -background none -resize $wxh $rotate $pathname $newPathname\" on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
               shell_exec("convert -background none -resize $wxh $rotate $pathname $newPathname"); } }
+          // / Code to convert and manipulate 3d model files.
+          if (in_array($oldExtension, $modelarray)) { 
+            $txt = ("OP-Act, Executing \"meshlabserver -i $pathname -o $newPathname\" on ".$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+            shell_exec("meshlabserver -i $pathname -o $newPathname"); } 
           // / Code to convert and manipulate audio, video, and multi-media files.
           if (in_array($oldExtension, $audioarray)) { 
             $ext = (' -f ' . $extension);
