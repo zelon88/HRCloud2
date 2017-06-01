@@ -90,10 +90,6 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 Check out the official [Wiki](https://github.com/zelon88/HRCloud2/wiki).
 
 ----------------------------
-[Official Website!](http://honestrepair.net/)
-
-[Try it out!](http://honestrepair.net/HRProprietary)
-
 
 [![HRCloud2](https://www.openhub.net/p/HRCloud2/widgets/project_partner_badge?format=gif&ref=samplg)](https://www.openhub.net/p/HRCloud2)
 
