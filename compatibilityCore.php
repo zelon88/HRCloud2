@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.5.4.8
-WRITTEN ON : 5/22/2017
+THIS VERSION : v1.5.5
+WRITTEN ON : 6/1/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -175,6 +175,22 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $txt = ('OP-Act: The update packages were unpacked sucessfully on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
     $UPDATEFiles = scandir($ResourceDir1);
+      // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
+  $txt = ('OP-Act: Preserving server configuration data on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    $BAKinc = 0;
+  while (file_exists($InstLoc.'/BACKUP/configBACKUP'.$BAKinc.'.php')) {
+    $BAKinc++; }
+  copy ($InstLoc.'/config.php', $InstLoc.'/BACKUP/configBACKUP'.$BAKinc.'.php'); 
+  rename ($ResourceDir1.'/config.php', $ResourceDir1.'/configLATEST.php');
+  copy ($InstLoc.'/config.php', $ResourceDir1.'/config.php');
+  // / The following code preserves HRAI configuration files to be restored after the update.
+    $BAKinc1 = 0;
+  while (file_exists($InstLoc.'Applications/HRAI/adminINFOBACKUP'.$BAKinc1.'.php')) {
+    $BAKinc1++; }
+  @copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $InstLoc.'/Applications/HRAI/adminINFO'.$BAKinc.'.php'); 
+  rename ($ResourceDir1.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFOLATEST.php');
+  copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFO.php'); 
     foreach($UPDATEFiles as $UF) {
       if ($UF == '.' or $UF == '..' or $UF == 'var' or $UF == 'www' or $UF == 'html' or $UF == 'HRProprietary') continue;
       $UFSrcDir = $ResourceDir1.'/'.$UF;
@@ -240,22 +256,6 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
-  // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
-  $txt = ('OP-Act: Preserving server configuration data on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    $BAKinc = 0;
-  while (file_exists($InstLoc.'/configBACKUP'.$BAKinc.'.php')) {
-    $BAKinc++; }
-  copy ($InstLoc.'/config.php', $InstLoc.'/BACKUP/configBACKUP'.$BAKinc.'.php'); 
-  rename ($ResourceDir1.'/config.php', $ResourceDir1.'/configLATEST.php');
-  copy ($InstLoc.'/config.php', $ResourceDir1.'/config.php');
-  // / The following code preserves HRAI configuration files to be restored after the update.
-    $BAKinc1 = 0;
-  while (file_exists($InstLoc.'Applications/HRAI/adminINFOBACKUP'.$BAKinc1.'.php')) {
-    $BAKinc1++; }
-  @copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $InstLoc.'/Applications/HRAI/adminINFO'.$BAKinc.'.php'); 
-  rename ($ResourceDir1.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFOLATEST.php');
-  copy ($InstLoc.'/Applications/HRAI/adminINFO.php', $ResourceDir1.'/Applications/HRAI/adminINFO.php'); 
   // / The following code checks that HRCloud2 was sucessfully updated..
   require ($ResourceDir1.'/versionInfo.php'); 
   $Version1 = $Version;
