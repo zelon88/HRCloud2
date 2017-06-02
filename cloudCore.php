@@ -667,6 +667,8 @@ if (isset( $_POST['convertSelected'])) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['width']);
             $_POST["rotate"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rotate']);
+            $pathname = str_replace(' ', '\ ', $pathname);
+            $newPathname = str_replace(' ', '\ ', $newPathname);
             $rotate = ('-rotate '.$_POST["rotate"]);
             $wxh = $width.'x'.$height;
             if ($wxh == '0x0' or $wxh =='x0' or $wxh == '0x' or $wxh == '0' or $wxh == '00' or $wxh == '' or $wxh == ' ') {       
