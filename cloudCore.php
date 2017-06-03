@@ -90,7 +90,10 @@ if(isset($_POST["upload"])) {
     $DangerousFiles = array('js', 'php', 'html', 'css');
     $F0 = pathinfo($file, PATHINFO_EXTENSION);
     if (in_array($F0, $DangerousFiles)) { 
-      $file = str_replace($F0, $F0.'SAFE', $file); }
+      $txt = ("ERROR!!! HRC2103, Unsupported file format, $F0 on $Time.");
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      echo nl2br("ERROR!!! HRC2103, Unsupported file format, $F0 on $Time."."\n".'--------------------'."\n"); 
+      continue; }
     $F2 = pathinfo($file, PATHINFO_BASENAME);
     $F3 = str_replace('//', '/', $CloudUsrDir.$F2);
     if($file == "") {
@@ -485,10 +488,6 @@ if (isset($_POST["dearchiveButton"])) {
         if (!is_dir($dearchUserDir)) {
           $txt = ('ERROR!!! HRC2390, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-          die($txt); } 
-        if (!is_dir($dearchUserDir)) {
-          $txt = ('ERROR!!! HRC2394, Could not create a user directory at '.$dearchUserDir.' on '.$Time.'!');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
           die($txt); } }
       if (!file_exists($dearchUserDir)) {
         mkdir($dearchUserDir);
@@ -557,6 +556,17 @@ if (isset($_POST["dearchiveButton"])) {
         shell_exec('7z e '.$dearchTempPath.' '.$dearchUserDir); 
         if (file_exists($dearchUserDir)) {
           $txt = ('OP-Act: '."Dearchived $dearchTempPath to $dearchUserDir using method 3 on $Time".'.'); 
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+    if (file_exists($dearchUserDir)) {
+      $dearchFiles = scandir($dearchUserDir);
+      foreach ($dearchFiles as $dearchFile) {
+        $DangerousFiles = array('js', 'php', 'html', 'css');
+        $dearchFileLoc = $dearchUserDir.'/'.$dearchFile;
+        $ext = pathinfo($dearchFileLoc, PATHINFO_EXTENSION);
+        if (in_array($ext, $DangerousFiles) && $dearchFile !== 'index.html') {
+          unlink($dearchFileLoc);
+          $txt = ('ERROR!!! HRC2568, Unsupported file format, '.$ext.' on '.$Time."\n".'--------------------'."\n"); 
+          echo nl2br ('ERROR!!! HRC2568, Unsupported file format, '.$ext.' on '.$Time."\n".'--------------------'."\n"); 
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
     // / Return an error if the extraction failed and no files were created.
     if (!file_exists($dearchUserDir)) {
