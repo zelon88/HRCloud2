@@ -595,6 +595,7 @@ if (isset( $_POST['convertSelected'])) {
     $convertcount = 0;
     $extension = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['extension']);
     $pathname = str_replace('//', '/', $CloudTmpDir.$file);
+    $pathname = str_replace(' ', '\ ', $pathname);
     $oldPathname = str_replace('//', '/', $CloudUsrDir.$file);
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
@@ -667,8 +668,6 @@ if (isset( $_POST['convertSelected'])) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['width']);
             $_POST["rotate"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rotate']);
-            $pathname = str_replace(' ', '\ ', $pathname);
-            $newPathname = str_replace(' ', '\ ', $newPathname);
             $rotate = ('-rotate '.$_POST["rotate"]);
             $wxh = $width.'x'.$height;
             if ($wxh == '0x0' or $wxh =='x0' or $wxh == '0x' or $wxh == '0' or $wxh == '00' or $wxh == '' or $wxh == ' ') {       
@@ -814,6 +813,7 @@ if (isset($_POST['pdfworkSelected'])) {
     if (!isset($_POST['pdfextension'])) {
       $extension = 'pdf'; }
     $pathname = str_replace('//', '/', $CloudTmpDir.$file); 
+    $pathname = str_replace(' ', '\ ', $pathname);
     $oldPathname = str_replace('//', '/', $CloudUsrDir.$file);
     $filename = pathinfo($pathname, PATHINFO_FILENAME);
     $oldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
@@ -993,6 +993,7 @@ if (isset($_POST['streamSelected'])) {
   foreach (($_POST['streamSelected']) as $MediaFile) {
     // / The following code will only create cache data if the $MediaFile is in the $PLMediaArr.     
         $pathname = str_replace('//', '/', $CloudUsrDir.$MediaFile);
+        $pathname = str_replace(' ', '\ ', $pathname);
         $Scanfilename = pathinfo($pathname, PATHINFO_FILENAME);
         $ScanoldExtension = pathinfo($pathname, PATHINFO_EXTENSION);
         $txt = ('OP-Act: Detected a '.$ScanoldExtension.' named '.$MediaFile.' on '.$Time.'.');
@@ -1075,6 +1076,7 @@ if (isset($_POST['streamSelected'])) {
     $txt = ('OP-Act: Initiated Streamer on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $pathname = str_replace('//', '/', $CloudTmpDir.'/'.$StreamFile);
+    $pathname = str_replace(' ', '\ ', $pathname);
     $oldPathname = str_replace('//', '/', $CloudUsrDir.$StreamFile);
     copy ($oldPathname, $pathname);
     if ($StreamFile == '.' or $StreamFile == '..' or is_dir($pathname) or is_dir($oldPathname)) continue;
