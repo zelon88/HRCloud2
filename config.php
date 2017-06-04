@@ -37,15 +37,14 @@ $ShowHRAI = '1';
 // / ------------------------------  
 // / Security Information ... 
   // / HRCloud2 Server can run on a local machine or on a network as a server to
-  // / serve clients over http using standard web browsers. When running locally it is 
-  // / advised to install HRCloud2 in a location that IS NOT hosted. 
+  // / serve clients over http using standard web browsers.
   // / Unique Salts.
   $Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
   // / Internal IP Address.
   $InternalIP = '192.168.1.7';
   // / Externally or internally accesible domain or IP.
   $URL = 'http://localhost';
-  // / Scan for viruses during directory scan. Use 1 for true or leave blank for false. 
+  // / Scan for viruses during directory scan. Use 1 for default. 
    // / (ClamAV MUST be installed on the localhost!!!).
   $VirusScan = '0';
   // / Use multi-threaded virus scanning. Virus scanning is extremely resource intensive. 
@@ -55,7 +54,7 @@ $ShowHRAI = '1';
   // / Thorough A/V scanning requires stricter permissions, and may require additional 
     // / ClamAV user, usergroup, and permissions configuration.
     // / Disable ('0') if you experience errors.
-    // / Enable ('0') if you experiencfalse-negatives.
+    // / Enable ('0') if you experience false-negatives.
   $ThoroughAV = '0';
   // / Persistent A/V scanning will try to achieve the highest level of scanning that is
     // / possible with available permissions. 
