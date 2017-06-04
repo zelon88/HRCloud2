@@ -1,9 +1,4 @@
-<!doctype html>
-<html>
-<head>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
-   <title>HRCloud2 Streamer</title>
+
     <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
     <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
     <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
@@ -19,32 +14,18 @@
       window.history.back(); }
       var index = 0;
 </script>
-</head>
-<body>
 
 <?php 
-// / Detect WordPress.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! HRS26, WordPress was not detected on the server.'."\n");
-  die('ERROR!!! HRS26, WordPress was not detected on the server.'); }
+// / Load commonCore WordPress.
+$CCFile = '/var/www/html/HRProprietary/HRCloud2/commonCore.php';
+if (!file_exists($CCFile)) {
+  echo nl2br('ERROR!!! HRS26, CommonCore was not detected on the server.'."\n");
+  die('ERROR!!! HRS26, CommonCore was not detected on the server.'); }
   else {
-    require($WPFile); } 
+    require($CCFile); } 
 // / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.6.5';
+$hrstreamerAppVersion = 'v0.7';
 $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppLogs';
-$LogInc = 0;
-$SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogDir = ($InstLoc.'/'.'VirusLogs'.'/'.$Date.'.txt');
-$LogFile = ($SesLogDir.'/'.$Date.'.txt');
-$CloudDir = $CloudLoc.'/'.$UserID;
-$CloudTemp = $InstLoc.'/DATA/';
-$CloudTempDir = $CloudTemp.$UserID;
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -103,11 +84,9 @@ if (file_exists($PlaylistDir)) {
   $PlaylistCacheDir = $PlaylistDir.'/.Cache';
   $PlaylistCacheFile = $PlaylistCacheDir.'/cache.php';
   $PlaylistFiles = scandir($PlaylistDir); 
-
-  require($PlaylistCacheFile);
   if (!file_exists($PlaylisrCacheFile)) {
     @mkdir($PlaylistCacheDir, 0755); 
-    $txt = '<?php';
+    $txt = '';
     $MAKECacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);
     touch($PlaylisrCacheFile); 
     $txt = ('OP-Act: Created a playlist cache file on '.$Time.'.');
@@ -116,6 +95,7 @@ if (file_exists($PlaylistDir)) {
     $txt = ('ERROR!!! HRS68, '.$PlaylistDir.' is not a valid .Playlist file!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     die($txt); }
+  require($PlaylistCacheFile);
   // / Separate the album art from the songs within the $PlaylistFiles.
     $PLCount = 0;
     $PLImageCount = 0;
@@ -163,9 +143,7 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
 $RandomImageFile = 'Applications/HRStreamer/Resources/RandomImageFile.png'; ?>
 
 <div id="artwork" name="artwork" align="center" style="max-width:65%;">
-  <div align="center"><strong>Artwork</strong>
-  <hr />
-  <img id="AlbumImage" name="AlbumImage" style="max-width:400px; padding-left:15px; padding-top:15px;" src="<?php echo $RandomImageFile; ?>"></div>
+  <img id="AlbumImage" name="AlbumImage" style="max-width:400px; padding-left:15px; padding-top:15px;" src="<?php echo $RandomImageFile; ?>">
 </div> 
 
 <div id="media" name="media" align="center" style="max-width:65%;">
@@ -203,6 +181,3 @@ foreach ($PlaylistFiles as $PlaylistFile) {
 </div>        
 <?php } ?> 
 </div>
-
-
-owE
