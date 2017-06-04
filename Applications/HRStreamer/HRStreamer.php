@@ -9,10 +9,28 @@
          e.style.display = 'none';
       else
          e.style.display = 'block'; }
-      var songsrc = [];
+    function show_visibility(id) {
+      var e = document.getElementById(id);
+         e.style.display = 'block'; }
+    function hide_visibility(id) {
+      var e = document.getElementById(id);
+         e.style.display = 'none'; }
+    function hide_all_visibility() {
+      var e = document.getElementsByClassName('buttonbar');
+          e.style.display = 'none'; }
     function goBack() {
       window.history.back(); }
-      var index = 0;
+    function stopAllAudio() {
+      var sounds = document.getElementsByTagName('audio');
+      for(i=0; i<sounds.length; i++) sounds[i].pause(); }
+    function startStopSelectedAudio(id) {
+      var myAudio = document.getElementById(id);
+      if (myAudio.paused) {
+        myAudio.play(); } 
+      else {
+        myAudio.pause(); } }
+    var songsrc = [];
+    var index = 0;
 </script>
 
 <?php 
@@ -127,8 +145,16 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
   if ($PlaylistSong == '.' or $PlaylistSong == '..' or is_dir($PlaylistSong)) continue;
     $SongCount++; 
     echo('</div><div id="PlaylistSong'.$SongCount.'" name="PlaylistSong'.$SongCount.'" style="display:block; width:200px; float:right; clear:right;"><hr />'); ?>
-    <div align="left"><p><strong><i><a style="float:left;"><?php echo $SongCount.'. '; ?></a></i></strong><img id="hideplay<?php echo $SongCount; ?>" name="hideplay<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>');" style="float:left; padding-right:5px; padding-left:5px; display:none;" src="Applications/HRStreamer/Resources/streamflipped.png">
-    <img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" onclick="toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>');" style="float:left; padding-right:5px; padding-left:5px; display:block;" src="Applications/HRStreamer/Resources/stream.png"></p></div>
+    <div align="left"><p><strong><i><a style="float:left;"><?php echo $SongCount.'. '; ?></a></i></strong><img id="hideplay<?php echo $SongCount; ?>" name="hideplay<?php echo $SongCount; ?>" 
+      onclick="stopAllAudio(); hide_visibility('hideplay<?php echo $SongCount; ?>'); show_visibility('play<?php echo $SongCount; ?>'); hide_all_visibility();  
+      toggle_visibility('buttonbar<?php echo $SongCount; ?>');" style="float:left; padding-right:5px; padding-left:5px; display:none;" src="Applications/HRStreamer/Resources/streamflipped.png">
+    <img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" 
+      onclick="stopAllAudio(); startStopSelectedAudio('song<?php echo $SongCount; ?>');
+<?php
+// / stop playing music and play selected music
+// / hide other media divs and show the selected media div
+?>
+    toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>');" style="float:left; padding-right:5px; padding-left:5px; display:block;" src="Applications/HRStreamer/Resources/stream.png"></p></div>
   <?php
     echo nl2br("\n".'<strong>'.$PlaylistSong.'</strong>'."\n"); 
     echo nl2br('<div align="center"><p id="moreInfoLink'.$SongCount.'" style="display:block;" onclick="toggle_visibility(\'PlaylistSongInfo'.$SongCount.'\'); toggle_visibility(\'moreInfoLink'.$SongCount.'\');"><i>More Info</i></p></div>'); ?>
@@ -154,24 +180,11 @@ foreach ($PlaylistFiles as $PlaylistFile) {
   $SongCount++; 
   $pathname = $PlaylistDir.'/'.$PlaylistFile; ?>
 <script type="text/javascript">
-    function vidplay<?php echo $SongCount; ?>() {
-       var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
-       var button<?php echo $SongCount; ?> = document.getElementById("play<?php echo $SongCount; ?>");
-       if (audio<?php echo $SongCount; ?>.paused) {
-          audio<?php echo $SongCount; ?>.play<?php echo $SongCount; ?>();
-          button<?php echo $SongCount; ?>.textContent = "||"; } 
-       else {
-          audio<?php echo $SongCount; ?>.pause<?php echo $SongCount; ?>();
-          button<?php echo $SongCount; ?>.textContent = ">"; } }
-    function restart<?php echo $SongCount; ?>() {
-        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
-        audio<?php echo $SongCount; ?>.currentTime = 0; }
-    function skip<?php echo $SongCount; ?>(value) {
-        var audio<?php echo $SongCount; ?> = document.getElementById("song<?php echo $SongCount; ?>");
-        audio<?php echo $SongCount; ?>.currentTime += value; 
-        songsrc.push("<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>"); }      
+
+
+    
 </script>
-<div align="center" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar<?php echo $SongCount; ?>" style="display:none;">
+<div align="center" class="buttonbar" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar<?php echo $SongCount; ?>" style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
 <div align="center" id="autosong" name="autosong">
