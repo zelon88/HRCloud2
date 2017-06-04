@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.3.9';
+$TeamsAppVersion = 'v0.8.4';
 $securityCore = '/var/www/html/HRProprietary/HRCloud2/securityCore.php';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
@@ -93,16 +93,12 @@ $filesSidebarFile = $ScriptsDir.'/filesSidebar.php';
 // / -----------------------------------------------------------------------------------
 // / The following code represents the Teams API handler, sanitizing and consolidating inputs.
   // / -New Team inputs.
-if (!isset($_POST['newTeam'])) {
-  $newTeamName = ''; }
 if (isset($_GET['newTeam'])) {
   $_POST['newTeam'] = $_GET['newTeam']; }
 if (isset($_POST['newTeam'])) {
   $_POST['newTeam'] = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['newTeam']); 
   $newTeamName = str_replace(str_split('./,[]{};:$!#^&%@>*<\''), '', $_POST['newTeam']); }
   // / -New SubTeam inputs.
-if (!isset($_POST['newSubTeam'])) {
-  $newTeamName = ''; }
 if (isset($_GET['newSubTeam']) && isset($_GET['joinTeam'])) {
   $_POST['newSubTeam'] = $_GET['joinSubTeam']; 
   $_POST['baseTeamID'] = $_GET['joinTeam']; }
@@ -289,10 +285,10 @@ if (!is_dir($UserFilesDir)) {
 // / The following code creates new user cache files if they do not exist.
 if (!file_exists($UserCacheFile)) {
   $MAKECacheFile = file_put_contents($UserCacheFile, $cleanCacheDATA.PHP_EOL, FILE_APPEND);
-  $txt = ('Op-Act: Created a new User Cache File '.'" on '.$Time.'!'); 
+  $txt = ('Op-Act: Created a new User Cache File at "'.$UserCacheFile.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 if (!file_exists($UserCacheFile)) {
-  $txt = ('ERROR!!! HRC2TeamsApp88, Unable to create a User Cache File at "'.$UserCacheFile.'" on '.$Time.'!'); 
+  $txt = ('ERROR!!! HRC2TeamsApp88, There was a problem creating a User Cache File at "'.$UserCacheFile.'" on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   echo nl2br($txt."\n");
   die (); }
@@ -439,7 +435,8 @@ foreach ($myTeamsList as $teamID) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to create a new Team.
-if ($newTeamName !== '') {
+function createNewTeam($newTeamName) {
+  global $UserID, $Time, $LogFile, $Salts, $TeamsDir, $newSubTeamName;
   $newTeamID = hash('sha256', $newTeamName.$Salts);
   $newTeamDir = str_replace('//', '/', $TeamsDir.'/'.$newTeamID);
   $newTeamFile = str_replace('//', '/', $newTeamDir.'/'.$newTeamID.'_DATA.php');
@@ -480,7 +477,8 @@ if ($newTeamName !== '') {
     $teamFile = $newTeamFile;
     $txt = ('OP-Act: Sucessfully created the new Team "'.$teamName.'" on '.$Time.'!');  
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  echo nl2br('Created <i>'.$teamName.'</i>'."\n"); }
+  echo nl2br('Created <i>'.$teamName.'</i>'."\n"); 
+  return ('true'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -586,7 +584,7 @@ function getMyTeams($myTeamsList) {
 // / -----------------------------------------------------------------------------------
 // / The following code will return the current users Teams in array format within it's return value when called.
 function getMyTeamsQuietly($myTeamsList) {
-  global $defaultDirs;
+  global $defaultDirs, $TeamsDir;
   $myTeamArr = array();
   $MYTCounter = 0;
   foreach ($myTeamsList as $myTeam) {
