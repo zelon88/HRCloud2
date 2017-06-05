@@ -42,7 +42,7 @@ if (!file_exists($CCFile)) {
   else {
     require($CCFile); } 
 // / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.7.1';
+$hrstreamerAppVersion = 'v0.7.5';
 $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
@@ -161,7 +161,6 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
     echo nl2br('<a id="moreInfo" name="moreInfo"><i>Artist: </i>'.${'PLSongArtist'.$SongCount}."\n".'<i>Title: </i>'.${'PLSongTitle'.$SongCount}."\n".'<i>Album: </i>'.${'PLSongAlbum'.$SongCount}.'</a>'); ?>
 
 <div align="center"><img id="FileImage" src="<?php echo ${'PLSongImage'.$SongCount};?>" style="max-width:100px; max-height:100px;" onclick="document.getElementById('AlbumImage').src='<?php echo ${'PLSongImage'.$SongCount};?>'"></div>
-
 </div></div>
 <?php }
 $RandomImageFile = 'Applications/HRStreamer/Resources/RandomImageFile.png'; ?>
@@ -177,16 +176,11 @@ foreach ($PlaylistFiles as $PlaylistFile) {
   if ($PlaylistFile == '.' or $PlaylistFile == '..' or $PlaylistFile == '.Cache' or is_dir($PlaylistFile)) continue;  
   $SongCount++; 
   $pathname = $PlaylistDir.'/'.$PlaylistFile; ?>
-<script type="text/javascript">
-
-
-    
-</script>
-<div align="center" class="buttonbar" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar" style="display:none;">
+<div align="center" class='buttonbar' id='buttonbar<?php echo $SongCount; ?>' name='buttonbar' style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
-<div align="center" id="autosong" name="autosong">
-  <audio id="song<?php echo $SongCount; ?>" name="song<?php echo $SongCount; ?>" preload="auto" controls="true" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
+<div align="center" id='autosong' name='autosong'>
+  <audio id="song<?php echo $SongCount; ?>" name='song<?php echo $SongCount; ?>' preload="auto" onended="toggle_visibility('play<?php echo ($SongCount + 1); ?>'); toggle_visibility('hideplay<?php echo ($SongCount + 1); ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('hideplay<?php echo $SongCount; ?>'); show_visibility('buttonbar<?php echo ($SongCount + 1); ?>'); hide_visibility('buttonbar<?php echo $SongCount; ?>'); document.getElementById('song<?php echo ($SongCount + 1); ?>').play();" controls="true" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
 <hr />
 </div> 
 </div>        
