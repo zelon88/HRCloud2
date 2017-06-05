@@ -15,6 +15,9 @@
     function hide_visibility(id) {
       var e = document.getElementById(id);
          e.style.display = 'none'; }
+    function hide_visibility_name(name) {
+      var e = document.getElementsByName(name);
+         e.style.display = 'none'; }
     function goBack() {
       window.history.back(); }
     function stopAllAudio() {
@@ -143,15 +146,12 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
     $SongCount++; 
     echo('</div><div id="PlaylistSong'.$SongCount.'" name="PlaylistSong'.$SongCount.'" style="display:block; width:200px; float:right; clear:right;"><hr />'); ?>
     <div align="left"><p><strong><i><a style="float:left;"><?php echo $SongCount.'. '; ?></a></i></strong><img id="hideplay<?php echo $SongCount; ?>" name="hideplay<?php echo $SongCount; ?>" 
-      
-      onclick="stopAllAudio(); hide_visibility('hideplay<?php echo $SongCount; ?>'); show_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>');" 
-
+      onclick="stopAllAudio(); hide_visibility('hideplay<?php echo $SongCount; ?>'); show_visibility('play<?php echo $SongCount; ?>');  
+        toggle_visibility('buttonbar<?php echo $SongCount; ?>');" 
       style="float:left; padding-right:5px; padding-left:5px; display:none;" src="Applications/HRStreamer/Resources/streamflipped.png">
     <img id="play<?php echo $SongCount; ?>" name="play<?php echo $SongCount; ?>" 
-      
-      onclick="stopAllAudio(); startStopSelectedAudio('song<?php echo $SongCount; ?>'); toggle_visibility('buttonbar<?php echo $SongCount; ?>'); 
-      show_visibility('hideplay<?php echo $SongCount; ?>'); hide_visibility('play<?php echo $SongCount; ?>');" 
-      
+      onclick="stopAllAudio(); startStopSelectedAudio('song<?php echo $SongCount; ?>'); toggle_visibility('hideplay<?php echo $SongCount; ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); 
+        toggle_visibility('buttonbar<?php echo $SongCount; ?>');" 
       style="float:left; padding-right:5px; padding-left:5px; display:block;" src="Applications/HRStreamer/Resources/stream.png"></p></div>
   <?php
     echo nl2br("\n".'<strong>'.$PlaylistSong.'</strong>'."\n"); 
@@ -182,7 +182,7 @@ foreach ($PlaylistFiles as $PlaylistFile) {
 
     
 </script>
-<div align="center" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar" style="display:none;">
+<div align="center" class="buttonbar" id="buttonbar<?php echo $SongCount; ?>" name="buttonbar" style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
 <div align="center" id="autosong" name="autosong">
