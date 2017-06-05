@@ -19,15 +19,16 @@ else {
 $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd', 'vdi');
 $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd');
-$DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
+$DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppa', 'odp');
 $ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
 $MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog', 'wma', 'mp2', 'flac');
 // / Set all secondary array data.
 $archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
-$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
-$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppt', 'ppa', 'ppt', 'pptx', 'odp');
+$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppa', 'odp', 'xps');
+$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4', 'pptx', 'ppt', 'xps');
 $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
+$modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
 $fileArray1 = array();
 // / Set all incremental data to 0.
 $tableCount = 0;
@@ -92,7 +93,7 @@ while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
 <input type='submit' name="back" id="back" value='&#x2190' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
 <div align="center" style="margin-bottom:5px;"><img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
 <img id='dearchiveButton' name='dearchiveutton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img id="imgeditButton" name="imgeditButton" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/share.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
+<img id="imgeditButton" name="imgeditButton" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/triangle.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
 </div>
 
 <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
@@ -181,8 +182,6 @@ Are you sure?
   <option value="potx">Potx</option>
   <option value="pot">Pot</option>
   <option value="ppa">Ppa</option>
-  <option value="ppt">Ppt</option>
-  <option value="pptx">Pptx</option>
   <option value="odp">Odp</option>
     <option value="zip">--3D Model Formats--</option>
   <option value="3ds">3ds</option>
