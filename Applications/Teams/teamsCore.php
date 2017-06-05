@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.4';
+$TeamsAppVersion = 'v0.8.5';
 $securityCore = '/var/www/html/HRProprietary/HRCloud2/securityCore.php';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
@@ -213,25 +213,6 @@ $fileViewerNeeded = 'false';
 $filePostDivNeeded = 'false';
 $textTeamPostDivNeeded = 'false';
 $filePostDivNeeded = 'false';
-if ($settingsInternationalGreetings == 1) {
-  $teamsGreetings = $teamsGreetingsInternational; }
-$greetingKey = array_rand($teamsGreetings);
-if ($teamToJoin == 'view') {
-  $newTeamDivNeeded1 = 'false';
-  $teamViewerNeeded == 'true'; 
-  $teamToJoin == null; 
-  unset($teamToJoin); }
-if ($friendToAdd == 'view') {
-  $newTeamDivNeeded1 = 'false';
-  $friendViewerNeeded == 'true'; 
-  $friendToAdd = null;
-  unset($friendToAdd); }
-if ($textPostDivNeeded == 'true' or $filePostDivNeeded == 'true' or $conversationDivNeeded == 'true' 
-  && ($textTeamPost !== '' or $textTeamPost !== 'view' or $fileTeamPost !== '' or $fileTeamPost !== 'view') 
-  && (isset($teamToJoin) or isset($subTeamToJoin))) { 
-  $teamsGreetingDivNeeded = 'false';
-  $newTeamDivNeeded1 = 'false'; }
-
 // / -----------------------------------------------------------------------------------
 
 // / ----------------------------------------------------------------------------------- 
@@ -431,6 +412,28 @@ foreach ($myTeamsList as $teamID) {
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br($txt."\n");
       continue; } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sets GUI variables now that core functions have completed,
+if ($settingsInternationalGreetings == 1) {
+  $teamsGreetings = $teamsGreetingsInternational; }
+$greetingKey = array_rand($teamsGreetings);
+if ($teamToJoin == 'view') {
+  $newTeamDivNeeded1 = 'false';
+  $teamViewerNeeded == 'true'; 
+  $teamToJoin == null; 
+  unset($teamToJoin); }
+if ($friendToAdd == 'view') {
+  $newTeamDivNeeded1 = 'false';
+  $friendViewerNeeded == 'true'; 
+  $friendToAdd = null;
+  unset($friendToAdd); }
+if ($textPostDivNeeded == 'true' or $filePostDivNeeded == 'true' or $conversationDivNeeded == 'true' 
+  && ($textTeamPost !== '' or $textTeamPost !== 'view' or $fileTeamPost !== '' or $fileTeamPost !== 'view') 
+  && (isset($teamToJoin) or isset($subTeamToJoin))) { 
+  $teamsGreetingDivNeeded = 'false';
+  $newTeamDivNeeded1 = 'false'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -853,7 +856,7 @@ return array('true', $friendCount, $pendingFriendCount); }
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to join a Team.
 function joinTeam($teamToJoin) {
-  global $Salts, $UserID, $Time, $LogFile, $TeamsDir, $UserCacheFile, $TeamCacheFile, $currentUserTeams, $USER_STATUS;
+  global $Salts, $UserID, $Time, $LogFile, $TeamsDir, $UserCacheFile, $TeamCacheFile, $currentUserTeams;
   $error = 0;
   if (is_array($teamToJoin)) {
     if (count($teamToJoin) > 1) {
@@ -863,16 +866,21 @@ function joinTeam($teamToJoin) {
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
       echo nl2br($prettyTxt."\n"); } 
     $teamToJoin = $teamToJoin[0]; }
-  $TeamCacheFile = $TeamsDir.'/'.$teamToJoin.'/_CACHE/_'.$teamToJoin.'_CACHE.php';
+  $TeamCacheDir = $TeamsDir.'/'.$teamToJoin.'/_CACHE';
+  $TeamCacheFile = $TeamCacheDir.'/_'.$teamToJoin.'_CACHE.php';
   $teamDir = $TeamsDir.'/'.$teamToJoin; 
-  $teamFile = $teamDir.'/'.$teamToJoin.'.php';
+  $teamFile = $teamDir.'/'.$teamToJoin.'_DATA.php';
   if (!file_exists($teamFile)) {
     $txt = ('ERROR!!! HRC2TeamsApp841, the file "'.$teamToJoin.'" is not a valid Team file on '.$Time.'!');  
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt);
     die(); }
+  if (!is_dir($TeamCacheDir)) {
+    @mkdir($TeamCacheDir); }
+  if (!file_exists($TeamCacheFile)) {
+    $teamCacheDATA = '<?php $ACTIVE_USERS = array(\'\'); $INACTIVE_USERS = array(\'\');?>'; 
+    $WRITETeamCacheDATA = file_put_contents($TeamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND); }
   include($teamFile);
-  include($TeamCacheFile);
   if(in_array($UserID, $BANNED_USERS)) {
     $txt = ('ERROR!!! HRC2TeamsApp505, The current user "'.$UserID.'" does not have permission to join the team "'.$teamToJoin.'" because they have been banned on '.$Time.'!');  
     $prettyTxt = 'Ooops, looks like you don\'t have permission to join this Team!';
@@ -888,15 +896,8 @@ function joinTeam($teamToJoin) {
   if(in_array($UserID, $TEAM_USERS) && !in_array($UserID, $BANNED_USERS)) {
     $currentUserTeams = array_push($currentUserTeams, $teamToJoin);
     $USER_STATUS = 1;
-    $userCacheDATA0 = implode('\',\'', $currentUserTeams);
     $userCacheDATA = '<?php $USER_STATUS = '.$USER_STATUS.'; $CURRENT_USER_TEAM = array(\''.$userCacheDATA0.'\'); ?>';
-    $WRITEUserCacheDATA = file_put_contents($userCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
-    if (!isset($ACTIVE_USERS) or !isset($INACTIVE_USERS)) {
-      $teamCacheDATA = ''; }
-    if (isset($ACTIVE_USERS) && isset($INACTIVE_USERS)) {
-      $ACTIVE_USERS = array_push($ACTIVE_USERS, $UserID);
-      $teamCacheDATA = '<?php $ACTIVE_USERS = array(\''.implode('\',\'', $ACTIVE_USERS).'\'); $INACTIVE_USERS = array(\''.implode('\',\'', $INACTIVE_USERS).'\');?>'; }
-    $WRITETeamCacheDATA = file_put_contents($TeamCacheFile, $teamCacheDATA.PHP_EOL, FILE_APPEND);
+    $WRITEUserCacheDATA = file_put_contents($UserCacheFile, $userCacheDATA.PHP_EOL, FILE_APPEND); 
     $teamsGreetingDivNeeded = 'false';
     $chatDivNeeded = 'true'; 
     $allowPosting = hash('sha256', $Salts.$teamToJoin.'');   
