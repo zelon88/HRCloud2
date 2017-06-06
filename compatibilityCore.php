@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.5.5.9
+THIS VERSION : v1.5.6
 WRITTEN ON : 6/5/2017
 */
 
@@ -164,14 +164,19 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   // / The following code is performed as a check that the update .zip package was unpacked.
-  if (!file_exists($ResourceDir1)) {
+  if (!file_exists($ResourceDir1.'/config.php')) {
     $txt = ('ERROR!!! HRC2CompatCore130, There was a problem unpacking the update packages on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   // / The following code is performed when an update .zip package was sucessfully unpacked.
   // / It will recursively copy all update files and directories to a folder, and then zip that folder
     // / into an "installation image" that we can over-write the $InstLoc with.
-  if (file_exists($ResourceDir1)) {
+  if (!file_exists($ResourceDir1.'/config.php')) {
+    $txt = ('ERROR!!! HRC2175, there was no data downloaded! Check that Github is not undergoing maintanence on '.$Time.'.'); 
+    echo nl2br ($txt.'<hr />');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die(); }
+  if (file_exists($ResourceDir1.'/config.php')) {
     $txt = ('OP-Act: The update packages were unpacked sucessfully on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
     $UPDATEFiles = scandir($ResourceDir1);
