@@ -4,8 +4,6 @@
 
 **[WIKI DOCUMENTATION!](https://github.com/zelon88/HRCloud2/wiki)**
 
-**[Official (hosted in-house) Download Mirror!](https://honestrepair.net/HRProprietary/Distros/HRCloud2-master.zip)**
-
 # HRCloud2
 A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assistant** that **Converts files, OCR's images & documents, Creates archives, Scans for viruses, Protects your server, Keeps itself up-to-date,** and **Runs your own AppLauncher!** 
 
@@ -100,5 +98,6 @@ Check out the official [Wiki](https://github.com/zelon88/HRCloud2/wiki).
 Think HRCloud2 is neat? Support us on Flattr!
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=zelon88&url=https://github.com/zelon88/HRCloud2&title=HRCloud2&language=&tags=github&category=software)  
 
+**[Official (hosted in-house) Download Mirror!](https://honestrepair.net/HRProprietary/Distros/HRCloud2-master.zip)**
 
 <3 Open-Source.
