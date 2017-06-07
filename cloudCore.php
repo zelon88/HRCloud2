@@ -951,7 +951,7 @@ if (isset($_POST['pdfworkSelected'])) {
 // / The following code will be performed when a user selects files to stream. (for you, Emily...)
 if (isset($_POST['streamSelected'])) {
   // / Define the and sanitize global .Playlist environment variables.
-  $getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
+  $getID3File = $InstLoc.'/Applications/getid3/getid3.php';
   $PlaylistName = str_replace(str_split('.\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
   $PLVideoArr =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');    
   $PLVideoArr2 =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');    
