@@ -42,8 +42,8 @@ if (!file_exists($CCFile)) {
   else {
     require($CCFile); } 
 // / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.7.5';
-$getID3File = $InstLoc.'/Applications/getID3-1.9.12/getid3/getid3.php';
+$hrstreamerAppVersion = 'v0.7.6';
+$getID3File = $InstLoc.'/Applications/getid3/getid3/getid3.php';
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
