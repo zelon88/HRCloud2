@@ -71,7 +71,7 @@ duties.
 -sudo apt-get install imagemagick
 -sudo apt-get install ffmpeg
 -sudo apt-get install id3
--sudo apt-get install tesseract
+-sudo apt-get install tesseract-ocr
 -sudo apt-get install meshlab
 --------------------------------------------------
 
