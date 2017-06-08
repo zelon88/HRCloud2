@@ -87,7 +87,6 @@ if (!isset($UserIDRAW)) {
 // / The followind code hashes the user ID and sets the directory structure for the session.
 $ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$AdminID = 1;
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $LogInc = 0;
@@ -290,10 +289,37 @@ while (file_exists($ClamLogDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code reads the Admin configuration settings and sets temporary variables.
+$AdminIDRAW = 1;
+$AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
+$adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
+$AdminConfig = $adminAppDataInstDir.'/.config.php';
+if (!file_exists($AdminConfig)) { 
+  chmod($AdminConfig, 0755); 
+  chown($AdminConfig, 'www-data'); }
+include ($AdminConfig);
+$AV = $VirusScan;
+$HP = $HighPerformanceAV;
+$TH = $ThoroughAV; 
+$PS = $PersistentAV;
+if (!file_exists($AdminConfig)) { 
+  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the admin config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die ('ERROR!!! HRC2CommonCore151, There was a problem creating the admin config file on '.$Time.'!'); }
+if (file_exists($AdminConfig)) {
+  include ($AdminConfig); }
+$AdminIDRAW = null;
+$AdminID = null;
+$adminAppDataInstDir = null;
+$AdminConfig = null;  
+unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
-  @chmod($UserConfig, 0755); 
-  @chown($UserConfig, 'www-data'); } 
+  chmod($UserConfig, 0755); 
+  chown($UserConfig, 'www-data'); } 
 if (!file_exists($UserConfig)) { 
   copy($LogInstallDir.'.config.php', $UserConfig); }
 if (!file_exists($UserConfig)) { 
@@ -302,6 +328,14 @@ if (!file_exists($UserConfig)) {
   die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
 if (file_exists($UserConfig)) {
   include ($UserConfig); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code re-sets some variables for security. Just-in-case the UserConfig is compromised.
+$VirusScan = $AV;
+$HighPerformanceAV = $HP;
+$ThoroughAV = $TH;
+$PersistentAV = $PS;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -379,5 +413,4 @@ if ($ColorScheme == '4') {
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); }
 // / -----------------------------------------------------------------------------------
-
 ?>
