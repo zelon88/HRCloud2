@@ -101,3 +101,6 @@ Think HRCloud2 is neat? Support us on Flattr!
 **[Official (hosted in-house) Download Mirror!](https://honestrepair.net/HRProprietary/Distros/HRCloud2-master.zip)**
 
 <3 Open-Source.
+
+[HRCloud2](http://hrcloud2.com)
+by [HonestRepair](https://www.HonestRepair.net)
