@@ -39,6 +39,8 @@ duties.
 -----STEP 3 - INSTALL PHP7.0 & PLUGINS-----
 -sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
 -sudo apt-get install php-all-dev
+-sudo apt-get install php7.0-zip
+-sudo apt-get install php7.0-gd
 -sudo apt-get install php-curl
 **EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.0/apache2/php.ini"**
 -sudo leafpad /etc/php/7.0/apache2/php.ini
@@ -52,6 +54,7 @@ duties.
   -post_max_size = 3000M
   -upload_max_filesize = 3000M
   -max_file_uploads = 100
+  -zlib.output_compression = On
 **SAVE THE MODIFIED "php.ini" FILE AND EXIT LEAFPAD**
 -sudo service apache2 restart
 --------------------------------------------------
