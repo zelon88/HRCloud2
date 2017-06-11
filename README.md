@@ -95,7 +95,7 @@ Check out the official [Wiki](https://github.com/zelon88/HRCloud2/wiki).
 
 [![HRCloud2](https://www.openhub.net/p/HRCloud2/widgets/project_partner_badge?format=gif&ref=samplg)](https://www.openhub.net/p/HRCloud2)
 
-Think HRCloud2 is neat? Support us on Flattr!
+Think our project is neat? Support us on Flattr!
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=zelon88&url=https://github.com/zelon88/HRCloud2&title=HRCloud2&language=&tags=github&category=software)  
 
 **[Official (hosted in-house) Download Mirror!](https://honestrepair.net/HRProprietary/Distros/HRCloud2-master.zip)**
