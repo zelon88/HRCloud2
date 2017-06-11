@@ -60,7 +60,7 @@ $appCounter = 0;
       echo '<button id="showInstallAppButton" name="showInstallAppButton" class="button" alt="Install App" title="Install App" style="display:block; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');">+</button>';
       echo '<img id="XshowInstallAppButton" name="XshowInstallAppButton" style="margin-right:5px; display:none; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');" src="Resources/x.png" alt="Close \'Install App\'" title="Close \'Install App\'"></p>'; 
       echo '<div id="installAppForm" name="installAppForm" style="display:none;"><form method="post" action="appIndex.php" enctype="multipart/form-data"><input type="file" id="appToUpload" name="appToUpload[]" class="uploadbox" multiple>';
-      echo '<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"><input type="submit" id="installApplication" name="installApplication" class="button" value="install App"></form></div>'; }
+      echo '<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"><input type="submit" id="installApplication" name="installApplication" class="button" value="Install App"></form></div>'; }
     if ($UserIDRAW !== 1) { 
       echo '</p>'; } ?>
 </div>
