@@ -4,8 +4,6 @@
 // / file, authenticate user storage, and define variables for the session.
 // / -----------------------------------------------------------------------------------
 
-ob_start("ob_gzhandler");
-
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
