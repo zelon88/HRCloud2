@@ -24,6 +24,8 @@ Malware Hanictor.23	USPS_glen.fendale.doc
 Malware Hanictor.24	BND7B8.tmp
 Malware Hanictor.25	WEXInc_
 Malware Hanictor.26	borjomi/gate.php
+Malware Hanictor.27	Billing_ruinedsunglass.doc		0cf705e4804f3585e44368e8d611ddb9376863ff8c4400d156d043f6b181924e
+Malware Hanictor.28	BNE9F0.tmp		dc8aa91015f1f67639b13489bd556e425aacc308d902ddf7585adf856c3aa7b2
 Malware Bunitu.1			81549d2ea47649a750bd4fc6e7be0b971c3fc6711a31af2f77ba437218ff63d1
 Malware Bunitu.2			b27b370597fc8155f518dbc07f188c30ebc8e1d210f181acaf36ddb20714d64e
 Malware Bunitu.3			43be87120cbd555dc926becbe92fd7a0b2a43d1dd0418b3184d59c676c81eaf6
@@ -319,6 +321,24 @@ Malware SuperMulti	masm32
 Malware SuperMulti.1	Gate.php
 Malware SuperMulti.2	gate.php
 Malware SuperMulti.3	DllTest.exe
+Malware Jaff	img_9117.pdf		23b8ff79b843ec1b7b963bd7bff5d30161bf805bb2b8904c336d2da3dcf41dcb
+Malware Jaff.1	img_5426.pdf		6faa78da1d6d8028d61ea96e16089893e3ba93e4dc357d552edd58df0bcfe2cd
+Malware Jaff.2	IMG_8010.pdf		9580f0eb3807e78ec876fb1b439a3455113d5e66d2d3470bf0eca06748fc9ee1
+Malware Jaff.3	IMG_6943.pdf		eb3cee41ccabe1449d99d36c255dc9d6162fe5931f32a9f73464be67df8b80cb
+Malware Jaff.4	T9PIQ.doc		018c0c2a56bcc94364aed07341e529c45f52c1e011b84fe5603a10d3f59e6f85
+Malware Jaff.5	U2MH1.doc		3084e31a061f6adf56486e959450166671072c5503e35703a70f8f40424d7188
+Malware Jaff.6	GWM2CKV.doc		a9eeb194ea0cfa3fb46a651b328e56fdd4428a13c893a4066a75bf407a14ab65
+Malware Jaff.7	XXZSTFDB.doc		df85f57b904273a5f14ee5f7f3aabdcb1f3c882f30e05caa05dc76c138f878e2
+Malware Jaff.8	bruhadson8.exe		077b498d9cc163e1ff5547e1abd625b8655f0339cb5e79d64c2ded17abb9e425
+Malware Jaff.9	4163.pdf		0237ae2520a441751b224d56aa776ba3758d07073b5164c5174ea2e4990f8462
+Malware Jaff.10	2317.pdf		0d33a0f086710c812794dc20c6057d422c74c582b6bb737b3c3ade0fd369c801
+Malware Jaff.11	4022.pdf		454d5ec8cac7915ab1b02852007d28a65a5076fbc28e5b6ffbb6bca290596a9e
+Malware Jaff.12	74332.pdf		4f332611fe30a155fcd73aff87135035436196acbb8ccf219efdc8a3c3b7ae14
+Malware Jaff.13	U9P2HY9.doc		549acec1f738a40d4097ba096ff2827bc76481b3f4dd73ef0fab437eb476be29
+Malware Jaff.14	NCVH2PL.doc		8abb70a36f99ee613f65535aeaaf28a3d0e79df7129110f4f9ef50833f664354
+Malware Jaff.15	WXEVIR.doc		9383ade91f05af3f350831ac76ba218e42fc033964753e6db71c0fded5b0b832
+Malware Jaff.16	W2X2PEW.doc		c47090ad7c20f9cafee4e162985f6a2d8b60c4e3b3327d532e70a167b8a1a9e8
+Malware Jaff.17	bruhadson8.exe		2cc1d8edc318e0e09aad6afbc48999980f8e39e54734bca4c1a95c7b5db39569
 Exploit CVE-2016-7200	188.165.163.226
 Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
