@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.5';
+$TeamsAppVersion = 'v0.8.6';
 $securityCore = '/var/www/html/HRProprietary/HRCloud2/securityCore.php';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
