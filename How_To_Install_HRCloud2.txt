@@ -19,8 +19,8 @@ a LAMP stack installed on your local machine DO NOT install this software.
 This software was designed to be run on a dedicated server setup for NAS
 duties.
 
-In the abscence of required dependencies, HRCloud2 will still make every 
-attempt to complete a user-suppied operation, and report errors as-needed. 
+In the abscence of required dependencies, HRCloud2 will make every attempt 
+to complete a user-suppied operation, and report errors as-needed. 
 Administrators are responsible for monitoring and maintaining the dependencies 
 of their servers.
 --------------------------------------------------
