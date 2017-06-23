@@ -149,8 +149,8 @@ these things, follow the additional steps below.
 -HRCloud2 will create and maintain complete segregation of user Cloud files during operation, and will not impose restrictions on user uploads
   (however PHP will, so verify that your php.ini file is set correctly!!!).
 -You and your users should now be able to access your server via any standard web browser by entering the IPv4 from your 
-ISP into the address bar. Alternatively you can purchase a domain name and point it at the IPv4 instead to obtain a ".com" 
-(or similar) address for your new Cloud.
+  ISP into the address bar. Alternatively you can purchase a domain name and point it at the IPv4 instead to obtain a ".com" 
+  (or similar) address for your new Cloud.
 --------------------------------------------------
 
 If you have any problems with HRCloud2 please create an issue on http://github.com/zelon88/HRCloud2
