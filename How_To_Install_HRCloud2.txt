@@ -20,7 +20,7 @@ This software was designed to be run on a dedicated server setup for NAS
 duties.
 
 In the abscence of required dependencies, HRCloud2 will make every attempt 
-to complete a user-suppied operation, and report errors as-needed. 
+to complete a user-suppied operation, and report errors every step of the way. 
 Administrators are responsible for monitoring and maintaining the dependencies 
 of their servers.
 --------------------------------------------------
