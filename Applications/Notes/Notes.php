@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.7 (5-13-2017 11:30)
+App Version: 1.8 (6-24-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -40,6 +40,7 @@ else {
 // / The following code ensures the Notes directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $NotesDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Notes/';
+$NotesDir2 = $CloudUsrDir.'/.AppData/Notes/';
 $noteData = '';
 $noteTitle = 'New Note...';
 $noteButtonEcho = 'Create Note';
@@ -75,6 +76,7 @@ if (isset($_GET['deleteNote'])) {
   $noteToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
   $noteToDelete = $noteToDelete;
   unlink($NotesDir.$noteToDelete.'.txt'); 
+  unlink($NotesDir2.$noteToDelete.'.txt');
   $txt = ('OP-Act: Deleting Note '.$noteToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$noteToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
