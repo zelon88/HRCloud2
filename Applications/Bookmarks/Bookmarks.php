@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Bookmarks	
-App Version: 1.2 (5-13-2017 11:30)
+App Version: 1.3 (6-24-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for saving your favorite URL's.
@@ -39,6 +39,7 @@ else {
 // / The following code ensures the Bookmarks directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $BookmarksDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Bookmarks/';
+$BookmarksDir2 = $CloudUsrDir.'/.AppData/Bookmarks/';
 $bookmarkData = '';
 $bookmarkTitle = 'New Bookmark...';
 $bookmarkButtonEcho = 'Create Bookmark';
@@ -73,6 +74,7 @@ if (isset($_GET['deleteBookmark'])) {
   $bookmarkToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteBookmark']);
   $bookmarkToDelete = $bookmarkToDelete;
   unlink($BookmarksDir.$bookmarkToDelete.'.txt'); 
+  unlink($BookmarksDir2.$bookmarkToDelete.'.txt');
   $txt = ('OP-Act: Deleting Bookmark '.$bookmarkToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$bookmarkToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
