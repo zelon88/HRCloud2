@@ -587,7 +587,7 @@ if (isset( $_POST['convertSelected'])) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $allowed =  array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 
+    $allowed =  array('svg', 'dxf', 'vdx', 'fig', '3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 
       'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
       'avi', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'odp');
     $file1 = str_replace('//', '/', $CloudUsrDir.$file);
@@ -614,6 +614,7 @@ if (isset( $_POST['convertSelected'])) {
     $docarray =  array('txt', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'odp', 'odf');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
+    $drawingarray = array('xvg', 'dxf', 'vdx', 'fig');
     $pdfarray = array('pdf');
     $abwarray = array('abw');
     $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd',);
@@ -693,6 +694,11 @@ if (isset( $_POST['convertSelected'])) {
             $txt = ("OP-Act, Executing \"meshlabserver -i $pathname -o $newPathname\" on ".$Time.'.');
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
             shell_exec("meshlabserver -i $pathname -o $newPathname"); } 
+          // / Code to convert and manipulate drawing files.
+          if (in_array($oldExtension, $drawingarray)) { 
+            $txt = ("OP-Act, Executing \"meshlabserver -i $pathname -o $newPathname\" on ".$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+            shell_exec("dia $pathname -e $newPathname"); } 
           // / Code to convert and manipulate audio, video, and multi-media files.
           if (in_array($oldExtension, $audioarray)) { 
             $ext = (' -f ' . $extension);
