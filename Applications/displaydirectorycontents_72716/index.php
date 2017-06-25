@@ -22,6 +22,7 @@ $DearchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vh
 $DocumentArray = array('txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'odf', 'ods', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppa', 'odp');
 $ImageArray = array('jpeg', 'jpg', 'png', 'bmp', 'gif', 'pdf');
 $MediaArray = array('3gp', 'avi', 'mp3', 'mp4', 'mov', 'aac', 'oog', 'wma', 'mp2', 'flac');
+$DrawingArray = array('svg', 'dxf', 'vdx', 'fig');
 // / Set all secondary array data.
 $archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
 $pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'pptx', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppa', 'odp', 'xps');
@@ -185,7 +186,7 @@ Are you sure?
   <option value="odp">Odp</option>
     <option value="zip">--3D Model Formats--</option>
   <option value="3ds">3ds</option>
-  <option value="collata">Collada</option>
+  <option value="collada">Collada</option>
   <option value="obj">Obj</option>
   <option value="off">Off</option>
   <option value="ply">Ply</option>
@@ -194,6 +195,11 @@ Are you sure?
   <option value="dxf">Dxf</option>
   <option value="u3d">U3d</option>
   <option value="vrml">Vrml</option>
+    <option value="zip">--Drawing Formats--</option>
+  <option value="svg">Svg</option>
+  <option value="dxf">Dxf</option>
+  <option value="vdx">Vdx</option>
+  <option value="fig">Fig</option>
 </select>
 <input type="submit" id="convertSubmit" name="convertSubmit" value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
