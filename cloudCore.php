@@ -696,7 +696,7 @@ if (isset( $_POST['convertSelected'])) {
             shell_exec("meshlabserver -i $pathname -o $newPathname"); } 
           // / Code to convert and manipulate drawing files.
           if (in_array($oldExtension, $drawingarray)) { 
-            $txt = ("OP-Act, Executing \"meshlabserver -i $pathname -o $newPathname\" on ".$Time.'.');
+            $txt = ("OP-Act, Executing \"dia $pathname -e $newPathname\" on ".$Time.'.');
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
             shell_exec("dia $pathname -e $newPathname"); } 
           // / Code to convert and manipulate audio, video, and multi-media files.
@@ -1098,6 +1098,8 @@ if (isset($_POST['streamSelected'])) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to unshare.
   if (isset($_POST['unshareConfirm'])) {
+    $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
+    $CloudShareDir2 = $CloudDir.'/.AppData/Shared';
     $txt = ('OP-Act: Initiated UnShare on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $_POST['unshareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']);
@@ -1107,10 +1109,11 @@ if (isset($_POST['streamSelected'])) {
     foreach ($_POST['filesToUnShare'] as $FTS) {
       $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
       @unlink($CloudShareDir.'/'.$FTS);
-      if (!file_exists($CloudShareDir.'/'.$FTS)) {
+      @unlink($CloudShareDir2.'/'.$FTS);
+      if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
         $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-      if (file_exists($CloudShareDir.'/'.$FTS)) {
+      if (file_exists($CloudShareDir.'/'.$FTS) or file_exists($CloudShareDir2.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } }
 // / -----------------------------------------------------------------------------------
