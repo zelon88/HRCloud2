@@ -216,7 +216,6 @@ Are you sure?
 <input type="submit" id='convertPhotoSubmit' name='convertPhotoSubmit' value='Convert Files' onclick="toggle_visibility('loadingCommandDiv');">
 </div>
 <div align="center"><img src='Resources/logosmall.gif' id='loadingCommandDiv' name='loadingCommandDiv' style="display:none; max-width:64px; max-height:64px;"/></div>
-</div>
 <div align="center" id='PDFOptionsDiv' name='PDFOptionsDiv' style="display:none;">
 <p><a id='makePDFbutton' name='makePDF' value='makePDF' ></a></p> 
 <p><select id='method1' name='method1'>   
@@ -256,6 +255,7 @@ Are you sure?
   | <input type='submit' id='clipboardPaste' name='clipboardPaste' value='Paste' onclick="toggle_visibility('loadingCommandDiv');"></p>
 </div>
 <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="display:none;"><img src='Resources/logoSmall.gif' style="max-width:64px; max-height:64px;"/></div>
+</div>  
   <table class="sortable">
     <thead>
     <tr>
