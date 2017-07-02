@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 1.9 (6-24-2017 11:30)
+App Version: 2 (7-2-2017 11:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -91,8 +91,8 @@ if (isset($_GET['deleteContact'])) {
   $ContactToDelete = str_replace(' ', '_', $ContactToDelete);
   if (file_exists($ContactsDir.$contactToDelete.'.php')) {
     @unlink($ContactsDir.$contactToDelete.'.php'); }
-  if (file_exists($ContactsDir2.$contactToDelete)) {
-    @unlink($ContactsDir2.$contactToDelete); } 
+  if (file_exists($ContactsDir2.$contactToDelete.'.php')) {
+    @unlink($ContactsDir2.$contactToDelete.'.phppppppppppppppppp'); } 
   $txt = ('OP-Act: Deleting Contacts '.$contactToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$contactToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
