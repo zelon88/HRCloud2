@@ -11,7 +11,7 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
-$versions = 'PHP-AV App v2.3.7 | Virus Definition v3.9, 6/19/2017';
+$versions = 'PHP-AV App v2.3.7 | Virus Definition v4.0, 7/11/2017';
 ?>
 <script type="text/javascript">
     function Clear() {    

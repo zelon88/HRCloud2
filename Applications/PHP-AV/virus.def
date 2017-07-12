@@ -26,6 +26,14 @@ Malware Hanictor.25	WEXInc_
 Malware Hanictor.26	borjomi/gate.php
 Malware Hanictor.27	Billing_ruinedsunglass.doc		0cf705e4804f3585e44368e8d611ddb9376863ff8c4400d156d043f6b181924e
 Malware Hanictor.28	BNE9F0.tmp		dc8aa91015f1f67639b13489bd556e425aacc308d902ddf7585adf856c3aa7b2
+Malware Hanictor.29	Document_yahoo.doc		f0420708c417376a52121f0a83c25a8b2051fffa5b3365205c34ac56e3d0065d
+Malware Hanictor.30	BN778F.tmp		b74663fcbfa7570f86f42f7a2211ad6b2a5c4bc425a913d8733a7f2704ca7014
+Malware Hanictor.31	eFax_aol.doc		fba0c13176f30040d6c78bb426ddaa5dd01afc45abb9b0ada8807f408167ca97
+Malware Hanictor.32	BNA208.tmp		d4325516998b202ee4e21e97121afd9cdc72793df052bad15cd44bfdab7e3d67
+Malware IPTU	Iptu-_-2017.zip		fd345c6cc9bbb17c8852f6fcdf9e9561d2d676c21abc1e4aec51b3d1c5a337e5
+Malware IPTU.2	Iptu-_-2017.exe		bb38ee84fa3be8a1690e1a16420d0580abc3704b987065ec14e601c22e62c4f4
+Malware IPTU.3	63466336034690346.etwe		b4b6210013bd25880e31f5300cc51f2e99c2e7cfb5b13438d419b35fd744a888
+Malware IPTU.4	NGtoolzXamp0.exe		d4cbf49c16febf85c3e5ef7b8d496f0be15989bbf8e54e1e25c4335d2e95ad9b
 Malware Bunitu.1			81549d2ea47649a750bd4fc6e7be0b971c3fc6711a31af2f77ba437218ff63d1
 Malware Bunitu.2			b27b370597fc8155f518dbc07f188c30ebc8e1d210f181acaf36ddb20714d64e
 Malware Bunitu.3			43be87120cbd555dc926becbe92fd7a0b2a43d1dd0418b3184d59c676c81eaf6
@@ -344,6 +352,11 @@ Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
 Exploit CVE-2016-7200.2.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
+Trojan	Loki		2bebe4a5acb9940a295a167aff62e81e9c11b55051450e1f8e979ff63d964071
+Trojan	Loki.2		326030d71dfb77f98d37eea3498d7dadd76c5ab59bd5fe279298c184ac3e08fa
+Trojan	Loki.3		121118a0f5e0e8c933efd28c9901e54e42792619a8a3a6d11e1f0025a7324bc2
+Trojan	RoughTed		9fc5fb99f72be24ec7d1e2004f1c1f2083885059e0e072314cb712934415bc24
+Trojan	RoughTed.2		0434a5b69bea3a10443c0740bca4f36772cf67130c6b7da5b1b16494b3e12377
 Trojan	W32.Adware.Gen!c	471f0993ccf1c5cb3c715740141b6d49	2d02ddb75f42e67f76da4df375834c7e79a62a5828875870d23b236a1d7ae19c
 Trojan	chaqiriq.doc	c9d2eac2c5c415f94ad599d1327f1e8f	e1e5bdecaa621a45c97fc732917c1c36bfd8d83158c88a3f444536c3e2bd389b
 Trojan	Zeuss Panda		6dc0bd77e51eb9af143c749539bd638020d557083479bcd4c4b9639fe61eb0f8
