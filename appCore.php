@@ -25,7 +25,7 @@ $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'HRAI', 'HRConvert2', 'HRScan2', 'HRAIMiniGui.php',
   'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress_3-16-17.zip', 'wordpress_3-16-17.zip');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip');
 $installedApps = array_diff($Apps, $defaultApps);
 if (isset($_POST['uninstallApplication'])) { 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
@@ -33,7 +33,7 @@ $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code will be performed when an administrator selects to install an HRCloud2 App..
+// / The following code will be performed when an administrator selects to install an HRCloud2 App.
 if (isset($_POST['installApplication'])) {
   // / Perform security check (UserID).
   if ($UserIDRAW !== 1) { 
