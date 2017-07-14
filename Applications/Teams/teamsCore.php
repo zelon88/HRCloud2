@@ -36,7 +36,7 @@ else {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
-$TeamsAppVersion = 'v0.8.6';
+$TeamsAppVersion = 'v0.8.7';
 $securityCore = '/var/www/html/HRProprietary/HRCloud2/securityCore.php';
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $TeamsDir = str_replace('//', '/', $CloudLoc.'/Apps/Teams');
@@ -589,17 +589,12 @@ function getMyTeams($myTeamsList) {
 function getMyTeamsQuietly($myTeamsList) {
   global $defaultDirs, $TeamsDir;
   $myTeamArr = array();
-  $MYTCounter = 0;
-  foreach ($myTeamsList as $myTeam) {
+  foreach ($myTeamsList as $myTeam) { 
     if ($myTeam == '.' or $myTeam == '..' or $myTeam == '' or $myTeam == '/' or $myTeam == '//' or in_array($myTeam, $defaultDirs)) continue; 
     $myTeamArr = array_push($myTeamArr, $myTeam);
     $myTeamFile = $TeamsDir.'/'.$myTeam.'/'.$myTeam.'.php';
     include($myTeamFile);
-    $myTeamArr[$MYTCounter]['id'] = $myTeam;
-    $myTeamArr[$MYTCounter]['name'] = $TEAM_NAME; }
-    $myTeamArr[$MYTCounter]['description'] = $TEAM_DESCRIPTION;
-    $MYTCounter++;
-  return($myTeamArr); } 
+  return($myTeamArr); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
