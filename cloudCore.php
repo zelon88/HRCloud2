@@ -1183,15 +1183,17 @@ if (isset($_POST['clipboardCopy'])) {
             echo nl2br($txt."\n"); } }
         if (is_dir($CloudDir.'/'.$clipboardSelected1)) {
         } } } }
-// / -----------------------------------------------------------------------------------
-// / Here is the fix for symlink date. --theo546 (source: http://stackoverflow.com/questions/34512105/php-check-how-old-a-symlink-file-is)
-function symlinkmtime($symlinkPath)
-{
-    $stat = lstat($symlinkPath);
-    return isset($stat['mtime']) ? $stat['mtime'] : null;
-}
+
 // / -----------------------------------------------------------------------------------
 // / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
+// / --- Code by theo546 ---
+  // / Here is the fix for symlink date. --theo546 (source: http://stackoverflow.com/questions/34512105/php-check-how-old-a-symlink-file-is)
+  function symlinkmtime($symlinkPath)
+  {
+      $stat = lstat($symlinkPath);
+      return isset($stat['mtime']) ? $stat['mtime'] : null;
+    }
+// / ---
 if (file_exists($CloudTempDir)) {
   $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -1223,7 +1225,6 @@ if ($bytes > 0) {
   $units = array('B', 'KB', 'MB', 'GB');
   if (array_key_exists($unit, $units) === true) { 
     $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }
-$DisplayFileCon = scandir($CloudLoc.'/'.$UserID.$UserDirPOST);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1232,67 +1233,66 @@ if (isset($_POST['search'])) {
   $txt = ('OP-Act: '."User initiated Cloud Search on $Time".'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); ?>
   <div align="center"><h3>Search Results</h3></div>
-<hr />
-<?php
-$SearchRAW = $_POST['search'];
-$txt = ('OP-Act: Raw user input is "'.$SearchRAW.'" on '.$Time.'.');
-$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-$searchRAW = str_replace(str_split('\\/[]{};:!$#&@>*<'), '', $searchRAW);
-$txt = ('OP-Act: Sanitized user input is "'.$SearchRAW.'" on '.$Time.'.');
-$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-$SearchLower = strtolower($SearchRAW);
-if ($SearchRAW == '') {
-  ?><div align="center"><?php echo nl2br('Please enter a search keyword.'."\n".'<a href="#" onclick="goBack();">&#8592; Go Back</a>'); ?><hr /></div> <?php die(); }
-$PendingResCount1 = '0';
-$PendingResCount2 = '0';
-$ResultFiles = scandir($CloudUsrDir);
-if (isset($SearchRAW)) {       
-  foreach ($ResultFiles as $ResultFile0) {
-    if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html') continue;
-      $ResultFile = $CloudUsrDir.$ResultFile0;    
-      $ResultTmpFile = $CloudTmpDir.$ResultFile0;
-      $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
-      $F2 = pathinfo($ResultFile, PATHINFO_BASENAME);
-      $F3 = $CloudTmpDir.$F2;
-      $F4 = pathinfo($ResultFile, PATHINFO_FILENAME);
-      $F5 = pathinfo($ResultFile, PATHINFO_EXTENSION);
-      $txt = ('OP-Act: '."Submitted $ResultFile to $CloudTmpDir on $Time".'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      $PendingResCount1++; 
-      $ResultRAW = $ResultFile0;
-      $Result = strtolower($ResultRAW);
-      if (!preg_match("/$SearchLower/", $Result)) continue; 
-      if (preg_match("/$SearchLower/", $Result)) { 
-        $PendingResCount2++; 
-          if (is_dir($ResultFile)) {
-            @mkdir($F3, 0755);
-            foreach ($iterator = new \RecursiveIteratorIterator(
-              new \RecursiveDirectoryIterator($ResultFile, \RecursiveDirectoryIterator::SKIP_DOTS),
-              \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-              if ($item->isDir()) {
-                @mkdir($F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); }   
-              else {
-                @copy($item, $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } 
-        $ResultURL = 'cloudCore.php?UserDirPOST='.$ResultFile0 ; }
-      if (!is_dir($ResultFile)) {  
+  <hr />
+  <?php
+  $SearchRAW = $_POST['search'];
+  $txt = ('OP-Act: Raw user input is "'.$SearchRAW.'" on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  $searchRAW = str_replace(str_split('\\/[]{};:!$#&@>*<'), '', $searchRAW);
+  $txt = ('OP-Act: Sanitized user input is "'.$SearchRAW.'" on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  $SearchLower = strtolower($SearchRAW);
+  if ($SearchRAW == '') {
+    ?><div align="center"><?php echo nl2br('Please enter a search keyword.'."\n".'<a href="#" onclick="goBack();">&#8592; Go Back</a>'); ?><hr /></div> <?php die(); }
+  $PendingResCount1 = '0';
+  $PendingResCount2 = '0';
+  $ResultFiles = scandir($CloudUsrDir);
+  if (isset($SearchRAW)) {       
+    foreach ($ResultFiles as $ResultFile0) {
+      if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html') continue;
+        $ResultFile = $CloudUsrDir.$ResultFile0;    
+        $ResultTmpFile = $CloudTmpDir.$ResultFile0;
+        $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
+        $F2 = pathinfo($ResultFile, PATHINFO_BASENAME);
+        $F3 = $CloudTmpDir.$F2;
+        $F4 = pathinfo($ResultFile, PATHINFO_FILENAME);
+        $F5 = pathinfo($ResultFile, PATHINFO_EXTENSION);
+        $txt = ('OP-Act: '."Submitted $ResultFile to $CloudTmpDir on $Time".'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        $PendingResCount1++; 
+        $ResultRAW = $ResultFile0;
+        $Result = strtolower($ResultRAW);
+        if (!preg_match("/$SearchLower/", $Result)) continue; 
+        if (preg_match("/$SearchLower/", $Result)) { 
+          $PendingResCount2++; 
+            if (is_dir($ResultFile)) {
+              @mkdir($F3, 0755);
+              foreach ($iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($ResultFile, \RecursiveDirectoryIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+                if ($item->isDir()) {
+                  @mkdir($F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); }   
+                else {
+                  @copy($item, $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } 
+          $ResultURL = 'cloudCore.php?UserDirPOST='.$ResultFile0 ; }
+        if (!is_dir($ResultFile)) {  
           @copy($ResultFile, $ResultTmpFile); } 
           ?><a href='<?php echo ($ResultURL); ?>'><?php echo nl2br($ResultFile0."\n"); ?></a>
           <hr /><?php } } 
-echo nl2br('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); 
-$txt = ('OP-ACT, Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.');
-$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } ?>
-<br>
-<div align="center"><a href="#" onclick="goBack();">&#8592; Go Back</a></div>
-<hr />
-
+  echo nl2br('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); 
+  $txt = ('OP-ACT, Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } ?>
+  <br>
+  <div align="center"><a href="#" onclick="goBack();">&#8592; Go Back</a></div>
+  <hr />
 <?php }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code handles which UI will be displayed for the selected operation.
 if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
-include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
-die(); } 
+  include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
+  die(); } 
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); 
 // / -----------------------------------------------------------------------------------
 ?>

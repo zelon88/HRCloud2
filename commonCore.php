@@ -154,9 +154,9 @@ $CloudUsrDir = str_replace('//', '/', $CloudUsrDir);
 // / The following code creates required HRCloud2 files if they do not exist. Also installs user 
 // / specific files and new index files as needed.
 if (!is_dir($CloudLoc)) {
-  echo ('ERROR!!! HRC2CommonCore59, There was an error verifying the CloudLoc as a valid directory. 
+  $txt = ('ERROR!!! HRC2CommonCore59, There was an error verifying the CloudLoc as a valid directory. 
     Please check the config.php file and refresh the page.');
-  die(); }
+  die($txt); }
 if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
   @mkdir($CloudDir, 0755); }
 // / -----
@@ -296,17 +296,17 @@ $AdminConfig = $adminAppDataInstDir.'/.config.php';
 if (!file_exists($AdminConfig)) { 
   chmod($AdminConfig, 0755); 
   chown($AdminConfig, 'www-data'); }
-include ($AdminConfig);
+if (!file_exists($AdminConfig)) { 
+  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the admin config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die ($txt); }
+if (file_exists($AdminConfig)) {
+  include ($AdminConfig); }
 $AV = $VirusScan;
 $HP = $HighPerformanceAV;
 $TH = $ThoroughAV; 
 $PS = $PersistentAV;
-if (!file_exists($AdminConfig)) { 
-  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the admin config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die ('ERROR!!! HRC2CommonCore151, There was a problem creating the admin config file on '.$Time.'!'); }
-if (file_exists($AdminConfig)) {
-  include ($AdminConfig); }
+include ($AdminConfig);
 $AdminIDRAW = null;
 $AdminID = null;
 $adminAppDataInstDir = null;
@@ -324,7 +324,7 @@ if (!file_exists($UserConfig)) {
 if (!file_exists($UserConfig)) { 
   $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); }
+  die ($txt); }
 if (file_exists($UserConfig)) {
   include ($UserConfig); }
 // / -----------------------------------------------------------------------------------
