@@ -23,7 +23,6 @@
   $myTeamCounter = count($myTeams);
   $myTeamCounter1 = 0;
   $lastMyTeam = 0;
-  print_r($myTeams);
   echo ('<a href=\'?showTeams=1\'><strong>My Teams</strong></a>');
   foreach ($myTeams as $myTeam) { 
     if ($myTeamCounter1 >= $myTeamCounter or $myTeamCounter == 0 or in_array($myTeam, $defaultDirs)) continue;
@@ -36,4 +35,4 @@
     $lastMyTeam = $myTeam; }
   if ($myTeamCounter == 0 or $myTeamCounter1 == 0) {
     echo ('<a href=\'?joinTeam=view\'>Nothing to show!</a>'); } 
-  echo('</div>'); 
+  echo('</div>');  
