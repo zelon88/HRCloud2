@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.3.7 (5-1-2017 01:00)
+App Version: 2.3.8 (7-19-2017 08:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -27,7 +27,7 @@ $versions = 'PHP-AV App v2.3.7 | Virus Definition v4.0, 7/11/2017';
     </script>
 <div align="center"><h3>PHP-AV</h3><hr /></div>
 <?php
-// PHP ANTI-VIRUS v2.3.7
+// PHP ANTI-VIRUS v2.3.8
 // Written by FujitsuBoy (aka Keyboard Artist)
 // Modified by zelon88
 
@@ -115,34 +115,35 @@ function virus_check($file, $defs, $debug, $defData) {
   // Hashes and checks files/folders for viruses against static virus defs.
   global $filecount, $infected, $report, $CONFIG;
 	$filecount++;
-	if ($file !== 'virus.def') 
-	  $data = file($file);
-	  $data = implode('\r\n', $data);
-	  $data1 = md5_file($file);
-	  $data2 = hash_file('sha256', $file);
-	  if ($defData !== $data2) {
-	    $clean = 1;
-	    foreach ($defs as $virus) {
-		  if ($virus[1] !== '') {
-		    if (strpos($data, $virus[1])) {
-			  // File matches virus defs.
-			  $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-			  $infected++;
-			  $clean = 0; } }
-		    if ($virus[2] !== '') {
-              if (strpos($data1, $virus[2])) {
-			  // File matches virus defs.
-			  $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-			  $infected++;
-			  $clean = 0; } }
-		  if ($virus[3] !== '') {
+	if ($file !== 'virus.def')
+	  if (file_exists($file)) { 
+	    $data = file($file);
+	    $data = implode('\r\n', $data);
+	    $data1 = md5_file($file);
+	    $data2 = hash_file('sha256', $file);
+	    if ($defData !== $data2) {
+	      $clean = 1;
+	      foreach ($defs as $virus) {
+		    if ($virus[1] !== '') {
+		      if (strpos($data, $virus[1])) {
+			    // File matches virus defs.
+			    $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			    $infected++;
+			    $clean = 0; } }
+		      if ($virus[2] !== '') {
+                if (strpos($data1, $virus[2])) {
+			    // File matches virus defs.
+			    $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			    $infected++;
+			    $clean = 0; } }
+		    if ($virus[3] !== '') {
               if (strpos($data2, $virus[3])) {
 			  // File matches virus defs.
 			  $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
 			  $infected++;
 			  $clean = 0; } } }
-	    if (($debug)&&($clean))
-		  $report .= '<p class="g">Clean: ' . $file . '</p>'; } }
+	      if (($debug)&&($clean))
+		    $report .= '<p class="g">Clean: ' . $file . '</p>'; } } }
 
 function renderhead() {
 ?>
