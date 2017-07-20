@@ -80,7 +80,7 @@ $LogFileInc2 = 0;
 @system("/bin/chown -R $user $CloudLoc");
 @system("/bin/chown -R $user $InstLoc");
 
-// / The following code purges old index.html files from the HRProprietary directory directory daily.
+// / The following code purges old index.html files from the HRProprietary directory daily.
 if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
   copy ('index.html', '/var/www/html/HRProprietary/index.html'); }
 
@@ -153,7 +153,7 @@ if (isset($_POST['scanSelected'])) {
     ?><hr /><?php } }
 
 // / The following code is used to scan the entire Cloud drive.
-if (!isset($_POST['scanSelected']) && isset($_POST['Scan'])) {
+if (isset($_POST['Scan'])) {
   // / Update anti-virus definitions from ClamAV.
   shell_exec('sudo freshclam');
   echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");

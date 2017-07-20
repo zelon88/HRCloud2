@@ -650,6 +650,10 @@ if (isset( $_POST['convertSelected'])) {
                 $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID[1].') on '.$Time.'.');
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
                 exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus); } }
+              if (!file_exists('/usr/bin/unoconv')) {
+                $txt = ('ERROR!!! HRC2654 Could not verify the document conversion engine on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+                die($txt); }
             if (count($DocEnginePID) >= 1) {
               $txt = ('OP-Act, The document conversion engine PID is '.$DocEnginePID[1]);
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);

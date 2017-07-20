@@ -5,7 +5,7 @@
    <title>HRCLoud2 | Application Settings</title>
 <?php
 // / -----------------------------------------------------------------------------------
-// / The follwoing code checks for the required core file ONLY and terminates if they are missing.
+// / The follwoing code checks for the required core filesand terminates if they are missing.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
@@ -110,7 +110,8 @@ echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code is performed whenever a user selects to
+// / The following code is performed whenever a user selects to reset their settings to the defaults set in 
+  // / the servers main config.php file.
 if (isset($_POST['LoadDefaults'])) {
   require('config.php');
   $NEWColorScheme = $ColorScheme; 
