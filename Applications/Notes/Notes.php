@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: 1.8 (6-24-2017 11:30)
+App Version: 1.9 (7-19-2017 09:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -75,8 +75,10 @@ if (isset($_GET['editNote'])) {
 if (isset($_GET['deleteNote'])) {
   $noteToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
   $noteToDelete = $noteToDelete;
-  unlink($NotesDir.$noteToDelete.'.txt'); 
-  unlink($NotesDir2.$noteToDelete.'.txt');
+  if (file_exists($NotesDir.$noteToDelete.'.txt')) {
+    @unlink($NotesDir.$noteToDelete.'.txt'); }
+  if (file_exists($NotesDir2.$NoteToDelete.'.txt')) {
+    @unlink($NotesDir2.$noteToDelete.'.txt'); }
   $txt = ('OP-Act: Deleting Note '.$noteToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$noteToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
