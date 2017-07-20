@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Bookmarks	
-App Version: 1.3 (6-24-2017 11:30)
+App Version: 1.4 (7-19-2017 09:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for saving your favorite URL's.
@@ -73,8 +73,10 @@ if (isset($_GET['editBookmark'])) {
 if (isset($_GET['deleteBookmark'])) {
   $bookmarkToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteBookmark']);
   $bookmarkToDelete = $bookmarkToDelete;
-  unlink($BookmarksDir.$bookmarkToDelete.'.txt'); 
-  unlink($BookmarksDir2.$bookmarkToDelete.'.txt');
+  if (file_exists($BookmarksDir.$bookmarkToDelete.'.txt')) {
+    @unlink($BookmarksDir.$bookmarkToDelete.'.txt'); }
+  if (file_exists($BookmarksDir2.$bookmarkToDelete.'.txt')) {
+    @unlink($BookmarksDir2.$bookmarkToDelete.'.txt'); }
   $txt = ('OP-Act: Deleting Bookmark '.$bookmarkToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$bookmarkToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
