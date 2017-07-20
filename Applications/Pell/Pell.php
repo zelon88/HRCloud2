@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v1 (6-19-2017 01:00)
+App Version: v1.1 (6-19-2017 01:00)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -12,6 +12,7 @@ HRCLOUD2-PLUGIN-END
 //*/
 
 // / The following code loads required HRCloud2 corefiles and resources.
+$noStyles = 1;
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2PellApp33, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
@@ -101,7 +102,6 @@ foreach ($pellFiles as $file) {
 ?>
 </table>
 </div>
-<hr />
 <div class="content">
   <div id="pell" class="pell"></div>
   <div style="margin-top:20px;">
@@ -113,19 +113,19 @@ foreach ($pellFiles as $file) {
       <pre id="html-output"></pre>
     </div>
 </div>
-<script src="dist/pell.js"></script>
 <script src="dist/HRC2.js"></script>
-<script>
-function toggle_visibility(id) {
+ <script src="dist/pell.js"></script>
+ <script>
+ function toggle_visibility(id) {
   var e = document.getElementById(id);
   if(e.style.display == 'block')
     e.style.display = 'none';
     else
       e.style.display = 'block'; }
+
       function ensureHTTP (str) {
         return /^https?:\/\//.test(str) && str || `http://${str}`
       }
-
       var editor = window.pell.init({
         element: document.getElementById('pell'),
         styleWithCSS: false,
