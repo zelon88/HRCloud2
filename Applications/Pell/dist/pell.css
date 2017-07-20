@@ -2,7 +2,8 @@
   border-radius: 5px;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   box-sizing: border-box;
-  width: 100%; }
+  width: 100%;
+  height: 50%; }
 
 .pell-content {
   box-sizing: border-box;

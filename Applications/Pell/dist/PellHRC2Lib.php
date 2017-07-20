@@ -1,7 +1,6 @@
 <?php
 
 // / The following code sanitizes all POST inputs used by Pell for HRCloud2.
-$_POST['htmlOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_POST['htmlOutput']);
 $_POST['filename'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_POST['filename']);
 $_POST['filename'] = str_replace(' ', '_', $_POST['filename']);
 $_POST['extension'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_POST['extension']);
