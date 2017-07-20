@@ -63,7 +63,13 @@ $PCIDATA = file_get_contents($pciCacheFile);
 $specPCIDeviceData = $PCIDATA.PHP_EOL;
 
 // / The following code retrievs statistics related to the server's uptime.
-exec('lspci', $UptimeDATA);
+$str   = @file_get_contents('/proc/uptime');
+$num   = floatval($str);
+$secs  = fmod($num, 60); $num = (int)($num / 60);
+$mins  = $num % 60;      $num = (int)($num / 60);
+$hours = $num % 24;      $num = (int)($num / 24);
+$days  = $num;
+$UptimeDATA = $days.' days, '.$hours.' hours, '.$mins.' minutes, '.$secs.' seconds';
 $MAKEUptimeCacheFile = file_put_contents($uptimeCacheFile, $UptimeDATA);
 $UptimeDATA = file_get_contents($uptimeCacheFile);
 $specUptimeData = $UptimeDATA.PHP_EOL;
