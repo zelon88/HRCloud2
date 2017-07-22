@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v1.1 (6-19-2017 01:00)
+App Version: v1.2 (6-21-2017 11:00)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -63,13 +63,13 @@ else {
   <img src="resources/save.png" onclick="toggle_visibility('saveOptions');">
   <img src="resources/load.png" onclick="toggle_visibility('openOptions');">
 </div>
-  
+<div align="center"><h3><?php echo ($_POST['filename']); ?></div>
+<br>
 <div id="saveOptions" name="saveOptions" align="center" style="display:none;">
 <form action="Pell.php" id="saveForm" name="saveForm" method="post" enctype="multipart/form-data">
 <a style="float:left;">Save File: </a>
 <br>
-  <input type="hidden" name="htmlOutput" id="htmlOutput" value="">
-  Filename: <input type="text" name="filename" id="filename" value="">
+  Filename: <input type="text" name="filename" id="filename" value="<?php echo $_POST['filename']; ?>"> | 
   Extension: <select name="extension" id="extension">
     <option value="txt">Txt</option>
     <option value="doc">Doc</option>
@@ -77,8 +77,12 @@ else {
     <option value="rtf">Rtf</option>
     <option value="odf">Odf</option>
     <option value="pdf">Pdf</option>
-  </select>
-  <a href="#" onclick="setValue();">Save</a>
+  </select> | 
+  Raw HTML: <input type="checkbox" name="rawOutput" value="checked">
+  <input type="hidden" name="htmlOutput" id="htmlOutput" value="">
+  <input type="hidden" name="fileOutput" id="fileOutput" value="">
+  <br>
+  <button href="#" onclick="setValue();">Save</button>
 </form>
 </div>
 
@@ -97,7 +101,7 @@ foreach ($pellFiles as $file) {
   $fileExtension = pathinfo($CloudUsrDir.$file, PATHINFO_EXTENSION);
   if (!in_array($fileExtension, $pellDocArray)) continue;
   $lastmodified = filemtime($CloudUsrDir.$file);
-  echo('<tr><td><a href="dist/PellHRC2Lib.php?pellOpen='.$file.'">'.$file.'</a></td><td><a href="dist/PellHRC2Lib.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
+  echo('<tr><td><a href="Pell.php?pellOpen='.$file.'">'.$file.'</a></td><td><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
 
 ?>
 </table>
@@ -106,14 +110,13 @@ foreach ($pellFiles as $file) {
   <div id="pell" class="pell"></div>
   <div style="margin-top:20px;">
     <h3>Text output:</h3>
-    <div id="text-output"></div>
+    <div id="textoutput"></div>
     </div>
     <div style="margin-top:20px;">
       <h3>HTML output:</h3>
-      <pre id="html-output"></pre>
+      <pre id="htmloutput"></pre>
     </div>
 </div>
-<script src="dist/HRC2.js"></script>
  <script src="dist/pell.js"></script>
  <script>
  function toggle_visibility(id) {
@@ -155,8 +158,8 @@ foreach ($pellFiles as $file) {
           }
         ],
         onChange: function (html) {
-          document.getElementById('text-output').innerHTML = html
-          document.getElementById('html-output').textContent = html
+          document.getElementById('textoutput').innerHTML = html;
+          document.getElementById('htmloutput').textContent = html;
         }
       })
 </script>
