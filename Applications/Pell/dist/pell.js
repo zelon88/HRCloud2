@@ -1,3 +1,4 @@
+
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -174,7 +175,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 function setValue(){
-    document.saveForm.htmlOutput.value = document.getElementById('html-output').textContent = html;
+    document.saveForm.htmlOutput.value = document.getElementById('htmloutput').innerHTML;
+    document.saveForm.fileOutput.value = document.getElementById('filename').textContent = file;
     document.forms["saveForm"].submit(); }
 
 // / Send the user back to the page they came from.
@@ -559,7 +561,7 @@ dean_addEvent.guid = 1;
 
 function removeEvent(element, type, handler) {
   if (element.removeEventListener) {
-    element.removeEventListener(type, handler, false); } \
+    element.removeEventListener(type, handler, false); }
   else {
     // delete the event handler from the hash table
     if (element.events && element.events[type]) {
