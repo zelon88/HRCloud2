@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v1.2 (6-21-2017 11:00)
+App Version: v1.3 (7-23-2017 13:00)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -78,7 +78,7 @@ else {
     <option value="odf">Odf</option>
     <option value="pdf">Pdf</option>
   </select> | 
-  Raw HTML: <input type="checkbox" name="rawOutput" value="checked">
+  Raw HTML: <input type="checkbox" name="rawOutput" id="rawOutput" value="checked">
   <input type="hidden" name="htmlOutput" id="htmlOutput" value="">
   <input type="hidden" name="fileOutput" id="fileOutput" value="">
   <br>
