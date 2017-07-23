@@ -11,6 +11,7 @@ $pellFiles = scandir($CloudUsrDir);
 $pellDocArray = array('txt', 'doc', 'docx', 'rtf', 'pdf');
 $pellDangerArr = array('index.php', 'index.html');
 $pellTempDir = $InstLoc.'/Applications/Pell/TEMP';
+$rawOutput = $_POST['rawOutput'];
 $htmlOutput = str_replace('&lt;', '<', str_replace('&gt;', '>', $_POST['htmlOutput'])); 
 $filename = $_POST['filename'];
 $pellTempFile = str_replace('//', '/', $pellTempDir.'/'.$filename.'.html');
@@ -59,9 +60,9 @@ if ($rawOutput == 'checked') {
             if ($stopper == 10) {
               $txt = 'ERROR!!! HRC2PellApp53, The converter timed out while copying your file. ';
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-              die($txt); } } } } } }
+              die($txt); } } } } } } }
 
-if ($rawOutput == 'checked') {
+if ($rawOutput !== 'checked') {
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     $txt = ("OP-Act, Executing \"pandoc -o $newPathname $pellTempFile\" on ".$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
@@ -69,11 +70,11 @@ if ($rawOutput == 'checked') {
 
 // / The following code captures any errors generated during execution and logs them/returns them to the user.
 if (!is_array($returnDATA)) {
-  $txt = ('OP-Act, Unoconv returned '.$returnDATA.' on '.$Time.'.');
+  $txt = ('OP-Act, The conversion engine returned '.$returnDATA.' on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 if (is_array($returnDATA)) {
-  $txt = ('OP-Act, Unoconv returned the following on '.$Time.':');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }                
+  $txt = ('OP-Act, The conversion engine returned the following on '.$Time.':');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);                
   foreach($returnDATA as $returnDATALINE) {
     $txt = ($returnDATALINE);
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
