@@ -86,13 +86,12 @@ if (is_array($returnDATA)) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 // / The following code cleans up any lingering temp files.if (file_exists($pellTempFile)) {
-unlink($pellTempFile);
 if (file_exists($pellTempFile)) {
   $txt = ('ERROR!!! HRC2PellApp87, There was a problem cleaning temporary Pell data on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 if (!file_exists($pellTempFile)) {
   $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 
 if (isset($_GET['pellOpen'])) {
 
