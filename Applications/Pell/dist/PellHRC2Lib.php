@@ -10,7 +10,8 @@ $_POST['rawOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\\\''), '', $
 $pellFiles = scandir($CloudUsrDir);
 $pellDocArray = array('txt', 'doc', 'docx', 'rtf', 'pdf');
 $pellDangerArr = array('index.php', 'index.html');
-$pellTempDir = $InstLoc.'/Applications/Pell/TEMP';
+$pellTempDir0 = $InstLoc.'/Applications/Pell/TEMP/';
+$pellTempDir = $InstLoc.'/Applications/Pell/TEMP/'.$UserID;
 $rawOutput = $_POST['rawOutput'];
 $htmlOutput = str_replace('&lt;', '<', str_replace('&gt;', '>', $_POST['htmlOutput'])); 
 $filename = $_POST['filename'];
@@ -19,6 +20,10 @@ $extension = $_POST['extension'];
 $newPathname = $CloudUsrDir.'/'.$filename.'.'.$extension;
 
 // / The following code gathers the document data to be saved and creates a temporary HTML file with it.
+if (!is_dir($pellTempDir0)) {
+  mkdir($pellTempDir0); }
+if (!file_exists($pellTempDir0.'/index.html')) {
+  copy($InstLoc.'/index.html', $pellTempDir0.'/index.html'); }
 if (!is_dir($pellTempDir)) {
   mkdir($pellTempDir); }
 if (!file_exists($pellTempDir.'/index.html')) {
@@ -60,6 +65,7 @@ if ($rawOutput == 'checked') {
             if ($stopper == 10) {
               $txt = 'ERROR!!! HRC2PellApp53, The converter timed out while copying your file. ';
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+              unlink($pellTempFile);
               die($txt); } } } } } } }
 
 if ($rawOutput !== 'checked') {
@@ -78,6 +84,15 @@ if (is_array($returnDATA)) {
   foreach($returnDATA as $returnDATALINE) {
     $txt = ($returnDATALINE);
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+
+// / The following code cleans up any lingering temp files.if (file_exists($pellTempFile)) {
+unlink($pellTempFile);
+if (file_exists($pellTempFile)) {
+  $txt = ('ERROR!!! HRC2PellApp87, There was a problem cleaning temporary Pell data on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+if (!file_exists($pellTempFile)) {
+  $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 if (isset($_GET['pellOpen'])) {
 
