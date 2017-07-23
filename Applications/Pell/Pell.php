@@ -60,16 +60,18 @@ else {
 <a id="header" name="header" align="center"><h1>Pell Editor for HRC2</h1></a>
 <hr />
 <div id="hrc2Toolbar" name="hrc2Toolbar" style="float:left;">
-  <img src="resources/save.png" onclick="toggle_visibility('saveOptions');">
-  <img src="resources/load.png" onclick="toggle_visibility('openOptions');">
+  <a href="Pell.php"><img src="resources/new.png" title="New File" alt="New File" onclick="toggle_visibility('loading');"></a>
+  <img src="resources/save.png" title="Save File" alt="Save File" onclick="toggle_visibility('saveOptions');">
+  <img src="resources/load.png" title="Open File" alt="Open File" onclick="toggle_visibility('openOptions');">
 </div>
-<div align="center"><h3><?php echo ($_POST['filename']); ?></div>
+<div align="center"><h3><?php echo ($fileEcho1); ?></div>
+<img id="loading" name="loading" src="resources/loading.gif" style="display:none;">
 <br>
 <div id="saveOptions" name="saveOptions" align="center" style="display:none;">
 <form action="Pell.php" id="saveForm" name="saveForm" method="post" enctype="multipart/form-data">
 <a style="float:left;">Save File: </a>
 <br>
-  Filename: <input type="text" name="filename" id="filename" value="<?php echo $_POST['filename']; ?>"> | 
+  Filename: <input type="text" name="filename" id="filename" value="<?php echo $fileEcho; ?>"> | 
   Extension: <select name="extension" id="extension">
     <option value="txt">Txt</option>
     <option value="doc">Doc</option>
@@ -100,7 +102,7 @@ foreach ($pellFiles as $file) {
   if (in_array($file, $pellDangerArr)) continue;
   $fileExtension = pathinfo($CloudUsrDir.$file, PATHINFO_EXTENSION);
   if (!in_array($fileExtension, $pellDocArray)) continue;
-  $lastmodified = filemtime($CloudUsrDir.$file);
+  $lastmodified = date("F d Y H:i:s.",filemtime($CloudUsrDir.$file));
   echo('<tr><td><a href="Pell.php?pellOpen='.$file.'">'.$file.'</a></td><td><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
 
 ?>
@@ -125,6 +127,14 @@ foreach ($pellFiles as $file) {
     e.style.display = 'none';
     else
       e.style.display = 'block'; }
+<?php 
+if (isset($_POST['pellOpen']) && $pellOpen == 1) {
+  echo ('
+    function pellOpenData() {
+    document.getElementById(\'pell\').innerHTML = \''.str_replace('"', '', json_encode($pellOpenFileData)).'\'; }
+    
+    window.onload = pellOpenData;'); }
+?>
 
       function ensureHTTP (str) {
         return /^https?:\/\//.test(str) && str || `http://${str}`
