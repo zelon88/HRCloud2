@@ -78,10 +78,12 @@ if (isset($_GET['deleteNote'])) {
   $counter = 0;
   while (file_exists($NotesDir.$noteToDelete.'.txt')) {
     if ($counter >= 10) continue;
-    @unlink($NotesDir.$noteToDelete.'.txt'); }
+    @unlink($NotesDir.$noteToDelete.'.txt'); 
+    $counter++; }
   while (file_exists($NotesDir2.$noteToDelete.'.txt')) {
     if ($counter >= 10) continue;
-    @unlink($NotesDir2.$noteToDelete.'.txt'); }
+    @unlink($NotesDir2.$noteToDelete.'.txt'); 
+    $counter++; }
   if (file_exists($NotesDir.$noteToDelete.'.txt') or file_exists($NotesDir2.$noteToDelete.'.txt')){
     $txt = ('ERROR!!! HRC2N86, There was a problem deleting the selected user note on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
