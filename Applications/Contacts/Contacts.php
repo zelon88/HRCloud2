@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: 2.1 (7-11-2017 20:30)
+App Version: 2.2 (7-23-2017 13:45)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -89,10 +89,18 @@ if (isset($_GET['editContact']) && $_GET['editContact'] !== '') {
 if (isset($_GET['deleteContact'])) {
   $contactToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteContact']);
   $ContactToDelete = str_replace(' ', '_', $ContactToDelete);
-  if (file_exists($ContactsDir.$contactToDelete.'.php')) {
-    @unlink($ContactsDir.$contactToDelete.'.php'); }
-  if (file_exists($ContactsDir2.$contactToDelete.'.php')) {
-    @unlink($ContactsDir2.$contactToDelete.'.php'); } 
+  $counter = 0;
+  while (file_exists($ContactsDir.$contactToDelete.'.txt')) {
+    if ($counter >= 10) continue;
+    @unlink($ContactsDir.$contactToDelete.'.txt'); 
+    $counter++; }
+  while (file_exists($ContactsDir2.$contactToDelete.'.txt')) {
+    if ($counter >= 10) continue;
+    @unlink($ContactsDir2.$contactToDelete.'.txt'); 
+    $counter++; }
+  if (file_exists($ContactsDir.$contactToDelete.'.txt') or file_exists($ContactsDir2.$contactToDelete.'.txt')){
+    $txt = ('ERROR!!! HRC2C102, There was a problem deleting the selected user contact on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   $txt = ('OP-Act: Deleting Contacts '.$contactToDelete.' on '.$Time.'!');
   echo 'Deleted <i>'.$contactToDelete.'</i>'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
