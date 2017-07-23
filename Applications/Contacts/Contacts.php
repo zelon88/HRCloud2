@@ -90,13 +90,13 @@ if (isset($_GET['deleteContact'])) {
   $contactToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteContact']);
   $ContactToDelete = str_replace(' ', '_', $ContactToDelete);
   $counter = 0;
-  while (file_exists($ContactsDir.$contactToDelete.'.txt')) {
+  while (file_exists($ContactsDir.$contactToDelete.'.php')) {
     if ($counter >= 10) continue;
-    @unlink($ContactsDir.$contactToDelete.'.txt'); 
+    @unlink($ContactsDir.$contactToDelete.'.php'); 
     $counter++; }
-  while (file_exists($ContactsDir2.$contactToDelete.'.txt')) {
+  while (file_exists($ContactsDir2.$contactToDelete.'.php')) {
     if ($counter >= 10) continue;
-    @unlink($ContactsDir2.$contactToDelete.'.txt'); 
+    @unlink($ContactsDir2.$contactToDelete.'.php'); 
     $counter++; }
   if (file_exists($ContactsDir.$contactToDelete.'.txt') or file_exists($ContactsDir2.$contactToDelete.'.txt')){
     $txt = ('ERROR!!! HRC2C102, There was a problem deleting the selected user contact on '.$Time.'!'); 
