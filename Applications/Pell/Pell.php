@@ -64,7 +64,7 @@ else {
   <img src="resources/save.png" title="Save File" alt="Save File" onclick="toggle_visibility('saveOptions');">
   <img src="resources/load.png" title="Open File" alt="Open File" onclick="toggle_visibility('openOptions');">
 </div>
-<div align="center"><h3><?php echo ($fileEcho1); ?></div>
+    <div align="center"><h3><?php echo ($fileEcho1); ?></h3></div>
 <img id="loading" name="loading" src="resources/loading.gif" style="display:none;">
 <br>
 <div id="saveOptions" name="saveOptions" align="center" style="display:none;">
