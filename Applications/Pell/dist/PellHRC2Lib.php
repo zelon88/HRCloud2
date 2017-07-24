@@ -1,8 +1,7 @@
 <?php
 // / The following code handles the pellOpen GET request.
 if (isset($_GET['pellOpen'])) {
-  $_POST['pellOpen'] = $_GET['pellOpen']; 
-  $pellOpen = 1; }
+  $_POST['pellOpen'] = $_GET['pellOpen']; }
 
 // / The following code sanitizes all POST inputs used by Pell for HRCloud2.
 $_POST['filename'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['filename']);
@@ -20,7 +19,8 @@ $pellDocs2 = 'doc';
 $pellDocs3 = 'docx';
 $pellDocs4 = 'rtf';
 $pellDocs5 = 'pdf';
-$pellDocs6 = array('docx', 'pdf', 'doc');
+$pellDocs6 = array('docx', 'doc');
+$pellDocs7 = array('rtf', 'pdf');
 $pellDocs7 = array('docx', 'rtf', 'pdf', 'doc');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
@@ -66,14 +66,14 @@ if (isset($htmlOutput) && isset($filename) && $filename !== '' && isset($extensi
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 
 // / The following code initializes the document conversion engine.
-if ((isset($_POST['pellOpen']) && $pellOpen !== '') or (isset($_POST['filename']) && $filename !=='')) {
+if ((isset($_POST['pellOpen']) && $pellOpen == '') or (isset($_POST['filename']) && $filename !=='')) {
   if (file_exists('/usr/bin/unoconv')) {
     $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
     if (count($DocEnginePID) < 1) {
       exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
-      $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID[1].') on '.$Time.'.');
+      $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID1[1].') on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus); } }
   if (!file_exists('/usr/bin/unoconv')) {
@@ -84,7 +84,7 @@ if ((isset($_POST['pellOpen']) && $pellOpen !== '') or (isset($_POST['filename']
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 // / The following code opens files from a users Cloud drive and presents them in to Pell for editing.
-if (isset($_POST['pellOpen']) && $pellOpen == 1) {
+if (isset($_POST['pellOpen']) && $pellOpen !== '') {
   if (strpos($pellOpen, '.'.$pellDocs1) == 'true') {
     $pellOpenFileData = file_get_contents($pellOpenFile);
     $pellOpenFileDataArr = file($pellOpenFile);
@@ -97,7 +97,7 @@ if (isset($_POST['pellOpen']) && $pellOpen == 1) {
   }
 
 // / The following code is performed when the "Raw HTML" is checked.
-if ($rawOutput == 'checked' && isset($filename) && $filename !=='' && isset($extension) && $extesion !== '') {
+if ($rawOutput == 'checked' && isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
   // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     if (in_array($extension, $pellDocArray)) {
@@ -116,16 +116,13 @@ if ($rawOutput == 'checked' && isset($filename) && $filename !=='' && isset($ext
               die($txt); } } } } }
 
 // / The following code is performed when the "Raw HTML" option is not checked.
-if ($rawOutput !== 'checked' && isset($filename) && $filename !=='' && isset($extension) && $extesion !== '') {
+if ($rawOutput !== 'checked' && isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     $txt = ("OP-Act, Executing \"pandoc -o $newPathname $pellTempFile\" on ".$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
     exec("pandoc -o $newPathname $pellTempFile", $returnDATA); } }
 
 // / The following code captures any errors generated during execution and logs them/returns them to the user.
-if (!is_array($returnDATA)) {
-  $txt = ('OP-Act, The conversion engine returned '.$returnDATA.' on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 if (is_array($returnDATA)) {
   $txt = ('OP-Act, The conversion engine returned the following on '.$Time.':');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);                
@@ -136,7 +133,7 @@ if (is_array($returnDATA)) {
 // / The following code cleans up any lingering temp files.if (file_exists($pellTempFile)) {
 if (file_exists($pellTempFile)) {
   $txt = ('ERROR!!! HRC2PellApp87, There was a problem cleaning temporary Pell data on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-if (!file_exists($pellTempFile)) {
-  $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  if (!file_exists($pellTempFile)) {
+    $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
