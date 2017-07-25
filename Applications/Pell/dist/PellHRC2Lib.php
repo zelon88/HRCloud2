@@ -85,16 +85,22 @@ if ((isset($_POST['pellOpen']) && $pellOpen == '') or (isset($_POST['filename'])
 
 // / The following code opens files from a users Cloud drive and presents them in to Pell for editing.
 if (isset($_POST['pellOpen']) && $pellOpen !== '') {
-  if (strpos($pellOpen, '.'.$pellDocs1) == 'true') {
-    $pellOpenFileData = file_get_contents($pellOpenFile);
-    $pellOpenFileDataArr = file($pellOpenFile);
+  if (!file_exists($pellOpenFile)) {
+    $txt = ('ERROR!!! HRC2PellApp89, Could not load '.$pellOpen.' into memory on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (file_exists($pellOpenFile)) {
     $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
-    $txt = ('OP-Act: Copied contents of '.$pellOpen.' to memory on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+    // / Code to handle opening .txt files.
+    if (strpos($pellOpen, '.'.$pellDocs1) == 'true') {
+      $pellOpenFileData = file_get_contents($pellOpenFile);
+      $pellOpenFileDataArr = file($pellOpenFile);
+      $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
+      $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
 
-  if (in_array($pellOpen, $pellDocs7) == 'true') {
+    if (in_array($pellOpen, $pellDocs7) == 'true') {
 
-  }
+  } } }
 
 // / The following code is performed when the "Raw HTML" is checked.
 if ($rawOutput == 'checked' && isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
