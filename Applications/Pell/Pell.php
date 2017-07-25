@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v1.6.5 (7-23-2017 13:00)
+App Version: v1.7 (7-24-2017 21:00)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -128,7 +128,6 @@ foreach ($pellFiles as $file) {
     else
       e.style.display = 'block'; }
 
-
       function ensureHTTP (str) {
         return /^https?:\/\//.test(str) && str || `http://${str}`
       }
@@ -165,6 +164,17 @@ foreach ($pellFiles as $file) {
           document.getElementById('htmloutput').textContent = html;
         }
       })
+
+<?php
+if (isset($_POST['pellOpen']) && $pellOpen !== '') {
+  echo('
+    var pellc = document.getElementsByClassName(\'pell-content\'),
+        i = pellc.length;
+
+    while(i--) {
+        pellc[i].innerHTML = \''.str_replace('"', '', json_encode($pellOpenFileData)).'\';
+    }'); }
+?>
 </script>
 </body>
 </html>
