@@ -115,8 +115,6 @@ $appDataCloudDir = $CloudLoc.'/'.$UserID.'/.AppData';
 $ContactsDir = $appDataInstDir.'/Contacts/';
 $NotesDir = $appDataInstDir.'/Notes/';
 $UserConfig = $appDataInstDir.'/.config.php';
-$appDataBackupFileCount = 0;
-$appDataBackupFileCount1 = 0;
 $BackupDir = $InstLoc.'/BACKUP';
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
@@ -353,61 +351,21 @@ foreach ($iterator = new \RecursiveIteratorIterator (
     @chmod($item, 0755);
     if ($item->isDir()) {
       if (!file_exists($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-        mkdir($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-        $appDataBackupFileCount++; } }
+        mkdir($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } }
     else {
-        if (!is_link($item)) {
-          copy($item, $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-          $appDataBackupFileCount++; } } }
-foreach ($iterator = new \RecursiveIteratorIterator (
-  new \RecursiveDirectoryIterator ($appDataCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
-  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-    @chmod($item, 0755);
-    if ($item->isDir()) {
-      if (!file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-        mkdir($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-        $appDataBackupFileCount1++; } }
-    else {
-        if (!is_link($item)) {
-          copy($item, $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-          $appDataBackupFileCount1++; } } }
-// / -----------------------------------------------------------------------------------
+        if (!is_link($item) or !file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+          copy($item, $appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } }
 
-// / -----------------------------------------------------------------------------------
-// / The following code sync's the users AppData between the InstLoc and the CloudLoc.
-$appDataBackupFileCount = 0;
-if (!file_exists($appDataInstDir)) {
-  @mkdir($appDataInstDir); }
-if (!file_exists($appDataInstDir)) {
-  $txt = ('WARNING!!! HRC2CommonCore381, There was a problem creating the a sync\'d copy of the AppData 
-   directory in the CloudLoc on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  echo nl2br($txt."\n".'Most likely the server\'s permissions are incorrect. 
-   Make sure the www-data usergroup and user have R/W access to ALL folders in the /var/www/html directory. '); }
 foreach ($iterator = new \RecursiveIteratorIterator (
   new \RecursiveDirectoryIterator ($appDataCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
   \RecursiveIteratorIterator::SELF_FIRST) as $item) {
     @chmod($item, 0755);
     if ($item->isDir()) {
       if (!file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-        mkdir($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-        $appDataBackupFileCount++; } }
+        mkdir($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } }
     else {
         if (!is_link($item)) {
-          copy($item, $appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-          $appDataBackupFileCount++; } } }
-foreach ($iterator = new \RecursiveIteratorIterator (
-  new \RecursiveDirectoryIterator ($appDataInstDir, \RecursiveDirectoryIterator::SKIP_DOTS),
-  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-    @chmod($item, 0755);
-    if ($item->isDir()) {
-      if (!file_exists($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-        mkdir($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-        $appDataBackupFileCount1++; } }
-    else {
-        if (!is_link($item)) {
-          copy($item, $appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
-          $appDataBackupFileCount1++; } } }
+          copy($item, $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
