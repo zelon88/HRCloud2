@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v1.7 (7-24-2017 21:00)
+App Version: v1.8 (7-25-2017 20:00)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -64,7 +64,7 @@ else {
   <img src="resources/save.png" title="Save File" alt="Save File" onclick="toggle_visibility('saveOptions');">
   <img src="resources/load.png" title="Open File" alt="Open File" onclick="toggle_visibility('openOptions');">
 </div>
-    <div align="center"><h3><?php echo ($fileEcho1); ?></h3></div>
+    <div align="center"><h3><?php if ($_GET['saved'] ==1) echo 'Saved '; echo ($fileEcho1); ?></h3></div>
 <img id="loading" name="loading" src="resources/loading.gif" style="display:none;">
 <br>
 <div id="saveOptions" name="saveOptions" align="center" style="display:none;">
@@ -172,7 +172,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
         i = pellc.length;
 
     while(i--) {
-        pellc[i].innerHTML = \''.str_replace('"', '', json_encode($pellOpenFileData)).'\';
+        pellc[i].innerHTML = \''.htmlspecialchars_decode(trim($pellOpenFileData)).'\';
     }'); }
 ?>
 </script>
