@@ -355,7 +355,10 @@ foreach ($iterator = new \RecursiveIteratorIterator (
     else {
         if (!is_link($item) or !file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
           copy($item, $appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } }
+// / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
+// / The following code sync's the users AppData between the CloudLoc and the InstLoc.
 foreach ($iterator = new \RecursiveIteratorIterator (
   new \RecursiveDirectoryIterator ($appDataCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
   \RecursiveIteratorIterator::SELF_FIRST) as $item) {
