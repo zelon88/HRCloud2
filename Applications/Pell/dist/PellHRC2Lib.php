@@ -14,17 +14,17 @@ $_POST['rawOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\\\''), '', $
 // / The following code sets global variables for the session.
   // / Arrays...
 $pellDocArray = array('txt', 'docx', 'rtf', 'pdf', 'doc');
-$pellDocs1 = 'txt';
-$pellDocs2 = 'doc';
-$pellDocs3 = 'docx';
-$pellDocs4 = 'rtf';
-$pellDocs5 = 'pdf';
-$pellDocs6 = array('docx', 'doc');
-$pellDocs7 = array('rtf', 'pdf');
+$pellDocs1 = '.txt';
+$pellDocs2 = '.doc';
+$pellDocs3 = '.docx';
+$pellDocs4 = '.rtf';
+$pellDocs5 = '.pdf';
+$pellDocs6 = array('.docx', '.doc');
+$pellDocs7 = array('.rtf', '.pdf');
 $pellDocs7 = array('docx', 'rtf', 'pdf', 'doc');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
-$htmlOutput = str_replace('&lt;', '<', str_replace('&gt;', '>', $_POST['htmlOutput'])); 
+$htmlOutput = htmlspecialchars($_POST['htmlOutput']); 
 $filename = $_POST['filename'];
 $pellOpen = $_POST['pellOpen'];
 $rawOutput = $_POST['rawOutput'];
@@ -44,6 +44,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
 if (isset($_POST['filename']) && $filename !== '') {
   $fileEcho = $filename;
   $fileEcho1 = $filename; }
+// / The following code cleans the extensions (ex: .doc before .docx to avoid false positive w/ leftover "x")
 foreach ($pellDocArray as $extCleaner) {
   $extCleaner = '.'.$extCleaner;
   if ($extCleaner == '.doc') { 
@@ -91,7 +92,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
   if (file_exists($pellOpenFile)) {
     $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
     // / Code to handle opening .txt files.
-    if (strpos($pellOpen, '.'.$pellDocs1) == 'true') {
+    if (strpos($pellOpen, $pellDocs1) == true) {
       $pellOpenFileData = file_get_contents($pellOpenFile);
       $pellOpenFileDataArr = file($pellOpenFile);
       $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
@@ -143,3 +144,7 @@ if (file_exists($pellTempFile)) {
   if (!file_exists($pellTempFile)) {
     $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+
+// / The following code reloads the page as-needed so that recently saved files appear in the load files menu.
+if (isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
+  echo('<script>window.location.href = "'.$URL.'/HRProprietary/HRCloud2/Applications/Pell/Pell.php?pellOpen='.$filename.'&extension='.$extension.'&saved=1'.'";</script>'); }
