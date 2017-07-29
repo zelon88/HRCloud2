@@ -1,7 +1,13 @@
 <?php
 // / The following code handles the pellOpen GET request.
+if (isset($_GET['saved'])) {
+  $_POST['saved'] = $_GET['saved']; }
+if (isset($_GET['extension'])) {
+  $_POST['extension'] = $_GET['extension']; }
 if (isset($_GET['pellOpen'])) {
   $_POST['pellOpen'] = $_GET['pellOpen']; }
+  if (isset($_GET['filename'])) {
+  $_POST['filename'] = $_GET['filename']; }
 
 // / The following code sanitizes all POST inputs used by Pell for HRCloud2.
 $_POST['filename'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['filename']);
@@ -14,14 +20,15 @@ $_POST['rawOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\\\''), '', $
 // / The following code sets global variables for the session.
   // / Arrays...
 $pellDocArray = array('txt', 'docx', 'rtf', 'pdf', 'doc');
-$pellDocs1 = '.txt';
-$pellDocs2 = '.doc';
-$pellDocs3 = '.docx';
-$pellDocs4 = '.rtf';
-$pellDocs5 = '.pdf';
-$pellDocs6 = array('.docx', '.doc');
-$pellDocs7 = array('.rtf', '.pdf');
-$pellDocs7 = array('docx', 'rtf', 'pdf', 'doc');
+$pellDocs1 = array('txt');
+$pellDocs2 = array('doc');
+$pellDocs3 = array('docx');
+$pellDocs4 = array('rtf');
+$pellDocs5 = array('pdf');
+$pellDocs6 = array('docx', 'doc');
+$pellDocs7 = array('rtf', 'pdf');
+$pellDocs8 = array('docx', 'rtf', 'pdf', 'doc');
+$pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
 $htmlOutput = htmlspecialchars($_POST['htmlOutput']); 
@@ -36,6 +43,10 @@ $pellTempDir = $InstLoc.'/Applications/Pell/TEMP/'.$UserID;
 $pellTempFile = str_replace('//', '/', $pellTempDir.'/'.$filename.'.html');
 $newPathname = str_replace('//', '/', $CloudUsrDir.'/'.$filename.'.'.$extension);
 $pellOpenFile = str_replace('//', '/', $CloudUsrDir.'/'.$pellOpen);
+$pellOpenFileExtension = pathinfo($pellOpenFile, PATHINFO_EXTENSION);
+$newTempHtmlPathname = str_replace('//', '/', $pellTempDir.'/'.$pellOpen.'.html');
+$newTempTxtPathname = str_replace('//', '/', $pellTempDir.'/'.$pellOpen.'.txt');
+$newHtmlPathname = str_replace($pellOpenFileExtension, 'html', $pellOpenFile);
 
 // / The following code sets the selected file for the save input textbox.
 if (isset($_POST['pellOpen']) && $pellOpen !== '') {
@@ -92,19 +103,24 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
   if (file_exists($pellOpenFile)) {
     $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
     // / Code to handle opening .txt files.
-    if (strpos($pellOpen, $pellDocs1) == true) {
+    if (in_array($pellOpenFileExtension, $pellDocs1)) {
       $pellOpenFileData = file_get_contents($pellOpenFile);
       $pellOpenFileDataArr = file($pellOpenFile);
       $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
       $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-
-    if (in_array($pellOpen, $pellDocs7) == 'true') {
-
-  } } }
+    if (in_array($pellOpenFileExtension, $pellDocs8)) {
+      $txt = ("OP-Act, Executing \"unoconv -o $newTempTxtPathname -f txt $pellOpenFile\" on ".$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
+      exec("unoconv -o $newTempTxtPathname -f txt $pellOpenFile", $returnDATA); 
+      $pellOpenFileData = file_get_contents($newTempTxtPathname);
+      $pellOpenFileDataArr = file($newTempTxtPathname);
+      $pellOpenFileTime = date("F d Y H:i:s.",filemtime($newTempTxtPathname)); 
+      $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 
 // / The following code is performed when the "Raw HTML" is checked.
-if ($rawOutput == 'checked' && isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
+if ($rawOutput == 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     if (in_array($extension, $pellDocArray)) {
@@ -123,7 +139,7 @@ if ($rawOutput == 'checked' && isset($filename) && $filename !== '' && isset($ex
               die($txt); } } } } }
 
 // / The following code is performed when the "Raw HTML" option is not checked.
-if ($rawOutput !== 'checked' && isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
+if ($rawOutput !== 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     $txt = ("OP-Act, Executing \"pandoc -o $newPathname $pellTempFile\" on ".$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
@@ -147,4 +163,4 @@ if (file_exists($pellTempFile)) {
 
 // / The following code reloads the page as-needed so that recently saved files appear in the load files menu.
 if (isset($filename) && $filename !== '' && isset($extension) && $extesion !== '') {
-  echo('<script>window.location.href = "'.$URL.'/HRProprietary/HRCloud2/Applications/Pell/Pell.php?pellOpen='.$filename.'&extension='.$extension.'&saved=1'.'";</script>'); }
+  echo('<script>window.location.href = "'.$URL.'/HRProprietary/HRCloud2/Applications/Pell/Pell.php'.'";</script>'); }
