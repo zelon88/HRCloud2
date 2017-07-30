@@ -27,7 +27,7 @@ $pellDocs4 = array('rtf');
 $pellDocs5 = array('pdf');
 $pellDocs6 = array('docx', 'doc');
 $pellDocs7 = array('rtf', 'pdf');
-$pellDocs8 = array('docx', 'rtf', 'pdf', 'doc');
+$pellDocs8 = array('docx', 'pdf', 'doc');
 $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
@@ -109,6 +109,25 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
       $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
       $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+    // / Code for opening .rtf files.
+    if (in_array($pellOpenFileExtension, $pellDocs4)) {
+      if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Pell/dist/rtf-html-php.php')) {
+        echo nl2br('ERROR!!! HRC2PellApp114, Cannot process the rtf conversion engine file (rtf-html-php.php).'."\n"); 
+        die (); }
+      else {
+        require ('/var/www/html/HRProprietary/HRCloud2/Applications/Pell/dist/rtf-html-php.php'); }
+      $reader = new RtfReader();
+      $rtfDATA = file_get_contents($pellOpenFile); 
+      $result = $reader->Parse($rtfDATA);
+      if ($result == TRUE) {
+        $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        $formatter = new RtfHtml();
+        $pellOpenFileData = $formatter->Format($reader->root); }
+      if ($result !== TRUE) {
+        $txt = ('ERROR!!! HRC2PellApp128 Could not copy the contents of '.$pellOpen.' into memory on '.$Time.'!');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+    // / Code for opening .doc and .docx files.
     if (in_array($pellOpenFileExtension, $pellDocs8)) {
       $txt = ("OP-Act, Executing \"unoconv -o $newTempTxtPathname -f txt $pellOpenFile\" on ".$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
@@ -154,6 +173,7 @@ if (is_array($returnDATA)) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 
 // / The following code cleans up any lingering temp files.if (file_exists($pellTempFile)) {
+@unlink($pellTempFile);
 if (file_exists($pellTempFile)) {
   $txt = ('ERROR!!! HRC2PellApp87, There was a problem cleaning temporary Pell data on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
