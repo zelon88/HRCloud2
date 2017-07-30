@@ -31,7 +31,7 @@ $pellDocs8 = array('docx', 'pdf', 'doc');
 $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
-$htmlOutput = htmlspecialchars($_POST['htmlOutput']); 
+$htmlOutput = $_POST['htmlOutput']; 
 $filename = $_POST['filename'];
 $pellOpen = $_POST['pellOpen'];
 $rawOutput = $_POST['rawOutput'];
@@ -104,7 +104,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
     $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
     // / Code to handle opening .txt files.
     if (in_array($pellOpenFileExtension, $pellDocs1)) {
-      $pellOpenFileData = file_get_contents($pellOpenFile);
+      $pellOpenFileData = str_replace('<?', '', file_get_contents($pellOpenFile));
       $pellOpenFileDataArr = file($pellOpenFile);
       $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
       $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
@@ -117,7 +117,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
       else {
         require ('/var/www/html/HRProprietary/HRCloud2/Applications/Pell/dist/rtf-html-php.php'); }
       $reader = new RtfReader();
-      $rtfDATA = file_get_contents($pellOpenFile); 
+      $rtfDATA = str_replace('<?', '', file_get_contents($pellOpenFile)); 
       $result = $reader->Parse($rtfDATA);
       if ($result == TRUE) {
         $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
@@ -132,20 +132,19 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
       $txt = ("OP-Act, Executing \"unoconv -o $newTempTxtPathname -f txt $pellOpenFile\" on ".$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
       exec("unoconv -o $newTempTxtPathname -f txt $pellOpenFile", $returnDATA); 
-      $pellOpenFileData = file_get_contents($newTempTxtPathname);
+      $pellOpenFileData = str_replace('<?', '', file_get_contents($newTempTxtPathname));
       $pellOpenFileDataArr = file($newTempTxtPathname);
       $pellOpenFileTime = date("F d Y H:i:s.",filemtime($newTempTxtPathname)); 
       $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 
 // / The following code is performed when the "Raw HTML" is checked.
-if ($rawOutput == 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
+if ($rawOutput == 'checked' && isset($_POST['rawOutput']) && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     if (in_array($extension, $pellDocArray)) {
           $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pellTempFile\" on ".$Time.'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-          exec("unoconv -o $newPathname -f $extension $pellTempFile", $returnDATA); 
         // / For some reason files take a moment to appear after being created with Unoconv.
           $stopper = 0;
           while(!file_exists($newPathname)) {
@@ -158,11 +157,11 @@ if ($rawOutput == 'checked' && isset($_POST['filename']) && $filename !== '' && 
               die($txt); } } } } }
 
 // / The following code is performed when the "Raw HTML" option is not checked.
-if ($rawOutput !== 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
+if ($rawOutput !== 'checked' && isset($_POST['rawOutput']) && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
-    $txt = ("OP-Act, Executing \"pandoc -o $newPathname $pellTempFile\" on ".$Time.'.');
+    $txt = ("OP-Act, Executing \"pandoc -s -o $newPathname $pellTempFile\" on ".$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-    exec("pandoc -o $newPathname $pellTempFile", $returnDATA); } }
+    exec("pandoc -s -o $newPathname $pellTempFile", $returnDATA); } }
 
 // / The following code captures any errors generated during execution and logs them/returns them to the user.
 if (is_array($returnDATA)) {
