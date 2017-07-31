@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v2.1 (7-29-2017 22:30)
+App Version: v2.2 (7-30-2017 20:45)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -60,7 +60,7 @@ else {
 <a id="header" name="header" align="center"><h1>Pell Editor for HRC2</h1></a>
 <hr />
 <div id="hrc2Toolbar" name="hrc2Toolbar" style="float:left;">
-  <a href="Pell.php"><img src="resources/new.png" title="New File" alt="New File" onclick="toggle_visibility('loading');"></a>
+  <a href="Pell.php"><img src="resources\new.png" title="New File" alt="New File" onclick="toggle_visibility('loading');"></a>
   <img src="resources/save.png" title="Save File" alt="Save File" onclick="toggle_visibility('saveOptions');">
   <img src="resources/load.png" title="Open File" alt="Open File" onclick="toggle_visibility('openOptions');">
 </div>
@@ -78,7 +78,6 @@ else {
     <option value="docx">Docx</option>
     <option value="rtf">Rtf</option>
     <option value="odf">Odf</option>
-    <option value="pdf">Pdf</option>
   </select> | 
   Raw HTML: <input type="checkbox" name="rawOutput" id="rawOutput" value="checked">
   <input type="hidden" name="htmlOutput" id="htmlOutput" value="">
@@ -87,13 +86,14 @@ else {
   <button href="#" onclick="setValue();">Save</button>
 </form>
 </div>
-
 <div id="openOptions" name="openOptions" align="center" style="display:none;">
 <a style="float:left;">Open File: </a>
 <br>
+<form action="Pell.php" id="deleteForm" name="deleteForm" method="post" enctype="multipart/form-data">
 <table id="openFiles" name="openFiles" class="sortable">
   <tr>
     <th>Filename</th>
+    <th>Delete</th>
     <th>Last Modified</th>
   </tr>
 <?php 
@@ -102,11 +102,15 @@ foreach ($pellFiles as $file) {
   if (in_array($file, $pellDangerArr)) continue;
   $fileExtension = pathinfo($CloudUsrDir.$file, PATHINFO_EXTENSION);
   if (!in_array($fileExtension, $pellDocArray)) continue;
-  $lastmodified = date("F d Y H:i:s.",filemtime($CloudUsrDir.$file));
-  echo('<tr><td><a href="Pell.php?pellOpen='.$file.'">'.$file.'</a></td><td><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
+  if (!file_exists($CloudUsrDir.$file)) continue;
+  $lastmodified = date("F d Y H:i:s.", filemtime($CloudUsrDir.$file));
+  echo('<tr><td><a href="Pell.php?pellOpen='.$file.'">'.$file.'</a></td>
+    <td><input type="image" id="deleteFile" name="deleteFile" value="'.$file.'" src="'.$URL.'/HRProprietary/HRCloud2/Applications/Pell/resources/deletesmall.png" alt="Delete '.$file.'" title="Delete '.$file.'"></td>
+    <td><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
 
 ?>
 </table>
+</form>
 </div>
 <div class="content">
   <div id="pell" class="pell"></div>
