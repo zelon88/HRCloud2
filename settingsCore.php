@@ -286,14 +286,16 @@ if ($UserIDRAW == 1) { ?>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
-
+<?php 
+/*
 <p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:15px;"><strong>6.</strong> High Performance A/V Scanning (Multi-threading): </p>
   <p><select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="width:100%;">
   <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
-
+*/
+?>
 <p alt="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." title="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." style="padding-left:15px;"><strong>7.</strong> Thorough A/V Scanning: </p>
   <p><select id="NEWThoroughAV" name="NEWThoroughAV" style="width:100%;">
   <option value="<?php echo $ThoroughAV; ?>">Current (<?php echo $TAVEcho; ?>)</option>

@@ -106,21 +106,21 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
   // / using alternate methods (ignoring it's settings configuration). With Persistence enabled 
   // / HRCloud2 will spare no expense to complete a sucessful scan on it's target.
 if ($HighPerformanceAV == 1) {
-  $HighPerf = '-m '; }
+  $HighPerf = '-m'; }
 if (!isset($HighPerformanceAV) or $HighPerformanceAV == '0') {
   $HighPerf = ''; }
-if ($ThoroughAVAV == 1) {
+if ($ThoroughAV == 1) {
   $Thorough = ''; }
 if (!isset($ThoroughAV) or $ThouroughAV == '0') {
-  $Thorough = '-fdpass'; }
+  $Thorough = '-fdpass '; }
 if ($PersistentAV !== '1') {
   $PersistenceEcho = 'Stopping.'; }
 if ($PersistentAV == '1') {
   $PersistenceEcho = 'Continuing...'; 
   $ThoroughRAW = $Thorough;
   if ($ThoroughRAW == '') {
-    $Thorough = '-fdpass'; } 
-  if ($ThoroughRAW !== '-fdpass') {
+    $Thorough = '-fdpass '; } 
+  if ($ThoroughRAW !== '-fdpass ') {
     $Thorough = ''; } }
 
 // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
@@ -142,9 +142,13 @@ if (isset($_POST['scanSelected'])) {
     $userscanfilename = $_POST['userscanfilename'];
     // / Update anti-virus definitions from ClamAV.
     @shell_exec('sudo freshclam');
+    $txt = ('OP-Act: Executing \'sudo freshclam\' on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
     ?><hr /><?php
     // / Perform a ClamScan on the supplied user file and cache the results.
+    $txt = ('OP-Act: Executing \'clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.'Virus Detected!!! '.$LogFile1.'\' on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     shell_exec('clamscan -r '.$CloudLoc.'/'.$userscanfilename.' | grep FOUND >> '.'Virus Detected!!! '.$LogFile1);
     $LogTXT = file_get_contents($LogFile1);
     $WriteClamLogFile = file_put_contents($LogFile, $LogTXT.PHP_EOL, FILE_APPEND);
@@ -155,15 +159,21 @@ if (isset($_POST['scanSelected'])) {
 // / The following code is used to scan the entire Cloud drive.
 if (isset($_POST['Scan'])) {
   // / Update anti-virus definitions from ClamAV.
+  $txt = ('OP-Act: Executing \'sudo freshclam\' on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   shell_exec('sudo freshclam');
   echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
   ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Cloud Location Directory and cache the results.
   $LogFileSize3 = 0;
-  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1)));
+  $txt = ('OP-Act: Executing \'clamscan -r '.$Thorough.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1.'\' on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1)));
   sleep(1);
   if (!file_exists($LogFile1)) {
-    shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
+    $txt = ('OP-Act: Executing \'clamscan -r '.$Thorough.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1.'\' on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (!file_exists($LogFile1)) {
     $txt = ('ERROR!!! HRC2SecCore136, Could not generate scan results on '.$Time.'! Continuing...');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -184,17 +194,23 @@ if (isset($_POST['Scan'])) {
    ?><hr /><?php
   // / Perform a ClamScan on the HRCloud2 Installation Directory and cache the results.
   $LogFileSize3 = 0;
-  shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$InstLoc.' | grep FOUND >> '.$LogFile2)));
+  $txt = ('OP-Act: Executing \'clamscan -r '.$Thorough.' '.$InstLoc.' | grep FOUND >> '.$LogFile2.'\' on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$InstLoc.' | grep FOUND >> '.$LogFile2)));
   sleep(1);
   if (!file_exists($LogFile1)) {
-    shell_exec(str_replace('  ', ' ', str_replace('   ', ' ', 'clamscan -r '.$Thorough.' '.$HighPerf.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
+    $txt = ('OP-Act: Executing \'clamscan -r '.$Thorough.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1.'\' on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$CloudLoc.' | grep FOUND >> '.$LogFile1))); }
   if (file_exists($LogFile2)) { 
     $LogFileSize4 = @filesize($LogFile2);
     $LogFileDATA2 = file($LogFile2);
     foreach ($LogFileDATA2 as $LogDATA2) {
       if (strpos($LogDATA2, 'FOUND') == 'true' or $LogFileSize4 >= 3) {
         $INFECTION_DETECTED = 1;
-        $WriteClamLogFile = file_put_contents($LogFile2, 'Virus Detected!!!'.PHP_EOL, FILE_APPEND); } 
+        $txt = 'Virus Detected!!!';
+        $WriteClamLogFile = file_put_contents($LogFile2, $txt.PHP_EOL, FILE_APPEND); 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
       if (strpos($LogDATA2, 'FOUND') == 'false') {
         $WriteClamLogFile = file_put_contents($LogFile1, ''.PHP_EOL, FILE_APPEND); } }
     $LogTXT = @file_get_contents($LogFile2);
