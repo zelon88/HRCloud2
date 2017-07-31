@@ -107,8 +107,6 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
   // / HRCloud2 will spare no expense to complete a sucessful scan on it's target.
 if ($HighPerformanceAV == 1) {
   $HighPerf = '-m'; }
-if (!isset($HighPerformanceAV) or $HighPerformanceAV == '0') {
-  $HighPerf = ''; }
 if ($ThoroughAV == 1) {
   $Thorough = ''; }
 if (!isset($ThoroughAV) or $ThouroughAV == '0') {
