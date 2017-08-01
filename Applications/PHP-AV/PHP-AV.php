@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.4 (7-30-2017 08:00)
+App Version: 2.5 (7-31-2017 21:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -11,11 +11,11 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 
-PHP ANTI-VIRUS v2.4
+PHP ANTI-VIRUS v2.5
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
-$versions = 'PHP-AV App v2.4 | Virus Definition v4.0, 7/11/2017';
+$versions = 'PHP-AV App v2.5 | Virus Definition v4.0, 7/11/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -94,6 +94,20 @@ if (isset($_POST['AVScan'])) {
     $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT']; }
 // / -----------------------------------------------------------------------------------
 
+// / The following function sets a controlled memory limit for scanned files.
+function file_get_contents_chunked($file,$chunk_size,$callback) { 
+  try {
+    $handle = fopen($file, "r");
+    $i = 0;
+    while (!feof($handle)) { 
+      call_user_func_array($callback,array(fread($handle,$chunk_size),&$handle,$i));
+      $i++; }
+    fclose($handle); }
+    catch(Exception $e) {
+      trigger_error("file_get_contents_chunked::" . $e->getMessage(),E_USER_NOTICE);
+      return false; }
+  return true; }
+
 // / -----------------------------------------------------------------------------------
 // / The following functions perform the loading of definitions as well as scanning and verification of files being scanned.
 function file_scan($folder, $defs, $debug) {
@@ -108,9 +122,8 @@ function file_scan($folder, $defs, $debug) {
         $isdir = @is_dir($folder.'/'.$entry);
         if (!$isdir and $entry!='.' and $entry!='..') {
           virus_check($folder.'/'.$entry, $defs, $debug, $defData); } 
-        elseif ($isdir  and $entry!='.' and $entry!='..') {
-          $filesize = @filesize($folder.'/'.$entry);
-          if ($filesize >= $memoryLimit or $filesize == '') continue; 
+        elseif ($isdir  and $entry !='.' and $entry!='..') {
+
           file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
       $d->close(); } }
 function load_defs($file, $debug) {
@@ -147,6 +160,8 @@ function virus_check($file, $defs, $debug, $defData) {
 	      if ($defData !== $data2) {
 	        $clean = 1;
 	        foreach ($defs as $virus) {
+	          $filesize = @filesize($file);
+              if ($filesize >= $memoryLimit or $filesize == '') continue; 
 		      if ($virus[1] !== '') {
 		        if (strpos($data, $virus[1])) {
 			      // File matches virus defs.
