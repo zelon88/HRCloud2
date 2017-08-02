@@ -1,20 +1,23 @@
 <?php
 // / -----------------------------------------------------------------------------------
-// / The following code handles the pellOpen GET request.
+// / The following code handles GET requests and sets POST inputs with them.
+  // / Pell For HRC2 accepts API inputs from the following POST and/or GET inputs.
 if (isset($_GET['deleteFile'])) {
-  $_POST['saved'] = $_GET['deleteFile']; }
+  $_POST['deleteFile'] = $_GET['deleteFile']; }
 if (isset($_GET['saved'])) {
   $_POST['saved'] = $_GET['saved']; }
 if (isset($_GET['extension'])) {
   $_POST['extension'] = $_GET['extension']; }
 if (isset($_GET['pellOpen'])) {
   $_POST['pellOpen'] = $_GET['pellOpen']; }
-  if (isset($_GET['filename'])) {
+if (isset($_GET['filename'])) {
   $_POST['filename'] = $_GET['filename']; }
+if (isset($_GET['rawOutput'])) {
+  $_POST['rawOutput'] = $_GET['rawOutput']; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code sanitizes all POST inputs used by Pell for HRCloud2.
+// / The following code sanitizes all POST (and get) inputs used by Pell for HRCloud2.
 $_POST['deleteFile'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['deleteFile']);
 $_POST['deleteFile'] = str_replace(' ', '_', $_POST['deleteFile']);
 $_POST['filename'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['filename']);
@@ -22,7 +25,7 @@ $_POST['filename'] = str_replace(' ', '_', $_POST['filename']);
 $_POST['pellOpen'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['pellOpen']);
 $_POST['pellOpen'] = str_replace(' ', '_', $_POST['pellOpen']);
 $_POST['extension'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['extension']);
-$_POST['rawOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['rawOutput']);
+if (isset($_POST['rawOutput'])) $_POST['rawOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['rawOutput']);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -41,11 +44,11 @@ $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
 $deletefile = $_POST['deleteFile'];
-$htmlOutput = $_POST['htmlOutput']; 
+if (!isset($_POST['rawOutput'])) $htmlOutput = htmlspecialchars_decode(trim($_POST['htmlOutput']));
+if (isset($_POST['rawOutput'])) $htmlOutput = trim($_POST['htmlOutput']); 
 $filename = $_POST['filename'];
 $deleteFile = $_POST['deleteFile'];
 $pellOpen = $_POST['pellOpen'];
-$rawOutput = $_POST['rawOutput'];
 $extension = $_POST['extension'];
   // / Directory structure...
 $pellFiles = scandir($CloudUsrDir);
@@ -183,7 +186,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code is performed when the "Raw HTML" is checked.
+// / The following code is performed when a file is saved while the "Raw HTML" is checked.
 if ($_POST['rawOutput'] !== 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
@@ -208,7 +211,7 @@ if ($_POST['rawOutput'] !== 'checked' && isset($_POST['filename']) && $filename 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code is performed when the "Raw HTML" option is not checked.
+// / The following code is performed when a file is saved while the "Raw HTML" option is not checked.
 if ($_POST['rawOutput'] == 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     $txt = ("OP-Act, Executing \"pandoc -s $pellTempFile -o $newPathname\" on ".$Time.'.');
