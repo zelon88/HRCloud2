@@ -25,7 +25,7 @@ $_POST['filename'] = str_replace(' ', '_', $_POST['filename']);
 $_POST['pellOpen'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['pellOpen']);
 $_POST['pellOpen'] = str_replace(' ', '_', $_POST['pellOpen']);
 $_POST['extension'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['extension']);
-if (isset($_POST['rawOutput'])) $_POST['rawOutput'] = str_replace(str_split('.~#[](){};:$!#^&%@>*<"\\\''), '', $_POST['rawOutput']);
+$_POST['htmlOutput'] = str_replace(str_split('"\\\''), '', $_POST['htmlOutput']);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -44,8 +44,8 @@ $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
 $deletefile = $_POST['deleteFile'];
-if (!isset($_POST['rawOutput'])) $htmlOutput = htmlspecialchars_decode(trim($_POST['htmlOutput']));
-if (isset($_POST['rawOutput'])) $htmlOutput = trim($_POST['htmlOutput']); 
+if (isset($_POST['rawOutput'])) $htmlOutput = htmlspecialchars_decode(trim($_POST['htmlOutput']));
+if (!isset($_POST['rawOutput'])) $htmlOutput = trim($_POST['htmlOutput']); 
 $filename = $_POST['filename'];
 $deleteFile = $_POST['deleteFile'];
 $pellOpen = $_POST['pellOpen'];
@@ -175,9 +175,9 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
         echo nl2br($txt."\n"); } }
     // / Code for opening .odf, .doc and .docx files.
     if (in_array($pellOpenFileExtension, $pellDocs8)) {
-      $txt = ("OP-Act, Executing \"unoconv -o $newTempTxtPathname -f txt $pellOpenFile\" on ".$Time.'.');
+      $txt = ("OP-Act, Executing \"unoconv -o $newTempHtmlPathname -f txt $pellOpenFile\" on ".$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-      exec("unoconv -o $newTempTxtPathname -f txt $pellOpenFile", $returnDATA); 
+      exec("unoconv -o $newTempHtmlPathname -f txt $pellOpenFile", $returnDATA); 
       $pellOpenFileData = str_replace('<?', '', file_get_contents($newTempTxtPathname));
       $pellOpenFileDataArr = file($newTempTxtPathname);
       $pellOpenFileTime = date("F d Y H:i:s.",filemtime($newTempTxtPathname)); 
@@ -187,7 +187,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a file is saved while the "Raw HTML" is checked.
-if ($_POST['rawOutput'] !== 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
+if (!isset($_POST['rawOutput']) && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     if (in_array($extension, $pellDocArray)) {
@@ -212,7 +212,7 @@ if ($_POST['rawOutput'] !== 'checked' && isset($_POST['filename']) && $filename 
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a file is saved while the "Raw HTML" option is not checked.
-if ($_POST['rawOutput'] == 'checked' && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
+if (isset($_POST['rawOutput']) && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     $txt = ("OP-Act, Executing \"pandoc -s $pellTempFile -o $newPathname\" on ".$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
