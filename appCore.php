@@ -30,6 +30,7 @@ $installedApps = array_diff($Apps, $defaultApps);
 if (isset($_POST['uninstallApplication'])) { 
   $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
+$stopper = 0;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -128,20 +129,20 @@ if (isset($_FILES["appToUpload"])) {
           die(); } } 
     if (!file_exists($appInstallDir)) {
       $txt = ('ERROR!!! HRC2AppCore137, There was a problem creating '.$appInstallDir.' on '.$Time.'.'); 
-      echo nl2br ($txt."\n".'--------------------'."\n"); 
+      echo nl2br ($txt."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     if (file_exists($appInstallDir)) {
       $txt = ('OP-Act: Installed App '.$appInstallDir.' on '.$Time.'.'); 
-      echo nl2br ($txt."\n".'--------------------'."\n"); 
+      echo nl2br ($txt."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     unlink ($appInstallDir0); 
     if (!file_exists($appInstallDir0)) {
       $txt = ('OP-Act: Cleaning up on '.$Time.'.'); 
-      echo nl2br ($txt."\n".'--------------------'."\n"); 
+      echo nl2br ($txt."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
     if (file_exists($appInstallDir0)) {
       $txt = ('ERROR!!! HRC2AppCore142, There was a problem cleaning up '.$appToInstallRAW.' on '.$Time.'.'); 
-      echo nl2br ($txt."\n".'--------------------'."\n"); 
+      echo nl2br ($txt."\n"); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }} } }
 // / -----------------------------------------------------------------------------------
 
@@ -175,13 +176,13 @@ if (isset($_POST['uninstallApplication'])) {
       if (!file_exists($CleanDir)) {
         $txt = ('OP-Act: Deleted file '.$CleanDir.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-        echo nl2br($txt."\n".'--------------------'."\n"); } 
+        echo nl2br($txt."\n"); } 
       if (!file_exists($CleanDir)) {
         $txt = ('ERROR!!! HRC2AppCore165 Could not delete file '.$CleanDir.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-        echo nl2br($txt."\n".'--------------------'."\n"); } } }
+        echo nl2br($txt."\n"); } } }
   if (is_dir($CleanDir)) {
-    echo nl2br('OP-Act: Executing Janitor on Target: '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
+    echo nl2br('OP-Act: Executing Janitor on Target: '.$uninstallApp.' on '.$Time.'.'."\n"."\n");
     // / Includes the janitor to delete the target App.
     $CleanFiles = scandir($CleanDir);
     include ('janitor.php');
@@ -189,14 +190,17 @@ if (isset($_POST['uninstallApplication'])) {
     @unlink ($CleanDir.'/'.$uninstallApp.'.php');
     @rmdir ($CleanDir);
     // / Check that the Janitor suceeded in deleting the target App.
-    if (!file_exists($CleanDir)) {
+    if (!is_dir($CleanDir)) {
       $txt = ('OP-Act: Uninstalled App '.$uninstallApp.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br($txt."\n".'--------------------'."\n"); }
-    if (file_exists($CleanDir)) {
-      $txt = ('ERROR!!! HRC2AppCore183 Could not uninstall App '.$uninstallApp.' on '.$Time.'.'."\n".'--------------------'."\n");
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      echo nl2br($txt."\n".'--------------------'."\n"); } } }
+      echo nl2br($txt."\n"); }
+    if (is_dir($CleanDir)) { 
+      while (is_dir($CleanDir) && $stopper < 10) {
+        usleep(1000);
+        $stopper++; }
+    $txt = ('ERROR!!! HRC2AppCore183 Could not uninstall App '.$uninstallApp.' on '.$Time.'.'."\n");
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    echo nl2br($txt."\n"); } } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
