@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v2.2 (7-30-2017 20:45)
+App Version: v2.5 (8-4-2017 21:00)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -77,9 +77,8 @@ else {
     <option value="doc">Doc</option>
     <option value="docx">Docx</option>
     <option value="rtf">Rtf</option>
-    <option value="odf">Odf</option>
-  </select> | 
-  Raw HTML: <input type="checkbox" name="rawOutput" id="rawOutput" value="checked">
+    <option value="odt">Odt</option>
+  </select>
   <input type="hidden" name="htmlOutput" id="htmlOutput" value="">
   <input type="hidden" name="fileOutput" id="fileOutput" value="">
   <br>
@@ -103,7 +102,7 @@ foreach ($pellFiles as $file) {
   $fileExtension = pathinfo($CloudUsrDir.$file, PATHINFO_EXTENSION);
   if (!in_array($fileExtension, $pellDocArray)) continue;
   if (!file_exists($CloudUsrDir.$file)) continue;
-  $lastmodified = date("F d Y H:i:s.", filemtime($CloudUsrDir.$file));
+  $lastmodified = date("M j Y g:i A", filemtime($CloudUsrDir.$file));
   echo('<tr><td><a href="Pell.php?pellOpen='.$file.'">'.$file.'</a></td>
     <td><input type="image" id="deleteFile" name="deleteFile" value="'.$file.'" src="'.$URL.'/HRProprietary/HRCloud2/Applications/Pell/resources/deletesmall.png" alt="Delete '.$file.'" title="Delete '.$file.'"></td>
     <td><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
@@ -168,15 +167,14 @@ foreach ($pellFiles as $file) {
           document.getElementById('htmloutput').textContent = html;
         }
       })
-
+  document.getElementById('htmloutput').textContent = '<?php echo str_replace('\'', '\\\'', str_replace("\n", '', preg_replace('/\s\s+/', ' ', htmlspecialchars_decode(trim($pellOpenFileData))))); ?>';
 <?php
 if (isset($_POST['pellOpen']) && $pellOpen !== '') {
   echo('
     var pellc = document.getElementsByClassName(\'pell-content\'),
         i = pellc.length;
-
     while(i--) {
-        pellc[i].innerHTML = \''.str_replace('\'', '\\\'', htmlspecialchars_decode(trim($pellOpenFileData))).'\';
+        pellc[i].innerHTML = \''.str_replace('\'', '\\\'', str_replace("\n", '', preg_replace('/\s\s+/', ' ', htmlspecialchars_decode(trim($pellOpenFileData))))).'\';
     }'); }
 ?>
 </script>
