@@ -31,21 +31,20 @@ $_POST['htmlOutput'] = str_replace(str_split('"\\\''), '', $_POST['htmlOutput'])
 // / -----------------------------------------------------------------------------------
 // / The following code sets global variables for the session.
   // / Arrays...
-$pellDocArray = array('txt', 'docx', 'rtf', 'pdf', 'odf', 'doc');
+$pellDocArray = array('txt', 'docx', 'rtf', 'pdf', 'odt', 'doc');
 $pellDocs1 = array('txt');
 $pellDocs2 = array('doc');
 $pellDocs3 = array('docx');
 $pellDocs4 = array('rtf');
 $pellDocs5 = array('pdf');
 $pellDocs6 = array('docx', 'doc');
-$pellDocs7 = array('rtf', 'pdf');
-$pellDocs8 = array('docx', 'doc', 'odf');
+$pellDocs7 = array('pdf');
+$pellDocs8 = array('docx', 'doc', 'odt', 'rtf');
 $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
 $deletefile = $_POST['deleteFile'];
-if (isset($_POST['rawOutput'])) $htmlOutput = htmlspecialchars_decode(trim($_POST['htmlOutput']));
-if (!isset($_POST['rawOutput'])) $htmlOutput = trim($_POST['htmlOutput']); 
+$htmlOutput = htmlspecialchars_decode(trim($_POST['htmlOutput']));
 $filename = $_POST['filename'];
 $deleteFile = $_POST['deleteFile'];
 $pellOpen = $_POST['pellOpen'];
@@ -61,6 +60,18 @@ $pellOpenFileExtension = pathinfo($pellOpenFile, PATHINFO_EXTENSION);
 $newTempHtmlPathname = str_replace('//', '/', $pellTempDir.'/'.$pellOpen.'.html');
 $newTempTxtPathname = str_replace('//', '/', $pellTempDir.'/'.$pellOpen.'.txt');
 $newHtmlPathname = str_replace($pellOpenFileExtension, 'html', $pellOpenFile);
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Function by Justin Cook...
+  // / http://www.justin-cook.com/2006/03/31/php-parse-a-string-between-two-strings/
+function get_string_between($string, $start, $end){
+  $string = ' ' . $string;
+  $ini = strpos($string, $start);
+  if ($ini == 0) return '';
+  $ini += strlen($start);
+  $len = strpos($string, $end, $ini) - $ini;
+  return substr($string, $ini, $len); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -139,7 +150,7 @@ if ((isset($_POST['pellOpen']) && $pellOpen == '') or (isset($_POST['filename'])
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code opens files from a users Cloud drive and presents them in to Pell for editing.
+// / The following code opens files from a users Cloud drive and presents them to Pell for editing.
 if (isset($_POST['pellOpen']) && $pellOpen !== '') {
   if (!file_exists($pellOpenFile)) {
     $txt = ('ERROR!!! HRC2PellApp89, Could not load '.$pellOpen.' into memory on '.$Time.'.');
@@ -151,7 +162,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
     if (in_array($pellOpenFileExtension, $pellDocs1)) {
       $pellOpenFileData = str_replace('<?', '', file_get_contents($pellOpenFile));
       $pellOpenFileDataArr = file($pellOpenFile);
-      $pellOpenFileTime = date("F d Y H:i:s.",filemtime($pellOpenFile)); 
+      $pellOpenFileTime = date("F d Y H:i:s",filemtime($pellOpenFile)); 
       $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
     // / Code for opening .rtf files.
@@ -173,54 +184,50 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
         $txt = ('ERROR!!! HRC2PellApp128 Could not copy the contents of '.$pellOpen.' into memory on '.$Time.'!');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n"); } }
-    // / Code for opening .odf, .doc and .docx files.
+    // / Code for opening .odt, .doc and .docx files.
     if (in_array($pellOpenFileExtension, $pellDocs8)) {
       $txt = ("OP-Act, Executing \"unoconv -o $newTempHtmlPathname -f txt $pellOpenFile\" on ".$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-      exec("unoconv -o $newTempHtmlPathname -f txt $pellOpenFile", $returnDATA); 
-      $pellOpenFileData = str_replace('<?', '', file_get_contents($newTempTxtPathname));
-      $pellOpenFileDataArr = file($newTempTxtPathname);
-      $pellOpenFileTime = date("F d Y H:i:s.",filemtime($newTempTxtPathname)); 
+      exec("unoconv -o $newTempHtmlPathname -f html $pellOpenFile", $returnDATA); 
+      $pellOpenFileData = file_get_contents($newTempHtmlPathname);
+      $junk = get_string_between($pellOpenFileData, '<!DOCTYPE HTML', '"ltr">');
+      $pellOpenFileData = str_replace('<!DOCTYPE HTML'.$junk.'"ltr">', '', $pellOpenFileData);
+      $junk = null;
+      unset($junk);
+      $pellOpenFileData = str_replace('</body>', '', $pellOpenFileData);
+      $pellOpenFileData = str_replace('</html>', '', $pellOpenFileData);
+      $pellOpenFileData = str_replace('<?', '', $pellOpenFileData);
+      $pellOpenFileDataArr = file($newTempHtmlPathname);
+      $pellOpenFileTime = date("F d Y H:i:s",filemtime($newTempHtmlPathname)); 
       $txt = ('OP-Act: Copied contents of '.$pellOpen.' into memory on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code is performed when a file is saved while the "Raw HTML" is checked.
-if (!isset($_POST['rawOutput']) && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
+// / The following code is performed when a file is saved.
+if (isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
   // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
-    if (in_array($extension, $pellDocArray)) {
-          $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pellTempFile\" on ".$Time.'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-        // / For some reason files take a moment to appear after being created with Unoconv.
-          $stopper = 0;
-          while(!file_exists($newPathname)) {
-            exec("unoconv -o $newPathname -f $extension $pellTempFile");
-            $stopper++;
-            if ($stopper == 10) {
-              $txt = 'ERROR!!! HRC2PellApp53, The converter timed out while copying your file. ';
-              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-              echo nl2br($txt."\n");
-              unlink($pellTempFile);
-              die($txt); } } } }
+    if (in_array($extension, $pellDocs1)) {
+      copy($pellTempFile, $newPathname); }
+    if (in_array($extension, $pellDocs8)) {
+      $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pellTempFile\" on ".$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
+      // / For some reason files take a moment to appear after being created with Unoconv.
+      $stopper = 0;
+      while(!file_exists($newPathname)) {
+        exec("unoconv -o $newPathname -f $extension $pellTempFile");
+        $stopper++;
+        if ($stopper == 10) {
+          $txt = 'ERROR!!! HRC2PellApp53, The converter timed out while copying your file. ';
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+          echo nl2br($txt."\n");
+          unlink($pellTempFile);
+          die($txt); } } } }
   if (file_exists($newPathname)) {
     $txt = ('OP-Act, Created '.$newPathname.' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt."\n"); } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code is performed when a file is saved while the "Raw HTML" option is not checked.
-if (isset($_POST['rawOutput']) && isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
-  if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
-    $txt = ("OP-Act, Executing \"pandoc -s $pellTempFile -o $newPathname\" on ".$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-    exec("pandoc -s $pellTempFile -o $newPathname", $returnDATA); } 
-  if (file_exists($newPathname)) {
-    $txt = ('OP-Act, Created '.$newPathname.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($txt."\n"); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -234,15 +241,16 @@ if (is_array($returnDATA)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code cleans up any lingering temp files.if (file_exists($pellTempFile)) {
-@unlink($pellTempFile);
+// / The following code cleans up any lingering temp files. 
 if (file_exists($pellTempFile)) {
-  $txt = ('ERROR!!! HRC2PellApp87, There was a problem cleaning temporary Pell data on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  echo nl2br($txt."\n"); }
-if (!file_exists($pellTempFile)) {
-  $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  @unlink($pellTempFile);
+  if (file_exists($pellTempFile)) {
+    $txt = ('ERROR!!! HRC2PellApp87, There was a problem cleaning temporary Pell data on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    echo nl2br($txt."\n"); }
+  if (!file_exists($pellTempFile)) {
+    $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
