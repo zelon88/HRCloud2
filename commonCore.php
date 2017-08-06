@@ -292,12 +292,8 @@ $AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
 $adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
 $AdminConfig = $adminAppDataInstDir.'/.config.php';
 if (!file_exists($AdminConfig)) { 
-  chmod($AdminConfig, 0755); 
-  chown($AdminConfig, 'www-data'); }
-if (!file_exists($AdminConfig)) { 
-  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the admin config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die ($txt); }
+  $txt = ('WARNING!!! HRC2CommonCore151, There was a problem loading the admin config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 if (file_exists($AdminConfig)) {
   include ($AdminConfig); }
 $AV = $VirusScan;
