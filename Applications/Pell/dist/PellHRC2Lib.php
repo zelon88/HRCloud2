@@ -215,15 +215,14 @@ if (isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
       // / For some reason files take a moment to appear after being created with Unoconv.
       $stopper = 0;
-      while(!file_exists($newPathname)) {
-        exec("unoconv -o $newPathname -f $extension $pellTempFile");
-        $stopper++;
-        if ($stopper == 10) {
-          $txt = 'ERROR!!! HRC2PellApp53, The converter timed out while copying your file. ';
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-          echo nl2br($txt."\n");
-          unlink($pellTempFile);
-          die($txt); } } } }
+      exec("unoconv -o $newPathname -f $extension $pellTempFile");
+      $stopper++;
+      if ($stopper == 10) {
+        $txt = 'ERROR!!! HRC2PellApp53, The converter timed out while copying your file. ';
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        echo nl2br($txt."\n");
+        unlink($pellTempFile);
+        die($txt); } } }
   if (file_exists($newPathname)) {
     $txt = ('OP-Act, Created '.$newPathname.' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
