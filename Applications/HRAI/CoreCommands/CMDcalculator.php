@@ -20,16 +20,17 @@ $input = rtrim($input);
 $input = ltrim($input);
 if ($CMDinit[$CMDcounter] == 1) {
 
-// / This CMDcommand was copied from the HRC2 Calculator App on 11/30/2016.
+// / This CMDcommand was copied from the HRC2 Calculator App on 8/8/2017.
 
 // / HRAI Specific Code.
-if ($LOADcalculator == '1') {
-  $calculatorInput = $_POST['input']; 
+$_POST['calculatorInput'] = $_POST['input'];
+$calculatorInput = $_POST['calculatorInput'];
 if (isset($calculatorInput) && $calculatorInput == '') {
-  echo ('There was no equation to calculate!'); } }
+  echo ('There was no equation to calculate!'); }
 
-// / Copy/Pasta code from 11/30/2016 HRC2 Calculator App..... Word-for-word.
+// / Copy/Pasta code from 8/8/2017 HRC2 Calculator App..... Word-for-word.
 if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
+  $calculatorInput = strtolower($calculatorInput);
   // / The following code defines a function originally written by Justin Cook...
   // / http://www.justin-cook.com/wp/2006/03/31/php-parse-a-string-between-two-strings/
     function get_string_between($string, $start, $end) {
@@ -47,7 +48,7 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
   $subtractionFunctions = str_split('-');
   $multicationFunctions = str_split('*');
   $divisionFunctions = str_split('/');
-  $calculatorInput = str_replace(str_split('[]{};:$!#&@><'), '', $_POST['calculatorInput']);
+  $calculatorInput = str_replace(str_split('[]{};:$!#&@>=<'), '', $_POST['calculatorInput']);
   $calculatorInput = strtolower($calculatorInput);
   $calculatorInput = str_replace(str_split('xX'), '*', $calculatorInput);
   $calculatorInput = str_replace('multiplied by', '*', $calculatorInput);
@@ -67,18 +68,19 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
     $calculatorInput = str_replace(')'.$number, ')*'.$number, $calculatorInput); }
   if ($calculatorInput == '') {
     echo ('There was no equation to calculate!'); }
-
   $priorityFunctions = get_string_between($calculatorInput, '(', ')');
   $priorityFunctions = str_replace(str_split('()'), '', $priorityFunctions);
+  // / The following code prepares ONLY ONE (the first encountered) nested equation before proceeding.  
   if ($priorityFunctions !== '') {
     $counter++;
     echo ('<i>'.$calculatorInput.'</i>');
     eval('$priorityTotal = ('.$priorityFunctions.');');
     echo ('<p><strong>'.$counter.'.</strong> <i>('.$priorityFunctions.')</i> = <strong>'.$priorityTotal.'</strong></p>');
     $calculatorInput = str_replace($priorityFunctions, $priorityTotal, $calculatorInput); }
-
+// / The following code parses upper-level equations.
 if ($calculatorInput !== '') {
   $counter++;
   eval('$total = ('.$calculatorInput.');');
   echo ('<p><strong>'.$counter.'.</strong> <i>'.$calculatorInput.'</i> = <u><strong>'.$total.'</strong></u></p>'); } } }
+
 ?>
