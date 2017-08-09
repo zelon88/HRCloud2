@@ -11,11 +11,11 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 
-PHP ANTI-VIRUS v2.5
+PHP ANTI-VIRUS v2.6
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
-$versions = 'PHP-AV App v2.5 | Virus Definition v4.0, 7/11/2017';
+$versions = 'PHP-AV App v2.6 | Virus Definition v4.0, 7/11/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -39,7 +39,8 @@ $versions = 'PHP-AV App v2.5 | Virus Definition v4.0, 7/11/2017';
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the memory limit for scanned files (larger files will be skipped).
-$memoryLimit = (rtrim(ini_get("memory_limit"). 'M') * 1024 * 1024);
+$memoryLimit = (rtrim(ini_get("memory_limit"), 'M') * 1024 * 1024);
+ini_set('memory_limit', '-1');
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -94,22 +95,9 @@ if (isset($_POST['AVScan'])) {
     $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT']; }
 // / -----------------------------------------------------------------------------------
 
-// / The following function sets a controlled memory limit for scanned files.
-function file_get_contents_chunked($file,$chunk_size,$callback) { 
-  try {
-    $handle = fopen($file, "r");
-    $i = 0;
-    while (!feof($handle)) { 
-      call_user_func_array($callback,array(fread($handle,$chunk_size),&$handle,$i));
-      $i++; }
-    fclose($handle); }
-    catch(Exception $e) {
-      trigger_error("file_get_contents_chunked::" . $e->getMessage(),E_USER_NOTICE);
-      return false; }
-  return true; }
-
 // / -----------------------------------------------------------------------------------
-// / The following functions perform the loading of definitions as well as scanning and verification of files being scanned.
+// / Functions
+
 function file_scan($folder, $defs, $debug) {
   // Hunts files/folders recursively for scannable items.
   $defData = hash_file('sha256', 'virus.def');
@@ -126,6 +114,7 @@ function file_scan($folder, $defs, $debug) {
 
           file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
       $d->close(); } }
+
 function load_defs($file, $debug) {
   // Reads tab-delimited defs file.
   $defs = file($file);
@@ -137,6 +126,7 @@ function load_defs($file, $debug) {
 if ($debug)
   echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
   return $defs; }
+
 function check_defs($file) {
   // Check for >755 perms on virus defs.
   clearstatcache();
@@ -145,6 +135,7 @@ function check_defs($file) {
 	return false;
   else
 	return true; }
+
 function virus_check($file, $defs, $debug, $defData) {
   // Hashes and checks files/folders for viruses against static virus defs.
   global $memoryLimit, $filecount, $infected, $report, $CONFIG;
@@ -152,36 +143,34 @@ function virus_check($file, $defs, $debug, $defData) {
 	if ($file !== 'virus.def')
 	  if (file_exists($file)) { 
 	  	$filesize = filesize($file);
-	  	if ($memoryLimit > $filesize) {  
 	      $data = file($file);
 	      $data = implode('\r\n', $data);
 	      $data1 = md5_file($file);
 	      $data2 = hash_file('sha256', $file);
-	      if ($defData !== $data2) {
-	        $clean = 1;
-	        foreach ($defs as $virus) {
-	          $filesize = @filesize($file);
-              if ($filesize >= $memoryLimit or $filesize == '') continue; 
+	    if ($defData !== $data2) {
+	       $clean = 1;
+	      foreach ($defs as $virus) {
+	        $filesize = @filesize($file);
 		      if ($virus[1] !== '') {
 		        if (strpos($data, $virus[1])) {
-			      // File matches virus defs.
-			      $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-			      $infected++;
-			      $clean = 0; } }
-		        if ($virus[2] !== '') {
-                  if (strpos($data1, $virus[2])) {
-			      // File matches virus defs.
-			      $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-			      $infected++;
-			      $clean = 0; } }
-		      if ($virus[3] !== '') {
-                if (strpos($data2, $virus[3])) {
-			    // File matches virus defs.
-			    $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
-			    $infected++;
-			    $clean = 0; } } }
-	        if (($debug)&&($clean)) {
-		      $report .= '<p class="g">Clean: ' . $file . '</p>'; } } } } } 
+			       // File matches virus defs.
+			       $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			       $infected++;
+			       $clean = 0; } }
+		      if ($virus[2] !== '') {
+            if (strpos($data1, $virus[2])) {
+			          // File matches virus defs.
+			        $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			        $infected++;
+			        $clean = 0; } }
+		       if ($virus[3] !== '') {
+            if (strpos($data2, $virus[3])) {
+			          // File matches virus defs.
+			        $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+			        $infected++;
+			         $clean = 0; } } }
+	       if (($debug)&&($clean)) {
+		      $report .= '<p class="g">Clean: ' . $file . '</p>'; } } } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
