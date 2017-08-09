@@ -26,7 +26,7 @@ if (!isset($_POST['input'])) { ?>
 <div id="HRAITop" align='center'><img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logoslowbreath.gif'/></div>
 <?php } 
 if (isset($_POST['input'])) {
-  $_POST['input'] = str_replace(str_split('[]{};:$#^&%@>*<'), '', $_POST['input']); ?>
+  $_POST['input'] = str_replace(str_split('[]{};:$#^&%@><'), '', $_POST['input']); ?>
 <div id="HRAITop" style="float: left; margin-left: 15px;">
 <img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logo.gif'/>
 </div>
