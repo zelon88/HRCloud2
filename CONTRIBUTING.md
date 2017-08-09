@@ -14,7 +14,7 @@ Any contribution which adds value and/or convinience to the platform.
 
 --WE WILL NOT CONSIDER-- 
 Any contribution that requires a connection to external or 3rd party servers or services. 
-This includes Google Cloud, AWS, or any other PaaS or SaaS service that the cannot be
+This includes Google Cloud, AWS, or any other PaaS or SaaS service that cannot be
 included as a local dependency. 
 
 --NICE TO HAVE--
