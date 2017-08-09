@@ -2,14 +2,8 @@
 
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDcalculator.php'; 
 $inputMATCH = array('calculator', 'the sum of', 'quotient of', 'plus', 'add', 'subtract', 'minus', 'take away', 
-  'divided by', 'multiplied by', 'times');
+  'divided by', 'multiplied by', 'times', '+', '-', '/', '*');
 $CMDcounter++;
-
-if (isset($input) && $input !== '') {
-  foreach ($inputMATCH as $inputM1) {
-    if (preg_match('/'.$inputM1.'/', $input)) {
-      $CMDinit[$CMDcounter] = 1;
-      $input = preg_replace('/'.$inputM1.'/',' ',$input); } } }
 
 if (!isset($input)) {
   $input = ''; }
@@ -18,7 +12,6 @@ $input = str_replace('   ',' ',$input);
 $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 $input = ltrim($input);
-if ($CMDinit[$CMDcounter] == 1) {
 
 // / This CMDcommand was copied from the HRC2 Calculator App on 8/8/2017.
 
@@ -81,6 +74,6 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
 if ($calculatorInput !== '') {
   $counter++;
   eval('$total = ('.$calculatorInput.');');
-  echo ('<p><strong>'.$counter.'.</strong> <i>'.$calculatorInput.'</i> = <u><strong>'.$total.'</strong></u></p>'); } } }
+  echo ('<p><strong>'.$counter.'.</strong> <i>'.$calculatorInput.'</i> = <u><strong>'.$total.'</strong></u></p>'); } } 
 
 ?>
