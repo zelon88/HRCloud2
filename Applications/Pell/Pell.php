@@ -148,6 +148,42 @@ foreach ($pellFiles as $file) {
             result: () => window.pell.exec('italic')
           },
           {
+            name: 'heading1',
+            result: () => window.pell.exec('formatBlock', '<H1>')
+          },
+          {
+            name: 'heading2',
+            result: () => window.pell.exec('formatBlock', '<H2>')
+          },
+          {
+            name: 'paragraph',
+            result: () => window.pell.exec('formatBlock', '<P>')
+          },
+          {
+            name: 'quote',
+            result: () => window.pell.exec('formatBlock', '<BLOCKQUOTE>')
+          },
+          {
+            name: 'olist',
+            result: () => window.pell.exec('insertOrderedList')
+          },
+          {
+            name: 'ulist',
+            result: () => window.pell.exec('insertUnorderedList')
+          },
+          {
+            name: 'line',
+            result: () => window.pell.exec('insertHorizontalRule')
+          },
+          {
+            name: 'undo',
+            result: () => window.pell.exec('undo')
+          },
+          {
+            name: 'redo',
+            result: () => window.pell.exec('redo')
+          },
+          {
             name: 'image',
             result: () => {
               const url = window.prompt('Enter the image URL')
