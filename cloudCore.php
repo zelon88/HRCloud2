@@ -1189,49 +1189,6 @@ if (isset($_POST['clipboardCopy'])) {
         } } } }
 
 // / -----------------------------------------------------------------------------------
-// / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
-// / --- Code by theo546 ---
-  // / Here is the fix for symlink date. --theo546 (source: http://stackoverflow.com/questions/34512105/php-check-how-old-a-symlink-file-is)
-  function symlinkmtime($symlinkPath)
-  {
-      $stat = lstat($symlinkPath);
-      return isset($stat['mtime']) ? $stat['mtime'] : null;
-    }
-// / ---
-if (file_exists($CloudTempDir)) {
-  $txt = ('OP-Act: Initiated AutoClean on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $DFiles = glob($CloudTempDir.'/*');
-  $now = time();
-  foreach ($DFiles as $DFile) {
-    if (in_array($DFile, $defaultApps)) continue;
-    if ($DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
-    if (($now - symlinkmtime($DFile)) >= 600) { // Time to keep files.
-      if (is_file($DFile)) {
-        @chmod ($DFile, 0755);
-        unlink($DFile); 
-        $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-      if (is_dir($DFile)) {
-        $CleanDir = $DFile;
-        @chmod ($CleanDir, 0755);
-        $CleanFiles = scandir($DFile);
-        include('/var/www/html/HRProprietary/HRCloud2/janitor.php'); 
-        @unlink($DFile.'/index.html');
-        @rmdir($DFile); } } } }
-// / copy a fresh index file to the Temp Cloud directory.        
-if (!file_exists($CloudTempDir.'/index.html')) {
-  copy('index.html', $CloudTempDir.'/index.html'); }
-// / Display appropriate filesizes.
-$bytes = sprintf('%u', filesize($DisplayFile));
-if ($bytes > 0) {
-  $unit = intval(log($bytes, 1024));
-  $units = array('B', 'KB', 'MB', 'GB');
-  if (array_key_exists($unit, $units) === true) { 
-    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / Code to search a users Cloud Drive and return the results.
 if (isset($_POST['search'])) { 
   $txt = ('OP-Act: '."User initiated Cloud Search on $Time".'.');
