@@ -39,7 +39,7 @@ else {
 // / We must run this code before loading the rest of the core files so as to avoid a required refresh before 
   // / displaying the latest settings.
 if (isset($_POST['Save'])) {
-  // / The following code is sets the users color scheme.
+  // / The following code is sets the users color scheme. 
   if (isset($_POST['NEWColorScheme'])) {
     $NEWColorScheme = $_POST['NEWColorScheme'];
     $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
@@ -101,7 +101,6 @@ if (isset($_POST['Save'])) {
 <hr />
 <?php
 sleep(1);
-include('/var/www/html/HRProprietary/HRCloud2/commonCore.php');
 echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 ?></div>
 <div align="center">   
