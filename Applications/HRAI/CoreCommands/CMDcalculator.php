@@ -35,13 +35,13 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
       return substr($string, $ini, $len); } 
   // / The following code sets the global variables for the session.
   $numbers = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-  $basicFunctions = str_split('+-xX*/');
-  $advancedFunctions = str_split('%');
-  $additionFunctions = str_split('+'); 
-  $subtractionFunctions = str_split('-');
-  $multicationFunctions = str_split('*');
-  $divisionFunctions = str_split('/');
-  $calculatorInput = str_replace(str_split('[]{};:$!#&@>=<'), '', $_POST['calculatorInput']);
+  $basicFunctions = array('+', '-', 'x', 'X', '*', '/');
+  $advancedFunctions = '%';
+  $additionFunctions = '+';
+  $subtractionFunctions = '-';
+  $multicationFunctions = '*';
+  $divisionFunctions = '/';
+  $calculatorInput = str_replace(str_split('[]{};:$!#&@>=<?,'), '', $calculatorInput);
   $calculatorInput = strtolower($calculatorInput);
   $calculatorInput = str_replace(str_split('xX'), '*', $calculatorInput);
   $calculatorInput = str_replace('multiplied by', '*', $calculatorInput);
@@ -73,6 +73,8 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
 // / The following code parses upper-level equations.
 if ($calculatorInput !== '') {
   $counter++;
+  foreach($basicFunctions as $bfunc) {
+    $calculatorInput = trim($calculatorInput, $bfunc); }
   eval('$total = ('.$calculatorInput.');');
   echo ('<p><strong>'.$counter.'.</strong> <i>'.$calculatorInput.'</i> = <u><strong>'.$total.'</strong></u></p>'); } } 
 
