@@ -46,7 +46,6 @@ if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
   $calculatorInput = str_replace(str_split('xX'), '*', $calculatorInput);
   $calculatorInput = str_replace('multiplied by', '*', $calculatorInput);
   $calculatorInput = str_replace('plus', '+', $calculatorInput);
-  $calculatorInput = str_replace('and', '+', $calculatorInput);
   $calculatorInput = str_replace('minus', '-', $calculatorInput);
   $calculatorInput = str_replace('take away', '-', $calculatorInput);
   $calculatorInput = str_replace('times', '*', $calculatorInput);
