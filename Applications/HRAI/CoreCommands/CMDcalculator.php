@@ -6,6 +6,8 @@ $inputMATCH = array('calculator', 'the sum of', 'quotient of', 'plus', 'add', 's
 $CMDcounter++;
 
 if (!isset($input)) {
+  $_POST['calculatorInput'] = $_POST['input'];
+  $calculatorInput = $_POST['calculatorInput'];
   $input = ''; }
 
 $input = str_replace('   ',' ',$input);
@@ -16,8 +18,6 @@ $input = ltrim($input);
 // / This CMDcommand was copied from the HRC2 Calculator App on 8/8/2017.
 
 // / HRAI Specific Code.
-$_POST['calculatorInput'] = $_POST['input'];
-$calculatorInput = $_POST['calculatorInput'];
 if (isset($calculatorInput) && $calculatorInput == '') {
   echo ('There was no equation to calculate!'); }
 
