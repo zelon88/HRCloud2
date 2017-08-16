@@ -59,15 +59,8 @@ else {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code sets variables for the session.
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-$UserIDRAW = get_current_user_id();
-$Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / The following code checks to see that the user is logged in.
+$UserIDRAW = get_current_user_id();
 if ($UserIDRAW == '') {
   echo nl2br('ERROR!!! HRC2CommonCore100, You are not logged in!'."\n"); 
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
@@ -84,6 +77,13 @@ if (!isset($UserIDRAW)) {
 
 // / -----------------------------------------------------------------------------------
 // / The followind code hashes the user ID and sets the directory structure for the session.
+if (isset($Timezone) or $Timezone == '') $Timezone = 'America/New_York';
+$Now = time();
+$Timezone = str_replace(' ', '_', $Timezone);
+date_default_timezone_set($Timezone);
+$Date = date("m_d_y");
+$Time = date("F j, Y, g:i a", $Now); 
+$Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
