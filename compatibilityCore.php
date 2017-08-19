@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.7.5.4
-WRITTEN ON : 8/15/2017
+THIS VERSION : v1.7.6
+WRITTEN ON : 8/19/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
   echo nl2br($txt.'</hr>');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 // / -----------------------------------------------------------------------------------
-
+ 
 // / -----------------------------------------------------------------------------------
 // / The following code will check the O/S installed on the server and return a warning message if Windows is detected.
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {

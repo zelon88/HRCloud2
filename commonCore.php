@@ -77,12 +77,8 @@ if (!isset($UserIDRAW)) {
 
 // / -----------------------------------------------------------------------------------
 // / The followind code hashes the user ID and sets the directory structure for the session.
-if (isset($Timezone) or $Timezone == '') $Timezone = 'America/New_York';
-$Now = time();
-$Timezone = str_replace(' ', '_', $Timezone);
-date_default_timezone_set($Timezone);
 $Date = date("m_d_y");
-$Time = date("F j, Y, g:i a", $Now); 
+$Time = date("F j, Y, g:i a"); 
 $Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
@@ -329,6 +325,16 @@ $VirusScan = $AV;
 $HighPerformanceAV = $HP;
 $ThoroughAV = $TH;
 $PersistentAV = $PS;
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code resets the official time according to the Timezone entry in the user's config file.
+if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
+$Now = time();
+$Timezone = str_replace(' ', '_', $Timezone);
+date_default_timezone_set($Timezone);
+$Date = date("m_d_y");
+$Time = date("F j, Y, g:i a"); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

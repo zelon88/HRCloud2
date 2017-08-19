@@ -53,9 +53,7 @@ if (isset($_POST['NEWDataCompression'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
 // / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
-  // / ONLY ADMINISTRATORS CAN CLEAR HRC2 SYSTEM CACHE FILES !!!
 if (isset($_POST['ClearCachePOST'])) {
   $ClearCachePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearCachePOST']); }
 if (isset($_POST['ClearUserCache'])) {
@@ -67,25 +65,29 @@ if (isset($_POST['ClearCache'])) {
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify a specific file or directory within a users Cloud to scan for viruses with ClamAV.
 if (isset($_POST['NEWVirusScan'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWVirusScan']); }
+  $NEWVirusScan = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWVirusScan']); }
 if (isset($_POST['userscanfilename'])) { 
   $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['userscanfilename']); }
 if (isset($_POST['scanSelected'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['scanSelected']); }
+  $scanSelected = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['scanSelected']); }
 if (isset($_POST['HighPerformanceAV'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['HighPerformanceAV']); }
+  $HighPerformanceAV = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['HighPerformanceAV']); }
 if (isset($_POST['NEWHighPerformanceAV'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWHighPerformanceAV']); }
+  $NEWHighPerformanceAV = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWHighPerformanceAV']); }
+if (isset($_POST['NEWThoroughAV'])) { 
+  $NEWThoroughAV = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWThoroughAV']); }
+if (isset($_POST['NEWPersistentAV'])) { 
+  $NEWPersistentAV = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWPersistentAV']); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to sanitize new settings inputs.
 if (isset($_POST['NEWColorScheme'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWColorScheme']); }
+  $NEWColorScheme = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWColorScheme']); }
 if (isset($_POST['NEWShowHRAI'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowHRAI']); }
-if (isset($_POST['NEWShowHRAI'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowHRAI']); }
+  $NEWShowHRAI = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowHRAI']); }
+if (isset($_POST['NEWTimezone'])) { 
+  $NEWTimezone = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWTimezone']); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
