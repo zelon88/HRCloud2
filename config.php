@@ -74,3 +74,9 @@ $ShowHRAI = '1';
   // / Directory to be scanned for file dumps (NO SLASH AFTER DIRECTORY!!!) ...  
   $CloudLoc = '/home/justin/Desktop/TestDir/Cloud';
 // / ------------------------------ 
+
+// / ------------------------------ 
+// / Default Timezone
+  // / This timezone will be the default one used if a user has not specified there own.
+$defaultTimezone = 'America/New_York';
+// / ------------------------------ 
