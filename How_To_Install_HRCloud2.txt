@@ -82,6 +82,8 @@ of their servers.
 -sudo apt-get install tesseract-ocr
 -sudo apt-get install meshlab
 -sudo apt-get install dia
+-sudo apt-get install handbrake
+-sudo apt-get install handbrake-cli
 --------------------------------------------------
 
 -----STEP 5 - INSTALL HRCLOUD2-----
