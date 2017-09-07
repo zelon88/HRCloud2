@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.6 (8-8-2017 21:15)
+App Version: 2.7 (9-6-2017 22:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -15,7 +15,7 @@ PHP ANTI-VIRUS v2.6
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
-$versions = 'PHP-AV App v2.6 | Virus Definition v4.0, 7/11/2017';
+$versions = 'PHP-AV App v2.7 | Virus Definition v4.1, 9/6/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -38,8 +38,7 @@ $versions = 'PHP-AV App v2.6 | Virus Definition v4.0, 7/11/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code sets the memory limit for scanned files (larger files will be skipped).
-$memoryLimit = (rtrim(ini_get("memory_limit"), 'M') * 1024 * 1024);
+// / The following code sets the memory limit for PHP to unlimited. Memory is controlled later.
 ini_set('memory_limit', '-1');
 // / -----------------------------------------------------------------------------------
 
@@ -138,16 +137,39 @@ function check_defs($file) {
 
 function virus_check($file, $defs, $debug, $defData) {
   // Hashes and checks files/folders for viruses against static virus defs.
-  global $memoryLimit, $filecount, $infected, $report, $CONFIG;
+  global $memoryLimit, $chunkSize, $filecount, $infected, $report, $CONFIG;
 	$filecount++;
-	if ($file !== 'virus.def')
+	if ($file !== $InstLoc.'/Applications/PHP-AV/virus.def') {
 	  if (file_exists($file)) { 
 	  	$filesize = filesize($file);
-	      $data = file($file);
-	      $data = implode('\r\n', $data);
-	      $data1 = md5_file($file);
-	      $data2 = hash_file('sha256', $file);
-	    if ($defData !== $data2) {
+      // / Scan files larger than the memory limit by breaking them into chunks.
+      if ($filesize >= $memoryLimit && file_exists($file)) {
+        $handle = @fopen($file, "r");
+          if ($handle) {
+            while (($buffer = fgets($handle, $chunkSize)) !== false) {
+              $data = $buffer;
+              foreach ($defs as $virus) {
+                $filesize = @filesize($file);
+                if ($virus[1] !== '') {
+                  if (strpos($data, $virus[1])) {
+                   // File matches virus defs.
+                   $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+                   $infected++;
+                   $clean = 0; } } } }
+            if (!feof($handle)) {
+              echo 'ERROR!!! PHPAV160, Unable to open '.$file.' on '.$Time.'.'.\n; }
+          fclose($handle); } } } }
+      // / Scan files smaller than the memory limit by fitting the entire file into memory.
+      if ($filesize < $memoryLimit && file_exists($file)) {
+        $data = file($file);
+	      $data = implode('\r\n', $data); }
+	    if (file_exists($file)) {
+        $data1 = md5_file($file);
+	      $data2 = hash_file('sha256', $file); }
+      if (!file_exists($file)) {
+        $data1 = '';
+        $data2 = ''; }
+      if ($defData !== $data2) {
 	       $clean = 1;
 	      foreach ($defs as $virus) {
 	        $filesize = @filesize($file);
@@ -170,7 +192,7 @@ function virus_check($file, $defs, $debug, $defData) {
 			        $infected++;
 			         $clean = 0; } } }
 	       if (($debug)&&($clean)) {
-		      $report .= '<p class="g">Clean: ' . $file . '</p>'; } } } } 
+		      $report .= '<p class="g">Clean: ' . $file . '</p>'; } } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

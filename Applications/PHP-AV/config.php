@@ -25,4 +25,12 @@ $CONFIG['debug'] = 0;
 
 $CONFIG['scanpath'] = $CONFIG['scanpath'];
 
+// MEMORY LIMITS
+// -----------------
+// These options can be used to specify memory restrictions for
+// PHP-AV. Anything larger than $memoryLimit (bytes) in bytes will be 
+// chopped into $chunkSize (bytes). Each chunk is then scanned separately.
+
+$memoryLimit = 4000000;
+$chunkSize = 1000000;
 ?>
