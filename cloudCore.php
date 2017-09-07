@@ -588,8 +588,8 @@ if (isset( $_POST['convertSelected'])) {
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $allowed =  array('svg', 'dxf', 'vdx', 'fig', '3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 
-      'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2',
-      'avi', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'odp');
+      'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2', '3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv', 
+      'avi', 'aac', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'odp');
     $file1 = str_replace('//', '/', $CloudUsrDir.$file);
     $file2 = str_replace('//', '/', $CloudTmpDir.$file);
     copy($file1, $file2); 
@@ -613,6 +613,8 @@ if (isset( $_POST['convertSelected'])) {
     $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile);
     $docarray =  array('txt', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'odp', 'odf');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
+    $audioarray =  array('mp3', 'wma', 'wav', 'ogg', 'mp2', 'flac', 'aac');
+    $videoarray =  array('3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv');
     $modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
     $drawingarray = array('xvg', 'dxf', 'vdx', 'fig');
     $pdfarray = array('pdf');
@@ -626,7 +628,6 @@ if (isset( $_POST['convertSelected'])) {
     $arrayraro = array('rar',);
     $abwstd = array('doc', 'abw');
     $abwuno = array('docx', 'pdf', 'txt', 'rtf', 'odf', 'dat', 'cfg');
-    $audioarray =  array('mp3', 'wma', 'wav', 'ogg');
     $stub = ('http://localhost/HRProprietary/HRClou2/DATA/');
     $newFileURL = $stub.$UserID.$UserDirPOST.$newFile;
     // / Code to increment the conversion in the event that an output file already exists.    
@@ -703,7 +704,12 @@ if (isset( $_POST['convertSelected'])) {
             $txt = ("OP-Act, Executing \"dia $pathname -e $newPathname\" on ".$Time.'.');
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
             shell_exec("dia $pathname -e $newPathname"); } 
-          // / Code to convert and manipulate audio, video, and multi-media files.
+          // / Code to convert and manipulate video files.
+          if (in_array($oldExtension, $videoarray)) { 
+            $txt = ("OP-Act, Executing \"HandBrakeCLI -i $pathname -o $newPathname\" on ".$Time.'.');
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+            shell_exec("HandBrakeCLI -i $pathname -o $newPathname"); } 
+          // / Code to convert and manipulate audio files.
           if (in_array($oldExtension, $audioarray)) { 
             $ext = (' -f ' . $extension);
               if (isset($_POST['bitrate'])) {
@@ -965,7 +971,7 @@ if (isset($_POST['streamSelected'])) {
   $PlaylistName = str_replace(str_split('.\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
   $PLVideoArr =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');    
   $PLVideoArr2 =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');    
-  $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+  $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'aac', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
   $PLAudioArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac');
   $PLAudioOGGArr =  array('ogg');
   $PLAudioMP4Arr =  array('mp4');
