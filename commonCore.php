@@ -335,14 +335,6 @@ if (file_exists($UserConfig)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code re-sets some variables for security. Just-in-case the UserConfig is compromised.
-$VirusScan = $AV;
-$HighPerformanceAV = $HP;
-$ThoroughAV = $TH;
-$PersistentAV = $PS;
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / The following code resets the official time according to the Timezone entry in the user's config file.
 if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
 $Now = time();
@@ -350,6 +342,14 @@ $Timezone = str_replace(' ', '_', $Timezone);
 date_default_timezone_set($Timezone);
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code re-sets some variables for security. Just-in-case the UserConfig is compromised.
+$VirusScan = $AV;
+$HighPerformanceAV = $HP;
+$ThoroughAV = $TH;
+$PersistentAV = $PS;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
