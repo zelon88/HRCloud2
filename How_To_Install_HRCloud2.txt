@@ -143,8 +143,9 @@ these things, follow the additional steps below.
   seek the owners manual for the specific make and manual for your router.
 -Once you have gained access to your router, seek the settings which control Firewall exceptions and Static NAT settings.
   You should seek a way to enter the local IPv4 address of the machine running HRCloud2 for port 80.
-  You should also seek a way to enter a "Static NAT" entry for the local IPv4 address of the machine running HRCloud2 for port 80.
+  You should also seek a way to enter a "Static NAT" entry for the local IPv4 address of the machine running HRCloud2.
   You should also forward port 80 to the internal IPv4 of the machine running HRCloud2.
+  To configure SSL encryption, add port 443 to your port forwarding rules and visit www.letsencrypt.com for instructions on obtaining and installing an SSL certificate.
 -It is not reccomended that you utilize this Cloud platform in commercial or even open-to-the-public fashion. 
 -To protect your installation and your server, secure your administrator account within WordPress and disable account creation for visitors.
 -If you want other users to have their own Cloud on your network, create an account for them manually by using the administrator features
