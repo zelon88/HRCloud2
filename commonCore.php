@@ -105,6 +105,7 @@ $SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
 $SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
 $ResourcesDir = $InstLoc.'/Resources';
+$TipFile = $ResourcesDir.'/tips.php';
 $TempResourcesDir = $ResourcesDir.'/TEMP';
 $appDataInstDir = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $appDataCloudDir = $CloudLoc.'/'.$UserID.'/.AppData';
@@ -279,6 +280,20 @@ if (!file_exists($CloudShareDir)) {
 while (file_exists($ClamLogDir)) {
   $ClamLogFileInc++;
   $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt'; } 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code checks if ShowTips is enabled and loads a random Tip if needed.
+if (!isset($ShowTips)) {
+  $ShowTips = '1'; }
+if (file_exists($TipFile) && $ShowTips == '1') {
+  if ($ShowTips == '1') {
+    include ($TipFile);
+    $RandomTip = array_rand($Tips);
+    $Tip = $Tips[$RandomTip];
+    $Tips = null; 
+    $RandomTip = null;
+    unset($Tips, $RandomTip); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

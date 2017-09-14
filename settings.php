@@ -37,6 +37,7 @@ else {
     </script>
 
 <?php include('header.php'); ?>
+
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -62,7 +63,10 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } ?>
+<?php } 
+if ($ShowTips == '1' && isset($Tip)) {
+  echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+  
 <div id="settingsContentsDiv" align='center'>
   <iframe src="settingsCore.php" id="settingsContents" name="settingsContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>

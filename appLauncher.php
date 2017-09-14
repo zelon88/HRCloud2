@@ -29,9 +29,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-
-?>
-<?php include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
+include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">
 <?php if ($ShowHRAI == '1') {  ?>
@@ -50,7 +48,7 @@ else {
   <input type="hidden" name="sesID" value="<?php echo $sesID;?>">
   <input type="hidden" name="display_name" value="<?php echo $display_name;?>">
   <?php if (!isset($input)) {
-    $input = ''; } ?>
+    $input = ''; } ?>  
   <div id='HRAIButtons2' name='HRAIButtons2' style="margin-right:15%;">
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="Clear();">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></div></form>
@@ -58,7 +56,10 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } ?>
+<?php } 
+  if ($ShowTips == '1' && isset($Tip)) {
+  echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+
 <div id="cloudContentsDiv" align='center'>
   <iframe src="appIndex.php" id="cloudContents" name="cloudContents" width=815px style="min-height:350px; max-height:950px; margin-top:-4px; margin-left:-4px; border:inset;" onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>

@@ -59,7 +59,10 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } ?>
+<?php } 
+if ($ShowTips == '1' && isset($Tip)) {
+  echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+
 <div id="cloudContentsDiv" align='center'>
   <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>

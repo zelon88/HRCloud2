@@ -38,10 +38,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/appCore.php')) {
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/appCore.php'); }
-
-?>
-
-<?php include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
+include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
@@ -68,7 +65,10 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } ?>
+<?php } 
+if ($ShowTips == '1' && isset($Tip)) {
+  echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+
 <div id="cloudContentsDiv" align='center' style="width:404px; padding-top: 5px;">
 <div id="filesOverview" name="filesOverview" style="float:left; height:160px; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 10px;"><p><h3>Files</h3></div>

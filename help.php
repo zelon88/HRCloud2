@@ -61,7 +61,10 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } ?>
+<?php } 
+if ($ShowTips == '1' && isset($Tip)) {
+  echo '</p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+
 <div id="helpContentsDiv" align='center'>
   <iframe src="helper.php" id="helpsContents" name="helpContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
