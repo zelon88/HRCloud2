@@ -39,7 +39,7 @@ $pellDocs4 = array('rtf');
 $pellDocs5 = array('pdf');
 $pellDocs6 = array('docx', 'doc');
 $pellDocs7 = array('pdf');
-$pellDocs8 = array('docx', 'doc', 'odt', 'rtf');
+$pellDocs8 = array('docx', 'doc', 'odt');
 $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
@@ -135,7 +135,7 @@ if ((isset($_POST['pellOpen']) && $pellOpen == '') or (isset($_POST['filename'])
     $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
-    if (count($DocEnginePID) < 1) {
+    if (count($DocEnginePID) <= 1) {
       exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
       $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID1[1].') on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -181,14 +181,25 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
         $formatter = new RtfHtml();
         $pellOpenFileData = $formatter->Format($reader->root); }
       if ($result !== TRUE) {
-        $txt = ('ERROR!!! HRC2PellApp128 Could not copy the contents of '.$pellOpen.' into memory on '.$Time.'!');
+        $txt = ('ERROR!!! HRC2PellApp128, Could not copy the contents of '.$pellOpen.' into memory on '.$Time.'!');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n"); } }
+    if (in_array($pellOpenFileExtension, $pellDocs2)) {
+      $pellOpenDocx = str_replace('.doc', '.docx', $pellOpenFile);
+      $txt = ('OP-Act: Executing "unoconv -o '.$pellOpenDocx.' -f docx '.$pellOpenFile.'" on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      exec('unoconv -o '.$pellOpenDocx.' -f docx '.$pellOpenFile);
+      if (!file_exists($pellOpenDocx)) {
+        $txt = 'ERROR!!! HRC2PellApp191, Could not create the temporary file "'.$pellOpenDocx.'" on '.$Time.'.';
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        die($txt); }
+    $pellOpenFile = $pellOpenDocx;
+    $pellOpenFileExtension = 'docx'; }
     // / Code for opening .odt, .doc and .docx files.
     if (in_array($pellOpenFileExtension, $pellDocs8)) {
-      $txt = ('OP-Act: Executing "unoconv -o '.$newTempHtmlPathname.' -f '.$pellOpenFile.'" on '.$Time.'.');
+      $txt = ('OP-Act: Executing "pandoc -s '.$pellOpenFile.' -o '.$newTempHtmlPathname.'" on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      exec("unoconv -o $newTempHtmlPathname -f $pellOpenFile");
+      exec("pandoc -s $pellOpenFile -o $newTempHtmlPathname");
       if (!file_exists($newTempHtmlPathname)) {
         $txt = ('ERROR HRC2PellApp195, could not convert the selected file on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
