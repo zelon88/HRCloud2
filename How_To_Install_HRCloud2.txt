@@ -84,6 +84,7 @@ of their servers.
 -sudo apt-get install dia
 -sudo apt-get install handbrake
 -sudo apt-get install handbrake-cli
+-sudo apt-get install pandoc
 --------------------------------------------------
 
 -----STEP 5 - INSTALL HRCLOUD2-----
@@ -98,9 +99,9 @@ of their servers.
 **HRCLOUD2 REQUIRES A SAFE LOCATION TO CREATE USER CLOUD DIRECTORIES. TO FACILITATE
   THIS YOU MUST CREATE A !!!NEW!!! DIRECTORY AND ENTER IS AS THE "$CloudLoc"**
 **ONCE YOU HAVE CREATED A CLOUD LOCATION "$CloudLoc" CONTINUE**
-          -sudo chmod -R 0755 /path/to/my/CloudLocDIRECTORY
-          -sudo chown -R www-data /PATH/TO/MY/CloudLocDIRECTORY
-          -sudo chgrp -R www-data /PATH/TO/MY/CloudLocDIRECTORY
+          -sudo chmod -R 0755 /path/to/my/CloudLoc
+          -sudo chown -R www-data /path/to/my/CloudLoc
+          -sudo chgrp -R www-data /path/to/my/CloudLoc
 **IF YOU DO NOT HAVE A VALID "$CloudLoc" AND PROPER PERMISSIONS, HRCLOUD2 ...WILL...NOT...WORK!!!**
 -sudo leafpad /var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php
 **CAREFULLY READ AND COMPLETELY FILL OUT YOUR ADMIN USER AND LOGIN INFO FOR HRAI**
