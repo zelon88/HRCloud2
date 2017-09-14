@@ -186,9 +186,13 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
         echo nl2br($txt."\n"); } }
     // / Code for opening .odt, .doc and .docx files.
     if (in_array($pellOpenFileExtension, $pellDocs8)) {
-      $txt = ("OP-Act, Executing \"unoconv -o $newTempHtmlPathname -f txt $pellOpenFile\" on ".$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
-      exec("unoconv -o $newTempHtmlPathname -f html $pellOpenFile", $returnDATA); 
+      $txt = ('OP-Act: Executing "unoconv -o '.$newTempHtmlPathname.' -f '.$pellOpenFile.'" on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      exec("unoconv -o $newTempHtmlPathname -f $pellOpenFile");
+      if (!file_exists($newTempHtmlPathname)) {
+        $txt = ('ERROR HRC2PellApp195, could not convert the selected file on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        die($txt); }
       $pellOpenFileData = file_get_contents($newTempHtmlPathname);
       $junk = get_string_between($pellOpenFileData, '<!DOCTYPE HTML', '"ltr">');
       $pellOpenFileData = str_replace('<!DOCTYPE HTML'.$junk.'"ltr">', '', $pellOpenFileData);
