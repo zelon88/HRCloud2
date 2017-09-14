@@ -11,7 +11,6 @@ App Integration: 0 (False)
 App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 
-PHP ANTI-VIRUS v2.6
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
