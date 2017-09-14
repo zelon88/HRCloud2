@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v2.6 (9-13-2017 21:00)
+App Version: v2.7 (9-13-2017 23:30)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
