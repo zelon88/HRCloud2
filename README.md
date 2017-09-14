@@ -23,7 +23,7 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 # CURRENT CORE FEATURES
 
--Takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are either temporarily moved to a user-specific hosted directory (or symlinks are created, where possible) and cleaned every 10 minutes. 
+-Takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory or symlinks are created and cleaned every 10 minutes. 
 
 -Non-hosted permanent files remain until deleted by the end-user.
 
