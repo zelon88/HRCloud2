@@ -55,6 +55,14 @@ if (isset($_POST['Save'])) {
     $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
+  // / The following code sets the users Tipa display preference.
+  if (isset($_POST['NEWShowTips'])) {
+    $NEWShowTips = $_POST['NEWShowTips'];
+    $txt = ('$ShowTips = \''.$NEWShowTips.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br('Saved New Tips Settings.'."\n"); }
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
@@ -130,17 +138,13 @@ if (isset($_POST['LoadDefaults'])) {
   $NEWTimezone = $Timezone; 
   $txt = ('$Timezone = \''.$NEWTimezone.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+  $NEWShowTips = $ShowTips; 
+  $txt = ('$ShowTips = \''.$NEWShowTips.'\';');
+  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
   if ($UserIDRAW == 1) {
     $NEWVirusScan = $VirusScan; 
     $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
-    $NEWVirusScan = $VirusScan; 
-    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
-    if (isset($HighPerformanceAV)) {
-      $NEWHighPerformanceAV = $HighPerformanceAV; 
-      $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } 
     if (!isset($HighPerformanceAV)) { 
       $NEWHighPerformanceAV = '0'; 
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
@@ -255,6 +259,14 @@ if (!isset($Timezone)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Tips input field.
+if ($ShowTips == '1') {
+  $STipsEcho = 'Enabled'; }
+if ($ShowTips !== '1') {
+  $STipsEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following is displayed to all users.
 ?>
 <div align='left'>
@@ -277,8 +289,12 @@ if (!isset($Timezone)) {
   <option value="0">Disabled</option>
 </select></p>
 
-<p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>3.</strong> Clear User Cache Files: </p>
-    <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<p alt="Show or Hide Tips at the top of most windows." title="Show or Hide Tips at the top of most windows." style="padding-left:15px;"><strong>3.</strong> Tips: </p>
+  <p><select id="NEWShowTips" name="NEWShowTips" style="padding-left:30px; width:100%;">
+  <option value="<?php echo $ShowTips; ?>">Current (<?php echo $STipsEcho; ?>)</option>
+  <option value="1">Enabled</option>
+  <option value="0">Disabled</option>
+</select></p>
 
 <?php
 $regions = array(
@@ -309,7 +325,12 @@ foreach($timezones as $region => $list) {
   print '<optgroup>' . "\n"; }
 print '</select></p>';  
 // / -----------------------------------------------------------------------------------
+?>
 
+<p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>5.</strong> Clear User Cache Files: </p>
+    <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+
+<?php
 // / -----------------------------------------------------------------------------------
 // / The following is displayed if the user is an administrator.
 if ($UserIDRAW == 1) { ?>
