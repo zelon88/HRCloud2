@@ -337,7 +337,7 @@ if ($UserIDRAW == 1) { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
-<p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"><strong>5.</strong> System Update </p>
+<p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"><strong>6.</strong> System Update </p>
  <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
  <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
  <p style="float:center; padding-left:10%;">Manual Update Options: </p>
@@ -347,7 +347,7 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
-<p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"><strong>6.</strong> Virus Scanning (Requires ClamAV on server): </p>
+<p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"><strong>7.</strong> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;">
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>
