@@ -39,7 +39,7 @@ $pellDocs4 = array('rtf');
 $pellDocs5 = array('pdf');
 $pellDocs6 = array('docx', 'doc');
 $pellDocs7 = array('pdf');
-$pellDocs8 = array('docx', 'doc', 'odt');
+$pellDocs8 = array('docx', 'doc', 'odt', 'rtf');
 $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
@@ -135,7 +135,7 @@ if ((isset($_POST['pellOpen']) && $pellOpen == '') or (isset($_POST['filename'])
     $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
-    if (count($DocEnginePID) <= 1) {
+    if (count($DocEnginePID) < 0) {
       exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
       $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID1[1].') on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
