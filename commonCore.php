@@ -297,6 +297,21 @@ if (file_exists($TipFile) && $ShowTips == '1') {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code loads the user config file if it exists and creates one if it does not.
+if (!file_exists($UserConfig)) { 
+  chmod($UserConfig, 0755); 
+  chown($UserConfig, 'www-data'); } 
+if (!file_exists($UserConfig)) { 
+  copy($LogInstallDir.'.config.php', $UserConfig); }
+if (!file_exists($UserConfig)) { 
+  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die ($txt); }
+if (file_exists($UserConfig)) {
+  include ($UserConfig); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code reads the Admin configuration settings and sets temporary variables.
 $AdminIDRAW = 1;
 $AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
@@ -317,21 +332,6 @@ $AdminID = null;
 $adminAppDataInstDir = null;
 $AdminConfig = null;  
 unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code loads the user config file if it exists and creates one if it does not.
-if (!file_exists($UserConfig)) { 
-  chmod($UserConfig, 0755); 
-  chown($UserConfig, 'www-data'); } 
-if (!file_exists($UserConfig)) { 
-  copy($LogInstallDir.'.config.php', $UserConfig); }
-if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die ($txt); }
-if (file_exists($UserConfig)) {
-  include ($UserConfig); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
