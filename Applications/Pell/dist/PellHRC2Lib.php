@@ -41,6 +41,7 @@ $pellDocs6 = array('docx', 'doc');
 $pellDocs7 = array('pdf');
 $pellDocs8 = array('docx', 'doc', 'odt', 'rtf');
 $pellDocs9 = array('pdf', 'png', 'bmp', 'jpg', 'jpeg');
+$pellDocs10 = array('docx', 'doc', 'odt');
 $pellDangerArr = array('index.php', 'index.html');
   // / Post inputs...
 $deletefile = $_POST['deleteFile'];
@@ -196,7 +197,7 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
     $pellOpenFile = $pellOpenDocx;
     $pellOpenFileExtension = 'docx'; }
     // / Code for opening .odt, .doc and .docx files.
-    if (in_array($pellOpenFileExtension, $pellDocs8)) {
+    if (in_array($pellOpenFileExtension, $pellDocs10)) {
       $txt = ('OP-Act: Executing "pandoc -s '.$pellOpenFile.' -o '.$newTempHtmlPathname.'" on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       exec("pandoc -s $pellOpenFile -o $newTempHtmlPathname");
