@@ -1,0 +1,72 @@
+<?php
+/*//
+HRCLOUD2-PLUGIN-START
+App Name: UberGallery
+App Version: 3.0 (9-19-2017 22:00)
+App License: GPLv3
+App Author: UberGallery & zelon88
+App Description: A simple HRCloud2 App for viewing photos.
+App Integration: 0 (False)
+App Permission: 0 (Admin)
+HRCLOUD2-PLUGIN-END
+//*/
+
+// / The follwoing code checks for the HRC2 commonCore file and terminates if it is missing.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+  $txt = 'ERROR!!! HRC2UG4, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n";
+  echo nl2br($txt); 
+  die ($txt); }
+else {
+  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+
+$galleryExt = array('.jpeg', '.jpg', '.png', '.png', '.bmp');
+$userInstDir = $AppDir.'UberGallery';
+$tempGalleryDir = $appDataInstDir.'/UberGallery';
+$userGalleryDir = $appDataCloudDir.'/UberGallery';
+$userGalleryIndex = $tempGalleryDir.'/index.php';
+$userGalleryURL = $URL.'';
+$directory = $CloudUsrDir;
+
+// / The following code creates a userGalleryDir in the users AppData folder if none exits.
+if (!is_dir($tempGalleryDir)) {
+  mkdir($tempGalleryDir);
+  if (is_dir($tempGalleryDir)) {
+    foreach ($iterator = new \RecursiveIteratorIterator (
+      new \RecursiveDirectoryIterator ($userInstDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+      \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+      @chmod($item, 0755);
+      if ($item->isDir()) {
+        if (!file_exists($tempGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+          mkdir($tempGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } }
+      else {
+        if (!is_link($item) or !file_exists($tempGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+          copy($item, $tempGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } } } }
+
+// / The following code creates a userGalleryDir in the users AppData folder if none exits.
+if (!is_dir($userGalleryDir)) {
+  mkdir($userGalleryDir);
+  if (is_dir($userGalleryDir)) {
+    foreach ($iterator = new \RecursiveIteratorIterator (
+      new \RecursiveDirectoryIterator ($userInstDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+      \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+      @chmod($item, 0755);
+      if ($item->isDir()) {
+        if (!file_exists($userGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+          mkdir($userGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } }
+      else {
+        if (!is_link($item) or !file_exists($userGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
+          copy($item, $userGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } } } }
+
+  if (!is_dir($tempGalleryDir)) {
+  	$txt = 'ERROR!!! HRC2UGI12, Could not create a temporary gallery directory on '.$Time.'.';
+  	$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); }
+
+foreach (scandir($CloudUsrDir) as $CloudFile) {
+  foreach ($galleryExt as $ext) {
+  	if (strpos($CloudFile, $ext) == true) {
+      copy($CloudUsrDir.'/'.$CloudFile, $tempGalleryDir.'/gallery-images/'.$CloudFile);
+      copy($CloudUsrDir.'/'.$CloudFile, $userGalleryDir.'/gallery-images/'.$CloudFile); } } } 
+
+require($userGalleryIndex);
+
