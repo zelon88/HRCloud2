@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.7.7.9
-WRITTEN ON : 9/16/2017
+THIS VERSION : v1.7.8
+WRITTEN ON : 9/19/2017
 */
 
 // / -----------------------------------------------------------------------------------
@@ -529,6 +529,17 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
   if (file_exists($InstLoc.'/Applications/displaydirectorycontents_logs/index.php')) {
     @unlink($InstLoc.'/Applications/displaydirectorycontents_logs1/index.php'); } 
   $txt = ('OP-Act: Cleaned and optimized HRCloud2 on '.$Time.'.'); 
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  $c1 = 0;
+  foreach ($iterator = new \RecursiveIteratorIterator (
+    new \RecursiveDirectoryIterator ($InstLoc, \RecursiveDirectoryIterator::SKIP_DOTS),
+    \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+    @chmod($item, 0755);
+    if ($item->isDir()) {
+      copy('index.html', $item.'/index.html'); 
+      $c1++; } }
+  $txt = ('OP-Act: Purged '.$c1.' index files on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   if (file_exists($ResourceDir1.'/versionInfo.php')) {
