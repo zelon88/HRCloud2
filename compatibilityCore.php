@@ -241,7 +241,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                       if (is_dir($UFSrcDir5)) {
                         @mkdir ($UFDstDir5);
                         $UPDATEFiles6 = scandir ($UFSrcDir5);
-                        foreach ($UPDATEFiles7 as $UF6) {    
+                        foreach ($UPDATEFiles6 as $UF6) {    
                           if ($UF6 == '.' or $UF6 == '..' or $UF6 == 'var' or $UF6 == 'www' or $UF6 == 'html' or $UF6 == 'HRProprietary') continue;   
                           $UFSrcDir6 = $ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF5.'/'.$UF5.'/'.$UF6;
                           $UFDstDir6 = $InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF5.'/'.$UF5.'/'.$UF6; 
