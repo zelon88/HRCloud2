@@ -85,6 +85,10 @@ of their servers.
 -sudo apt-get install handbrake
 -sudo apt-get install handbrake-cli
 -sudo apt-get install pandoc
+-sudo apt install npm
+-sudo apt-get install nodejs
+-sudo apt-get install nodejs-legacy
+-npm install nativefier -g
 --------------------------------------------------
 
 -----STEP 5 - INSTALL HRCLOUD2-----
