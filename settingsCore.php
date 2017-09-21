@@ -177,6 +177,49 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Generate a client installer package using user supplied specifications.
+if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_POST['GenClientCPU']) && isset($_POST['GenClientHomepage'])) {
+  $GenClientURL = $URL;
+  $GenClientHomepage = trim($GenClientHomepage,'/');
+  $SupportedClientOS = array('windows', 'linux', 'osx');
+  $SupportedClientCPU = array('ia32', 'x64', 'armv71');
+  if ($GenClientHomepage == 'home') $GenClientHomepage = '/HRProprietary/HRCloud2/index2.php';
+  if (in_array($GenClientOS, $SupportedClientOS) && in_array($GenClientCPU, $SupportedClientCPU)) { 
+    $GenClientDir = $ClientInstallDir.'/'.$GenClientOS;
+    $GenClientZip = $CloudUsrDir.'HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip';
+    $GenClientTempZip = $CloudTmpDir.'HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip';
+    $txt = 'OP-Act: Executing "nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.'/'.$GenClientHomepage.'" "'.$GenClientDir.'"" on '.$Time.'.';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.'/'.$GenClientHomepage.'" "'.$GenClientDir.'"');
+    copy ('index.html', $GenClientOS);
+    @system("/bin/chmod -R 0755 $CloudLoc");
+    @system("/bin/chmod -R 0755 $InstLoc");    
+    if (is_dir($GenClientDir)) {
+      $txt = 'OP-Act: Executing "'.'zip -r -o '.$GenClientZip.' '.$GenClientDir.'" on '.$Time.'.';
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      exec('zip -r -o '.$GenClientZip.' '.$GenClientDir);
+      if (!file_exists($GenClientZip)) {
+        $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'.';
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    if (!is_dir($GenClientDir)) {
+      $txt = 'ERROR!!! HRC2SettingsCore201, Could not create the Client App build folder on '.$Time.'.';
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+  if (!in_array($GenClientOS, $SupportedClientOS) or !in_array($GenClientCPU, $SupportedClientCPU)) {
+    $txt = 'ERROR!!! HRC2SettingsCore189, Invalid Client App Settings specified on '.$Time.'.';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  if (file_exists($GenClientZip)) {
+    foreach ($iterator = new \RecursiveIteratorIterator (
+      new \RecursiveDirectoryIterator ($GenClientDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+      \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+      @chmod($item, 0755);
+      if ($item->isDir()) {
+        copy('index.html', $item.'/index.html'); } } 
+    copy($GenClientZip, $GenClientTempZip);
+    echo nl2br('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'."\n".'</hr>'); } }
+// / -----------------------------------------------------------------------------------
+
+
+// / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
 if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) {
   $DCEcho = 'Disabled'; }
@@ -272,7 +315,27 @@ if ($ShowTips !== '1') {
 <div align='left'>
 <form action="settingsCore.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
-<p alt="Change the HRCloud2 color scheme." title="Change the HRCloud2 color scheme." style="padding-left:15px;"><strong>1.</strong> Color Scheme: </p>
+<p alt="Generate a Desktop client App for your device." title="Generate a client App for your device." style="padding-left:15px;"><strong>1.</strong> Desktop App: </p>
+  <p><select id="GenClientOS" name="GenClientOS" style="float:left; padding-left:30px; width:30%;">
+  <option value="">Select your OS</option>
+  <option value="windows">Windows</option>
+  <option value="linux">Linux</option>
+  <option value="osx">OSX</option>
+  </select>
+  <select id="GenClientCPU" name="GenClientCPU" style="float:left; padding-left:30px; width:30%;">
+  <option value="">Select your CPU</option>
+  <option value="x64">64-Bit (x64)</option>
+  <option value="ia32">32-Bit (x32)</option>
+  <option value="armv71">ARMv71</option>
+  </select>
+  <select id="GenClientHomepage" name="GenClientHomepage" style="float:left; padding-left:30px; width:30%;">
+  <option value="">Select your Homepage</option>
+  <option value="">URL Home</option>
+  <option value="home">Cloud Home</option>
+  </select></p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='GenerateClient' id='GenerateClient' value='Build Client' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+
+<p alt="Change the HRCloud2 color scheme." title="Change the HRCloud2 color scheme." style="padding-left:15px;"><strong>2.</strong> Color Scheme: </p>
   <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;">
   <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
   <option value="1">Blue (Default)</option>
@@ -282,14 +345,14 @@ if ($ShowTips !== '1') {
   <option value="5">Black</option>
 </select></p>
 
-<p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong>2.</strong> HRAI Load Balancing Personal Assistant: </p>
+<p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong>3.</strong> HRAI Load Balancing Personal Assistant: </p>
   <p><select id="NEWShowHRAI" name="NEWShowHRAI" style="padding-left:30px; width:100%;">
   <option value="<?php echo $ShowHRAI; ?>">Current (<?php echo $SHRAIEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
 
-<p alt="Show or Hide Tips at the top of most windows." title="Show or Hide Tips at the top of most windows." style="padding-left:15px;"><strong>3.</strong> Tips: </p>
+<p alt="Show or Hide Tips at the top of most windows." title="Show or Hide Tips at the top of most windows." style="padding-left:15px;"><strong>4.</strong> Tips: </p>
   <p><select id="NEWShowTips" name="NEWShowTips" style="padding-left:30px; width:100%;">
   <option value="<?php echo $ShowTips; ?>">Current (<?php echo $STipsEcho; ?>)</option>
   <option value="1">Enabled</option>
@@ -313,7 +376,7 @@ foreach ($regions as $name => $mask) {
     $time = new DateTime(NULL, new DateTimeZone($timezone));
     $ampm = $time->format('H') > 12 ? ' ('. $time->format('g:i a'). ')' : '';
     $timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm; } }
-print '<p alt="Adjust the timezone so that logs and GUI elements match your local time." title="Adjust the timezone so that logs and GUI elements match your local time." style="padding-left:15px;"><strong>4.</strong> Select Your Timezone</p>
+print '<p alt="Adjust the timezone so that logs and GUI elements match your local time." title="Adjust the timezone so that logs and GUI elements match your local time." style="padding-left:15px;"><strong>5.</strong> Select Your Timezone</p>
 <p><select id="NEWTimezone" name="NEWTimezone" style="padding-left:30px; width:100%;">';
 print '<option name="'.$TZEcho.'" value="'.$TZEcho.'">Current ('.$TZEcho.')</option>'."\n";
 foreach($timezones as $region => $list) {
@@ -327,7 +390,7 @@ print '</select></p>';
 // / -----------------------------------------------------------------------------------
 ?>
 
-<p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>5.</strong> Clear User Cache Files: </p>
+<p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"><strong>6.</strong> Clear User Cache Files: </p>
     <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <?php
@@ -337,7 +400,7 @@ if ($UserIDRAW == 1) { ?>
 <div align="center"><h3>Admin Settings</h3></div>
 <hr />
 
-<p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"><strong>6.</strong> System Update </p>
+<p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"><strong>7.</strong> System Update </p>
  <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
  <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
  <p style="float:center; padding-left:10%;">Manual Update Options: </p>
@@ -347,7 +410,7 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
-<p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"><strong>7.</strong> Virus Scanning (Requires ClamAV on server): </p>
+<p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"><strong>8.</strong> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;">
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
   <option value="1">Enabled</option>
@@ -363,14 +426,14 @@ if ($UserIDRAW == 1) { ?>
 </select></p>
 */
 ?>
-<p alt="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." title="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." style="padding-left:15px;"><strong>8.</strong> Thorough A/V Scanning: </p>
+<p alt="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." title="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." style="padding-left:15px;"><strong>9.</strong> Thorough A/V Scanning: </p>
   <p><select id="NEWThoroughAV" name="NEWThoroughAV" style="width:100%;">
   <option value="<?php echo $ThoroughAV; ?>">Current (<?php echo $TAVEcho; ?>)</option>
   <option value="1">Enabled</option>
   <option value="0">Disabled</option>
 </select></p>
 
-<p alt="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." title="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." style="padding-left:15px;"><strong>9.</strong> Persistent A/V Scanning: </p>
+<p alt="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." title="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." style="padding-left:15px;"><strong>10.</strong> Persistent A/V Scanning: </p>
   <p><select id="NEWPersistentAV" name="NEWPersistentAV" style="width:100%;">
   <option value="<?php echo $PersistentAV; ?>">Current (<?php echo $PAVEcho; ?>)</option>
   <option value="1">Enabled</option>

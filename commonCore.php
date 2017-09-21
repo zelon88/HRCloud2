@@ -105,6 +105,10 @@ $SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
 $SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
 $ResourcesDir = $InstLoc.'/Resources';
+$ClientInstallDir = $ResourcesDir.'/ClientInstallers';
+$ClientInstallDirWin = $ClientInstallDir.'/windows';
+$ClientInstallDirLin = $ClientInstallDir.'/linux';
+$ClientInstallDirOsx = $ClientInstallDir.'/osx';
 $TipFile = $ResourcesDir.'/tips.php';
 $TempResourcesDir = $ResourcesDir.'/TEMP';
 $appDataInstDir = $InstLoc.'/DATA/'.$UserID.'/.AppData';
@@ -207,6 +211,50 @@ if (!file_exists($TempResourcesDir)) {
     $txt = ('ERROR!!! HRC2CommonCore137, The Temp Resources Directory does not exist and could not be created on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 @copy($InstLoc.'/index.html', $TempResourcesDir.'/index.html');
+// / -----
+// / The following code checks if the ClientInstallers directory exists, and creates one if it does not.
+if (!file_exists($ClientInstallDir)) {
+  mkdir($ClientInstallDir, 0755); 
+  if (file_exists($ClientInstallDir)) {
+    $txt = ('OP-Act: Created a Client Installer Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($ClientInstallDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore219, The Client Installer Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $ClientInstallDir.'/index.html');
+// / -----
+// / The following code checks if the Windows ClientInstallers directory exists, and creates one if it does not.
+if (!file_exists($ClientInstallDirWin)) {
+  mkdir($ClientInstallDirWin, 0755); 
+  if (file_exists($ClientInstallDirWin)) {
+    $txt = ('OP-Act: Created a Windows Client Installer Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($ClientInstallDirWin)) {
+    $txt = ('ERROR!!! HRC2CommonCore230, The Client Windows Installer Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $ClientInstallDirWin.'/index.html');
+// / -----
+// / The following code checks if the Linux ClientInstallers directory exists, and creates one if it does not.
+if (!file_exists($ClientInstallDirLin)) {
+  mkdir($ClientInstallDirLin, 0755); 
+  if (file_exists($ClientInstallDirLin)) {
+    $txt = ('OP-Act: Created a Linux Client Installer Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($ClientInstallDirLin)) {
+    $txt = ('ERROR!!! HRC2CommonCore241, The Client Linux Installer Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $ClientInstallDirLin.'/index.html');
+// / -----
+// / The following code checks if the OSX ClientInstallers directory exists, and creates one if it does not.
+if (!file_exists($ClientInstallDirOsx)) {
+  mkdir($ClientInstallDirOsx, 0755); 
+  if (file_exists($ClientInstallDirOsx)) {
+    $txt = ('OP-Act: Created a OSX Client Installer Directory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($ClientInstallDirOsx)) {
+    $txt = ('ERROR!!! HRC2CommonCore230, The Client OSX Installer Directory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $ClientInstallDirOsx.'/index.html');
 // / -----
 // / The following code checks if the CloudUsrDir exists, and creates one if it does not.
 if (!file_exists($CloudUsrDir)) {

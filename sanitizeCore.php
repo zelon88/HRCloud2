@@ -36,6 +36,18 @@ set_time_limit(0);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code sets variables for generating client-side Apps based on user supplied specs. 
+if (isset($_POST['GenerateClient'])) {
+  $GenerateClient = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenerateClient']); }
+if (isset($_POST['GenClientOS'])) {
+  $GenClientOS = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientOS']); }
+if (isset($_POST['GenClientCPU'])) {
+  $GenClientCPU = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientCPU']); }
+if (isset($_POST['GenClientHomepage'])) {
+  $GenClientHomepage = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientHomepage']); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
   // / ONLY ADMINISTRATORS CAN SET COMPRESSION SETTINGS !!!
 // / Can be used by administrators to set data compression settings for user uploaded content.
   // / "DataCompressionPOST" can be set to 0 for "disabled" or 1 for "enabled".
