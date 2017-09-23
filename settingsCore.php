@@ -219,7 +219,6 @@ if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_P
     echo nl2br('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'."\n".'</hr>'); } }
 // / -----------------------------------------------------------------------------------
 
-
 // / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
 if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) {
@@ -326,7 +325,7 @@ if ($ShowTips !== '1') {
   <select id="GenClientCPU" name="GenClientCPU" style="float:left; padding-left:30px; width:30%;">
   <option value="">Select your CPU</option>
   <option value="x64">64-Bit (x64)</option>
-  <option value="ia32">32-Bit (x86)</option>
+  <option value="ia32">32-Bit (x32)</option>
   <option value="armv71">ARMv71</option>
   </select>
   <select id="GenClientHomepage" name="GenClientHomepage" style="float:left; padding-left:30px; width:30%;">
