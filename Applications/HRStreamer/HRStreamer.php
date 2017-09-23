@@ -40,9 +40,9 @@ if (!file_exists($CCFile)) {
   echo nl2br('ERROR!!! HRS26, CommonCore was not detected on the server.'."\n");
   die('ERROR!!! HRS26, CommonCore was not detected on the server.'); }
   else {
-    require($CCFile); } 
+    require_once($CCFile); } 
 // / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.7.6';
+$hrstreamerAppVersion = 'v0.7.7';
 $getID3File = $InstLoc.'/Applications/getid3/getid3/getid3.php';
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
