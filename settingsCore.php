@@ -195,7 +195,7 @@ if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_P
     @system("/bin/chmod -R 0755 $CloudLoc");
     @system("/bin/chmod -R 0755 $InstLoc");    
     if (is_dir($GenClientDir)) {
-      if ($GenClientOS == 'windows') copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/setup.bat');
+      if ($GenClientOS == 'windows') copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/HRCloud2-Client-win32-'.$GenClientCPU.'/setup.bat');
       $txt = 'OP-Act: Executing "'.'zip -r -o '.$GenClientZip.' '.$GenClientDir.'" on '.$Time.'.';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       exec('zip -r -o '.$GenClientZip.' '.$GenClientDir);
