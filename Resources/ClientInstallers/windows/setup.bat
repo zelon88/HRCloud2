@@ -15,10 +15,11 @@ IF %M%==Y GOTO INSTALL
 IF %M%==N GOTO EOF
 
 :INSTALL
-mkdir "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\HRCloud2"
-xcopy "" "C:\Program Files\HRCloud2" /s 
+mkdir "C:\Program Files\HRCloud2"
+xcopy *.* "C:\Program Files\HRCloud2" /s 
 powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('C:\ProgramData\Microsoft\Windows\Start Menu\Programs\HRCloud2-Client.lnk');$s.TargetPath='C:\Program Files\HRCloud2\HRCloud2-Client.exe';$s.Save()"
 powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Desktop\HRCloud2-Client.lnk');$s.TargetPath='C:\Program Files\HRCloud2\HRCloud2-Client.exe';$s.Save()"
+ECHO INSTALLATION COMPLETE!
 PAUSE
 EXIT /B
 
