@@ -95,6 +95,7 @@ $CloudTempDir = $CloudTemp.$UserID;
 $CloudShareDir = $LogLoc.'/Shared';
 $AppDir = $InstLoc.'/Applications/';
 $CloudAppDir = $CloudLoc.'/Apps';
+$JanitorFile = $InstLoc.'/janitor.php';
 $AdminConfig = $InstLoc.'/DATA/'.$AdminCacheHash.'/.AppData/.config.php';
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
@@ -503,7 +504,7 @@ if (file_exists($CloudTempDir)) {
         $CleanDir = $DFile;
         @chmod ($CleanDir, 0755);
         $CleanFiles = scandir($DFile);
-        include('/var/www/html/HRProprietary/HRCloud2/janitor.php'); 
+        include($JanitorFile); 
         @unlink($DFile.'/index.html');
         @rmdir($DFile); } } } }
 // / copy a fresh index file to the Temp Cloud directory.        

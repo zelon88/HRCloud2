@@ -191,14 +191,27 @@ if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_P
     $txt = 'OP-Act: Executing "nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.'/'.$GenClientHomepage.'" "'.$GenClientDir.'"" on '.$Time.'.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.'/'.$GenClientHomepage.'" "'.$GenClientDir.'"');
-    copy ('index.html', $GenClientOS);
+    copy ('index.html', $ClientInstallDir.'/'.$GenClientOS.'/index.html');
     @system("/bin/chmod -R 0755 $CloudLoc");
-    @system("/bin/chmod -R 0755 $InstLoc");    
+    @system("/bin/chmod -R 0755 $InstLoc");
+    if (file_exists($GenClientDir)) {
+      foreach ($iterator = new \RecursiveIteratorIterator (
+        new \RecursiveDirectoryIterator ($GenClientDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+        \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+        @chmod($item, 0755);
+        if ($item->isDir()) {
+          copy('index.html', $item.'/index.html'); } }  
     if (is_dir($GenClientDir)) {
-      if ($GenClientOS == 'windows') copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/HRCloud2-Client-win32-'.$GenClientCPU.'/setup.bat');
-      $txt = 'OP-Act: Executing "'.'zip -r -o '.$GenClientZip.' '.$GenClientDir.'" on '.$Time.'.';
+      if ($GenClientOS == 'windows') {
+        $GenClientOS1 = 'win32'; 
+        copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/HRCloud2-Client-win32-'.$GenClientCPU.'/setup.bat'); }
+      if ($GenClientOS == 'linux') {
+        $GenClientOS1 = 'linux'; }
+      if ($GenClientOS == 'osx') {
+        $GenClientOS1 = 'darwin'; }
+      $txt = 'OP-Act: Executing "'.'cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU.'" on '.$Time.'.';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      exec('zip -r -o '.$GenClientZip.' '.$GenClientDir);
+      exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU);
       if (!file_exists($GenClientZip)) {
         $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'.';
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -208,15 +221,18 @@ if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_P
   if (!in_array($GenClientOS, $SupportedClientOS) or !in_array($GenClientCPU, $SupportedClientCPU)) {
     $txt = 'ERROR!!! HRC2SettingsCore189, Invalid Client App Settings specified on '.$Time.'.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
-  if (file_exists($GenClientZip)) {
-    foreach ($iterator = new \RecursiveIteratorIterator (
-      new \RecursiveDirectoryIterator ($GenClientDir, \RecursiveDirectoryIterator::SKIP_DOTS),
-      \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-      @chmod($item, 0755);
-      if ($item->isDir()) {
-        copy('index.html', $item.'/index.html'); } } 
-    copy($GenClientZip, $GenClientTempZip);
-    echo nl2br('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'."\n".'</hr>'); } }
+  copy($GenClientZip, $GenClientTempZip);
+  if (is_dir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU)) {
+    $objects = scandir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU);
+    foreach ($objects as $object) {
+      if ($object != "." && $object != ".." && $object != '/' && $object != '//') {
+        if (filetype($dir."/".$object) == "dir") 
+           rrmdir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); 
+        else 
+          unlink ($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); } }
+    reset($objects);
+    rmdir($dir); }
+  echo nl2br('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'."\n".'</hr>'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
