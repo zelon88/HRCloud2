@@ -19,6 +19,11 @@ if (!file_exists('commonCore.php')) {
   die (); }
 else {
   require_once ('commonCore.php'); }
+  
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '80'; }
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '0'; }
 ?>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
@@ -35,7 +40,8 @@ else {
 <?php include('header.php'); ?>
 
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
-<?php if ($ShowHRAI == '1') {  ?>
+<?php if ($ShowHRAI == '1') {  
+  $HRAIHeight = '185'; ?>
 <div id="HRAIDiv" style="float: center; ">
   <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
   <div id='HRAIButtons1' name='HRAIButtons1' style="margin-left:15%;">
@@ -59,18 +65,13 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } 
+<?php }
 if ($ShowTips == '1' && isset($Tip)) {
   echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
 
 <div id="cloudContentsDiv" align='center'>
   <iframe src="cloudCore.php" id="cloudContents" name="cloudContents" style="min-height:350px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
-<?php 
-if ($ShowHRAI == '1') {
-  $HRAIHeight = '185'; }
-if ($ShowHRAI !== '1') {
-  $HRAIHeight = '80'; } ?>
 <script>
 ;(function($){
     $(document).ready(function(){

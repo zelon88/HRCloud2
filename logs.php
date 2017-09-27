@@ -21,6 +21,11 @@ if (!file_exists('commonCore.php')) {
   die (); }
 else {
   require('commonCore.php'); }
+
+if ($ShowHRAI == '1') {
+  $HRAIHeight = '85'; }
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '0'; } 
 ?>
     <script type="text/javascript">
     function toggle_visibility(id) {
@@ -64,15 +69,13 @@ else {
 <script type="text/javascript">
 document.getElementById("HRAIMini").submit;
 </script>
-<?php } ?>
+<?php } 
+if ($ShowTips == '1' && isset($Tip)) {
+  echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+  
 <div id="logsContentsDiv" align='center'>
   <iframe src="DATA/<?php echo $UserID; ?>/.AppData/.index.php" id="logsContents" name="logsContents" style="min-height:450px; max-height:950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
-<?php 
-if ($ShowHRAI == '1') {
-  $HRAIHeight = '85'; }
-if ($ShowHRAI !== '1') {
-  $HRAIHeight = '0'; } ?>
 <script>
 ;(function($){
   //Resizes the div to the remaining page size.

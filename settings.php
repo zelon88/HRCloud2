@@ -5,6 +5,7 @@
    <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
    <title>HRCloud2 | Settings</title>
 <?php
+
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('sanitizeCore.php')) {
@@ -20,6 +21,11 @@ if (!file_exists('commonCore.php')) {
   die (); }
 else {
   require('commonCore.php'); }
+
+if ($ShowHRAI == '1') {
+  $HRAIHeight = '85'; }
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '0'; } 
 ?>
     <script type="text/javascript">
     function Clear() {    
@@ -70,11 +76,6 @@ if ($ShowTips == '1' && isset($Tip)) {
 <div id="settingsContentsDiv" align='center'>
   <iframe src="settingsCore.php" id="settingsContents" name="settingsContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
-<?php 
-if ($ShowHRAI == '1') {
-  $HRAIHeight = '85'; }
-if ($ShowHRAI !== '1') {
-  $HRAIHeight = '0'; } ?>
 <script>
 ;(function($){
   //Resizes the div to the remaining page size.

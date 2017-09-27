@@ -18,6 +18,11 @@ if (!file_exists('commonCore.php')) {
   die (); }
 else {
   require('commonCore.php'); }
+
+if ($ShowHRAI == '1') {
+  $HRAIHeight = '85'; }
+if ($ShowHRAI !== '1') {
+  $HRAIHeight = '0'; }
 ?>
     <script type="text/javascript">
     function Clear() {    
@@ -62,17 +67,13 @@ else {
 document.getElementById("HRAIMini").submit;
 </script>
 <?php } 
+
 if ($ShowTips == '1' && isset($Tip)) {
   echo '</p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
 
 <div id="helpContentsDiv" align='center'>
   <iframe src="helper.php" id="helpsContents" name="helpContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
-<?php 
-if ($ShowHRAI == '1') {
-  $HRAIHeight = '185'; }
-if ($ShowHRAI !== '1') {
-  $HRAIHeight = '80'; } ?>
 <script>
 ;(function($){
     $(document).ready(function(){
