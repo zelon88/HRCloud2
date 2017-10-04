@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.8.5.2
+THIS VERSION : v1.8.5.3
 WRITTEN ON : 10/3/2017
 */
 
@@ -179,8 +179,21 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   if (file_exists($ResourceDir1.'/config.php')) {
     $txt = ('OP-Act: The update packages were unpacked sucessfully on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);     
-    $UPDATEFiles = scandir($ResourceDir1);
-      // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
+    $UPDATEFiles = scandir($ResourceDir1); }
+  // / The following code checks the HRCloud2 version and stops the update process if an old version was prepared.
+  if (!file_exists($ResourceDir1.'/versionInfo.php')) {
+    $txt = ('ERROR!!! HRC2CompatCore223, Could not verify the latest "versionInfo.php" on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt.'<hr />');  }
+  $Version0 = trim($Version, 'v');
+  require ($ResourceDir1.'/versionInfo.php'); 
+  $Version1 = trim($Version, 'v');
+  require ($InstLoc.'/versionInfo.php'); 
+  if ($Version1 < $Version0) {
+    $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die ($txt.'<hr />'); }
+   // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
   $txt = ('OP-Act: Preserving server configuration data on '.$Time.'.'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     $BAKinc = 0;
@@ -247,32 +260,20 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
                           $UFDstDir6 = $InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF5.'/'.$UF5.'/'.$UF6; 
                         if (is_dir($ResourceDir1.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4.'/'.$UF5)) @mkdir($InstLoc.'/'.$UF.'/'.$UF2.'/'.$UF3.'/'.$UF4.'/'.$UF5, 0755);
                         if (is_file($UFSrcDir6)) @copy ($UFSrcDir6, $UFDstDir6); } } } } } } } } } } }   
-        $txt = ('OP-Act: Copied update data on '.$Time.'.'); 
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  // / The following code checks the HRCloud2 version and stops the update process if an old version was prepared.
-  if (!file_exists($ResourceDir1.'/versionInfo.php')) {
-    $txt = ('ERROR!!! HRC2CompatCore223, Could not verify the latest "versionInfo.php" on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die($txt.'<hr />');  }
+  $txt = ('OP-Act: Copied update data on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  // / The following code checks that HRCloud2 was sucessfully updated.
   require ($ResourceDir1.'/versionInfo.php'); 
-  $Version1 = $Version;
+  $Version1 = trim($Version, 'v');
   require ($InstLoc.'/versionInfo.php'); 
-  if ($Version1 < $Version) {
-    $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die ($txt.'<hr />'); }
-  // / The following code checks that HRCloud2 was sucessfully updated..
-  require ($ResourceDir1.'/versionInfo.php'); 
-  $Version1 = $Version;
-  require ($InstLoc.'/versionInfo.php'); 
-  if ($Version1 !== $Version) {
+  if ($Version1 !== $Version0) {
     $txt = ('WARNING!!! HRC2CompatCore94, Version discrepency detected after unpacking the installation image on '.$Time.'!'."\n".
       '    Important Note: Manual install reccomended! Try using "Clean Update" and "Check Compatibility." If problem persists, 
       check permissions to all HRC2 directories and use a terminal window or file manager to update.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt.'<hr />'); }
-  if ($Version1 == $Version) {
-    if ($Version1 == $Version) {
+  if ($Version1 == $Version0) {
+    if ($Version1 == $Version0) {
       $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
       echo nl2br ($txt.'<hr />');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
@@ -548,31 +549,9 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
   $txt = ('OP-Act: Purged '.$c1.' index files on '.$Time.'.'); 
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  if (file_exists($ResourceDir1.'/versionInfo.php')) {
-    require ($ResourceDir1.'/versionInfo.php'); 
-    $Version1 = $Version;
-    require ($InstLoc.'/versionInfo.php'); 
-    if ($Version1 > $Version) {
-      $txt = ('OP-Act: The verson '.$Version.' of HRCloud2 stored in the update queue is newer than the one already installed on '.$Time.'.'); 
-      echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Continuing with errors on '.$Time.'.'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    if ($Version1 < $Version) {
-      $txt = ('OP-Act: The verson '.$Version.' of HRCloud2 stored in the update queue is older than the one already installed on '.$Time.'.'); 
-      echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Continuing with errors on '.$Time.'.'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    if ($Version1 == $Version) {
-      $txt = ('OP-Act: The verson '.$Version.' of HRCloud2 stored in the update queue is already installed on '.$Time.'.'); 
-      echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
-  if (!file_exists($ResourceDir1.'/versionInfo.php')) { 
-    require ($InstLoc.'/versionInfo.php');  
-      $txt = ('OP-Act: This server is running HRCloud2 '.$Version.'.'); 
-      echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
+  $txt = ('OP-Act: This server is running HRCloud2 '.$Version.'.'); 
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }  
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
