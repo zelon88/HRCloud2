@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.8.5
-WRITTEN ON : 9/27/2017
+THIS VERSION : v1.8.5.2
+WRITTEN ON : 10/3/2017
 */
 
 // / -----------------------------------------------------------------------------------

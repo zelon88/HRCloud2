@@ -641,22 +641,22 @@ if (isset( $_POST['convertSelected'])) {
             // / appear, simply refresh the page.
           if (in_array($oldExtension, $docarray)) {
           // / The following code performs several compatibility checks before copying or converting anything.
+            if (!file_exists('/usr/bin/unoconv')) {
+              $txt = ('ERROR!!! HRC2654 Could not verify the document conversion engine on '.$Time.'.');
+              $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+              die($txt); }
             if (file_exists('/usr/bin/unoconv')) {
               $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
             // / The following code checks to see if Unoconv is in memory.
               exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
-              if (count($DocEnginePID) < 1) {
+              if (count($DocEnginePID) == 0) {
+                $txt = ('OP-Act: Starting the document conversion engine on '.$Time.'.');
+                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
                 exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
-                $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID[1].') on '.$Time.'.');
-                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
                 exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus); } }
-              if (!file_exists('/usr/bin/unoconv')) {
-                $txt = ('ERROR!!! HRC2654 Could not verify the document conversion engine on '.$Time.'.');
-                $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-                die($txt); }
-            if (count($DocEnginePID) >= 1) {
-              $txt = ('OP-Act, The document conversion engine PID is '.$DocEnginePID[1]);
+            if (count($DocEnginePID) > 0) {
+              $txt = ('OP-Act, The document conversion engine PID is '.$DocEnginePID[0]);
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
               $txt = ("OP-Act, Executing \"unoconv -o $newPathname -f $extension $pathname\" on ".$Time.'.');
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);      
