@@ -185,6 +185,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $txt = ('ERROR!!! HRC2CompatCore223, Could not verify the latest "versionInfo.php" on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />');  }
+  require ($InstLoc.'/versionInfo.php'); 
   $Version0 = trim($Version, 'v');
   require ($ResourceDir1.'/versionInfo.php'); 
   $Version1 = trim($Version, 'v');
@@ -273,10 +274,9 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br($txt.'<hr />'); }
   if ($Version1 == $Version0) {
-    if ($Version1 == $Version0) {
-      $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
-      echo nl2br ($txt.'<hr />');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+    $txt = ('OP-Act: Sucessfully installed version '.$Version.' of HRCloud2 on '.$Time.'.'); 
+    echo nl2br ($txt.'<hr />');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
