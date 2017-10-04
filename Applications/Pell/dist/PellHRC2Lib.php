@@ -132,21 +132,27 @@ if (isset($htmlOutput) && isset($filename) && $filename !== '' && isset($extensi
 // / -----------------------------------------------------------------------------------
 // / The following code initializes the document conversion engine.
 if ((isset($_POST['pellOpen']) && $pellOpen == '') or (isset($_POST['filename']) && $filename !=='')) {
+  if (!file_exists('/usr/bin/unoconv')) {
+    $txt = ('ERROR!!! HRC2654 Could not verify the document conversion engine on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); }
   if (file_exists('/usr/bin/unoconv')) {
     $txt = ('OP-Act: Verified the document conversion engine on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    // / The following code checks to see if Unoconv is in memory.
     exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus);
-    if (count($DocEnginePID) < 0) {
+    if (count($DocEnginePID) == 0) {
       exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
-      $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID1[1].') on '.$Time.'.');
+      $txt = ('OP-Act: Starting the document conversion engine (PID '.$DocEnginePID[0].') on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus); } }
-  if (!file_exists('/usr/bin/unoconv')) {
-    $txt = ('ERROR!!! HRC2PellApp30, Could not verify the document conversion engine on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br($txt."\n"); }
-  if (count($DocEnginePID) >= 1) {
-    $txt = ('OP-Act, The document conversion engine PID is '.$DocEnginePID[1]);
+  if (count($DocEnginePID) > 0) {
+    $g1 = 'are';
+    $g2 = 's';
+    if (!isset($DocEnginePID[1])) {
+      $g1 = 'is'; 
+      $g2 = ''; }
+    $txt = ('OP-Act, The document conversion engine PID is '.$DocEnginePID[0].'. There '.$g1.' '.count($DocEnginePID).' instance'.$g2.' running.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 // / -----------------------------------------------------------------------------------
 
@@ -222,7 +228,6 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a file is saved.
 if (isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) && $extesion !== '') {
-  // / The following code starts the document conversion engine if an instance is not already running.
   if (file_exists($pellTempFile) && isset($filename) && isset($extension)) {
     if (in_array($extension, $pellDocs1)) {
       copy($pellTempFile, $newPathname); }
@@ -251,8 +256,9 @@ if (is_array($returnDATA)) {
   $txt = ('OP-Act, The conversion engine returned the following on '.$Time.':');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);                
   foreach($returnDATA as $returnDATALINE) {
-    $txt = ($returnDATALINE);
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+    $txt = ($txt.' '.$returnDATALINE);
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo $txt; } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
