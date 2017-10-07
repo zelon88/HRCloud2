@@ -180,7 +180,7 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 // / Generate a client installer package using user supplied specifications.
 if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_POST['GenClientCPU']) && isset($_POST['GenClientHomepage'])) {
   $GenClientURL = $URL;
-  $GenClientHomepage = trim($GenClientURL, '/');
+  $GenClientHomepage = trim($GenClientHomepage, '/');
   $SupportedClientOS = array('windows', 'linux', 'osx');
   $SupportedClientCPU = array('ia32', 'x64', 'armv71');
   $GenClientPre = 'HRCloud2-Client-';
@@ -189,9 +189,9 @@ if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_P
     $GenClientDir = $ClientInstallDir.'/'.$GenClientOS;
     $GenClientZip = $CloudUsrDir.'HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip';
     $GenClientTempZip = $CloudTmpDir.'HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip';
-    $txt = 'OP-Act: Executing "nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.'/'.$GenClientHomepage.'" "'.$GenClientDir.'"" on '.$Time.'.';
+    $txt = 'OP-Act: Executing "nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.$GenClientHomepage.'" "'.$GenClientDir.'"" on '.$Time.'.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.'/'.$GenClientHomepage.'" "'.$GenClientDir.'"');
+    exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.$GenClientHomepage.'" "'.$GenClientDir.'"');
     @copy ('index.html', $ClientInstallDir.'/'.$GenClientOS.'/index.html');
     @system("/bin/chmod -R 0755 $CloudLoc");
     @system("/bin/chmod -R 0755 $InstLoc");
