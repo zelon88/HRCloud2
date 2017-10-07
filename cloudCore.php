@@ -128,35 +128,35 @@ if (isset($_POST["download"])) {
   if (!is_array($_POST['filesToDownload'])) {
     $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
     $_POST['filesToDownload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDownload']); }
-    foreach ($_POST['filesToDownload'] as $key=>$file) {
-      $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
-      if ($file == '.' or $file == '..' or $file == 'index.html') continue;
-      $file1 = $file;
-      $file1 = ltrim(rtrim($file, '/'), '/');
-      $file = $CloudUsrDir.$file;
-      if (!file_exists($file)) continue;
-      $F2 = pathinfo($file, PATHINFO_BASENAME);
-      $F3 = $CloudTmpDir.$F2;
-      if($file == "") {
-        $txt = ("ERROR!!! HRC2187, No file specified on $Time".'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-        echo nl2br("ERROR!!! HRC2187, No file specified"."\n");
-        die(); }
-      if (file_exists($F3)) { 
-        @touch($F3); }
-      if (!is_dir($file)) { 
-        $COPY_TEMP = symlink($file, $F3); 
-        $txt = ('OP-Act: '."Submitted $file to $F3 on $Time".'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-      if (is_dir($file)) { 
-        mkdir($F3, 0755);
-          foreach ($iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($file, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-            if ($item->isDir()) {
-              mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
-            else {
-    symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } } }
+  foreach ($_POST['filesToDownload'] as $key=>$file) {
+    $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
+    if ($file == '.' or $file == '..' or $file == 'index.html') continue;
+    $file1 = $file;
+    $file1 = trim($file, '/');
+    $file = $CloudUsrDir.$file;
+    if (!file_exists($file)) continue;
+    $F2 = pathinfo($file, PATHINFO_BASENAME);
+    $F3 = $CloudTmpDir.$F2;
+    if($file == "") {
+      $txt = ("ERROR!!! HRC2187, No file specified on $Time".'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      echo nl2br("ERROR!!! HRC2187, No file specified"."\n");
+      die(); }
+    if (file_exists($F3)) { 
+      @touch($F3); }
+    if (!is_dir($file) or !file_exists($file)) { 
+      $COPY_TEMP = symlink($file, $F3); 
+      $txt = ('OP-Act: '."Submitted $file to $F3 on $Time".'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    if (is_dir($file)) { 
+      mkdir($F3, 0755);
+      foreach ($iterator = new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($file, \RecursiveDirectoryIterator::SKIP_DOTS),
+        \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+        if ($item->isDir()) {
+          mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
+        else {
+          symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
