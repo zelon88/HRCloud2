@@ -92,14 +92,14 @@ if(isset($_POST["upload"])) {
     if (in_array($F0, $DangerousFiles)) { 
       $txt = ("ERROR!!! HRC2103, Unsupported file format, $F0 on $Time.");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      echo nl2br("ERROR!!! HRC2103, Unsupported file format, $F0 on $Time."."\n".'--------------------'."\n"); 
+      echo nl2br($txt."\n".'--------------------'."\n"); 
       continue; }
     $F2 = pathinfo($file, PATHINFO_BASENAME);
     $F3 = str_replace('//', '/', $CloudUsrDir.$F2);
     if($file == "") {
       $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      echo nl2br("ERROR!!! HRC2160, No file specified on $Time."."\n".'--------------------'."\n"); 
+      echo nl2br($txt."\n".'--------------------'."\n"); 
       die(); }
     $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
     $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');

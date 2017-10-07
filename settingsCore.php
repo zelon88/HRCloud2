@@ -180,9 +180,10 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 // / Generate a client installer package using user supplied specifications.
 if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_POST['GenClientCPU']) && isset($_POST['GenClientHomepage'])) {
   $GenClientURL = $URL;
-  $GenClientHomepage = trim($GenClientHomepage,'/');
+  $GenClientHomepage = trim($GenClientURL, '/');
   $SupportedClientOS = array('windows', 'linux', 'osx');
   $SupportedClientCPU = array('ia32', 'x64', 'armv71');
+  $GenClientPre = 'HRCloud2-Client-';
   if ($GenClientHomepage == 'home') $GenClientHomepage = '/HRProprietary/HRCloud2/index2.php';
   if (in_array($GenClientOS, $SupportedClientOS) && in_array($GenClientCPU, $SupportedClientCPU)) { 
     $GenClientDir = $ClientInstallDir.'/'.$GenClientOS;
@@ -206,12 +207,13 @@ if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_P
         $GenClientOS1 = 'win32'; 
         copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/HRCloud2-Client-win32-'.$GenClientCPU.'/setup.bat'); }
       if ($GenClientOS == 'linux') {
-        $GenClientOS1 = 'linux'; }
+        $GenClientOS1 = 'linux'; 
+        $GenClientPre = 'hr-cloud-2-client-'; }
       if ($GenClientOS == 'osx') {
         $GenClientOS1 = 'darwin'; }
-      $txt = 'OP-Act: Executing "'.'cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU.'" on '.$Time.'.';
+      $txt = 'OP-Act: Executing "'.'cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU.'" on '.$Time.'.';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU);
+      exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU);
       if (!file_exists($GenClientZip)) {
         $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'.';
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
