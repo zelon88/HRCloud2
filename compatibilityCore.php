@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.8.5.8
+THIS VERSION : v1.8.5.9
 WRITTEN ON : 10/6/2017
 */
 
@@ -122,19 +122,14 @@ if ($AutoDownloadPOST == '1' or $AutoDownloadPOST== 'true' or $AutoDownloadPOST 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die($txt.'<hr />'); }
   set_time_limit(0);
+  $txt = ('OP-Act: Opening a connection to Github and downloading data on '.$Time.'.'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   $MAKEUpdatedZIP = file_put_contents($UpdatedZIP1, @fopen($UpdatedZIPURL, 'r')); 
   if (!file_exists($UpdatedZIP1)) {
     $txt = ('ERROR!!! HRC2CompatCore110, Could not open a connection to Github on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     die ($txt.'<hr />'); }
-  $txt = ('OP-Act: Opened a connection to Github and downloading data on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   set_time_limit(0); 
-  if (!file_exists($UpdatedZIP1)) {
-    $txt = ('ERROR!!! HRC2CompatCore79, Could not download the HRCLOUD2.zip file from Github on '.$Time.'.'); 
-    echo nl2br ($txt.'<hr />');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die ($txt.'<hr />'); } 
   if (file_exists($UpdatedZIP1)) {
     $txt = ('OP-Act: The latest version of HRCloud2 was sucessfully downloaded on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
@@ -172,7 +167,7 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
   // / It will recursively copy all update files and directories to a folder, and then zip that folder
     // / into an "installation image" that we can over-write the $InstLoc with.
   if (!file_exists($ResourceDir1.'/config.php')) {
-    $txt = ('ERROR!!! HRC2175, there was no data downloaded! Check that Github is not undergoing maintanence on '.$Time.'.'); 
+    $txt = ('ERROR!!! HRC2175, Unable to download data! Check that Github is not undergoing maintanence on '.$Time.'.'); 
     echo nl2br ($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die(); }
