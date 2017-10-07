@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v1.8.5.6
+THIS VERSION : v1.8.5.8
 WRITTEN ON : 10/6/2017
 */
 
@@ -187,11 +187,23 @@ if ($AutoInstallPOST == '1' or $AutoInstallPOST == 'true' or $AutoInstallPOST ==
     die($txt.'<hr />');  }
   require ($InstLoc.'/versionInfo.php'); 
   $Version0 = trim($Version, 'v');
+  $V0Len = strlen($Version0);
   require ($ResourceDir1.'/versionInfo.php'); 
   $Version1 = trim($Version, 'v');
+  $V1Len = strlen($Version1);
+  if ($V0Len >= $V1Len) { 
+    $VLenDiff = $V0Len - $V1Len; }
+  while ($VLenDiff !== 0) { 
+    $Version1 = $Version1.'0';
+    $VLenDiff--; }
+  if ($V1Len >= $V0Len) { 
+    $VLenDiff = $V1Len - $V0Len; }
+  while ($VLenDiff !== 0) { 
+    $Version0 = $Version0.'0';
+    $VLenDiff--; }
   require ($InstLoc.'/versionInfo.php'); 
   if ($Version1 < $Version0) {
-    $txt = ('ERROR!!! HRC2CompatCor139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
+    $txt = ('ERROR!!! HRC2CompatCore139, The pending HRCloud2 update is older than the one already in use on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     die ($txt.'<hr />'); }
    // / The following code preserves the base HRCloud2 configuration files to be restored after the update.
