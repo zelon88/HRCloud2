@@ -161,6 +161,28 @@ if (!is_dir($CloudLoc)) {
 if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
   @mkdir($CloudDir, 0755); }
 // / -----
+// / The following code checks if the LogLoc exists, and creates one if it does not.
+// / Also creates the file strucutre needed for the Logs to display content and store cache data.
+if (!file_exists($LogLoc)) {
+  $JICInstallLogs = @mkdir($LogLoc, 0755); 
+  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
+    foreach ($LogInstallFiles as $LIF) {
+      if (in_array($LIF, $installedApps)) continue;
+      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
+      @copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } }
+copy($InstLoc.'/'.$LogInstallDir.'.index.php',$LogLoc.'/.index.php');
+// / -----
+// / The following code checks if the SesLogDir exists, and creates one if it does not.
+// / Also creates the file strucutre needed for the sesLog to display content.
+if (!file_exists($SesLogDir)) {
+  $JICInstallLogs = @mkdir($SesLogDir, 0755);
+  @copy($InstLoc.'/index.html', $SesLogDir.'/index.html');
+    foreach ($LogInstallFiles1 as $LIF1) {
+      if (in_array($LIF1, $installedApps)) continue;
+      if ($LIF1 == '.' or $LIF1 == '..') continue;
+        @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
+@copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
+// / -----
 if(!file_exists($CloudTemp)) {
   mkdir($CloudTemp); 
   if (file_exists($CloudDir)) {
@@ -292,28 +314,6 @@ if (!file_exists($BackupDir)) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 @copy($InstLoc.'/index.html', $BackupDir.'/index.html');
 // / -----
-// / The following code checks if the LogLoc exists, and creates one if it does not.
-// / Also creates the file strucutre needed for the Logs to display content and store cache data.
-if (!file_exists($LogLoc)) {
-  $JICInstallLogs = @mkdir($LogLoc, 0755); 
-  @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
-    foreach ($LogInstallFiles as $LIF) {
-      if (in_array($LIF, $installedApps)) continue;
-      if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
-      @copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } }
-copy($InstLoc.'/'.$LogInstallDir.'.index.php',$LogLoc.'/.index.php');
-// / -----
-// / The following code checks if the SesLogDir exists, and creates one if it does not.
-// / Also creates the file strucutre needed for the sesLog to display content.
-if (!file_exists($SesLogDir)) {
-  $JICInstallLogs = @mkdir($SesLogDir, 0755);
-  @copy($InstLoc.'/index.html', $SesLogDir.'/index.html');
-    foreach ($LogInstallFiles1 as $LIF1) {
-      if (in_array($LIF1, $installedApps)) continue;
-      if ($LIF1 == '.' or $LIF1 == '..') continue;
-        @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
-@copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
-// / -----
 // / The following code checks if the CloudShareDir exists, and creates one if it does not.
 if (!file_exists($CloudShareDir)) {
   $JICInstallShared = @mkdir($CloudShareDir, 0755); 
@@ -359,6 +359,24 @@ if (!file_exists($UserConfig)) {
   die ($txt); }
 if (file_exists($UserConfig)) {
   include ($UserConfig); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code determines the color scheme that the user has selected. 
+// / May require a refresh to take effect.
+if ($noStyles !== 1) {
+  if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+    $ColorScheme = '1'; }
+  if ($ColorScheme == '1') {
+    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/style.css">'); }
+  if ($ColorScheme == '2') {
+    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); }
+  if ($ColorScheme == '3') {
+    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); }
+  if ($ColorScheme == '4') {
+    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
+  if ($ColorScheme == '5') {
+    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -459,24 +477,6 @@ if ($Udir == '//') {
   $Udir = '/'; }
 if ($Udir == '//') {
   $Udir = '/'; }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code determines the color scheme that the user has selected. 
-// / May require a refresh to take effect.
-if ($noStyles !== 1) {
-  if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-    $ColorScheme = '1'; }
-  if ($ColorScheme == '1') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/style.css">'); }
-  if ($ColorScheme == '2') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); }
-  if ($ColorScheme == '3') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); }
-  if ($ColorScheme == '4') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
-  if ($ColorScheme == '5') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

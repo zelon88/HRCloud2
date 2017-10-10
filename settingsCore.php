@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
-   <title>HRCLoud2 | Application Settings</title>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
+<title>HRCLoud2 | Application Settings</title>
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for the required core filesand terminates if they are missing.
@@ -63,6 +64,14 @@ if (isset($_POST['Save'])) {
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Tips Settings.'."\n"); }
+  // / The following code is sets the current user timezone.
+  if (isset($_POST['NEWTimezone'])) {
+    $NEWTimezone = $_POST['NEWTimezone'];
+    $txt = ('$Timezone = \''.$NEWTimezone.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br('Saved New Timezone Settings.'."\n"); }
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
@@ -104,15 +113,7 @@ if (isset($_POST['Save'])) {
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Persistent AV Settings.'."\n"); } 
-        // / The following code is sets the current user timezone.
-    if (isset($_POST['NEWTimezone'])) {
-      $NEWTimezone = $_POST['NEWTimezone'];
-      $txt = ('$Timezone = \''.$NEWTimezone.'\';') ;
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Timezone Settings.'."\n"); } }
+      echo nl2br('Saved New Persistent AV Settings.'."\n"); } }
 ?>
 <hr />
 <?php
