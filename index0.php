@@ -1,19 +1,11 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico">
 <title>HRCloud2 | Home </title>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-<script type="text/javascript">
-    function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block'; }
-    function Clear() {    
-      document.getElementById("input").value= ""; }
-</script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
 <?php 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
@@ -39,10 +31,7 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/appCore.php')) {
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/appCore.php'); }
 
-?>
-
-<?php include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
-
+include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -65,10 +54,10 @@ else {
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="Clear();">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></div></form>
 </div>
-<script type="text/javascript">
-document.getElementById("HRAIMini").submit;
-</script>
-<?php } ?>
+<?php } 
+if ($ShowTips == '1' && isset($Tip)) {
+  echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
+
 <div id="cloudContentsDiv" align='center' style="width:404px; padding-top: 5px;">
 <div id="filesOverview" name="filesOverview" style="float:left; height:160px; width:195px; border:inset; margin-bottom:2px;">
 <div align="left" style="margin-left: 10px;"><p><h3>Files</h3></div>

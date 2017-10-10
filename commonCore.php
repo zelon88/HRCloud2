@@ -127,6 +127,7 @@ $defaultApps = array('.', '..', '', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'i
   'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip');
 $DangerousFiles = array('js', 'php', 'html', 'css');
 $installedApps = array_diff($Apps, $defaultApps);
+$tipsHeight = '0';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

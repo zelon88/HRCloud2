@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
-   <title>HRCloud2 | Settings</title>
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico">
+<title>HRCloud2 | Settings</title>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
 <?php
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
@@ -22,30 +24,9 @@ if (!file_exists('commonCore.php')) {
 else {
   require('commonCore.php'); }
 
-if ($ShowHRAI == '1') {
-  $HRAIHeight = '85'; }
-if ($ShowHRAI !== '1') {
-  $HRAIHeight = '0'; } 
-?>
-    <script type="text/javascript">
-    function Clear() {    
-      document.getElementById("search").value= ""; }
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-         e.style.display = 'none';
-      else
-         e.style.display = 'block'; }
-    function goBack() {
-      window.history.back(); }
-    function Clear() {    
-      document.getElementById("input").value= ""; }
-    </script>
-
-<?php include('header.php'); ?>
-
+include('header.php'); ?>
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
-<?php if ($ShowHRAI == '1') {  ?>
+<?php if ($ShowHRAI == '1') { ?>
 <div id="HRAIDiv" style="float: center; ">
   <iframe src="Applications/HRAI/core.php" id="HRAIMini" name="HRAIMini" width="810" height="75" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
   <div id='HRAIButtons1' name='HRAIButtons1' style="margin-left:15%;">
@@ -71,22 +52,28 @@ document.getElementById("HRAIMini").submit;
 </script>
 <?php } 
 if ($ShowTips == '1' && isset($Tip)) {
+  $tipsHeight = '60';
   echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
-  
 <div id="settingsContentsDiv" align='center'>
-  <iframe src="settingsCore.php" id="settingsContents" name="settingsContents" style="min-height: 450px; max-height: 950px;" width="815" scrolling="yes" margin-top:-4px; margin-left:-4px; border:double; onload="document.getElementById('loading').style.display='none';"></iframe>
+  <iframe src="settingsCore.php" id="settingsContents" name="settingsContents" width="815px" style="min-height:450px; max-height:950px; padding-top:-4px; padding-left:-4px; border:inset;" onload="document.getElementById('loading').style.display='none';"></iframe>
 </div>
+</div>
+<?php
+if ($ShowHRAI == '1') {
+  $hraiHeight = '185'; }
+if ($ShowHRAI !== '1') {
+  $hraiHeight = '80'; } 
+$heightAdjuster = $hraiHeight + $tipsHeight; ?>
 <script>
 ;(function($){
   //Resizes the div to the remaining page size.
     $(document).ready(function(){
-        $('#settingsContents').height( $(window).height() - <?php echo $HRAIHeight; ?> );
+        $('#settingsContents').height( $(window).height() - <?php echo $heightAdjuster; ?> );
         $(window).resize(function(){
-            $('#settingsContents').height( $(this).height() - <?php echo $HRAIHeight; ?> );
+            $('#settingsContents').height( $(this).height() - <?php echo $heightAdjuster; ?> );
         });
     });
 })(jQuery);
 </script>
-</div>
 </body>
 </html>
