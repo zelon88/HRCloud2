@@ -4,9 +4,16 @@
 function goBack() {
   window.history.back(); }
 </script>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
-   <title>Cloud Contents</title>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
+<script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
+<script type="text/javascript">
+function Clear() {    
+  document.getElementById("search").value= ""; }
+</script>
+<title>Cloud Contents</title>
 <?php
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -47,6 +54,9 @@ $EditInc = 0;
     elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB"; }
     else{$size=round($size/1073741824, 1)." GB"; }
     return $size; }
+
+include ($UserConfig);
+
 // / Color scheme handler.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
@@ -70,18 +80,6 @@ else {
   $ahref="./?hidden";
   $atext="Show"; }
 ?>
-<script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-<script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
-<script type="text/javascript">
-    function Clear() {    
-      document.getElementById("search").value= ""; }
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-         e.style.display = 'none';
-      else
-         e.style.display = 'block'; }
-</script>
 </head>
 <body>
 <div id="container">
