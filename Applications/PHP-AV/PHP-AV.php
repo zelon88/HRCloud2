@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 2.7 (9-6-2017 22:00)
+App Version: 2.8 (10-10-2017 22:30)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -14,7 +14,7 @@ HRCLOUD2-PLUGIN-END
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
-$versions = 'PHP-AV App v2.7 | Virus Definition v4.1, 9/6/2017';
+$versions = 'PHP-AV App v2.8 | Virus Definition v4.1, 10/10/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -254,6 +254,6 @@ echo $report; }
 // / The following code represents the PHP-AV Footer, which displays version information.
 ?>
 <hr />
-<p style="text-align:center;">Loaded virus definition: <i><a href="virus.def"><?php echo $versions; ?></i></p>
+<p style="text-align:center;">Loaded virus definition: <i><u><a style="color:blue; cursor:pointer;" onclick="window.open('virus.def','resizable,height=400,width=650'); return false;"><?php echo $versions; ?></u></i></p>
 </body>
 </html>
