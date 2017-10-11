@@ -120,13 +120,13 @@ foreach ($apps as $appName) {
 
   // / The following code displays administrator specific buttons.
   if ($UserIDRAW == 1) {
-    echo ('<img id="deleteApp'.$appCounter.'Button" name="deleteApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:block;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\');" src="Resources/deletesmall.png" alt="Delete \''.$appName.'\'" title="Delete \''.$appName.'\'">'); 
-    echo ('<img id="XdeleteApp'.$appCounter.'Button" name="XdeleteApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \'Delete '.$appName.'\'" title="Close \'Delete '.$appName.' \'">'); }
+    echo ('<img id="deleteApp'.$appCounter.'Button" name="deleteApp'.$appCounter.'Button" style="cursor:pointer; padding-left:6px; padding-bottom:2px; float:right; display:block;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\');" src="Resources/deletesmall.png" alt="Delete \''.$appName.'\'" title="Delete \''.$appName.'\'">'); 
+    echo ('<img id="XdeleteApp'.$appCounter.'Button" name="XdeleteApp'.$appCounter.'Button" style="cursor:pointer; padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'deleteApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XdeleteApp'.$appCounter.'Button\'); toggle_visibility(\'uninstallApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \'Delete '.$appName.'\'" title="Close \'Delete '.$appName.' \'">'); }
 
   // / The followind code displays the App image and Launch button to all users.
-  echo ('<img id="infoApp'.$appCounter.'Button" name="infoApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:block;" src="Resources/info.png" alt="Show \''.$appName.'\' Info" title="Show \''.$appName.'\' Info" onclick="toggle_visibility(\'infoApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XinfoApp'.$appCounter.'Button\'); toggle_visibility(\'infoApp'.$appCounter.'Div\');">'); 
-  echo ('<img id="XinfoApp'.$appCounter.'Button" name="XinfoApp'.$appCounter.'Button" style="padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'infoApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XinfoApp'.$appCounter.'Button\'); toggle_visibility(\'infoApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \''.$appName.'\' Info" title="Close \''.$appName.'\' Info">'); 
-  echo ('<img src="Resources/newwindow.png" style="padding-left:6px; padding-bottom:2px; float:right;" alt="Launch \''.$appName.'\' in a new window" title="Launch \''.$appName.'\' in a new window" onclick="window.open(\''.$appLoc.'\',\''.$appName.'\',\'resizable,height=400,width=650\'); return false;">');
+  echo ('<img id="infoApp'.$appCounter.'Button" name="infoApp'.$appCounter.'Button" style="cursor:pointer; padding-left:6px; padding-bottom:2px; float:right; display:block;" src="Resources/info.png" alt="Show \''.$appName.'\' Info" title="Show \''.$appName.'\' Info" onclick="toggle_visibility(\'infoApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XinfoApp'.$appCounter.'Button\'); toggle_visibility(\'infoApp'.$appCounter.'Div\');">'); 
+  echo ('<img id="XinfoApp'.$appCounter.'Button" name="XinfoApp'.$appCounter.'Button" style="cursor:pointer; padding-left:6px; padding-bottom:2px; float:right; display:none;" onclick="toggle_visibility(\'infoApp'.$appCounter.'Button\'); toggle_visibility(\'app'.$appName.'Icon\'); toggle_visibility(\'XinfoApp'.$appCounter.'Button\'); toggle_visibility(\'infoApp'.$appCounter.'Div\'); " src="Resources/x.png" alt="Close \''.$appName.'\' Info" title="Close \''.$appName.'\' Info">'); 
+  echo ('<img src="Resources/newwindow.png" style="cursor:pointer; padding-left:6px; padding-bottom:2px; float:right;" alt="Launch \''.$appName.'\' in a new window" title="Launch \''.$appName.'\' in a new window" onclick="window.open(\''.$appLoc.'\',\''.$appName.'\',\'resizable,height=400,width=650\'); return false;">');
   echo ('</p></div>');
   echo nl2br ('<hr />');
   echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');">');
@@ -139,8 +139,8 @@ foreach ($apps as $appName) {
     echo ('<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"></form><br></div>'); }
   
   // / The followind code displays the App image and Launch button to all users.
-  echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="display:none;" onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
-  echo ('<div align="center"><a onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
+  echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="cursor:pointer; display:none;" onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
+  echo ('<div align="center"><a style="cursor:pointer;" onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a style="cursor:pointer;" onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
   
   // / The following code displays the Basic App information, when clicked.
   echo ('<div align="left" id="appBasic'.$appCounter.'" name="appBasic'.$appCounter.'" style="display:none;"><hr />');
@@ -160,7 +160,7 @@ foreach ($apps as $appName) {
 
   // / The followind code displays the App icon, if one exits in the App Directory.
   if (file_exists($appIcon)) {
-    echo nl2br('<p><img src="'.$appIcon.'" maxwidth="48px" max-height="48px" id="app'.$appName.'Icon" name="app'.$appName.'Icon" style="display:block;" title="'.$appName.'" alt="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\';"></p> '); }
+    echo nl2br('<p><img src="'.$appIcon.'" maxwidth="48px" max-height="48px" id="app'.$appName.'Icon" name="app'.$appName.'Icon" style="cursor:pointer; display:block;" title="'.$appName.'" alt="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\';"></p> '); }
   
   // / The following code signifies the end of each App Div in the appIndex. DO NOT ADD APP-SPECIFIC CODE BELOW THIS LINE!!!
   echo nl2br('</div>');     
