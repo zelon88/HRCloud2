@@ -26,10 +26,7 @@ else {
 // / The following code verifies and cleans the config file.    
 if ($Accept_GPLv3_OpenSource_License !== '1') {
   die ('ERROR!!! HRC2CommonCore124, You must read and completely fill out the config.php file located in your
-    HRCloud2 installation directory before you can use this software!'); 
-  $CleanConfig = '1';
-  $INTIP = 'localhost';
-  $EXTIP = 'localhost'; }
+    HRCloud2 installation directory before you can use this software!'); }
 if (isset ($InternalIP)) { 
   unset ($InternalIP); }
 if (isset ($ExternalIP)) { 
