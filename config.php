@@ -12,26 +12,21 @@
 
 // / ------------------------------
 // / License Information ...
-// / To continue, please accept the included GPLv3 license by changing the following 
-// / variable to '1'. By changing the '$Accept_GPLv3_OpenSource_License' variable to '1'
-// / you aknowledge that you have read and agree to the terms of the included LICENSE file.
+  // / To continue, please accept the included GPLv3 license by changing the following 
+  // / variable to '1'. By changing the '$Accept_GPLv3_OpenSource_License' variable to '1'
+  // / you aknowledge that you have read and agree to the terms of the included LICENSE file.
 $Accept_GPLv3_OpenSource_License = '1';
 // / ------------------------------
 
 // / ------------------------------
 // / General Information ... 
-// / Leave '1' for default and to allow individual users to modify their own color-schemes.
+  // / Leave '1' for default and to allow individual users to modify their own color-schemes.
 $ColorScheme = '1';
-// / To show HRAI in your Cloud homepage, set $ShowHRAI to '1'. To hide HRAI in your Cloud
-// / homepage set $ShowHRAI to '0'. Default is '1'.
+  // / To show HRAI in your Cloud homepage, set $ShowHRAI to '1'. To hide HRAI in your Cloud
+  // / homepage set $ShowHRAI to '0'. Default is '1'.
 $ShowHRAI = '1';
-// / ------------------------------
-
-// / ------------------------------
-// / Admin Login Information ...
-  $AdmLogin = 'YourName';
-  $AdmPass = 'YourPassword';
-  $UniqueServerName = 'YourServer';
+  // / To hide tooltips at the top of each page, set $ShowTips to '0'.
+$ShowTips = '1';
 // / ------------------------------
 
 // / ------------------------------  
@@ -39,40 +34,38 @@ $ShowHRAI = '1';
   // / HRCloud2 Server can run on a local machine or on a network as a server to
   // / serve clients over http using standard web browsers.
   // / Unique Salts.
-  $Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
-  // / Internal IP Address.
-  $InternalIP = '192.168.1.7';
+$Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
   // / Externally or internally accesible domain or IP.
-  $URL = 'http://localhost';
+$URL = 'https://www.YOUR_URL_HERE.net';
   // / Scan for viruses during directory scan. Use 1 for default. 
    // / (ClamAV MUST be installed on the localhost!!!).
-  $VirusScan = '0';
+$VirusScan = '0';
   // / Use multi-threaded virus scanning. Virus scanning is extremely resource intensive. 
     // / If you are running an older machine (Rpi, CoreDuo, or any single-core CPU) leave 
     // / this setting disabled ('0').
-  $HighPerformanceAV = '0';
+$HighPerformanceAV = '0';
   // / Thorough A/V scanning requires stricter permissions, and may require additional 
     // / ClamAV user, usergroup, and permissions configuration.
     // / Disable ('0') if you experience errors.
     // / Enable ('0') if you experience false-negatives.
-  $ThoroughAV = '0';
+$ThoroughAV = '0';
   // / Persistent A/V scanning will try to achieve the highest level of scanning that is
     // / possible with available permissions. 
     // / When enabled; If errors are encountered ANY AND EVERY attempt to recover from the 
       // / error will be made. No expense will be spared to complete the operation.
     // / When disabled; If errors are encountered, NO ATTEMPTS to recover from the error
       // / will be made. The operation will be abandoned and abort after reasonable effort.
-  $PersistentAV = '1';
+$PersistentAV = '1';
 // / ------------------------------
 
 // / ------------------------------ 
 // / Directory locations ...
-// / Use format '/home/justin/Desktop/TestDir'.
+  // / Use format '/home/YOUR_USERNAME/Desktop/TestDir'.
   // / YOU MUST INSTALL HRCLOUD2 TO THE FOLLOWING DIRECTORY!!!
   // / DO NOT CHANGE THE DEFAULT INSTALL DIRECTORY!!!
-  $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
+$InstLoc = '/var/www/html/HRProprietary/HRCloud2';
   // / Directory to be scanned for file dumps (NO SLASH AFTER DIRECTORY!!!) ...  
-  $CloudLoc = '/home/justin/Desktop/TestDir/Cloud';
+$CloudLoc = '/home/YOUR_USERNAME/Desktop/TestDir/Cloud';
 // / ------------------------------ 
 
 // / ------------------------------ 
