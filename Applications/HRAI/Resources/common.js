@@ -12,3 +12,11 @@ function toggle_visibility(id) {
     e.style.display = 'none';
     else
       e.style.display = 'block'; }
+
+// / Toggle the border on the console button.
+function toggle_border(id) {
+  var f = document.getElementById(id);
+  if(f.style.border == 'inset')
+    f.style.border = 'outset';
+    else
+      f.style.border = 'inset'; }
