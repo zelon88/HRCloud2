@@ -74,7 +74,9 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Clear user / master cache option.
 
--Clipboard ((BETA) copy/paste files, folders, items between locations)
+-Clipboard (copy/paste files, folders, items between locations).
+
+-Build your own desktop client app from the Settings page. Compatible with Windows, Linux, and MacOS.
 
 # RUNS ON
 
