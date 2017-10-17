@@ -20,7 +20,7 @@ require_once($coreFuncfile);
 require_once($onlineFile);
 require_once($InstLoc.'/config.php');
 ?>
-<div id="showConsoleButton" name="showConsoleButton" alt="Toggle Console" style="border:2px; border-style:inset; clear:right; float:right;" onclick="toggle_visibility('console');">Console</div>
+<div id="showConsoleButton" name="showConsoleButton" alt="Toggle Console" style="border:2px; border-style:outset; clear:right; float:right;" onclick="toggle_visibility('console'); toggle_border('showConsoleButton');">Console</div>
 <?php
 if (!isset($_POST['input'])) { ?>
 <div id="HRAITop" align='center'><img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logoslowbreath.gif'/></div>
