@@ -14,7 +14,7 @@ HRCLOUD2-PLUGIN-END
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
-$versions = 'PHP-AV App v2.8 | Virus Definition v4.1, 10/10/2017';
+$versions = 'PHP-AV App v2.8 | Virus Definition v4.2, 10/17/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
