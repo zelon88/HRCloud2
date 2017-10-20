@@ -12,7 +12,9 @@ ECHO N - EXIT
 ECHO.
 SET /P M=Type Y or N, then press ENTER:
 IF %M%==Y GOTO INSTALL
-IF %M%==N GOTO EOF
+IF %M%==y GOTO INSTALL
+IF %M%==N GOTO END
+IF %M%==n GOTO END
 
 :INSTALL
 ECHO CREATING DIRECTORUIES!
@@ -24,7 +26,5 @@ powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('C:\ProgramData\Mi
 powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Desktop\HRCloud2-Client.lnk');$s.TargetPath='C:\Program Files\HRCloud2\HRCloud2-Client.exe';$s.Save()"
 ECHO INSTALLATION COMPLETE!
 PAUSE
-EXIT /B
-
-GOTO MENU
+:END
 EXIT /B
