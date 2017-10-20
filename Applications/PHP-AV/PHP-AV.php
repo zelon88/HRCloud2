@@ -95,7 +95,6 @@ if (isset($_POST['AVScan'])) {
 
 // / -----------------------------------------------------------------------------------
 // / Functions
-
 function file_scan($folder, $defs, $debug) {
   // Hunts files/folders recursively for scannable items.
   $defData = hash_file('sha256', 'virus.def');
@@ -109,7 +108,6 @@ function file_scan($folder, $defs, $debug) {
         if (!$isdir and $entry!='.' and $entry!='..') {
           virus_check($folder.'/'.$entry, $defs, $debug, $defData); } 
         elseif ($isdir  and $entry !='.' and $entry!='..') {
-
           file_scan($folder.'/'.$entry, $defs, $debug, $defData); } }
       $d->close(); } }
 
@@ -148,16 +146,27 @@ function virus_check($file, $defs, $debug, $defData) {
             while (($buffer = fgets($handle, $chunkSize)) !== false) {
               $data = $buffer;
               foreach ($defs as $virus) {
-                $filesize = @filesize($file);
                 if ($virus[1] !== '') {
-                  if (strpos($data, $virus[1])) {
+                  if (strpos($data, $virus[1]) or strpos($file, $virus[1])) {
                    // File matches virus defs.
                    $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
                    $infected++;
                    $clean = 0; } } } }
             if (!feof($handle)) {
               echo 'ERROR!!! PHPAV160, Unable to open '.$file.' on '.$Time.'.'.\n; }
-          fclose($handle); } } } }
+          fclose($handle); } 
+          if ($virus[2] !== '') {
+            if (strpos($data1, $virus[2])) {
+                // File matches virus defs.
+              $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+              $infected++;
+              $clean = 0; } }
+           if ($virus[3] !== '') {
+            if (strpos($data2, $virus[3])) {
+                // File matches virus defs.
+              $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
+              $infected++;
+               $clean = 0; } } } } }
       // / Scan files smaller than the memory limit by fitting the entire file into memory.
       if ($filesize < $memoryLimit && file_exists($file)) {
         $data = file($file);
