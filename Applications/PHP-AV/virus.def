@@ -347,11 +347,23 @@ Malware Jaff.14	NCVH2PL.doc		8abb70a36f99ee613f65535aeaaf28a3d0e79df7129110f4f9e
 Malware Jaff.15	WXEVIR.doc		9383ade91f05af3f350831ac76ba218e42fc033964753e6db71c0fded5b0b832
 Malware Jaff.16	W2X2PEW.doc		c47090ad7c20f9cafee4e162985f6a2d8b60c4e3b3327d532e70a167b8a1a9e8
 Malware Jaff.17	bruhadson8.exe		2cc1d8edc318e0e09aad6afbc48999980f8e39e54734bca4c1a95c7b5db39569
+AdWind			c3a3ac48b3c6e0f7e48c7a2bb2dc3fa4f2c8d5fd0fcf1e0bce096b6b0f50eccf
+AdWind.2		c5387a9af9ee4ee5809d59680161059c03c029794dec391b142a97baa8d5d42c	
 Exploit CVE-2016-7200	188.165.163.226
 Exploit CVE-2016-7200.1	<Session SID="161" BitFlags="208">
 Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
 Exploit CVE-2016-7200.2.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
+Trojan DarkComet			7d14025275fbcd277f74aaaa0533bfe02f22c070a954c813d75140a8c352b36d
+Trojan DarkComet.1	1.exe		f5118f6534b0bb265f563421697bdcb29fed31267f75a71d7dd0da7a31be662a
+Trojan DarkComet.2	2.exe		7a141eba6dc8b7e6a27bdcf067e1c45fc9e35aa2f699b3b526f44be6b47a54d5
+Trojan DarkComet.3	3.exe		1520fb831f4c77f57f663e393b0ba0f2edc8bc0455b86e0641485432acd1bfe8
+Trojan DarkComet.4	4.exe		c15d6ce3051ecb4a4aa1e128ea85c0b4159de3d36430578b5bacdb074cca0d2d
+Trojan DarkComet.5	5.exe		a68083aaddbba3d8e23f607aee07cc1b4ace727c9f0539ad9edda594b0ae0b1d
+Trojan DarkComet.6	6.exe		93f1b692dc95fc9d1fe0fbb68b82841bc5ad02561a90d5e081ae00e08e02c350
+Trojan DarkComet.7			25437f103f7ccbc444d8703bbf7a08d7691c5d00066bdeb80bd60883bfb16327
+Trojan DarkComet.8			fea9e7094bc95dc152f595f7b45c78ec15a76fc6ceec9812d38de6c601c4170e
+Trojan DarkComet.9			d142c0342a9540a8b78fe649c92a0e960da4cda5f45d3d54d0502abc41e29fef
 Trojan FormBook	winz6j8.bat
 Trojan FormBook.1	Receipt.exe		a341876e11f1a7e0bc370df8affccf52532ab95003bc83199522376eb51a5fa1
 Trojan FormBook.2	Receipt.r22		c9acea81a8eaece1bea16dba774393907a6141ca260cc072ea9e2d0c0ae6aee4
@@ -361,6 +373,8 @@ Trojan FormBook.5	hxxps://superiorleather.co.uk/Receipt.r22
 Trojan Loki			2bebe4a5acb9940a295a167aff62e81e9c11b55051450e1f8e979ff63d964071
 Trojan Loki.2			326030d71dfb77f98d37eea3498d7dadd76c5ab59bd5fe279298c184ac3e08fa
 Trojan Loki.3			121118a0f5e0e8c933efd28c9901e54e42792619a8a3a6d11e1f0025a7324bc2
+Trojan Loki.4			34a19d2fb7e045bb1c985ed727beff59f169b3021ee67cfc462366a66ce14251
+Trojan Loki.5	7571BA.exe		54ef1c6df5b3b288366b560f7721f1cc5e556bd2fa3c8b0edee7fdb2fe871ffb
 Trojan RoughTed			9fc5fb99f72be24ec7d1e2004f1c1f2083885059e0e072314cb712934415bc24
 Trojan RoughTed.2			0434a5b69bea3a10443c0740bca4f36772cf67130c6b7da5b1b16494b3e12377
 Trojan W32.Adware.Gen!c		471f0993ccf1c5cb3c715740141b6d49	2d02ddb75f42e67f76da4df375834c7e79a62a5828875870d23b236a1d7ae19c
@@ -378,8 +392,15 @@ Trojan Minzen		B469B78CA04E8FDAD957CCC68B5B1C3D
 Trojan	Dreambot
 Trojan Vawtrak		5238cd34caae600b3f592e2595aa6949
 Trojan Vawtrak.1		6fad86a0fcc912f32474f6c7a86fe37a
-Trojan	vawtrak
-Trojan	emotet
+Trojan	Emotet
+Trojan	Emotet.1	Purchase-Order-50717202/	5a8b91fac4cdd9220dae03dc4160d8d77fb509482d14370da38227b5de7ee639
+Trojan	Emotet.2	OVERDUE-ACCOUNT/	ae388ef426ffac2888e3c0d616619091048e07f7dadb04051a895b71c9123626
+Trojan	Emotet.3	gescanntes-Dokument/	32eb4a34d123927ca5fd2e5f36634c1e50017e156e4ec7e5cdce3feb23c6c543
+Trojan	Emotet.4	Payment-and-address./	
+Trojan	Emotet.5	Rechnung-Bestellung-97866	
+Trojan	Emotet.6	2017-11190	
+Trojan	Emotet.7	Rechnung-2017-10-76709	
+Trojan	Emotet.8	Rechnung-im-Anhang	
 Trojan ZeroT.1			3124fcb79da0bdf9d0d1995e37b06f7929d83c1c4b60e38c104743be71170efe
 Trojan ZeroT.2	0228.doc		b5c208e4fb8ba255883f771d384ca85566c7be8adcf5c87114a62efb53b73fda
 Trojan ZeroT.3	0228.exe		bc2246813d7267608e1a80a04dac32da9115a15b1550b0c4842b9d6e2e7de374
@@ -542,6 +563,14 @@ Trojan Cerber.BS.8			5bcb16e6dd8a023f7daef3cf2193ec4d8b911e3af677be3ebfbe58dbaf6
 Trojan Cerber.BS.9			0a7786e86d3df2548e12176b5d8aa6db0de9e556450a90f7c36fdbab1392b48f
 Trojan TerrorEK.1			88cdbf79aba30f553a949fc281baaa5d2e5f887d6c3f05b617c4712a709d47a9
 Trojan TerrorEK.2			71ea85fd9a93949b4a22ed0ac43caebf991f9c046318bf6a490fe1ecb95537fe
+Trojan TerrorSmokeLoader.1	3458.tmp.exe		07e96eb325ef315ede680eca649426d6a4516e03a859926d651fda669a98873a
+Trojan TerrorSmokeLoader.2	4A97.tmp.exe		dda0f5b8759220bdbd8e5dba8bff49868b12e1d5e3bd273b366050dab0c8dd4f
+Trojan TerrorSmokeLoader.3	65A7.tmp.exe		a5bb96d731ef58cf17cc579578ab89c7c46f275982be8eb137ff64268dff1efc
+Trojan TerrorSmokeLoader.4	8C4A.tmp.dll		bdf3c4e804ebffad9f7ba9a3e3e467d0251c16f57e41095b593d226d2e7f399d
+Trojan TerrorSmokeLoader.5	C14F.tmp.exe		e70e429aa051017432921f4cdf2b8492c5cff9465ffdc3aabad2a865ecd2b326
+Trojan TerrorSmokeLoader.6	rvfwteia.exe		e6516d2911fc3378903b396b1b3ec97ddd497a1e8b974b531b1f140a485d39ca
+Trojan TerrorSmokeLoader.7			2090456737a6b44f2c16943662c9cb42acf05b1db6d63f89253a39f33e0ec02c
+Trojan TerrorSmokeLoader.8			c9f3397340e3671a47c6f15f9e6b1697265cecbb37b3c9c29d1eeae3b4312497
 Trojan Disttrak	pdwmtphw.exe
 Trojan Disttrak.1	caiaw00a.exe		010d4517c81bcdc438cb36fdf612274498d08db19bba174462ecbede7d9ce6bb
 Trojan Disttrak.2	sdwprint.exe		efd2f4c3fe4e9f2c9ac680a9c670cca378cef6b8776f2362ed278317bfb1fca8
@@ -605,6 +634,33 @@ Liber Inc. Exploit	sp2fucked.biz
 Liber Inc. Exploit	admin2cash.biz
 Liber Inc. Exploit	coolsearch.biz
 Liber Inc. Exploit	Web-res.biz
+Ransomware Sage	4846.doc		b0aed0e368425dfe126491b71546ad27061a1c4346b4de51202766b4113620a7
+Ransomware Sage.1	28255.doc		55d6e3ed606acddf3c4112ffe4b4447f4bfacda9d03d187cbc2374b6048f5712
+Ransomware Sage.2	88507.zip		da8db4d594370f36b93d4121897d4056cf2f36e61b55b6e8a9569e3121fad1df
+Ransomware Sage.3	67214604.zip		13584b8ab9b4c5cb7c89e60ca2fd46e0ce3771d50c0e9a5402415580179a13e0
+Ransomware Sage.4	92181052.zip		26ad4cf58b40b2df9ff39ab302d7bf15bbd4a7e064f614015797a13631160ee8
+Ransomware Sage.5	31084472583.zip		b9216e8e5201a8fc2433ce60cd379077c60c11c888edffc5d130e328ed2c7ffb
+Ransomware Sage.6	525463435470.zip		12f96c81580efc35193561fd45e51abd9b742df11777a198d0df9e6800ce1c15
+Ransomware Sage.7	599450048391.zip		dd18a44aa3166de08c77083dde6b0d697fde882a38a95f749a451b52c4eac4bc
+Ransomware Sage.8	58843249449955.zip		caf07e4e2670dc3c6b824a1fdb0a0de90a00b0759e95c97e88d07f65d646769b
+Ransomware Sage.9	004765275711512.zip		3528de5cdcf6529e1dd7f0e24ead27c0ae360f311e877530f98fb2ac9367c5cc
+Ransomware Sage.10	940.js		b1ae04485794079bc11902bcd56f4b36408fdedb18c44a55d2d919c65fab577a
+Ransomware Sage.11	3822.js		35abf5d73f96856c535499f04771f27103fdb1275e0e74bd4c963b9c3225e94e
+Ransomware Sage.12	3902.js		bab55dc85f006ae26ed5ad447089eb1be80cac75519a199d94620a01651cad13
+Ransomware Sage.13	9660.js		e89ffc61e3c79115bfc3d855227405a850eb7a8fa3ac5c4bdd77389ba6945e31
+Ransomware Sage.14	22032.js		aba9d22dd3573f0902a7219790915de8dbb0b07b5e25ed28c6a87b4acfaa0c39
+Ransomware Sage.15	28588.js		6bcb0a226921fc1a9e6bebd92dffd5dd528937e6bde50bbcc08fd7593e9da27c
+Ransomware Sage.16	29219.js		942f64e913a1f3781adecd88e47f8da75981f69d20ce9206e3374f5331a54e0f
+Ransomware Sage.17	29459.js		24fc14ae2bfa634a54cafc6b22a596ad2b85dba621388255d3e0eb6294cd03ae
+Ransomware Sage.18	32148.exe		6132c32a717ff1d5f5ff86ce0d4a27d59b332ec1f5e75f12c1346c0ab3fbda0c
+Ransomware Sage.19	4051.exe		b16eea3a52ad7ffe0b18309395da9394982b6219f16e021e43ce57731d29a0ec
+Ransomware Sage.20	417187.exe		81609d5cdc5068ffd5975c1045710cecdbaa33a2eed682894322847e93c9cb21
+Ransomware Sage.21	220986.exe		cb219bf88ceeb2ecf95072576148e17e52e56e5f02876ac00a204a3bcb9352cc
+Ransomware Sage.22	27599.exe		008484650884010ac949d1041e48dd0abf4967c9ddf305a971ddfc32f9d4cfeb
+Ransomware Sage.23	483882.exe		5a99897d463f1685b83b2d017dc734ba657fe3f612a74fcba730b826fce5e44c
+Ransomware Sage.24	636057.exe		64978bc162765959aa0c3de15f4fce90041bf3bc01e668ba649eb7e686222a30
+Ransomware Sage.25	496938.exe		046b9330d7da6619ff96ce3c94adc5f35fa2fb26cd1da7d2f57890bfde5e4f59
+Ransomware Sage.26	803051.exe		8f1374b432fa7580397e57949b32044e89663215e71ad0252638875a61908323
 Ransomware Nebula.Gootkit		48ae9a5d10085e5f6a1221cd1eedade6	6fe13d913f4d3f2286f67fbde08ab17418ba8370410e52354ffa12a0aaf498f8
 Ransomware Nebula.Pitou		6f9d71eebe319468927f74b93c820ce4	b976cf6fd583b349e51cb34b73de6ef3a5ee72f86849f847b9158b4a7fb2315c
 Ransomware Nebula			f4627005c018071f8ec6b084eef3936e3a267660b0df99ffa0d27a8d943d1af5

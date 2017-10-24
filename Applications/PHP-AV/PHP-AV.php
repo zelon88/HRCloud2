@@ -14,7 +14,7 @@ HRCLOUD2-PLUGIN-END
 Written by FujitsuBoy (aka Keyboard Artist)
 Modified by zelon88
 //*/
-$versions = 'PHP-AV App v2.8 | Virus Definition v4.2, 10/17/2017';
+$versions = 'PHP-AV App v2.8 | Virus Definition v4.4, 10/24/2017';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ function virus_check($file, $defs, $debug, $defData) {
                 // File matches virus defs.
               $report .= '<p class="r">Infected: ' . $file . ' (' . $virus[0] . ')</p>';
               $infected++;
-               $clean = 0; } } } } }
+              $clean = 0; } } } } }
       // / Scan files smaller than the memory limit by fitting the entire file into memory.
       if ($filesize < $memoryLimit && file_exists($file)) {
         $data = file($file);
