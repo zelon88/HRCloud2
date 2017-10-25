@@ -1,0 +1,21 @@
+h1 {
+  font-family: arial; }
+p {
+  font-family: arial;
+  padding: 0;
+  margin: 0;
+  font-size: 14px; }
+.g {
+  color: #009900; }
+.r {
+  color: #990000;
+  font-weight: bold; }
+.d {
+  color: #ccc; }
+#summary {
+  border: #333 solid 1px;
+  background: #f0efca;
+  padding: 10px;
+  margin: 10px; }
+#summary p {
+  font-size: 12px; }

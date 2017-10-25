@@ -355,12 +355,12 @@ Exploit CVE-2016-7200.2	chakraBase.add(0x1DA2F5),
 Exploit CVE-2016-7200.2.1	<SessionFlag N="x-responsebodytransferlength" V="7,757"/>
 Exploit CVE-2016-4117	import com.adobe.tvsdk.mediacore.timeline.operations.DeleteRangeTimelineOperation;
 Trojan DarkComet			7d14025275fbcd277f74aaaa0533bfe02f22c070a954c813d75140a8c352b36d
-Trojan DarkComet.1	1.exe		f5118f6534b0bb265f563421697bdcb29fed31267f75a71d7dd0da7a31be662a
-Trojan DarkComet.2	2.exe		7a141eba6dc8b7e6a27bdcf067e1c45fc9e35aa2f699b3b526f44be6b47a54d5
-Trojan DarkComet.3	3.exe		1520fb831f4c77f57f663e393b0ba0f2edc8bc0455b86e0641485432acd1bfe8
-Trojan DarkComet.4	4.exe		c15d6ce3051ecb4a4aa1e128ea85c0b4159de3d36430578b5bacdb074cca0d2d
-Trojan DarkComet.5	5.exe		a68083aaddbba3d8e23f607aee07cc1b4ace727c9f0539ad9edda594b0ae0b1d
-Trojan DarkComet.6	6.exe		93f1b692dc95fc9d1fe0fbb68b82841bc5ad02561a90d5e081ae00e08e02c350
+Trojan DarkComet.1			f5118f6534b0bb265f563421697bdcb29fed31267f75a71d7dd0da7a31be662a
+Trojan DarkComet.2			7a141eba6dc8b7e6a27bdcf067e1c45fc9e35aa2f699b3b526f44be6b47a54d5
+Trojan DarkComet.3			1520fb831f4c77f57f663e393b0ba0f2edc8bc0455b86e0641485432acd1bfe8
+Trojan DarkComet.4			c15d6ce3051ecb4a4aa1e128ea85c0b4159de3d36430578b5bacdb074cca0d2d
+Trojan DarkComet.5			a68083aaddbba3d8e23f607aee07cc1b4ace727c9f0539ad9edda594b0ae0b1d
+Trojan DarkComet.6			93f1b692dc95fc9d1fe0fbb68b82841bc5ad02561a90d5e081ae00e08e02c350
 Trojan DarkComet.7			25437f103f7ccbc444d8703bbf7a08d7691c5d00066bdeb80bd60883bfb16327
 Trojan DarkComet.8			fea9e7094bc95dc152f595f7b45c78ec15a76fc6ceec9812d38de6c601c4170e
 Trojan DarkComet.9			d142c0342a9540a8b78fe649c92a0e960da4cda5f45d3d54d0502abc41e29fef
