@@ -326,9 +326,6 @@ if (isset($_POST['grabberFilename'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / / There is an API input for creating playlists, but it sucks and I'm still working on HRStreamer. When it's ready, or
-   // / if the date is later than February of 2017, plaease open a support ticket and tell me to update this code. 
-  // / HRC2SanCore139.
 set_time_limit(0);
 // / -----------------------------------------------------------------------------------
 ?>

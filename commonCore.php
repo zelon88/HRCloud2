@@ -4,7 +4,7 @@
 // / file, authenticate user storage, and define variables for the session.
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------
+// / -----------------------------------------------------------------------------------  
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
@@ -180,6 +180,7 @@ if (!file_exists($SesLogDir)) {
         @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
 @copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
 // / -----
+// / The following code checks if the $CloudTemp directory ($CloudLoc.$userID) exists, and creates one if it does not.
 if(!file_exists($CloudTemp)) {
   mkdir($CloudTemp); 
   if (file_exists($CloudDir)) {
@@ -190,6 +191,7 @@ if(!file_exists($CloudTemp)) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 @copy($InstLoc.'/index.html', $CloudTemp.'index.html');
 // / -----
+// / The following code checks if the $CloudTemp directory ($InstLoc.'/DATA/'.$userID) exists, and creates one if it does not.
 if (!file_exists($CloudTempDir)) { 
   mkdir($CloudTempDir, 0755); 
   if (file_exists($CloudTempDir)) {
