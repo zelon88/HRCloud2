@@ -44,9 +44,9 @@
         <!-- Start UberGallery v<?php echo UberGallery::VERSION; ?> - Copyright (c) <?php echo date('Y'); ?> Chris Kankiewicz (http://www.ChrisKankiewicz.com) -->
         <?php if (!empty($galleryArray) && $galleryArray['stats']['total_images'] > 0): ?>
             <ul class="gallery-wrapper thumbnails">
-                <?php foreach ($galleryArray['images'] as $image): ?>
+                <?php foreach ($galleryArray['images'] as $image): ?>  
                     <li class="">
-                        <a href="<?php echo str_replace('/var/www/html/', '', html_entity_decode($image['file_path'])); ?>" title="<?php echo $image['file_title']; ?>" class="thumbnail" rel="colorbox">
+                        <a href="<?php echo $image['file_path']; ?>" title="<?php echo $image['file_title']; ?>" class="thumbnail" rel="colorbox">
                             <img src="<?php echo $image['thumb_path']; ?>" alt="<?php echo $image['file_title']; ?>" />
                         </a>
                     </li>
