@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: UberGallery
-App Version: 3.0 (9-19-2017 22:00)
+App Version: 3.1 (10-30-2017 22:00)
 App License: GPLv3
 App Author: UberGallery & zelon88
 App Description: A simple HRCloud2 App for viewing photos.
@@ -11,7 +11,7 @@ App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
 
-// / The follwoing code checks for the HRC2 commonCore file and terminates if it is missing.
+// / The follwoing code checks for the HRC2 core files and terminates if any are missing.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
   $txt = 'ERROR!!! HRC2UG4, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n";
   echo nl2br($txt); 
@@ -24,10 +24,14 @@ $userInstDir = $AppDir.'UberGallery';
 $tempGalleryDir = $appDataInstDir.'/UberGallery';
 $userGalleryDir = $appDataCloudDir.'/UberGallery';
 $userGalleryIndex = $tempGalleryDir.'/index.php';
+$serverGalleryIndex = $AppDir.'UberGallery/index.php';
 $userGalleryURL = $URL.'';
 $directory = $CloudUsrDir;
+$excludedFiles = array('index.php');
 
-// / The following code creates a userGalleryDir in the users AppData folder if none exits.
+if (file_exists($userGalleryIndex)) unlink($userGalleryIndex);
+
+// / The following code creates a tempGalleryDir in the users hosted AppData folder if none exits.
 if (!is_dir($tempGalleryDir)) {
   mkdir($tempGalleryDir);
   if (is_dir($tempGalleryDir)) {
@@ -42,7 +46,7 @@ if (!is_dir($tempGalleryDir)) {
         if (!is_link($item) or !file_exists($tempGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
           copy($item, $tempGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } } } }
 
-// / The following code creates a userGalleryDir in the users AppData folder if none exits.
+// / The following code creates a userGalleryDir in the users temporary AppData folder if none exits.
 if (!is_dir($userGalleryDir)) {
   mkdir($userGalleryDir);
   if (is_dir($userGalleryDir)) {
@@ -57,16 +61,17 @@ if (!is_dir($userGalleryDir)) {
         if (!is_link($item) or !file_exists($userGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
           copy($item, $userGalleryDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } } } }
 
-  if (!is_dir($tempGalleryDir)) {
-  	$txt = 'ERROR!!! HRC2UGI12, Could not create a temporary gallery directory on '.$Time.'.';
-  	$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die($txt); }
+if (!is_dir($tempGalleryDir)) {
+	$txt = 'ERROR!!! HRC2UGI12, Could not create a temporary gallery directory on '.$Time.'.';
+	$MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die($txt); }
 
 foreach (scandir($CloudUsrDir) as $CloudFile) {
   foreach ($galleryExt as $ext) {
-  	if (strpos($CloudFile, $ext) == true) {
+  	if (strpos($CloudFile, $ext) == true && !in_array($CloudFile, $excludedFiles)) {
       copy($CloudUsrDir.'/'.$CloudFile, $tempGalleryDir.'/gallery-images/'.$CloudFile);
       copy($CloudUsrDir.'/'.$CloudFile, $userGalleryDir.'/gallery-images/'.$CloudFile); } } } 
 
+copy($serverGalleryIndex, $userGalleryIndex);
 require($userGalleryIndex);
 
