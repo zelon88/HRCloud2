@@ -164,10 +164,9 @@ if (!file_exists($LogLoc)) {
   $JICInstallLogs = @mkdir($LogLoc, 0755); 
   @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
     foreach ($LogInstallFiles as $LIF) {
-      if (in_array($LIF, $installedApps)) continue;
       if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
       @copy($InstLoc.'/'.$LogInstallDir.$LIF, $LogLoc.'/'.$LIF); } }
-copy($InstLoc.'/'.$LogInstallDir.'.index.php',$LogLoc.'/.index.php');
+copy($InstLoc.'/'.$LogInstallDir.'.index.php', $LogLoc.'/.index.php');
 // / -----
 // / The following code checks if the SesLogDir exists, and creates one if it does not.
 // / Also creates the file strucutre needed for the sesLog to display content.
@@ -348,8 +347,8 @@ if (file_exists($TipFile) && $ShowTips == '1') {
 // / -----------------------------------------------------------------------------------
 // / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
-  chmod($UserConfig, 0755); 
-  chown($UserConfig, 'www-data'); } 
+  @chmod($UserConfig, 0755); 
+  @chown($UserConfig, 'www-data'); } 
 if (!file_exists($UserConfig)) { 
   copy($LogInstallDir.'.config.php', $UserConfig); }
 if (!file_exists($UserConfig)) { 
