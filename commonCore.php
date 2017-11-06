@@ -158,6 +158,28 @@ if (!is_dir($CloudLoc)) {
 if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
   @mkdir($CloudDir, 0755); }
 // / -----
+
+// / The following code checks if the $CloudTemp directory ($CloudLoc.$userID) exists, and creates one if it does not.
+if(!file_exists($CloudTemp)) {
+  mkdir($CloudTemp); 
+  if (file_exists($CloudDir)) {
+    $txt = ('OP-Act: Created a Cloud Temp BaseDirectory on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($CloudDir)) {
+    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp BaseDirectory does not exist and could not be created on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+@copy($InstLoc.'/index.html', $CloudTemp.'index.html');
+// / -----
+// / The following code checks if the $CloudTemp directory ($InstLoc.'/DATA/'.$userID) exists, and creates one if it does not.
+if (!file_exists($CloudTempDir)) { 
+  mkdir($CloudTempDir, 0755); }
+@copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
+// / -----
+// / The following code checks if the CloudTmpDir exists, and creates one if it does not.
+if (!file_exists($CloudTmpDir)) { 
+  mkdir($CloudTmpDir, 0755); }
+@copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
+// / -----
 // / The following code checks if the LogLoc exists, and creates one if it does not.
 // / Also creates the file strucutre needed for the Logs to display content and store cache data.
 if (!file_exists($LogLoc)) {
@@ -178,39 +200,6 @@ if (!file_exists($SesLogDir)) {
       if ($LIF1 == '.' or $LIF1 == '..') continue;
         @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
 @copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
-// / -----
-// / The following code checks if the $CloudTemp directory ($CloudLoc.$userID) exists, and creates one if it does not.
-if(!file_exists($CloudTemp)) {
-  mkdir($CloudTemp); 
-  if (file_exists($CloudDir)) {
-    $txt = ('OP-Act: Created a Cloud Temp BaseDirectory on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  if (!file_exists($CloudDir)) {
-    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp BaseDirectory does not exist and could not be created on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-@copy($InstLoc.'/index.html', $CloudTemp.'index.html');
-// / -----
-// / The following code checks if the $CloudTemp directory ($InstLoc.'/DATA/'.$userID) exists, and creates one if it does not.
-if (!file_exists($CloudTempDir)) { 
-  mkdir($CloudTempDir, 0755); 
-  if (file_exists($CloudTempDir)) {
-    $txt = ('OP-Act: Created a Cloud Temp Directory on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  if (!file_exists($CloudTempDir)) {
-    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp Directory does not exist and could not be created on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-@copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
-// / -----
-// / The following code checks if the CloudTmpDir exists, and creates one if it does not.
-if (!file_exists($CloudTmpDir)) { 
-  mkdir($CloudTmpDir, 0755); 
-  if (file_exists($CloudTmpDir)) {
-    $txt = ('OP-Act: Created a Cloud Temp SubDirectory on '.$Time.'.'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-  if (!file_exists($CloudTmpDir)) {
-    $txt = ('ERROR!!! HRC2CommonCore137, The Cloud Temp SubDirectory does not exist and could not be created on '.$Time.'!'); 
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
-@copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
 // / -----
 // / The following code checks if the Resources directory exists, and creates one if it does not.
 if (!file_exists($ResourcesDir)) {
