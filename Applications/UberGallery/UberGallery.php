@@ -2,12 +2,12 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: UberGallery
-App Version: 3.1.5 (10-30-2017 22:00)
+App Version: 3.2 (11-6-2017 19:00)
 App License: GPLv3
 App Author: UberGallery & zelon88
 App Description: A simple HRCloud2 App for viewing photos.
 App Integration: 0 (False)
-App Permission: 0 (Admin)
+App Permission: 1 (Everyone)
 HRCLOUD2-PLUGIN-END
 //*/
 
