@@ -60,7 +60,7 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Admins can automatically install Apps from .zip files or uninstall them just as easily.
 
--Includes "Notes", "Contacts", and "Calculator" apps by zelon88.
+-Includes "Notes", "Contacts", "Bookmarks", and "Calculator" apps by zelon88.
 
 -Includes "Grabber" App by zelon88 for downloading files from URL straight to your Cloud Drive.
 
@@ -69,6 +69,12 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 -Includes "ServMonitor" App for real-time monitoring of server utilization, status, and specs (including CPU, RAM, Temp(s), Battery, Power Status, and more specs than your device manager could shake a stick at!
 
 -Includes "PHP-AV" App, a server-side anti-virus, anti-malware app that admins can use to scan their server. Written in PHP, this app can target ANY file or folder on the server, or intelligently scans HRCloud2-related files with a single click.
+
+-Includes "Pell" App for creating, opening, editing, and saving office and document files.
+
+-Includes "Uber Gallery" App for viewing images.
+
+-Includes "Executor" App giving Admins the ability to execute Bash code on the server remotely.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
