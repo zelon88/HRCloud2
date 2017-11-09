@@ -52,7 +52,7 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
   
 -Keeps excellent logs of everything it does.
 
--Stream & Playlist features. (Alpha)
+-Stream & Playlist features.
 
 -Users can view and launch Apps from their AppLauncher.
 
