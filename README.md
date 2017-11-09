@@ -74,7 +74,7 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Includes "Uber Gallery" App for viewing images.
 
--Includes "Executor" App giving Admins the ability to execute Bash code on the server remotely.
+-Includes "Executor" App giving Admins the ability to remotely execute Bash code on the server.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
