@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.6 (4-29-2017 10:30)
+App Version: 1.7 (4-29-2017 10:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
@@ -13,19 +13,19 @@ HRCLOUD2-PLUGIN-END
 
 // / The following code sanitizes the user input URL. 
 if (isset($_POST['grabberURL'])) { 
-  $grabberURLPOST = str_replace(str_split('[]{};$!#^&@>*<'), '', $_POST['grabberURL']); }
+  $grabberURLPOST = htmlentities(str_replace(str_split('~#[](){};$!#^&@>*<"\''), '', $_POST['grabberURL']), ENT_QUOTES, 'UTF-8'); }
 
 // / The following code sanitizes the user input filename. 
 if (isset($_POST['grabberFilename'])) { 
-  $_POST['grabberFilename'] = str_replace('./', '', $_POST['grabberFilename']); 
-  $_POST['grabberFilename'] = str_replace('../', '', $_POST['grabberFilename']);
-  $_POST['grabberFilename'] = str_replace('..', '', $_POST['grabberFilename']); 
-  $GrabberFilenamePOST = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['grabberFilename']);
-  $GrabberFilenamePOST = str_replace('./', '', $GrabberFilenamePOST); 
-  $GrabberFilenamePOST = str_replace('../', '', $GrabberFilenamePOST);
-  $GrabberFilenamePOST = str_replace('..', '', $GrabberFilenamePOST); }
-
+  $grabberFilenamePOST = htmlentities(str_replace(str_split('~#[](){};$!#^&@>*<"\''), '', $_POST['grabberFilename']), ENT_QUOTES, 'UTF-8');
+  $grabberFilenamePOST = str_replace('./', '', $grabberFilenamePOST); 
+  $grabberFilenamePOST = str_replace('../', '', $grabberFilenamePOST);
+  $grabberFilenamePOST = str_replace('..', '', $grabberFilenamePOST); 
+  $grabberFilenamePOST = str_replace('./', '', $grabberFilenamePOST); 
+  $grabberFilenamePOST = str_replace('../', '', $grabberFilenamePOST);
+  $grabberFilenamePOST = str_replace('..', '', $grabberFilenamePOST); } 
 ?>
+
 <script type="text/javascript">
 // / Javascript to clear the text input fields onclick.
     function Clear() {    
@@ -98,8 +98,8 @@ function grab_simple_file($url, $filename) {
 
 // / The following code handles errors and echos the result of the operation to the user.
 if (isset($grabberURLPOST)) {
-  $GrabberFile = $CloudUsrDir.$GrabberFilenamePOST;  
-  $GrabberTmpFile = $CloudTmpDir.$GrabberFilenamePOST;  
+  $GrabberFile = $CloudUsrDir.$grabberFilenamePOST;  
+  $GrabberTmpFile = $CloudTmpDir.$grabberFilenamePOST;  
   if (strpos('http', $grabberURLPOST) == 'false') {
     $txt = ('ERROR!!! HRC2GrabberApp43, The supplied URL "'.$grabberURLPOST.'" is not valid on '.$Time.'!'); 
     $ERROR = 1;
@@ -134,12 +134,12 @@ if (isset($grabberURLPOST)) {
             or try again later.'."\n");
             die(); } }
         if (!file_exists($GrabberFile)) {
-          $txt = ('ERROR!!! HRC2GrabberApp115, There was a problem creating '.$GrabberFilenamePOST.' on '.$Time.'!'); 
+          $txt = ('ERROR!!! HRC2GrabberApp115, There was a problem creating '.$grabberFilenamePOST.' on '.$Time.'!'); 
           $ERROR = 1;
           echo ($txt.'<hr />');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
         if (file_exists($GrabberFile)) {
-          $txt = ('OP-Act: Created '.$GrabberFilenamePOST.' on '.$Time.'!'); 
+          $txt = ('OP-Act: Created '.$grabberFilenamePOST.' on '.$Time.'!'); 
           echo ($txt.'<hr />');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } }
       if (does_url_exist($grabberURLPOST) == 'false') {
@@ -147,7 +147,7 @@ if (isset($grabberURLPOST)) {
         $ERROR = 1;
         echo ($txt.'<hr />');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); } } 
-  $txt1 = ('<p><form action="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$GrabberFilenamePOST.'"><input type="submit" id="downloadGrabbed" name="downloadGrabbed" value="Download Grabbed File"></form></p>');
+  $txt1 = ('<p><form action="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/'.$grabberFilenamePOST.'"><input type="submit" id="downloadGrabbed" name="downloadGrabbed" value="Download Grabbed File"></form></p>');
   if (!file_exists($GrabberFile) or $ERROR == 1) {
     $txt1 = ''; }
   $txt2 = ('<p><button id="goBack" name="goBack" onclick="goBack();">Go Back</button></p>');
