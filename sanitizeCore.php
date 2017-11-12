@@ -175,7 +175,7 @@ if (isset($_POST['shareConfirm'])) {
   // / This can be used to create a directory or retreive the contents of an existing directory.
   // / Example: 'Pictures/' needs to exist before 'Pictures/Flowers' can be created.
 if (isset($_POST['dirToMake'])) {
-  $_POST['dirToMake'] = htmlentities(str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_POST['dirToMake']), ENT_QUOTES, 'UTF-8'); }
+  $MAKEUserDir = htmlentities(str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_POST['dirToMake']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -207,11 +207,13 @@ if (isset($_POST['playlistSelected'])) {
 // / Can be used to upload multiple files.
   // / Must specify upload as a POST variable.
   // / Must specify $_FILES['filesToUpload'] as an array of files from the client's device.
-if (isset($_POST['filesToUpload'])) {
-  $_POST['filesToUpload'] = htmlentities(str_replace(str_split('\\/~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToUpload']), ENT_QUOTES, 'UTF-8'); 
-  if (!is_array($_POST['filesToUpload'])) {
-    $_FILES['filesToUpload'] = array($_FILES['filesToUpload']); 
-    $_FILES['filesToUpload'] = htmlentities(str_replace(str_split('\\/~#[](){};:$!#^&%@>*<"\''), '', $_FILES['filesToUpload']), ENT_QUOTES, 'UTF-8'); } }
+if (isset($_POST['upload'])) {
+  $upload = htmlentities(str_replace(str_split('\\/~#[](){};:$!#^&%@>*<"\''), '', $_POST['upload']), ENT_QUOTES, 'UTF-8'); 
+  if (isset($_POST['filesToUpload'])) {
+    $_POST['filesToUpload'] = htmlentities(str_replace(str_split('\\/~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToUpload']), ENT_QUOTES, 'UTF-8'); 
+    if (!is_array($_POST['filesToUpload'])) {
+      $_FILES['filesToUpload'] = array($_FILES['filesToUpload']); 
+      $_FILES['filesToUpload'] = htmlentities(str_replace(str_split('\\/~#[](){};:$!#^&%@>*<"\''), '', $_FILES['filesToUpload']), ENT_QUOTES, 'UTF-8'); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -219,10 +221,12 @@ if (isset($_POST['filesToUpload'])) {
   // / must specify download as a POST variable.
   // / Must specify $_POST['filesToDownload'] as a string or an array of filenames in the CloudLoc.
 if (isset($_POST['download'])) {
-  $_POST['download'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['download']), ENT_QUOTES, 'UTF-8'); 
-  if (!is_array($_POST['filesToDownload'])) {
-    $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
-    $_POST['filesToDownload'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToDownload']), ENT_QUOTES, 'UTF-8'); } }
+  $download = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['download']), ENT_QUOTES, 'UTF-8'); 
+  if (isset($_POST['filesToUpload'])) {
+    $_POST['filesToDownload'] = htmlentities(str_replace(str_split('\\/~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToDownload']), ENT_QUOTES, 'UTF-8');   
+    if (!is_array($_POST['filesToDownload'])) {
+      $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
+      $_POST['filesToDownload'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToDownload']), ENT_QUOTES, 'UTF-8'); } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

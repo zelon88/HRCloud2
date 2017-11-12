@@ -48,8 +48,7 @@ else {
 // / -----------------------------------------------------------------------------------
 // / The following code is perfomed whenever a user POSTs an input directory.
 // / This code is also used in some cases to create intermediate directories that are required for delivering data to the user.
-if (isset($_POST['dirToMake'])) {
-  $MAKEUserDir = $_POST['dirToMake'];
+if (isset($MAKEUserDir)) {
   // / If no UserDir exists, silently create one.
   if (!file_exists($CloudDir.'/'.$MAKEUserDir)) {
     @mkdir ($CloudDir.'/'.$MAKEUserDir, 0755); 
@@ -77,16 +76,15 @@ if (isset($_POST['dirToMake'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user initiates a file upload.
-if(isset($_POST["upload"])) {
+if(isset($upload)) {
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST["upload"] = str_replace(str_split('\\~#()/[]{};:$!#^&%@>*<'), '', $_POST["upload"]);
   if (!is_array($_FILES["filesToUpload"]['name'])) {
     $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']); }
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;     
-    $_GET['UserDirPOST'] = str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']);
-    $file = str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file);
+    $_GET['UserDirPOST'] = htmlentities(str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']), ENT_QUOTES, 'UTF-8');
+    $file = htmlentities(str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file), ENT_QUOTES, 'UTF-8');
     $DangerousFiles = array('js', 'php', 'html', 'css');
     $F0 = pathinfo($file, PATHINFO_EXTENSION);
     if (in_array($F0, $DangerousFiles)) { 
@@ -121,13 +119,11 @@ if(isset($_POST["upload"])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user downloads a selection of files.
-if (isset($_POST["download"])) {
+if (isset($download)) {
   $txt = ('OP-Act: Initiated Downloader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST["download"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST["download"]);
   if (!is_array($_POST['filesToDownload'])) {
-    $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
-    $_POST['filesToDownload'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDownload']); }
+    $_POST['filesToDownload'] = array($_POST['filesToDownload']); }
   foreach ($_POST['filesToDownload'] as $key=>$file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;
