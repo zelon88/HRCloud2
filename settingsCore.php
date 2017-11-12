@@ -7,27 +7,28 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for the required core filesand terminates if they are missing.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
+if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+  require('sanitizeCore.php'); }
+if (!file_exists('commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore103, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
+  require('commonCore.php'); }
+if (!file_exists('securityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (securityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php')) {
+  require('securityCore.php'); }
+if (!file_exists('compatibilityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/compatibilityCore.php'); }
+  require('compatibilityCore.php'); }
 // / -----------------------------------------------------------------------------------
+
 ?>
 <div align="center">
 <h3>HRCloud2 Settings</h3>
@@ -39,34 +40,30 @@ else {
 // / The following code is performed whenever a user selects to save new settings to their user cache file.
 // / We must run this code before loading the rest of the core files so as to avoid a required refresh before 
   // / displaying the latest settings.
-if (isset($_POST['Save'])) {
+if (isset($saveSettings)) {
   // / The following code is sets the users color scheme. 
-  if (isset($_POST['NEWColorScheme'])) {
-    $NEWColorScheme = $_POST['NEWColorScheme'];
+  if (isset($NEWColorScheme)) {
     $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Color Scheme" setting: "'.$NEWColorScheme.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
   // / The following code sets the users HRAI display preference.
-  if (isset($_POST['NEWShowHRAI'])) {
-    $NEWShowHRAI = $_POST['NEWShowHRAI'];
+  if (isset($NEWShowHRAI)) {
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
   // / The following code sets the users Tipa display preference.
-  if (isset($_POST['NEWShowTips'])) {
-    $NEWShowTips = $_POST['NEWShowTips'];
+  if (isset($$NEWShowTips)) {
     $txt = ('$ShowTips = \''.$NEWShowTips.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Tips Settings.'."\n"); }
   // / The following code is sets the current user timezone.
-  if (isset($_POST['NEWTimezone'])) {
-    $NEWTimezone = $_POST['NEWTimezone'];
+  if (isset($NEWTimezone)) {
     $txt = ('$Timezone = \''.$NEWTimezone.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
@@ -75,40 +72,35 @@ if (isset($_POST['Save'])) {
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
-    if (isset($_POST['NEWDataCompression'])) {
-      $NEWDataCompression = $_POST['NEWDataCompression'];
+    if (isset($NEWDataCompression)) {
       $txt = ('$DataCompression = \''.$NEWDataCompression.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Data Compression Settings.'."\n"); }
     // / The following code is sets the server's Virus Scanning setting.
-    if (isset($_POST['NEWVirusScan'])) {
-      $NEWVirusScan = $_POST['NEWVirusScan'];
+    if (isset($NEWVirusScan)) {
       $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
     // / The following code is sets the server's High Performance AV setting.
-    if (isset($_POST['NEWHighPerformanceAV'])) {
-      $NEWHighPerformanceAV = $_POST['NEWHighPerformanceAV'];
+    if (isset($NEWHighPerformanceAV)) {
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New High Performance AV Settings.'."\n"); }
     // / The following code is sets the server's High Performance AV setting.
-    if (isset($_POST['NEWThoroughAV'])) {
-      $NEWThoroughAV = $_POST['NEWThoroughAV'];
+    if (isset($NEWThoroughAV)) {
       $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Thorough AV" setting: "'.$NEWThoroughAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Thorough AV Settings.'."\n"); } 
     // / The following code is sets the server's Persistence AV setting.
-    if (isset($_POST['NEWPersistentAV'])) {
-      $NEWPersistentAV = $_POST['NEWPersistentAV'];
+    if (isset($NEWPersistentAV)) {
       $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';') ;
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
@@ -128,7 +120,7 @@ echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects to reset their settings to the defaults set in 
   // / the servers main config.php file.
-if (isset($_POST['LoadDefaults'])) {
+if (isset($loadDefaultSettings)) {
   require('config.php');
   $NEWColorScheme = $ColorScheme; 
   $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';');
@@ -179,7 +171,7 @@ $SaltHash = $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 
 // / -----------------------------------------------------------------------------------
 // / Generate a client installer package using user supplied specifications.
-if (isset($_POST['GenerateClient']) && isset($_POST['GenClientOS']) && isset($_POST['GenClientCPU']) && isset($_POST['GenClientHomepage'])) {
+if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && isset($GenClientHomepage)) {
   $GenClientURL = $URL;
   $GenClientHomepage = trim($GenClientHomepage, '/');
   $SupportedClientOS = array('windows', 'linux', 'osx');

@@ -28,21 +28,21 @@
 
 // / -----------------------------------------------------------------------------------
 // / The following code will check for and initialize required HRCloud2 Core files.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
+if (!file_exists('sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/securityCore.php')) {
+  require_once ('sanitizeCore.php'); }
+if (!file_exists('securityCore.php')) {
   echo nl2br('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
   die (); }
 else {
-  require ('/var/www/html/HRProprietary/HRCloud2/securityCore.php'); }
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+  require ('securityCore.php'); }
+if (!file_exists('commonCore.php')) {
   echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once ('commonCore.php'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -336,13 +336,6 @@ $TFile1 = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $TFile1);
 $TFile1 = str_replace(' ', '\ ', $TFile1); 
 $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
    'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-$docarray =  array('dat', 'pages', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'odf', 'odt', 'abw');
-$spreadarray = array('xls', 'xlsx', 'ods');
-$imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
-$audioarray =  array('mp3', 'avi', 'wma', 'wav', 'ogg');
-$pdfarray = array('pdf');
-$gifarray = array('gif');
-$abwarray = array('abw');
 $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
 $rararr = array('rar');
 $ziparr = array('zip');

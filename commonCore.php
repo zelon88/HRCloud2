@@ -4,22 +4,25 @@
 // / file, authenticate user storage, and define variables for the session.
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------  
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('ERROR!!! HRC2CommonCore9, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
-  die (); }
-else {
-  require_once('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+$CurrentDir = getcwd();
+if (strpos($CurrentDir, 'Applications') ==  TRUE) $CD = '../../';
+if (strpos($CurrentDir, 'Applications') == FALSE) $CD = '';
 
-// / The follwoing code checks if the config.php file exists and 
+// / -----------------------------------------------------------------------------------  
+// / The following code checks if the config.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
+if (!file_exists($CD.'config.php')) {
   echo nl2br('ERROR!!! HRC2CommonCore17, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
-  require_once('/var/www/html/HRProprietary/HRCloud2/config.php'); }
+  require_once($CD.'config.php'); }
+// / The following code checks if the sanitizeCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists($CD.'sanitizeCore.php')) {
+  echo nl2br('ERROR!!! HRC2CommonCore9, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
+  die (); }
+else {
+  require_once($CD.'sanitizeCore.php'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -35,18 +38,17 @@ if (isset ($ExternalIP)) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
+$WPFile = $ServerRootDir.'/wp-load.php';
 if (!file_exists($WPFile)) {
   $WPArch  = $InstLoc.'/Applications/wordpress.zip';
-  $VARDir = '/var/www/html';
   echo nl2br('</head>Notice!!! HRC2CommonCore27, WordPress was not detected on the server. 
     Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'."\n");
   echo nl2br('OP-Act: Installing WordPress.'."\n");
-  shell_exec('unzip '.$WPArch.' -d '.$VARDir); 
+  shell_exec('unzip '.$WPArch.' -d '.$ServerRootDir); 
   if (file_exists($WPFile)) {
     echo nl2br('OP-Act: Sucessfully installed WordPress!'."\n"); }
-  $VARDir = null;
-  unset($VARDir); 
+  $ServerRootDir = null;
+  unset($ServerRootDir); 
   die(); }
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server. 
