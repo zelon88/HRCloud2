@@ -64,12 +64,15 @@ $PersistentAV = '1';
 
 // / ------------------------------ 
 // / Directory locations ...
-  // / Use format '/home/YOUR_USERNAME/Desktop/TestDir'.
+// / The ServerRootDir should be pointed at the root of your web server directory.
+  // / (NO SLASH AFTER DIRECTORY!!!) ...  
+$ServerRootDir = '/var/www/html';
+  // / Use format '/home/YOUR_USERNAME/Desktop/TestDir'. (NO SLASH AFTER DIRECTORY!!!) ...  
   // / YOU MUST INSTALL HRCLOUD2 TO THE FOLLOWING DIRECTORY!!!
-  // / DO NOT CHANGE THE DEFAULT INSTALL DIRECTORY!!!
+  // / DO NOT CHANGE THE DEFAULT INSTALL DIRECTORY!!! 
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
-  // / Directory to be scanned for file dumps (NO SLASH AFTER DIRECTORY!!!) ...  
-$CloudLoc = '/home/YOUR_USERNAME/Desktop/TestDir/Cloud';
+  // / The CloudLoc is where permanent Cloud files are stored. (NO SLASH AFTER DIRECTORY!!!) ...  
+$CloudLoc = '/mnt/22E65FA5E65F784D/Cloud';
 // / ------------------------------ 
 
 // / ------------------------------ 
