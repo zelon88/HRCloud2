@@ -36,15 +36,27 @@ set_time_limit(0);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Can be used to save changed settings.
+if (isset($_POST['Save'])) {
+  $saveSettings = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['Save']), ENT_QUOTES, 'UTF-8'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Can be used to load default (current) settings.
+if (isset($_POST['LoadDefaults'])) {
+  $loadDefaultSettings = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['LoadDefaults']), ENT_QUOTES, 'UTF-8'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code sets variables for generating client-side Apps based on user supplied specs. 
 if (isset($_POST['GenerateClient'])) {
-  $GenerateClient = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenerateClient']); }
+  $GenerateClient = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenerateClient']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['GenClientOS'])) {
-  $GenClientOS = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientOS']); }
+  $GenClientOS = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientOS']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['GenClientCPU'])) {
-  $GenClientCPU = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientCPU']); }
+  $GenClientCPU = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientCPU']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['GenClientHomepage'])) {
-  $GenClientHomepage = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientHomepage']); }
+  $GenClientHomepage = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['GenClientHomepage']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -57,49 +69,49 @@ if (isset($_POST['GenClientHomepage'])) {
   // / 2 = Maximum performance.
   // / 3 = Maximum storage capacity.
 if (isset($_POST['DataCompression'])) {
-  $DataCompression = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['DataCompression']); }
+  $DataCompression = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['DataCompression']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['DataCompressionMethod'])) {
-  $DataCompressionMethod = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['DataCompressionMethod']); }
+  $DataCompressionMethod = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['DataCompressionMethod']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWDataCompression'])) {
-  $DataCompressionMethod = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWDataCompression']); }
+  $DataCompressionMethod = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWDataCompression']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
 if (isset($_POST['ClearCachePOST'])) {
-  $ClearCachePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearCachePOST']); }
+  $ClearCachePOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearCachePOST']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['ClearUserCache'])) {
-  $ClearCachePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearUserCache']); }
+  $ClearCachePOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearUserCache']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['ClearCache'])) {
-  $ClearCachePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearCache']); }
+  $ClearCachePOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearCache']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify a specific file or directory within a users Cloud to scan for viruses with ClamAV.
 if (isset($_POST['NEWVirusScan'])) { 
-  $NEWVirusScan = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWVirusScan']); }
+  $NEWVirusScan = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWVirusScan']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['userscanfilename'])) { 
-  $userscanfilename = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['userscanfilename']); }
+  $userscanfilename = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['userscanfilename']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['scanSelected'])) { 
-  $scanSelected = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['scanSelected']); }
+  $scanSelected = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['scanSelected']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['HighPerformanceAV'])) { 
-  $HighPerformanceAV = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['HighPerformanceAV']); }
+  $HighPerformanceAV = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['HighPerformanceAV']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWHighPerformanceAV'])) { 
-  $NEWHighPerformanceAV = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWHighPerformanceAV']); }
+  $NEWHighPerformanceAV = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWHighPerformanceAV']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWThoroughAV'])) { 
-  $NEWThoroughAV = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWThoroughAV']); }
+  $NEWThoroughAV = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWThoroughAV']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWPersistentAV'])) { 
-  $NEWPersistentAV = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWPersistentAV']); }
+  $NEWPersistentAV = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWPersistentAV']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to sanitize new settings inputs.
 if (isset($_POST['NEWColorScheme'])) { 
-  $NEWColorScheme = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWColorScheme']); }
+  $NEWColorScheme = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWColorScheme']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWShowHRAI'])) { 
-  $NEWShowHRAI = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowHRAI']); }
+  $NEWShowHRAI = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowHRAI']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWTimezone'])) { 
-  $NEWTimezone = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWTimezone']); }
+  $NEWTimezone = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWTimezone']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -108,7 +120,7 @@ if (isset($_POST['NEWTimezone'])) {
   // / Accepts a value of '1' or 'true'.
   // / ONLY ADMINISTRATORS CAN AUTO-UPDATE HRC2 !!!
 if (isset($_POST['AutoUpdate'])) {
-  $AutoUpdatePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoUpdate']); }
+  $AutoUpdatePOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoUpdate']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -116,43 +128,43 @@ if (isset($_POST['AutoUpdate'])) {
   // / DOES NOT INSTALL OR REPLACE ANYTHING !!!
   // / ONLY ADMINISTRATORS CAN DOWNLOAD HRC2 UPDATES !!!
 if (isset($_POST['AutoDownload'])) {
-  $AutoDownloadPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoDownload']); }
+  $AutoDownloadPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoDownload']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to automatically install an official HRC2 update package that was download manually.
   // / WILL EXTRACT AND OVER-WRITE HRC2 SYSTEM FILES WITH ONES FROM /Resources/TEMP
 if (isset($_POST['AutoInstall'])) {
-  $AutoInstallPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoInstall']); }
+  $AutoInstallPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoInstall']), ENT_QUOTES, 'UTF-8'); }
 
 // / Can be used to clean up the HRC2 temp directories and perform compatibility adjustments after a manual update.
   // / ONLY ADMINISTRATORS CAN DOWNLOAD HRC2 UPDATES !!!
 if (isset($_POST['AutoClean'])) {
-  $AutoCleanPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoClean']); }
+  $AutoCleanPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AutoClean']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to automatically check for and repair compatibility bugs and known issues.
   // / Accepts a value of '1' or 'true'.
 if (isset($_POST['CheckCompatibility'])) {
-  $CheckCompatPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckCompatibility']); }
+  $CheckCompatPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckCompatibility']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['CheckCompat'])) {
-  $CheckCompatPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckCompat']); }
+  $CheckCompatPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckCompat']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify shared files for UN-sharing. Will ONLY delete the shared copy of the file. Originals will remain.
 if (isset($_POST['unshareConfirm'])) {
-  $ClearUserCachePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['unshareConfirm']); 
+  $_POST['unshareConfirm'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['unshareConfirm']), ENT_QUOTES, 'UTF-8'); 
   if (!is_array($_POST['filesToUnShare'])) {
     $_POST['filesToUnShare'] = array($_POST['filesToUnShare']); 
-    $_POST['filesToUnShare'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToUnShare']); } }
+    $_POST['filesToUnShare'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToUnShare']), ENT_QUOTES, 'UTF-8'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify files for sharing files with other people by giving them a static URL on the server.
 if (isset($_POST['shareConfirm'])) {
-  $ClearUserCachePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['shareConfirm']); 
+  $_POST['shareConfirm'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['shareConfirm']); 
   if (!is_array($_POST['filesToShare'])) {
     $_POST['filesToShare'] = array($_POST['filesToShare']); 
     $_POST['filesToShare'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['filesToShare']); } }
