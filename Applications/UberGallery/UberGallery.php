@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: UberGallery
-App Version: 3.2 (11-6-2017 19:00)
+App Version: 3.3 (11-11-2017 19:00)
 App License: GPLv3
 App Author: UberGallery & zelon88
 App Description: A simple HRCloud2 App for viewing photos.
@@ -12,12 +12,12 @@ HRCLOUD2-PLUGIN-END
 //*/
 
 // / The follwoing code checks for the HRC2 core files and terminates if any are missing.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists('../../commonCore.php')) {
   $txt = 'ERROR!!! HRC2UG4, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n";
   echo nl2br($txt); 
   die ($txt); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require('../../commonCore.php'); }
 
 $galleryExt = array('.jpeg', '.jpg', '.png', '.png', '.bmp');
 $userInstDir = $AppDir.'UberGallery';
