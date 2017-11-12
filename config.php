@@ -33,6 +33,11 @@ $ShowTips = '1';
 // / Security Information ... 
   // / HRCloud2 Server can run on a local machine or on a network as a server to
   // / serve clients over http using standard web browsers.
+
+  // / Secret Salts.
+    // / Change these to something completely random and keep it a secret. Store your $Salts
+    // / in hardcopy form or an encrypted drive in case of emergency.
+    // / IF YOU LOSE YOUR SALTS YOU WILL BE UNABLE TO DECODE USER ID'S AFTER AN EMEREGENCY.
   // / Unique Salts.
 $Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
   // / Externally or internally accesible domain or IP.
