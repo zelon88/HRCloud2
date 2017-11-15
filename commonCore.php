@@ -210,7 +210,7 @@ if (!file_exists($SesLogDir)) {
 // / -----
 // / The following code checks if the Resources directory exists, and creates one if it does not.
 if (!file_exists($ResourcesDir)) {
-  mkdir($TempResourcesDir, 0755); 
+  @mkdir($TempResourcesDir, 0755); 
   if (file_exists($ResourcesDir)) {
     $txt = ('OP-Act: Created a Resources Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -221,7 +221,7 @@ if (!file_exists($ResourcesDir)) {
 // / -----
 // / The following code checks if the TempResources directory exists, and creates one if it does not.
 if (!file_exists($TempResourcesDir)) {
-  mkdir($TempResourcesDir, 0755); 
+  @mkdir($TempResourcesDir, 0755); 
   if (file_exists($TempResourcesDir)) {
     $txt = ('OP-Act: Created a Temp Resources Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -232,7 +232,7 @@ if (!file_exists($TempResourcesDir)) {
 // / -----
 // / The following code checks if the ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDir)) {
-  mkdir($ClientInstallDir, 0755); 
+  @mkdir($ClientInstallDir, 0755); 
   if (file_exists($ClientInstallDir)) {
     $txt = ('OP-Act: Created a Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -243,7 +243,7 @@ if (!file_exists($ClientInstallDir)) {
 // / -----
 // / The following code checks if the Windows ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDirWin)) {
-  mkdir($ClientInstallDirWin, 0755); 
+  @mkdir($ClientInstallDirWin, 0755); 
   if (file_exists($ClientInstallDirWin)) {
     $txt = ('OP-Act: Created a Windows Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -254,7 +254,7 @@ if (!file_exists($ClientInstallDirWin)) {
 // / -----
 // / The following code checks if the Linux ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDirLin)) {
-  mkdir($ClientInstallDirLin, 0755); 
+  @mkdir($ClientInstallDirLin, 0755); 
   if (file_exists($ClientInstallDirLin)) {
     $txt = ('OP-Act: Created a Linux Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -265,7 +265,7 @@ if (!file_exists($ClientInstallDirLin)) {
 // / -----
 // / The following code checks if the OSX ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDirOsx)) {
-  mkdir($ClientInstallDirOsx, 0755); 
+  @mkdir($ClientInstallDirOsx, 0755); 
   if (file_exists($ClientInstallDirOsx)) {
     $txt = ('OP-Act: Created a OSX Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -276,7 +276,7 @@ if (!file_exists($ClientInstallDirOsx)) {
 // / -----
 // / The following code checks if the CloudUsrDir exists, and creates one if it does not.
 if (!file_exists($CloudUsrDir)) {
-  mkdir($CloudUsrDir, 0755); 
+  @mkdir($CloudUsrDir, 0755); 
   if (file_exists($CloudUsrDir)) {
     $txt = ('OP-Act: Created a Cloud User Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -287,7 +287,7 @@ if (!file_exists($CloudUsrDir)) {
 // / -----
 // / The following code checks if the CloudAppDir exists, and creates one if it does not.
 if (!file_exists($CloudAppDir)) { 
-  mkdir($CloudAppDir, 0755); 
+  @mkdir($CloudAppDir, 0755); 
   if (file_exists($CloudAppDir)) {
     $txt = ('OP-Act: Created a CloudLoc Apps Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -299,7 +299,7 @@ if (!file_exists($CloudAppDir)) {
 // / The following code will create a backup directory for restoration data.
   // / NO USER DATA IS STORED IN THE BACKUP DIRECTORY!!! Only server configuration data.
 if (!file_exists($BackupDir)) {
-  mkdir($BackupDir, 0755);
+  @mkdir($BackupDir, 0755);
   if (file_exists($BackupDir)) {
     $txt = ('OP-Act: Created a Backup Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
