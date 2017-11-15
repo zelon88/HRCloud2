@@ -569,11 +569,9 @@ if (isset($_POST["dearchiveButton"])) {
 if (isset( $_POST['convertSelected'])) {
   $txt = ('OP-Act: Initiated HRConvert2 on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST['convertSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']);
-  if (!is_array($_POST['convertSelected'])) {
-    $_POST['convertSelected'] = array($_POST['convertSelected']); } 
+  $_POST['convertSelected'] = str_replace('//', '/', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']));
   foreach ($_POST['convertSelected'] as $key => $file) {
-    $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file); 
+    $file = htmlentities(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file), ENT_QUOTES, 'UTF-8'); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $allowed =  array('svg', 'dxf', 'vdx', 'fig', '3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 

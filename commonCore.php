@@ -4,9 +4,14 @@
 // / file, authenticate user storage, and define variables for the session.
 // / -----------------------------------------------------------------------------------
 
+// / -----------------------------------------------------------------------------------
+// / The following code sets the $CD variable used to craft responsive absolute paths.
 $CurrentDir = getcwd();
-if (strpos($CurrentDir, 'Applications') ==  TRUE) $CD = '../../';
-if (strpos($CurrentDir, 'Applications') == FALSE) $CD = '';
+$CD = '';
+if (strpos($CurrentDir, 'HRAI') ==  TRUE) $CD = '../../';
+if (strpos($_SERVER["SCRIPT_FILENAME"], 'HRAIMiniGui') == TRUE) $CD = '../';
+if (strpos($CurrentDir, 'Shared') == TRUE) $CD = '../../../../';
+// / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------  
 // / The following code checks if the config.php file exists and 
@@ -141,13 +146,13 @@ if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') {
 if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) {
   $UserDirPOST = ('/'); }
 // / The following code cleans extra slashes from the UserDirPOST.
-$UserDirPOST = str_replace('//', '/', $_POST['UserDirPOST']);
-$CloudTmpDir = $CloudTempDir.$UserDirPOST; 
-$CloudTmpDir = str_replace('//', '/', $CloudTmpDir); 
-$CloudTmpDir = str_replace('//', '/', $CloudTmpDir); 
-$CloudUsrDir = $CloudDir.$UserDirPOST; 
-$CloudUsrDir = str_replace('//', '/', $CloudUsrDir); 
-$CloudUsrDir = str_replace('//', '/', $CloudUsrDir); 
+$UserDirPOST = str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST']));
+$CloudTmpDir = str_replace('//', '/', $CloudTempDir.$UserDirPOST); 
+$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', $CloudTmpDir)); 
+$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', $CloudTmpDir)); 
+$CloudUsrDir = str_replace('//', '/', $CloudDir.$UserDirPOST); 
+$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', $CloudUsrDir)); 
+$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', $CloudUsrDir)); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

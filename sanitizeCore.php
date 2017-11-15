@@ -183,13 +183,8 @@ if (isset($_POST['dirToMake'])) {
   // / Must specify either UserDir or UserDirPOST as a POST or GET variable.
 if (isset($_GET['UserDirPOST'])) {
   $_GET['UserDirPOST'] = htmlentities(str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_GET['UserDirPOST']), ENT_QUOTES, 'UTF-8');
-  $_POST['UserDirPOST'] = $_GET['UserDirPOST'];
-  $_POST['UserDir'] = $_GET['UserDirPOST']; }
-// / I realize this looks strange, but it's valid and intensional. DO NOT MODIFY IT !!!
-if (isset($_GET['UserDir'])) {
-  $_GET['UserDirPOST'] = htmlentities(str_replace(str_split('.~#[](){};:$!#^&%@>*<"\''), '', $_GET['UserDir']), ENT_QUOTES, 'UTF-8');
-  $_POST['UserDirPOST'] = $_GET['UserDir'];
-  $_POST['UserDir'] = $_GET['UserDir']; }
+  $_POST['UserDirPOST'] = str_replace('//', '/', $_GET['UserDirPOST']);
+  $_POST['UserDir'] = str_replace('//', '/', $_GET['UserDirPOST']); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -296,10 +291,10 @@ if (isset($_POST["dearchiveButton"])) {
     // / Must specify an "extension" and a "userconvertfilename" . 
     // / OPTIONAL: Audio Files Only. Specify either pure integer to select a bitrate or "auto" for automatic (no quotes) .
       // / The userconvertfilename should NOT contain an extension.
-if (isset( $_POST['convertSelected'])) {
-  $_POST['convertSelected'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['convertSelected']), ENT_QUOTES, 'UTF-8');
-    if (!is_array($_POST['convertSelected'])) {
-      $_POST['convertSelected'] = array($_POST['convertSelected']); }
+if (isset($_POST['convertSelected'])) {
+  $_POST['convertSelected'] = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['convertSelected']);
+  if (!is_array($_POST['convertSelected'])) {
+    $_POST['convertSelected'] = array($_POST['convertSelected']); }
   $_POST['extension'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['extension']), ENT_QUOTES, 'UTF-8'); 
   $_POST['userconvertfilename'] = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['userconvertfilename']), ENT_QUOTES, 'UTF-8');
   if (isset($_POST['bitrate'])) {
