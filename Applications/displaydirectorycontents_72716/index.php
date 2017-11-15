@@ -46,6 +46,9 @@ $ConvertInc = 0;
 $RenameInc = 0;
 $ConvertInc = 0;
 $EditInc = 0;
+// / Clean the raw Udir of slashes.
+$Udir = str_replace('//', '/', $Udir);
+$Udir = str_replace('//', '/', $Udir);
 // / GUI specific resources.
   function pretty_filesize($file) {
     $size=filesize($file);
@@ -55,6 +58,7 @@ $EditInc = 0;
     else{$size=round($size/1073741824, 1)." GB"; }
     return $size; }
 
+// / The following code loads the users config data.
 include ($UserConfig);
 
 // / Color scheme handler.
@@ -276,7 +280,11 @@ Are you sure?
     <tbody>
 <?php
   $myDirectory = rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/');
-  $myDirectory=opendir($myDirectory);
+  if (!is_dir($myDirectory)) {
+    $txt = ('ERROR!!! HRC2Index284, The selected file is not actually a directory on '.$Time.'!'."\n");
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      die($txt); }
+  $myDirectory = opendir($myDirectory);
   while ($entryName=readdir($myDirectory)) {
     $dirArray[]=$entryName; }
   closedir($myDirectory);
@@ -383,6 +391,7 @@ if (in_array($extnRAW, $MediaArray)) {
   $specialHTML = '<img src="Resources/stream.png" alt=\'Stream Media\'/>'; }
 if ($extn == "Folder") {
   $specialHTML = '<img src="Resources/archive.png" alt=\'Compress\'/>'; }
+
 // / Handle the AJAX post for if a user clicks on a folder in their drive.
 if ($extn == 'Folder' or $extn == '<Directory>' or strpos($name, '.') == 'false' 
   or $extnRAW == '' or $extnRAW == NULL) { 
