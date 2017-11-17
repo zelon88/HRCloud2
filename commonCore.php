@@ -14,15 +14,12 @@ if (strpos($CurrentDir, 'Shared') == TRUE) $CD = '../../../../';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------  
-// / The following code checks if the config.php file exists and 
-// / terminates if it does not.
+// / The following code checks if the config.php and the sanitizeCore.php files exist.
 if (!file_exists($CD.'config.php')) {
   echo nl2br('ERROR!!! HRC2CommonCore17, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
   die (); }
 else {
   require_once($CD.'config.php'); }
-// / The following code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
 if (!file_exists($CD.'sanitizeCore.php')) {
   echo nl2br('ERROR!!! HRC2CommonCore9, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
   die (); }
