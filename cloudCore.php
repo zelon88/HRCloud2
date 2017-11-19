@@ -983,7 +983,16 @@ if (isset($_POST['pdfworkSelected'])) {
           echo nl2br('ERROR!!! HRC2620, There was a problem converting your file! Please rename your file or try again later.'."\n".'--------------------'."\n"); 
           $txt = ('ERROR!!! HRC2620, '."Could not convert $pathname to $newPathname on $Time".'!'); 
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-           die(); } } }
+           die(); } } 
+  // / Free un-needed memory.
+  $_POST['pdfworkSelected'] = $txt = $MAKELogFile = $pdfworkcount = $key = $file = $allowedPDFw = $file1 = $file2 = $_POST['pdfextension'] = $extension = $pathname 
+   = $oldPathname = $filename = $oldExtension = $newFile = $newPathname = $doc1array = $img1array = $pdf1array = $stub = $newFileURL = $pathnameTEMP = $_POST['method']
+   = $_POST['method1'] = $pathnameTEMP1 = $PagedFilesArrRAW = $PagedFile = $CleanFilname = $CleanPathnamePages = $PageNumber = $READPAGEDATA = $WRITEDOCUMENT = $multiple
+   = $pathnameTEMP0 = $pathnameTEMPTesseract = $pathnameTEMP0 = $imgmethod = $pathnameTEMP3 = null;
+  unset ($_POST['pdfworkSelected'], $txt, $MAKELogFile, $pdfworkcount, $key, $file, $allowedPDFw, $file1, $file2, $_POST['pdfextension'], $extension, $pathname,
+   $oldPathname , $filename, $oldExtension, $newFile, $newPathname, $doc1array, $img1array, $pdf1array, $stub, $newFileURL, $pathnameTEMP, $_POST['method'],
+   $_POST['method1'], $pathnameTEMP1, $PagedFilesArrRAW, $PagedFile, $CleanFilname, $CleanPathnamePages, $PageNumber, $READPAGEDATA, $WRITEDOCUMENT, $multiple,
+   $pathnameTEMP0, $pathnameTEMPTesseract, $pathnameTEMP0, $imgmethod, $pathnameTEMP3); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1103,52 +1112,67 @@ if (isset($_POST['streamSelected'])) {
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
           shell_exec("ffmpeg -i $pathname$ext$br$newPathname"); }  
         if (in_array($oldExtension, $PLAudioOGGArr)) {
-          copy ($oldPathname, str_replace('//', '/', $playlistDir.'/'.$StreamFile)); } } }
+          copy ($oldPathname, str_replace('//', '/', $playlistDir.'/'.$StreamFile)); } } 
+  // / Free un-needed memory.
+  $_POST['streamSelected'] = $getID3File = $PlaylistName = $PLVideoArr = $PLVideoArr2 = $PLMediaArr = $PLAudioArr = $PLAudioOGGArr = $PLAudioMP4Arr = $PLVideoMP4Arr = $MediaFileCount 
+   = $VideoFileCount = $PlaylistTmpDir = $playlistDir = $playlistCacheDir = $PlaylistCacheFile = $txt = $MAKELogFile = $_POST['streamSelected'] = $pathname = $Scanfilename = $ScanoldExtension
+   = $getID3 = $id3Tags = $PLSongTitle = $PLSongArtist = $PLSongAlbum = $PLSongImage = $PLSongImageDATA = $SongImageFile = $SongImageFileRAW = $fo1 = $fo2 = $fo3 = $fo4 = $MAKECacheImageFileRAW 
+   = $StreamFile = $filename = $oldPathname = $oldExtension = $ext = $bitrate = $br = null;
+  unset ($_POST['streamSelected'], $getID3File, $PlaylistName, $PLVideoArr, $PLVideoArr2, $PLMediaArr, $PLAudioArr, $PLAudioOGGArr, $PLAudioMP4Arr, $PLVideoMP4Arr, $MediaFileCount, 
+   $VideoFileCount, $PlaylistTmpDir, $playlistDir, $playlistCacheDir, $PlaylistCacheFile, $txt, $MAKELogFile, $_POST['streamSelected'], $pathname, $Scanfilename, $ScanoldExtension, 
+   $getID3, $id3Tags, $PLSongTitle, $PLSongArtist, $PLSongAlbum, $PLSongImage, $PLSongImageDATA, $SongImageFile, $SongImageFileRAW, $fo1, $fo2, $fo3, $fo4, $MAKECacheImageFileRAW, 
+   $StreamFile, $filename, $oldPathname, $oldExtension, $ext, $bitrate, $br); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to share.
-  if (isset($_POST['shareConfirm'])) {
-    $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
-    $txt = ('OP-Act: Initiated Share on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $_POST['shareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['shareConfirm']);
-    if (!is_array($_POST["filesToShare"])) {
-      $_POST['filesToShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToShare'])); }
-    foreach ($_POST['filesToShare'] as $FTS) {
-      $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      $copySrc = str_replace('//', '/', $CloudUsrDir.$FTS);
-      $copyDst = str_replace('//', '/', $CloudShareDir.'/'.$FTS);
-      copy($copySrc, $copyDst); 
-      if (file_exists($CloudShareDir.'/'.$FTS)) {
-        $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-      if (!file_exists($CloudShareDir.'/'.$FTS)) {
-        $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+if (isset($_POST['shareConfirm'])) {
+  $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
+  $txt = ('OP-Act: Initiated Share on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  $_POST['shareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['shareConfirm']);
+  if (!is_array($_POST["filesToShare"])) {
+    $_POST['filesToShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToShare'])); }
+  foreach ($_POST['filesToShare'] as $FTS) {
+    $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
+    $copySrc = str_replace('//', '/', $CloudUsrDir.$FTS);
+    $copyDst = str_replace('//', '/', $CloudShareDir.'/'.$FTS);
+    copy($copySrc, $copyDst); 
+    if (file_exists($CloudShareDir.'/'.$FTS)) {
+      $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    if (!file_exists($CloudShareDir.'/'.$FTS)) {
+      $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  // / Free un-needed memory.
+  $_POST['shareConfirm'] = $CloudShareDir = $txt = $MAKELogFile = $_POST['filesToShare'] = $FTS = $copySrc = $copyDst = null;
+  unset ($_POST['shareConfirm'], $CloudShareDir, $txt, $MAKELogFile, $_POST['filesToShare'], $FTS, $copySrc, $copyDst); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to unshare.
-  if (isset($_POST['unshareConfirm'])) {
-    $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
-    $CloudShareDir2 = $CloudDir.'/.AppData/Shared';
-    $txt = ('OP-Act: Initiated UnShare on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    $_POST['unshareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']);
-  if (isset($_POST["filesToUnShare"])) {
-    if (!is_array($_POST["filesToUnShare"])) {
-      $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
-    foreach ($_POST['filesToUnShare'] as $FTS) {
-      $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      @unlink($CloudShareDir.'/'.$FTS);
-      @unlink($CloudShareDir2.'/'.$FTS);
-      if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
-        $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-      if (file_exists($CloudShareDir.'/'.$FTS) or file_exists($CloudShareDir2.'/'.$FTS)) {
-        $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } }
+if (isset($_POST['unshareConfirm'])) {
+  $CloudShareDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
+  $CloudShareDir2 = $CloudDir.'/.AppData/Shared';
+  $txt = ('OP-Act: Initiated UnShare on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+  $_POST['unshareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']);
+if (isset($_POST["filesToUnShare"])) {
+  if (!is_array($_POST["filesToUnShare"])) {
+    $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
+  foreach ($_POST['filesToUnShare'] as $FTS) {
+    $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
+    @unlink($CloudShareDir.'/'.$FTS);
+    @unlink($CloudShareDir2.'/'.$FTS);
+    if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
+      $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+    if (file_exists($CloudShareDir.'/'.$FTS) or file_exists($CloudShareDir2.'/'.$FTS)) {
+      $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } 
+  // / Free un-needed memory.
+  $_POST['unshareConfirm'] = $CloudShareDir = $CloudShareDir2 = $txt = $MAKELogFile = $_POST['filesToUnShare'] = $FTS = null;
+  unset ($_POST['unshareConfirm'], $CloudShareDir, $CloudShareDir2, $txt, $MAKELogFile, $_POST['filesToUnShare'], $FTS); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1214,8 +1238,13 @@ if (isset($_POST['clipboardCopy'])) {
             $txt = 'ERROR!!! HRC2945, There was a problem copying '.$CloudDir.'/'.$clipboardSelected1.' to '.$PasteDir.' on '.$Time.'.';
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
             echo nl2br($txt."\n"); } }
-        if (is_dir($CloudDir.'/'.$clipboardSelected1)) {
-        } } } }
+        if (is_dir($CloudDir.'/'.$clipboardSelected1)) { } } } 
+  // / Free un-needed memory.
+  $_POST['clipboardCopy'] = $_POST['clipboardSelected'] = $UserClipboard = $clipboard = $txt = $MAKELogFile = $MAKEClipboardFile = $copyCounter = $clipboardSelected
+   = $_POST['clipboardCopyDir'] = $CopyDir = $clipboardArray = $_POST['clipboardPasteDir'] = $PasteDir = null;
+  unset ($_POST['clipboardCopy'], $_POST['clipboardSelected'], $UserClipboard, $clipboard, $txt, $MAKELogFile, $MAKEClipboardFile, $copyCounter, $clipboardSelected,
+   $_POST['clipboardCopyDir'], $CopyDir, $clipboardArray, $_POST['clipboardPasteDir'], $PasteDir); }
+// / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Code to search a users Cloud Drive and return the results.
@@ -1275,7 +1304,12 @@ if (isset($_POST['search'])) {
   <br>
   <div align="center"><a href="#" onclick="goBack();">&#8592; Go Back</a></div>
   <hr />
-<?php }
+<?php 
+  // / Free un-needed memory.
+  $_POST['search'] = $txt = $MAKELogFile = $SearchRAW = $PendingResCount1 = $PendingResCount2 = $ResultFiles = $SearchLower = $ResultFile = $ResultFile0 = $ResultTmpFile
+   = $ResultURL = $F2 = $F3 = $F4 = $F5 = $Result = $iterator = $item = null;
+  unset ($_POST['search'], $txt, $MAKELogFile, $SearchRAW, $PendingResCount1, $PendingResCount2, $ResultFiles, $SearchLower, $ResultFile, $ResultFile0, $ResultTmpFile,
+   $ResultURL, $F2, $F3, $F4, $F5, $Result, $iterator, $item); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
