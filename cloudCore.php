@@ -114,7 +114,10 @@ if(isset($upload)) {
           try again later.'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
         unlink($F3);
-        die($txt); } } } }
+        die($txt); } } } 
+  // / Free un-needed memory.
+  $txt = $file = $F0 = $F2 = $F3 = $ClamLogFileDATA = $Upload = $MAKELogFile = null;
+  unset ($txt, $file, $F0, $F2, $F3, $ClamLogFileDATA, $Upload, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -152,7 +155,10 @@ if (isset($download)) {
         if ($item->isDir()) {
           mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
         else {
-          symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } } }
+          symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } } 
+  // / Free un-needed memory.
+  $txt = $_POST['filesToDownload'] = $key = $file = $file1 = $F2 = $F3 = $COPY_TEMP = $iterator = $item = $MAKELogFile = null;
+  unset ($txt, $_POST['filesToDownload'], $key, $file, $file1, $F2, $F3, $COPY_TEMP, $iterator, $item, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -197,7 +203,10 @@ if (isset($_POST['copy'])) {
           if (!file_exists($copyDst)) { 
             $txt = ('ERROR!!! HRC2CloudCore198, '."Could not copy $CFile to $newCopyFilename".'.'."$cext on $Time".'!');
             echo nl2br ($txt."\n".'--------------------'."\n");
-            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  // / Free un-needed memory.
+  $txt = $_POST['copy'] = $_POST['filesToCopy'] = $_POST['newcopyfilename'] = $copycount = $key = $CFile = $cext = $newCopyFilename = $copySrc = $copyDst = $ClamLogFileDATA = $MAKELogFile = null;
+  unset ($_POST['copy'], $_POST['filesToCopy'], $_POST['newcopyfilename'], $copycount, $key, $CFile, $cext, $newCopyFilename, $copySrc, $copyDst, $ClamLogFileDATA, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -242,7 +251,10 @@ if (isset($_POST['rename'])) {
           if (!file_exists($renDst)) { 
             $txt = ('ERROR!!! HRC2CloudCore242, '."Could not rename $ReNFile to $renameFilename".'.'."$renext on $Time".'!');
             echo nl2br ($txt."\n".'--------------------'."\n");
-            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+            $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  // / Free un-needed memory.
+  $_POST['rename'] = $txt = $_POST['filesToRename'] = $_POST['renamefilename'] = $rencount = $key = $ReNFile = $renameFilename = $renext = $renSrc = $renDst = $ClamLogFileDATA = $MAKELogFile = null;
+  unset ($_POST['rename'], $txt, $_POST['filesToRename'], $_POST['renamefilename'], $rencount, $key, $ReNFile, $renameFilename, $renExt, $renSrc, $renDst, $ClamLogFileDATA, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -315,7 +327,10 @@ if (isset($_POST['deleteconfirm'])) {
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
     $txt = ('OP-Act: '."Deleted $DFile from $CloudUsrDir from User directory on $Time".'.');
     echo nl2br ('OP-Act: '."Deleted $DFile on $Time".'.'."\n".'--------------------'."\n");   
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+  // / Free un-needed memory.
+  $_POST['deleteconfirm'] = $txt = $_POST['filesToDelete'] = $key = $DFile = $objects = $object = $object2 = $MAKELogFile = null;
+  unset ($_POST['deleteconfirm'], $txt, $_POST['filesToDelete'], $key, $DFile, $objects, $object, $object2, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -363,27 +378,32 @@ if (!is_dir($filename)) {
           try again later.'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
         die($txt); } }
-// / Handle archiving of rar compatible files.
-if(in_array($UserExt, $rararr)) {
-  copy ($filename, $CloudTmpDir.$TFile1); 
-  shell_exec('rar a -ep '.$archDst.' '.$archSrc); 
-  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
-  echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-// / Handle archiving of .zip compatible files.
-if(in_array($UserExt, $ziparr)) {
-  copy ($filename, $CloudTmpDir.$TFile1); 
-  shell_exec('zip -j '.$archDst.'.zip '.$archSrc); 
-  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
-  echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-// / Handle archiving of 7zipper compatible files.
-if(in_array($UserExt, $tararr)) {
-  copy ($filename, $CloudTmpDir.$TFile1); 
-  shell_exec('7z a '.$archDst.'.'.$UserExt.' '.$archSrc); 
-  $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
-  echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }  
+  // / Handle archiving of rar compatible files.
+  if(in_array($UserExt, $rararr)) {
+    copy ($filename, $CloudTmpDir.$TFile1); 
+    shell_exec('rar a -ep '.$archDst.' '.$archSrc); 
+    $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
+    echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+  // / Handle archiving of .zip compatible files.
+  if(in_array($UserExt, $ziparr)) {
+    copy ($filename, $CloudTmpDir.$TFile1); 
+    shell_exec('zip -j '.$archDst.'.zip '.$archSrc); 
+    $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
+    echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+  // / Handle archiving of 7zipper compatible files.
+  if(in_array($UserExt, $tararr)) {
+    copy ($filename, $CloudTmpDir.$TFile1); 
+    shell_exec('7z a '.$archDst.'.'.$UserExt.' '.$archSrc); 
+    $txt = ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt in $CloudUsrDir on $Time".'.');
+    echo nl2br ('OP-Act: '."Archived $filename to $UserFileName".'.'."$UserExt on $Time".'.'."\n".'--------------------'."\n");  
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  // / Free un-needed memory.
+  $_POST['archive'] = $txt = $filesToArchive = $key = $TFile1 = $allowed = $archarray = $rararr = $ziparr = $tararr = $filename = $filename1 
+   = $ext = $_POST['archextension'] = $UserExt = $_POST['userfilename'] = $UDP = $UserFileName = $archSrc = $archDst = $ClamLogFileDATA = $MAKELogFile = null;
+  unset ($_POST['archive'], $filesToArchive, $key, $TFile1, $allowed, $archarray, $rararr, $ziparr, $tararr, $filename, $filename1, $ext,
+   $_POST['archextension'], $UserExt, $_POST['userfilename'], $UDP, $UserFileName, $archSrc, $archDst, $ClamLogFileDATA, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -561,12 +581,17 @@ if (isset($_POST["dearchiveButton"])) {
     if (!file_exists($dearchUserDir)) {
       $txt = ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
       echo nl2br ('ERROR!!! HRC2449, There was a problem creating '.$dearchUserDir.' on '.$Time."\n".'--------------------'."\n"); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  // / Free un-needed memory.
+  $_POST['dearchiveButton'] = $txt = $UDP = $allowed = $archarray = $rararr = $ziparr = $tararr = $_POST["filesToDearchive"] = $File = $dearchUserPath = $ext
+   = $dearchUserDir = $dearchUserFile = $dearchUserFilename = $dearchTempPath = $dearchTempDir = $dearchTempFile = $dearchTempFilename = $ClamLogFileDATA = $MAKELogFile = null;
+  unset ($_POST['dearchiveButton'], $txt, $UDP, $allowed, $archarray, $rararr, $ziparr, $tararr, $_POST["filesToDearchive"], $File, $dearchUserPath, $ext, 
+   $dearchUserDir, $dearchUserfile, $dearchUserFilename, $dearchTempPath, $dearchTempDir, $dearchTempFile, $dearchTempFilename, $ClamLogFileDATA, $MAKELogFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to convert to other formats.
-if (isset( $_POST['convertSelected'])) {
+if (isset($_POST['convertSelected'])) {
   $txt = ('OP-Act: Initiated HRConvert2 on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST['convertSelected'] = str_replace('//', '/', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']));
@@ -669,7 +694,7 @@ if (isset( $_POST['convertSelected'])) {
           // / Code to convert and manipulate image files.
           if (in_array($oldExtension, $imgarray)) {
             $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['height']);
-            $height = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['width']);
+            $width = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['width']);
             $_POST["rotate"] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rotate']);
             $rotate = ('-rotate '.$_POST["rotate"]);
             $wxh = $width.'x'.$height;
@@ -784,14 +809,25 @@ if (isset( $_POST['convertSelected'])) {
                               @rmdir($delFile); } } 
                               @rmdir($safedir2); } }
 // / Error handler and logger for converting files.
-if (!file_exists($newPathname)) {
-  echo nl2br('ERROR!!! HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
-  $txt = ('ERROR!!! HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'!');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  die(); } 
-if (file_exists($newPathname)) {
-  $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } }
+  if (!file_exists($newPathname)) {
+    echo nl2br('ERROR!!! HRC2524, There was an error during the file conversion process and your file was not copied.'."\n");
+    $txt = ('ERROR!!! HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'!');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    die(); } 
+  if (file_exists($newPathname)) {
+    $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
+  // / Free un-needed memory.
+  $_POST['convertSelected'] = $txt = $key = $file = $allowed = $file1 = $file2 = $convertcount = $extension = $pathname = $oldPathname = $filename = $oldExtension
+   = $newFile = $newPathname = $docarray = $imgarray = $audioarray = $videoarray = $modelarray = $drawingarray = $pdfarray = $abwarray = $archarray = $array7z = $array7zo
+   = $arrayzipo = $arraytaro = $arrayraro = $abwstd = $abwuno = $stub = $newFileURL = $_POST['userconvertfilename'] = $returnDATA = $returnDATALINE = $stopper = $height 
+   = $width = $_POST['height'] = $_POST['width'] = $rotate = $_POST['rotate'] = $wxh = $bitrate = $_POST['bitrate'] = $safedir1 = $safedirTEMP = $safedirTEMP2 = $safedirTEMP3
+   = $safedir2 = $safedir3 = $safedir4 = $delFiles = $delFile = $MAKELogFile = null;
+  unset ($_POST['convertSelected'], $txt, $key, $file, $allowed, $file1, $file2, $convertcount, $extension, $pathname, $oldPathname, $filename, $oldExtension, 
+   $newFile, $newPathname, $docarray, $imgarray, $audioarray, $videoarray, $modelarray, $drawingarray, $pdfarray, $abwarray, $archarray, $array7z, $array7zo,
+   $arrayzipo, $arraytaro, $arrayraro, $abwstd, $abwuno, $stub, $newFileURL, $_POST['userconvertfilename'], $returnDATA, $returnDATALINE, $stopper, $height, 
+   $width, $_POST['height'], $_POST['width'], $rotate, $_POST['rotate'], $wxh, $bitrate, $_POST['bitrate'], $safedir1, $safedirTEMP, $safedirTEMP2, $safedirTEMP3,
+   $safedir2, $safedir3, $safedir4, $delFiles, $delFile, $MAKELogFile ); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
