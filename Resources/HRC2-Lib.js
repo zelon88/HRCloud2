@@ -8,4 +8,9 @@ function goBack() {
   window.history.back(); }
 function Clear() {    
   document.getElementById("input").value= ""; }
+function ClearSearch() {    
+  document.getElementById("search").value= ""; }
 document.getElementById("HRAIMini").submit;
+function refreshIframe() {
+  var ifr = document.getElementsByName('cloudContents')[0];
+  ifr.src = ifr.src; }
