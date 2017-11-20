@@ -321,6 +321,24 @@ if (isset($_POST['pdfworkSelected'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Can be used to add selected files to a users favorite files.
+if (isset($_POST['favoriteConfirm'])) {
+  $_POST['favoriteConfirm'] = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['favoriteConfirm']); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Can be used to remove selected files from a users favorite files.
+if (isset($_POST['favoriteDelete'])) {
+  $_POST['favoriteDelete'] = str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['favoriteDelete']); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Can be used to display a list of favorite files in the Drive section instead of all files.
+if (isset($_GET['showFavoritesPOST']) or isset($_POST['showFavorites'])) {
+  $showFavorites = '1'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 set_time_limit(0);
 // / -----------------------------------------------------------------------------------
 ?>

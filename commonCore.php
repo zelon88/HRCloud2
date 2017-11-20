@@ -115,6 +115,8 @@ $TipFile = $ResourcesDir.'/tips.php';
 $TempResourcesDir = $ResourcesDir.'/TEMP';
 $appDataInstDir = $InstLoc.'/DATA/'.$UserID.'/.AppData';
 $appDataCloudDir = $CloudLoc.'/'.$UserID.'/.AppData';
+$FavoritesCacheFileInst = $appDataInstDir.'/.favorites.php';
+$FavoritesCacheFileCloud = $appDataCloudDir.'/.favorites.php';
 $ContactsDir = $appDataInstDir.'/Contacts/';
 $NotesDir = $appDataInstDir.'/Notes/';
 $UserConfig = $appDataInstDir.'/.config.php';
@@ -314,6 +316,14 @@ if (!file_exists($CloudShareDir)) {
       if ($SIF == '.' or $SIF == '..' or is_dir($SIF)) continue;
       @copy($InstLoc.'/'.$SharedInstallDir.$SIF, $CloudShareDir.'/'.$SIF); } }
 @copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
+// / -----
+// / The following code checks if the FavoritesCacheFile exists, and creates one if it does not.
+if (!file_exists($FavoritesCacheFileCloud) or !file_exists($FavoritesCacheFileInst)) { 
+  $data = '<?php $FavoriteFiles = array();';
+  $txt = ('OP-Act: Created a Favorites cache file on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND);
+  copy ($FavoritesCacheFileCloud, $FavoritesCacheFileInst); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

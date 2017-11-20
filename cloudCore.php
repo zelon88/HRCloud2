@@ -1176,6 +1176,45 @@ if (isset($_POST["filesToUnShare"])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code is performed when a user selects files to add a file to their favorites.
+if (isset($_POST['favoriteConfirm'])) {
+  include($FavoritesCacheFileCloud);
+  if (!is_array($_POST["favoriteConfirm"])) {
+    $_POST['favoriteConfirm'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['favoriteConfirm'])); }
+  foreach ($_POST['favoriteConfirm'] as $favoriteToAdd) {
+    $favoriteToAdd = ltrim(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $favoriteToAdd), '/');
+    array_push($FavoriteFiles, $favoriteToAdd);
+    $txt = ('OP-Act: User added \''.$favoriteToAdd.'\' to their Favorite Files on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  $FavoriteFilesCSV = str_replace('\'\', ', '', implode('\', \'', $FavoriteFiles));
+  $data = '$FavoriteFiles = array(\''.$FavoriteFilesCSV.'\');';
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); 
+  copy($FavoritesCacheFileCloud, $FavoritesCacheFileInst); 
+  $_POST['favoriteConfirm'] = null; 
+  unset ($_POST['favoriteConfirm']); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed when a user selects files to remove a file from their favorites.
+if (isset($_POST['favoriteDelete'])) {
+  include($FavoritesCacheFileCloud);
+  foreach ($_POST['favoriteDelete'] as $favoriteToRemove) {
+    $favoriteToRemove = ltrim(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $favoriteToRemove), '/'); 
+    $favfilecounter = 0;
+    foreach ($FavoriteFiles as $FavFile) {
+      if ($FavFile == $favoriteToRemove or $FavFile == '') {
+        $FavoriteFiles[$favfilecounter] = null; }
+      $favfilecounter++; }
+    $txt = ('OP-Act: User removed \''.$favoriteToRemove.'\' from their Favorite Files on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  $data = '$FavoriteFiles = array(\''.implode('\', \'', $FavoriteFiles).'\');';
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); 
+  copy($FavoritesCacheFileCloud, $FavoritesCacheFileInst); 
+  $_POST['favoriteDelete'] = null; 
+  unset ($_POST['favoriteDelete']); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code controls the creation and management of a users clipboard cache file.
 if (isset($_POST['clipboardCopy'])) {
   if (!is_array($_POST['clipboardSelected'])) {
