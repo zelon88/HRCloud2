@@ -1,18 +1,8 @@
 
-<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
-<script type="text/javascript">
-function goBack() {
-  window.history.back(); }
-</script>
 <meta charset="UTF-8">
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-<script type="text/javascript" src="<?php echo $URL; ?>/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="Resources/HRC2-Lib.js"></script>
 <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
-<script type="text/javascript">
-function Clear() {    
-  document.getElementById("search").value= ""; }
-</script>
 <title>Cloud Contents</title>
 <?php
 // / The follwoing code checks if the commonCore.php file exists and 
@@ -87,23 +77,46 @@ else {
 </head>
 <body>
 <div id="container">
-<div align='center'><h3><?php
-echo rtrim(ltrim($Udir, '/'), '/'); 
-?></h3></div><?php
+<div align='center'><h3>
+<?php
+echo rtrim(ltrim($Udir, '/'), '/');
+if ($showFavorites === '1') echo 'Favorites'; 
 while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
-  $ArchInc++; }
-?>
+  $ArchInc++; }?>
+</div>
+
 <div align="center" style="margin-bottom:5px;">
-<input type='submit' name="back" id="back" value='&#x2190' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
-<div align="center" style="margin-bottom:5px;"><img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | <img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | <img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | <img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
-<img id='dearchiveButton' name='dearchiveutton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | <img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
-<img id="imgeditButton" name="imgeditButton" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | <img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/triangle.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
+<input type='submit' name="back" id="back" value='&#x2190' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> |
+<input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="document.location.href = document.location.href; toggle_visibility('loadingCommandDiv');"> | 
+<input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');"></div>
+<div align="center" style="margin-bottom:5px;">
+<img id='favoritesButton' name='favoritesButton' title='Favorites' alt='Favorites' onclick="toggle_visibility('favoritesOptionsDiv');" src='Resources/favorites.png'/> | 
+<img id='copyButton' name='copyButton' title="Copy" alt="Copy" onclick="toggle_visibility('copyOptionsDiv');" src='Resources/copy.png'/> | 
+<img id='renameButton' name='renameButton' title="Rename" alt="Rename" onclick="toggle_visibility('renameOptionsDiv');" src='Resources/rename.png'/> | 
+<img id='deleteButton' name='deleteButton' title="Delete" alt="Delete" onclick="toggle_visibility('deleteOptionsDiv');" src='Resources/deletesmall.png'/> | 
+<img id='archive' name='archive' title="Archive" alt="Archive" onclick="toggle_visibility('archiveOptionsDiv');" src='Resources/archiveFile.png'/> | 
+<img id='dearchiveButton' name='dearchiveutton' title="Dearchive" alt="Dearchive" onclick="toggle_visibility('loadingCommandDiv');" src='Resources/dearchive.png'/> | 
+<img id="convertButton" name="convertButton" title="Convert" alt="Convert" onclick="toggle_visibility('convertOptionsDiv');" src='Resources/convert.png'/> | 
+<img id="imgeditButton" name="imgeditButton" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | 
+<img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | 
+<img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
+<img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/triangle.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | 
+<img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
 </div>
 
 <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
   <p><input type='submit' name="newFolder" id="newFolder" value='New Folder' onclick="toggle_visibility('makedirDiv'); toggle_visibility('makedir'); toggle_visibility('dirToMake');">
   <input type='submit' name="newFile" id="newFile" value='New File' onclick="toggle_visibility('uploadDiv'); toggle_visibility('upload'); toggle_visibility('filesToUpload');"></p>
   </div>
+
+<div align="center" id='favoritesOptionsDiv' name='favoritesOptionsDiv' style="display:none;">
+<p><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type='submit' id='showFavorites' name='showFavorites' value='View Favorites' onclick="toggle_visibility('loadingCommandDiv');"></form></p>
+<p><input type='submit' id="favoriteSubmit" name="favoriteSubmit" value='Add to Favorites' onclick="toggle_visibility('loadingCommandDiv');"></p>
+<?php
+if ($showFavorites === '1') { ?>
+<p><input type='submit' id="favoriteDelete" name="favoriteDelete" value='Un-Favorite' onclick="toggle_visibility('loadingCommandDiv');"></p>
+<?php } ?>
+</div>
 
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
 <div align="center" name="makedirDiv" id="makedirDiv" style="display:none;">
@@ -257,7 +270,7 @@ Are you sure?
 </div>
 <div align="center" id='SearchOptionsDiv' name='SearchOptionsDiv' style="display:none;">
 <form action="cloudCore.php" method="post" enctype="multipart/form-data">
-<p><input type="text" id='search' name='search' value='Search...' onclick="Clear();">
+<p><input type="text" id='search' name='search' value='Search...' onclick="ClearSearch();">
   <input type='submit' id='searchbutton' name='searchbutton' value='Search Cloud' onclick="toggle_visibility('loadingCommandDiv');"></p>
 </form>
 </div>
@@ -279,23 +292,27 @@ Are you sure?
     </thead>
     <tbody>
 <?php
-  $myDirectory = rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/');
-  if (!is_dir($myDirectory)) {
-    $txt = ('ERROR!!! HRC2Index284, The selected file is not actually a directory on '.$Time.'!'."\n");
+  if ($showFavorites == '1') {
+    require($FavoritesCacheFileInst);
+    $dirArray = $FavoriteFiles; }
+  if ($showFavorites !== '1') {
+    $myDirectory = rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/');
+    if (!is_dir($myDirectory)) {
+      $txt = ('ERROR!!! HRC2Index284, The selected file is not actually a directory on '.$Time.'!'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       die($txt); }
-  $myDirectory = opendir($myDirectory);
-  while ($entryName=readdir($myDirectory)) {
-    $dirArray[]=$entryName; }
-  closedir($myDirectory);
+    $myDirectory = opendir($myDirectory);
+    while ($entryName=readdir($myDirectory)) {
+      $dirArray[]=$entryName; }
+    closedir($myDirectory); }
   $indexCount=count($dirArray);
-  sort($dirArray);
+  if ($indexCount > 1) sort($dirArray);
   for ($index=0; $index < $indexCount; $index++) {
     if (substr("$dirArray[$index]", 0, 1)!=$hide) {
       $favicon="";
       $class="file";
       $name=$dirArray[$index];
-      if ($name == 'index.html') continue;
+      if ($name == 'index.html' or $name === '') continue; 
       $namehref=$dirArray[$index];
       $fileArray = array_push($fileArray1, $namehref);
     if (substr_compare($namehref, '/', 1)) { 
@@ -479,6 +496,41 @@ $.ajax( {
     newcopyfilename : $("#newcopyfilename").val()},
     success: function(data) {
         window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
+    }
+} );
+});
+});
+<?php 
+if ($showFavorites === '1') { ?>
+$(document).ready(function () {
+$("#favoriteDelete").click(function(){
+var favoritesSelectedDelete = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+favoritesSelectedDelete.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { favoriteDelete : favoritesSelectedDelete},
+    success: function(data) {
+        window.location.href = "cloudCore.php<?php echo '?showFavoritesPOST=1'; ?>";
+    }
+} );
+});
+});
+<?php } ?>
+$(document).ready(function () {
+$("#favoriteSubmit").click(function(){
+var favoritesSelected = new Array();
+$('input[name="corePostSelect[]"]:checked').each(function() {
+favoritesSelected.push(this.value);
+});
+$.ajax( {
+    type: 'POST',
+    url: 'cloudCore.php',
+    data: { favoriteConfirm : favoritesSelected},
+    success: function(data) {
+        window.location.href = "cloudCore.php<?php echo '?showFavoritesPOST=1'; ?>";
     }
 } );
 });
