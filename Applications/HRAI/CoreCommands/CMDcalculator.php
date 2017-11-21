@@ -30,23 +30,22 @@ if ($CMDinit[$CMDcounter] == 1) {
   // / The following code sets the global variables for the session.
   $numbers = range(0, 9);
   // / Note that the letter "x" is missing from the $letters array.
-  $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z');
-  $basicFunctions = array('+', '-', 'x', 'X', '*', '/');
+  $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+  $basicFunctions = array('+', '-', '*', '/');
   $advancedFunctions = '%';
   $additionFunctions = '+';
   $subtractionFunctions = '-';
   $multicationFunctions = '*';
   $divisionFunctions = '/';
   $calculatorInput = str_replace(str_split('[]{};:$!#&@>=<?\'",'), '', $calculatorInput);
-  $calculatorInput = str_replace(str_split('xX'), '*', $calculatorInput);
   $calculatorInput = str_replace('multiplied by', '*', $calculatorInput);
   $calculatorInput = str_replace('plus', '+', $calculatorInput);
   $calculatorInput = str_replace('minus', '-', $calculatorInput);
   $calculatorInput = str_replace('take away', '-', $calculatorInput);
   $calculatorInput = str_replace('times', '*', $calculatorInput);
   $calculatorInput = str_replace('divided by', '/', $calculatorInput);
-  $calculatorInput = str_replace(str_split('abcdefghijklmnopqrstuvwyz'), '', $calculatorInput);
-  $calculatorInput = str_replace(str_split('ABCDEFGHIJKLMNOPQRSTUVWYZ'), '', $calculatorInput);  
+  $calculatorInput = str_replace(str_split('abcdefghijklmnopqrstuvwxyz'), '', $calculatorInput);
+  $calculatorInput = str_replace(str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), '', $calculatorInput);  
   $calculatorInput = str_replace(' ', '', $calculatorInput);
 
   // / The following code cleans the user input for the math interpreter.

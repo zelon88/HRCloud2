@@ -21,7 +21,7 @@ if ($user_ID == '0') {
 $timeGreeting = 'Hello, ';
 $StopTime = '0';
 // / Code for modning specific responses.
-  if (date("H") <= '15' && date("H") > '3'){
+  if (date("H") <= '12' && date("H") > '3'){
     if (preg_match('/good morning/',$input)) { 
       echo nl2br('Good morning, Commander!'."\r"); 
       $input = preg_replace('/good morning/','',$input);
@@ -49,7 +49,7 @@ $StopTime = '0';
     $timeGreeting = 'Good morning, '; }
 // / Code for afternoon specific responses.
 if ($StopTime == '0') {
-  if (date("H") >= '15' && date("H") <= '20'){  
+  if (date("H") >= '12' && date("H") <= '18'){  
     if (preg_match('/good afternoon/',$input)) {
       echo nl2br('It has been so far, Commander!'."\r"); 
       $input = preg_replace('/good afternoon/','',$input);
@@ -78,7 +78,7 @@ if ($StopTime == '0') {
     $StopTime++; } }
 // / Code for evening specific responses.
 if ($StopTime == '0') {
-  if (date("H") >= '20' or date("H") <= '3') {
+  if (date("H") >= '18' or date("H") <= '3') {
     if (preg_match('/good evening/',$input)){
       echo nl2br('Yes, Commander. It has been.'."\r"); 
       $input = preg_replace('/good evening/','',$input);
@@ -88,7 +88,7 @@ if ($StopTime == '0') {
         echo nl2br('Yes, Commander. It has been.'."\r"); 
         $input = preg_replace('/good morning/','',$input);
         $input = str_replace('good morning','',$input); } }
-    if (date("H") >= '3' && date("H") <= '12' or date("H") > '20') {
+    if (date("H") >= '3' or date("H") <= '12' or date("H") > '20') {
       if (preg_match('/good morning/',$input)){      
       echo nl2br('It\'s '.$hour.', Commander.'."\r"); 
       $input = preg_replace('/good morning/','',$input);
