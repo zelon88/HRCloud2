@@ -1307,7 +1307,8 @@ if (isset($_POST['search'])) {
   $ResultFiles = scandir($CloudUsrDir);
   if (isset($SearchRAW)) {       
     foreach ($ResultFiles as $ResultFile0) {
-      if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html') continue;
+      if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html' 
+       or $ResultFile0 == '.AppData' or strpos($ResultFile0, '.php') == TRUE) continue;
         $ResultFile = $CloudUsrDir.$ResultFile0;    
         $ResultTmpFile = $CloudTmpDir.$ResultFile0;
         $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
