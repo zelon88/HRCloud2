@@ -2,16 +2,9 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="Resources/HRC2-Lib.js"></script>
-<script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
+<script type="text/javascript" src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
 <title>Cloud Contents</title>
 <?php
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 // / Set all primary array data.
 $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
 $ArchiveArray = array('zip', 'rar', 'tar', 'bz', 'gz', 'bz2', '7z', 'iso', 'vhd', 'vdi');
@@ -111,8 +104,10 @@ while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
 
 <div align="center" id='favoritesOptionsDiv' name='favoritesOptionsDiv' style="display:none;">
 <p><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type='submit' id='showFavorites' name='showFavorites' value='View Favorites' onclick="toggle_visibility('loadingCommandDiv');"></form></p>
-<p><input type='submit' id="favoriteSubmit" name="favoriteSubmit" value='Add to Favorites' onclick="toggle_visibility('loadingCommandDiv');"></p>
 <?php
+if ($showFavorites !== '1') { ?>
+<p><input type='submit' id="favoriteSubmit" name="favoriteSubmit" value='Add to Favorites' onclick="toggle_visibility('loadingCommandDiv');"></p>
+<?php }
 if ($showFavorites === '1') { ?>
 <p><input type='submit' id="favoriteDelete" name="favoriteDelete" value='Un-Favorite' onclick="toggle_visibility('loadingCommandDiv');"></p>
 <?php } ?>
@@ -317,6 +312,7 @@ Are you sure?
       $fileArray = array_push($fileArray1, $namehref);
     if (substr_compare($namehref, '/', 1)) { 
       $namehref = substr_replace('/'.$namehref, $namehref, 0); }
+    if (!file_exists($CloudUsrDir.$dirArray[$index])) continue;
     $modtime=date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
     $timekey=date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
     if (is_dir($dirArray[$index])) {
