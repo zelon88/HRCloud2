@@ -142,10 +142,10 @@ if (strpos($Current_URL, $UserID) == 'false') {
 		$sizekey=filesize($dirArray[$index]); }
 
     if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' or $namehref == 'Bookmarks'
-      or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true'
-      or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true' 
+      or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true' or $namehref == 'Bookmarks' or $namehref == 'Favorites.php' 
+      or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true'
       or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true' or strpos($namehref, 'ServMon') == 'true') continue;
-    if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' or $namehref == 'Bookmarks'
+    if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts'
       or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
       or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
       or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true' or strpos($name, 'ServMon') == 'true') continue;	
