@@ -1020,11 +1020,20 @@ if (isset($_POST['streamSelected'])) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   require($getID3File);
   // / The following code creates the .Playlist directory as well as the .Cache directory and cache files.
-  if (!file_exists($PlaylistCacheFile)) {
+  if (!file_exists($playlistDir)) {
     mkdir($playlistDir, 0755);
-    copy($InstLoc.'/index.html', $playlistDir.'/index.html');
-    mkdir($playlistCacheDir, 0755); 
-    copy($InstLoc.'/index.html', $playlistCacheDir.'/index.html');
+    copy($InstLoc.'/index.html', $playlistDir.'/index.html'); 
+    $txt = ('OP-Act: Created a playlist directory on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($playlistCacheDir)) {
+    mkdir($playlistCacheDir, 0755);
+    copy($InstLoc.'/index.html', $playlistCacheDir.'/index.html'); 
+    $txt = ('OP-Act: Created a playlist cache directory on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($PlaylistCacheFile)) {
+    $txt = '';
+    $MAKECacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL, FILE_APPEND);
+    touch($PlaylistCacheFile);  
     $txt = ('OP-Act: Created a playlist cache file on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
   if (strpos($PlaylistCacheDir, '.Playlist') == 'false' or file_exists($PlaylistCacheDir)) {
@@ -1033,7 +1042,7 @@ if (isset($_POST['streamSelected'])) {
     die($txt); } 
   if (!is_array($_POST['streamSelected'])) {
     $_POST['streamSelected'] = array($_POST['streamSelected']); } 
-  foreach (($_POST['streamSelected']) as $MediaFile) {
+  foreach ($_POST['streamSelected'] as $MediaFile) {
     // / The following code will only create cache data if the $MediaFile is in the $PLMediaArr.     
     $pathname = str_replace('//', '/', $CloudUsrDir.$MediaFile);
     $pathname = str_replace(' ', '\ ', $pathname);
@@ -1046,23 +1055,43 @@ if (isset($_POST['streamSelected'])) {
       $getID3 = new getID3;
       $id3Tags = $getID3->analyze($pathname);
       getid3_lib::CopyTagsToComments($pathname);
+      // / ID3v1 tags
+      // / If id3v1 title tags are set, return them as a variable.
+      if(isset($id3Tags['tags']['id3v1']['title'][0])) {
+        $PLSongTitle = $id3Tags['tags']['id3v1']['title'][0]; 
+        $PLSongTitle = str_replace(str_split('\\/[]{};:>#*\'<'), '', ($PLSongTitle)); }
+      if(!isset($id3Tags['tags']['id3v1']['title'][0])) {
+        $PLSongTitle = ''; }
+      // / If id3v1 artist tags are set, return them as a variable.
+      if(isset($id3Tags['tags']['id3v1']['artist'][0])) {
+        $PLSongArtist = $id3Tags['tags']['id3v1']['artist'][0]; 
+        $PLSongArtist = str_replace(str_split('\\/[]{};:>$#*\'<'), '', ($PLSongArtist)); }
+      if(!isset($id3Tags['tags']['id3v1']['artist'][0])) {
+        $PLSongArtist = ''; }
+      // / If id3v1 album tags are set, return them as a variable.
+      if(isset($id3Tags['tags']['id3v1']['album'][0])) {
+        $PLSongAlbum = $id3Tags['tags']['id3v1']['album'][0]; 
+        $PLSongAlbum = str_replace(str_split('\\/[]{};:>#*\'<'), '', ($PLSongAlbum)); }
+      if(!isset($id3Tags['tags']['id3v1']['album'][0])) {
+        $PLSongAlbum = ''; }
+      // ID3v2 tags.
       // / If id3v2 title tags are set, return them as a variable.
-      if(isset($id3Tags['tags']['id3v2']['title'])) {
+      if(isset($id3Tags['tags']['id3v2']['title'][0])) {
         $PLSongTitle = $id3Tags['tags']['id3v2']['title'][0]; 
         $PLSongTitle = str_replace(str_split('\\/[]{};:>#*\'<'), '', ($PLSongTitle)); }
-      if(!isset($id3Tags['tags']['id3v2']['title'])) {
+      if(!isset($id3Tags['tags']['id3v2']['title'][0])) {
         $PLSongTitle = ''; }
       // / If id3v2 artist tags are set, return them as a variable.
-      if(isset($id3Tags['tags']['id3v2']['artist'])) {
+      if(isset($id3Tags['tags']['id3v2']['artist'][0])) {
         $PLSongArtist = $id3Tags['tags']['id3v2']['artist'][0]; 
         $PLSongArtist = str_replace(str_split('\\/[]{};:>$#*\'<'), '', ($PLSongArtist)); }
-      if(!isset($id3Tags['tags']['id3v2']['artist'])) {
+      if(!isset($id3Tags['tags']['id3v2']['artist'][0])) {
         $PLSongArtist = ''; }
       // / If id3v2 album tags are set, return them as a variable.
-      if(isset($id3Tags['tags']['id3v2']['album'])) {
+      if(isset($id3Tags['tags']['id3v2']['album'][0])) {
         $PLSongAlbum = $id3Tags['tags']['id3v2']['album'][0]; 
         $PLSongAlbum = str_replace(str_split('\\/[]{};:>#*\'<'), '', ($PLSongAlbum)); }
-      if(!isset($id3Tags['tags']['id3v2']['album'])) {
+      if(!isset($id3Tags['tags']['id3v2']['album'][0])) {
         $PLSongAlbum = ''; }
       // / If id3v2 image tags are set, return it as an image data variable as well as a .jpg file in the .Cache directory..
       if(isset($id3Tags['id3v2']['APIC'][0]['data']) && $id3Tags['id3v2']['APIC'][0]['data'] !== '') {
