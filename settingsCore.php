@@ -56,7 +56,7 @@ if (isset($saveSettings)) {
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Settings.'."\n"); }
   // / The following code sets the users Tipa display preference.
-  if (isset($$NEWShowTips)) {
+  if (isset($NEWShowTips)) {
     $txt = ('$ShowTips = \''.$NEWShowTips.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
