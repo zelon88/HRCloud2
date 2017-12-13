@@ -42,7 +42,7 @@ if (!file_exists($CCFile)) {
   else {
     require_once($CCFile); } 
 // / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.7.7';
+$hrstreamerAppVersion = 'v0.7.8';
 $getID3File = $InstLoc.'/Applications/getid3/getid3/getid3.php';
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
@@ -102,11 +102,10 @@ if (file_exists($PlaylistDir)) {
   $PlaylistCacheDir = $PlaylistDir.'/.Cache';
   $PlaylistCacheFile = $PlaylistCacheDir.'/cache.php';
   $PlaylistFiles = scandir($PlaylistDir); 
-  if (!file_exists($PlaylisrCacheFile)) {
-    @mkdir($PlaylistCacheDir, 0755); 
+  if (!file_exists($PlaylistCacheFile)) {
     $txt = '';
     $MAKECacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);
-    touch($PlaylisrCacheFile); 
+    touch($PlaylistCacheFile); 
     $txt = ('OP-Act: Created a playlist cache file on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
   if (strpos($PlaylistDir, '.Playlist') == 'false') {
