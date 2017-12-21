@@ -147,7 +147,7 @@ these things, follow the additional steps below.
   system administrator for the required information. If you are not greeted with any tangible login screen other than an error message, 
   seek the owners manual for the specific make and manual for your router.
 -Once you have gained access to your router, seek the settings which control Firewall exceptions and Static NAT settings.
-  You should seek a way to enter the local IPv4 address of the machine running HRCloud2 for port 80.
+  You should seek a way to enter the local IPv4 address of the machine running HRCloud2.
   You should also seek a way to enter a "Static NAT" entry for the local IPv4 address of the machine running HRCloud2.
   You should also forward port 80 to the internal IPv4 of the machine running HRCloud2.
   To configure SSL encryption, add port 443 to your port forwarding rules and visit www.letsencrypt.com for instructions on obtaining and installing an SSL certificate.
