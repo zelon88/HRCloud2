@@ -1174,8 +1174,8 @@ if (isset($_POST['shareConfirm'])) {
       $txt = ('ERROR!!! HRC2862, Could not share '.$FTS.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
   // / Free un-needed memory.
-  $_POST['shareConfirm'] = $CloudShareDir = $txt = $MAKELogFile = $_POST['filesToShare'] = $FTS = $copySrc = $copyDst = null;
-  unset ($_POST['shareConfirm'], $CloudShareDir, $txt, $MAKELogFile, $_POST['filesToShare'], $FTS, $copySrc, $copyDst); }
+  $CloudShareDir = $txt = $MAKELogFile = $_POST['filesToShare'] = $FTS = $copySrc = $copyDst = null;
+  unset ($CloudShareDir, $txt, $MAKELogFile, $_POST['filesToShare'], $FTS, $copySrc, $copyDst); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1186,22 +1186,22 @@ if (isset($_POST['unshareConfirm'])) {
   $txt = ('OP-Act: Initiated UnShare on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST['unshareConfirm'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['unshareConfirm']);
-if (isset($_POST["filesToUnShare"])) {
-  if (!is_array($_POST["filesToUnShare"])) {
-    $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
-  foreach ($_POST['filesToUnShare'] as $FTS) {
-    $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-    @unlink($CloudShareDir.'/'.$FTS);
-    @unlink($CloudShareDir2.'/'.$FTS);
-    if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
-      $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    if (file_exists($CloudShareDir.'/'.$FTS) or file_exists($CloudShareDir2.'/'.$FTS)) {
-      $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } 
+  if (isset($_POST["filesToUnShare"])) {
+    if (!is_array($_POST["filesToUnShare"])) {
+      $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
+    foreach ($_POST['filesToUnShare'] as $FTS) {
+      $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
+      @unlink($CloudShareDir.'/'.$FTS);
+      @unlink($CloudShareDir2.'/'.$FTS);
+      if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
+        $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+      if (file_exists($CloudShareDir.'/'.$FTS) or file_exists($CloudShareDir2.'/'.$FTS)) {
+        $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } 
   // / Free un-needed memory.
-  $_POST['unshareConfirm'] = $CloudShareDir = $CloudShareDir2 = $txt = $MAKELogFile = $_POST['filesToUnShare'] = $FTS = null;
-  unset ($_POST['unshareConfirm'], $CloudShareDir, $CloudShareDir2, $txt, $MAKELogFile, $_POST['filesToUnShare'], $FTS); }
+  $CloudShareDir = $CloudShareDir2 = $txt = $MAKELogFile = $_POST['filesToUnShare'] = $FTS = null;
+  unset ($CloudShareDir, $CloudShareDir2, $txt, $MAKELogFile, $_POST['filesToUnShare'], $FTS); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1219,8 +1219,8 @@ if (isset($_POST['favoriteConfirm'])) {
   $data = '$FavoriteFiles = array(\''.$FavoriteFilesCSV.'\');';
   $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); 
   copy($FavoritesCacheFileCloud, $FavoritesCacheFileInst); 
-  $_POST['favoriteConfirm'] = null; 
-  unset ($_POST['favoriteConfirm']); }
+  $_POST['favoriteConfirm'] = $favoriteToAdd = $FavoriteFiles = $FavoriteFilesCSV = $data = $MAKEFavCacheFile = null; 
+  unset ($_POST['favoriteConfirm'], $favoriteToAdd, $FavoriteFiles, $FavoriteFilesCSV, $data, $MAKEFavCacheFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1239,8 +1239,8 @@ if (isset($_POST['favoriteDelete'])) {
   $data = '$FavoriteFiles = array(\''.implode('\', \'', $FavoriteFiles).'\');';
   $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); 
   copy($FavoritesCacheFileCloud, $FavoritesCacheFileInst); 
-  $_POST['favoriteDelete'] = null; 
-  unset ($_POST['favoriteDelete']); }
+  $_POST['favoriteDelete'] = $favoriteToRemove = $FavoriteFiles = $favfilecounter = $FavFile = $data = $MAKEFavCacheFile = null; 
+  unset ($_POST['favoriteDelete'], $favoriteToRemove, $FavoriteFiles, $favfilecounter, $FavFile, $data, $MAKEFavCacheFile); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -1385,6 +1385,9 @@ if (isset($_POST['search'])) {
 // / The following code handles which UI will be displayed for the selected operation.
 if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
+  die(); }
+if (isset($_POST['shareConfirm']) or isset($_POST['unshareConfirm']) or isset($_GET['showShared'])) {
+  include($InstLoc.'/Applications/displaydirectorycontents_shared/.index.php'); 
   die(); } 
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); 
 // / -----------------------------------------------------------------------------------
