@@ -16,6 +16,7 @@ $convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', '
 $pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
+$UserSharedDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
 $fileCounter = 0;
 // / Color scheme handler.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
@@ -84,7 +85,7 @@ function toggle_visibility(id) {
 	else { $hide=".";
 	 $ahref="./?hidden";
 	 $atext="Show"; }
-	 $myDirectory=opendir(".");
+	 $myDirectory=opendir($UserSharedDir);
 	while ($entryName=readdir($myDirectory)) {
 	  $dirArray[]=$entryName; }
 	closedir($myDirectory);
@@ -95,10 +96,11 @@ function toggle_visibility(id) {
 		$favicon="";
 		$class="file";
 		$name=$dirArray[$index];
-		$modtime=date("M j Y g:i A", filemtime($dirArray[$index]));
+		$path=$UserSharedDir.'/'.$name;
+		$modtime=date("M j Y g:i A", filemtime($path));
 		$namehref=$dirArray[$index];
-		$timekey=date("YmdHis", filemtime($dirArray[$index]));
-		if(is_dir($dirArray[$index])) {
+		$timekey=date("YmdHis", filemtime($path));
+		if(is_dir($path)) {
 		  $extn="&lt;Directory&gt;";
 		  $size="&lt;Directory&gt;";
 		  $sizekey="0";
@@ -110,7 +112,7 @@ function toggle_visibility(id) {
 				if ($name==".."){$name=".. (Parent Directory)"; $extn="&lt;System Dir&gt;"; } }
 
 		  else {
-		  $extn=pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+		  $extn=pathinfo($path, PATHINFO_EXTENSION);
 		  switch ($extn) {
 		    case "txt": $extn="Text File"; 
 		    break;
@@ -118,8 +120,8 @@ function toggle_visibility(id) {
 		    if ($extn!="") {
 		      $extn=strtoupper($extn)." File"; } 
 		    else {$extn="Unknown"; } break; }
-		  $size=pretty_filesize($dirArray[$index]);
-          $sizekey=filesize($dirArray[$index]); }
+		  $size=pretty_filesize($path);
+          $sizekey=filesize($path); }
 
 		if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
 			or strpos($namehref, '.css') == 'true' or strpos($namehref, '.html') == 'true' or strpos($namehref, '.css') == 'true' 
