@@ -481,7 +481,7 @@ if ($Udir == '//') {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code will be performed whenever a user executes ANY HRC2 Cloud "core" feature.
+// / The following code will clean up old files.
 // / --- Code by theo546 ---
   // / Here is the fix for symlink date. --theo546 (source: http://stackoverflow.com/questions/34512105/php-check-how-old-a-symlink-file-is)
   function symlinkmtime($symlinkPath)
@@ -509,7 +509,7 @@ if (file_exists($CloudTempDir)) {
         include($JanitorFile); 
         @unlink($DFile.'/index.html');
         @rmdir($DFile); } } } }
-// / copy a fresh index file to the Temp Cloud directory.        
+// / Copy a fresh index file to the Temp Cloud directory.        
 if (!file_exists($CloudTempDir.'/index.html')) {
   copy('index.html', $CloudTempDir.'/index.html'); }
 // / Display appropriate filesizes.

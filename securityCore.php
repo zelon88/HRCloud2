@@ -281,4 +281,4 @@ if ($INFECTION_DETECTED !== 1) {
 // / Delete temporary scan cache data.
 @unlink ($LogFile1);
 @unlink ($LogFile2);
-  ?> 
+?>

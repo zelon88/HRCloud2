@@ -882,8 +882,7 @@ if (isset($_POST['pdfworkSelected'])) {
           if (in_array($oldExtension, $pdf1array)) {
             if (in_array($extension, $doc1array)) {
               $pathnameTEMP = str_replace('.'.$oldExtension, '.txt', $pathname);
-    
-            $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
+              $_POST['method'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['method']);
               if ($_POST['method1'] == '0' or $_POST['method1'] == '') {
                 shell_exec("pdftotext -layout $pathname $pathnameTEMP"); 
                 $txt = ('OP-Act: '."Converted $pathnameTEMP1 to $pathnameTEMP on $Time".' using method 0.'); 
@@ -898,7 +897,6 @@ if (isset($_POST['pdfworkSelected'])) {
                   $txt = ('Notice!!! HRC2601, Attempting PDFWork conversion "method 2" on '.$Time.'.'."\n"); 
                   echo ($txt."\n".'--------------------'."\n"); 
                   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }          
-              
               if ($_POST['method1'] == '1') {
                 $pathnameTEMP1 = str_replace('.'.$oldExtension, '.jpg' , $pathname);
                 shell_exec("convert $pathname $pathnameTEMP1");
