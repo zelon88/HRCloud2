@@ -93,7 +93,8 @@ while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
 <img id="imgeditButton" name="imgeditButton" title="Image / Photo Editing Tools" alt="Image / Photo Editing Tools" onclick="toggle_visibility('photoOptionsDiv');" src='Resources/photoedit.png'/> | 
 <img id="pdfworkButton" name="pdfworkButton" title="OCR (Optical Character Recognition) Tools" alt="OCR (Optical Character Recognition) Tools" onclick="toggle_visibility('PDFOptionsDiv');" src='Resources/makepdf.png'/> | 
 <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
-<img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/triangle.png'/> | <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | 
+<img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/triangle.png'/> | 
+<img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | 
 <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
 </div>
 
@@ -103,9 +104,9 @@ while (file_exists($CloudUsrDir.'Archive'.'_'.$Date.'_'.$ArchInc)) {
   </div>
 
 <div align="center" id='favoritesOptionsDiv' name='favoritesOptionsDiv' style="display:none;">
-<p><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type='submit' id='showFavorites' name='showFavorites' value='View Favorites' onclick="toggle_visibility('loadingCommandDiv');"></form></p>
 <?php
 if ($showFavorites !== '1') { ?>
+<p><form action="cloudCore.php" method="post" enctype="multipart/form-data"><input type='submit' id='showFavorites' name='showFavorites' value='View Favorites' onclick="toggle_visibility('loadingCommandDiv');"></form></p>
 <p><input type='submit' id="favoriteSubmit" name="favoriteSubmit" value='Add to Favorites' onclick="toggle_visibility('loadingCommandDiv');"></p>
 <?php }
 if ($showFavorites === '1') { ?>
@@ -756,7 +757,7 @@ $.ajax( {
     url: 'cloudCore.php',
     data: { shareConfirm : "1", filesToShare : shareSelected},
     success: function(data) {
-        window.location.href = "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>";
+        window.location.href = "cloudCore.php?showShared=1";
     }
 } );
 });
