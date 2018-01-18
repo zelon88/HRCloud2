@@ -12,23 +12,29 @@
 <div id="container">
 <div align="center"><h3>HRCloud2 Logs</h3></div>
 <?php
-// / -----------------------------------------------------------------------------------
-// / The following code verifies that the HRCloud2 configuration file exists.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
-  echo nl2br('</head>ERROR!!! HRC2LogsIndex19, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+// / The follwoing code checks if the commonCore.php file exists and 
+// / terminates if it does not.
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/config.php'); }
-// / -----------------------------------------------------------------------------------
+  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
 
-// / -----------------------------------------------------------------------------------
-// / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! HRC2LogsIndex27, WordPress was not detected on the server.'."\n"); }
-  else {
-    require_once($WPFile); } 
-// / -----------------------------------------------------------------------------------
+$fileCounter = 0;
+
+// / Color scheme handler.
+if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+  $ColorScheme = '1'; }
+if ($ColorScheme == '1') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
+if ($ColorScheme == '2') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
+if ($ColorScheme == '3') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
+if ($ColorScheme == '4') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
+if ($ColorScheme == '5') {
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session.
@@ -36,36 +42,8 @@ $Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $UserIDRAW = get_current_user_id();
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
-$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code loads the users config.php file.
-if (!file_exists($UserConfig)) {
-  @chmod($UserConfig, 0755); }
-if (!file_exists($UserConfig)) {
-  echo nl2br('</head>ERROR!!! HRC2LogsIndex49, User Cache file was not detected on the server!'."\n"); 
-  die (); }
-else {
-    require($UserConfig); } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code loads the users color scheme.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -141,10 +119,6 @@ if (strpos($Current_URL, $UserID) == 'false') {
 		$size=pretty_filesize($dirArray[$index]);
 		$sizekey=filesize($dirArray[$index]); }
 
-    if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' or $namehref == 'Bookmarks'
-      or strpos($namehref, 'css') == 'true' or strpos($namehref, 'html') == 'true' or $namehref == 'Bookmarks' or $namehref == 'Favorites.php' 
-      or strpos($namehref, 'php') == 'true' or strpos($namehref, 'error') == 'true' or strpos($namehref, 'style') == 'true'
-      or strpos($namehref, 'Shared') == 'true' or strpos($namehref, 'index') == 'true' or strpos($namehref, 'ServMon') == 'true') continue;
     if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts'
       or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
       or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
