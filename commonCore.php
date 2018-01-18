@@ -10,6 +10,7 @@ $CurrentDir = getcwd();
 $CD = '';
 if (strpos($CurrentDir, 'Applications') ==  TRUE) $CD = '../../';
 if (strpos($_SERVER["SCRIPT_FILENAME"], 'HRAIMiniGui') == TRUE) $CD = '../';
+if (strpos($CurrentDir, '.AppData') == TRUE) $CD = '../../../';
 if (strpos($CurrentDir, 'Shared') == TRUE) $CD = '../../../../';
 // / -----------------------------------------------------------------------------------
 
@@ -102,8 +103,10 @@ $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
 $LogInstallFiles1 = scandir($InstLoc.'/'.$LogInstallDir1);
-$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
+$UserShared = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared';
+$UserSharedIndex = $UserShared.'/.index.php';
 $SharedInstallDir = 'Applications/displaydirectorycontents_shared/';
+$UserSharedDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
 $SharedInstallFiles = scandir($InstLoc.'/'.$SharedInstallDir);
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
 $ResourcesDir = $InstLoc.'/Resources';
