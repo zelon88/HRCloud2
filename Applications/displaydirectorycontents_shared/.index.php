@@ -5,19 +5,13 @@
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2TeamsApp35, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('</head><body>ERROR!!! HRC2SharedIndex8, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
-$PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-$archArr = array('rar', 'tar', 'tar.bz', '7z', 'zip', 'tar.gz', 'tar.bz2', 'tgz');
-$pdfWordArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
-$convertArr = array('pdf', 'doc', 'docx', 'txt', 'rtf', 'odf', 'pages', 'jpg', 'jpeg', 'png', 'bmp', 'gif', 'mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-$pdfWordArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
-$imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
-$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
-$UserSharedDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/Shared';
+
 $fileCounter = 0;
+
 // / Color scheme handler.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
@@ -98,7 +92,7 @@ function toggle_visibility(id) {
 		$name=$dirArray[$index];
 		$path=$UserSharedDir.'/'.$name;
 		$modtime=date("M j Y g:i A", filemtime($path));
-		$namehref=$dirArray[$index];
+		$namehref=$UserShared.'/'.$name;
 		$timekey=date("YmdHis", filemtime($path));
 		if(is_dir($path)) {
 		  $extn="&lt;Directory&gt;";
@@ -123,13 +117,13 @@ function toggle_visibility(id) {
 		  $size=pretty_filesize($path);
           $sizekey=filesize($path); }
 
-		if ($namehref == 'index.html' or $namehref == 'style.css' or $namehref == 'Notes' or $namehref == 'Contacts' 
-			or strpos($namehref, '.css') == 'true' or strpos($namehref, '.html') == 'true' or strpos($namehref, '.css') == 'true' 
-			or strpos($namehref, 'Shared') == 'true') continue; ?>
-<?php
+		if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
+			or strpos($name, '.css') == 'true' or strpos($name, '.html') == 'true' or strpos($name, '.css') == 'true' 
+			or strpos($name, 'Shared') == 'true') continue; 
+
 	 echo("<tr class='$class'>
-			<td><a href='./$namehref'$favicon class='name'>$name</a></td>
-			<td><a href='./$namehref'>$extn</a></td>
+			<td><a href='$namehref'$favicon class='name'>$name</a></td>
+			<td><a href='$namehref'>$extn</a></td>
       <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$namehref'></div></td>
             <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
 			<td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>"); ?>
