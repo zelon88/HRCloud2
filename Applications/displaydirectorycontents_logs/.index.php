@@ -119,10 +119,7 @@ if (strpos($Current_URL, $UserID) == 'false') {
 		$size=pretty_filesize($dirArray[$index]);
 		$sizekey=filesize($dirArray[$index]); }
 
-    if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts'
-      or strpos($name, '.css') == 'true' or strpos($name, 'html') == 'true'
-      or strpos($name, 'php') == 'true' or strpos($name, 'error') == 'true' or strpos($name, 'style') == 'true' 
-      or strpos($name, 'Shared') == 'true' or strpos($name, 'index') == 'true' or strpos($name, 'ServMon') == 'true') continue;	
+    if (in_array($name, $defaultApps)) continue;
     	
 	// Output
 	 echo("<tr class='$class'>
