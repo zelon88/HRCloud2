@@ -139,8 +139,8 @@ if (isset($_POST['scanSelected'])) {
   if (isset($_POST['userscanfilename'])) {
     $userscanfilename = $_POST['userscanfilename'];
     // / Update anti-virus definitions from ClamAV.
-    @shell_exec('sudo freshclam');
-    $txt = ('OP-Act: Executing \'sudo freshclam\' on '.$Time.'.');
+    @shell_exec('freshclam');
+    $txt = ('OP-Act: Executing \'freshclam\' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     echo nl2br('<a style="padding-left:15px;">Updated Virus Definitions.</a>'."\n");
     ?><hr /><?php
