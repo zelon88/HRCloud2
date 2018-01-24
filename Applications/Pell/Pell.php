@@ -2,7 +2,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Pell for HRC2
-App Version: v3.0 (10-3-2017 21:15)
+App Version: v3.1 (10-3-2017 21:15)
 App License: GPLv3
 App Author: jaredreich & zelon88
 App Description: A simple HRCloud2 document writer.
@@ -103,9 +103,10 @@ foreach ($pellFiles as $file) {
   if (!in_array($fileExtension, $pellDocArray)) continue;
   if (!file_exists($CloudUsrDir.$file)) continue;
   $lastmodified = date("M j Y g:i A", filemtime($CloudUsrDir.$file));
+  $timekey=date("YmdHis", filemtime($CloudUsrDir.$file));
   echo('<tr><td><a href="Pell.php?pellOpen='.$file.'">'.$file.'</a></td>
     <td><input type="image" id="deleteFile" name="deleteFile" value="'.$file.'" src="'.$URL.'/HRProprietary/HRCloud2/Applications/Pell/resources/deletesmall.png" alt="Delete '.$file.'" title="Delete '.$file.'"></td>
-    <td><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
+    <td sorttable_customkey=\''.$timekey.'\'><a href="Pell.php?pellOpen='.$file.'">'.$lastmodified.'</a></td></tr>'); }
 
 ?>
 </table>
