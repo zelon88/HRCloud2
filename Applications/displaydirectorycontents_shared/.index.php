@@ -117,9 +117,7 @@ function toggle_visibility(id) {
 		  $size=pretty_filesize($path);
           $sizekey=filesize($path); }
 
-		if ($name == 'index.html' or $name == 'style.css' or $name == 'Notes' or $name == 'Contacts' 
-			or strpos($name, '.css') == 'true' or strpos($name, '.html') == 'true' or strpos($name, '.css') == 'true' 
-			or strpos($name, 'Shared') == 'true') continue; 
+    if (in_array($name, $defaultApps)) continue;
 
 	 echo("<tr class='$class'>
 			<td><a href='$namehref'$favicon class='name'>$name</a></td>
