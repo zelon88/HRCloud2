@@ -31,6 +31,7 @@ if ($CMDinit[$CMDcounter] == 1) {
   $numbers = range(0, 9);
   // / Note that the letter "x" is missing from the $letters array.
   $letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+  $functions = array('+', '-', '*', '/', '%');
   $basicFunctions = array('+', '-', '*', '/');
   $advancedFunctions = '%';
   $additionFunctions = '+';
@@ -65,7 +66,7 @@ if ($CMDinit[$CMDcounter] == 1) {
     $calculatorInput = str_replace($priorityFunctions, $priorityTotal, $calculatorInput); }
 
 // / The following code parses upper-level equations.
-if ($calculatorInput !== '') {
+if ($calculatorInput !== '' && strlen($calculatorInput) > 1) {
   $counter++;
   foreach($basicFunctions as $bfunc) {
     $calculatorInput = trim($calculatorInput, $bfunc); }
