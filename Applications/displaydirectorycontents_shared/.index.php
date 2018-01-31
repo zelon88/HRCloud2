@@ -122,7 +122,7 @@ function toggle_visibility(id) {
 	 echo("<tr class='$class'>
 			<td><a href='$namehref'$favicon class='name'>$name</a></td>
 			<td><a href='$namehref'>$extn</a></td>
-      <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$namehref'></div></td>
+      <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$name'></div></td>
             <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
 			<td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>"); ?>
 <?php 
