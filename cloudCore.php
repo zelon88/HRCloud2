@@ -1189,11 +1189,20 @@ if (isset($_POST['unshareConfirm'])) {
       $_POST['filesToUnShare'] = array(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToUnShare'])); }
     foreach ($_POST['filesToUnShare'] as $FTS) {
       $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
-      @unlink($CloudShareDir.'/'.$FTS);
-      @unlink($CloudShareDir2.'/'.$FTS);
+      if (strpos($FTS, 'http//') == TRUE or strpos($FTS, 'https//') == TRUE) {
+        $txt = ('ERROR!!! HRC21193, URL supplied in filesToUnShare, expecting a filename, '.$FTS.' on '.$Time.'!');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        die(); }  
       if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
-        $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+        $txt = ('ERROR!!! HRC21197, The supplied file doesn\'t exist, '.$FTS.' on '.$Time.'!');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        die(); }
+      if (strpos($FTS, 'http//') == FALSE or strpos($FTS, 'https//') == FALSE ) {
+        @unlink($CloudShareDir.'/'.$FTS);
+        @unlink($CloudShareDir2.'/'.$FTS); 
+        if (!file_exists($CloudShareDir.'/'.$FTS) && !file_exists($CloudShareDir2.'/'.$FTS)) {
+          $txt = ('OP-Act: UnShared '.$FTS.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
       if (file_exists($CloudShareDir.'/'.$FTS) or file_exists($CloudShareDir2.'/'.$FTS)) {
         $txt = ('ERROR!!! HRC2862, Could not UnShare '.$FTS.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } } 

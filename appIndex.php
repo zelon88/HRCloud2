@@ -115,8 +115,9 @@ foreach ($apps as $appName) {
             if ($UserIDRAW !== 1) continue 2; }
         $lineCounter++; }
 
-  echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">'."\n".'<strong>'.$appName.'</strong>');
-  echo ('<div align="center"><p>');
+  echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">');
+  echo ('<div align="center">');
+  echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');"><p>');
 
   // / The following code displays administrator specific buttons.
   if ($UserIDRAW == 1) {
@@ -129,18 +130,17 @@ foreach ($apps as $appName) {
   echo ('<img src="Resources/newwindow.png" style="cursor:pointer; padding-left:6px; padding-bottom:2px; float:right;" alt="Launch \''.$appName.'\' in a new window" title="Launch \''.$appName.'\' in a new window" onclick="window.open(\''.$appLoc.'\',\''.$appName.'\',\'resizable,height=400,width=650\'); return false;">');
   echo ('</p></div>');
   echo nl2br ('<hr />');
-  echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');">');
 
   // / The following code displays administrator specific buttons.
   if ($UserIDRAW == 1) {
     echo nl2br('<div align="center" id="uninstallApp'.$appCounter.'Div" name="uninstallApp'.$appCounter.'Div" style="display:none;">');
-    echo nl2br('<hr /><form action="appIndex.php" method="post" enctype="multipart/form-data"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
+    echo nl2br('<form action="appIndex.php" method="post" enctype="multipart/form-data"><input type="submit" id="uninstallApp'.$appCounter.'" name="uninstallApp'.$appCounter.'" value="Confirm Delete" alt="Confirm Delete '.$appName.'" title="Confirm Delete '.$appName.'" onclick="toggle_visibility(\'loading\');">');
     echo ('<input type="hidden" id="uninstallApplication" name="uninstallApplication" value="'.$appName.'">');
     echo ('<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"></form><br></div>'); }
   
   // / The followind code displays the App image and Launch button to all users.
   echo nl2br('<div align="center" id="infoApp'.$appCounter.'Div" name="infoApp'.$appCounter.'Div" style="cursor:pointer; display:none;" onclick="toggle_visibility(\'appSelector'.$appCounter.'\');">' );
-  echo ('<div align="center"><a style="cursor:pointer;" onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><hr /><strong>Info</strong></a> | <a style="cursor:pointer;" onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
+  echo ('<div align="center"><a style="cursor:pointer;" onclick="toggle_visibility(\'appBasic'.$appCounter.'\');"><strong>Info</strong></a> | <a style="cursor:pointer;" onclick="toggle_visibility(\'appDescription'.$appCounter.'\'); "><strong>Description</strong></a></div>');
   
   // / The following code displays the Basic App information, when clicked.
   echo ('<div align="left" id="appBasic'.$appCounter.'" name="appBasic'.$appCounter.'" style="display:none;"><hr />');
@@ -160,7 +160,7 @@ foreach ($apps as $appName) {
 
   // / The followind code displays the App icon, if one exits in the App Directory.
   if (file_exists($appIcon)) {
-    echo nl2br('<p><img src="'.$appIcon.'" maxwidth="48px" max-height="48px" id="app'.$appName.'Icon" name="app'.$appName.'Icon" style="cursor:pointer; display:block;" title="'.$appName.'" alt="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\';"></p> '); }
+    echo nl2br('<p><img src="'.$appIcon.'" maxwidth="75px" max-height="75px" id="app'.$appName.'Icon" name="app'.$appName.'Icon" style="cursor:pointer; display:block;" title="'.$appName.'" alt="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\';"></p> '); }
   
   // / The following code signifies the end of each App Div in the appIndex. DO NOT ADD APP-SPECIFIC CODE BELOW THIS LINE!!!
   echo nl2br('</div>');     
