@@ -418,8 +418,8 @@ if ($ShowTips !== '1') {
 
 <?php
 $regions = array(
-    'Africa' => DateTimeZone::AFRICA,
     'America' => DateTimeZone::AMERICA,
+    'Africa' => DateTimeZone::AFRICA,
     'Antarctica' => DateTimeZone::ANTARCTICA,
     'Aisa' => DateTimeZone::ASIA,
     'Atlantic' => DateTimeZone::ATLANTIC,
