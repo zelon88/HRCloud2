@@ -4,8 +4,9 @@
 <title>HRAI Core</title>
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="Resources/common.js"></script>
-
+<script type="text/javascript" src="Applications/meSpeak/mespeak.js"></script>
 </head>
+
 <body>
   <div name="top"></div>
 <?php 
@@ -15,6 +16,7 @@ session_start();
 require_once('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreVar.php');
 require_once($wpfile);
 require_once($HRC2SecurityCoreFile);
+require_once($HRC2CommonCoreFile);
 require_once($coreArrfile);
 require_once($coreFuncfile);
 require_once($onlineFile);
@@ -92,26 +94,29 @@ $getServBusy = getServBusy();
 $inputRAW = $input;
 $input = str_replace(str_split(',.!?'), '', $_POST['input']);
 $input = strtolower($input);
-
 ?>
+
 <hr /></div>
 <div id="end"></div>
 <?php
 // / The following code detects and initializes all CoreCommands.
-  // / CoreCommands are parsed every time the core is executed.
-  // / They contain the format for HRAI to match text to certain tasks.
-  // / They also contain the code for the task to be completed.
-  // / HRAI loads these CoreCommands, and if the input matches, the command will run.
-$CMDFilesDir1 = scandir($InstLoc.'/Applications/HRAI/CoreCommands');
+ // / CoreCommands are parsed every time the core is executed.
+ // / They contain the format for HRAI to match text to certain tasks.
+ // / They also contain the code for the task to be completed.
+ // / HRAI loads these CoreCommands, and if the input matches, the command will run.
 $CMDcounter = 0;
 foreach($CMDFilesDir1 as $CMDFile) {
   if ($CMDFile == '.' or $CMDFile == '..' or strpos($CMDFile, 'index') == 'true' or is_dir($CMDFile)) continue;
   $CMDFile = ($InstLoc.'/Applications/HRAI/CoreCommands/'.$CMDFile);
   include_once($CMDFile); }
-
-// / The following code displays the MiniGui if needed.
-$displayMiniGui = displayMiniGui();
+$cleanOutput = cleanOutput($output);
 ?>
+
 </div>
+<script type="text/javascript">
+meSpeak.speak('<?php echo $cleanOutput; ?>');
+meSpeak.loadConfig('Applications/meSpeak/mespeak_config.json');
+meSpeak.loadVoice('Applications/meSpeak/voices/en/en-us.json');
+</script>
 </body>
 </html>

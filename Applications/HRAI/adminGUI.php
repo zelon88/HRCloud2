@@ -70,7 +70,7 @@ if ($user_ID == 1) {
     </div>
 
 
-<div align='center' ><?php echo '<h3>Welcome back, Commander!';?></h3></div>
+<div align='center' ><?php echo '<h3>Welcome back, '.$nickname.'!';?></h3></div>
 <div align='center' ><h5><hr><?php echo 'ServerID: '.$serverID.'  |  Username: '.$display_name;?></h5></div>
 
 

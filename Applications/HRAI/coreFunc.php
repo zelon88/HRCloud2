@@ -20,6 +20,12 @@ function performMaintanence() {
   if (file_exists($InstLoc.'/Applications/HRAI/HRAIHelper.php')) {
     unlink ($InstLoc.'/Applications/HRAI/HRAIHelper.php'); } }
 
+// / The following code cleans any output generated from user input for the text-to-speech engine.
+function cleanOutput($output) {
+  global $newlineArr;
+  $cleanOutput = strip_tags(str_replace($newlineArr, ' ', $output));
+  return $cleanOutput; }
+
 // / The following code specifies if HRAI is required in an Iframer (Tells HRAI to shrink it's footprint).
 function displayMiniGui() {
   global $InstLoc;
@@ -115,9 +121,9 @@ function verifyUser_ID() {
   $user_IDRAW = get_current_user_id();
   $user_ID = hash('ripemd160', $user_IDRAW.$Salts); 
   if (authenticateAPI() == 1) $user_ID = defineUserID();
-return ($user_ID); }
+  return ($user_ID); }
 
-// SECRET: This is to verify that the sesDir is authentic and up-to-date.
+// The following code is to verify that the sesDir is authentic and up-to-date.
 function authSesID($user_ID) {
   global $Salts, $day;
   if(isset($_POST['sesID'])){
@@ -137,6 +143,7 @@ function authSesID($user_ID) {
   $sesLogfile = $InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date.'/HRAI-'.$sesID.'.txt';  
   return ($sesID); }
 
+// / The following code forces the creation of a sesDir by any means.
 function forceCreateSesDir($sesID) {
   global $InstLoc, $Salts, $Date, $date, $day;
   $user_ID = verifyUser_ID();
@@ -177,7 +184,7 @@ function forceCreateSesDir($sesID) {
      and failed each time. I am sorry. Please try again later. '); } 
     return($sesLogfile); } 
 
-// / Detect WordPress and require it if it is. Echo and log status when complete.
+// / The folowing code detects WordPress and requires it if possible. Echo and log status when complete.
 function detectWordPress() {
   global $wpfile;
   if (file_exists($wpfile)){
@@ -189,14 +196,13 @@ function detectWordPress() {
     echo nl2br($txt."\n"); }
   return($txt); }
 
+// / The following code executes a PHP file and returns the output as the return variable.
 function LOCALreadOutputOfPHPfile($aPHPfileORurl) {
-  // / This function executes a PHP file and returns the output as the return variable.
   ob_start(); // begin collecting output
   include($aPHPfileORurl);
-  $result = ob_get_clean(); // retrieve output from myfile.php, stop buffering
+  $result = ob_get_clean(); // Retrieve output from myfile.php, stop buffering.
   $varCache0 = '/var/www/html/HRProprietary/HRAI/Cache/varCache.php';
     $varCache1 = fopen("$varCache0", "a+");
     $txt = ('$result = '.$result);
     $compLogfile = file_put_contents($varCache0, $txt.PHP_EOL , FILE_APPEND); 
-return $result; }
-
+  return $result; }
