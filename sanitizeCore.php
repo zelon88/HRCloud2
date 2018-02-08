@@ -110,6 +110,8 @@ if (isset($_POST['NEWColorScheme'])) {
   $NEWColorScheme = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWColorScheme']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWShowHRAI'])) { 
   $NEWShowHRAI = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowHRAI']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWHRAIAudio'])) { 
+  $NEWHRAIAudio = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWHRAIAudio']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWShowTips'])) { 
   $NEWShowTips = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowTips']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWTimezone'])) { 
