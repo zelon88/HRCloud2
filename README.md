@@ -76,6 +76,8 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Includes "Executor" App giving Admins the ability to remotely execute Bash code on the server.
 
+-Includes "Calendar" App for checking out dates (Tasks/ToDo's/Notifications in-process).
+
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
 -Clear user / master cache option.
@@ -101,6 +103,7 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 -Working on Calendar App!
 -Improving HRAI's text-to-speech engine!
 -Adding more settings!
+-Notifications system with App-side API!
 
 # Want more?
 
