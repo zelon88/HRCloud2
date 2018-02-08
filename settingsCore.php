@@ -62,13 +62,20 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Tips Settings.'."\n"); }
-  // / The following code is sets the current user timezone.
+  // / The following code sets the current user timezone.
   if (isset($NEWTimezone)) {
     $txt = ('$Timezone = \''.$NEWTimezone.'\';') ;
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Timezone Settings.'."\n"); }
+  // / The following code sets the current user nickname.
+  if (isset($NEWNickname)) {
+    $txt = ('$nickname = \''.$NEWNickname.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Saved "Nickname" setting: "'.$NEWNickname.'" to the user cache file on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br('Saved New Nickname Settings.'."\n"); }
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
@@ -128,11 +135,14 @@ if (isset($loadDefaultSettings)) {
   $NEWShowHRAI = $ShowHRAI; 
   $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
-  $NEWTimezone = $Timezone; 
+  $NEWTimezone = $defaultTimezone; 
   $txt = ('$Timezone = \''.$NEWTimezone.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
   $NEWShowTips = $ShowTips; 
   $txt = ('$ShowTips = \''.$NEWShowTips.'\';');
+  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+  $NEWNickname = $defaultNickname; 
+  $txt = ('$nickname = \''.$NEWNickname.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
   if ($UserIDRAW == 1) {
     $NEWVirusScan = $VirusScan; 
@@ -313,6 +323,14 @@ if (!isset($Timezone)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Nickname input field.
+if (isset($nickname)) {
+  $NNEcho = $nickname; }
+if (!isset($nickname)) {
+  $NNEcho = $defaultNickname; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Tips input field.
 if ($ShowTips == '1') {
   $STipsEcho = 'Enabled'; }
@@ -345,6 +363,9 @@ if ($ShowTips !== '1') {
   <option value="home">Cloud Home</option>
   </select></p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='GenerateClient' id='GenerateClient' value='Build Client' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+
+<p alt="Change what HRAI and HRCloud2 calls you." title="Change what HRAI and HRCloud calls you." style="padding-left:15px;"><strong>2.</strong> Nickname: </p>
+  <p><input type='text' id="NEWNickname" name="NEWNickname" style="padding-left:30px; width:100%;" value="<?php echo $NNEcho; ?>"></p>
 
 <p alt="Change the HRCloud2 color scheme." title="Change the HRCloud2 color scheme." style="padding-left:15px;"><strong>2.</strong> Color Scheme: </p>
   <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;">

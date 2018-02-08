@@ -114,6 +114,8 @@ if (isset($_POST['NEWShowTips'])) {
   $NEWShowTips = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWShowTips']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWTimezone'])) { 
   $NEWTimezone = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWTimezone']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWNickname'])) { 
+  $NEWNickname = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWNickname']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

@@ -117,7 +117,7 @@ foreach ($apps as $appName) {
 
   echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">');
   echo ('<div align="center">');
-  echo nl2br('<input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');"><p>');
+  echo nl2br('<br><input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');"><p>');
 
   // / The following code displays administrator specific buttons.
   if ($UserIDRAW == 1) {
