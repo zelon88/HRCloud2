@@ -80,3 +80,9 @@ $CloudLoc = '/mnt/22E65FA5E65F784D/Cloud';
   // / This timezone will be the default one used if a user has not specified there own.
 $defaultTimezone = 'America/New_York';
 // / ------------------------------ 
+
+// / ------------------------------ 
+// / Default Nickname
+  // / This Nickname will be the default one used if a user has not specified there own.
+$defaultTimezone = 'Commander';
+// / ------------------------------ 
