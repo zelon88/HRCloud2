@@ -98,6 +98,9 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -New features, bug fixes, and improvements several times weekly!!!
 -Working on "Teams" App so you can finally uninstall Slack!
+-Working on Calendar App!
+-Improving HRAI's text-to-speech engine!
+-Adding more settings!
 
 # Want more?
 
