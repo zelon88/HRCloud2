@@ -73,7 +73,6 @@ function getCPUInfo() {
 
 $GetCPUInfo = getCPUInfo();
 $GetNumOfCores = getNumOfCores();
-    echo nl2br('CPU Information:'."\r");
-    echo nl2br("Total Threads: $GetNumOfCores\r");
-    echo nl2br("$GetCPUInfo \r");
-    echo nl2br("--------------------------------\r"); }
+
+$output = 'CPU Information:'."\r"."Total Threads: $GetNumOfCores\r".$GetCPUInfo."\r";
+echo nl2br($output); }

@@ -27,8 +27,9 @@ if ($CMDinit[$CMDcounter] == 1) {
   // / Get the status of this server and write it to the sesLogfile.
   $txt = ('CoreAI: Server status is '.$serverStat.' on '.$date.'. ');
   $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 
-echo nl2br("Yes, Sir! \r");
-// / Check to see if our server is busy. Find other nodes on the local network to help if so.
+  $output = $output."Yes, Sir! \r";
+  echo nl2br($output);
+  // / Check to see if our server is busy. Find other nodes on the local network to help if so.
   $getServBusy = getServBusy();
   $serverIDCFH = hash('sha256', $serverID.$sesID.$day); 
   require($CallForHelp); }

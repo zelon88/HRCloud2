@@ -37,6 +37,5 @@ $up_hours = $hours[0]; // grab the hours
 $mins = $hours[1]; // get the mins
 $up_mins = str_replace(",", "", $mins); // strip the comma from the mins
 
-echo nl2br("This server has been up for " . $up_days . " days, " . $up_hours . " hours, and " . $up_mins . " minutes.\n");
-// echo the results  
-echo nl2br("--------------------------------\r"); } 
+$output = "This server has been up for " . $up_days . " days, " . $up_hours . " hours, and " . $up_mins . " minutes.\n";
+echo nl2br($output); } 

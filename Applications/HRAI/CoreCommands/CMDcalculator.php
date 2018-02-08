@@ -72,5 +72,3 @@ if ($calculatorInput !== '' && strlen($calculatorInput) > 1) {
     $calculatorInput = trim($calculatorInput, $bfunc); }
   eval('$total = ('.$calculatorInput.');');
   echo ('<p><strong>'.$counter.'.</strong> <i>'.$calculatorInput.'</i> = <u><strong>'.$total.'</strong></u></p>'); } } 
-
-?>

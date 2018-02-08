@@ -27,6 +27,5 @@ function getMemInfo() {
     $compCachefile = file_put_contents($infoCachefile, $txt.PHP_EOL , FILE_APPEND);
     return $txt; }
 $GetMemInfo = getMemInfo();
-    echo nl2br('Memory Information:'."\r");
-    echo nl2br("$GetMemInfo \r");
-    echo nl2br("--------------------------------\r"); }
+$output = $output.'Memory Information:'."\r".$GetMemInfo."\r";
+echo nl2br($output); }

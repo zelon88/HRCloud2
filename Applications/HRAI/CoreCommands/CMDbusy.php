@@ -20,8 +20,9 @@ $input = ltrim($input);
 if ($CMDinit[$CMDcounter] == 1) {
 
 // / --------------------------------------
-
 if (getServBusy() == 1 ) {
-echo nl2br('This server reports it is busy.'."\r"); }
+  $output = $output.'This server reports it is busy.'."\r";
+  echo nl2br($output); }
 if (getServBusy() == 0 ) {
-echo nl2br('This server reports it is idle.'."\r--------------------------------\r"); } }
+  $output = $output.'This server reports it is idle.';
+  echo nl2br($output); } }
