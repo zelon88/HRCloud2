@@ -13,21 +13,12 @@
 <div align="center"><h3>HRCloud2 Logs</h3></div>
 <?php
 // / -----------------------------------------------------------------------------------
-// / The following code verifies that the HRCloud2 configuration file exists.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
-  echo nl2br('</head>ERROR!!! HRC2LogsIndex19, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
+// / The follwoing code checks for required core files and terminates if they are missing.
+if (!file_exists('commonCore.php')) {
+  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require('/var/www/html/HRProprietary/HRCloud2/config.php'); }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code verifies that WordPress is installed.
-$WPFile = '/var/www/html/wp-load.php';
-if (!file_exists($WPFile)) {
-  echo nl2br('</head>ERROR!!! HRC2LogsIndex27, WordPress was not detected on the server.'."\n"); }
-  else {
-    require_once($WPFile); } 
+  require_once ('../../../commonCore.php'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
