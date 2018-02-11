@@ -26,6 +26,11 @@ function cleanOutput($output) {
   $cleanOutput = strip_tags(str_replace($newlineArr, ' ', $output));
   return $cleanOutput; }
 
+// / The following code cleans any inputs provided by the user.
+function cleanInput($input) {
+  $input = strtolower(htmlentities(str_replace(str_split(',.!?'), '', $input), ENT_QUOTES, 'UTF-8')); 
+  return $input; }
+
 // / The following code specifies if HRAI is required in an Iframer (Tells HRAI to shrink it's footprint).
 function displayMiniGui() {
   global $InstLoc;

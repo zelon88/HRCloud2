@@ -92,8 +92,7 @@ $getServBusy = getServBusy();
 
 // / The following code prunes the user's input before loading the CoreCommands to execute matches.
 $inputRAW = $input;
-$input = str_replace(str_split(',.!?'), '', $_POST['input']);
-$input = strtolower($input);
+$input = cleanInput($input);
 ?>
 
 <hr /></div>
