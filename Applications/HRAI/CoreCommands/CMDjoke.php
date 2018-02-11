@@ -6,7 +6,7 @@ $inputMATCH = array('tell me a joke', 'got any jokes', 'let me hear a joke', 'ca
 $responses = array('What does a user-interface and a joke have in common?'."\n".'If you have to explain them they\'re not good.', 
  'I do but none of them are funny',
  'Here\'s my favorite joke: 01010111 01101001 01101110 01100100 01101111 01110111 01110011 00100000 01011000 01010000',
- 'A programmers wife asked her husband to go to the store and get a gallon of milk. If they have milk he should get a dozen. He returned some time later with a twelve gallons of milk. His wife asked why he had so much milk The programmer replied, "They had eggs."',
+ 'A programmers wife asked her husband to go to the store and get a gallon of milk. If they have milk he should get a dozen. He returned some time later with twelve gallons of milk. When his wife asked why he had so much milk the programmer replied, "They had eggs."',
   'Half-Life 3 will be released within 12 months.',
   'The Browns are going to win the next super-bowl.',
   'I just wrote a song about tortillas. Actually, it\'s more of a rap.',
