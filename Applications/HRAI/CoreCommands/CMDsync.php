@@ -24,8 +24,9 @@ if ($CMDinit[$CMDcounter] == 1) {
 
 include($nodeCache); 
 $serverStat = getServStat();
-$output = $output."Yes, Sir! \r"."Sucessfully Reloaded nodeCache! \r".'This serverID & status: '.$serverStat."\r";
+$output = "Yes, Sir! \r"."Sucessfully Reloaded nodeCache! \r".'This serverID & status: '.$serverStat."\r";
 echo nl2br($output);
+
 // / Write the nodeCount to the sesLogfile.
 $txt = ('CoreAI: RELOADED nodeCache, nodeCount is '.$nodeCount.' on '.$date.'. ');
 $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); 

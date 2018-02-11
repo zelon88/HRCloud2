@@ -20,8 +20,6 @@ $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 $input = ltrim($input);
 if ($CMDinit[$CMDcounter] == 1) {
-
-// / --------------------------------------
-
-$output = $output.'It is currently '."\r".$date.". \r";
-echo nl2br($output); }
+  // / --------------------------------------
+  $output = $output.'It is currently '."\r".$date.". \r";
+  echo nl2br($output); }
