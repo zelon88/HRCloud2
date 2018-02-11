@@ -11,6 +11,7 @@ $CD = '';
 if (strpos($CurrentDir, 'Applications') ==  TRUE) $CD = '../../';
 if (strpos($_SERVER["SCRIPT_FILENAME"], 'HRAIMiniGui') == TRUE) $CD = '../';
 if (strpos($CurrentDir, '.AppData') == TRUE) $CD = '../../../';
+if (strpos($CurrentDir, '.AppData/') == TRUE) $CD = '../../../../';
 if (strpos($CurrentDir, 'Shared') == TRUE) $CD = '../../../../';
 // / -----------------------------------------------------------------------------------
 
