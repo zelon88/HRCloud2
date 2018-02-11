@@ -13,7 +13,7 @@ $responses = array('What does a user-interface and a joke have in common?'."\n".
   'I hate Russian dolls. They\'re always so full of themselves',
   'If humans shouldn\'t eat at night, why do refrigerators have light bulbs?',
   'So I got arrested the other night. The officer called for papers but I called scissors.',
-  'In the army when you lose your rifle they charge you $85. That\'s why in the navy the captain goes down with the ship',
+  'In the army when you lose your rifle they charge you $85. That\'s why in the navy the captain goes down with the ship.',
   'Confrence calls are great if you enjoy saying "Goodbye" 300 times.',
   'I got fired today. My boss asked why I\'ve been having so much car trouble lately and I told him, "I always try to put the key into the ignition three times but sometimes I just can\'t bring myself to do it."',
   'All my jokes are "yo mama" jokes, and I\'ve already received a warning from human resources.',
