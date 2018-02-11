@@ -14,11 +14,11 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists('commonCore.php')) {
+if (!file_exists('../../../../commonCore.php')) {
   echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('../../../commonCore.php'); }
+  require_once ('../../../../commonCore.php'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -43,20 +43,19 @@ else {
     require($UserConfig); } 
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------
-// / The following code loads the users color scheme.
+// / Color scheme handler.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
 if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
 if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
 if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
 if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
+  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -132,7 +131,7 @@ if (strpos($Current_URL, $UserID) == 'false') {
     $size=pretty_filesize($dirArray[$index]);
     $sizekey=filesize($dirArray[$index]); }
 
-    if (in_array($name, $defaultApps)) continue; 
+    if (in_array($name, $defaultApps) or strpos($name, '.css')) continue; 
       
   // Output
    echo("<tr class='$class'>
