@@ -13,14 +13,11 @@
 session_start();
 
 // / The following code loads core AI files. Write an entry to the log if successful.
-require_once('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreVar.php');
-require_once($wpfile);
-require_once($HRC2SecurityCoreFile);
+require_once('coreVar.php');
 require_once($HRC2CommonCoreFile);
 require_once($coreArrfile);
 require_once($coreFuncfile);
 require_once($onlineFile);
-require_once($InstLoc.'/config.php');
 ?>
 <div id="showConsoleButton" name="showConsoleButton" alt="Toggle Console" style="border:2px; border-style:outset; clear:right; float:right;" onclick="toggle_visibility('console'); toggle_border('showConsoleButton');">Console</div>
 <?php
@@ -28,7 +25,7 @@ if (!isset($_POST['input'])) { ?>
 <div id="HRAITop" align='center'><img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logoslowbreath.gif'/></div>
 <?php } 
 if (isset($_POST['input'])) {
-  $_POST['input'] = str_replace(str_split('[]{};:$#^&%@><'), '', $_POST['input']); ?>
+  $_POST['input'] = htmlentities(str_replace(str_split('[]{};:$#^&%@><'), '', $_POST['input']), ENT_QUOTES, 'UTF-8'); ?>
 <div id="HRAITop" style="float: left; margin-left: 15px;">
 <img id='logo' src='<?php echo $URL.'/HRProprietary/HRCloud2/Applications/HRAI/'; ?>Resources/logo.gif'/>
 </div>
@@ -109,13 +106,14 @@ foreach($CMDFilesDir1 as $CMDFile) {
   $CMDFile = ($InstLoc.'/Applications/HRAI/CoreCommands/'.$CMDFile);
   include_once($CMDFile); }
 $cleanOutput = cleanOutput($output);
-?>
 
-</div>
-<script type="text/javascript">
-meSpeak.speak('<?php echo $cleanOutput; ?>');
-meSpeak.loadConfig('Applications/meSpeak/mespeak_config.json');
-meSpeak.loadVoice('Applications/meSpeak/voices/en/en-us.json');
-</script>
+?></div><?php
+if ($HRAIAudio == '1') { ?>
+  <script type="text/javascript">
+  meSpeak.speak('<?php echo $cleanOutput; ?>');
+  meSpeak.loadConfig('Applications/meSpeak/mespeak_config.json');
+  meSpeak.loadVoice('Applications/meSpeak/voices/en/en-us.json');
+  </script>
+<?php } ?>
 </body>
 </html>
