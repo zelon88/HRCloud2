@@ -88,5 +88,5 @@ $defaultTimezone = 'America/New_York';
 // / ------------------------------ 
 // / Default Nickname
   // / This Nickname will be the default one used if a user has not specified there own.
-$defaultTimezone = 'Commander';
+$defaultNickname = 'Commander';
 // / ------------------------------ 
