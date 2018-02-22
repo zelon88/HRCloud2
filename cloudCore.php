@@ -23,7 +23,7 @@
 // / DEPENDENCY REQUIREMENTS ... 
 // / This application requires Debian Linux (w/3rd Party audio license), 
 // / Apache 2.4, PHP 7.0+, MySQL, JScript, WordPress, LibreOffice, Unoconv, 
-// / ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG, and ImageMagick.
+// / ClamAV, Tesseract, Rar, Unrar, Unzip, 7zipper, FFMPEG, PDF2TXT, and ImageMagick.
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ if(isset($upload)) {
       shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$F3.' | grep FOUND >> '.$ClamLogDir)));
       $ClamLogFileDATA = @file_get_contents($ClamLogDir);
       if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
-        $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+        $txt = ('Warning!!! HRConvert2338, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
@@ -190,7 +190,7 @@ if (isset($_POST['copy'])) {
           shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$copySrc.' | grep FOUND >> '.$ClamLogDir)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
           if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
-            $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+            $txt = ('Warning!!! HRConvert2338, There were potentially infected files detected. The file
               transfer could not be completed at this time. Please check your file for viruses or
               try again later.'."\n");
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
@@ -238,7 +238,7 @@ if (isset($_POST['rename'])) {
           shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$renSrc.' | grep FOUND >> '.$ClamLogDir)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
           if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
-            $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+            $txt = ('Warning!!! HRConvert2338, There were potentially infected files detected. The file
               transfer could not be completed at this time. Please check your file for viruses or
               try again later.'."\n");
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
@@ -373,7 +373,7 @@ if (!is_dir($filename)) {
       shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$archSrc.' | grep FOUND >> '.$ClamLogDir)));
       $ClamLogFileDATA = file_get_contents($ClamLogDir);
       if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
-        $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+        $txt = ('Warning!!! HRConvert2338, There were potentially infected files detected. The file
           transfer could not be completed at this time. Please check your file for viruses or
           try again later.'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
@@ -523,7 +523,7 @@ if (isset($_POST["dearchiveButton"])) {
               shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$dearchTempPath.' | grep FOUND >> '.$ClamLogDir)));
               $ClamLogFileDATA = file_get_contents($ClamLogDir);
               if (strpos($ClamLogFileDATA, 'Virus Detected') == 'true' or strpos($ClamLogFileDATA, 'FOUND') == 'true') {
-                $txt = ('WARNING HRC2338, There were potentially infected files detected. The file
+                $txt = ('Warning!!! HRConvert2338, There were potentially infected files detected. The file
                   transfer could not be completed at this time. Please check your file for viruses or
                   try again later.'."\n");
                 $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);          
