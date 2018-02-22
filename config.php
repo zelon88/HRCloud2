@@ -18,7 +18,11 @@ $Accept_GPLv3_OpenSource_License = '1';
 // / ------------------------------
 
 // / ------------------------------
-// / General Information ... 
+// / General Information ...   
+  // / This timezone will be the default one used if a user has not specified there own.
+$defaultTimezone = 'America/New_York';
+  // / The Nickname will be the default one used if a user has not specified there own.
+$defaultNickname = 'Commander';
   // / Leave '1' for default and to allow individual users to modify their own color-schemes.
 $ColorScheme = '1';
   // / To show HRAI in your Cloud homepage, set $ShowHRAI to '1'. To hide HRAI in your Cloud
@@ -45,17 +49,17 @@ $ShowTips = '1';
 $Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
   // / Externally or internally accesible domain or IP.
 $URL = 'https://www.YOUR_URL_HERE.net';
-  // / Scan for viruses during directory scan. Use 1 for default. 
+  // / Scan for viruses during directory scan. Use '1' for default. 
    // / (ClamAV MUST be installed on the localhost!!!).
 $VirusScan = '0';
   // / Use multi-threaded virus scanning. Virus scanning is extremely resource intensive. 
     // / If you are running an older machine (Rpi, CoreDuo, or any single-core CPU) leave 
-    // / this setting disabled ('0').
+    // / this setting disabled '0'.
 $HighPerformanceAV = '0';
   // / Thorough A/V scanning requires stricter permissions, and may require additional 
     // / ClamAV user, usergroup, and permissions configuration.
-    // / Disable ('0') if you experience errors.
-    // / Enable ('0') if you experience false-negatives.
+    // / Disable '0' if you experience errors.
+    // / Enable '0' if you experience false-negatives.
 $ThoroughAV = '0';
   // / Persistent A/V scanning will try to achieve the highest level of scanning that is
     // / possible with available permissions. 
@@ -79,14 +83,3 @@ $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
 $CloudLoc = '/mnt/22E65FA5E65F784D/Cloud';
 // / ------------------------------ 
 
-// / ------------------------------ 
-// / Default Timezone
-  // / This timezone will be the default one used if a user has not specified there own.
-$defaultTimezone = 'America/New_York';
-// / ------------------------------ 
-
-// / ------------------------------ 
-// / Default Nickname
-  // / This Nickname will be the default one used if a user has not specified there own.
-$defaultNickname = 'Commander';
-// / ------------------------------ 
