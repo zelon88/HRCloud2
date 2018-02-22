@@ -21,7 +21,7 @@ $Accept_GPLv3_OpenSource_License = '1';
 // / General Information ...   
   // / This timezone will be the default one used if a user has not specified there own.
 $defaultTimezone = 'America/New_York';
-  // / The Nickname will be the default one used if a user has not specified there own.
+  // / This Nickname will be the default one used if a user has not specified there own.
 $defaultNickname = 'Commander';
   // / Leave '1' for default and to allow individual users to modify their own color-schemes.
 $ColorScheme = '1';
