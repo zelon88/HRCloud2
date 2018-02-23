@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico">
 <title>HRCloud2 | Settings</title>
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/query-3.1.0.min.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
 <?php
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
