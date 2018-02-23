@@ -2,9 +2,9 @@
 <html>
 <head>
    <meta charset="UTF-8">
-   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
+   <link rel="shortcut icon" href="favicon.ico">
    <title>HRCLoud2 | App Launcher</title>
-<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
 function toggle_visibility(id) {
     var e = document.getElementById(id);
@@ -19,35 +19,35 @@ function goBack() {
 <?php
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppIndex20, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('sanitizeCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppIndex28, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('commonCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
 
 // / The follwoing code checks if the appCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('appCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppIndex34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('appCore.php'); } 
+  require_once (realpath(dirname(__FILE__)).'/appCore.php'); } 
 
 // / The follwoing code checks if the securityCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('securityCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AppIndex47, Cannot process the HRCloud2 Security file (securityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('securityCore.php'); } ?>
+  require_once (realpath(dirname(__FILE__)).'/securityCore.php'); } ?>
 
 </head>
 <body>

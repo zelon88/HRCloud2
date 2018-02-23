@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v2.3.4.5
-WRITTEN ON : 2/21/2018
+THIS VERSION : v2.3.5
+WRITTEN ON : 2/22/2018
 */
 
 // / -----------------------------------------------------------------------------------
@@ -19,16 +19,16 @@ echo ('<div style="margin-left:15px;">');
 
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists($InstLoc.'/commonCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2CompatCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ($InstLoc.'/commonCore.php'); }
-if (!file_exists($InstLoc.'/sanitizeCore.php')) {
+  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('ERROR!!! HRC2CompatCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
   die (); }
 else {
-  require_once ($InstLoc.'/sanitizeCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

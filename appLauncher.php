@@ -9,21 +9,21 @@
 <?php 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
   
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
 
-include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
+include(realpath(dirname(__FILE__)).'/header.php'); ?>
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">
 <?php if ($ShowHRAI == '1') { ?>
 <div id="HRAIDiv" style="float: center; ">

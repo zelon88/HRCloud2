@@ -2,9 +2,9 @@
 <html>
 <head>
    <meta charset="UTF-8">
-   <link rel="shortcut icon" href="Applications/displaydirectorycontents_72716/favicon.ico">
+   <link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico">
    <title>HRCLoud2 | Application Settings</title>
-<script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
 function goBack() {
     window.history.back(); }
@@ -12,19 +12,19 @@ function goBack() {
 <?php
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2Helper33, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
+  require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2Helper35, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require('commonCore.php'); }
+  require(realpath(dirname(__FILE__)).'/commonCore.php'); }
  ?>
 </head>
 <body>

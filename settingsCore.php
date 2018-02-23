@@ -7,26 +7,26 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for the required core filesand terminates if they are missing.
-if (!file_exists('sanitizeCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('sanitizeCore.php'); }
-if (!file_exists('commonCore.php')) {
+  require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore103, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('commonCore.php'); }
-if (!file_exists('securityCore.php')) {
+  require(realpath(dirname(__FILE__)).'/commonCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (securityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('securityCore.php'); }
-if (!file_exists('compatibilityCore.php')) {
+  require(realpath(dirname(__FILE__)).'/securityCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/compatibilityCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require('compatibilityCore.php'); }
+  require(realpath(dirname(__FILE__)).'/compatibilityCore.php'); }
 // / -----------------------------------------------------------------------------------
 
 ?>

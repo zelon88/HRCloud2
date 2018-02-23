@@ -2,27 +2,27 @@
 
 // / The follwoing code checks if the config.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/config.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/config.php')) {
   echo nl2br('ERROR!!! HRC2SecCore3, Cannot process the HRCloud2 Config file (config.php).'."\n"); 
   die (); }
 else {
-  require ('/var/www/html/HRProprietary/HRCloud2/config.php'); }
+  require (realpath(dirname(__FILE__)).'/config.php'); }
 
 // / The follwoing code checks if the CommonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('ERROR!!! HRC2SecCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('ERROR!!! HRC2SecCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+  require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
 
 // / The following code sets the variables for the session.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
