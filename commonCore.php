@@ -45,7 +45,7 @@ if (isset ($ExternalIP)) {
 $WPFile = $ServerRootDir.'/wp-load.php';
 if (!file_exists($WPFile)) {
   $WPArch  = $InstLoc.'/Applications/wordpress.zip';
-  echo nl2br('</head>Notice!!! HRC2CommonCore27, WordPress was not detected on the server. 
+  echo nl2br('Notice!!! HRC2CommonCore27, WordPress was not detected on the server. 
     Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'."\n");
   echo nl2br('OP-Act: Installing WordPress.'."\n");
   shell_exec('unzip '.$WPArch.' -d '.$ServerRootDir); 
@@ -56,7 +56,7 @@ if (!file_exists($WPFile)) {
   die(); }
 if (!file_exists($WPFile)) {
   echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server. 
-   And could not be installed.</body></html>'."\n"); }
+   And could not be installed.'."\n"); }
 else {
   require_once ($WPFile); } 
 // / -----------------------------------------------------------------------------------
@@ -492,14 +492,9 @@ if ($Udir == '//') {
 
 // / -----------------------------------------------------------------------------------
 // / The following code will clean up old files.
-// / --- Code by theo546 ---
-  // / Here is the fix for symlink date. --theo546 (source: http://stackoverflow.com/questions/34512105/php-check-how-old-a-symlink-file-is)
-  function symlinkmtime($symlinkPath)
-  {
-      $stat = lstat($symlinkPath);
-      return isset($stat['mtime']) ? $stat['mtime'] : null;
-    }
-// / ---
+function symlinkmtime($symlinkPath) {
+  $stat = lstat($symlinkPath);
+  return isset($stat['mtime']) ? $stat['mtime'] : null; }
 if (file_exists($CloudTempDir)) {
   $DFiles = glob($CloudTempDir.'/*');
   $now = time();
@@ -519,10 +514,16 @@ if (file_exists($CloudTempDir)) {
         include($JanitorFile); 
         @unlink($DFile.'/index.html');
         @rmdir($DFile); } } } }
-// / Copy a fresh index file to the Temp Cloud directory.        
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------        
+// / The following code copies a fresh index file to the Temp Cloud directory.
 if (!file_exists($CloudTempDir.'/index.html')) {
   copy('index.html', $CloudTempDir.'/index.html'); }
-// / Display appropriate filesizes.
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code displays appropriate filesizes.
 $bytes = sprintf('%u', filesize($DisplayFile));
 if ($bytes > 0) {
   $unit = intval(log($bytes, 1024));

@@ -640,8 +640,6 @@ if (isset($_POST['convertSelected'])) {
     $arrayraro = array('rar',);
     $abwstd = array('doc', 'abw');
     $abwuno = array('docx', 'pdf', 'txt', 'rtf', 'odf', 'dat', 'cfg');
-    $stub = ('http://localhost/HRProprietary/HRClou2/DATA/');
-    $newFileURL = $stub.$UserID.$UserDirPOST.$newFile;
     // / Code to increment the conversion in the event that an output file already exists.    
     while(file_exists($newPathname)) {
       $convertcount++;
@@ -820,12 +818,12 @@ if (isset($_POST['convertSelected'])) {
   // / Free un-needed memory.
   $_POST['convertSelected'] = $txt = $key = $file = $allowed = $file1 = $file2 = $convertcount = $extension = $pathname = $oldPathname = $filename = $oldExtension
    = $newFile = $newPathname = $docarray = $imgarray = $audioarray = $videoarray = $modelarray = $drawingarray = $pdfarray = $abwarray = $archarray = $array7z = $array7zo
-   = $arrayzipo = $arraytaro = $arrayraro = $abwstd = $abwuno = $stub = $newFileURL = $_POST['userconvertfilename'] = $returnDATA = $returnDATALINE = $stopper = $height 
+   = $arrayzipo = $arraytaro = $arrayraro = $abwstd = $abwuno = $_POST['userconvertfilename'] = $returnDATA = $returnDATALINE = $stopper = $height 
    = $width = $_POST['height'] = $_POST['width'] = $rotate = $_POST['rotate'] = $wxh = $bitrate = $_POST['bitrate'] = $safedir1 = $safedirTEMP = $safedirTEMP2 = $safedirTEMP3
    = $safedir2 = $safedir3 = $safedir4 = $delFiles = $delFile = $MAKELogFile = null;
   unset ($_POST['convertSelected'], $txt, $key, $file, $allowed, $file1, $file2, $convertcount, $extension, $pathname, $oldPathname, $filename, $oldExtension, 
    $newFile, $newPathname, $docarray, $imgarray, $audioarray, $videoarray, $modelarray, $drawingarray, $pdfarray, $abwarray, $archarray, $array7z, $array7zo,
-   $arrayzipo, $arraytaro, $arrayraro, $abwstd, $abwuno, $stub, $newFileURL, $_POST['userconvertfilename'], $returnDATA, $returnDATALINE, $stopper, $height, 
+   $arrayzipo, $arraytaro, $arrayraro, $abwstd, $abwuno, $_POST['userconvertfilename'], $returnDATA, $returnDATALINE, $stopper, $height, 
    $width, $_POST['height'], $_POST['width'], $rotate, $_POST['rotate'], $wxh, $bitrate, $_POST['bitrate'], $safedir1, $safedirTEMP, $safedirTEMP2, $safedirTEMP3,
    $safedir2, $safedir3, $safedir4, $delFiles, $delFile, $MAKELogFile ); }
 // / -----------------------------------------------------------------------------------
@@ -871,8 +869,6 @@ if (isset($_POST['pdfworkSelected'])) {
     $doc1array =  array('txt', 'pages', 'doc', 'xls', 'xlsx', 'docx', 'rtf', 'odf', 'ods', 'odt');
     $img1array = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     $pdf1array = array('pdf');
-    $stub = ($URL.'/HRProprietary/HRCloud2/DATA/');
-    $newFileURL = $stub.$UserID.$UserDirPOST.$newFile;
       if (in_array($oldExtension, $allowedPDFw)) {
         while(file_exists($newPathname)) {
           $pdfworkcount++; 
@@ -984,11 +980,11 @@ if (isset($_POST['pdfworkSelected'])) {
            die(); } } 
   // / Free un-needed memory.
   $_POST['pdfworkSelected'] = $txt = $MAKELogFile = $pdfworkcount = $key = $file = $allowedPDFw = $file1 = $file2 = $_POST['pdfextension'] = $extension = $pathname 
-   = $oldPathname = $filename = $oldExtension = $newFile = $newPathname = $doc1array = $img1array = $pdf1array = $stub = $newFileURL = $pathnameTEMP = $_POST['method']
+   = $oldPathname = $filename = $oldExtension = $newFile = $newPathname = $doc1array = $img1array = $pdf1array = $pathnameTEMP = $_POST['method']
    = $_POST['method1'] = $pathnameTEMP1 = $PagedFilesArrRAW = $PagedFile = $CleanFilname = $CleanPathnamePages = $PageNumber = $READPAGEDATA = $WRITEDOCUMENT = $multiple
    = $pathnameTEMP0 = $pathnameTEMPTesseract = $pathnameTEMP0 = $imgmethod = $pathnameTEMP3 = null;
   unset ($_POST['pdfworkSelected'], $txt, $MAKELogFile, $pdfworkcount, $key, $file, $allowedPDFw, $file1, $file2, $_POST['pdfextension'], $extension, $pathname,
-   $oldPathname , $filename, $oldExtension, $newFile, $newPathname, $doc1array, $img1array, $pdf1array, $stub, $newFileURL, $pathnameTEMP, $_POST['method'],
+   $oldPathname , $filename, $oldExtension, $newFile, $newPathname, $doc1array, $img1array, $pdf1array, $pathnameTEMP, $_POST['method'],
    $_POST['method1'], $pathnameTEMP1, $PagedFilesArrRAW, $PagedFile, $CleanFilname, $CleanPathnamePages, $PageNumber, $READPAGEDATA, $WRITEDOCUMENT, $multiple,
    $pathnameTEMP0, $pathnameTEMPTesseract, $pathnameTEMP0, $imgmethod, $pathnameTEMP3); }
 // / -----------------------------------------------------------------------------------
