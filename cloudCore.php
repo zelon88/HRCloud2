@@ -101,7 +101,7 @@ if(isset($upload)) {
       die(); }
     $COPY_TEMP = copy($_FILES['filesToUpload']['tmp_name'][$key], $F3);
     $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
-    echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'."\n".'--------------------'."\n");
+    echo nl2br ($txt.'.'."\n".'--------------------'."\n");
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     chmod($F3, 0755); 
     // / The following code checks the Cloud Location with ClamAV after copying, just in case.
@@ -139,7 +139,7 @@ if (isset($download)) {
     if($file == "") {
       $txt = ("ERROR!!! HRC2187, No file specified on $Time".'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      echo nl2br("ERROR!!! HRC2187, No file specified"."\n");
+      echo nl2br($txt.'.'."\n".'--------------------'."\n");
       die(); }
     if (file_exists($F3)) { 
       @touch($F3); }
