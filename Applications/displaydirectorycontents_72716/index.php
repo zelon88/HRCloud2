@@ -1,4 +1,6 @@
-
+<!doctype html>
+<html>
+<head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="Resources/HRC2-Lib.js"></script>
@@ -68,7 +70,8 @@ else {
   $atext="Show"; }
 ?>
 </head>
-<body>
+
+<body style="font-family:<?php echo $Font; ?>;">
 <div id="container">
 <div align='center'><h3>
 <?php
