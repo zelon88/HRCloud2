@@ -29,7 +29,7 @@
 // / -----------------------------------------------------------------------------------
 // / The following code will check for and initialize required HRCloud2 Core files.
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".''); 
   die (); }
 else {
   require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
@@ -70,7 +70,7 @@ if (isset($MAKEUserDir)) {
   // / If no CloudTempDir exists, silently create one.  
   if (!file_exists($CloudTempDir.'/'.$MAKEUserDir)) {    
       // / Log the attempt.
-      $txt = ('ERROR!!! HRC265, Could not create '.$CloudTempDir.'/'.$MAKEUserDir.' on '.$Time.'.');
+      $txt = ('ERROR!!! HRC273, Could not create '.$CloudTempDir.'/'.$MAKEUserDir.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 // / -----------------------------------------------------------------------------------
 
