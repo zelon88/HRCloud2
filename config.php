@@ -9,6 +9,7 @@
 // SERIOUS FILESYSTEM DAMAGE COULD RESULT FROM INCORRECT DATABASE OR DIRECTORY INFO !!!
 // / ------------------------------
 
+
 // / ------------------------------
 // / License Information ...
   // / To continue, please accept the included GPLv3 license by changing the following 
@@ -18,22 +19,24 @@ $Accept_GPLv3_OpenSource_License = '1';
 // / ------------------------------
 
 // / ------------------------------
-// / General Information ...   
+// / General Information ... 
   // / This timezone will be the default one used if a user has not specified there own.
 $defaultTimezone = 'America/New_York';
   // / This Nickname will be the default one used if a user has not specified there own.
 $defaultNickname = 'Commander';
+  // / The font type to use for displaying text within GUI elements.
+$defaultFont = 'Helvetica';
   // / Leave '1' for default and to allow individual users to modify their own color-schemes.
-$ColorScheme = '1';
+$defaultColorScheme = '1';
   // / To show HRAI in your Cloud homepage, set $ShowHRAI to '1'. To hide HRAI in your Cloud
   // / Default is '1'.
-$ShowHRAI = '1';
+$defaultShowHRAI = '1';
   // / To have HRAI read most outputs out loud using client speakers and audio device, set to '1'.
   // / Default is '1'.
-$HRAIAudio = '1';
+$defaultHRAIAudio = '1';
   // / To hide tooltips at the top of each page, set $ShowTips to '0'.
   // / Default is '1'.
-$ShowTips = '1';
+$defaultShowTips = '1';
 // / ------------------------------
 
 // / ------------------------------  
@@ -45,22 +48,21 @@ $ShowTips = '1';
     // / Change these to something completely random and keep it a secret. Store your $Salts
     // / in hardcopy form or an encrypted drive in case of emergency.
     // / IF YOU LOSE YOUR SALTS YOU WILL BE UNABLE TO DECODE USER ID'S AFTER AN EMEREGENCY.
-  // / Unique Salts.
 $Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
   // / Externally or internally accesible domain or IP.
 $URL = 'https://www.YOUR_URL_HERE.net';
   // / Scan for viruses during directory scan. Use '1' for default. 
-   // / (ClamAV MUST be installed on the localhost!!!).
+    // / (ClamAV MUST be installed on the localhost!!!).
 $VirusScan = '0';
   // / Use multi-threaded virus scanning. Virus scanning is extremely resource intensive. 
     // / If you are running an older machine (Rpi, CoreDuo, or any single-core CPU) leave 
     // / this setting disabled '0'.
-$HighPerformanceAV = '0';
+$HighPerformanceAV = '1';
   // / Thorough A/V scanning requires stricter permissions, and may require additional 
     // / ClamAV user, usergroup, and permissions configuration.
     // / Disable '0' if you experience errors.
     // / Enable '0' if you experience false-negatives.
-$ThoroughAV = '0';
+$ThoroughAV = '1';
   // / Persistent A/V scanning will try to achieve the highest level of scanning that is
     // / possible with available permissions. 
     // / When enabled; If errors are encountered ANY AND EVERY attempt to recover from the 
@@ -71,15 +73,27 @@ $PersistentAV = '1';
 // / ------------------------------
 
 // / ------------------------------ 
-// / Directory locations ...
+// / Directory Locations ...
 // / The ServerRootDir should be pointed at the root of your web server directory.
   // / (NO SLASH AFTER DIRECTORY!!!) ...  
 $ServerRootDir = '/var/www/html';
   // / Use format '/home/YOUR_USERNAME/Desktop/TestDir'. (NO SLASH AFTER DIRECTORY!!!) ...  
-  // / YOU MUST INSTALL HRCLOUD2 TO THE FOLLOWING DIRECTORY!!!
-  // / DO NOT CHANGE THE DEFAULT INSTALL DIRECTORY!!! 
+  // / NOT OPTIMIZED FOR ALTERNATE INSTALL LOCATIONS!!! (NO SLASH AFTER DIRECTORY!!!) ...
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
   // / The CloudLoc is where permanent Cloud files are stored. (NO SLASH AFTER DIRECTORY!!!) ...  
-$CloudLoc = '/mnt/22E65FA5E65F784D/Cloud';
+$CloudLoc = '/mnt/23E43FN6A95F784A/Cloud';
 // / ------------------------------ 
 
+// / ------------------------------ 
+// / Filesystem Permission Settings ...
+  // / Set the user for the Apache server to use when it writes to the filesystem.
+  // / Default is 'www-data'.
+$ApacheUser = 'www-data';
+  // / Set the user group for the Apache server to use when it writes to the filesystem.
+  // / Default is 'www-data'.
+$ApacheGroup = 'www-data';
+  // / Select the permission level of the $CloudLoc.
+$CLPerms = '0755';
+  // / Select the permission level of the $InstLoc.
+$ILPerms = '0755';
+// / ------------------------------ 
