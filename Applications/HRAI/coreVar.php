@@ -1,6 +1,6 @@
 <?php
 include_once('/var/www/html/HRProprietary/HRCloud2/config.php'); 
-$HRAI_VERSION = 'v5.5';
+$HRAI_VERSION = 'v5.6';
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
 $CallForHelp = $InstLoc.'/Applications/HRAI/CallForHelp.php';

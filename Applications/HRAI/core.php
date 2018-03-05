@@ -7,8 +7,6 @@
 <script type="text/javascript" src="Applications/meSpeak/mespeak.js"></script>
 </head>
 
-<body>
-  <div name="top"></div>
 <?php 
 session_start();
 
@@ -19,6 +17,9 @@ require_once($coreArrfile);
 require_once($coreFuncfile);
 require_once($onlineFile);
 ?>
+
+<body style="font-family:<?php echo $Font; ?>;">
+  <div name="top"></div>
 <div id="showConsoleButton" name="showConsoleButton" alt="Toggle Console" style="border:2px; border-style:outset; clear:right; float:right;" onclick="toggle_visibility('console'); toggle_border('showConsoleButton');">Console</div>
 <?php
 if (!isset($_POST['input'])) { ?>
