@@ -1,16 +1,43 @@
 <!doctype html>
 <html>
 <head>
+   <meta charset="UTF-8">
+   <link rel="shortcut icon" href="./.favicon.ico">
+   <title>HRCLoud2 | Log Viewer</title>
+   <link rel="stylesheet" href="./.style.css">
+   <script src="./.sorttable.js"></script>
+</head>
 <?php
-// / The follwoing code checks if the commonCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2SharedIndex8, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+// / -----------------------------------------------------------------------------------
+// / The follwoing code checks for required core files and terminates if they are missing.
+if (!file_exists('../../../../commonCore.php')) {
+  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once ('../../../../commonCore.php'); }
+// / -----------------------------------------------------------------------------------
+  
+// / -----------------------------------------------------------------------------------
+// / The following code sets the variables for the session.
+$Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$UserIDRAW = get_current_user_id();
+$UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
+$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
+$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
+$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
+// / -----------------------------------------------------------------------------------
 
-$fileCounter = 0;
+// / -----------------------------------------------------------------------------------
+// / The following code loads the users config.php file.
+if (!file_exists($UserConfig)) {
+  @chmod($UserConfig, 0755); }
+if (!file_exists($UserConfig)) {
+  echo nl2br('</head>ERROR!!! HRC2LogsIndex49, User Cache file was not detected on the server!'."\n"); 
+  die (); }
+else {
+    require($UserConfig); } 
+// / -----------------------------------------------------------------------------------
 
 // / Color scheme handler.
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
@@ -25,26 +52,21 @@ if ($ColorScheme == '4') {
   echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
 if ($ColorScheme == '5') {
   echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code will verify the user ID and the directory being accessed before continuing.
+if (strpos($Current_URL, $UserID) == 'false') {
+  $txt = ('ERROR!!! HRC2LogsIndex74, Could not verify the user '.$UserID.' on '.$Time.'!');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die($txt); }
+// / ------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code generates most of the HTML boody for the session.
 ?>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="./.favicon.ico">
-   <title>HRCLoud2 | Shared Files Viewer</title>
-   <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-   <script src="./.sorttable.js"></script>
-<script type="text/javascript">
-function goBack() {
-  window.history.back(); }
-function refresh() {
-  window.location.reload(); }
-function toggle_visibility(id) {
-    var e = document.getElementById(id);
-    if(e.style.display == 'block')
-      e.style.display = 'none';
-    else
-      e.style.display = 'block'; }
-</script>
-</head>
-<body>
+
+<body style="font-family:<?php echo $Font; ?>;">
 <div align="center" id="container">
 <div align="center"><h3>Shared Files</h3></div>
 <div align="center" style="margin-bottom:10px;">
