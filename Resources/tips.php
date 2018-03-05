@@ -18,4 +18,8 @@ $Tips = array(
 'Stick with Open-Source software, apps, and plugins and stick it to the man with us!',
 'Zelon88 created HRCloud2. If you get stuck <a href="mailto:zelon88@gmail.com?Subject=HRC2%20Help" target="_top">send him an email</a>!',
 'The Calculator App can handle mathematic or plain speech commands like "What is 2 plus 2 times 2" or "2+2(2-2x22)-2" with better precision than Google. If the answer is too long it returns scientific notation.',
-'To see what HRAI\'s thinking, click the "Console" button in the top right corner of your HRAI window.');
+'To see what HRAI\'s thinking, click the "Console" button in the top right corner of your HRAI window.',
+'You can change your Nickname, Timezone, Theme and Font settings by clicking the ≡ button.',
+'HRAI can talk! You can change HRAI\'s audio settings on the settings page by clicking on the ≡ button.',
+'You can create a playlist of your favorite music files by clicking on the <img src="Resources/stream.png"></img> button!',
+'Have an idea for an app? It\'s easier than you think to make your own HRC2 Apps. For more information on HRC2 Apps check out <a href="https://github.com/zelon88/HRCloud2/wiki/About-HRCloud2-Apps">the official HRCloud2 Wiki</a>.');
