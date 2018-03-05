@@ -274,7 +274,7 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
     if (is_dir($GenClientDir)) {
       if ($GenClientOS == 'windows') {
         $GenClientOS1 = 'win32'; 
-        copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/HRCloud2-Client-win32-'.$GenClientCPU.'/setup.bat'); }
+        @copy($ClientInstallDirWin.'/setup.bat', $GenClientDir.'/HRCloud2-Client-win32-'.$GenClientCPU.'/setup.bat'); }
       if ($GenClientOS == 'linux') {
         $GenClientOS1 = 'linux'; 
         $GenClientPre = 'hr-cloud-2-client-'; }
@@ -285,10 +285,12 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
       exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU);
       if (!file_exists($GenClientZip)) {
         $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'.';
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        die($txt); }
     if (!is_dir($GenClientDir)) {
       $txt = 'ERROR!!! HRC2SettingsCore201, Could not create the Client App build folder on '.$Time.'.';
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      die($txt); } }
   if (!in_array($GenClientOS, $SupportedClientOS) or !in_array($GenClientCPU, $SupportedClientCPU)) {
     $txt = 'ERROR!!! HRC2SettingsCore189, Invalid Client App Settings specified on '.$Time.'.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
