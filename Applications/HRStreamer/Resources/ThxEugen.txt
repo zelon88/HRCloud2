@@ -1,8 +1,0 @@
-This application uses an awesome icon created by Eugen Buzuk from www.icondrawer.com.
-
-
-www.icondrawer.com
-('/HRProprietary/HRCloud2/Applications/HRStreamer/Resources/RandomImageFile.png')
-
-
-Thank you, Eugen!!!
