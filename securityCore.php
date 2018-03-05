@@ -27,7 +27,6 @@ else {
 // / The following code sets the variables for the session.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
 $UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
-$user = 'www-data';
 $LogFile0 = $SesLogDir.'/VirusLog_'.$Date.'.txt';
 $LogFile1 = $SesLogDir.'/VirusLog1_'.$Date.'.txt';
 $LogFile2 = $SesLogDir.'/VirusLog2_'.$Date.'.txt';
@@ -35,50 +34,50 @@ $LogFileInc0 = 0;
 $LogFileInc1 = 0;
 $LogFileInc2 = 0;
 
-// / The following code changes the permission of certain directories to 0755,
-@chmod($CloudLoc, 0755);
-@chmod('/var/www', 0755);
-@chmod('/var/www/html', 0755);
-@chmod('/var/www/html/HRProprietary', 0755);
-@chmod($InstLoc, 0755);
-@chmod($InstLoc.'/Applications', 0755);
-@chmod($InstLoc.'/Resources', 0755);
-@chmod($InstLoc.'/DATA', 0755);
-@chmod($InstLoc.'/Screenshots', 0755);
-@chmod($InstLoc.'/Styles', 0755);
-@chmod($UserConfig, 0755);
-@system("/bin/chmod -R 0755 $CloudLoc");
-@system("/bin/chmod -R 0755 $InstLoc");
+// / Set default permissions if none exist in config.php.
+if (!isset($CLPerms) or strlen($CLPerms) > 4 or strlen($CLPerms < 3)) $CLPerms = '0755'; 
+if (!isset($CLPerms) or strlen($IL_Perms) > 4 or strlen($IL_Perms < 3)) $IL_Perms = '0755'; 
+if (!isset($ApacheUser)) $ApacheGroup = 'www-data';
+if (!isset($ApacheUser)) $ApacheUser = 'www-data';
+
+// / The following code changes the permission of certain directories to whatever is specified in config.php,
+@chmod($CloudLoc, $CLPerms);
+@chmod($UserConfig, $CLPerms);
+@chmod($InstLoc, $IL_Perms);
+@chmod($InstLoc.'/Applications', $IL_Perms);
+@chmod($InstLoc.'/Resources', $IL_Perms);
+@chmod($InstLoc.'/DATA', $IL_Perms);
+@chmod($InstLoc.'/Screenshots', $IL_Perms);
+@chmod($InstLoc.'/Styles', $IL_Perms);
+@system("/bin/chmod -R $CLPerms $CloudLoc");
+@system("/bin/chmod -R $IL_Perms $InstLoc");
 
 // / The following code changes the group of certain directories to the www-data group,
-@chgrp($CloudLoc, $user);
-@chgrp('/var/www', $user);
-@chgrp('/var/www/html', $user);
-@chgrp('/var/www/html/HRProprietary', $user);
-@chgrp($InstLoc, $user);
-@chgrp($InstLoc.'/Applications', $user);
-@chgrp($InstLoc.'/Resources', $user);
-@chgrp($InstLoc.'/DATA', $user);
-@chgrp($InstLoc.'/Screenshots', $user);
-@chgrp($InstLoc.'/Styles', $user);
-@chgrp($UserConfig, $user);
-@system("/bin/chgrp -R $user $CloudLoc");
-@system("/bin/chgrp -R $user $InstLoc");
+@chgrp($CloudLoc, $ApacheGroup);
+@chgrp($UserConfig, $ApacheGroup);
+@chgrp($InstLoc, $ApacheGroup);
+@chgrp($InstLoc.'/Applications', $ApacheGroup);
+@chgrp($InstLoc.'/Resources', $ApacheGroup);
+@chgrp($InstLoc.'/DATA', $ApacheGroup);
+@chgrp($InstLoc.'/Screenshots', $ApacheGroup);
+@chgrp($InstLoc.'/Styles', $ApacheGroup);
+@system("/bin/chgrp -R $ApacheGroup $CloudLoc");
+@system("/bin/chgrp -R $ApacheGroup $InstLoc");
 
 // / The following code changes the ownership of certain directories to the www-data user,
-@chown($CloudLoc, $user);
-@chown('/var/www', $user);
-@chown('/var/www/html', $user);
-@chown('/var/www/html/HRProprietary', $user);
-@chown($InstLoc, $user);
-@chown($InstLoc.'/Applications', $user);
-@chown($InstLoc.'/Resources', $user);
-@chown($InstLoc.'/DATA', $user);
-@chown($InstLoc.'/Screenshots', $user);
-@chown($InstLoc.'/Styles', $user);
-@chown($UserConfig, $user);
-@system("/bin/chown -R $user $CloudLoc");
-@system("/bin/chown -R $user $InstLoc");
+@chown($CloudLoc, $ApacheUser);
+@chown('/var/www', $ApacheUser);
+@chown('/var/www/html', $ApacheUser);
+@chown('/var/www/html/HRProprietary', $ApacheUser);
+@chown($InstLoc, $ApacheUser);
+@chown($InstLoc.'/Applications', $ApacheUser);
+@chown($InstLoc.'/Resources', $ApacheUser);
+@chown($InstLoc.'/DATA', $ApacheUser);
+@chown($InstLoc.'/Screenshots', $ApacheUser);
+@chown($InstLoc.'/Styles', $ApacheUser);
+@chown($UserConfig, $ApacheUser);
+@system("/bin/chown -R $ApacheUser $CloudLoc");
+@system("/bin/chown -R $ApacheUser $InstLoc");
 
 // / The following code purges old index.html files from the HRProprietary directory daily.
 if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
@@ -235,9 +234,9 @@ $LogFileDATA22 = file($LogFile2);
 @system("/bin/chgrp -R $user $LogFile0");
 @system("/bin/chgrp -R $user $LogFile1");
 @system("/bin/chgrp -R $user $LogFile2");
-@system("/bin/chmod -R 0755 $LogFile0");
-@system("/bin/chmod -R 0755 $LogFile1");
-@system("/bin/chmod -R 0755 $LogFile2");
+@system("/bin/chmod -R 0750 $LogFile0");
+@system("/bin/chmod -R 0750 $LogFile1");
+@system("/bin/chmod -R 0750 $LogFile2");
 // / Infection handler will throw the $INFECTION_DETECTED variable to '1' if potential infections were found.
 if (strpos($LogFileDATA0, 'Virus Detected') == 'true' or strpos($LogFileDATA1, 'Virus Detected') == 'true' or strpos($LogFileDATA2, 'Virus Detected') == 'true'
   or strpos($LogFileDATA0, 'FOUND') == 'true' or strpos($LogFileDATA1, 'FOUND') == 'true' or strpos($LogFileDATA3, 'FOUND') == 'true') {

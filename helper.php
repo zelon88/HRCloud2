@@ -9,11 +9,13 @@
 function goBack() {
     window.history.back(); }
 </script>
+</head>
+
 <?php
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2Helper33, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('<body>ERROR!!! HRC2Helper33, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
@@ -21,13 +23,13 @@ else {
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('ERROR!!! HRC2Helper35, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
+  echo nl2br('<body>ERROR!!! HRC2Helper35, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n".'</body></html>'); 
   die (); }
 else {
   require(realpath(dirname(__FILE__)).'/commonCore.php'); }
  ?>
-</head>
-<body>
+
+<body style="font-family:<?php echo $Font; ?>;">
 <div align="center">
  <h3>HRCloud2 Help</h3>
 </div>

@@ -10,7 +10,7 @@
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2Logs12, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('<body>ERROR!!! HRC2Logs12, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require('sanitizeCore.php'); }
@@ -18,12 +18,13 @@ else {
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('commonCore.php')) {
-  echo nl2br('ERROR!!! HRC2Logs20, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
+  echo nl2br('<body>ERROR!!! HRC2Logs20, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n".'</body></html>'); 
   die (); }
 else {
   require('commonCore.php'); }
 
 include('header.php'); ?>
+<body style="font-family:<?php echo $Font; ?>;">
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') { ?>
 <div id="HRAIDiv" style="float: center; ">

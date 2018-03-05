@@ -30,6 +30,7 @@ else {
 // / -----------------------------------------------------------------------------------
 
 ?>
+<body style="font-family:<?php echo $Font; ?>;">
 <div align="center">
 <h3>HRCloud2 Settings</h3>
 <hr />
@@ -83,6 +84,13 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Nickname" setting: "'.$NEWNickname.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Nickname Settings.'."\n"); }
+  // / The following code sets the current user font.
+  if (isset($NEWFont)) {
+    $txt = ('$Font = \''.$NEWFont.'\';') ;
+    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+    $txt = ('OP-Act: Saved "Font" setting: "'.$NEWFont.'" to the user cache file on '.$Time.'!'); 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br('Saved New Font Settings.'."\n"); }
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
@@ -119,7 +127,35 @@ if (isset($saveSettings)) {
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Persistent AV Settings.'."\n"); } }
+      echo nl2br('Saved New Persistent AV Settings.'."\n"); } 
+    // / The following code is sets the server's Apache User setting.
+    if (isset($NEWApacheUser)) {
+      $txt = ('$ApacheUser = \''.$NEWApacheUser.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Apache User" setting: "'.$NEWApacheUser.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Apache User Settings.'."\n"); }
+    // / The following code is sets the server's Apache Group setting.
+    if (isset($NEWApacheGroup)) {
+      $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Apache Group" setting: "'.$NEWApacheGroup.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Apache Group Settings.'."\n"); }
+    // / The following code is sets the server's Cloud Location Permission setting.
+    if (isset($NEWCLPerms)) {
+      $txt = ('$CLPerms = \''.$NEWCLPerms.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Cloud Location Permission" setting: "'.$NEWCLPerms.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Cloud Location Permission Settings.'."\n"); } 
+    // / The following code is sets the server's Installation Location Permission setting.
+    if (isset($NEWILPerms)) {
+      $txt = ('$ILPerms = \''.$NEWILPerms.'\';') ;
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Installation Location Permission" setting: "'.$NEWILPerms.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Installation Location Permission Settings.'."\n"); } }
 ?>
 <hr />
 <?php
@@ -154,10 +190,14 @@ if (isset($loadDefaultSettings)) {
   $NEWNickname = $defaultNickname; 
   $txt = ('$nickname = \''.$NEWNickname.'\';');
   $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+  $NEWFont = $defaultFont; 
+  $txt = ('$Font = \''.$NEWFont.'\';');
+  $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
   if ($UserIDRAW == 1) {
-    $NEWVirusScan = $VirusScan; 
-    $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
-    $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND);
+    if (!isset($NEWVirusScan)) { 
+      $NEWVirusScan = $VirusScan; 
+      $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
     if (!isset($HighPerformanceAV)) { 
       $NEWHighPerformanceAV = '0'; 
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
@@ -169,6 +209,22 @@ if (isset($loadDefaultSettings)) {
     if (!isset($ThoroughAV)) { 
       $NEWPersistentAV = '0'; 
       $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } 
+    if (!isset($NEWApacheUser)) { 
+      $NEWApacheUser = $ApacheUser; 
+      $txt = ('$ApacheUser = \''.$NEWApacheUser.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($NEWApacheGroup)) { 
+      $NEWApacheGroup = $ApacheGroup; 
+      $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($NEWCLPerms)) { 
+      $NEWCLPerms = $CLPerms; 
+      $txt = ('$CLPerms = \''.$NEWCLPerms.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($ILPerms)) { 
+      $NEWILPerms = $ILPerms; 
+      $txt = ('$ILPerms = \''.$NEWILPerms.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } }
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); 
   ?>
@@ -349,11 +405,51 @@ if (!isset($nickname)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Nickname input field.
+if (isset($Font)) {
+  $FEcho = $Font; }
+if (!isset($Font)) {
+  $FEcho = $defaultFont; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Tips input field.
 if ($ShowTips == '1') {
   $STipsEcho = 'Enabled'; }
 if ($ShowTips !== '1') {
   $STipsEcho = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Apache User input field.
+if (isset($ApacheUser)) {
+  $AUEcho = $ApacheUser; }
+if (!isset($ApacheUser)) {
+  $AUEcho = $ApacheUser; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Apache Group input field.
+if (isset($ApacheGroup)) {
+  $AGEcho = $ApacheGroup; }
+if (!isset($ApacheGroup)) {
+  $AGEcho = $ApacheGroup; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Cloud Location Permission input field.
+if (isset($CLPerms)) {
+  $CLPEcho = $CLPerms; }
+if (!isset($CLPerms)) {
+  $CLPEcho = $CLPerms; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Installation Location Permission input field.
+if (isset($ILPerms)) {
+  $ILPEcho = $ILPerms; }
+if (!isset($ILPerms)) {
+  $ILPEcho = $ILPerms; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -393,6 +489,26 @@ if ($ShowTips !== '1') {
   <option value="3">Green</option>
   <?php // ADD NUMBER 4 NEXT!!!!! ?>
   <option value="5">Black</option>
+</select></p>
+
+<p alt="Change the HRCloud2 font." title="Change the HRCloud2 font." style="padding-left:15px;"><strong></strong> Font: </p>
+  <p><select id="NEWFont" name="NEWFont" style="padding-left:30px; width:100%;">
+  <option value="<?php echo $Font; ?>">Current (<?php echo $FEcho; ?>)</option>
+  <option value="Helvetica">Helvetica (Default)</option>
+  <option value="Arial">Arial</option>
+  <option value="Arial Black">Arial Black</option>
+  <option value="Times">Times</option>
+  <option value="Times New Roman">Times New Roman</option>
+  <option value="Courier New">Courier New</option>
+  <option value="Courier ">Courier</option>
+  <option value="Verdana">Verdana</option>
+  <option value="Georgia">Georgia</option>
+  <option value="Palatino">Palatino</option>
+  <option value="Garamond">Garamond</option>
+  <option value="Bookman">Bookman</option>
+  <option value="Comic Sans MS">Comic Sans MS</option>
+  <option value="Trebuchet MS">Trebuchet MS</option>
+  <option value="Impact">Impact</option>
 </select></p>
 
 <p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong></strong> HRAI Load Balancing Personal Assistant: </p>
@@ -467,6 +583,18 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
+<p alt="Set the Apache User. (Default: www-data)" title="Set the Apache User. WARNING!!! Do not change unless you are confident your input is accurate. (Default: www-data)" style="padding-left:15px;"><strong></strong> Apache User: WARNING!!! Custom installations only. (Default: www-data)</p>
+  <p><input type='text' id="NEWApacheUser" name="NEWApacheUser" style="padding-left:30px; width:100%;" value="<?php echo $AUEcho; ?>"></p>
+
+<p alt="Set the Apache Group. (Default: www-data)" title="Set the Apache Group. WARNING!!! Do not change unless you are confident your input is accurate. (Default: www-data)" style="padding-left:15px;"><strong></strong> Apache Group: WARNING!!! Custom installations only. (Default: www-data)</p>
+  <p><input type='text' id="NEWApacheGroup" name="NEWApacheGroup" style="padding-left:30px; width:100%;" value="<?php echo $AGEcho; ?>"></p>
+
+<p alt="Set the Cloud Location Permissions. (Default: 0755)" title="Set the Cloud Location Permissions. WARNING!!! Do not change unless you are confident your input is accurate. (Default: 0755)" style="padding-left:15px;"><strong></strong> Cloud Location Permissions: WARNING!!! Custom installations only. (Default: 0755)</p>
+  <p><input type='text' id="NEWCLPerms" name="NEWCLPerms" style="padding-left:30px; width:100%;" value="<?php echo $CLPEcho; ?>"></p>
+
+<p alt="Set the Installation Location Permissions. (Default: 0755)" title="Set the Installation Location Permissions. WARNING!!! Do not change unless you are confident your input is accurate. (Default: 0755)" style="padding-left:15px;"><strong></strong> Installation Location Permissions: WARNING!!! Custom installations only. (Default: 0755)</p>
+  <p><input type='text' id="NEWILPerms" name="NEWILPerms" style="padding-left:30px; width:100%;" value="<?php echo $ILPEcho; ?>"></p>
+
 <p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"> Virus Scanning (Requires ClamAV on server): </p>
   <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;">
   <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
@@ -517,6 +645,7 @@ if ($UserIDRAW == 1) { ?>
 </div>
 </div>
 <hr />
+</body>
   <script type="text/javascript">
     function toggle_visibility(id) {
       var e = document.getElementById(id);

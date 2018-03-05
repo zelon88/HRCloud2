@@ -3,17 +3,17 @@
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AppCore5, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('<body>ERROR!!! HRC2AppCore5, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('ERROR!!! HRC2AppCore13, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
+  echo nl2br('<body>ERROR!!! HRC2AppCore13, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n".'</body></html>'); 
   die (); }
 else {
   require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
 if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) {
-  echo nl2br('ERROR!!! HRC2AppCore21, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
+  echo nl2br('<body>ERROR!!! HRC2AppCore21, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n".'</body></html>'); 
   die (); }
 else {
   require_once (realpath(dirname(__FILE__)).'/securityCore.php'); }

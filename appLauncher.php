@@ -6,11 +6,12 @@
 <title>HRCloud2 | Apps </title>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
+</head>
 <?php 
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('<body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
@@ -18,12 +19,13 @@ else {
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  echo nl2br('<body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
   require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
 
 include(realpath(dirname(__FILE__)).'/header.php'); ?>
+<body style="font-family:<?php echo $Font; ?>;">
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">
 <?php if ($ShowHRAI == '1') { ?>
 <div id="HRAIDiv" style="float: center; ">

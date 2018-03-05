@@ -338,20 +338,6 @@ while (file_exists($ClamLogDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code checks if ShowTips is enabled and loads a random Tip if needed.
-if (!isset($ShowTips)) {
-  $ShowTips = '1'; }
-if (file_exists($TipFile) && $ShowTips == '1') {
-  if ($ShowTips == '1') {
-    include ($TipFile);
-    $RandomTip = array_rand($Tips);
-    $Tip = $Tips[$RandomTip];
-    $Tips = null; 
-    $RandomTip = null;
-    unset($Tips, $RandomTip); } } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   @chmod($UserConfig, 0755); 
@@ -368,8 +354,45 @@ if (file_exists($UserConfig)) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets some default settings if none are specified by config.php.
-if (!isset($defaultNickname ) or $defaultNickname == '') $defaultNickname = 'Commander';  
-if (!isset($defaultTimezone ) or $defaultTimezone == '') $defaultTimezone = 'America/New_York'; 
+if (!isset($defaultNickname) or $defaultNickname == '') $defaultNickname = 'Commander';  
+if (!isset($defaultTimezone) or $defaultTimezone == '') $defaultTimezone = 'America/New_York'; 
+if (!isset($defaultFont) or $defaultFont == '') $defaultFont = 'Helvetica'; 
+if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';  
+if (!isset($defaultShowHRAI) or $defaultShowHRAI == '') $defaultShowHRAI = '';
+if (!isset($defaultHRAIAudio) or $defaultHRAIAudio == '') $defaultHRAIAudio = '1'; 
+if (!isset($defaultShowTips) or $defaultShowTips == '') $defaultShowTips = '1'; 
+if (!isset($nickname) or $nickname == '') $nickname = $defaultNickname;
+if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
+if (!isset($Font) or $Font == '') $Font = $defaultFont;
+if (!isset($ColorScheme) or $ColorScheme == '') $defaultColorScheme = $defaultColorScheme;
+if (!isset($ShowHRAI) or $ShowHRAI == '') $defaultShowHRAI = $ShowHRAI;
+if (!isset($HRAIAudio) or $HRAIAudio == '') $defaultHRAIAudio = 'Helvetica';
+if (!isset($ShowTips) or $ShowTips == '') $ShowTips = $defaultShowTips;
+if (!isset($ApacheUser) or $ApacheUser == '') $ApacheUser = 'www-data';
+if (!isset($ApacheGroup) or $ApacheGroup == '') $ApacheGroup = 'www-data';
+if (!isset($CLPerms) or $CLPerms == '') $CLPerms = '0755';
+if (!isset($ILPerms) or $ILPerms == '') $ILPerms = '0755';
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sets the date and time for the session.
+$Now = time();
+$Timezone = str_replace(' ', '_', $Timezone);
+date_default_timezone_set($Timezone);
+$Date = date("m_d_y");
+$Time = date("F j, Y, g:i a"); 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code checks if ShowTips is enabled and loads a random Tip if needed.
+if (file_exists($TipFile) && $ShowTips == '1') {
+  if ($ShowTips == '1') {
+    include ($TipFile);
+    $RandomTip = array_rand($Tips);
+    $Tip = $Tips[$RandomTip];
+    $Tips = null; 
+    $RandomTip = null;
+    unset($Tips, $RandomTip); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -405,6 +428,10 @@ $AV = $VirusScan;
 $HP = $HighPerformanceAV;
 $TH = $ThoroughAV; 
 $PS = $PersistentAV;
+$AU = $ApacheUser;
+$AG = $ApacheGroup;
+$CLP = $CLPerms;
+$ILP = $ILPerms;
 include ($AdminConfig);
 $AdminIDRAW = null;
 $AdminID = null;
@@ -414,21 +441,15 @@ unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code resets the official time according to the Timezone entry in the user's config file.
-if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
-$Now = time();
-$Timezone = str_replace(' ', '_', $Timezone);
-date_default_timezone_set($Timezone);
-$Date = date("m_d_y");
-$Time = date("F j, Y, g:i a"); 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / The following code re-sets some variables for security. Just-in-case the UserConfig is compromised.
 $VirusScan = $AV;
 $HighPerformanceAV = $HP;
 $ThoroughAV = $TH;
 $PersistentAV = $PS;
+$ApacheUser = $AU;
+$ApacheGroup = $AG;
+$CLPerms = $CLP;
+$ILPerms = $ILP;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

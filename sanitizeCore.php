@@ -87,6 +87,18 @@ if (isset($_POST['ClearCache'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / Can be used to specify a new permission settings.
+if (isset($_POST['NEWApacheUser'])) { 
+  $NEWApacheUser = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWApacheUser']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWApacheGroup'])) { 
+  $NEWApacheGroup = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWApacheGroup']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWCLPerms'])) { 
+  $NEWCLPerms = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWCLPerms']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWILPerms'])) { 
+  $NEWILPerms = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWILPerms']), ENT_QUOTES, 'UTF-8'); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / Can be used to specify a specific file or directory within a users Cloud to scan for viruses with ClamAV.
 if (isset($_POST['NEWVirusScan'])) { 
   $NEWVirusScan = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWVirusScan']), ENT_QUOTES, 'UTF-8'); }
@@ -118,6 +130,8 @@ if (isset($_POST['NEWTimezone'])) {
   $NEWTimezone = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWTimezone']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWNickname'])) { 
   $NEWNickname = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWNickname']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWFont'])) { 
+  $NEWFont = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWFont']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
