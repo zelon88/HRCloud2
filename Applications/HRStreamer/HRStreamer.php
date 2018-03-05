@@ -1,23 +1,24 @@
-
-    <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
-    <script src="Applications/displaydirectorycontents_72716/sorttable.js"></script>
-    <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
-    <script type="text/javascript">
+<html>
+  <head>
+    <title>HRStreamer</title>
+  </head>
+  <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
+  <script type="text/javascript">
     function toggle_visibility(id) {
       var e = document.getElementById(id);
       if(e.style.display == 'block')
-         e.style.display = 'none';
+        e.style.display = 'none';
       else
-         e.style.display = 'block'; }
+        e.style.display = 'block'; }
     function show_visibility(id) {
       var e = document.getElementById(id);
-         e.style.display = 'block'; }
+      e.style.display = 'block'; }
     function hide_visibility(id) {
       var e = document.getElementById(id);
-         e.style.display = 'none'; }
+      e.style.display = 'none'; }
     function hide_visibility_name(name) {
       var e = document.getElementsByName(name);
-         e.style.display = 'none'; }
+      e.style.display = 'none'; }
     function goBack() {
       window.history.back(); }
     function stopAllAudio() {
@@ -31,18 +32,19 @@
         myAudio.pause(); } }
     var songsrc = [];
     var index = 0;
-</script>
-
+  </script>  
+  <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
+  <body style="font-family:<?php echo $Font; ?>;">
 <?php 
 // / Load commonCore WordPress.
-$CCFile = '/var/www/html/HRProprietary/HRCloud2/commonCore.php';
+$CCFile = 'commonCore.php';
 if (!file_exists($CCFile)) {
   echo nl2br('ERROR!!! HRS26, CommonCore was not detected on the server.'."\n");
   die('ERROR!!! HRS26, CommonCore was not detected on the server.'); }
   else {
     require_once($CCFile); } 
 // / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.7.8';
+$hrstreamerAppVersion = 'v0.8';
 $getID3File = $InstLoc.'/Applications/getid3/getid3/getid3.php';
 if ($UserIDRAW == '0' or $UserIDRAW == '') {
   $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
@@ -178,10 +180,12 @@ foreach ($PlaylistFiles as $PlaylistFile) {
 <div align="center" class='buttonbar' id='buttonbar<?php echo $SongCount; ?>' name='buttonbar' style="display:none;">
 <strong><?php echo $PlaylistFile; ?></strong>
 <hr />
-<div align="center" id='autosong' name='autosong'>
-  <audio id="song<?php echo $SongCount; ?>" name='song<?php echo $SongCount; ?>' preload="auto" onended="toggle_visibility('play<?php echo ($SongCount + 1); ?>'); toggle_visibility('hideplay<?php echo ($SongCount + 1); ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('hideplay<?php echo $SongCount; ?>'); show_visibility('buttonbar<?php echo ($SongCount + 1); ?>'); hide_visibility('buttonbar<?php echo $SongCount; ?>'); document.getElementById('song<?php echo ($SongCount + 1); ?>').play();" controls="true" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
-<hr />
-</div> 
-</div>        
-<?php } ?> 
-</div>
+      <div align="center" id='autosong' name='autosong'>
+        <audio id="song<?php echo $SongCount; ?>" name='song<?php echo $SongCount; ?>' preload="auto" onended="toggle_visibility('play<?php echo ($SongCount + 1); ?>'); toggle_visibility('hideplay<?php echo ($SongCount + 1); ?>'); toggle_visibility('play<?php echo $SongCount; ?>'); toggle_visibility('hideplay<?php echo $SongCount; ?>'); show_visibility('buttonbar<?php echo ($SongCount + 1); ?>'); hide_visibility('buttonbar<?php echo $SongCount; ?>'); document.getElementById('song<?php echo ($SongCount + 1); ?>').play();" controls="true" src="<?php echo 'DATA/'.$UserID.'/'.$PlaylistName.'/'.$PlaylistFile; ?>" type="audio/ogg" style="width:390px;"></audio>
+        <hr />
+      </div> 
+    </div>        
+    <?php } ?> 
+    </div>
+  </body>
+</html>
