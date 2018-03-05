@@ -22,4 +22,7 @@ $Tips = array(
 'You can change your Nickname, Timezone, Theme and Font settings by clicking the ≡ button.',
 'HRAI can talk! You can change HRAI\'s audio settings on the settings page by clicking on the ≡ button.',
 'You can create a playlist of your favorite music files by clicking on the <img src="Resources/stream.png"></img> button!',
-'Have an idea for an app? It\'s easier than you think to make your own HRC2 Apps. For more information on HRC2 Apps check out <a href="https://github.com/zelon88/HRCloud2/wiki/About-HRCloud2-Apps">the official HRCloud2 Wiki</a>.');
+'Have an idea for an app? It\'s easier than you think to make your own HRC2 Apps. For more information on HRC2 Apps check out <a href="https://github.com/zelon88/HRCloud2/wiki/About-HRCloud2-Apps">the official HRCloud2 Wiki</a>.',
+'You can hide HRAI from your Cloud pages from your Settings page by clicking the ≡ button!',
+'Time not showing right? Change your Timezone settings by clicking the ≡ button!',
+'Have a couple files you use all the time? Add them to your favorites by clicking on the <img src="Resources/favorites.png"></img> button!');
