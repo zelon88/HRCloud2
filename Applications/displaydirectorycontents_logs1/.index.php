@@ -4,13 +4,9 @@
    <meta charset="UTF-8">
    <link rel="shortcut icon" href="./.favicon.ico">
    <title>HRCLoud2 | Log Viewer</title>
-
    <link rel="stylesheet" href="./.style.css">
    <script src="./.sorttable.js"></script>
 </head>
-<body>
-<div id="container">
-<div align="center"><h3>HRCloud2 Logs</h3></div>
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
@@ -69,6 +65,11 @@ if (strpos($Current_URL, $UserID) == 'false') {
 // / -----------------------------------------------------------------------------------
 // / The following code generates most of the HTML boody for the session.
 ?>
+
+<body style="font-family:<?php echo $Font; ?>;">
+<div id="container">
+<div align="center"><h3>HRCloud2 Logs</h3></div>
+
 <table class="sortable">
   <thead>
   <tr>
