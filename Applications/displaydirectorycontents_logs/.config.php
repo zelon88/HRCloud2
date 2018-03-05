@@ -1,4 +1,8 @@
 <?php
 $ColorScheme = '1'; 
-$VirusScan = '0';
+$ShowTips = '1';
 $ShowHRAI = '1';
+$HRAIAudio = '1';
+$Timezone = 'America/New_York';
+$Nickname = 'Commander';
+$Font = 'Helvetica';
