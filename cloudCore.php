@@ -1390,8 +1390,8 @@ if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
   die(); }
 if (isset($_POST['shareConfirm']) or isset($_POST['unshareConfirm']) or isset($_GET['showShared'])) {
-  include($InstLoc.'/Applications/displaydirectorycontents_shared/.index.php'); 
-  die(); } 
+  echo ('<script type="text/javascript">window.location = "DATA/'.$UserID.'/.AppData/Shared/.index.php?viewsharebutton=view+shared";</script>');
+  die(); }
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); 
 // / -----------------------------------------------------------------------------------
 ?>
