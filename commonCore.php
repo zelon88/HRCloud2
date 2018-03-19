@@ -453,7 +453,7 @@ $ILPerms = $ILP;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code sync's the users AppData between the CloudLoc and the InstLoc.
+// / The following code sync's the users AppData between the InstLoc and the Cloud.
 if (!file_exists($appDataCloudDir)) {
   @mkdir($appDataCloudDir); }
 if (!file_exists($appDataCloudDir)) {
