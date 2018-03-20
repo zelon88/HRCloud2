@@ -77,15 +77,13 @@ if (isset($MAKEUserDir)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user initiates a file upload.
 if(isset($upload)) {
+  $_GET['UserDirPOST'] = htmlentities(str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']), ENT_QUOTES, 'UTF-8');
   $txt = ('OP-Act: Initiated Uploader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  if (!is_array($_FILES["filesToUpload"]['name'])) {
-    $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']); }
+  if (!is_array($_FILES["filesToUpload"]['name'])) $_FILES["filesToUpload"]['name'] = array($_FILES["filesToUpload"]['name']);
   foreach ($_FILES['filesToUpload']['name'] as $key=>$file) {
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;     
-    $_GET['UserDirPOST'] = htmlentities(str_replace(str_split('.[]{};:$!#^&%@>*<'), '', $_GET['UserDirPOST']), ENT_QUOTES, 'UTF-8');
-    $file = htmlentities(str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file), ENT_QUOTES, 'UTF-8');
-    $DangerousFiles = array('js', 'php', 'html', 'css');
+    $file = htmlentities(str_replace(str_split('\\/[]{};:$!#^&%@>*<'), '', $file), ENT_QUOTES, 'UTF-8'); 
     $F0 = pathinfo($file, PATHINFO_EXTENSION);
     if (in_array($F0, $DangerousFiles)) { 
       $txt = ("ERROR!!! HRC2103, Unsupported file format, $F0 on $Time.");
@@ -123,11 +121,11 @@ if(isset($upload)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user downloads a selection of files.
 if (isset($download)) {
+  $download = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $download);
   $txt = ('OP-Act: Initiated Downloader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  if (!is_array($_POST['filesToDownload'])) {
-    $_POST['filesToDownload'] = array($_POST['filesToDownload']); }
-  foreach ($_POST['filesToDownload'] as $key=>$file) {
+  if (!is_array($download)) $_POST['filesToDownload'] = array($download); 
+  foreach ($download as $key=>$file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;
     $file1 = $file;
@@ -164,14 +162,14 @@ if (isset($download)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects a file to copy.
 if (isset($_POST['copy'])) {
+  $_POST['copy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['copy']);
+  $_POST['newcopyfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['newcopyfilename']);
+  $_POST['filesToCopy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToCopy']);
   $txt = ('OP-Act: Initiated Copier on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $_POST['copy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['copy']);
-  if (!is_array($_POST['filesToCopy'])) {
-    $_POST['newcopyfilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['newcopyfilename']);
-    $_POST['filesToCopy'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToCopy']);
-    $_POST['filesToCopy'] = array($_POST['filesToCopy']); }
-    $copycount = 0;
+  $copycount = 0;
+  if (!is_array($_POST['filesToCopy'])) $_POST['filesToCopy'] = array($_POST['filesToCopy']); 
   foreach ($_POST['filesToCopy'] as $key=>$CFile) { 
     $CFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $CFile);
     if ($CFile == '' or $CFile == null) continue;   
@@ -212,14 +210,13 @@ if (isset($_POST['copy'])) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed whenever a user selects a file to rename.
 if (isset($_POST['rename'])) {
+  $_POST['rename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rename']);
+  $_POST['renamefilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['renamefilename']); 
+  $_POST['filesToRename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToRename']);
   $txt = ('OP-Act: Initiated Renamer on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST['rename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['rename']);
-  if (!is_array($_POST['filesToRename'])) {
-    $_POST['renamefilename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['renamefilename']); 
-    $_POST['filesToRename'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToRename']);
-    $_POST['filesToRename'] = array($_POST['filesToRename']); }
-    $rencount = 0;
+  $rencount = 0;
+  if (!is_array($_POST['filesToRename'])) $_POST['filesToRename'] = array($_POST['filesToRename']); 
   foreach ($_POST['filesToRename'] as $key=>$ReNFile) { 
     $ReNFile = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $ReNFile);
     if ($ReNFile == '' or $ReNFile == null) continue;
@@ -409,22 +406,18 @@ if (!is_dir($filename)) {
 // / -----------------------------------------------------------------------------------
 // / The following code will be performed when a user selects archives to extract.
 if (isset($_POST["dearchiveButton"])) {
-  // / The following code sets the global dearchive variables for the session.
+  $_POST['dearchiveButton'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dearchiveButton']);
   $txt = ('OP-Act: Initiated Dearchiver on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST['dearchiveButton'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['dearchiveButton']);
   $UDP = '';
   $allowed =  array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
   $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
   $rararr = array('rar');
   $ziparr = array('zip');
   $tararr = array('7z', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
-  if ($UserDirPOST !== '/' or $UserDirPOST !== '//') {
-    $UDP = $UserDirPOST; }
+  if ($UserDirPOST !== '/' or $UserDirPOST !== '//') $UDP = $UserDirPOST;
   if (isset($_POST["filesToDearchive"])) {
-    if (!is_array($_POST["filesToDearchive"])) {
-      $_POST['filesToDearchive'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['filesToDearchive']);
-      $_POST['filesToDearchive'] = array($_POST['filesToDearchive']); }
+    if (!is_array($_POST["filesToDearchive"])) $_POST['filesToDearchive'] = array($_POST['filesToDearchive']); 
     foreach (($_POST['filesToDearchive']) as $File) {
       if ($File == '.' or $File == '..') continue;
       // / The following code sets variables for each archive being extracted.
@@ -592,10 +585,11 @@ if (isset($_POST["dearchiveButton"])) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user selects files to convert to other formats.
 if (isset($_POST['convertSelected'])) {
+  $_POST['convertSelected'] = str_replace('//', '/', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']));
   $txt = ('OP-Act: Initiated HRConvert2 on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  $_POST['convertSelected'] = str_replace('//', '/', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['convertSelected']));
-  foreach ($_POST['convertSelected'] as $key => $file) {
+  if (!is_array($_POST['convertSelected'])) $_POST['convertSelected'] = array($_POST['convertSelected']);
+  foreach ($_POST['convertSelected'] as $file) {
     $file = htmlentities(str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file), ENT_QUOTES, 'UTF-8'); 
     $txt = ('OP-Act: User '.$UserID.' selected to Convert file '.$file.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -816,12 +810,12 @@ if (isset($_POST['convertSelected'])) {
     $txt = ('OP-Act: File '.$newPathname.' was created on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
   // / Free un-needed memory.
-  $_POST['convertSelected'] = $txt = $key = $file = $allowed = $file1 = $file2 = $convertcount = $extension = $pathname = $oldPathname = $filename = $oldExtension
+  $_POST['convertSelected'] = $txt = $file = $allowed = $file1 = $file2 = $convertcount = $extension = $pathname = $oldPathname = $filename = $oldExtension
    = $newFile = $newPathname = $docarray = $imgarray = $audioarray = $videoarray = $modelarray = $drawingarray = $pdfarray = $abwarray = $archarray = $array7z = $array7zo
    = $arrayzipo = $arraytaro = $arrayraro = $abwstd = $abwuno = $_POST['userconvertfilename'] = $returnDATA = $returnDATALINE = $stopper = $height 
    = $width = $_POST['height'] = $_POST['width'] = $rotate = $_POST['rotate'] = $wxh = $bitrate = $_POST['bitrate'] = $safedir1 = $safedirTEMP = $safedirTEMP2 = $safedirTEMP3
    = $safedir2 = $safedir3 = $safedir4 = $delFiles = $delFile = $MAKELogFile = null;
-  unset ($_POST['convertSelected'], $txt, $key, $file, $allowed, $file1, $file2, $convertcount, $extension, $pathname, $oldPathname, $filename, $oldExtension, 
+  unset ($_POST['convertSelected'], $txt, $file, $allowed, $file1, $file2, $convertcount, $extension, $pathname, $oldPathname, $filename, $oldExtension, 
    $newFile, $newPathname, $docarray, $imgarray, $audioarray, $videoarray, $modelarray, $drawingarray, $pdfarray, $abwarray, $archarray, $array7z, $array7zo,
    $arrayzipo, $arraytaro, $arrayraro, $abwstd, $abwuno, $_POST['userconvertfilename'], $returnDATA, $returnDATALINE, $stopper, $height, 
    $width, $_POST['height'], $_POST['width'], $rotate, $_POST['rotate'], $wxh, $bitrate, $_POST['bitrate'], $safedir1, $safedirTEMP, $safedirTEMP2, $safedirTEMP3,
@@ -834,12 +828,11 @@ if (isset($_POST['pdfworkSelected'])) {
   $_POST['pdfworkSelected'] = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['pdfworkSelected']);
   $txt = ('OP-Act: Initiated PDFWork on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    if (!is_array($_POST['pdfworkSelected'])) {
-      $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']); } 
   $pdfworkcount = '0';
+  if (!is_array($_POST['pdfworkSelected'])) $_POST['pdfworkSelected'] = array($_POST['pdfworkSelected']);
   foreach ($_POST['pdfworkSelected'] as $key=>$file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
-    $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file.' on '.$Time.'.');
+    $txt = ('OP-Act: User '.$UserID.' selected to PDFWork file '.$file[$key].' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     $allowedPDFw =  array('txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'ods', 'odf', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw');
     $file1 = $CloudUsrDir.$file;
