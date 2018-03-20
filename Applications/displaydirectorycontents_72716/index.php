@@ -75,14 +75,6 @@
         <input type='submit' name="upload" id="upload" value='&#x21E7' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
         </div>
       </form>
-      <div align="center" id='scandocshowDiv' name='scandocshowDiv' style="display:none;">
-        <input type="text" id="scandocuserfilename" name="scandocuserfilename" value='<?php echo $Udir.'Scanned-Document_'.$Date; ?>'> 
-        <select id='outputtopdf' name='outputtopdf'> 
-          <option value="0">Preserve Extensions</option>
-          <option value="1">Create PDF's</option>
-        </select>
-        <input type="submit" id="scandocSubmit" name="scandocSubmit" value='Scan Document' onclick="toggle_visibility('loadingCommandDiv');">
-      </div>
       <div align="center" id='deleteOptionsDiv' name='deleteOptionsDiv' style="display:none;">
         Are you sure?
         <input type="submit" id="deleteFileSubmit" name="deleteFileSubmit" value='Confirm Delete' onclick="toggle_visibility('loadingCommandDiv');">
