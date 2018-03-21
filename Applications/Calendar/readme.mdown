@@ -1,3 +1,8 @@
+This library file was modified for use in HRCloud2. It's original creator is https://github.com/bastianallgeier.
+The original repo can be found at https://github.com/bastianallgeier/calendar.
+
+--------------------------------------------------------------------------------
+
 # Calendar
 
 A Calendar and Date handling library for PHP
