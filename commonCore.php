@@ -4,17 +4,6 @@
 // / file, authenticate user storage, and define variables for the session.
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------
-// / The following code sets the $CD variable used to craft responsive absolute paths.
-$CurrentDir = getcwd();
-$CD = '';
-if (strpos($CurrentDir, 'Applications') ==  TRUE) $CD = '../../';
-if (strpos($_SERVER["SCRIPT_FILENAME"], 'HRAIMiniGui') == TRUE) $CD = '../';
-if (strpos($CurrentDir, '.AppData') == TRUE) $CD = '../../../';
-if (strpos($CurrentDir, '.AppData/') == TRUE) $CD = '../../../../';
-if (strpos($CurrentDir, 'Shared') == TRUE) $CD = '../../../../';
-// / -----------------------------------------------------------------------------------
-
 // / -----------------------------------------------------------------------------------  
 // / The following code checks if the config.php and the sanitizeCore.php files exist.
 if (!file_exists(realpath(dirname(__FILE__)).'/config.php')) {

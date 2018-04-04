@@ -121,11 +121,10 @@ if(isset($upload)) {
 // / -----------------------------------------------------------------------------------
 // / The following code is performed when a user downloads a selection of files.
 if (isset($download)) {
-  $download = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $download);
   $txt = ('OP-Act: Initiated Downloader on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  if (!is_array($download)) $_POST['filesToDownload'] = array($download); 
-  foreach ($download as $key=>$file) {
+  if (!is_array($_POST['filesToDownload'])) $_POST['filesToDownload'] = array($_POST['filesToDownload']); 
+  foreach ($_POST['filesToDownload'] as $key=>$file) {
     $file = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;
     $file1 = $file;
