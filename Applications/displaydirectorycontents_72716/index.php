@@ -250,7 +250,6 @@
         $favicon = "";
         $class = "file";
         $name = $dirArray[$index];
-        if ($name == 'index.html' or $name === '') continue; 
         $namehref = $dirArray[$index];
         $fileArray = array_push($fileArray1, $namehref);
       if (substr_compare($namehref, '/', 1)) { 
@@ -296,6 +295,7 @@
           case "doc": $extn = "Microsoft Word Document"; break;
           case "docx": $extn = "Microsoft Word Document"; break;
           case "zip": $extn = "ZIP Archive"; break;
+          case "playlist": $extn = "Playlist"; break;
           case "htaccess": $extn = "Apache Config File"; break;
           case "exe": $extn = "Windows Executable"; break;
           case '<Directory>': $extn = 'Folder'; break;
@@ -307,11 +307,8 @@
             break; }
           if (strpos($extn, 'directory') == 'true' or strpos($extn, 'Directory') == 'true' or strpos($name, '.') == 'false') {
             $extn = "Folder"; }
-          if (strpos($name, '.Playlist') == 'true' or strpos($extn, 'PLAYLIST') == 'true') {
-            $extn = "Playlist"; } 
           $size = getFilesize($CloudUsrDir.$dirArray[$index]);
           $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
-
           if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
           $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
           $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
