@@ -252,11 +252,11 @@
         $name = $dirArray[$index];
         $namehref = $dirArray[$index];
         $fileArray = array_push($fileArray1, $namehref);
-      if (substr_compare($namehref, '/', 1)) { 
-        $namehref = substr_replace('/'.$namehref, $namehref, 0); }
-      if (!file_exists($CloudUsrDir.$dirArray[$index])) continue;
+      if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
+      if (empty($namehref)) continue;
+      if (substr_compare($namehref, '/', 1)) $namehref = substr_replace('/'.$namehref, $namehref, 0); 
       $modtime = date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
-      $timekey = date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index]));
+      $timekey = date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index])); 
       if (is_dir($dirArray[$index])) {
         $extn = "&lt;Directory&gt;";
         $size = "&lt;Directory&gt;";
