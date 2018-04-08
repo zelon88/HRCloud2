@@ -5,7 +5,7 @@
     <script type="text/javascript" src="../../../../Applications/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../../../../Resources/HRC2-Lib.js"></script>
     <script type="text/javascript" src="../../../../Resources/sorttable.js"></script>
-    <title>Cloud Contents</title>
+    <title>Shared Cloud Contents</title>
 
     <?php
     // / The following code will check for and initialize required HRCloud2 Core files.
