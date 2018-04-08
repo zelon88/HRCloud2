@@ -551,7 +551,7 @@ foreach ($regions as $name => $mask) {
     $time = new DateTime(NULL, new DateTimeZone($timezone));
     $ampm = $time->format('H') > 12 ? ' ('. $time->format('g:i a'). ')' : '';
     $timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm; } }
-print '<p alt="Adjust the timezone so that logs and GUI elements match your local time." title="Adjust the timezone so that logs and GUI elements match your local time." style="padding-left:15px;"><strong></strong> Select Your Timezone:</p>
+print '<p alt="Adjust the timezone so that logs and GUI elements match your local time." title="Adjust the timezone so that logs and GUI elements match your local time." style="padding-left:15px;"><strong></strong> Timezone:</p>
 <p><select id="NEWTimezone" name="NEWTimezone" style="padding-left:30px; width:100%;">';
 print '<option name="'.$TZEcho.'" value="'.$TZEcho.'">Current ('.$TZEcho.')</option>'."\n";
 foreach($timezones as $region => $list) {
