@@ -1,75 +1,31 @@
 <!doctype html>
 <html>
-<head>
-   <meta charset="UTF-8">
-   <link rel="shortcut icon" href="./.favicon.ico">
-   <title>HRCLoud2 | Log Viewer</title>
-   <link rel="stylesheet" href="./.style.css">
-   <script src="./.sorttable.js"></script>
-</head>
-<?php
-// / -----------------------------------------------------------------------------------
-// / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists('../../../commonCore.php')) {
-  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
-  die (); }
-else {
-  require_once ('../../../commonCore.php'); }
-// / -----------------------------------------------------------------------------------
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../../Applications/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../../../Resources/HRC2-Lib.js"></script>
+    <script type="text/javascript" src="../../../Resources/sorttable.js"></script>
+    <title>Log Viewer</title>
 
-// / -----------------------------------------------------------------------------------
-// / The following code sets the variables for the session.
-$Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$UserIDRAW = get_current_user_id();
-$UserID = hash('ripemd160', $UserIDRAW.$Salts);
-$UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
-$UserSharedIndex = $URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/Shared/.index.php';
-$UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
-$UserConfig = $InstLoc.'/DATA/'.$UserID.'/.AppData/.config.php';
-// / -----------------------------------------------------------------------------------
+    <?php
+    // / The following code will check for and initialize required HRCloud2 Core files.
+    if (!file_exists('../../../guiCore.php')) {
+      echo nl2br('ERROR!!! HRC2Index12, Cannot process the HRCloud2 GUI Core file (guiCore.php)!'."\n".''); 
+      die (); }
+    else {
+      require_once ('../../../guiCore.php'); }
+    ?>
+    </head>
 
-// / -----------------------------------------------------------------------------------
-// / The following code loads the users config.php file.
-if (!file_exists($UserConfig)) {
-  @chmod($UserConfig, 0755); }
-if (!file_exists($UserConfig)) {
-  echo nl2br('</head>ERROR!!! HRC2LogsIndex49, User Cache file was not detected on the server!'."\n"); 
-  die (); }
-else {
-    require($UserConfig); } 
-// / -----------------------------------------------------------------------------------
-
-// / Color scheme handler.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/style.css">'); }
-if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Applications/displaydirectorycontents_72716/styleBLACK.css">'); } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will verify the user ID and the directory being accessed before continuing.
-if (strpos($Current_URL, $UserID) == 'false') {
-  $txt = ('ERROR!!! HRC2LogsIndex74, Could not verify the user '.$UserID.' on '.$Time.'!');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die($txt); }
-// / ------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code generates most of the HTML boody for the session.
-?>
-<body style="font-family:<?php echo $Font; ?>;">
-<div id="container">
-<div align="center"><h3>HRCloud2 Logs</h3></div>
-
-<table class="sortable">
+    <body style="font-family:<?php echo $Font; ?>;">
+      <div align="center" id="container">
+        <div align="center"><h3>HRCloud2 Logs</h3></div>
+        <div align="center" style="margin-bottom:10px;">
+          <input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refresh();"></div>
+        <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
+      </div>
+      <table class="sortable">
   <thead>
 	<tr>
 	  <th>Filename</th>
@@ -123,7 +79,7 @@ if (strpos($Current_URL, $UserID) == 'false') {
 		  else {
 		  $extn=pathinfo($dirArray[$index], PATHINFO_EXTENSION);
 		  switch ($extn) {
-		    case "txt": $extn="Text File"; 
+		    case "txt": $extn="Log File"; 
 		    break;
 		    default: 
 		  if ($extn!=""){$extn=strtoupper($extn)." File"; } 
