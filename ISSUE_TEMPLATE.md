@@ -1,5 +1,7 @@
 // THE FOLLOWING IS A TEMPLATE FOR AN ISSUE SUBMITTED FOR HRCLOUD2
+
 // ISSUES CAN BE SUBMITTED AT https://github.com/zelon88/HRCloud2/issues 
+
 // OR BY EMAILING zelon88@gmail.com.
 
 
