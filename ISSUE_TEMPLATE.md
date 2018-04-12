@@ -1,8 +1,8 @@
-// THE FOLLOWING IS A TEMPLATE FOR AN ISSUE SUBMITTED FOR HRCLOUD2
+**This document is a template for submitting technical issues for HRCloud2.**
 
-// SUBMIT ISSUES ON GITHUB: https://github.com/zelon88/HRCloud2/issues 
+Submit issues on Github: https://github.com/zelon88/HRCloud2/issues 
 
-// EMAIL ISSUES TO: zelon88@gmail.com.
+Email issues to: zelon88@gmail.com.
 
 --------------------------------------------------
 
