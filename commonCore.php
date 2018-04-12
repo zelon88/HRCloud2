@@ -346,21 +346,32 @@ if (file_exists($UserConfig)) {
 if (!isset($defaultNickname) or $defaultNickname == '') $defaultNickname = 'Commander';  
 if (!isset($defaultTimezone) or $defaultTimezone == '') $defaultTimezone = 'America/New_York'; 
 if (!isset($defaultFont) or $defaultFont == '') $defaultFont = 'Helvetica'; 
-if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';  
+if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';
+if (!is_numeric($defaultColorSchemes)) $defaultColorSchemes = '0'; 
 if (!isset($defaultShowHRAI) or $defaultShowHRAI == '') $defaultShowHRAI = '';
 if (!isset($defaultHRAIAudio) or $defaultHRAIAudio == '') $defaultHRAIAudio = '1'; 
+if (!is_numeric($defaultHRAIAudio) or $defaultHRAIAudio > '1') $defaultHRAIAudio = '0'; 
 if (!isset($defaultShowTips) or $defaultShowTips == '') $defaultShowTips = '1'; 
+if (!is_numeric($defaultShowTips) or $defaultShowTips > '1') $defaultShowTips = '0'; 
+if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $TOSEnableURL = '0';
+if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $TOSEnableURL = '0'; 
+if (!isset($ShowHRAI) or $ShowHRAI == '') $defaultShowHRAI = $ShowHRAI;
+if (!isset($HRAIAudio) or $HRAIAudio == '') $defaultHRAIAudio = 'Helvetica';
 if (!isset($nickname) or $nickname == '') $nickname = $defaultNickname;
 if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
 if (!isset($Font) or $Font == '') $Font = $defaultFont;
-if (!isset($ColorScheme) or $ColorScheme == '') $defaultColorScheme = $defaultColorScheme;
-if (!isset($ShowHRAI) or $ShowHRAI == '') $defaultShowHRAI = $ShowHRAI;
-if (!isset($HRAIAudio) or $HRAIAudio == '') $defaultHRAIAudio = 'Helvetica';
+if (!isset($ColorScheme) or $ColorScheme == '') $ColorScheme = $defaultColorScheme;
 if (!isset($ShowTips) or $ShowTips == '') $ShowTips = $defaultShowTips;
 if (!isset($ApacheUser) or $ApacheUser == '') $ApacheUser = 'www-data';
 if (!isset($ApacheGroup) or $ApacheGroup == '') $ApacheGroup = 'www-data';
 if (!isset($CLPerms) or $CLPerms == '') $CLPerms = '0755';
+if (!is_numeric($CLPerms)) $CLPerms = '0'; 
 if (!isset($ILPerms) or $ILPerms == '') $ILPerms = '0755';
+if (!is_numeric($ILPerms)) $ILPerms = '0'; 
+if (!isset($PPEURL) or $PPEURL == '') $PPEURL = '0';
+if (!is_numeric($PPEURL) or $PPEURL > '1') $PPEURL = '0'; 
+if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/privacy-policy';
+if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/terms-of-service';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

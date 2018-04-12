@@ -5,7 +5,7 @@
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
 <title>HRCLoud2 | Application Settings</title>
 <?php
-// / -----------------------------------------------------------------------------------
+// / -----------------------------------------------------------------------------------a
 // / The follwoing code checks for the required core filesand terminates if they are missing.
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
@@ -44,49 +44,49 @@ else {
 if (isset($saveSettings)) {
   // / The following code is sets the users color scheme. 
   if (isset($NEWColorScheme)) {
-    $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';') ;
+    $txt = ('$ColorScheme = \''.$NEWColorScheme.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Color Scheme" setting: "'.$NEWColorScheme.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
   // / The following code sets the users HRAI display preference.
   if (isset($NEWShowHRAI)) {
-    $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';') ;
+    $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Display Settings.'."\n"); }
   // / The following code sets the users HRAI audio preference.
   if (isset($NEWHRAIAudio)) {
-    $txt = ('$HRAIAudio = \''.$NEWHRAIAudio.'\';') ;
+    $txt = ('$HRAIAudio = \''.$NEWHRAIAudio.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "HRAI Audio" setting: "'.$NEWHRAIAudio.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New HRAI Audio Settings.'."\n"); }
   // / The following code sets the users Tipa display preference.
   if (isset($NEWShowTips)) {
-    $txt = ('$ShowTips = \''.$NEWShowTips.'\';') ;
+    $txt = ('$ShowTips = \''.$NEWShowTips.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Tips Settings.'."\n"); }
   // / The following code sets the current user timezone.
   if (isset($NEWTimezone)) {
-    $txt = ('$Timezone = \''.$NEWTimezone.'\';') ;
+    $txt = ('$Timezone = \''.$NEWTimezone.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Timezone Settings.'."\n"); }
   // / The following code sets the current user nickname.
   if (isset($NEWNickname)) {
-    $txt = ('$nickname = \''.$NEWNickname.'\';') ;
+    $txt = ('$nickname = \''.$NEWNickname.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Nickname" setting: "'.$NEWNickname.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo nl2br('Saved New Nickname Settings.'."\n"); }
   // / The following code sets the current user font.
   if (isset($NEWFont)) {
-    $txt = ('$Font = \''.$NEWFont.'\';') ;
+    $txt = ('$Font = \''.$NEWFont.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Font" setting: "'.$NEWFont.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -95,67 +95,95 @@ if (isset($saveSettings)) {
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
     if (isset($NEWDataCompression)) {
-      $txt = ('$DataCompression = \''.$NEWDataCompression.'\';') ;
+      $txt = ('$DataCompression = \''.$NEWDataCompression.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Data Compression Settings.'."\n"); }
     // / The following code is sets the server's Virus Scanning setting.
     if (isset($NEWVirusScan)) {
-      $txt = ('$VirusScan = \''.$NEWVirusScan.'\';') ;
+      $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
     // / The following code is sets the server's High Performance AV setting.
     if (isset($NEWHighPerformanceAV)) {
-      $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';') ;
+      $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New High Performance AV Settings.'."\n"); }
     // / The following code is sets the server's High Performance AV setting.
     if (isset($NEWThoroughAV)) {
-      $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';') ;
+      $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Thorough AV" setting: "'.$NEWThoroughAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Thorough AV Settings.'."\n"); } 
     // / The following code is sets the server's Persistence AV setting.
     if (isset($NEWPersistentAV)) {
-      $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';') ;
+      $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Persistent AV Settings.'."\n"); } 
     // / The following code is sets the server's Apache User setting.
     if (isset($NEWApacheUser)) {
-      $txt = ('$ApacheUser = \''.$NEWApacheUser.'\';') ;
+      $txt = ('$ApacheUser = \''.$NEWApacheUser.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Apache User" setting: "'.$NEWApacheUser.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Apache User Settings.'."\n"); }
     // / The following code is sets the server's Apache Group setting.
     if (isset($NEWApacheGroup)) {
-      $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';') ;
+      $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Apache Group" setting: "'.$NEWApacheGroup.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Apache Group Settings.'."\n"); }
     // / The following code is sets the server's Cloud Location Permission setting.
     if (isset($NEWCLPerms)) {
-      $txt = ('$CLPerms = \''.$NEWCLPerms.'\';') ;
+      $txt = ('$CLPerms = \''.$NEWCLPerms.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Cloud Location Permission" setting: "'.$NEWCLPerms.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Cloud Location Permission Settings.'."\n"); } 
     // / The following code is sets the server's Installation Location Permission setting.
     if (isset($NEWILPerms)) {
-      $txt = ('$ILPerms = \''.$NEWILPerms.'\';') ;
+      $txt = ('$ILPerms = \''.$NEWILPerms.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Installation Location Permission" setting: "'.$NEWILPerms.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Installation Location Permission Settings.'."\n"); } }
+      echo nl2br('Saved New Installation Location Permission Settings.'."\n"); }
+    // / The following code is sets the enablement of Privacy Policy modifications in the GUI.
+    if (isset($NEWPPEURL)) {
+      $txt = ('$PPEURL = \''.$NEWPPEURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Enable Privacy Policy" setting: "'.$NEWPPEURL.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Enable Privacy Policy Settings.'."\n"); }
+    // / The following code is sets the Privacy Policy URL in the GUI.
+    if (isset($NEWPPURL)) {
+      $txt = ('$PPURL = \''.$NEWPPURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Privacy Policy" setting: "'.$NEWPPURL.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Privacy Policy Settings.'."\n"); }
+    // / The following code is sets the enablement of Terms Of Service modifications in the GUI.
+    if (isset($NEWTOSEnableURL)) {
+      $txt = ('$TOSEnableURL = \''.$NEWTOSEnableURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Enable Terms Of Service" setting: "'.$NEWTOSEnableURL.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Enable Terms Of Service Settings.'."\n"); }
+    // / The following code is sets the Terms Of Service URL in the GUI.
+    if (isset($NEWTermsOfServiceURL)) {
+      $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
+      $txt = ('OP-Act: Saved "Terms Of Service" setting: "'.$NEWTermsOfServiceURL.'" to the user cache file on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+      echo nl2br('Saved New Terms Of Service Settings.'."\n"); } }
 ?>
 <hr />
 <?php
@@ -225,6 +253,22 @@ if (isset($loadDefaultSettings)) {
     if (!isset($ILPerms)) { 
       $NEWILPerms = $ILPerms; 
       $txt = ('$ILPerms = \''.$NEWILPerms.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($PPEURL)) { 
+      $NEWPPEURL = $PPEURL; 
+      $txt = ('$PPEURL = \''.$NEWPPEURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($PPURL)) { 
+      $NEWPPURL = $PPURL; 
+      $txt = ('$PPURL = \''.$NEWPPURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($TOSEURL)) { 
+      $NEWTOSEURL = $TOSEURL; 
+      $txt = ('$TOSEURL = \''.$NEWTOSEURL.'\';');
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
+    if (!isset($TermsOfServiceURL)) { 
+      $NEWTernsOfServiceURL = $TermsOfServiceURL; 
+      $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } }
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); 
   ?>
@@ -311,147 +355,173 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
 // / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
 if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) {
-  $DCEcho = 'Disabled'; }
+  $DCURL = 'Disabled'; }
 if ($DataCompression == '1') {
-  $DCEcho = 'Enabled (Automatic)'; }
+  $DCURL = 'Enabled (Automatic)'; }
 if ($DataCompression == '2') {
-  $DCEcho = 'Enabled (High Performance)'; }
+  $DCURL = 'Enabled (High Performance)'; }
 if ($DataCompression == '3') {
-  $DCEcho = 'Enabled (High Capacity)'; } 
+  $DCURL = 'Enabled (High Capacity)'; } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Color Scheme" option.
 if ($ColorScheme == '1') {
-  $CSEcho = 'Blue (Default)'; }
+  $CSURL = 'Blue (Default)'; }
 if ($ColorScheme == '2') {
-  $CSEcho = 'Red'; }
+  $CSURL = 'Red'; }
 if ($ColorScheme == '3') {
-  $CSEcho = 'Green'; } 
+  $CSURL = 'Green'; } 
 if ($ColorScheme == '4') {
-  $CSEcho = 'Grey'; }
+  $CSURL = 'Grey'; }
 if ($ColorScheme == '5') {
-  $CSEcho = 'Black'; }
+  $CSURL = 'Black'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the show HRAI input field.
 if ($ShowHRAI == '1') {
-  $SHRAIEcho = 'Enabled'; }
+  $SHRAIURL = 'Enabled'; }
 if ($ShowHRAI !== '1') {
-  $SHRAIEcho = 'Disabled'; }
+  $SHRAIURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the HRAI audio input field.
 if ($HRAIAudio == '1') {
-  $AHRAIEcho = 'Enabled'; }
+  $AHRAIURL = 'Enabled'; }
 if ($HRAIAudio !== '1') {
-  $AHRAIEcho = 'Disabled'; }
+  $AHRAIURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Anti-Virus input field.
 if ($VirusScan == '1') {
-  $VSEcho = 'Enabled'; }
+  $VSURL = 'Enabled'; }
 if ($VirusScan !== '1') {
-  $VSEcho = 'Disabled'; }
+  $VSURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the High Performance AV input field.
 if ($HighPerformanceAV == '1') {
-  $HPAVEcho = 'Enabled'; }
+  $HPAVURL = 'Enabled'; }
 if ($HighPerformanceAV !== '1') {
-  $HPAVEcho = 'Disabled'; }
+  $HPAVURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Thorough AV input field.
 if ($ThoroughAV == '1') {
-  $TAVEcho = 'Enabled'; }
+  $TAVURL = 'Enabled'; }
 if ($ThoroughAV !== '1') {
-  $TAVEcho = 'Disabled'; }
+  $TAVURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Persistent AV input field.
 if ($PersistentAV == '1') {
-  $PAVEcho = 'Enabled'; }
+  $PAVURL = 'Enabled'; }
 if ($PersistentAV !== '1') {
-  $PAVEcho = 'Disabled'; }
+  $PAVURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the WordPress Integration input field.
 if ($WordPressIntegration == '1') {
-  $WPIEcho = 'Enabled'; }
+  $WPIURL = 'Enabled'; }
 if ($WordPressIntegration == '0') {
-  $WPIEcho = 'Disabled'; }
+  $WPIURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Timezone input field.
 if (isset($Timezone)) {
-  $TZEcho = $Timezone; }
+  $TZURL = $Timezone; }
 if (!isset($Timezone)) {
-  $TZEcho = $defaultTimezone; }
+  $TZURL = $defaultTimezone; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Nickname input field.
 if (isset($nickname)) {
-  $NNEcho = $nickname; }
+  $NNURL = $nickname; }
 if (!isset($nickname)) {
-  $NNEcho = $defaultNickname; }
+  $NNURL = $defaultNickname; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Nickname input field.
 if (isset($Font)) {
-  $FEcho = $Font; }
+  $FURL = $Font; }
 if (!isset($Font)) {
-  $FEcho = $defaultFont; }
+  $FURL = $defaultFont; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Tips input field.
 if ($ShowTips == '1') {
-  $STipsEcho = 'Enabled'; }
+  $STipsURL = 'Enabled'; }
 if ($ShowTips !== '1') {
-  $STipsEcho = 'Disabled'; }
+  $STipsURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Apache User input field.
 if (isset($ApacheUser)) {
-  $AUEcho = $ApacheUser; }
+  $AUURL = $ApacheUser; }
 if (!isset($ApacheUser)) {
-  $AUEcho = $ApacheUser; }
+  $AUURL = 'www-data'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Apache Group input field.
 if (isset($ApacheGroup)) {
-  $AGEcho = $ApacheGroup; }
+  $AGURL = $ApacheGroup; }
 if (!isset($ApacheGroup)) {
-  $AGEcho = $ApacheGroup; }
+  $AGURL = 'www-data'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Cloud Location Permission input field.
 if (isset($CLPerms)) {
-  $CLPEcho = $CLPerms; }
+  $CLPURL = $CLPerms; }
 if (!isset($CLPerms)) {
-  $CLPEcho = $CLPerms; }
+  $CLPURL = '0755'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Installation Location Permission input field.
 if (isset($ILPerms)) {
-  $ILPEcho = $ILPerms; }
+  $ILPURL = $ILPerms; }
 if (!isset($ILPerms)) {
-  $ILPEcho = $ILPerms; }
+  $ILPURL = '0755'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value to enable the Privacy Policy URL input field.
+if ($PPEURL == '1') {
+  $PPEURL = 'Enabled'; }
+if ($PPEURL == '0') {
+  $PPEURL = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Privacy Policy URL input field.
+$PPURL = $PPURL;
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value to enable the Terms Of Service URL input field.
+if ($TOSEnableURL == '1') {
+  $TOSEURL = 'Enabled'; }
+if ($TOSEnableURL == '0') {
+  $TOSEURL = 'Disabled'; }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / Prepare the echo value for the Terms Of Service URL input field.
+$TOSURL = $TermsOfServiceURL;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -461,78 +531,90 @@ if (!isset($ILPerms)) {
 <form action="settingsCore.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
 
 <p alt="Generate a Desktop client App for your device." title="Generate a client App for your device." style="padding-left:15px;"><strong></strong> Desktop App: </p>
-  <p><select id="GenClientOS" name="GenClientOS" style="float:left; padding-left:30px; width:30%;">
-  <option value="">Select your OS</option>
-  <option value="windows">Windows</option>
-  <option value="linux">Linux</option>
-  <option value="osx">OSX</option>
+<p>
+  <select id="GenClientOS" name="GenClientOS" style="float:left; padding-left:30px; width:30%;">
+    <option value="">Select your OS</option>
+    <option value="windows">Windows</option>
+    <option value="linux">Linux</option>
+    <option value="osx">OSX</option>
   </select>
   <select id="GenClientCPU" name="GenClientCPU" style="float:left; padding-left:30px; width:30%;">
-  <option value="">Select your CPU</option>
-  <option value="x64">64-Bit (x64)</option>
-  <option value="ia32">32-Bit (x32)</option>
-  <option value="armv71">ARMv71</option>
+    <option value="">Select your CPU</option>
+    <option value="x64">64-Bit (x64)</option>
+    <option value="ia32">32-Bit (x32)</option>
+    <option value="armv71">ARMv71</option>
   </select>
   <select id="GenClientHomepage" name="GenClientHomepage" style="float:left; padding-left:30px; width:30%;">
-  <option value="">Select your Homepage</option>
-  <option value="">URL Home</option>
-  <option value="home">Cloud Home</option>
-  </select></p>
+    <option value="">Select your Homepage</option>
+    <option value="">URL Home</option>
+    <option value="home">Cloud Home</option>
+  </select>
+</p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='GenerateClient' id='GenerateClient' value='Build Client' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <p alt="Change what HRAI and HRCloud2 calls you." title="Change what HRAI and HRCloud calls you." style="padding-left:15px;"><strong></strong> Nickname: </p>
-  <p><input type='text' id="NEWNickname" name="NEWNickname" style="padding-left:30px; width:100%;" value="<?php echo $NNEcho; ?>"></p>
+<p><input type='text' id="NEWNickname" name="NEWNickname" style="padding-left:30px; width:100%;" value="<?php echo $NNURL; ?>"></p>
 
 <p alt="Change the HRCloud2 color scheme." title="Change the HRCloud2 color scheme." style="padding-left:15px;"><strong></strong> Color Scheme: </p>
-  <p><select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;">
-  <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSEcho; ?>)</option>
-  <option value="1">Blue (Default)</option>
-  <option value="2">Red</option>
-  <option value="3">Green</option>
-  <?php // ADD NUMBER 4 NEXT!!!!! ?>
-  <option value="5">Black</option>
-</select></p>
+<p>
+  <select id="NEWColorScheme" name="NEWColorScheme" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $ColorScheme; ?>">Current (<?php echo $CSURL; ?>)</option>
+    <option value="1">Blue (Default)</option>
+    <option value="2">Red</option>
+    <option value="3">Green</option>
+    <?php // ADD NUMBER 4 NEXT!!!!! ?>
+    <option value="5">Black</option>
+  </select>
+</p>
 
 <p alt="Change the HRCloud2 font." title="Change the HRCloud2 font." style="padding-left:15px;"><strong></strong> Font: </p>
-  <p><select id="NEWFont" name="NEWFont" style="padding-left:30px; width:100%;">
-  <option value="<?php echo $Font; ?>">Current (<?php echo $FEcho; ?>)</option>
-  <option value="Helvetica">Helvetica (Default)</option>
-  <option value="Arial">Arial</option>
-  <option value="Arial Black">Arial Black</option>
-  <option value="Times">Times</option>
-  <option value="Times New Roman">Times New Roman</option>
-  <option value="Courier New">Courier New</option>
-  <option value="Courier ">Courier</option>
-  <option value="Verdana">Verdana</option>
-  <option value="Georgia">Georgia</option>
-  <option value="Palatino">Palatino</option>
-  <option value="Garamond">Garamond</option>
-  <option value="Bookman">Bookman</option>
-  <option value="Comic Sans MS">Comic Sans MS</option>
-  <option value="Trebuchet MS">Trebuchet MS</option>
-  <option value="Impact">Impact</option>
-</select></p>
+<p>
+  <select id="NEWFont" name="NEWFont" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $Font; ?>">Current (<?php echo $FURL; ?>)</option>
+    <option value="Helvetica">Helvetica (Default)</option>
+    <option value="Arial">Arial</option>
+    <option value="Arial Black">Arial Black</option>
+    <option value="Times">Times</option>
+    <option value="Times New Roman">Times New Roman</option>
+    <option value="Courier New">Courier New</option>
+    <option value="Courier ">Courier</option>
+    <option value="Verdana">Verdana</option>
+    <option value="Georgia">Georgia</option>
+    <option value="Palatino">Palatino</option>
+    <option value="Garamond">Garamond</option>
+    <option value="Bookman">Bookman</option>
+    <option value="Comic Sans MS">Comic Sans MS</option>
+    <option value="Trebuchet MS">Trebuchet MS</option>
+    <option value="Impact">Impact</option>
+  </select>
+</p>
 
 <p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong></strong> HRAI Load Balancing Personal Assistant: </p>
-  <p><select id="NEWShowHRAI" name="NEWShowHRAI" style="padding-left:30px; width:100%;">
-  <option value="<?php echo $ShowHRAI; ?>">Current (<?php echo $SHRAIEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
+<p>
+  <select id="NEWShowHRAI" name="NEWShowHRAI" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $ShowHRAI; ?>">Current (<?php echo $SHRAIURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
 
 <p alt="Enable or disable HRAI Audio reading most HRAI outputs out loud." title="Enable or disable HRAI Audio reading most HRAI outputs out loud." style="padding-left:15px;"><strong></strong> Enable HRAI Audio: </p>
-  <p><select id="NEWHRAIAudio" name="NEWHRAIAudio" style="padding-left:30px; width:100%;">
-  <option value="<?php echo $HRAIAudio; ?>">Current (<?php echo $AHRAIEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
+<p>
+  <select id="NEWHRAIAudio" name="NEWHRAIAudio" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $HRAIAudio; ?>">Current (<?php echo $AHRAIURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
 
 <p alt="Show or Hide Tips at the top of most windows." title="Show or Hide Tips at the top of most windows." style="padding-left:15px;"><strong></strong> Tips: </p>
-  <p><select id="NEWShowTips" name="NEWShowTips" style="padding-left:30px; width:100%;">
-  <option value="<?php echo $ShowTips; ?>">Current (<?php echo $STipsEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
+<p>
+  <select id="NEWShowTips" name="NEWShowTips" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $ShowTips; ?>">Current (<?php echo $STipsURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
 
 <?php
 $regions = array(
@@ -553,7 +635,7 @@ foreach ($regions as $name => $mask) {
     $timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm; } }
 print '<p alt="Adjust the timezone so that logs and GUI elements match your local time." title="Adjust the timezone so that logs and GUI elements match your local time." style="padding-left:15px;"><strong></strong> Timezone:</p>
 <p><select id="NEWTimezone" name="NEWTimezone" style="padding-left:30px; width:100%;">';
-print '<option name="'.$TZEcho.'" value="'.$TZEcho.'">Current ('.$TZEcho.')</option>'."\n";
+print '<option name="'.$TZURL.'" value="'.$TZURL.'">Current ('.$TZURL.')</option>'."\n";
 foreach($timezones as $region => $list) {
   print '<optgroup label="' . $region . '">' . "\n";
   foreach($list as $timezone => $name) {
@@ -566,7 +648,7 @@ print '</select></p>';
 ?>
 
 <p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"> Clear User Cache Files: </p>
-    <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <?php
 // / -----------------------------------------------------------------------------------
@@ -576,56 +658,84 @@ if ($UserIDRAW == 1) { ?>
 <hr />
 
 <p alt="Options for updating and maintainging HRCloud2." title="Options for updating and maintainging HRCloud2." style="padding-left:15px;"> System Update:</p>
- <p style="float:center; padding-left:10%;">Automatic Update Options: </p>
- <p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
- <p style="float:center; padding-left:10%;">Manual Update Options: </p>
- <p style="float:center; padding-left:10%;">
+<p style="float:center; padding-left:10%;">Automatic Update Options: </p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='AutoUpdate' id='AutoUpdate' value='Automatic Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<p style="float:center; padding-left:10%;">Manual Update Options: </p>
+<p style="float:center; padding-left:10%;">
   <input type='submit' name='AutoDownload' id='AutoDownload' value='Download Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='AutoInstall' id='AutoInstall' value='Install Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
-  <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+  <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
+</p>
 
 <p alt="Set the Apache User. (Default: www-data)" title="Set the Apache User. WARNING!!! Do not change unless you are confident your input is accurate. (Default: www-data)" style="padding-left:15px;"><strong></strong> Apache User: WARNING!!! Custom installations only. (Default: www-data)</p>
-  <p><input type='text' id="NEWApacheUser" name="NEWApacheUser" style="padding-left:30px; width:100%;" value="<?php echo $AUEcho; ?>"></p>
+<p><input type='text' id="NEWApacheUser" name="NEWApacheUser" style="padding-left:30px; width:100%;" value="<?php echo $AUURL; ?>"></p>
 
 <p alt="Set the Apache Group. (Default: www-data)" title="Set the Apache Group. WARNING!!! Do not change unless you are confident your input is accurate. (Default: www-data)" style="padding-left:15px;"><strong></strong> Apache Group: WARNING!!! Custom installations only. (Default: www-data)</p>
-  <p><input type='text' id="NEWApacheGroup" name="NEWApacheGroup" style="padding-left:30px; width:100%;" value="<?php echo $AGEcho; ?>"></p>
+<p><input type='text' id="NEWApacheGroup" name="NEWApacheGroup" style="padding-left:30px; width:100%;" value="<?php echo $AGURL; ?>"></p>
 
 <p alt="Set the Cloud Location Permissions. (Default: 0755)" title="Set the Cloud Location Permissions. WARNING!!! Do not change unless you are confident your input is accurate. (Default: 0755)" style="padding-left:15px;"><strong></strong> Cloud Location Permissions: WARNING!!! Custom installations only. (Default: 0755)</p>
-  <p><input type='text' id="NEWCLPerms" name="NEWCLPerms" style="padding-left:30px; width:100%;" value="<?php echo $CLPEcho; ?>"></p>
+<p><input type='text' id="NEWCLPerms" name="NEWCLPerms" style="padding-left:30px; width:100%;" value="<?php echo $CLPURL; ?>"></p>
 
 <p alt="Set the Installation Location Permissions. (Default: 0755)" title="Set the Installation Location Permissions. WARNING!!! Do not change unless you are confident your input is accurate. (Default: 0755)" style="padding-left:15px;"><strong></strong> Installation Location Permissions: WARNING!!! Custom installations only. (Default: 0755)</p>
-  <p><input type='text' id="NEWILPerms" name="NEWILPerms" style="padding-left:30px; width:100%;" value="<?php echo $ILPEcho; ?>"></p>
+<p><input type='text' id="NEWILPerms" name="NEWILPerms" style="padding-left:30px; width:100%;" value="<?php echo $ILPURL; ?>"></p>
 
 <p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"> Virus Scanning (Requires ClamAV on server): </p>
-  <p><select id="NEWVirusScan" name="NEWVirusScan" style="width:100%;">
-  <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
-<?php 
-/*
+<p>
+  <select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
+
 <p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:15px;"><strong>6.</strong> High Performance A/V Scanning (Multi-threading): </p>
-  <p><select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="width:100%;">
-  <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
-*/
-?>
+<p>
+  <select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="width:100%;">
+    <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
+
 <p alt="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." title="Options to enable thorough A/V scanning (May require advanced ClamAV permission configuration)." style="padding-left:15px;"> Thorough A/V Scanning: </p>
-  <p><select id="NEWThoroughAV" name="NEWThoroughAV" style="width:100%;">
-  <option value="<?php echo $ThoroughAV; ?>">Current (<?php echo $TAVEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
+<p>
+  <select id="NEWThoroughAV" name="NEWThoroughAV" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $ThoroughAV; ?>">Current (<?php echo $TAVURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
 
 <p alt="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." title="Options to enable persistent A/V scanning (Will attempt to be as aggressive as possible without causing errors)." style="padding-left:15px;"> Persistent A/V Scanning: </p>
-  <p><select id="NEWPersistentAV" name="NEWPersistentAV" style="width:100%;">
-  <option value="<?php echo $PersistentAV; ?>">Current (<?php echo $PAVEcho; ?>)</option>
-  <option value="1">Enabled</option>
-  <option value="0">Disabled</option>
-</select></p>
+<p>
+  <select id="NEWPersistentAV" name="NEWPersistentAV" style="padding-left:30px; width:100%;">
+    <option value="<?php echo $PersistentAV; ?>">Current (<?php echo $PAVURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
+
+<p alt="Options to enable a Privacy Policy button on the Help page." title="Options to enable a Privacy Policy button that links to an admin supplied URL." style="padding-left:15px;"> Privacy Policy URL: </p>
+<p>
+  <select id="NEWEnablePrivacyPolicyURL" name="NEWEnablePrivacyPolicyURL" style="padding-left:30px; width:100%;" onchange="selectChanged('NEWEnablePrivacyPolicyURL', 'NEWPrivacyPolicyURL');">
+    <option value="<?php echo $PPEURL; ?>">Current (<?php echo $PPEURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
+<p><input type='text' id="NEWPrivacyPolicyURL" name="NEWPrivacyPolicyURL" style="padding-left:30px; width:100%;" value="<?php echo $PPURL; ?>"></p>
+
+<p alt="Options to enable a Terms Of Service button on the Help page." title="Options to enable a Terms Of Service button that links to an admin supplied URL." style="padding-left:15px;"> Terms Of Service URL: </p>
+<p>
+  <select id="NEWEnableTermsOfServiceURL" name="NEWEnableTermsOfServiceURL" style="padding-left:30px; width:100%;" onchange="selectChanged('NEWEnableTermsOfServiceURL', 'NEWTermsOfServiceURL');">
+    <option value="<?php echo $TOSEnableURL; ?>">Current (<?php echo $TOSEURL; ?>)</option>
+    <option value="1">Enabled</option>
+    <option value="0">Disabled</option>
+  </select>
+</p>
+<p><input type='text' id="NEWTermsOfServiceURL" name="NEWTermsOfServiceURL" style="padding-left:30px; width:100%;" value="<?php echo $TermsOfServiceURL; ?>" disabled></p>
+
 <p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php }
 // / -----------------------------------------------------------------------------------
@@ -649,13 +759,9 @@ if ($UserIDRAW == 1) { ?>
 <hr />
 </body>
   <script type="text/javascript">
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-         e.style.display = 'none';
-      else
-         e.style.display = 'block'; }
-    function goBack() {
-      window.history.back(); }
+    function selectChanged(id1, id2) {
+      var x = document.getElementById(id1).value;
+      document.getElementById(id2).disabled = (x == 0); }
+    selectChanged();
 </script>
 </html>

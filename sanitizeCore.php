@@ -87,7 +87,7 @@ if (isset($_POST['ClearCache'])) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / Can be used to specify a new permission settings.
+// / Can be used to specify new permission settings.
 if (isset($_POST['NEWApacheUser'])) { 
   $NEWApacheUser = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWApacheUser']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWApacheGroup'])) { 
@@ -114,6 +114,8 @@ if (isset($_POST['NEWThoroughAV'])) {
   $NEWThoroughAV = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWThoroughAV']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWPersistentAV'])) { 
   $NEWPersistentAV = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<'), '', $_POST['NEWPersistentAV']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWEnableTermsOfServiceURL'])) { 
+  $NEWTOSEnableURL = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWEnableTermsOfServiceURL']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
