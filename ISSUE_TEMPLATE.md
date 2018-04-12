@@ -10,7 +10,7 @@ Hello,
 
 My name is %YOUR_NAME%. I am running %OPERATING_SYSTEM_DISTRO% on %PHP_VERSION% with %HRCLOUD2_VERSION% and %WORDPRESS_VERSION%.
 
-When I try to use the %PROBLEM_FEATURE% feature HRCloud2 [%fails, stops responding, crashes my computer, other%].
+When I try to use %PROBLEM_FEATURE% HRCloud2 [%fail miserably, stop responding, crash my computer, other%].
 
 I sometimes get a %ERROR_MESSAGE% error/warning. Here are my log files.....
 
