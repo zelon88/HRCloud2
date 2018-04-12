@@ -1,6 +1,6 @@
 **This document is a template for submitting technical issues for HRCloud2.**
 
-Submit issues on Github: https://github.com/zelon88/HRCloud2/issues 
+Submit issues on Github: https://github.com/zelon88/HRCloud2/issues.
 
 Email issues to: zelon88@gmail.com.
 
