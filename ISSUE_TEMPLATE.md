@@ -21,4 +21,5 @@ I can recreate the problem using the steps below.....
 %STEPS_TO_RECREATE_PROBLEM%
 
 Thank you!
+
 %YOUR_NAME%
