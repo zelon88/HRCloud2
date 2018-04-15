@@ -150,9 +150,9 @@ if (isset($download)) {
         new \RecursiveDirectoryIterator($file, \RecursiveDirectoryIterator::SKIP_DOTS),
         \RecursiveIteratorIterator::SELF_FIRST) as $item) {
         if ($item->isDir()) {
-          mkdir($F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); }   
+          mkdir($F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); }   
         else {
-          symlink($item, $F3 . DIRECTORY_SEPARATOR . $iterator->getSubPathName()); } } } } 
+          symlink($item, $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } } } 
   // / Free un-needed memory.
   $txt = $_POST['filesToDownload'] = $key = $file = $file1 = $F2 = $F3 = $COPY_TEMP = $iterator = $item = $MAKELogFile = null;
   unset ($txt, $_POST['filesToDownload'], $key, $file, $file1, $F2, $F3, $COPY_TEMP, $iterator, $item, $MAKELogFile); }
@@ -1152,7 +1152,7 @@ if (isset($_POST['shareConfirm'])) {
     $FTS = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $FTS);
     $copySrc = str_replace('//', '/', $CloudUsrDir.$FTS);
     $copyDst = str_replace('//', '/', $CloudShareDir.'/'.$FTS);
-    copy($copySrc, $copyDst); 
+    symlink($copySrc, $copyDst); 
     if (file_exists($CloudShareDir.'/'.$FTS)) {
       $txt = ('OP-Act: Shared '.$FTS.' on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
