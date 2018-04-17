@@ -20,11 +20,13 @@ $Accept_GPLv3_OpenSource_License = '1';
 
 // / ------------------------------
 // / General Information ... 
+  // 
+
   // / This timezone will be the default one used if a user has not specified there own.
 $defaultTimezone = 'America/New_York';
   // / This Nickname will be the default one used if a user has not specified there own.
 $defaultNickname = 'Commander';
-  // / The font type to use for displaying text within GUI elements.
+  // / The default font type to use for displaying text within GUI elements.
 $defaultFont = 'Helvetica';
   // / Leave '1' for default and to allow individual users to modify their own color-schemes.
 $defaultColorScheme = '1';
@@ -37,15 +39,28 @@ $defaultHRAIAudio = '1';
   // / To hide tooltips at the top of each page, set $ShowTips to '0'.
   // / Default is '1'.
 $defaultShowTips = '1';
+  // / The default URL for the Privacy-Policy that applies to this installation.
+  // / Default is '0'.
+$defaultPPEnableURL = 'https://www.honestrepair.net/privacy-policy';
+  // / The defaultTOSEURL will set the defauly.
+  // / Default is '0'.
+$defaultTOSEnableURL = 'https://www.honestrepair.net/terms-of-service';
+  // / The default URL for the Privacy-Policy that applies to this installation.
+  // / Default is 'https://www.honestrepair.net/index.php/privacy-policy/'.
+$defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
+  // / The default URL for the Terms-Of-Service that applies to this installation.
+  // / Default is 'https://www.honestrepair.net/index.php/terms-of-service/'.
+$defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
 // / ------------------------------
 
 // / ------------------------------  
 // / Security Information ... 
   // / HRCloud2 Server can run on a local machine or on a network as a server to
-  // / serve clients over http using standard web browsers.
+  // / serve clients over http using standard web browsers. These settings tell
+  // / HRCloud2 information about protecting itself.
 
-  // / Secret Salts.
-    // / Change these to something completely random and keep it a secret. Store your $Salts
+  // / Change the Salts to something completely random and keep it a secret. 
+    // / Store your $Salts
     // / in hardcopy form or an encrypted drive in case of emergency.
     // / IF YOU LOSE YOUR SALTS YOU WILL BE UNABLE TO DECODE USER ID'S AFTER AN EMEREGENCY.
 $Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
