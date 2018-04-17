@@ -157,7 +157,6 @@ if (!is_dir($CloudLoc)) {
 if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
   @mkdir($CloudDir, 0755); }
 // / -----
-
 // / The following code checks if the $CloudTemp directory ($CloudLoc.$userID) exists, and creates one if it does not.
 if(!file_exists($CloudTemp)) {
   mkdir($CloudTemp); 
@@ -359,6 +358,9 @@ if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $defaultTOSEnabl
 if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $defaultTOSEnableURL = '0'; 
 if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
 if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code sets some default settings if none are specified by the user's config.php.
 if (!isset($ShowHRAI) or $ShowHRAI == '') $ShowHRAI = $defaultShowHRAI;
 if (!isset($HRAIAudio) or $HRAIAudio == '') $HRAIAudio = $defaultHRAIAudio;
@@ -379,7 +381,6 @@ if (!isset($TOSEnableURL) or $TOSEnableURL == '') $TOSEnableURL = $defaultTOSEna
 if (!is_numeric($TOSEnableURL) or $TOSEnableURL > '1') $TOSEnableURL = $defaultTOSEnableURL; 
 if (!isset($PrivacyPolicyURL) or $PrivacyPolicyURL == '') $PrivacyPolicyURL = $defaultPrivacyPolicyURL;
 if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL = $defaultTermsOfServiceURL;
-
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
