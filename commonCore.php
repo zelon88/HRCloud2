@@ -353,10 +353,15 @@ if (!isset($defaultHRAIAudio) or $defaultHRAIAudio == '') $defaultHRAIAudio = '1
 if (!is_numeric($defaultHRAIAudio) or $defaultHRAIAudio > '1') $defaultHRAIAudio = '0'; 
 if (!isset($defaultShowTips) or $defaultShowTips == '') $defaultShowTips = '1'; 
 if (!is_numeric($defaultShowTips) or $defaultShowTips > '1') $defaultShowTips = '0'; 
-if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $TOSEnableURL = '0';
-if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $TOSEnableURL = '0'; 
-if (!isset($ShowHRAI) or $ShowHRAI == '') $defaultShowHRAI = $ShowHRAI;
-if (!isset($HRAIAudio) or $HRAIAudio == '') $defaultHRAIAudio = 'Helvetica';
+if (!isset($defaultPPEnableURL) or $defaultPPEnableURL == '') $defaultPPEnableURL = '0';
+if (!is_numeric($defaultPPEnableURL) or $defaultPPEnableURL > '1') $defaultPPEnableURL = '0'; 
+if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $defaultTOSEnableURL = '0';
+if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $defaultTOSEnableURL = '0'; 
+if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
+if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
+// / The following code sets some default settings if none are specified by the user's config.php.
+if (!isset($ShowHRAI) or $ShowHRAI == '') $ShowHRAI = $defaultShowHRAI;
+if (!isset($HRAIAudio) or $HRAIAudio == '') $HRAIAudio = $defaultHRAIAudio;
 if (!isset($nickname) or $nickname == '') $nickname = $defaultNickname;
 if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
 if (!isset($Font) or $Font == '') $Font = $defaultFont;
@@ -365,13 +370,16 @@ if (!isset($ShowTips) or $ShowTips == '') $ShowTips = $defaultShowTips;
 if (!isset($ApacheUser) or $ApacheUser == '') $ApacheUser = 'www-data';
 if (!isset($ApacheGroup) or $ApacheGroup == '') $ApacheGroup = 'www-data';
 if (!isset($CLPerms) or $CLPerms == '') $CLPerms = '0755';
-if (!is_numeric($CLPerms)) $CLPerms = '0'; 
+if (!is_numeric($CLPerms)) $CLPerms = '0755'; 
 if (!isset($ILPerms) or $ILPerms == '') $ILPerms = '0755';
-if (!is_numeric($ILPerms)) $ILPerms = '0'; 
-if (!isset($PPEURL) or $PPEURL == '') $PPEURL = '0';
-if (!is_numeric($PPEURL) or $PPEURL > '1') $PPEURL = '0'; 
-if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/privacy-policy';
-if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/terms-of-service';
+if (!is_numeric($ILPerms)) $ILPerms = '0755'; 
+if (!isset($PPEnableURL) or $PPEnableURL == '') $PPEnableURL = $defaultPPEnableURL;
+if (!is_numeric($PPEnableURL) or $PPEnableURL > '1') $PPEnableURL = $defaultPPEnableURL; 
+if (!isset($TOSEnableURL) or $TOSEnableURL == '') $TOSEnableURL = $defaultTOSEnableURL;
+if (!is_numeric($TOSEnableURL) or $TOSEnableURL > '1') $TOSEnableURL = $defaultTOSEnableURL; 
+if (!isset($PrivacyPolicyURL) or $PrivacyPolicyURL == '') $PrivacyPolicyURL = $defaultPrivacyPolicyURL;
+if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL = $defaultTermsOfServiceURL;
+
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

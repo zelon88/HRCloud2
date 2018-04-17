@@ -134,6 +134,15 @@ if (isset($_POST['NEWNickname'])) {
   $NEWNickname = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWNickname']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['NEWFont'])) { 
   $NEWFont = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWFont']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWEnablePrivacyPolicyURL'])) { 
+  $NEWPPEnableURL = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWEnablePrivacyPolicyURL']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWEnableTermsOfServiceURL'])) { 
+  $NEWTOSEnableURL = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['NEWEnableTermsOfServiceURL']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWPrivacyPolicyURL'])) { 
+  $NEWPrivacyPolicyURL = htmlentities(str_replace(str_split('~#[](){};$!#^>*<"\'"\''), '', $_POST['NEWPrivacyPolicyURL']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['NEWTermsOfServiceURL'])) { 
+  $NEWTermsOfServiceURL = htmlentities(str_replace(str_split('~#[](){};$!#^>*<"\''), '', $_POST['NEWTermsOfServiceURL']), ENT_QUOTES, 'UTF-8'); }
+
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

@@ -157,17 +157,17 @@ if (isset($saveSettings)) {
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Installation Location Permission Settings.'."\n"); }
     // / The following code is sets the enablement of Privacy Policy modifications in the GUI.
-    if (isset($NEWPPEURL)) {
-      $txt = ('$PPEURL = \''.$NEWPPEURL.'\';');
+    if (isset($NEWPPEnableURL)) {
+      $txt = ('$PPEnableURL = \''.$NEWPPEnableURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Enable Privacy Policy" setting: "'.$NEWPPEURL.'" to the user cache file on '.$Time.'!'); 
+      $txt = ('OP-Act: Saved "Enable Privacy Policy" setting: "'.$NEWPPEnableURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Enable Privacy Policy Settings.'."\n"); }
     // / The following code is sets the Privacy Policy URL in the GUI.
-    if (isset($NEWPPURL)) {
-      $txt = ('$PPURL = \''.$NEWPPURL.'\';');
+    if (isset($NEWPrivacyPolicyURL)) {
+      $txt = ('$PrivacyPolicyURL = \''.$NEWPrivacyPolicyURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Privacy Policy" setting: "'.$NEWPPURL.'" to the user cache file on '.$Time.'!'); 
+      $txt = ('OP-Act: Saved "Privacy Policy" setting: "'.$NEWPrivacyPolicyURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Privacy Policy Settings.'."\n"); }
     // / The following code is sets the enablement of Terms Of Service modifications in the GUI.
@@ -184,10 +184,27 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Terms Of Service" setting: "'.$NEWTermsOfServiceURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Terms Of Service Settings.'."\n"); } }
+    // / The following code applies settings that have just been submitted so they appear immediately.
+    $ShowHRAI = $NEWShowHRAI;
+    $HRAIAudio = $NEWHRAIAudio;
+    $nickname = $NEWNickname;
+    $Timezone = $NEWTimezone;
+    $Font = $NEWFont;
+    $ColorScheme = $NEWColorScheme;
+    $ShowTips = $NEWShowTips;
+    $ApacheUser = $NEWApacheUser;
+    $ApacheGroup = $NEWApacheGroup;
+    $CLPerms = $NEWCLPerms; 
+    $ILPerms = $NEWILPerms; 
+    $PPEnableURL = $NEWPPEnableURL;
+    $PPEnableURL = $NEWPPEnableURL; 
+    $TOSEnableURL = $NEWTOSEnableURL;
+    $TOSEnableURL = $NEWTOSEnableURL; 
+    $PrivacyPolicyURL = $NEWPrivacyPolicyURL;
+    $TermsOfServiceURL = $NEWTermsOfServiceURL;
 ?>
 <hr />
 <?php
-sleep(1);
 echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
 ?></div>
 <div align="center">   
@@ -250,23 +267,23 @@ if (isset($loadDefaultSettings)) {
       $NEWCLPerms = $CLPerms; 
       $txt = ('$CLPerms = \''.$NEWCLPerms.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($ILPerms)) { 
+    if (!isset($NEWILPerms)) { 
       $NEWILPerms = $ILPerms; 
       $txt = ('$ILPerms = \''.$NEWILPerms.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($PPEURL)) { 
-      $NEWPPEURL = $PPEURL; 
-      $txt = ('$PPEURL = \''.$NEWPPEURL.'\';');
+    if (!isset($NEWPPEnableURL)) { 
+      $NEWPPEnableURL = $PPEnableURL; 
+      $txt = ('$PPEnableURL = \''.$NEWPPEnableURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($PPURL)) { 
-      $NEWPPURL = $PPURL; 
-      $txt = ('$PPURL = \''.$NEWPPURL.'\';');
+    if (!isset($NEWPrivacyPolicyURL)) { 
+      $NEWPrivacyPolicyURL = $PrivacyPolicyURL; 
+      $txt = ('$PrivacyPolicyURL = \''.$NEWPrivacyPolicyURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($TOSEURL)) { 
-      $NEWTOSEURL = $TOSEURL; 
-      $txt = ('$TOSEURL = \''.$NEWTOSEURL.'\';');
+    if (!isset($NEWTOSEnableURL)) { 
+      $NEWTOSEnableURL = $TOSEnableURL; 
+      $txt = ('$TOSEnableURL = \''.$NEWTOSEnableURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($TermsOfServiceURL)) { 
+    if (!isset($NEWTermsOfServiceURL)) { 
       $NEWTernsOfServiceURL = $TermsOfServiceURL; 
       $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } }
@@ -277,11 +294,6 @@ if (isset($loadDefaultSettings)) {
 sleep(1); } ?>
 </div>
 <?php
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / Include the user's configuration data.
-require($UserConfig);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -500,23 +512,27 @@ if (!isset($ILPerms)) {
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value to enable the Privacy Policy URL input field.
-if ($PPEURL == '1') {
-  $PPEURL = 'Enabled'; }
-if ($PPEURL == '0') {
-  $PPEURL = 'Disabled'; }
+if ($PPEnableURL == '1') {
+  $PPEURL = 'Enabled'; 
+  $PPDisabledAtt = ''; }
+if ($PPEnableURL == '0') {
+  $PPEURL = 'Disabled'; 
+  $PPDisabledAtt = ' disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Privacy Policy URL input field.
-$PPURL = $PPURL;
+$PPURL = $PrivacyPolicyURL;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value to enable the Terms Of Service URL input field.
 if ($TOSEnableURL == '1') {
-  $TOSEURL = 'Enabled'; }
+  $TOSEURL = 'Enabled'; 
+  $TOSDisabledAtt = ''; }
 if ($TOSEnableURL == '0') {
-  $TOSEURL = 'Disabled'; }
+  $TOSEURL = 'Disabled'; 
+  $TOSDisabledAtt = ' disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -689,9 +705,9 @@ if ($UserIDRAW == 1) { ?>
   </select>
 </p>
 
-<p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:15px;"><strong>6.</strong> High Performance A/V Scanning (Multi-threading): </p>
+<p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:30px; width:100%;"> High Performance A/V Scanning (Multi-threading): </p>
 <p>
-  <select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="width:100%;">
+  <select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="padding-left:30px; width:100%;">
     <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVURL; ?>)</option>
     <option value="1">Enabled</option>
     <option value="0">Disabled</option>
@@ -719,12 +735,12 @@ if ($UserIDRAW == 1) { ?>
 <p alt="Options to enable a Privacy Policy button on the Help page." title="Options to enable a Privacy Policy button that links to an admin supplied URL." style="padding-left:15px;"> Privacy Policy URL: </p>
 <p>
   <select id="NEWEnablePrivacyPolicyURL" name="NEWEnablePrivacyPolicyURL" style="padding-left:30px; width:100%;" onchange="selectChanged('NEWEnablePrivacyPolicyURL', 'NEWPrivacyPolicyURL');">
-    <option value="<?php echo $PPEURL; ?>">Current (<?php echo $PPEURL; ?>)</option>
+    <option value="<?php echo $PPEnableURL; ?>">Current (<?php echo $PPEURL; ?>)</option>
     <option value="1">Enabled</option>
     <option value="0">Disabled</option>
   </select>
 </p>
-<p><input type='text' id="NEWPrivacyPolicyURL" name="NEWPrivacyPolicyURL" style="padding-left:30px; width:100%;" value="<?php echo $PPURL; ?>"></p>
+<p><input type='text' id="NEWPrivacyPolicyURL" name="NEWPrivacyPolicyURL" style="padding-left:30px; width:100%;" value="<?php echo $PrivacyPolicyURL; ?>"<?php echo $PPDisabledAtt; ?>></p>
 
 <p alt="Options to enable a Terms Of Service button on the Help page." title="Options to enable a Terms Of Service button that links to an admin supplied URL." style="padding-left:15px;"> Terms Of Service URL: </p>
 <p>
@@ -734,7 +750,7 @@ if ($UserIDRAW == 1) { ?>
     <option value="0">Disabled</option>
   </select>
 </p>
-<p><input type='text' id="NEWTermsOfServiceURL" name="NEWTermsOfServiceURL" style="padding-left:30px; width:100%;" value="<?php echo $TermsOfServiceURL; ?>" disabled></p>
+<p><input type='text' id="NEWTermsOfServiceURL" name="NEWTermsOfServiceURL" style="padding-left:30px; width:100%;" value="<?php echo $TermsOfServiceURL; ?>"<?php echo $TOSDisabledAtt; ?>></p>
 
 <p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php }

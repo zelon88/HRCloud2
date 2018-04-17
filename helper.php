@@ -46,6 +46,10 @@ else {
 <p><input type="submit" id="latestcommitsbutton" name="submitsmall" value="Latest Commits"></p></form>
 <form action="https://github.com/zelon88/HRCloud2/wiki/Dependency-Requirements" target="_parent">
 <p><input type="submit" id="dependencybutton" name="submitsmall" value="Dependency Info"></p></form>
+<?php if ($TOSEnableURL == 1) { ?>
+<form action="<?php echo $TermsOfServiceURL; ?>" target="_parent">
+<p><input type="submit" id="termsofservicebutton" name="submitsmall" value="Terms Of Service"></p></form>
+<?php } ?>
 </div>
 <div style="float:left;">
 <form action="https://github.com/zelon88/HRCloud2/wiki/Technical-Description-and-Breakdown" target="_parent">
@@ -56,6 +60,10 @@ else {
 <p><input type="submit" id="bugbutton" name="submitsmall" value="Report A Bug"></p></form>
 <form action="mailto:zelon88@gmail.com">
 <p><input type="submit" id="contactbutton" name="submitsmall" value="Contact zelon88"></p></form>
+<?php if ($PPEnableURL == 1) { ?>
+<form action="<?php echo $PrivacyPolicyURL; ?>" target="_parent">
+<p><input type="submit" id="privacypolicybutton" name="submitsmall" value="Privacy Policy"></p></form>
+<?php } ?>
 </div>
 </div>
 </div>
