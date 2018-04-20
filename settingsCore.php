@@ -286,7 +286,26 @@ if (isset($loadDefaultSettings)) {
     if (!isset($NEWTermsOfServiceURL)) { 
       $NEWTernsOfServiceURL = $TermsOfServiceURL; 
       $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } }
+      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } 
+    // / The following code applies settings that have just been submitted so they appear immediately.
+    $ShowHRAI = $NEWShowHRAI;
+    $HRAIAudio = $NEWHRAIAudio;
+    $nickname = $NEWNickname;
+    $Timezone = $NEWTimezone;
+    $Font = $NEWFont;
+    $ColorScheme = $NEWColorScheme;
+    $ShowTips = $NEWShowTips;
+    $ApacheUser = $NEWApacheUser;
+    $ApacheGroup = $NEWApacheGroup;
+    $CLPerms = $NEWCLPerms; 
+    $ILPerms = $NEWILPerms; 
+    $PPEnableURL = $NEWPPEnableURL;
+    $PPEnableURL = $NEWPPEnableURL; 
+    $TOSEnableURL = $NEWTOSEnableURL;
+    $TOSEnableURL = $NEWTOSEnableURL; 
+    $PrivacyPolicyURL = $NEWPrivacyPolicyURL;
+    $TermsOfServiceURL = $NEWTermsOfServiceURL; }
+
   ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); 
   ?>
 <hr /></div>
