@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v2.5.1
-WRITTEN ON : 4/19/2018
+THIS VERSION : v2.5.2
+WRITTEN ON : 4/23/2018
 */
 
 // / -----------------------------------------------------------------------------------
@@ -87,6 +87,31 @@ if ($ClearCachePOST == '1' or $ClearCachePOST == 'true' or $ClearCachePOST == 'C
     echo nl2br($txt.'<hr />');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     require ($UserConfig); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code is performed whenever a user selects to clear their user cache.
+if ($ClearFavoritesPOST == '1' or $ClearFavoritesPOST == 'true' or $ClearFavoritesPOST == 'Clear Favorites') {
+  if ($UserIDRAW == 0) {
+    $txt = 'ERROR!!! HRC2CompatCore96, A non-logged-in user attempted to Clear User Favorites on '.$Time.'.';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt.'<hr />'); }
+  $txt = ('OP_Act: Initiated User Favorites Cleaner on '.$Time.'.');
+  echo nl2br ($txt.'<hr />');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  @unlink($FavoritesCacheFileCloud);
+  copy($LogInstallDir.'.favorites.php', $FavoritesCacheFileCloud); 
+  @unlink($FavoritesCacheFileInst); 
+  copy($LogInstallDir.'.favorites.php', $FavoritesCacheFileInst);
+  if (!file_exists($FavoritesCacheFileCloud)) { 
+    $txt = ('ERROR!!! HRC2CompatCore106, There was a problem creating the user favorites file on '.$Time.'!'); 
+    echo nl2br ($txt.'<hr />');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die ($txt.'<hr />'); }
+  if (file_exists($FavoritesCacheFileCloud)) {
+    $txt = ('OP-Act: Cleaned user favorite cache files on '.$Time.'!'); 
+    echo nl2br($txt.'<hr />');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

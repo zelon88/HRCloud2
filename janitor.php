@@ -7,7 +7,7 @@
 // / The following array sets some SAFE files that WILL NOT be deleted. These are skipped by the Janitor.
 $SAFEArr = array('', ' ', 'HRProprietary', 'HRCloud2', '.AppData', 'config.php');
 
-if ($JanitorDeleteIndex == '1') {
+if ($JanitorDeleteIndex == 1) { 
   unset($defaultApps['index.html']); }
 
 $CleanFilesRAW = $CleanFiles;

@@ -139,12 +139,16 @@ if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) {
   $UserDirPOST = ('/'); }
 // / The following code cleans extra slashes from the UserDirPOST.
 $UserDirPOST = str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST']));
-$CloudTmpDir = str_replace('//', '/', $CloudTempDir.$UserDirPOST); 
-$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', $CloudTmpDir)); 
-$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', $CloudTmpDir)); 
-$CloudUsrDir = str_replace('//', '/', $CloudDir.$UserDirPOST); 
-$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', $CloudUsrDir)); 
-$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', $CloudUsrDir)); 
+$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $CloudTempDir.$UserDirPOST)))); 
+$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $CloudDir.$UserDirPOST)))); 
+// / The following code represents the user directory handler.
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
+  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
+    $_POST['UserDir'] = '/'; 
+    $_POST['UserDirPOST'] = '/'; }  
+  $Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'].'/'))); }
+if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
+  $Udir = '/'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -196,7 +200,7 @@ if (!file_exists($SesLogDir)) {
     foreach ($LogInstallFiles1 as $LIF1) {
       if (in_array($LIF1, $installedApps)) continue;
       if ($LIF1 == '.' or $LIF1 == '..') continue;
-        @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
+      @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $SesLogDir.'/'.$LIF1); } }
 @copy($InstLoc.'/'.$LogInstallDir1.'.index.php', $SesLogDir.'/.index.php');
 // / -----
 // / The following code checks if the Resources directory exists, and creates one if it does not.
@@ -310,12 +314,26 @@ if (!file_exists($CloudShareDir)) {
 @copy($InstLoc.'/'.$SharedInstallDir.'.index.php', $CloudShareDir.'/.index.php');
 // / -----
 // / The following code checks if the FavoritesCacheFile exists, and creates one if it does not.
-if (!file_exists($FavoritesCacheFileCloud) or !file_exists($FavoritesCacheFileInst)) { 
+if (!file_exists($FavoritesCacheFileCloud)) { 
   $data = '<?php $FavoriteFiles = array();';
-  $txt = ('OP-Act: Created a Favorites cache file on '.$Time.'.');
+  $txt = ('OP-Act: Created a Favorites cache file in the Cloud loc on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND);
-  copy ($FavoritesCacheFileCloud, $FavoritesCacheFileInst); }
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); }
+// / -----
+// / The following code checks if the FavoritesCacheFile exists, and creates one if it does not.
+if (!file_exists($FavoritesCacheFileInst)) { 
+  $data = '<?php $FavoriteFiles = array();';
+  $txt = ('OP-Act: Created a Favorites cache file in the Inst loc on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileInst, $data.PHP_EOL, FILE_APPEND); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------        
+// / The following code copies an index file to the Temp Cloud directory.
+if (!file_exists($CloudTempDir.'/index.html')) {
+  copy('index.html', $CloudTempDir.'/index.html'); }
+if (!file_exists($CloudTmpDir.'/index.html')) {
+  copy('index.html', $CloudTmpDir.'/index.html'); }  
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -328,9 +346,6 @@ while (file_exists($ClamLogDir)) {
 // / -----------------------------------------------------------------------------------
 // / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
-  @chmod($UserConfig, 0755); 
-  @chown($UserConfig, 'www-data'); } 
-if (!file_exists($UserConfig)) { 
   copy($LogInstallDir.'.config.php', $UserConfig); }
 if (!file_exists($UserConfig)) { 
   $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
@@ -338,6 +353,24 @@ if (!file_exists($UserConfig)) {
   die ($txt); }
 if (file_exists($UserConfig)) {
   include ($UserConfig); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code reads the Admin configuration settings and sets temporary variables.
+$AdminIDRAW = 1;
+$AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
+$adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
+$AdminConfig = $adminAppDataInstDir.'/.config.php';
+if (!file_exists($AdminConfig)) { 
+  $txt = ('WARNING!!! HRC2CommonCore151, There was a problem loading the admin config file on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+if (file_exists($AdminConfig)) {
+  include ($AdminConfig); }
+$AdminIDRAW = null;
+$AdminID = null;
+$adminAppDataInstDir = null;
+$AdminConfig = null;  
+unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -393,6 +426,49 @@ $Time = date("F j, Y, g:i a");
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code will clean up old files.
+if (file_exists($CloudTempDir)) {
+  $DFiles = glob($CloudTempDir.'/*');
+  foreach ($DFiles as $DFile) {
+    if (in_array($DFile, $defaultApps) or $DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
+    $stat = lstat($DFile);
+    if (($Now - isset($stat['mtime']) ? $stat['mtime'] : null) >= 600) { // Time to keep files.
+      if (is_file($DFile)) {
+        unlink($DFile); 
+        $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+      if (is_dir($DFile)) {
+        $CleanDir = $DFile;
+        $CleanFiles = scandir($DFile);
+        $JanitorDeleteIndex = 1;
+        include($JanitorFile); 
+        @rmdir($DFile); } } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sync's the users AppData between the InstLoc and the CloudLoc.
+if (!file_exists($appDataCloudDir)) {
+  @mkdir($appDataCloudDir); }
+if (!file_exists($appDataCloudDir)) {
+  $txt = ('WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData 
+   directory in the CloudLoc on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  echo nl2br($txt."\n".'Most likely the server\'s permissions are incorrect. 
+   Make sure the www-data usergroup and user have R/W access to ALL folders in the /var/www/html directory. '); }
+foreach ($iterator = new \RecursiveIteratorIterator (
+  new \RecursiveDirectoryIterator ($appDataInstDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+  $ADCD = $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName();
+    if (is_dir($item)) {
+      if (!is_dir($ADCD)) {
+        mkdir($ADCD); 
+        continue; } }
+    else {
+        if (!is_link($item) && !file_exists($ADCD)) {
+          copy($item, $ADCD); } } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code checks if ShowTips is enabled and loads a random Tip if needed.
 if (file_exists($TipFile) && $ShowTips == '1') {
   if ($ShowTips == '1') {
@@ -420,145 +496,5 @@ if ($noStyles !== 1) {
     echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
   if ($ColorScheme == '5') {
     echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code reads the Admin configuration settings and sets temporary variables.
-$AdminIDRAW = 1;
-$AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
-$adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
-$AdminConfig = $adminAppDataInstDir.'/.config.php';
-if (!file_exists($AdminConfig)) { 
-  $txt = ('WARNING!!! HRC2CommonCore151, There was a problem loading the admin config file on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-if (file_exists($AdminConfig)) {
-  include ($AdminConfig); }
-$AV = $VirusScan;
-$HP = $HighPerformanceAV;
-$TH = $ThoroughAV; 
-$PS = $PersistentAV;
-$AU = $ApacheUser;
-$AG = $ApacheGroup;
-$CLP = $CLPerms;
-$ILP = $ILPerms;
-include ($AdminConfig);
-$AdminIDRAW = null;
-$AdminID = null;
-$adminAppDataInstDir = null;
-$AdminConfig = null;  
-unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code re-sets some variables for security. Just-in-case the UserConfig is compromised.
-$VirusScan = $AV;
-$HighPerformanceAV = $HP;
-$ThoroughAV = $TH;
-$PersistentAV = $PS;
-$ApacheUser = $AU;
-$ApacheGroup = $AG;
-$CLPerms = $CLP;
-$ILPerms = $ILP;
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code sync's the users AppData between the InstLoc and the Cloud.
-if (!file_exists($appDataCloudDir)) {
-  @mkdir($appDataCloudDir); }
-if (!file_exists($appDataCloudDir)) {
-  $txt = ('WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData 
-   directory in the CloudLoc on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  echo nl2br($txt."\n".'Most likely the server\'s permissions are incorrect. 
-   Make sure the www-data usergroup and user have R/W access to ALL folders in the /var/www/html directory. '); }
-foreach ($iterator = new \RecursiveIteratorIterator (
-  new \RecursiveDirectoryIterator ($appDataInstDir, \RecursiveDirectoryIterator::SKIP_DOTS),
-  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-    @chmod($item, 0755);
-    if ($item->isDir()) {
-      if (!file_exists($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-        mkdir($appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } }
-    else {
-        if (!is_link($item) or !file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-          copy($item, $appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code sync's the users AppData between the CloudLoc and the InstLoc.
-foreach ($iterator = new \RecursiveIteratorIterator (
-  new \RecursiveDirectoryIterator ($appDataCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
-  \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-    @chmod($item, 0755);
-    if ($item->isDir()) {
-      if (!file_exists($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName())) {
-        mkdir($appDataInstDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } }
-    else {
-        if (!is_link($item)) {
-          copy($item, $appDataCloudDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName()); } } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code represents the user directory handler.
-if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
-  if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
-    $_POST['UserDir'] = '/'; 
-    $_POST['UserDirPOST'] = '/'; } 
-  $Udir = $_POST['UserDirPOST'].'/'; }
-if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
-  $Udir = '/'; }
-if (strpos($Udir, '//') == 'true') {
-  $Udir = str_replace('//', '/', $Udir); }
-if (strpos($Udir, '//') == 'true') {
-  $Udir = str_replace('//', '/', $Udir); }
-if (strpos($Udir, '//') == 'true') {
-  $Udir = str_replace('//', '/', $Udir); }
-if ($Udir == '//') {
-  $Udir = '/'; }
-if ($Udir == '//') {
-  $Udir = '/'; }
-if ($Udir == '//') {
-  $Udir = '/'; }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code will clean up old files.
-function symlinkmtime($symlinkPath) {
-  $stat = lstat($symlinkPath);
-  return isset($stat['mtime']) ? $stat['mtime'] : null; }
-if (file_exists($CloudTempDir)) {
-  $DFiles = glob($CloudTempDir.'/*');
-  $now = time();
-  foreach ($DFiles as $DFile) {
-    if (in_array($DFile, $defaultApps)) continue;
-    if ($DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
-    if (($now - symlinkmtime($DFile)) >= 600) { // Time to keep files.
-      if (is_file($DFile)) {
-        @chmod ($DFile, 0755);
-        unlink($DFile); 
-        $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-      if (is_dir($DFile)) {
-        $CleanDir = $DFile;
-        @chmod ($CleanDir, 0755);
-        $CleanFiles = scandir($DFile);
-        include($JanitorFile); 
-        @unlink($DFile.'/index.html');
-        @rmdir($DFile); } } } }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------        
-// / The following code copies a fresh index file to the Temp Cloud directory.
-if (!file_exists($CloudTempDir.'/index.html')) {
-  copy('index.html', $CloudTempDir.'/index.html'); }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code displays appropriate filesizes.
-$bytes = sprintf('%u', filesize($DisplayFile));
-if ($bytes > 0) {
-  $unit = intval(log($bytes, 1024));
-  $units = array('B', 'KB', 'MB', 'GB');
-  if (array_key_exists($unit, $units) === true) { 
-    $DisplayFileSize = sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]); } }
 // / -----------------------------------------------------------------------------------
 ?>

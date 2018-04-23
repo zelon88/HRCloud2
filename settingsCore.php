@@ -685,6 +685,9 @@ print '</select></p>';
 <p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"> Clear User Cache Files: </p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
+<p alt="Delete your favorites cache. (Will NOT delete uploaded data or user content)" title="Delete your favorites cache." style="padding-left:15px;"> Clear Favorite Files: </p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='ClearFavorites' id='ClearFavorites' value='Clear Favorites' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+
 <?php
 // / -----------------------------------------------------------------------------------
 // / The following is displayed if the user is an administrator.

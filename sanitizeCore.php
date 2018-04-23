@@ -84,6 +84,8 @@ if (isset($_POST['ClearUserCache'])) {
   $ClearCachePOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearUserCache']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['ClearCache'])) {
   $ClearCachePOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearCache']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['ClearFavorites'])) {
+  $ClearFavoritesPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['ClearFavorites']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
