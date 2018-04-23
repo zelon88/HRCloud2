@@ -682,10 +682,10 @@ print '</select></p>';
 // / -----------------------------------------------------------------------------------
 ?>
 
-<p alt="Delete all cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete all cache and temporary data related to your user account." style="padding-left:15px;"> Clear User Cache Files: </p>
+<p alt="Delete cache and temporary data related to your HRCloud2 user account. (Will NOT delete uploaded data or user content)" title="Delete cache and temporary data related to your user account." style="padding-left:15px;"> Clear User Cache Files: </p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='ClearCache' id='ClearCache' value='Clear User Cache' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
-<p alt="Delete your favorites cache. (Will NOT delete uploaded data or user content)" title="Delete your favorites cache." style="padding-left:15px;"> Clear Favorite Files: </p>
+<p alt="Delete your favorites cache. (Will NOT delete uploaded data or user content)" title="Delete your favorites cache." style="padding-left:15px;"> Clear Favorites Cache: </p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='ClearFavorites' id='ClearFavorites' value='Clear Favorites' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <?php
@@ -727,7 +727,7 @@ if ($UserIDRAW == 1) { ?>
   </select>
 </p>
 
-<p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:30px; width:100%;"> High Performance A/V Scanning (Multi-threading): </p>
+<p alt="Options to enable high performance (Multithreaded) A/V scanning." title="Options to enable high performance (Multithreaded) A/V scanning." style="padding-left:15px; width:100%;"> High Performance A/V Scanning (Multi-threading): </p>
 <p>
   <select id="NEWHighPerformanceAV" name="NEWHighPerformanceAV" style="padding-left:30px; width:100%;">
     <option value="<?php echo $HighPerformanceAV; ?>">Current (<?php echo $HPAVURL; ?>)</option>
