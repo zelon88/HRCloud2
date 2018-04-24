@@ -432,11 +432,11 @@ if (file_exists($CloudTempDir)) {
   foreach ($DFiles as $DFile) {
     if (in_array($DFile, $defaultApps) or $DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
     $stat = lstat($DFile);
-    if (($Now - isset($stat['mtime']) ? $stat['mtime'] : null) >= 600) { // Time to keep files.
-      if (is_file($DFile)) {
-        unlink($DFile); 
-        $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+      if (($Now - $stat['mtime']) >= 600) { // Time to keep files.
+        if (is_file($DFile)) {
+          unlink($DFile); 
+          $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
       if (is_dir($DFile)) {
         $CleanDir = $DFile;
         $CleanFiles = scandir($DFile);
