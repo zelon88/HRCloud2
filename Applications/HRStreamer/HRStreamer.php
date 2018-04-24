@@ -3,75 +3,52 @@
     <title>HRStreamer</title>
   </head>
   <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
-  <script type="text/javascript">
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-        e.style.display = 'none';
-      else
-        e.style.display = 'block'; }
-    function show_visibility(id) {
-      var e = document.getElementById(id);
-      e.style.display = 'block'; }
-    function hide_visibility(id) {
-      var e = document.getElementById(id);
-      e.style.display = 'none'; }
-    function hide_visibility_name(name) {
-      var e = document.getElementsByName(name);
-      e.style.display = 'none'; }
-    function goBack() {
-      window.history.back(); }
-    function stopAllAudio() {
-      var sounds = document.getElementsByTagName('audio');
-      for(i=0; i<sounds.length; i++) sounds[i].pause(); }
-    function startStopSelectedAudio(id) {
-      var myAudio = document.getElementById(id);
-      if (myAudio.paused) {
-        myAudio.play(); } 
-      else {
-        myAudio.pause(); } }
-    var songsrc = [];
-    var index = 0;
-  </script>  
+  <script type="text/javascript" src="Applications/HRStreamer/HRStreamerLib.js"></script>  
   <link rel="stylesheet" href="Applications/displaydirectorycontents_72716/style.css">
   <body style="font-family:<?php echo $Font; ?>;">
 <?php 
-// / Load commonCore WordPress.
+// / Set global variables.
+$hrstreamerAppVersion = 'v0.9';
+
+// / Load the HRCloud2 commonCore.
 $CCFile = 'commonCore.php';
 if (!file_exists($CCFile)) {
-  echo nl2br('ERROR!!! HRS26, CommonCore was not detected on the server.'."\n");
-  die('ERROR!!! HRS26, CommonCore was not detected on the server.'); }
+  echo nl2br('ERROR!!! HRS26, CommonCore was not detected on the server.'."\n"); }
   else {
     require_once($CCFile); } 
-// / Detect WordPress and set global variables.
-$hrstreamerAppVersion = 'v0.8';
-$getID3File = $InstLoc.'/Applications/getid3/getid3/getid3.php';
-if ($UserIDRAW == '0' or $UserIDRAW == '') {
-  $txt = ('ERROR!!! HRS43, You are not logged in on '.$Time.'!');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-  die('ERROR!!! HRS43, You are not logged in on '.$Time.'!'); }
-if (file_exists($getID3File)) {
-  require($getID3File); }
+
+// / Load the getid3 library.
+$getID3File = 'Applications/getid3/getid3/getid3.php';
 if (!file_exists($getID3File)) {
   $txt = ('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
   die('ERROR!!! HRS53, The getID3 module is not installed on the server on '.$Time.'!'); }
+  else {
+    require_once($getID3File); } 
+
 // / Set POST variables.-
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $_POST['playlistSelected'] = $_GET['playlistSelected']; }
+
 // / The following code is performed whnenever there is a playlistSelected.
 if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $PlaylistName = $_POST['playlistSelected'];  
   $PlaylistDir = $CloudTempDir.'/'.$PlaylistName;
+  $PlaylistCloudDir = $CloudDir.'/'.$PlaylistName;
   if (!file_exists($PlaylistDir)) {
     mkdir($PlaylistDir, 0755);
-    $txt = ('Creating '.$PlaylistDir.' on '.$Time.'!');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
-    if (file_exists($PlaylistUSRDir)) {
-      foreach (glob($PlaylistUSRDir) as $PlaylistUSRFiles) {
-        $txt = ('Copied '.$PlaylistUSRFiles.' to '.$PlaylistUSRDir.' on '.$Time.'!');
-        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-        copy ($PlaylistUSRFiles, $PlaylistDir); } } } 
+    copy($InstLoc.'/index.html', $PlaylistDir.'/indes.html');
+    foreach ($iterator = new \RecursiveIteratorIterator (
+      new \RecursiveDirectoryIterator ($PlaylistCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+      \RecursiveIteratorIterator::SELF_FIRST) as $item) {
+      $PD = $PlaylistDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName();
+        if (is_dir($item)) {
+          if (!is_dir($PD)) {
+            mkdir($PD, 0755); 
+            continue; } }
+        else {
+            if (!is_link($item) && !file_exists($PD)) {
+              symlink($item, $PD); } } } }
     if (!file_exists($PlaylistDir)) {
       $txt = ('ERROR!!! HRS86, The PlaylistDir does not exist on '.$Time.'!');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
@@ -80,7 +57,7 @@ if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   else {
     $txt = ('ERROR!!! HRS70, There was no playlist selected on '.$Time.'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
-    die('ERROR!!! HRS70, There was no playlist selected on '.$Time.'!'); }
+    die($txt); }
 ?>
   <div align="center">
   <h3><?php echo $PlaylistNameRAW; ?></h3>
@@ -88,7 +65,7 @@ if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   <hr />
 <?php  
   // / If the selected playlist name does not contain .playlist, kill the script.
-  if (strpos($PlaylistDir, '.Playlist') == 'false') {
+  if (strpos($PlaylistDir, '.Playlist') == FALSE) {
     $txt = ('ERROR!!! HRS60, The selected playlist is not a valid HRCloud2 ".playlist" file on '.$Time.'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     die('ERROR!!! HRS60, The selected playlist is not a valid HRCloud2 ".playlist" file on '.$Time.'!'); }
@@ -105,12 +82,10 @@ if (file_exists($PlaylistDir)) {
   $PlaylistCacheFile = $PlaylistCacheDir.'/cache.php';
   $PlaylistFiles = scandir($PlaylistDir); 
   if (!file_exists($PlaylistCacheFile)) {
-    $txt = '';
-    $MAKECacheFile = file_put_contents($PlaylistCacheFile, $txt.PHP_EOL , FILE_APPEND);
-    touch($PlaylistCacheFile); 
-    $txt = ('OP-Act: Created a playlist cache file on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); }
-  if (strpos($PlaylistDir, '.Playlist') == 'false') {
+    $txt = ('ERRPR!!! HRS79, This Playlist does not contain a valid cache file on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
+    die($txt); }
+  if (strpos($PlaylistDir, '.Playlist') == FALSE) {
     $txt = ('ERROR!!! HRS68, '.$PlaylistDir.' is not a valid .Playlist file!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND);
     die($txt); }
