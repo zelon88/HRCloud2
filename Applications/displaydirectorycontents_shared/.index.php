@@ -52,70 +52,83 @@
         sort($dirArray);
         for ($index = 0; $index < $indexCount; $index++) {
           if (substr("$dirArray[$index]", 0, 1) != $hide) {
-          $favicon = "";
-          $class = "file";
-          $name = $dirArray[$index];
-          $path = $UserSharedDir.'/'.$name;
-          $modtime = date("M j Y g:i A", filemtime($path));
-          $namehref = $UserShared.'/'.$name;
-          $timekey = date("YmdHis", filemtime($path));
-          if(is_dir($path)) {
-            $extn = "&lt;Directory&gt;";
-            $size = "&lt;Directory&gt;";
-            $sizekey = "0";
-            $class = "dir";
-            if(file_exists($namehref."/favicon.ico")) {
-              $favicon = " style='background-image:url($namehref/favicon.ico);'";
-              $extn = "&lt;Website&gt;"; }
-              if ($name == "."){$name=". (Current Directory)"; $extn = "&lt;System Dir&gt;"; $favicon = " style='background-image:url($namehref/.favicon.ico);'";}
-              if ($name == ".."){$name=".. (Parent Directory)"; $extn = "&lt;System Dir&gt;"; } }
+            $favicon = "";
+            $class = "file";
+            $name = $dirArray[$index];
+            $namehref = $dirArray[$index];
+            $fileArray = array_push($fileArray1, $namehref);
+            if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
+            if (empty($namehref)) continue;
+            if (substr_compare($namehref, '/', 1)) $namehref = substr_replace('/'.$namehref, $namehref, 0); 
+            $modtime = date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
+            $timekey = date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index])); 
+            if(is_dir($path)) {
+              $extn = "&lt;Directory&gt;";
+              $size = "&lt;Directory&gt;";
+              $sizekey = "0";
+              $class = "dir";
+              if(file_exists($namehref."/favicon.ico")) {
+                $favicon = " style='background-image:url($namehref/favicon.ico);'";
+                $extn = "&lt;Website&gt;"; }
+                if ($name == "."){$name=". (Current Directory)"; $extn = "&lt;System Dir&gt;"; $favicon = " style='background-image:url($namehref/.favicon.ico);'"; }
+                if ($name == ".."){$name=".. (Parent Directory)"; $extn = "&lt;System Dir&gt;"; } }
             else {
-            $extn = pathinfo($path, PATHINFO_EXTENSION);
-            switch ($extn) {
-              case "png": $extn = "PNG Image"; break;
-              case "jpg": $extn = "JPEG Image"; break;
-              case "jpeg": $extn = "JPEG Image"; break;
-              case "svg": $extn = "SVG Image"; break;
-              case "gif": $extn = "GIF Image"; break;
-              case "ico": $extn = "Windows Icon"; break;
-              case "txt": $extn = "Text File"; break;
-              case "log": $extn = "Log File"; break;
-              case "htm": $extn = "HTML File"; break;
-              case "html": $extn = "HTML File"; break;
-              case "xhtml": $extn = "HTML File"; break;
-              case "shtml": $extn = "HTML File"; break;
-              case "php": $extn = "PHP Script"; break;
-              case "js": $extn = "Javascript File"; break;
-              case "css": $extn = "Stylesheet"; break;
-              case "pdf": $extn = "PDF Document"; break;
-              case "xls": $extn = "Spreadsheet"; break;
-              case "xlsx": $extn= "Spreadsheet"; break;
-              case "doc": $extn = "Microsoft Word Document"; break;
-              case "docx": $extn = "Microsoft Word Document"; break;
-              case "zip": $extn = "ZIP Archive"; break;
-              case "playlist": $extn = "Playlist"; break;
-              case "htaccess": $extn = "Apache Config File"; break;
-              case "exe": $extn = "Windows Executable"; break;
-              case '<Directory>': $extn = 'Folder'; break;
-              case 'Directory': $extn = 'Folder'; break;
-              case '<directory>': $extn = 'Folder'; break;
-              case 'directory': $extn = 'Folder'; break;
-              break;
-              default: 
-              if ($extn != "") {
-                $extn = strtoupper($extn)." File"; } 
-              else {$extn = "Unknown"; } break; }
-              $size = getFilesize($path);
-              $sizekey = filesize($path); }
-          if (in_array($name, $defaultApps)) continue;
-         echo("<tr class='$class'>
-            <td><a href='$namehref'$favicon class='name'>$name</a></td>
-            <td><a href='$namehref'>$extn</a></td>
-            <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$name'></div></td>
-                  <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
-            <td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>");  
-          $fileCounter++;
-          } } ?>
+              // Gets file extension.
+              $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+              // Prettifies file type.
+              switch ($extn) {
+                case "png": $extn = "PNG Image"; break;
+                case "bmp": $extn = "BMP Image"; break;
+                case "jpg": $extn = "JPEG Image"; break;
+                case "jpeg": $extn = "JPEG Image"; break;
+                case "svg": $extn = "SVG Image"; break;
+                case "gif": $extn = "GIF Image"; break;
+                case "ico": $extn = "Windows Icon"; break;
+                case "txt": $extn = "Text File"; break;
+                case "log": $extn = "Log File"; break;
+                case "htm": $extn = "HTML File"; break;
+                case "sh": $extn = "Bash Script"; break;
+                case "html": $extn = "HTML File"; break;
+                case "xhtml": $extn = "HTML File"; break;
+                case "shtml": $extn = "HTML File"; break;
+                case "php": $extn = "PHP Script"; break;
+                case "js": $extn = "Javascript File"; break;
+                case "css": $extn = "Stylesheet"; break;
+                case "pdf": $extn = "PDF Document"; break;
+                case "xls": $extn = "Spreadsheet"; break;
+                case "ods": $extn = "Spreadsheet"; break;
+                case "xlsx": $extn= "Spreadsheet"; break;
+                case "doc": $extn = "Microsoft Word Document"; break;
+                case "docx": $extn = "Microsoft Word Document"; break;
+                case "zip": $extn = "ZIP Archive"; break;
+                case "playlist": $extn = "Playlist"; break;
+                case "htaccess": $extn = "Apache Config File"; break;
+                case "exe": $extn = "Windows Executable"; break;
+                case '<Directory>': $extn = 'Folder'; break;
+                case 'Directory': $extn = 'Folder'; break;
+                case '<directory>': $extn = 'Folder'; break;
+                case 'directory': $extn = 'Folder'; break;
+                default: if ($extn != ""){ $extn = strtoupper($extn)." File"; }
+                  break; }
+                if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == false) {
+                  $extn = "Folder"; }
+                if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
+                $size = getFilesize($CloudUsrDir.$dirArray[$index]);
+                $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
+                $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
+                $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+                if ($extnRAW == '' or $extnRAW == NULL or preg_match('~[0-9]~', $size) == FALSE) {
+                  $extn = "Folder"; 
+                  $size = "Unknown"; 
+                  $size = "Unknown"; }
+            if (in_array($name, $defaultApps)) continue;
+           echo("<tr class='$class'>
+              <td><a href='$namehref'$favicon class='name'>$name</a></td>
+              <td><a href='$namehref'>$extn</a></td>
+              <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$name'></div></td>
+                    <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
+              <td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>");  
+          $fileCounter++; } } ?>
         </tbody>
         </table>
 
