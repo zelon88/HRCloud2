@@ -247,163 +247,150 @@
     if ($indexCount > 1) sort($dirArray);
     for ($index = 0; $index < $indexCount; $index++) {
       if (substr("$dirArray[$index]", 0, 1) != $hide) {
-        $favicon = "";
         $class = "file";
         $name = $dirArray[$index];
         $namehref = $dirArray[$index];
         $fileArray = array_push($fileArray1, $namehref);
-      if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
-      if (empty($namehref)) continue;
-      if (substr_compare($namehref, '/', 1)) $namehref = substr_replace('/'.$namehref, $namehref, 0); 
-      $modtime = date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
-      $timekey = date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index])); 
-      if (is_dir($dirArray[$index])) {
-        $extn = "&lt;Directory&gt;";
-        $size = "&lt;Directory&gt;";
-        $sizekey = "0";
-        $class = "dir";
-          if (file_exists("$namehref/favicon.ico")) {
-            $slash = '/';
-            $favicon = " style='background-image:url($slash$namehref/favicon.ico);'";
-            $extn = "&lt;Website&gt;"; }
-          if ($name == ".") $name = ". (Current Directory)"; $extn = "&lt;System Dir&gt;"; $favicon = " style='background-image:url($slash$namehref/favicon.ico);'";
-          if ($name == "..") $name = ".. (Parent Directory)"; $extn = "&lt;System Dir&gt;"; }
-    // File-only operations.
-      else {
-        // Gets file extension.
-        $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
-        // Prettifies file type.
-        switch ($extn) {
-          case "png": $extn = "PNG Image"; break;
-          case "jpg": $extn = "JPEG Image"; break;
-          case "jpeg": $extn = "JPEG Image"; break;
-          case "svg": $extn = "SVG Image"; break;
-          case "gif": $extn = "GIF Image"; break;
-          case "ico": $extn = "Windows Icon"; break;
-          case "txt": $extn = "Text File"; break;
-          case "log": $extn = "Log File"; break;
-          case "htm": $extn = "HTML File"; break;
-          case "html": $extn = "HTML File"; break;
-          case "xhtml": $extn = "HTML File"; break;
-          case "shtml": $extn = "HTML File"; break;
-          case "php": $extn = "PHP Script"; break;
-          case "js": $extn = "Javascript File"; break;
-          case "css": $extn = "Stylesheet"; break;
-          case "pdf": $extn = "PDF Document"; break;
-          case "xls": $extn = "Spreadsheet"; break;
-          case "xlsx": $extn= "Spreadsheet"; break;
-          case "doc": $extn = "Microsoft Word Document"; break;
-          case "docx": $extn = "Microsoft Word Document"; break;
-          case "zip": $extn = "ZIP Archive"; break;
-          case "playlist": $extn = "Playlist"; break;
-          case "htaccess": $extn = "Apache Config File"; break;
-          case "exe": $extn = "Windows Executable"; break;
-          case '<Directory>': $extn = 'Folder'; break;
-          case 'Directory': $extn = 'Folder'; break;
-          case '<directory>': $extn = 'Folder'; break;
-          case 'directory': $extn = 'Folder'; break;
-          default: if ($extn != ""){ $extn = strtoupper($extn)." File"; } else {
-            $extn = "Folder"; } 
-            break; }
-          if (strpos($extn, 'directory') == 'true' or strpos($extn, 'Directory') == 'true' or strpos($name, '.') == 'false') {
-            $extn = "Folder"; }
-          $size = getFilesize($CloudUsrDir.$dirArray[$index]);
-          $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
-          if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
-          $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
-          $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
-          if ($extnRAW == '' or $extnRAW == NULL) {
-            $extn = "Folder"; 
-            $size = "Unknown"; }
-          if (preg_match('~[0-9]~', $size) == 'false') {
-            $size = "Unknown"; }
-          if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
-            if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
-              $_POST['UserDir'] = '/'; 
-              $_POST['UserDirPOST'] = '/'; } 
-            $Udir = $_POST['UserDirPOST'].'/'; }
-          if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
-            $Udir = '/'; }
-          if ($Udir == '//') {
-            $Udir = '/'; }
-          if ($Udir == '//') {
-            $Udir = '/'; }
-          if ($Udir == '//') {
-            $Udir = '/'; }
-          $CleanUdir = str_replace('//', '/', $Udir.$name);
-          $CleanUdir = str_replace('//', '/', $CleanUdir);
-          $CleanUdir = str_replace('//', '/', $CleanUdir);
-          $CleanDir = rtrim($CleanUdir, '/');
-          // / Handle the AJAX post for if a user clicks on a folder in their drive.
-          if ($extn == 'Folder' or $extn == '<Directory>' or strpos($name, '.') == 'false' 
-            or $extnRAW == '' or $extnRAW == NULL) { 
-            ?>
-            <script type="text/javascript">
-            $(document).ready(function () {
-            $("#corePostDL<?php echo $tableCount; ?>").click(function(){
-            $.ajax( {
-                type: 'POST',
-                url: 'cloudCore.php',
-                data: { download : "1", dirToMake : "<?php echo $CleanUdir; ?>", filesToDownload : "<?php echo $name; ?>"},
-                success: function(returnFile) {
-                  toggle_visibility('loadingCommandDiv');
-                    window.location.href = "<?php echo ('cloudCore.php?UserDirPOST='.$CleanUdir); ?>";
-                }
-            } );
-            });
-            });
-            </script>
-            <?php }
-          // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
-          if ($extn == 'Playlist' or $extn == 'PLAYLIST') { 
-            if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
-              $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; } 
-            else {
-              $PLSpecialEcho = ''; } ?>
-            <script type="text/javascript">
-            $(document).ready(function () {
-            $("#corePostDL<?php echo $tableCount; ?>").click(function(){
-            $.ajax( {
-                type: 'POST',
-                url: 'cloudCore.php',
-                data: { playlistSelected : "<?php echo $name; ?>"},
-                success: function(returnFile) {
-                  toggle_visibility('loadingCommandDiv');
-                  window.location.href = "<?php echo ('cloudCore.php?playlistSelected='.$name); ?>";
-                }
-            } );
-            });
-            });
-            </script>
-            <?php }
-          if ($extn !== "Folder" or $extn !== "Playlist") { ?>
-            <script type="text/javascript">
-            $(document).ready(function () {
-            $("#corePostDL<?php echo $tableCount; ?>").click(function(){
-            $.ajax( {
-                type: 'POST',
-                url: 'cloudCore.php',
-                data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
-                success: function(returnFile) {
-                  toggle_visibility('loadingCommandDiv');
-                  window.setTimeout(function(){
-                    window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>";
-                  }, 2500);
-                }
-            } );
-            });
-            });
-            </script>
-            <?php }
-             echo("
-              <tr class='$class'>
-                <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
-                <td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
-                <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
-                <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
-                <td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
-              </tr>");
-              $tableCount++; } } ?>
+        if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
+        if (empty($namehref)) continue;
+        if (substr_compare($namehref, '/', 1)) $namehref = substr_replace('/'.$namehref, $namehref, 0); 
+        $modtime = date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
+        $timekey = date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index])); 
+        if (is_dir($dirArray[$index])) {
+          $extn = "&lt;Directory&gt;";
+          $size = "&lt;Directory&gt;";
+          $sizekey = "0";
+          $class = "dir";
+            if ($name == ".") $name = ". (Current Directory)"; $extn = "&lt;System Dir&gt;"; $favicon = " style='background-image:url($slash$namehref/favicon.ico);'";
+            if ($name == "..") $name = ".. (Parent Directory)"; $extn = "&lt;System Dir&gt;"; }
+      // File-only operations.
+        else {
+          // Gets file extension.
+          $extn = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+          // Prettifies file type.
+          switch ($extn) {
+            case "png": $extn = "PNG Image"; break;
+            case "bmp": $extn = "BMP Image"; break;
+            case "jpg": $extn = "JPEG Image"; break;
+            case "jpeg": $extn = "JPEG Image"; break;
+            case "svg": $extn = "SVG Image"; break;
+            case "gif": $extn = "GIF Image"; break;
+            case "ico": $extn = "Windows Icon"; break;
+            case "txt": $extn = "Text File"; break;
+            case "log": $extn = "Log File"; break;
+            case "htm": $extn = "HTML File"; break;
+            case "sh": $extn = "Bash Script"; break;
+            case "html": $extn = "HTML File"; break;
+            case "xhtml": $extn = "HTML File"; break;
+            case "shtml": $extn = "HTML File"; break;
+            case "php": $extn = "PHP Script"; break;
+            case "js": $extn = "Javascript File"; break;
+            case "css": $extn = "Stylesheet"; break;
+            case "pdf": $extn = "PDF Document"; break;
+            case "xls": $extn = "Spreadsheet"; break;
+            case "ods": $extn = "Spreadsheet"; break;
+            case "xlsx": $extn= "Spreadsheet"; break;
+            case "doc": $extn = "Microsoft Word Document"; break;
+            case "docx": $extn = "Microsoft Word Document"; break;
+            case "zip": $extn = "ZIP Archive"; break;
+            case "playlist": $extn = "Playlist"; break;
+            case "htaccess": $extn = "Apache Config File"; break;
+            case "exe": $extn = "Windows Executable"; break;
+            case '<Directory>': $extn = 'Folder'; break;
+            case 'Directory': $extn = 'Folder'; break;
+            case '<directory>': $extn = 'Folder'; break;
+            case 'directory': $extn = 'Folder'; break;
+            default: if ($extn != ""){ $extn = strtoupper($extn)." File"; }
+              break; }
+            if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == false) {
+              $extn = "Folder"; }
+            if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
+            $size = getFilesize($CloudUsrDir.$dirArray[$index]);
+            $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
+            $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
+            $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+            if ($extnRAW == '' or $extnRAW == NULL or preg_match('~[0-9]~', $size) == FALSE) {
+              $extn = "Folder"; 
+              $size = "Unknown"; 
+              $size = "Unknown"; }
+            if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
+              if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
+                $_POST['UserDir'] = '/'; 
+                $_POST['UserDirPOST'] = '/'; } 
+              $Udir = $_POST['UserDirPOST'].'/'; }
+            if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
+              $Udir = '/'; }
+            $CleanUdir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir.$name)));
+            $CleanDir = rtrim($CleanUdir, '/');
+
+            // / Handle the AJAX post for if a user clicks on a folder in their drive.
+            if (strpos($name, '.') == FALSE) { ?>
+              <script type="text/javascript">
+              $(document).ready(function () {
+              $("#corePostDL<?php echo $tableCount; ?>").click(function(){
+              $.ajax( {
+                  type: 'POST',
+                  url: 'cloudCore.php',
+                  data: { download : "1", dirToMake : "<?php echo $CleanUdir; ?>", filesToDownload : "<?php echo $name; ?>"},
+                  success: function(returnFile) {
+                    toggle_visibility('loadingCommandDiv');
+                      window.location.href = "<?php echo ('cloudCore.php?UserDirPOST='.$CleanUdir); ?>";
+                  }
+              } );
+              });
+              });
+              </script>
+              <?php }
+            // / Handle the AJAX post for if a use clicks on a .Playlist file in their drive.
+            if (strpos($name, '.Playlist') == TRUE) { 
+              if (isset ($_POST['UserDirPOST']) && $_POST['UserDirPOST'] !== '' && $_POST['UserDirPOST'] !== '/') { 
+                $PLSpecialEcho = '?UserDirPOST='.$UserDirPOST; } 
+              else {
+                $PLSpecialEcho = ''; } ?>
+              <script type="text/javascript">
+              $(document).ready(function () {
+              $("#corePostDL<?php echo $tableCount; ?>").click(function(){
+              $.ajax( {
+                  type: 'POST',
+                  url: 'cloudCore.php',
+                  data: { playlistSelected : "<?php echo $name; ?>"},
+                  success: function(returnFile) {
+                    toggle_visibility('loadingCommandDiv');
+                    window.location.href = "<?php echo ('cloudCore.php?playlistSelected='.$name); ?>";
+                  }
+              } );
+              });
+              });
+              </script>
+              <?php }
+            if (strpos($name, '.') == TRUE && strpos($name, '.Playlist') == FALSE) { ?>
+              <script type="text/javascript">
+              $(document).ready(function () {
+              $("#corePostDL<?php echo $tableCount; ?>").click(function(){
+              $.ajax( {
+                  type: 'POST',
+                  url: 'cloudCore.php',
+                  data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
+                  success: function(returnFile) {
+                    toggle_visibility('loadingCommandDiv');
+                    window.setTimeout(function(){
+                      window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>";
+                    }, 2500);
+                  }
+              } );
+              });
+              });
+              </script>
+              <?php }
+               echo("
+                <tr class='$class'>
+                  <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
+                  <td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
+                  <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
+                  <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
+                  <td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
+                </tr>");
+                $tableCount++; } } ?>
       </tbody>
     </table>
     <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
