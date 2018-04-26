@@ -159,7 +159,7 @@ if (!is_dir($CloudLoc)) {
     Please check the config.php file and refresh the page.');
   die($txt); }
 if (!file_exists($CloudDir) && strpos($CloudDir, '.zip') == 'false') {
-  @mkdir($CloudDir, 0755); }
+  @mkdir($CloudDir, $CLPerms); }
 // / -----
 // / The following code checks if the $CloudTemp directory ($CloudLoc.$userID) exists, and creates one if it does not.
 if(!file_exists($CloudTemp)) {
@@ -174,18 +174,18 @@ if(!file_exists($CloudTemp)) {
 // / -----
 // / The following code checks if the $CloudTemp directory ($InstLoc.'/DATA/'.$userID) exists, and creates one if it does not.
 if (!file_exists($CloudTempDir)) { 
-  mkdir($CloudTempDir, 0755); }
+  mkdir($CloudTempDir, $ILPerms); }
 @copy($InstLoc.'/index.html', $CloudTempDir.'/index.html');
 // / -----
 // / The following code checks if the CloudTmpDir exists, and creates one if it does not.
 if (!file_exists($CloudTmpDir)) { 
-  mkdir($CloudTmpDir, 0755); }
+  mkdir($CloudTmpDir, $ILPerms); }
 @copy($InstLoc.'/index.html', $CloudTmpDir.'/index.html');
 // / -----
 // / The following code checks if the LogLoc exists, and creates one if it does not.
 // / Also creates the file strucutre needed for the Logs to display content and store cache data.
 if (!file_exists($LogLoc)) {
-  $JICInstallLogs = @mkdir($LogLoc, 0755); 
+  $JICInstallLogs = @mkdir($LogLoc, $ILPerms); 
   @copy($InstLoc.'/index.html',$LogLoc.'/index.html'); 
     foreach ($LogInstallFiles as $LIF) {
       if ($LIF == '.' or $LIF == '..' or $LIF == '.config.php') continue;
@@ -195,7 +195,7 @@ copy($InstLoc.'/'.$LogInstallDir.'.index.php', $LogLoc.'/.index.php');
 // / The following code checks if the SesLogDir exists, and creates one if it does not.
 // / Also creates the file strucutre needed for the sesLog to display content.
 if (!file_exists($SesLogDir)) {
-  $JICInstallLogs = @mkdir($SesLogDir, 0755);
+  $JICInstallLogs = @mkdir($SesLogDir, $ILPerms);
   @copy($InstLoc.'/index.html', $SesLogDir.'/index.html');
     foreach ($LogInstallFiles1 as $LIF1) {
       if (in_array($LIF1, $installedApps)) continue;
@@ -205,7 +205,7 @@ if (!file_exists($SesLogDir)) {
 // / -----
 // / The following code checks if the Resources directory exists, and creates one if it does not.
 if (!file_exists($ResourcesDir)) {
-  @mkdir($TempResourcesDir, 0755); 
+  @mkdir($TempResourcesDir, $ILPerms); 
   if (file_exists($ResourcesDir)) {
     $txt = ('OP-Act: Created a Resources Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -216,7 +216,7 @@ if (!file_exists($ResourcesDir)) {
 // / -----
 // / The following code checks if the TempResources directory exists, and creates one if it does not.
 if (!file_exists($TempResourcesDir)) {
-  @mkdir($TempResourcesDir, 0755); 
+  @mkdir($TempResourcesDir, $ILPerms); 
   if (file_exists($TempResourcesDir)) {
     $txt = ('OP-Act: Created a Temp Resources Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -227,7 +227,7 @@ if (!file_exists($TempResourcesDir)) {
 // / -----
 // / The following code checks if the ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDir)) {
-  @mkdir($ClientInstallDir, 0755); 
+  @mkdir($ClientInstallDir, $ILPerms); 
   if (file_exists($ClientInstallDir)) {
     $txt = ('OP-Act: Created a Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -238,7 +238,7 @@ if (!file_exists($ClientInstallDir)) {
 // / -----
 // / The following code checks if the Windows ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDirWin)) {
-  @mkdir($ClientInstallDirWin, 0755); 
+  @mkdir($ClientInstallDirWin, $ILPerms); 
   if (file_exists($ClientInstallDirWin)) {
     $txt = ('OP-Act: Created a Windows Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -249,7 +249,7 @@ if (!file_exists($ClientInstallDirWin)) {
 // / -----
 // / The following code checks if the Linux ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDirLin)) {
-  @mkdir($ClientInstallDirLin, 0755); 
+  @mkdir($ClientInstallDirLin, $ILPerms); 
   if (file_exists($ClientInstallDirLin)) {
     $txt = ('OP-Act: Created a Linux Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -271,7 +271,7 @@ if (!file_exists($ClientInstallDirOsx)) {
 // / -----
 // / The following code checks if the CloudUsrDir exists, and creates one if it does not.
 if (!file_exists($CloudUsrDir)) {
-  @mkdir($CloudUsrDir, 0755); 
+  @mkdir($CloudUsrDir, $CLPerms); 
   if (file_exists($CloudUsrDir)) {
     $txt = ('OP-Act: Created a Cloud User Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -282,7 +282,7 @@ if (!file_exists($CloudUsrDir)) {
 // / -----
 // / The following code checks if the CloudAppDir exists, and creates one if it does not.
 if (!file_exists($CloudAppDir)) { 
-  @mkdir($CloudAppDir, 0755); 
+  @mkdir($CloudAppDir, $CLPerms); 
   if (file_exists($CloudAppDir)) {
     $txt = ('OP-Act: Created a CloudLoc Apps Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -294,7 +294,7 @@ if (!file_exists($CloudAppDir)) {
 // / The following code will create a backup directory for restoration data.
   // / NO USER DATA IS STORED IN THE BACKUP DIRECTORY!!! Only server configuration data.
 if (!file_exists($BackupDir)) {
-  @mkdir($BackupDir, 0755);
+  @mkdir($BackupDir, $ILPerms);
   if (file_exists($BackupDir)) {
     $txt = ('OP-Act: Created a Backup Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -305,7 +305,7 @@ if (!file_exists($BackupDir)) {
 // / -----
 // / The following code checks if the CloudShareDir exists, and creates one if it does not.
 if (!file_exists($CloudShareDir)) {
-  $JICInstallShared = @mkdir($CloudShareDir, 0755); 
+  $JICInstallShared = @mkdir($CloudShareDir, $ILPerms); 
   @copy($InstLoc.'/index.html', $CloudShareDir.'/index.html');
     foreach ($SharedInstallFiles as $SIF) {
       if (in_array($SIF, $installedApps)) continue;
