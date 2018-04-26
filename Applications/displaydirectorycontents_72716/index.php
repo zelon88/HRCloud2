@@ -63,13 +63,13 @@
         <?php } ?>
       </div>
 
-      <form action="cloudCore.php" method="post" enctype="multipart/form-data">
+      <form action="cloudCore.php?UserDirPOST=<?php echo $Udir; ?>" method="post" enctype="multipart/form-data">
         <div align="center" name="makedirDiv" id="makedirDiv" style="display:none;">
         <input type="text" name="dirToMake" id="dirToMake" value="<?php echo $Udir; ?>" style="display:none;">
         <input type='submit' name="makedir" id="makedir" value='Create New Folder' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
         </div>
       </form>
-      <form action="cloudCore.php" method="post" enctype="multipart/form-data">
+      <form action="cloudCore.php?UserDirPOST=<?php echo $Udir; ?>" method="post" enctype="multipart/form-data">
         <div align="center" name="uploadDiv" id="uploadDiv" style="display:none;">
         <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple style="display:none;">
         <input type='submit' name="upload" id="upload" value='&#x21E7' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
