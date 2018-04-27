@@ -27,6 +27,8 @@ if (isset ($InternalIP)) {
   unset ($InternalIP); }
 if (isset ($ExternalIP)) { 
   unset ($ExternalIP); } 
+$CLPerms = str_replace('\'', '', $CLPerms);
+$ILPerms = str_replace('\'', '', $ILPerms);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -260,7 +262,7 @@ if (!file_exists($ClientInstallDirLin)) {
 // / -----
 // / The following code checks if the OSX ClientInstallers directory exists, and creates one if it does not.
 if (!file_exists($ClientInstallDirOsx)) {
-  @mkdir($ClientInstallDirOsx, 0755); 
+  @mkdir($ClientInstallDirOsx, $ILPerms); 
   if (file_exists($ClientInstallDirOsx)) {
     $txt = ('OP-Act: Created a OSX Client Installer Directory on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
