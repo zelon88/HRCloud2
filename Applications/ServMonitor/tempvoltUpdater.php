@@ -16,10 +16,10 @@ $tempvoltIncludeFile = 'Cache/tempvoltINCLUDE.php';
 
 // / The following code resets the cache file.
 if (file_exists($tempvoltCacheFile)) {
-  @chmod($tempvoltCacheFile, 0755);
+  @chmod($tempvoltCacheFile, $ILPerms);
   @unlink($tempvoltCacheFile); }
 if (file_exists($tempvoltCacheFile1)) {
-  @chmod($tempvoltCacheFile1, 0755);
+  @chmod($tempvoltCacheFile1, $ILPerms);
   @unlink($tempvoltCacheFile1); }
 
 // / The following code retrieves basic statistics related to the server's temperature in degrees celcius and saves it into a cache file.

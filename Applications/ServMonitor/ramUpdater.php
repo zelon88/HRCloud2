@@ -3,9 +3,9 @@
 // / This file will retrieve information regarding the server's memory performance and statistics.
 $ramCacheFile = 'Cache/ramCACHE.php';
 $ramIncludeFile = 'Cache/ramINCLUDE.php';
-@chmod($ramCacheFile, 0755);
-@chown($ramCacheFile, 'www-data');
-@chgrp($ramCacheFile, 'www-data');
+@chmod($ramCacheFile, $ILPerms);
+@chown($ramCacheFile, $ApacheUser);
+@chgrp($ramCacheFile, $ApacheGroup);
 
 // / This file will reurn the servers current RAM usage percentage.
 $exec_free = explode("\n", trim(shell_exec('free')));

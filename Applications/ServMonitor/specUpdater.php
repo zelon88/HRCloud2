@@ -7,29 +7,29 @@ $cpuSpecCacheFile = 'Cache/cpuSpecCACHE.php';
 $usbCacheFile = 'Cache/usbCACHE.php';
 $pciCacheFile = 'Cache/pciCACHE.php';
 $uptimeCacheFile = 'Cache/uptimeCACHE.php';
-@chmod($specCacheFile, 0755);
-@chown($specCacheFile, 'www-data');
-@chgrp($specCacheFile, 'www-data');
-@chmod($storageCacheFile, 0755);
-@chown($storageCacheFile, 'www-data');
-@chgrp($storageCacheFile, 'www-data');
-@chmod($cpuCacheFile, 0755);
-@chown($cpuCacheFile, 'www-data');
-@chgrp($cpuCacheFile, 'www-data');
-@chmod($usbCacheFile, 0755);
-@chown($usbCacheFile, 'www-data');
-@chgrp($usbCacheFile, 'www-data');
-@chmod($pciCacheFile, 0755);
-@chown($pciCacheFile, 'www-data');
-@chgrp($pciCacheFile, 'www-data');
-@chmod($uptimeCacheFile, 0755);
-@chown($uptimeCacheFile, 'www-data');
-@chgrp($uptimeCacheFile, 'www-data');
+@chmod($specCacheFile, $ILPerms);
+@chown($specCacheFile, $ApacheUser);
+@chgrp($specCacheFile, $ApacheGroup);
+@chmod($storageCacheFile, $ILPerms);
+@chown($storageCacheFile, $ApacheUser);
+@chgrp($storageCacheFile, $ApacheGroup);
+@chmod($cpuCacheFile, $ILPerms);
+@chown($cpuCacheFile, $ApacheUser);
+@chgrp($cpuCacheFile, $ApacheGroup);
+@chmod($usbCacheFile, $ILPerms);
+@chown($usbCacheFile, $ApacheUser);
+@chgrp($usbCacheFile, $ApacheGroup);
+@chmod($pciCacheFile, $ILPerms);
+@chown($pciCacheFile, $ApacheUser);
+@chgrp($pciCacheFile, $ApacheGroup);
+@chmod($uptimeCacheFile, $ILPerms);
+@chown($uptimeCacheFile, $ApacheUser);
+@chgrp($uptimeCacheFile, $ApacheGroup);
 
 // / The following code creates a cache file, or returns an error if one cannot be created
 if (file_exists($specCacheFile)) {
   @chmod('Cache/');
-  @chmod($specCacheFile, 0755);
+  @chmod($specCacheFile, $ILPerms);
   @unlink($specCacheFile); }
 
 // / The following code retrievs statistics related to the server's basic hardware devices.

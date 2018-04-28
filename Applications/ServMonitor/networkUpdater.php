@@ -3,12 +3,12 @@
 // / This file will retrieve information regarding the server's network performance and statistics.
 $networkCacheFile = 'Cache/networkCACHE.php';
 $networkCacheFile1 = 'Cache/networkCACHE1.php';
-@chmod($networkCacheFile, 0755);
-@chown($networkCacheFile, 'www-data');
-@chgrp($networkCacheFile, 'www-data');
-@chmod($networkCacheFile1, 0755);
-@chown($networkCacheFile1, 'www-data');
-@chgrp($networkCacheFile1, 'www-data');
+@chmod($networkCacheFile, $ILPerms);
+@chown($networkCacheFile, $ApacheUser);
+@chgrp($networkCacheFile, $ApacheGroup);
+@chmod($networkCacheFile1, $ILPerms);
+@chown($networkCacheFile1, $ApacheUser);
+@chgrp($networkCacheFile1, $ApacheGroup);
 $integerArr = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
 $letterArr = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
 
@@ -23,11 +23,11 @@ if (isset($_POST['adapterNum'])) {
 // / The following code creates a cache file, or returns an error if one cannot be created
 if (file_exists($networkCacheFile)) {
   @chmod('Cache/');
-  @chmod($networkCacheFile, 0755);
+  @chmod($networkCacheFile, $ILPerms);
   @unlink($networkCacheFile); }
 if (file_exists($networkCacheFile1)) {
   @chmod('Cache/');
-  @chmod($networkCacheFile1, 0755);
+  @chmod($networkCacheFile1, $ILPerms);
   @unlink($networkCacheFile1); }
 
 // / The following code retrievs statistics related to the server's network devices.

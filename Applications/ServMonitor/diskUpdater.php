@@ -3,13 +3,13 @@
 // / This file will retrieve information regarding the server's disk performance and statistics.
 $diskCacheFile = 'Cache/diskCACHE.php';
 $diskIncludeFile = 'Cache/diskINCLUDE.php';
-@chmod($diskCacheFile, 0755);
-@chown($diskCacheFile, 'www-data');
-@chgrp($diskCacheFile, 'www-data');
+@chmod($diskCacheFile, $ILPerms);
+@chown($diskCacheFile, $ApacheUser);
+@chgrp($diskCacheFile, $ApacheGroup);
 
 // / The following code resets the cache file.
 if (file_exists($diskCacheFile)) {
-  @chmod($diskCacheFile, 0755);
+  @chmod($diskCacheFile, $ILPerms);
   @unlink($diskCacheFile); }
 
 // / The following code sets the POST and GET variables for the session, if there were any.

@@ -4,16 +4,16 @@
 $cpuCacheFile = 'Cache/cpuCACHE.php';
 $cpuCacheFile1 = 'Cache/cpuCACHE1.php';
 $cpuIncludeFile = 'Cache/cpuINCLUDE.php';
-@chmod($cpuCacheFile, 0755);
-@chown($cpuCacheFile, 'www-data');
-@chgrp($cpuCacheFile, 'www-data');
-@chmod($cpuCacheFile1, 0755);
-@chown($cpuCacheFile1, 'www-data');
-@chgrp($cpuCacheFile1, 'www-data');
+@chmod($cpuCacheFile, $ILPerms);
+@chown($cpuCacheFile, $ApacheUser);
+@chgrp($cpuCacheFile, $ApacheGroup);
+@chmod($cpuCacheFile1, $ILPerms);
+@chown($cpuCacheFile1, $ApacheUser);
+@chgrp($cpuCacheFile1, $ApacheGroup);
 
 // / The following code resets the cache file.
 if (file_exists($cpuCacheFile)) {
-  @chmod($cpuCacheFile, 0755);
+  @chmod($cpuCacheFile, $ILPerms);
   @unlink($cpuCacheFile); }
 
 // / The following code will return the server's CPU load percentage average for the past 1 minute.

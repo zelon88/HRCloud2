@@ -6,11 +6,12 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: v2.9 (7-19-2017 8:30)
+App Version: v3.0 (4-27-2018 21:00)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
 App Integration: 0 (False)
+App Permission: 0 (Admin)
 HRCLOUD2-PLUGIN-END
 //*/
 
@@ -52,14 +53,14 @@ if ($UpateInt == '' or !(isset($UpdateInterval))) {
 // / -----------------------------------------------------------------------------------
 // / The following code creates a cache dir, or returns an error if one cannot be created.
 // / -Take ownership of cache files
-@chown('Cache/', 'www-data');
+@chown('Cache/', $ILPerms);
 // / -Change the group of cache files-
-@chgrp('Cache', 'www-data');
+@chgrp('Cache', $ILPerms);
 // / -Restrict cache files-
-@chmod('Cache/', 0755);
+@chmod('Cache/', $ILPerms);
 // / -Check for the existence of required dirs and files. Copy a new index if needed-
 if (!is_dir('Cache/')) {
-  @mkdir('Cache/', 0755); 
+  @mkdir('Cache/', $ILPerms); 
   @copy($InstLoc.'/index.html', 'Cache/index.html'); }
 // / -Report erros-
 if (!is_dir('Cache/')) {
