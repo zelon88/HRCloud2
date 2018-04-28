@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Executor
-App Version: 1.4 (4-29-2017 11:30)
+App Version: 1.5 (4-27-2018 21:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 command-line for using PHP like it were Bash.
@@ -47,7 +47,7 @@ if (isset($_POST['executorInput'])) {
   $executorValue = $_POST['executorInput']; }
 ?>
 <form action="Executor.php" method="POST">
-<p style="text-align:left; margin:15px;"><strong>www-data@www-data-<?php echo gethostname().':'.$cd; ?>$ </strong></p>
+<p style="text-align:left; margin:15px;"><strong><?php echo $ApacheGroup; ?>@<?php echo $ApacheUser; ?>-<?php echo gethostname().':'.$cd; ?>$ </strong></p>
 <p><textarea id="executorInput" name="executorInput" value="<?php echo $executorValue; ?>" cols="40" rows="5"></textarea></p>
 <p><input type="submit" id="executorSubmit" name="executorSubmit" title="Execute" alt="Execute" value="Execute"></p>
 </form>
