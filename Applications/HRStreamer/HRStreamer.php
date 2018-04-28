@@ -8,7 +8,7 @@
   <body style="font-family:<?php echo $Font; ?>;">
 <?php 
 // / Set global variables.
-$hrstreamerAppVersion = 'v0.9';
+$hrstreamerAppVersion = 'v1.0';
 
 // / Load the HRCloud2 commonCore.
 $CCFile = 'commonCore.php';
@@ -36,7 +36,7 @@ if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   $PlaylistDir = $CloudTempDir.'/'.$PlaylistName;
   $PlaylistCloudDir = $CloudDir.'/'.$PlaylistName;
   if (!file_exists($PlaylistDir)) {
-    mkdir($PlaylistDir, 0755);
+    mkdir($PlaylistDir, $ILPerms);
     copy($InstLoc.'/index.html', $PlaylistDir.'/indes.html');
     foreach ($iterator = new \RecursiveIteratorIterator (
       new \RecursiveDirectoryIterator ($PlaylistCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
@@ -44,7 +44,7 @@ if(isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
       $PD = $PlaylistDir.DIRECTORY_SEPARATOR.$iterator->getSubPathName();
         if (is_dir($item)) {
           if (!is_dir($PD)) {
-            mkdir($PD, 0755); 
+            mkdir($PD, $CLPerms); 
             continue; } }
         else {
             if (!is_link($item) && !file_exists($PD)) {
