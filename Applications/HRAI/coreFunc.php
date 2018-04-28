@@ -4,10 +4,14 @@ require('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/coreVar.php');
 // / The following code takes ownership of required HRAI directories for the www-data usergroup.
 function checkServerPermissions() {
   global $InstLoc;
-  system('chown -R www-data '.$InstLoc);
-  system('chown -R www-data '.$InstLoc.'/DATA');
-  system('chown -R www-data '.$InstLoc.'/Applications');
-  system('chown -R www-data '.$InstLoc.'/Applications/HRAI'); }
+  system('chown -R '.$ApacheUser.' '.$InstLoc);
+  system('chown -R '.$ApacheUser.' '.$InstLoc.'/DATA');
+  system('chown -R '.$ApacheUser.' '.$InstLoc.'/Applications');
+  system('chown -R '.$ApacheUser.' '.$InstLoc.'/Applications/HRAI');
+  system('chgrp -R '.$ApacheGroup.' '.$InstLoc);
+  system('chgrp -R '.$ApacheGroup.' '.$InstLoc.'/DATA');
+  system('chgrp -R '.$ApacheGroup.' '.$InstLoc.'/Applications');
+  system('chgrp -R '.$ApacheGroup.' '.$InstLoc.'/Applications/HRAI'); }
 
 // / The following code is used to clean up old files from previous versions of HRCloud2.
 // / This code last updated on 11/30/16 23:18.
@@ -155,7 +159,7 @@ function forceCreateSesDir($sesID) {
   $input = defineUserInput();
   $sesLogfile = $InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date.'/HRAI-'.$sesID.'.txt'; 
   if (!file_exists($InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date)) {
-    mkdir($InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date, 0755); }
+    mkdir($InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date, $ILPerms); }
   if (file_exists($InstLoc.'/DATA/'.$user_ID.'/.AppData/'.$Date)) { 
     echo nl2br('Session ID: '.$sesID.' '."\n"); 
   $txt = ('CoreAI: '."User $user_ID initiated session $sesID with input \"$input\" on $date".
@@ -177,7 +181,7 @@ function forceCreateSesDir($sesID) {
     $compLogfile = file_put_contents($sesLogfile, $txt.PHP_EOL , FILE_APPEND); }
    // / If a logfile still doesn't exist try making one with extra privilages.
   if (!file_exists($sesLogfile)) {
-    mkdir('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt', 0755);
+    mkdir('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt', $ILPerms);
     $sesLogfile = ('/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/sesLogs/'."$user_ID".'/'."$sesID".'/'."$sesID".'.txt');
     $txt = ('CoreAI: '."User $display_name".','." $user_ID initiated $sesID with $input on $date".
       ' Libraries loaded. Logfile created, method 4. ');
