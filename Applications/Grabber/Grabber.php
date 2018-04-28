@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.7 (4-29-2017 10:30)
+App Version: 1.8 (4-27-2018 21:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
