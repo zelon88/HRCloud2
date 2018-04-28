@@ -27,8 +27,8 @@ if (isset ($InternalIP)) {
   unset ($InternalIP); }
 if (isset ($ExternalIP)) { 
   unset ($ExternalIP); } 
-$CLPerms = str_replace('\'', '', $CLPerms);
-$ILPerms = str_replace('\'', '', $ILPerms);
+$CLPerms = octdec(str_replace('\'', '', $CLPerms));
+$ILPerms = octdec(str_replace('\'', '', $ILPerms));
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -126,6 +126,49 @@ $defaultApps = array('.', '..', '', 'error.php', 'HRAIMiniGui.php', 'jquery-3.1.
 $DangerousFiles = array('js', 'php', 'html', 'css');
 $installedApps = array_diff($Apps, $defaultApps);
 $tipsHeight = '0';
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sets some default settings if none are specified by config.php.
+if (!isset($defaultNickname) or $defaultNickname == '') $defaultNickname = 'Commander';  
+if (!isset($defaultTimezone) or $defaultTimezone == '') $defaultTimezone = 'America/New_York'; 
+if (!isset($defaultFont) or $defaultFont == '') $defaultFont = 'Helvetica'; 
+if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';
+if (!is_numeric($defaultColorSchemes)) $defaultColorSchemes = '0'; 
+if (!isset($defaultShowHRAI) or $defaultShowHRAI == '') $defaultShowHRAI = '';
+if (!isset($defaultHRAIAudio) or $defaultHRAIAudio == '') $defaultHRAIAudio = '1'; 
+if (!is_numeric($defaultHRAIAudio) or $defaultHRAIAudio > '1') $defaultHRAIAudio = '0'; 
+if (!isset($defaultShowTips) or $defaultShowTips == '') $defaultShowTips = '1'; 
+if (!is_numeric($defaultShowTips) or $defaultShowTips > '1') $defaultShowTips = '0'; 
+if (!isset($defaultPPEnableURL) or $defaultPPEnableURL == '') $defaultPPEnableURL = '0';
+if (!is_numeric($defaultPPEnableURL) or $defaultPPEnableURL > '1') $defaultPPEnableURL = '0'; 
+if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $defaultTOSEnableURL = '0';
+if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $defaultTOSEnableURL = '0'; 
+if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
+if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sets some default settings if none are specified by the user's config.php.
+if (!isset($ShowHRAI) or $ShowHRAI == '') $ShowHRAI = $defaultShowHRAI;
+if (!isset($HRAIAudio) or $HRAIAudio == '') $HRAIAudio = $defaultHRAIAudio;
+if (!isset($nickname) or $nickname == '') $nickname = $defaultNickname;
+if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
+if (!isset($Font) or $Font == '') $Font = $defaultFont;
+if (!isset($ColorScheme) or $ColorScheme == '') $ColorScheme = $defaultColorScheme;
+if (!isset($ShowTips) or $ShowTips == '') $ShowTips = $defaultShowTips;
+if (!isset($ApacheUser) or $ApacheUser == '') $ApacheUser = 'www-data';
+if (!isset($ApacheGroup) or $ApacheGroup == '') $ApacheGroup = 'www-data';
+if (!isset($CLPerms) or $CLPerms == '') $CLPerms = 0755;
+if (!is_numeric($CLPerms)) $CLPerms = octdec(str_replace('\'', '', $CLPerms)); 
+if (!isset($ILPerms) or $ILPerms == '') $ILPerms = 0755;
+if (!is_numeric($ILPerms)) $ILPerms = octdec(str_replace('\'', '', $ILPerms));
+if (!isset($PPEnableURL) or $PPEnableURL == '') $PPEnableURL = $defaultPPEnableURL;
+if (!is_numeric($PPEnableURL) or $PPEnableURL > '1') $PPEnableURL = $defaultPPEnableURL; 
+if (!isset($TOSEnableURL) or $TOSEnableURL == '') $TOSEnableURL = $defaultTOSEnableURL;
+if (!is_numeric($TOSEnableURL) or $TOSEnableURL > '1') $TOSEnableURL = $defaultTOSEnableURL; 
+if (!isset($PrivacyPolicyURL) or $PrivacyPolicyURL == '') $PrivacyPolicyURL = $defaultPrivacyPolicyURL;
+if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL = $defaultTermsOfServiceURL;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -373,49 +416,6 @@ $AdminID = null;
 $adminAppDataInstDir = null;
 $AdminConfig = null;  
 unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code sets some default settings if none are specified by config.php.
-if (!isset($defaultNickname) or $defaultNickname == '') $defaultNickname = 'Commander';  
-if (!isset($defaultTimezone) or $defaultTimezone == '') $defaultTimezone = 'America/New_York'; 
-if (!isset($defaultFont) or $defaultFont == '') $defaultFont = 'Helvetica'; 
-if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';
-if (!is_numeric($defaultColorSchemes)) $defaultColorSchemes = '0'; 
-if (!isset($defaultShowHRAI) or $defaultShowHRAI == '') $defaultShowHRAI = '';
-if (!isset($defaultHRAIAudio) or $defaultHRAIAudio == '') $defaultHRAIAudio = '1'; 
-if (!is_numeric($defaultHRAIAudio) or $defaultHRAIAudio > '1') $defaultHRAIAudio = '0'; 
-if (!isset($defaultShowTips) or $defaultShowTips == '') $defaultShowTips = '1'; 
-if (!is_numeric($defaultShowTips) or $defaultShowTips > '1') $defaultShowTips = '0'; 
-if (!isset($defaultPPEnableURL) or $defaultPPEnableURL == '') $defaultPPEnableURL = '0';
-if (!is_numeric($defaultPPEnableURL) or $defaultPPEnableURL > '1') $defaultPPEnableURL = '0'; 
-if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $defaultTOSEnableURL = '0';
-if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $defaultTOSEnableURL = '0'; 
-if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
-if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code sets some default settings if none are specified by the user's config.php.
-if (!isset($ShowHRAI) or $ShowHRAI == '') $ShowHRAI = $defaultShowHRAI;
-if (!isset($HRAIAudio) or $HRAIAudio == '') $HRAIAudio = $defaultHRAIAudio;
-if (!isset($nickname) or $nickname == '') $nickname = $defaultNickname;
-if (!isset($Timezone) or $Timezone == '') $Timezone = $defaultTimezone;
-if (!isset($Font) or $Font == '') $Font = $defaultFont;
-if (!isset($ColorScheme) or $ColorScheme == '') $ColorScheme = $defaultColorScheme;
-if (!isset($ShowTips) or $ShowTips == '') $ShowTips = $defaultShowTips;
-if (!isset($ApacheUser) or $ApacheUser == '') $ApacheUser = 'www-data';
-if (!isset($ApacheGroup) or $ApacheGroup == '') $ApacheGroup = 'www-data';
-if (!isset($CLPerms) or $CLPerms == '') $CLPerms = '0755';
-if (!is_numeric($CLPerms)) $CLPerms = '0755'; 
-if (!isset($ILPerms) or $ILPerms == '') $ILPerms = '0755';
-if (!is_numeric($ILPerms)) $ILPerms = '0755'; 
-if (!isset($PPEnableURL) or $PPEnableURL == '') $PPEnableURL = $defaultPPEnableURL;
-if (!is_numeric($PPEnableURL) or $PPEnableURL > '1') $PPEnableURL = $defaultPPEnableURL; 
-if (!isset($TOSEnableURL) or $TOSEnableURL == '') $TOSEnableURL = $defaultTOSEnableURL;
-if (!is_numeric($TOSEnableURL) or $TOSEnableURL > '1') $TOSEnableURL = $defaultTOSEnableURL; 
-if (!isset($PrivacyPolicyURL) or $PrivacyPolicyURL == '') $PrivacyPolicyURL = $defaultPrivacyPolicyURL;
-if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL = $defaultTermsOfServiceURL;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
