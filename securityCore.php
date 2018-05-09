@@ -34,55 +34,6 @@ $LogFileInc0 = 0;
 $LogFileInc1 = 0;
 $LogFileInc2 = 0;
 
-// / Set default permissions if none exist in config.php.
-if (!isset($CLPerms) or strlen($CLPerms) > 4 or strlen($CLPerms < 3)) $CLPerms = '0755'; 
-if (!isset($CLPerms) or strlen($IL_Perms) > 4 or strlen($IL_Perms < 3)) $IL_Perms = '0755'; 
-if (!isset($ApacheUser)) $ApacheGroup = 'www-data';
-if (!isset($ApacheUser)) $ApacheUser = 'www-data';
-
-// / The following code changes the permission of certain directories to whatever is specified in config.php,
-@chmod($CloudLoc, $CLPerms);
-@chmod($UserConfig, $CLPerms);
-@chmod($InstLoc, $IL_Perms);
-@chmod($InstLoc.'/Applications', $IL_Perms);
-@chmod($InstLoc.'/Resources', $IL_Perms);
-@chmod($InstLoc.'/DATA', $IL_Perms);
-@chmod($InstLoc.'/Screenshots', $IL_Perms);
-@chmod($InstLoc.'/Styles', $IL_Perms);
-@system("/bin/chmod -R $CLPerms $CloudLoc");
-@system("/bin/chmod -R $IL_Perms $InstLoc");
-
-// / The following code changes the group of certain directories to the www-data group,
-@chgrp($CloudLoc, $ApacheGroup);
-@chgrp($UserConfig, $ApacheGroup);
-@chgrp($InstLoc, $ApacheGroup);
-@chgrp($InstLoc.'/Applications', $ApacheGroup);
-@chgrp($InstLoc.'/Resources', $ApacheGroup);
-@chgrp($InstLoc.'/DATA', $ApacheGroup);
-@chgrp($InstLoc.'/Screenshots', $ApacheGroup);
-@chgrp($InstLoc.'/Styles', $ApacheGroup);
-@system("/bin/chgrp -R $ApacheGroup $CloudLoc");
-@system("/bin/chgrp -R $ApacheGroup $InstLoc");
-
-// / The following code changes the ownership of certain directories to the www-data user,
-@chown($CloudLoc, $ApacheUser);
-@chown('/var/www', $ApacheUser);
-@chown('/var/www/html', $ApacheUser);
-@chown('/var/www/html/HRProprietary', $ApacheUser);
-@chown($InstLoc, $ApacheUser);
-@chown($InstLoc.'/Applications', $ApacheUser);
-@chown($InstLoc.'/Resources', $ApacheUser);
-@chown($InstLoc.'/DATA', $ApacheUser);
-@chown($InstLoc.'/Screenshots', $ApacheUser);
-@chown($InstLoc.'/Styles', $ApacheUser);
-@chown($UserConfig, $ApacheUser);
-@system("/bin/chown -R $ApacheUser $CloudLoc");
-@system("/bin/chown -R $ApacheUser $InstLoc");
-
-// / The following code purges old index.html files from the HRProprietary directory daily.
-if (!file_exists('/var/www/html/HRProprietary/index.html') or filemtime('/var/www/html/HRProprietary/index.html') >= 86400) {
-  copy ('index.html', '/var/www/html/HRProprietary/index.html'); }
-
 // / Secutity related processing.
 if (isset($_POST['YUMMYSaltHash'])) {
   $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
