@@ -142,20 +142,6 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Apache Group" setting: "'.$NEWApacheGroup.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo nl2br('Saved New Apache Group Settings.'."\n"); }
-    // / The following code is sets the server's Cloud Location Permission setting.
-    if (isset($NEWCLPerms)) {
-      $txt = ('$CLPerms = \''.$NEWCLPerms.'\';');
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Cloud Location Permission" setting: "'.$NEWCLPerms.'" to the user cache file on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Cloud Location Permission Settings.'."\n"); } 
-    // / The following code is sets the server's Installation Location Permission setting.
-    if (isset($NEWILPerms)) {
-      $txt = ('$ILPerms = \''.$NEWILPerms.'\';');
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
-      $txt = ('OP-Act: Saved "Installation Location Permission" setting: "'.$NEWILPerms.'" to the user cache file on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Installation Location Permission Settings.'."\n"); }
     // / The following code is sets the enablement of Privacy Policy modifications in the GUI.
     if (isset($NEWPPEnableURL)) {
       $txt = ('$PPEnableURL = \''.$NEWPPEnableURL.'\';');
@@ -194,8 +180,6 @@ if (isset($saveSettings)) {
     $ShowTips = $NEWShowTips;
     $ApacheUser = $NEWApacheUser;
     $ApacheGroup = $NEWApacheGroup;
-    $CLPerms = $NEWCLPerms; 
-    $ILPerms = $NEWILPerms; 
     $PPEnableURL = $NEWPPEnableURL;
     $PPEnableURL = $NEWPPEnableURL; 
     $TOSEnableURL = $NEWTOSEnableURL;
@@ -263,14 +247,6 @@ if (isset($loadDefaultSettings)) {
       $NEWApacheGroup = $ApacheGroup; 
       $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($NEWCLPerms)) { 
-      $NEWCLPerms = $CLPerms; 
-      $txt = ('$CLPerms = \''.$NEWCLPerms.'\';');
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
-    if (!isset($NEWILPerms)) { 
-      $NEWILPerms = $ILPerms; 
-      $txt = ('$ILPerms = \''.$NEWILPerms.'\';');
-      $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
     if (!isset($NEWPPEnableURL)) { 
       $NEWPPEnableURL = $PPEnableURL; 
       $txt = ('$PPEnableURL = \''.$NEWPPEnableURL.'\';');
@@ -296,9 +272,7 @@ if (isset($loadDefaultSettings)) {
     $ColorScheme = $NEWColorScheme;
     $ShowTips = $NEWShowTips;
     $ApacheUser = $NEWApacheUser;
-    $ApacheGroup = $NEWApacheGroup;
-    $CLPerms = $NEWCLPerms; 
-    $ILPerms = $NEWILPerms; 
+    $ApacheGroup = $NEWApacheGroup; 
     $PPEnableURL = $NEWPPEnableURL;
     $PPEnableURL = $NEWPPEnableURL; 
     $TOSEnableURL = $NEWTOSEnableURL;
@@ -514,22 +488,6 @@ if (!isset($ApacheGroup)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / Prepare the echo value for the Cloud Location Permission input field.
-if (isset($CLPerms)) {
-  $CLPURL = $CLPerms; }
-if (!isset($CLPerms)) {
-  $CLPURL = '0755'; }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / Prepare the echo value for the Installation Location Permission input field.
-if (isset($ILPerms)) {
-  $ILPURL = $ILPerms; }
-if (!isset($ILPerms)) {
-  $ILPURL = '0755'; }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // / Prepare the echo value to enable the Privacy Policy URL input field.
 if ($PPEnableURL == '1') {
   $PPEURL = 'Enabled'; 
@@ -711,12 +669,6 @@ if ($UserIDRAW == 1) { ?>
 
 <p alt="Set the Apache Group. (Default: www-data)" title="Set the Apache Group. WARNING!!! Do not change unless you are confident your input is accurate. (Default: www-data)" style="padding-left:15px;"><strong></strong> Apache Group: WARNING!!! Custom installations only. (Default: www-data)</p>
 <p><input type='text' id="NEWApacheGroup" name="NEWApacheGroup" style="padding-left:30px; width:100%;" value="<?php echo $AGURL; ?>"></p>
-
-<p alt="Set the Cloud Location Permissions. (Default: 0755)" title="Set the Cloud Location Permissions. WARNING!!! Do not change unless you are confident your input is accurate. (Default: 0755)" style="padding-left:15px;"><strong></strong> Cloud Location Permissions: WARNING!!! Custom installations only. (Default: 0755)</p>
-<p><input type='text' id="NEWCLPerms" name="NEWCLPerms" style="padding-left:30px; width:100%;" value="<?php echo $CLPURL; ?>"></p>
-
-<p alt="Set the Installation Location Permissions. (Default: 0755)" title="Set the Installation Location Permissions. WARNING!!! Do not change unless you are confident your input is accurate. (Default: 0755)" style="padding-left:15px;"><strong></strong> Installation Location Permissions: WARNING!!! Custom installations only. (Default: 0755)</p>
-<p><input type='text' id="NEWILPerms" name="NEWILPerms" style="padding-left:30px; width:100%;" value="<?php echo $ILPURL; ?>"></p>
 
 <p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"> Virus Scanning (Requires ClamAV on server): </p>
 <p>
