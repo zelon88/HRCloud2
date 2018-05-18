@@ -304,6 +304,25 @@ while (file_exists($ClamLogDir)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code reads the Admin configuration settings and sets temporary variables.
+$AdminIDRAW = 1;
+$AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
+$adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
+$AdminConfig = $adminAppDataInstDir.'/.config.php';
+if (!file_exists($AdminConfig)) { 
+  $txt = ('WARNING!!! HRC2CommonCore151, There was a problem loading the admin settings on '.$Time.'!'); 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+if (file_exists($AdminConfig)) {
+  include ($AdminConfig); }
+$Nickname = '';
+$AdminIDRAW = null;
+$AdminID = null;
+$adminAppDataInstDir = null;
+$AdminConfig = null;  
+unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
   copy($LogInstallDir.'.config.php', $UserConfig); }
