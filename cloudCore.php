@@ -689,9 +689,9 @@ if (isset($_POST['convertSelected'])) {
             shell_exec("dia $pathname -e $newPathname"); } 
           // / Code to convert and manipulate video files.
           if (in_array($oldExtension, $videoarray)) { 
-            $txt = ("OP-Act, Executing \"HandBrakeCLI -i $pathname -o $newPathname\" on ".$Time.'.');
+            $txt = ("OP-Act, Executing \"ffmpeg -i $pathname -c:v libx264 $newPathname\" on ".$Time.'.');
             $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-            shell_exec("HandBrakeCLI -i $pathname -o $newPathname"); } 
+            shell_exec("ffmpeg -i $pathname -c:v libx264 $newPathname"); } 
           // / Code to convert and manipulate audio files.
           if (in_array($oldExtension, $audioarray)) { 
             $ext = (' -f ' . $extension);

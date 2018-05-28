@@ -19,6 +19,13 @@ else {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code disables the platform when $EnableMaintenanceMode is set either here, or in config.php.
+//$EnableMaintenanceMode = 1;
+if (!isset($EnableMaintenanceMode) or $EnableMaintenanceMode !== '1') $EnableMaintenanceMode = '0';
+if ($EnableMaintenanceMode == '1') die('<strong>The page you are trying to reach is unavailable due to maintenance. Please check back later.</strong>');
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
 // / The following code verifies and cleans the config file.    
 if ($Accept_GPLv3_OpenSource_License !== '1') {
   die ('ERROR!!! HRC2CommonCore124, You must read and completely fill out the config.php file located in your
