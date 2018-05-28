@@ -20,8 +20,8 @@ $Accept_GPLv3_OpenSource_License = '1';
 
 // / ------------------------------
 // / General Information ... 
-  // 
-
+  // / To disable HRCloud2 for maintenance, set to '1';
+$EnableMaintenanceMode = '0';
   // / This timezone will be the default one used if a user has not specified there own.
 $defaultTimezone = 'America/New_York';
   // / This Nickname will be the default one used if a user has not specified there own.
