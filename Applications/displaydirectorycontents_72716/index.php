@@ -373,10 +373,7 @@
                   data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
                   success: function(returnFile) {
                     toggle_visibility('loadingCommandDiv');
-                    window.setTimeout(function(){
-                      window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>";
-                    }, 2500);
-                  }
+                    window.location.href = "<?php echo 'DATA/'.$UserID.$UserDirPOST.$name; ?>"; }
               } );
               });
               });
