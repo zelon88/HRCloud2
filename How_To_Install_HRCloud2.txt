@@ -50,16 +50,16 @@ of their servers.
 **EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.1/apache2/php.ini"**
 -sudo leafpad /etc/php/7.1/apache2/php.ini
 **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
-  -max_execution_time = 90
-  -max_input_time = 90
-  -memory_limit = 512M
-  -;Use 256 - 384M for Raspberry Pis
-  -display_errors = On
-  -;Leave display errors = Off if you're not debugging HRCloud2 youself
-  -post_max_size = 3000M
-  -upload_max_filesize = 3000M
-  -max_file_uploads = 100
-  -zlib.output_compression = On
+  max_execution_time = 90
+  max_input_time = 90
+  memory_limit = 512M
+  ;Use 256 - 384M for Raspberry Pis
+  display_errors = On
+  ;Leave display errors = Off if you're not debugging HRCloud2 youself
+  post_max_size = 3000M
+  upload_max_filesize = 3000M
+  max_file_uploads = 100
+  zlib.output_compression = On
 **SAVE THE MODIFIED "php.ini" FILE AND EXIT LEAFPAD**
 -sudo service apache2 restart
 --------------------------------------------------
@@ -68,6 +68,10 @@ of their servers.
 -sudo apt-get install clamav
 -sudo apt-get install libreoffice-common
 -sudo apt-get install unoconv
+-sudo chmod +x /etc/rc.local
+-sudo leafpad /etc/rc.local
+**ADD THE FOLLOWING LINE TO THE "rc.local" FILE **ABOVE** THE "exit 0" LINE**
+  soffice --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
 **IF DOCUMENT CONVERSIONS DONT WORK...**
           **-unoconv --listen**
           **OR -unoconv -l**
@@ -82,14 +86,13 @@ of their servers.
 -sudo apt-get install tesseract-ocr
 -sudo apt-get install meshlab
 -sudo apt-get install dia
--sudo apt-get install handbrake
--sudo apt-get install handbrake-cli
 -sudo apt-get install pandoc
 -sudo apt install npm
 -sudo apt-get install nodejs
 -sudo apt-get install nodejs-legacy
 -sudo apt-get install winetricks
 -npm install nativefier -g
+**REBOOT THE SERVER**
 --------------------------------------------------
 
 -----STEP 5 - INSTALL HRCLOUD2-----
@@ -98,7 +101,7 @@ of their servers.
 **VISIT "http://github.com/zelon88/HRCloud2" AND DOWNLOAD THE LATEST HRCLOUD2 .zip FILE
   TO YOUR DOWNLOADS FOLDER**
 **EXTRACT HRCLOUD2.zip TO YOUR DOWNLOADS FOLDER**
-**COPY THE CONTENTS OF THE "HRCloud2-master" FOLDER TO "/var/www/html/HRProprietary/HRCloud2"**
+**COPY THE CONTENTS OF THE "HRCloud2-master" FOLDER TO "/var/www/html/HRProprietary/HRCloud2"*
 -sudo leafpad /var/www/html/HRProprietary/HRCloud2/config.php
 **CAREFULLY READ AND COMPLETELY FILL OUT THE CONFIG.PHP FILE!!!**
 **HRCLOUD2 REQUIRES A SAFE LOCATION TO CREATE USER CLOUD DIRECTORIES. TO FACILITATE
