@@ -71,7 +71,7 @@ of their servers.
 -sudo chmod +x /etc/rc.local
 -sudo leafpad /etc/rc.local
 **ADD THE FOLLOWING LINE TO THE "rc.local" FILE **ABOVE** THE "exit 0" LINE**
-  soffice --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
+  /usr/bin/libreoffice/program/soffice.bin --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
 **IF DOCUMENT CONVERSIONS DONT WORK...**
           **-unoconv --listen**
           **OR -unoconv -l**
