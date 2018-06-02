@@ -125,8 +125,13 @@ if (!file_exists($pellTempDir.'/index.html')) {
   copy($InstLoc.'/index.html', $pellTempDir.'/index.html'); }
 if (isset($htmlOutput) && isset($filename) && $filename !== '' && isset($extension)) {
   file_put_contents($pellTempFile, $htmlOutput);
-  $txt = ('OP-Act: Created a temporary HTML file on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (file_exists($pellTempFile)) {
+    $txt = ('OP-Act: Created a temporary HTML file on '.$Time.'.');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  if (!file_exists($pellTempFile)) {
+    $txt = ('ERROR!!! HRC2PellApp132, Could not create a temporary HTML file on '.$Time.'!');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -244,6 +249,10 @@ if (isset($_POST['filename']) && $filename !== '' && isset($_POST['extension']) 
         echo nl2br($txt."\n");
         unlink($pellTempFile);
         die($txt); } } }
+  if (!file_exists($newPathname)) {
+    $txt = ('ERROR!!! HRC2PellApp248, Could not create '.$newPathname.' on '.$Time.'!');
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    echo nl2br($txt."\n"); }
   if (file_exists($newPathname)) {
     $txt = ('OP-Act, Created '.$newPathname.' on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -272,6 +281,22 @@ if (file_exists($pellTempFile)) {
   if (!file_exists($pellTempFile)) {
     $txt = ('OP-Act, Deleted temporary Pell data on '.$Time.'.');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+if (file_exists($pellTempDir)) {
+  $DFiles = glob($pellTempDir.'/*');
+  foreach ($DFiles as $DFile) {
+    if (in_array($DFile, $defaultApps) or $DFile == ($pellTempDir.'/.') or $DFile == ($pellTempDir.'/..')) continue;
+    $stat = lstat($DFile);
+      if (($Now - $stat['mtime']) >= 600) { // Time to keep files.
+        if (is_file($DFile)) {
+          unlink($DFile); 
+          $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
+          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
+      if (is_dir($DFile)) {
+        $CleanDir = $DFile;
+        $CleanFiles = scandir($DFile);
+        $JanitorDeleteIndex = 1;
+        include($JanitorFile); 
+        @rmdir($DFile); } } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
