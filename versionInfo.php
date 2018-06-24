@@ -1,4 +1,4 @@
 <?php 
 // / This file contains the current HRCloud2 version for auto-update purposes.
   // / 
-$Version = 'v2.6.7';
+$Version = 'v2.6.8';

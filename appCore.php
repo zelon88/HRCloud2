@@ -1,5 +1,4 @@
 <?php
-
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
 if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
@@ -24,11 +23,10 @@ else {
 $AppDir = $InstLoc.'/Applications/';
 $Apps = scandir($AppDir);
 $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'HRAI', 'HRConvert2', 'HRScan2', 'HRAIMiniGui.php',
-  'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip');
+ 'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 
+ 'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip');
 $installedApps = array_diff($Apps, $defaultApps);
-if (isset($_POST['uninstallApplication'])) { 
-  $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']); }
+if (isset($_POST['uninstallApplication'])) $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']);
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 $stopper = 0;
 // / -----------------------------------------------------------------------------------
@@ -57,9 +55,6 @@ if (isset($_FILES["appToUpload"])) {
     if ($file == '.' or $file == '..' or $file == 'index.html') continue;
     $appToInstallRAW = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $file);
     $installableArr = array('zip', 'rar', 'tar', 'tar.bz', 'tar.bz2', 'tar.gz', '7z'); 
-    foreach ($installableArr as $extToTest) {
-      if (strpos($appToInstallRAW, $extToTest)) {
-        $appExt = $extToTest; } }
     $appToInstall = str_replace('.'.$appExt, '', $appToInstallRAW);
     $appInstallDir = $InstLoc.'/Applications/'.$appToInstall;
     $appInstallDir0 = $InstLoc.'/Applications/'.$appToInstallRAW;
@@ -68,19 +63,19 @@ if (isset($_FILES["appToUpload"])) {
     $DangerousFiles = array('js', 'php', 'html', 'css');
     $F0 = pathinfo($file, PATHINFO_EXTENSION);
     if (in_array($F0, $DangerousFiles)) { 
-      $file = str_replace($F0, $F0.'SAFE', $file); }
-      $F2 = pathinfo($file, PATHINFO_BASENAME);
+        $txt = ("ERROR!!! HRC2AppCore67, Improper file format on $Time.");
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+        die($txt);  }
     if($file == "") {
         $txt = ("ERROR!!! HRC2AppCore160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-        die("ERROR!!! HRC2AppCore160, No file specified on $Time."); }
+        die($txt); }
       $txt = ('OP-Act: '."Uploaded $file to $CloudTmpDir on $Time".'.');
       echo nl2br ('OP-Act: '."Uploaded $file on $Time".'.'.'.'."\n".'--------------------'."\n");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $COPY_TEMP = copy($_FILES['appToUpload']['tmp_name'][$key], $appInstallDir0); 
       $txt = ('OP-Act: Initiated AppCore Dearchiver on '.$Time.'.');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-      $allowed =  $installableArr;
       $archarray = $installableArr;
       $rararr = array('rar');
       $ziparr = array('zip');
@@ -243,46 +238,31 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
 // / -----------------------------------------------------------------------------------
 // / The following code returns the random file or folder for each Cloud module. 
 $files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);
+$fileCounter = count($files)*2;
+$fileCouner1 = 0;
 $random_file = array_rand($files, 1);
 $random_file = $files[$random_file];
-if ($random_file == '.' or $random_file == '..') {
+while ($random_file == '.' or $random_file == '..' or strpos($random_file, '.html') or strpos($random_file, '.php')) {
+  if ($fileCounter1 >= $appCounter) {
+    $random_file = 'No files to show!';
+    break; }
   $random_file = $files[$random_file]; }
-if ($random_file == '.' or $random_file == '..') {
-  $random_file = $files[$random_file]; }  
-if ($random_file == '.' or $random_file == '..') {
-  $random_file = $files[$random_file]; }
-if ($random_file == '.' or $random_file == '..') {
-  $random_file = 'No files to show!'; } 
-if ($random_file == '') {
-  $random_file = 'No files to show!'; } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets a random App to echo for some home screens and GUI's.
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
+$appCounter = count($apps)*2;
+$appCouner1 = 0;
 $random_app = array_rand($apps);
 $random_app = $apps[$random_app];
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
+while ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps) or strpos($random_app, '.')) {
+  if ($appCounter1 >= $appCounter) {
+    $random_app = 'No apps to show!';
+    break; }
   $random_app = array_rand($apps);
   $random_app = $apps[$random_app]; }
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
-  $random_app = array_rand($apps);
-  $random_app = $apps[$random_app]; }
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
-  $random_app = array_rand($apps);
-  $random_app = $apps[$random_app]; }
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
-  $random_app = array_rand($apps);
-  $random_app = $apps[$random_app]; }
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
-  $random_app = array_rand($apps);
-  $random_app = $apps[$random_app]; }
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
-  $random_app = array_rand($apps);
-  $random_app = $apps[$random_app]; }
-if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps)) {
-  $random_app = 'No apps to show!'; }
-// / -----------------------------------------------------------------------------------
+// / --------------------------------------------------
 
 // / --------------------------------------------------
 // / Integrated App-Specific Code
@@ -291,39 +271,39 @@ if ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultA
 // / The following code sets a random Contact to echo for some home screens and GUI's.
 if (!is_dir($ContactsDir)) {
   mkdir($ContactsDir, 0755);
-    $txt = ('OP-Act: Created '.$ContactsDir.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  $txt = ('OP-Act: Created '.$ContactsDir.' on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
+$contactCounter = count($contacts)*2;
+$contactCounter1 = 0;
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
-if ($random_contact == '.' or $random_contact == '..' or in_array($random_contact, $defaultApps) or strpos($random_contact, '.txt') == 'true') {
-  $random_contact = 'No contacts to show!'; }
-if ($random_contact == 'contacts.php') { 
-  $random_contact = 'No contacts to show!'; }
+while ($random_contact == '.' or $random_contact == '..' or in_array($random_contact, $defaultApps) or strpos($random_contact, '.txt') or strpos($random_contact, '.html')) {
+  if ($contactCounter1 >= $contactCounter) {
+    $random_contact = 'Create new contact!';
+    break; }
+  $random_contact = array_rand($contacts);
+  $random_contact = $contacts[$random_contact]; 
+  $contactCounter1++; }
 $random_contact = str_replace('.php', '', $random_contact);
+
 // / The following code sets a random Note to echo for some home screens and GUI's.
 if (!is_dir($NotesDir)) {
   mkdir($NotesDir, 0755);
-    $txt = ('OP-Act: Created '.$NotesDir.' on '.$Time.'.');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  $txt = ('OP-Act: Created '.$NotesDir.' on '.$Time.'.');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
+$noteCounter = count($notes)*2;
+$noteCouner1 = 0;
 $random_note = array_rand($notes);
 $random_note = $notes[$random_note];
-if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.txt') == 'true' 
-  or strpos($random_note, '.php') == 'true') {
+while ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.php') or strpos($random_note, '.html')) {
+  if ($noteCounter1 >= $noteCounter) {
+    $random_note = 'Create new note!';
+    break; }
   $random_note = array_rand($notes);
-  $random_note = $notes[$random_note]; }
-if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.txt') == 'true' 
-  or strpos($random_note, '.php') == 'true') {
-  $random_note = array_rand($notes);
-  $random_note = $notes[$random_note]; }
-if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.txt') == 'true' 
-  or strpos($random_note, '.php') == 'true') {
-  $random_note = array_rand($notes);
-  $random_note = $notes[$random_note]; }
+  $random_note = $notes[$random_note]; 
+  $noteCounter1++; }
 $random_note = str_replace('.txt', '', $random_note);
-if ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or $random_note == '' 
-  or strpos($random_note, '.txt') == 'true' or strpos($random_note, '.php') == 'true') {
-  $random_note = 'No notes to show!'; } 
 // / -----------------------------------------------------------------------------------
 ?>
