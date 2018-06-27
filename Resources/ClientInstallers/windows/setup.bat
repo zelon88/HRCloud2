@@ -21,7 +21,7 @@ IF %M%==n GOTO END
 
 :INSTALL
 SET currentPath=%~dp0
-ECHO CREATING DIRECTORUIES!
+ECHO CREATING DIRECTORIES!
 mkdir "C:\Program Files\HRCloud2"
 ECHO COPYING FILES!
 xcopy /S "%currentPath:~0, -1%" "C:\Program Files\HRCloud2" 
