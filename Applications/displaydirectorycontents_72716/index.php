@@ -66,7 +66,7 @@
       <form action="cloudCore.php?UserDirPOST=<?php echo $Udir; ?>" method="post" enctype="multipart/form-data">
         <div align="center" name="makedirDiv" id="makedirDiv" style="display:none;">
         <input type="text" name="dirToMake" id="dirToMake" value="<?php echo $Udir; ?>" style="display:none;">
-        <input type='submit' name="makedir" id="makedir" value='Create New Folder' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
+        <input type='submit' name="makedir" id="makedir" value='Create Folder' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
         </div>
       </form>
       <form action="cloudCore.php?UserDirPOST=<?php echo $Udir; ?>" method="post" enctype="multipart/form-data">
