@@ -48,6 +48,8 @@ function virus_check($file, $defs, $debug, $defData) {
       $txt = 'Scanning file '.$file.' ... ';
       $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND);
       $filesize = filesize($file);
+      $data1 = hash_file('md5', $file);
+      $data2 = hash_file('sha256', $file);
       // / Scan files larger than the memory limit by breaking them into chunks.
       if ($filesize >= $memoryLimit && file_exists($file)) { 
         $txt = 'Chunking file ... ';
@@ -55,9 +57,7 @@ function virus_check($file, $defs, $debug, $defData) {
         $handle = @fopen($file, "r");
           if ($handle) {
             while (($buffer = fgets($handle, $chunkSize)) !== false) {
-              $data = $buffer;
-              $data1 = hash('md5', $data);
-              $data2 = hash('sha256', $data); 
+              $data = $buffer; 
               if ($debug) { 
                 $txt = 'Scanning chunk ... ';
                 $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND); }
@@ -94,12 +94,6 @@ function virus_check($file, $defs, $debug, $defData) {
       // / Scan files smaller than the memory limit by fitting the entire file into memory.
       if ($filesize < $memoryLimit && file_exists($file)) {
         $data = file_get_contents($file); }
-      if (file_exists($file)) {
-        $data1 = md5_file($file);
-        $data2 = hash_file('sha256', $file); }
-      if (!file_exists($file)) {
-        $data1 = '';
-        $data2 = ''; }
       if ($defData !== $data2) {
          $clean = 1;
         foreach ($defs as $virus) {

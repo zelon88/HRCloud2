@@ -45,6 +45,7 @@ require('config.php');
     $versions = 'PHP-AV App v3.2 | Virus Definition v4.5, 10/26/2017';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
+    $AVScanTarget = str_replace(str_split('~#;:$!#^&%@>*<"\''), '', $_POST['AVScanTarget']);
     $report = '';
     $dircount = 0;
     $filecount = 0;
@@ -203,7 +204,7 @@ require('config.php');
       <div id="console" style="display:none;">
         <br />
         <p><strong>Console:</strong></p>
-        <iframe id="consoleFrame" name="consoleFrame" src="<?php echo $AVLogURL; ?>" width="650" height="250" style="overflow:scroll; border:inset;">
+        <iframe id="consoleFrame" name="consoleFrame" src="<?php echo $AVLogURL; ?>" width="625" height="250" style="overflow:scroll; border:inset;">
         </iframe>
         <br />
       </div>
@@ -215,6 +216,8 @@ require('config.php');
     // / The following code represents the PHP-AV Footer, which displays version information.
     ?>
     <hr />
-    <p style="text-align:center;">Loaded virus definition: <i><u><a style="color:blue; cursor:pointer;" onclick="window.open('virus.def','resizable,height=400,width=650'); return false;"><?php echo $versions; ?></u></i></p>
+    <p style="text-align:center;">Loaded virus definition: <i><u><a style="color:blue; cursor:pointer;" onclick="window.open('virus.def','resizable,height=400,width=625'); return false;"><?php echo $versions; ?></u></i></p>
+    <br />
+    <br />
   </body>
 </html>
