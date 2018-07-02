@@ -143,6 +143,7 @@ $defaultApps = array('.', '..', '', 'error.php', 'HRAIMiniGui.php', 'jquery-3.1.
 $DangerousFiles = array('js', 'php', 'html', 'css');
 $installedApps = array_diff($Apps, $defaultApps);
 $tipsHeight = '0';
+$hr = '<hr style="width:100%;"/>'."\n";
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -191,14 +192,14 @@ if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL =
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
 $UserDirPOST = '/';
 if (isset($_POST['UserDirPOST']) or $_POST['UserDirPOST'] !== '/') {
-  $UserDirPOST = ('/'.$_POST['UserDirPOST'].'/'); }
+  $UserDirPOST = str_replace('//', '/', ('/'.$_POST['UserDirPOST'].'/')); }
 if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') {
-  $UserDirPOST = ('/'.$_POST['UserDir'].'/'); 
+  $UserDirPOST = str_replace('//', '/', ('/'.$_POST['UserDir'].'/')); 
   $_POST['UserDirPOST'] = $UserDirPOST; }
 if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) {
   $UserDirPOST = ('/'); }
 // / The following code cleans extra slashes from the UserDirPOST.
-$UserDirPOST = str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST']));
+$UserDirPOST = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'])));
 $CloudTmpDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $CloudTempDir.$UserDirPOST)))); 
 $CloudUsrDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $CloudDir.$UserDirPOST)))); 
 // / The following code represents the user directory handler.

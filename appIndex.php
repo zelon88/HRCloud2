@@ -36,7 +36,7 @@
     require_once (realpath(dirname(__FILE__)).'/securityCore.php'); } 
   // / -----------------------------------------------------------------------------------
   ?>
-  
+
   <body style="font-family:<?php echo $Font; ?>;">
     <div align="center">
       <p><strong>HRCloud2 Apps</strong> 
@@ -76,31 +76,31 @@
         $ApplicationDescription = '';
         $ApplicationWebsite = '';
         $ApplicationIntegration = '';
-          foreach ($lines as $line) {
-            if (strpos($line, 'App Name: ') == 'true') {
-              $ApplicationName = str_replace('App Name: ', '', $line); 
-              $ApplicationName = trim($ApplicationName); } 
-            if (strpos($line, 'App Version: ') == 'true') {
-              $ApplicationVersion = str_replace('App Version: ', '', $line);  } 
-            if (strpos($line, 'App License: ') == 'true') {
-              $ApplicationLicense = str_replace('App License: ', '', $line);  
-              $ApplicationLicense = trim($ApplicationLicense); }
-            if (strpos($line, 'App Author: ') == 'true') { 
-              $ApplicationAuthor = str_replace('App Author: ', '', $line); 
-              $ApplicationAuthor = trim($ApplicationAuthor); } 
-            if (strpos($line, 'App Description: ') == 'true') {
-              $ApplicationDescription = str_replace('App Description: ', '', $line); 
-              $ApplicationDescription = trim($ApplicationDescription); } 
-            if (strpos($line, 'App Website: ') == 'true') { 
-              $ApplicationWebsite = str_replace('App Website: ', '', $line); 
-              $ApplicationWebsite = trim($ApplicationWebsite); } 
-            if (strpos($line, 'App Integration: ') == 'true') {
-              $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
-              $ApplicationIntegration = trim($ApplicationIntegration); }
-            if (strpos($line, 'App Permission: 0') == 'true' or strpos($line, 'App Permission: admin') == 'true' 
-              or strpos($line, 'App Permission: Admin') == 'true') {
-                if ($UserIDRAW !== 1) continue 2; }
-            $lineCounter++; }
+        foreach ($lines as $line) {
+          if (strpos($line, 'App Name: ') == 'true') {
+            $ApplicationName = str_replace('App Name: ', '', $line); 
+            $ApplicationName = trim($ApplicationName); } 
+          if (strpos($line, 'App Version: ') == 'true') {
+            $ApplicationVersion = str_replace('App Version: ', '', $line);  } 
+          if (strpos($line, 'App License: ') == 'true') {
+            $ApplicationLicense = str_replace('App License: ', '', $line);  
+            $ApplicationLicense = trim($ApplicationLicense); }
+          if (strpos($line, 'App Author: ') == 'true') { 
+            $ApplicationAuthor = str_replace('App Author: ', '', $line); 
+            $ApplicationAuthor = trim($ApplicationAuthor); } 
+          if (strpos($line, 'App Description: ') == 'true') {
+            $ApplicationDescription = str_replace('App Description: ', '', $line); 
+            $ApplicationDescription = trim($ApplicationDescription); } 
+          if (strpos($line, 'App Website: ') == 'true') { 
+            $ApplicationWebsite = str_replace('App Website: ', '', $line); 
+            $ApplicationWebsite = trim($ApplicationWebsite); } 
+          if (strpos($line, 'App Integration: ') == 'true') {
+            $ApplicationIntegration = str_replace('App Integration: ', '', $line); 
+            $ApplicationIntegration = trim($ApplicationIntegration); }
+          if (strpos($line, 'App Permission: 0') == 'true' or strpos($line, 'App Permission: admin') == 'true' 
+           or strpos($line, 'App Permission: Admin') == 'true') {
+            if ($UserIDRAW !== 1) continue 2; }
+          $lineCounter++; }
 
       echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">');
       echo ('<div align="center">');
