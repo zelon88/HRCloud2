@@ -1,6 +1,5 @@
 <?php
 
-$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 $inputMATCH = array('how you been', 'how have you been', 'what\'s up', 'whats up', 'how are you');
 $responses = array('I guess that depends. Can I borrow one million dollars?', 'I\'m pretty good. I don\'t sleep so I don\'t 
  have to get up in the morning. I guess that counts for something.', 'I\'m great! It\'s a wonderful day so far', 

@@ -1,6 +1,5 @@
 <?php
 
-$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtime.php'; 
 $inputMATCH = array('how old are you', 'what is your age', 'whats your age', 'when were you born', 'what is your birthday');
 $responses = array('My first stable version was written in 2015. I was developed as a closed-source experiment in automated network integration, load balancing, and human-language command processing for the HonestRepair Cloud network.', 
  'I was born in 2015. I am '.(date("Y")-2015).' years old.',

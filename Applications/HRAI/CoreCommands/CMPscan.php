@@ -1,7 +1,7 @@
 <?php
 
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
-$inputMATCH = array('scan', 'virus check', 'malware check');
+$inputMATCH = array('scan a file', 'virus check', 'malware check', 'virus scan');
 $CMDcounter++;
 
 if (isset($input)) {
