@@ -179,11 +179,11 @@ if (isset($_POST['pellOpen']) && $pellOpen !== '') {
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
     // / Code for opening .rtf files.
     if (in_array($pellOpenFileExtension, $pellDocs4)) {
-      if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Pell/dist/rtf-html-php.php')) {
+      if (!file_exists('dist/rtf-html-php.php')) {
         echo nl2br('ERROR!!! HRC2PellApp114, Cannot process the rtf conversion engine file (rtf-html-php.php).'."\n"); 
         die (); }
       else {
-        require ('/var/www/html/HRProprietary/HRCloud2/Applications/Pell/dist/rtf-html-php.php'); }
+        require ('dist/rtf-html-php.php'); }
       $reader = new RtfReader();
       $rtfDATA = str_replace('<?', '', file_get_contents($pellOpenFile)); 
       $result = $reader->Parse($rtfDATA);
