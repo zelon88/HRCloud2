@@ -4,11 +4,11 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists('../../commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2ServMonitorApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  include ('../../commonCore.php'); }
 // / -----------------------------------------------------------------------------------
 
  // / -----------------------------------------------------------------------------------
@@ -34,8 +34,8 @@ require('specUpdater.php');
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="General Hardware Specs" alt="General Hardware Specs"> • General Hardware Specs: </strong>  <i><?php echo $specHardwareDeviceData; ?></i></a><hr />
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Storage Specs" alt="Storage Specs"> • Storage Specs: </strong>  <i><?php echo $specStorageDeviceData; ?></i></a><hr />
 <a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="CPU Specs" alt="CPU Specs"> • CPU Specs: </strong>  <i><?php echo $specCPUDeviceData; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="USB Specs" alt="USB Specs"> • USB Specs: </strong>  <i><?php echo $specPCIDeviceData; ?></i></a><hr />
-<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="PCI Specs" alt="PCI Specs"> • PCI Specs: </strong>  <i><?php echo $specUptimeData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Device Specs" alt="Device Specs"> • Device Specs: </strong>  <i><?php echo $specPCIDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;"><strong><img src="Resources/gauge.png" title="Uptime" alt="Uptime"> • Uptime: </strong>  <i><?php echo $specUptimeData; ?></i></a><hr />
 </div>
 </body>
 </html>
