@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: 3.2 (7-1-2018 00:30)
+App Version: v3.3 (7-7-2018 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -42,20 +42,26 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v3.2 | Virus Definition v4.5, 10/26/2017';
+    $versions = 'PHP-AV App v3.3 | Virus Definition v4.5, 10/26/2017';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
-    $AVScanTarget = str_replace(str_split('~#;:$!#^&%@>*<"\''), '', $_POST['AVScanTarget']);
     $report = '';
     $dircount = 0;
     $filecount = 0;
     $infected = 0;
+    $CONFIG = Array();
+    $CONFIG['debug'] = 0;
+    $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
+    $CONFIG['extensions'] = Array();
+    $abort = FALSE;
     $AVLogFile = $InstLoc.'/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt';
     $AVLogURL = str_replace(str_split('~#[](){};$!#^&%@>*<"\''), '', '/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt');
+    if (isset($_POST['AVScanTarget']) && $_POST['AVScanTarget'] !== '' && $_POST['AVScanTarget'] !== ' ') $AVScanTarget = str_replace(str_split('~#;:$!#^&%@>*<"\''), '', $_POST['AVScanTarget']);
     // / -----------------------------------------------------------------------------------
     
     // / -----------------------------------------------------------------------------------
     // / The following code writes entries to the main logfile with information about this session.
+    // / This is written to the HRC2 logfile.
     $txt = ('OP-Act: Initiating PHP-AV App on '.$Time.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: The PHP-AV Logfile for this session is '.$AVLogFile.'.'); 
@@ -65,8 +71,8 @@ require('config.php');
     // / -----------------------------------------------------------------------------------
     // / The following code checks if App permission is set to '1' and if the user is an administrator or not.
     if ($UserIDRAW !== 1) {
-      $txt = ('ERROR!!! HRC2PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);  
+      $txt = ('ERROR!!! PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!'); 
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       die($txt); } 
     // / -----------------------------------------------------------------------------------
 
@@ -77,7 +83,7 @@ require('config.php');
     if (!isset($_POST['UpdateInterval']) or $_POST['UpdateInterval'] == '') {
       $UpdateInterval = 15000; }
     if ($UpdateInterval <= 2000) {
-      $txt = ('WARNING!!! HRC2ServMonitorApp32, The "Update Interval" must be greater than 2000ms on '.$Time.'! Please increase the "Update Interval" to a value greater than 2000ms (or 2s).'); 
+      $txt = ('WARNING!!! PHPAVApp32, The "Update Interval" must be greater than 2000ms on '.$Time.'! Please increase the "Update Interval" to a value greater than 2000ms (or 2s).'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $UpdateInterval = 2000; }
     if ($UpateInt == '' or !(isset($UpdateInterval))) {
@@ -112,18 +118,29 @@ require('config.php');
     $valuePretty = ($UpdateInterval / 1000).'s';
     // / -----------------------------------------------------------------------------------
 
+    // / -----------------------------------------------------------------------------------   
+    // / The following code sets the AVScanTarget if one has been supplied.
+    if (isset($AVScanTarget) && $AVScanTarget !== '' && $AVScanTarget !== ' ') {
+      if (file_exists($AVScanTarget)) { 
+        $txt = 'Verified '.$AVScanTarget.' as a scan target on '.$Time.'!';
+        $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND); 
+        $CONFIG['scanpath'] = $AVScanTarget; } 
+      else { 
+        $txt = 'ERROR!!! PHPAVApp127, Cannot verify '.$AVScanTarget.' as a scan target on '.$Time.'!';
+        $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND); 
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        $abort = TRUE; } }
+    // / -----------------------------------------------------------------------------------
+
     // / -----------------------------------------------------------------------------------
     // / The following code is performed when a user selects to scan their server with PHP-AV.
-    if (isset($_POST['AVScan'])) { 
+    if (isset($_POST['AVScan']) && $abort === FALSE) { 
       $txt = 'Scan started on '.$Time.'.';
       $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND);
-      $CONFIG = Array();
-      $CONFIG['debug'] = 0;
-      $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
-      $CONFIG['extensions'] = Array();
-      $debug = null;
+      $txt = 'Scan target is '.$CONFIG['scanpath'].'.';
+      $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND);
       include_once('PHP-AV-Lib.php');
-      $defs = load_defs('virus.def', $debug);
+      $defs = load_defs('virus.def', $CONFIG['debug']);
       file_scan($CONFIG['scanpath'], $defs, $CONFIG['debug']);
       // / The following code sets user supplied memory variables if they are greater than the ones contained in config.php.
       if ($memoryLimitPOST >= $memoryLimit) {
@@ -138,15 +155,13 @@ require('config.php');
         $scanNote = 'PHP-AV did not find any dangerous or infected files.'; }
       if ($infected > 0) {
         $scanNote = 'PHP-AV found '.$infected.' files! Please review these files and remove/clean them as necessary.'; }
-      if (!isset($_POST['AVScanTarget']) or $_POST['AVScanTarget'] == '') {
-        $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT']; }
       echo '<h2>Scan Completed</h2>
        <div id=summary>
        <p><strong>Notes:</strong> '.$scanNote.'</p>
        <p><strong>Scanned folders:</strong> '.$dircount.'</p>
        <p><strong>Scanned files:</strong> '.$filecount.'</p>
        <p class=r><strong>Infected files:</strong> '.$infected.'</p>
-       <p><a href="<?php echo $AVLogURL; ?>"><strong>View Report</strong></a></p>
+       <p><a href="'.$AVLogURL.'"><strong>View Report</strong></a></p>
        </div>'.$report; } 
     // / -----------------------------------------------------------------------------------
 
@@ -160,45 +175,49 @@ require('config.php');
       setInterval(scrollIframe, <?php echo $UpateInt; ?>);       
     </script>
     <div align="center">
-      <br>
-      <p style="text-align:left; margin:15px;">PHP-AV is an open-source server-side anti-virus and vulnerability detection tool 
-        written in PHP developed by FujitsuBoy (aka Keyboard Artist) and heavily modified by zelon88.</p>
-      <p style="text-align:left; margin:15px;">This tool will scan for dangerous files, malicious file-contents,  
-        active vulnerabilities and potentially dangerous scripts and exploits.</p>
-      <br>
-      <input type="submit" value="Options" title="Display the PHP-AV Options Menu." alt="Display the PHP-AV Options Menu." onclick="toggle_visibility('Options');">
-      <form type="multipart/form-data" action="PHP-AV.php" method="POST">
-      <div name="Options" id="Options" style="display:none;">
-        <a style="max-width:75%;"><hr />
-          <p title="Select the update interval for the console display during scanning." alt="Select the update interval for the console display during scanning.">Specify the console Update Interval: </p>
-          <select id="UpdateInterval" name="UpdateInterval" title="Select the update interval for the console display during scanning." alt="Select the update interval for the console display during scanning.">
-            <option value="<?php echo $valueRAW; ?>">Current (<?php echo $valuePretty; ?>)</option>
-            <option value="15000">Default (15s)</option>
-            <option value="2000">2s</option>
-            <option value="3000">3s</option>
-            <option value="4000">4s</option>
-            <option value="5000">5s</option>
-            <option value="7000">7s</option>
-            <option value="10000">10s</option>
-            <option value="15000">15s</option>
-            <option value="30000">30s</option>
-            <option value="60000">60s</option>
-            <option value="90000">90s</option>
-            <option value="120000">120s</option>
-          </select>
-          <input type="submit" value="Apply" title="Apply update interval settings." alt="Apply update interval settings.">
-        <p title="Select a directory on the server to scan with PHP-AV." alt="Select a directory on the server to scan with PHP-AV.">Specify a server Directory / Filename: </p>
-        <input type="text" title="Select a directory on the server to scan with PHP-AV." alt="Select a directory on the server to scan with PHP-AV." name="AVScanTarget" id="AVScanTarget" value="">
-        <p title="Select the amount of memory for PHP-AV to use." alt="Select the amount of memory for PHP-AV to use.">Specify the Memory Limit for the scan: </p>
-        <input type="number" title="Select the amount of memory for PHP-AV to use." alt="Select the amount of memory for PHP-AV to use." name="AVmemoryLimit" id="AVmemoryLimit" value="<?php echo $memoryLimit; ?>">
-        <a style="max-width:75%;"> bytes </a>
-        <p title="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately." alt="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately.">Specify the Chunk Size for the scan: </p><input type="number" title="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately." alt="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately." name="AVmemoryLimit" id="AVmemoryLimit" value="<?php echo $chunkSize; ?>">
-        <a style="max-width:75%;"> bytes </a>
-        <hr /></a>
+      <div name="NewScanText" id="NewScanText" style="display:block;">
+        <br>
+        <p style="text-align:left; margin:15px;">PHP-AV is an open-source server-side anti-virus and vulnerability detection tool 
+          written in PHP developed by FujitsuBoy (aka Keyboard Artist) and heavily modified by zelon88.</p>
+        <p style="text-align:left; margin:15px;">This tool will scan for dangerous files, malicious file-contents,  
+          active vulnerabilities and potentially dangerous scripts and exploits.</p>
+        <br>
+        <input type="submit" value="Options" title="Display the PHP-AV Options Menu." alt="Display the PHP-AV Options Menu." onclick="toggle_visibility('Options');">
+        <form type="multipart/form-data" action="PHP-AV.php" method="POST">
+        <div name="Options" id="Options" style="display:none;">
+          <a style="max-width:75%;"><hr />
+            <p title="Select the update interval for the console display during scanning." alt="Select the update interval for the console display during scanning.">Specify the console Update Interval: </p>
+            <select id="UpdateInterval" name="UpdateInterval" title="Select the update interval for the console display during scanning." alt="Select the update interval for the console display during scanning.">
+              <option value="<?php echo $valueRAW; ?>">Current (<?php echo $valuePretty; ?>)</option>
+              <option value="15000">Default (15s)</option>
+              <option value="2000">2s</option>
+              <option value="3000">3s</option>
+              <option value="4000">4s</option>
+              <option value="5000">5s</option>
+              <option value="7000">7s</option>
+              <option value="10000">10s</option>
+              <option value="15000">15s</option>
+              <option value="30000">30s</option>
+              <option value="60000">60s</option>
+              <option value="90000">90s</option>
+              <option value="120000">120s</option>
+            </select>
+            <input type="submit" value="Apply" title="Apply update interval settings." alt="Apply update interval settings.">
+          <p title="Select a directory on the server to scan with PHP-AV." alt="Select a directory on the server to scan with PHP-AV.">Specify a server Directory / Filename: </p>
+          <input type="text" title="Select a directory on the server to scan with PHP-AV." alt="Select a directory on the server to scan with PHP-AV." name="AVScanTarget" id="AVScanTarget">
+          <p title="Select the amount of memory for PHP-AV to use." alt="Select the amount of memory for PHP-AV to use.">Specify the Memory Limit for the scan: </p>
+          <input type="number" title="Select the amount of memory for PHP-AV to use." alt="Select the amount of memory for PHP-AV to use." name="AVmemoryLimit" id="AVmemoryLimit" value="<?php echo $memoryLimit; ?>">
+          <a style="max-width:75%;"> bytes </a>
+          <p title="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately." alt="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately.">Specify the Chunk Size for the scan: </p><input type="number" title="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately." alt="PHP-AV will slice large files into chunks of this number of bytes and scan each chunk separately." name="AVmemoryLimit" id="AVmemoryLimit" value="<?php echo $chunkSize; ?>">
+          <a style="max-width:75%;"> bytes </a>
+          <hr /></a>
+        </div>
+        <br />
+        <input type="submit" name="AVScan" id="AVScan" value="Scan Server" onclick="toggle_visibility('NewScanText'); toggle_visibility('loading'); toggle_visibility('console'); refreshIframe();"></form>
       </div>
-      <br />
-      <input type="submit" name="AVScan" id="AVScan" value="Scan Server" onclick="toggle_visibility('loading'); toggle_visibility('console'); refreshIframe();"></form>
       <div id='loading' name='loading' align="center" style="display:none;">
+        <p><strong>Scanning...</strong></p>
+        <br />
         <p><img src='Resources/logosmall.gif' style="max-width:64px; max-height:64px;"/></p>
       </div>  
       <div id="console" style="display:none;">
