@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Executor
-App Version: 1.5 (4-27-2018 21:30)
+App Version: 1.6 (7-7-2018 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 command-line for using PHP like it were Bash.
@@ -15,11 +15,11 @@ HRCLOUD2-PLUGIN-END
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 error_reporting(E_ALL);
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists('../../commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2ExecutorApp26, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once ('../../commonCore.php'); }
 // / The following code checks if App permission is set to '1' and if the user is an administrator or not.
 $initData = file_get_contents('Executor.php');
   if ($UserIDRAW !== 1) {
