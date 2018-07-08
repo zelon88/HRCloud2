@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calendar
-App Version: 0.5 (1-18-2018 23:00)
+App Version: v0.6 (7-7-2018 00:00)
 App License: GPLv3
 App Author: bastianallgeier & zelon88
 App Description: A simple Calendar app for HRCloud2!
@@ -13,19 +13,19 @@ HRCLOUD2-PLUGIN-END
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists('../../commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2CalendarApp25, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once ('../../commonCore.php'); }
 
 // / The follwoing code checks if the calendarLibrary file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/Applications/Calendar/calendarLibrary.php')) {
+if (!file_exists('../../Applications/Calendar/calendarLibrary.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2CalendarApp17, Cannot process the Calendar Library file (calendarLibrary.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/Applications/Calendar/calendarLibrary.php'); }
+  require_once ('../../Applications/Calendar/calendarLibrary.php'); }
 
 // / The following code sets the desured GUI for the session.
 $guiPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_GET['gui']), ENT_QUOTES, 'UTF-8'); 
