@@ -183,6 +183,8 @@ if (isset($_POST['CheckCompatibility'])) {
   $CheckCompatPOST = htmlentities(str_replace(str_split('|\\~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckCompatibility']), ENT_QUOTES, 'UTF-8'); }
 if (isset($_POST['CheckCompat'])) {
   $CheckCompatPOST = htmlentities(str_replace(str_split('|\\~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckCompat']), ENT_QUOTES, 'UTF-8'); }
+if (isset($_POST['CheckPermissions'])) {
+  $CheckPermsPOST = htmlentities(str_replace(str_split('|\\~#[](){};:$!#^&%@>*<"\''), '', $_POST['CheckPermissions']), ENT_QUOTES, 'UTF-8'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

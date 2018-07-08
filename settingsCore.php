@@ -664,6 +664,11 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
 </p>
 
+<p alt="Verify the permissions level, owner, and group of HRCloud2 controlled directories." title="Verify the permissions level, owner, and group of HRCloud2 controlled directories." style="padding-left:15px;"> Permissions Check:</p>
+<p style="float:center; padding-left:10%;">
+  <input type='submit' name='CheckPermissions' id='CheckPermissions' value='Perms Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
+</p>
+
 <p alt="Set the Apache User. (Default: www-data)" title="Set the Apache User. WARNING!!! Do not change unless you are confident your input is accurate. (Default: www-data)" style="padding-left:15px;"><strong></strong> Apache User: WARNING!!! Custom installations only. (Default: www-data)</p>
 <p><input type='text' id="NEWApacheUser" name="NEWApacheUser" style="padding-left:30px; width:100%;" value="<?php echo $AUURL; ?>"></p>
 

@@ -139,7 +139,7 @@ $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $defaultApps = array('.', '..', '', 'error.php', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'index.html', 'HRAIMiniGui.php', 'HRAI', 'HRConvert2', 
   'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'style.css', 'Shared', 'ServMon.php', 'Favorites.php',  
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery');
+  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'PHPAV.php', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery');
 $DangerousFiles = array('js', 'php', 'html', 'css');
 $installedApps = array_diff($Apps, $defaultApps);
 $tipsHeight = '0';

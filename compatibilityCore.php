@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v2.7.5
-WRITTEN ON : 7/6/2018
+THIS VERSION : v2.8
+WRITTEN ON : 7/7/2018
 */
 
 // / -----------------------------------------------------------------------------------
@@ -547,6 +547,20 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
     @unlink($InstLoc.'/AdminLogin.php'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php')) {
     @unlink($InstLoc.'/Applications/HRAI/awake.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/online.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/online.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/coreArr.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/coreArr.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/CallForHelp.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/CallForHelp.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/ForceCallForHelp.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/ForceCallForHelp.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/langPar.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/langPar.php'); } 
+  if (file_exists($InstLoc.'/Applications/HRAI/langParVar.php')) {
+    @unlink($InstLoc.'/Applications/HRAI/langParVar.php'); } 
   if (file_exists($InstLoc.'/Applications/wordpress_1-28-17.zip')) {
     @unlink($InstLoc.'/Applications/wordpress_1-28-17.zip'); } 
   if (file_exists($InstLoc.'/Applications/HRAI/wordpress_11416.zip')) {
@@ -600,21 +614,13 @@ if ($CheckPermsPOST == '1' or $CheckPermsPOST == 'true'  or $CheckPermsPOST == '
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   @system("/bin/chgrp -R $user $CloudLoc");
-  $txt = 'Op-Act: The current user-group of the InstLoc is "'.posix_getpwuid(filegroup($InstLoc)).'".' ;
+  $txt = 'Op-Act: The current user:group of the CloudLoc is "'.posix_getpwuid(fileowner($CloudLoc))['name'].':'.posix_getgrgid(filegroup($CloudLoc))['name'].'".' ;
   echo nl2br ($txt.'<hr />');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   
   @system("/bin/chgrp -R $user $InstLoc");
-  $txt = 'Op-Act: The current user-group of the InstLoc is "'.posix_getpwuid(filegroup($InstLoc)).'".' ;
+  $txt = 'Op-Act: The current user:group of the InstLoc is "'.posix_getpwuid(fileowner($InstLoc))['name'].':'.posix_getgrgid(filegroup($InstLoc))['name'].'".' ;
   echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-  @system("/bin/chown -R $user $CloudLoc");
-  $txt = 'Op-Act: The current owner of the CloudLoc is "'.posix_getpwuid(fileowner($CloudLoc)).'".' ;
-  echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  @system("/bin/chown -R $user $InstLoc"); 
-  $txt = 'Op-Act: The current owner of the InstLoc is "'.posix_getpwuid(fileowner($InstLoc)).'".' ;
-  echo nl2br ($txt.'<hr />');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);}
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

@@ -1,0 +1,31 @@
+
+----------
+COMMIT 7/7/2018
+v2.8 - Update lots of apps!
+
+-Added a changelog to the repo to keep track of commits, notes, and other brainstorming stuff.
+-PHP-AV App to v3.3.
+-PHP-AV Scan targets now work properly.
+-PHP-AV header text now disappears when a scan is started, making more room for a pleasant console experience.
+-Improve cross platform support with relative paths throughout a lot of apps.
+-ServMonitor App to v3.1.
+-ServMonitor labels have been corrected, USB Devices -> Devices, PCI Devices -> Uptime.
+-Notes App to v
+-Contacts App to v2.3.
+-Grabber App to v1.9.
+-Calendar App to v0.6.
+-Bookmarks App to v1.6.
+-Calculator App to v1.6.
+-Pell to v3.4.
+-HRAI to v5.8.
+-Remove HRAI's ability to authenticate users as it is not needed.
+-Remove old experimental alpha code for natural language parsing.
+-Remove the sesLog creation and verification code.
+-Remove a lot of files that are no longer needed.
+-Improve HRAI performance by a considerable amount.
+-Reduce HRAI disk, memory, and CPU utilization, improve privacy & security.
+-Updated the HRConvert2 module of HRAI to use an installed version of HRConvert2 on the local server.
+-Added cleanup code to compatCore.php to deal with recent changes in HRAI.
+-Enabled the "Check Perms" functionality in settingsCore.php and added the UI elements to finally use it.
+-LAST MINUTE (not in some recent commit messages): Fix "PHPAV.php" appearing in Logs pages (added to $defaultApps in commonCore.php).
+----------
