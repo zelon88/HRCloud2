@@ -1,21 +1,12 @@
 <?php
-include_once('/var/www/html/HRProprietary/HRCloud2/config.php'); 
-$HRAI_VERSION = 'v5.7.5';
+$HRAI_VERSION = 'v5.8';
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
-$CallForHelp = $InstLoc.'/Applications/HRAI/CallForHelp.php';
 $HRC2SecurityCoreFile = $InstLoc.'/securityCore.php';
 $HRC2CommonCoreFile = $InstLoc.'/commonCore.php';
-$langParserfile = $InstLoc.'/Applications/HRAI/langPar.php';
-$onlineFile = $InstLoc.'/Applications/HRAI/online.php';
 $coreVarfile = $InstLoc.'/Applications/HRAI/coreVar.php';
 $coreFuncfile = $InstLoc.'/Applications/HRAI/coreFunc.php';
-$coreArrfile = $InstLoc.'/Applications/HRAI/coreArr.php';
-$nodeCache = $InstLoc.'/Applications/HRAI/Cache/nodeCache.php';
-$langParserfile = $InstLoc.'/Applications/HRAI/langPar.php';
-$onlineFile = $InstLoc.'/Applications/HRAI/online.php';
 $adminInfofile = '/var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php';
-$wpfile = '/var/www/html/wp-load.php';
 $CMDFilesDir1 = scandir($InstLoc.'/Applications/HRAI/CoreCommands');
 $CMDcounter = 0;
 $newlineArr = array("\n", "\r\n", "\r");
