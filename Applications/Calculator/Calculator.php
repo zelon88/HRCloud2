@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calculator
-App Version: 1.5 (4-4-2017 00:00)
+App Version: 1.6 (7-7-2018 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for doing math.
@@ -31,11 +31,11 @@ if (!isset($calculatorInput)) {
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
+if (!file_exists('../../commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2CalculatorApp26, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
 else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+  require_once ('../../commonCore.php'); }
 
 if (isset($_POST['calculatorInput']) && $_POST['calculatorInput'] !== '') {
   $calculatorInput = strtolower($calculatorInput);
