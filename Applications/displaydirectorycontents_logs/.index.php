@@ -62,6 +62,8 @@
 		$favicon="";
 		$class="file";
 		$name=$dirArray[$index];
+        foreach ($DangerousFiles as $DangerousFile) { 
+          if (strpos($name, $DangerousFile) == TRUE) continue 2; } 
 		$modtime=date("M j Y g:i A", filemtime($dirArray[$index]));
 		$namehref=$dirArray[$index];
         if (strpos($namehref, 'html') == 'true' or strpos($namehref, 'php') == 'true' or strpos($namehref, 'css') == 'true') continue;
