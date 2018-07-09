@@ -234,7 +234,7 @@
       require($FavoritesCacheFileInst);
       $dirArray = $FavoriteFiles; }
     if ($showFavorites !== '1') {
-      $myDirectory = rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/');
+      $myDirectory = str_replace('//', '/', str_replace('///', '/', rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/')));
       if (!is_dir($myDirectory)) {
         $txt = ('ERROR!!! HRC2Index284, The selected file is not actually a directory on '.$Time.'!'."\n");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -248,8 +248,8 @@
     for ($index = 0; $index < $indexCount; $index++) {
       if (substr("$dirArray[$index]", 0, 1) != $hide) {
         $class = "file";
-        $name = $dirArray[$index];
-        $namehref = $dirArray[$index];
+        $name = str_replace('//', '/', str_replace('///', '/', $dirArray[$index]));
+        $namehref = $name;
         $fileArray = array_push($fileArray1, $namehref);
         if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
         if (empty($namehref)) continue;
@@ -300,11 +300,13 @@
             case 'Directory': $extn = 'Folder'; break;
             case '<directory>': $extn = 'Folder'; break;
             case 'directory': $extn = 'Folder'; break;
-            default: if ($extn != ""){ $extn = strtoupper($extn)." File"; }
+            default: if ($extn != "") { $extn = strtoupper($extn)." File"; }
               break; }
-            if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == false) {
+            if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == FALSE) {
               $extn = "Folder"; }
             if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
+            foreach ($DangerousFiles as $DangerousFile) { 
+              if (strpos($name, $DangerousFile) == TRUE) continue 2; } 
             $size = getFilesize($CloudUsrDir.$dirArray[$index]);
             $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
             $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
@@ -313,15 +315,7 @@
               $extn = "Folder"; 
               $size = "Unknown"; 
               $size = "Unknown"; }
-            if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) {
-              if ($_POST['UserDir'] == '/' or $_POST['UserDirPOST'] == '/') { 
-                $_POST['UserDir'] = '/'; 
-                $_POST['UserDirPOST'] = '/'; } 
-              $Udir = $_POST['UserDirPOST'].'/'; }
-            if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
-              $Udir = '/'; }
-            $CleanUdir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $Udir.$name)));
-            $CleanDir = rtrim($CleanUdir, '/');
+            $CleanUdir = str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $Udir.$name)));
 
             // / Handle the AJAX post for if a user clicks on a folder in their drive.
             if (strpos($name, '.') == FALSE) { ?>
@@ -352,7 +346,7 @@
               $("#corePostDL<?php echo $tableCount; ?>").click(function(){
               $.ajax( {
                   type: 'POST',
-                  url: 'cloudCore.php',
+                  url: "<?php echo ('cloudCore.php?UserDirPOST='.$Udir); ?>",
                   data: { playlistSelected : "<?php echo $name; ?>"},
                   success: function(returnFile) {
                     toggle_visibility('loadingCommandDiv');
@@ -369,7 +363,7 @@
               $("#corePostDL<?php echo $tableCount; ?>").click(function(){
               $.ajax( {
                   type: 'POST',
-                  url: 'cloudCore.php',
+                  url: "<?php echo ('cloudCore.php?UserDirPOST='.$Udir); ?>",
                   data: { download : "1", filesToDownload : "<?php echo $name; ?>"},
                   success: function(returnFile) {
                     toggle_visibility('loadingCommandDiv');
@@ -666,7 +660,7 @@
       });
       $.ajax( {
           type: 'POST',
-          url: 'cloudCore.php',
+          url: "cloudCore.php<?php echo '?UserDirPOST='.$UserDirPOST; ?>",
           data: { shareConfirm : "1", filesToShare : shareSelected},
           success: function(data) {
               window.location.href = "cloudCore.php?showShared=1";
