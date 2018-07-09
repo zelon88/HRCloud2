@@ -582,7 +582,7 @@ $TOSURL = $TermsOfServiceURL;
   </select>
 </p>
 
-<p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong></strong> HRAI Load Balancing Personal Assistant: </p>
+<p alt="Show or Hide HRAI at the top of most windows." title="Show or Hide HRAI at the top of most windows." style="padding-left:15px;"><strong></strong> HRAI Personal Assistant: </p>
 <p>
   <select id="NEWShowHRAI" name="NEWShowHRAI" style="padding-left:30px; width:100%;">
     <option value="<?php echo $ShowHRAI; ?>">Current (<?php echo $SHRAIURL; ?>)</option>

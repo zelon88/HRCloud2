@@ -55,7 +55,8 @@ function getFiles($pathToFiles) {
 function getExtension($pathToFile) {
   return pathinfo($pathToFile, PATHINFO_EXTENSION); } 
 function getFilesize($File) {
-  $Size = filesize($File);
+  $Size = @filesize($File);
+  if (!is_numeric($Size)) $Size = 0;
   if ($Size < 1024) $Size=$Size." Bytes"; 
   elseif (($Size < 1048576) && ($Size > 1023)) $Size = round($Size / 1024, 1)." KB";
   elseif (($Size < 1073741824) && ($Size > 1048575)) $Size = round($Size / 1048576, 1)." MB";

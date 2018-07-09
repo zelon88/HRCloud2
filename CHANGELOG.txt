@@ -1,3 +1,21 @@
+----------
+COMMIT 7/8/2018
+v2.8.1 - Improve security, refactor cloudCore, commonCore.
+(v2.8.1 - Improve security, refactor cores.)
+
+-Added checks for dangerous files to all Cloud operations and to the GUI.
+-Refactor logging and echo'ing in cloudCore.php.
+-Remove (hopefully) any hope of duplicate backslashes in Cloud operations.
+-Change "die()" functions to "continue" functions with improved logging so the cloudCore can continue an operation on remaining files after there has been an error with one file.
+-Remove "load balancing" text from the "HRAI" setting in settingsCore.php.
+-Removed unused .config.php file from a location where it is not copied from.
+-Cleaned up the way Udirs are handled for downloads and Playlists.
+-Fixed bug where files inside subdirectories couldn't be shared.
+-Fixed shared index to clean up old symlinks that are broken due to users removing the original files.
+-Removed a bad check in unShare in cloudCore.php that made removing symlinks impossible if they were broken.
+-Updated commonCore.php to programatically create required directories with arrays and loops instead of using a bunch of WET static code.
+-Added code to purge index.html and .index.php of shared and log .AppData directories when they get older than 1 day.
+-Changed a bunch of strpos == TRUE to !== FALSE for reliability, with more to come.
 
 ----------
 COMMIT 7/7/2018
@@ -28,4 +46,5 @@ v2.8 - Update lots of apps!
 -Added cleanup code to compatCore.php to deal with recent changes in HRAI.
 -Enabled the "Check Perms" functionality in settingsCore.php and added the UI elements to finally use it.
 -LAST MINUTE (not in some recent commit messages): Fix "PHPAV.php" appearing in Logs pages (added to $defaultApps in commonCore.php).
+
 ----------
