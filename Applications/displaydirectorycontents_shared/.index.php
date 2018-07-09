@@ -22,7 +22,7 @@
         <div align="center"><h3>Shared Files</h3></div>
         <div align="center" style="margin-bottom:10px;">
           <input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
-          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refresh();"></div>
+          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); document.location.href = document.location.href;"></div>
         <div align="center" name="unshareButton" id="unshareButton" style="margin-bottom:10px;"><img src="/HRProprietary/HRCloud2/Resources/deletesmall.png" title="Remove Shared File" alt="Remove Shared File" onclick="toggle_visibility('loadingCommandDiv');"></div>
         <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
       </div>
@@ -55,13 +55,17 @@
             $favicon = "";
             $class = "file";
             $name = $dirArray[$index];
+            foreach ($DangerousFiles as $DangerousFile) { 
+              if (strpos($name, $DangerousFile) == TRUE) continue 2; } 
             $namehref = $dirArray[$index];
             $fileArray = array_push($fileArray1, $namehref);
-            if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
             if (empty($namehref)) continue;
             if (substr_compare($namehref, '/', 1)) $namehref = substr_replace('/'.$namehref, $namehref, 0); 
-            $modtime = date("M j Y g:i A", filemtime($CloudUsrDir.$dirArray[$index]));
-            $timekey = date("YmdHis", filemtime($CloudUsrDir.$dirArray[$index])); 
+            if (!file_exists($UserSharedDir.DIRECTORY_SEPARATOR.$dirArray[$index])) { 
+              @unlink($UserSharedDir.DIRECTORY_SEPARATOR.$dirArray[$index]);
+              continue; }
+            $modtime = date("M j Y g:i A", filemtime($UserSharedDir.DIRECTORY_SEPARATOR.$dirArray[$index]));
+            $timekey = date("YmdHis", filemtime($UserSharedDir.DIRECTORY_SEPARATOR.$dirArray[$index])); 
             if(is_dir($path)) {
               $extn = "&lt;Directory&gt;";
               $size = "&lt;Directory&gt;";
@@ -113,8 +117,8 @@
                 if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == false) {
                   $extn = "Folder"; }
                 if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
-                $size = getFilesize($CloudUsrDir.$dirArray[$index]);
-                $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
+                  $size = getFilesize($CloudUsrDir.$dirArray[$index]);
+                  $sizekey = $size; }
                 $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
                 $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
                 if ($extnRAW == '' or $extnRAW == NULL or preg_match('~[0-9]~', $size) == FALSE) {
