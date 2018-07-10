@@ -6,29 +6,26 @@
     <title>HRCloud2 | Home </title>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-  <?php
-  // / ----------------------------------------------------------------------------------- 
-  // / The follwoing code checks for required core files and terminates if they are missing.
-  if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-    echo nl2br('</head><body>ERROR!!! HRC2Index1-10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-    die (); }
-  else {
-    require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
+<?php
 
-  if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-    echo nl2br('</head><body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-    die (); }
-  else {
-    include_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
+// / ----------------------------------------------------------------------------------- 
+// / The follwoing code checks for required core files and terminates if they are missing.
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  include_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
 
-  if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) {
-    echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
-    die (); }
-  else {
-    require_once (realpath(dirname(__FILE__)).'/appCore.php'); }
-  include(realpath(dirname(__FILE__)).'/header.php');
-  // / -----------------------------------------------------------------------------------
-  ?>
+if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) {
+  echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
+  die (); }
+else {
+  require_once (realpath(dirname(__FILE__)).'/appCore.php'); }
+
+include(realpath(dirname(__FILE__)).'/header.php');
+// / -----------------------------------------------------------------------------------
+
+?>
   <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
     <?php if ($ShowHRAI == '1') {  ?>
     <div id="HRAIDiv" style="float: center;">

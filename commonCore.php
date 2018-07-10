@@ -6,16 +6,10 @@
 
 // / -----------------------------------------------------------------------------------  
 // / The following code checks if the config.php and the sanitizeCore.php files exist.
-if (!file_exists(realpath(dirname(__FILE__)).'/config.php')) {
-  echo nl2br('ERROR!!! HRC2CommonCore17, Cannot process the HRCloud2 configuration file (config.php).'."\n"); 
-  die (); }
-else {
-  require_once(realpath(dirname(__FILE__)).'/config.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('ERROR!!! HRC2CommonCore9, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'."\n"); 
-  die (); }
-else {
-  require_once(realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/config.php')) die('ERROR!!! HRC2CommonCore17, Cannot process the HRCloud2 configuration file (config.php).'.PHP_EOL); 
+else require_once(realpath(dirname(__FILE__)).'/config.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die('ERROR!!! HRC2CommonCore9, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'.PHP_EOL); 
+else require_once(realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -27,21 +21,15 @@ if ($EnableMaintenanceMode == '1') die('<strong>The page you are trying to reach
 
 // / -----------------------------------------------------------------------------------
 // / The following code verifies and cleans the config file.    
-if ($Accept_GPLv3_OpenSource_License !== '1') {
-  die ('ERROR!!! HRC2CommonCore124, You must read and completely fill out the config.php file located in your
-    HRCloud2 installation directory before you can use this software!'); }
-if (isset ($InternalIP)) { 
-  unset ($InternalIP); }
-if (isset ($ExternalIP)) { 
-  unset ($ExternalIP); } 
+if ($Accept_GPLv3_OpenSource_License !== '1') die('ERROR!!! HRC2CommonCore124, You must read and completely fill out the config.php file located in your HRCloud2 installation directory before you can use this software!'.PHP_EOL); 
+if (isset ($InternalIP)) unset ($InternalIP); 
+if (isset ($ExternalIP)) unset ($ExternalIP);  
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code validates permission settings.
-if (!isset($CLPerms)) { 
-  if (strlen($CLPerms) > 4 or strlen($CLPerms < 3)) $CLPerms = '0755'; }
-if (!isset($CLPerms)) {
-  if (strlen($IL_Perms) > 4 or strlen($IL_Perms < 3)) $IL_Perms = '0755'; }
+if (!isset($CLPerms)) if (strlen($CLPerms) > 4 or strlen($CLPerms < 3)) $CLPerms = '0755'; 
+if (!isset($CLPerms)) if (strlen($IL_Perms) > 4 or strlen($IL_Perms < 3)) $IL_Perms = '0755'; 
 if (!isset($ApacheUser)) $ApacheGroup = 'www-data';
 if (!isset($ApacheUser)) $ApacheUser = 'www-data';
 $CLPerms = octdec(str_replace('\'', '', $CLPerms));
@@ -53,37 +41,27 @@ $ILPerms = octdec(str_replace('\'', '', $ILPerms));
 $WPFile = $ServerRootDir.'/wp-load.php';
 if (!file_exists($WPFile)) {
   $WPArch  = $InstLoc.'/Applications/wordpress.zip';
-  echo nl2br('Notice!!! HRC2CommonCore27, WordPress was not detected on the server. 
-    Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'."\n");
-  echo nl2br('OP-Act: Installing WordPress.'."\n");
+  echo nl2br('Notice!!! HRC2CommonCore27, WordPress was not detected on the server.'.PHP_EOL."\n".' Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'.PHP_EOL."\n");
+  echo nl2br('OP-Act: Installing WordPress.'.PHP_EOL."\n");
   shell_exec('unzip '.$WPArch.' -d '.$ServerRootDir); 
-  if (file_exists($WPFile)) {
-    echo nl2br('OP-Act: Sucessfully installed WordPress!'."\n"); }
-  $ServerRootDir = null;
-  unset($ServerRootDir); 
+  if (file_exists($WPFile)) echo nl2br('OP-Act: Sucessfully installed WordPress!'.PHP_EOL."\n"); 
+  if (!file_exists($WPFile)) echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server and could not be installed.'.PHP_EOL."\n"); 
   die(); }
-if (!file_exists($WPFile)) {
-  echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server. 
-   And could not be installed.'."\n"); }
-else {
-  require_once ($WPFile); } 
+else require_once ($WPFile); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code checks to see that the user is logged in.
 $UserIDRAW = get_current_user_id();
 if ($UserIDRAW == '') {
-  echo nl2br('ERROR!!! HRC2CommonCore100, You are not logged in!'."\n"); 
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
+  die('ERROR!!! HRC2CommonCore100, You are not logged in!'.PHP_EOL); }
 if ($UserIDRAW == '0') {
-  echo nl2br('ERROR!!! HRC2CommonCore103, You are not logged in!'."\n");
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
+  die('ERROR!!! HRC2CommonCore103, You are not logged in!'.PHP_EOL); }
 if (!isset($UserIDRAW)) {
-  echo nl2br('ERROR!!! HRC2CommonCore106, You are not logged in!'."\n");
   wp_redirect('/wp-login.php?redirect_to=' . $_SERVER["REQUEST_URI"]);
-  die(); }
+  die('ERROR!!! HRC2CommonCore106, You are not logged in!'.PHP_EOL); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -95,9 +73,8 @@ $ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
-$LogInc = 0;
+$LogInc = $ClamLogFileInc = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
-$ClamLogFileInc = 0;
 $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt';
 $LogFile = $SesLogDir.'/HRC2-'.$SesHash.'-'.$Date.'.txt';
 $CloudDir = $CloudLoc.'/'.$UserID;
@@ -138,8 +115,8 @@ $Apps = scandir($AppDir);
 $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $defaultApps = array('.', '..', '', 'error.php', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'index.html', 'HRAIMiniGui.php', 'HRAI', 'HRConvert2', 
-  'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'style.css', 'Shared', 'ServMon.php', 'Favorites.php',  
-  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'PHPAV.php', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery');
+ 'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'style.css', 'Shared', 'ServMon.php', 'Favorites.php',  
+ 'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'PHPAV.php', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery');
 $DangerousFiles = array('js', 'php', 'html', 'css');
 $installedApps = array_diff($Apps, $defaultApps);
 $RequiredDirs1 = array($CloudDir, $CloudTemp, $CloudTempDir, $appDataCloudDir, $ResourcesDir, $TempResourcesDir, $ClientInstallDir, $ClientInstallDirWin, $ClientInstallDirLin, $ClientInstallDirOsx, $CloudAppDir, $BackupDir);
@@ -189,33 +166,25 @@ if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL =
 // / The following code sets a target directory within a users Cloud drive and prefixes 
 // / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
 $UserDirPOST = '/';
-if (isset($_POST['UserDirPOST']) or $_POST['UserDirPOST'] !== '/') {
-  $UserDirPOST = str_replace('//', '/', ('/'.$_POST['UserDirPOST'].'/')); }
-if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') {
-  $UserDirPOST = str_replace('//', '/', ('/'.$_POST['UserDir'].'/')); 
-  $_POST['UserDirPOST'] = $UserDirPOST; }
-if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) {
-  $UserDirPOST = ('/'); }
-// / The following code cleans extra slashes from the UserDirPOST.
-$UserDirPOST = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'])));
-$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $CloudTempDir.$UserDirPOST)))); 
-$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $CloudDir.$UserDirPOST)))); 
-array_push($RequiredDirs1, $CloudTmpDir);
-array_push($RequiredDirs1, $CloudUsrDir);
-// / The following code represents the user directory handler.
+// / If a valid UserDir is set, use it for all paths and operations.
+if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') $UserDirPOST = $_POST['UserDirPOST'] = str_replace('//', '/', str_replace('///', '/', '/'.$_POST['UserDir'].'/')); 
+// / If the root Cloud Drive is selected set the path directory and URL directory as a slash.
+if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) $Udir = $UserDirPOST = '/'; 
+// / Whatever directory the user is "in" is used for URLs.
 if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) { 
   $Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'].'/'))); }
-if (!isset($_POST['UserDir']) or !isset($_POST['UserDirPOST'])) { 
-  $Udir = '/'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code creates required HRCloud2 files if they do not exist. Also installs user 
-// / specific files and new index files as needed.
-if (!is_dir($CloudLoc)) {
-  $txt = ('ERROR!!! HRC2CommonCore59, There was an error verifying the CloudLoc as a valid directory. 
-    Please check the config.php file and refresh the page.');
-  die($txt); }
+// / The following code defines the user directories and adds them to the array of.
+$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudTempDir.$UserDirPOST)))); 
+$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudDir.$UserDirPOST)))); 
+array_push($RequiredDirs1, $CloudTmpDir, $CloudUsrDir);
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code creates required HRCloud2 files if they do not exist. Also installs user specific files and new index files as needed.
+if (!is_dir($CloudLoc)) die('ERROR!!! HRC2CommonCore59, There was a problem verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -223,35 +192,29 @@ if (!is_dir($CloudLoc)) {
 foreach ($RequiredDirs1 as $RequiredDir1) {
   if (!file_exists($RequiredDir1)) {
     mkdir($RequiredDir1); 
-    if (file_exists($RequiredDir1)) {
-      $txt = ('OP-Act: Created the required directory '.$RequiredDir1.' on '.$Time.'.'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-    if (!file_exists($RequiredDir1)) {
-      $txt = ('ERROR!!! HRC2CommonCore137, The required directory '.$RequiredDir1.' does not exist and could not be created on '.$Time.'!'); 
-      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } }
+    if (!file_exists($RequiredDir1)) die('ERROR!!! HRC2CommonCore137, The required directory '.$RequiredDir1.' does not exist and could not be created on '.$Time.'!'.PHP_EOL); }
   if (file_exists($RequiredDir1)) { 
     chown($RequiredDir1, $ApacheUser);
     chgrp($RequiredDir1, $ApacheGroup);
-    chmod($RequiredDir1, $ILPerms); 
-    if (!file_exists($RequiredDir1.'/index.html')) @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html');
-    if ($Now - @filemtime($RequiredDir1.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
-      @unlink($RequiredDir1.'/index.html');
-      @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } }
+    chmod($RequiredDir1, $ILPerms); }
+  if (!file_exists($RequiredDir1.'/index.html')) @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html');
+  if ($Now - @filemtime($RequiredDir1.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
+    @unlink($RequiredDir1.'/index.html');
+    @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code creates the last set of required directories that need advanced setup.
 foreach ($RequiredDirs2 as $RequiredDir2) { 
+  if ($RequiredDir2 === $SesLogDir) $LogInstallDir = $LogInstallDir1; 
+  if ($RequiredDir2 === $CloudShareDir) $LogInstallDir = $SharedInstallDir; 
   if (!file_exists($RequiredDir2)) {
     mkdir($RequiredDir2);
+    if (!file_exists($RequiredDir2)) die('ERROR!!! HRC2CommonCore137, The required directory '.$RequiredDir2.' does not exist and could not be created on '.$Time.'!'.PHP_EOL); 
     @copy($InstLoc.'/index.html', $RequiredDir2.'/index.html');
-    if (strpos('logs', $RequiredDir2) !== FALSE) $FilesArr = $LogInstallFiles; 
-    if (strpos('logs1', $RequiredDir2) !== FALSE) { 
-      $LogInstallDir = $LogInstallDir1;
-      $FilesArr = $LogInstallFiles1; } 
-    if (strpos('shared', $RequiredDir2) !== FALSE) { 
-      $LogInstallDir = $SharedInstallDir;
-      $FilesArr = $SharedInstallFiles; } 
+    if ($RequiredDir2 === $LogLoc) $FilesArr = $LogInstallFiles; 
+    if ($RequiredDir2 === $SesLogDir) $FilesArr = $LogInstallFiles1; 
+    if ($RequiredDir2 === $CloudShareDir) $FilesArr = $SharedInstallFiles; 
     foreach ($FilesArr as $LIF1) {
       if (in_array($LIF1, $installedApps)) continue;
       if ($LIF1 == '.' or $LIF1 == '..') continue;
@@ -259,15 +222,15 @@ foreach ($RequiredDirs2 as $RequiredDir2) {
   if (file_exists($RequiredDir2)) { 
     chown($RequiredDir2, $ApacheUser);
     chgrp($RequiredDir2, $ApacheGroup);
-    chmod($RequiredDir2, $ILPerms); 
-    if (!file_exists($RequiredDir2.'/.index.php') && file_exists($InstLoc.'/'.$LogInstallDir.'.index.php')) copy($InstLoc.'/'.$LogInstallDir.'.index.php', $SesLogDir.'/.index.php');
-    if ($Now - @filemtime($RequiredDir2.'/.index.php') >= 60 * 60 * 24 * 1 && file_exists($InstLoc.'/'.$LogInstallDir.'.index.php')) { // 1 day
-      unlink($RequiredDir2.'/.index.php');
-      copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } } }
+    chmod($RequiredDir2, $ILPerms); }
+  if (!file_exists($RequiredDir2.'/.index.php') && file_exists($InstLoc.'/'.$LogInstallDir.'.index.php')) copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php');
+  if ($Now - @filemtime($RequiredDir2.'/.index.php') >= 60 * 60 * 24 * 1 && file_exists($InstLoc.'/'.$LogInstallDir.'.index.php')) { // 1 day  
+    unlink($RequiredDir2.'/.index.php');
+    copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code creates a ClamLogFile if one does not exist.
+// / The following code sets a clean ClamLogFile if one does not exist.
 while (file_exists($ClamLogDir)) {
   $ClamLogFileInc++;
   $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt'; } 
@@ -280,10 +243,10 @@ $AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
 $adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
 $AdminConfig = $adminAppDataInstDir.'/.config.php';
 if (!file_exists($AdminConfig)) { 
-  $txt = ('WARNING!!! HRC2CommonCore151, There was a problem loading the admin settings on '.$Time.'!'); 
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
-if (file_exists($AdminConfig)) {
-  include ($AdminConfig); }
+  $txt = 'WARNING!!! HRC2CommonCore151, There was a problem loading the admin settings on '.$Time.'!'; 
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die($txt); }
+if (file_exists($AdminConfig)) include($AdminConfig); 
 $Nickname = '';
 $AdminIDRAW = null;
 $AdminID = null;
@@ -295,13 +258,13 @@ unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
 // / -----------------------------------------------------------------------------------
 // / The following code loads the user config file if it exists and creates one if it does not.
 if (!file_exists($UserConfig)) { 
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Creating a user config file on '.$Time.'.'.PHP_EOL, FILE_APPEND);
   copy($LogInstallDir.'.config.php', $UserConfig); }
 if (!file_exists($UserConfig)) { 
-  $txt = ('ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'); 
+  $txt = 'ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  die ($txt); }
-if (file_exists($UserConfig)) {
-  include ($UserConfig); }
+  die($txt); }
+if (file_exists($UserConfig)) include($UserConfig);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -317,26 +280,42 @@ $Time = date("F j, Y, g:i a");
 // / The following code checks if the FavoritesCacheFile exists, and creates one if it does not.
 if (!file_exists($FavoritesCacheFileCloud)) { 
   $data = '<?php $FavoriteFiles = array();';
-  $txt = ('OP-Act: Created a Favorites cache file in the Cloud loc on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Created a Favorites cache file in the Cloud directory on '.$Time.'.'.PHP_EOL, FILE_APPEND); 
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileCloud, $data.PHP_EOL, FILE_APPEND); 
+  if (!file_exists($FavoritesCacheFileCloud)) { 
+    $txt = 'ERROR!!! HRC2CommonCore301, There was a problem creating a Favorites cache file in the Cloud directory on '.$Time.'!'; 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code checks if the FavoritesCacheFile exists, and creates one if it does not.
 if (!file_exists($FavoritesCacheFileInst)) { 
   $data = '<?php $FavoriteFiles = array();';
-  $txt = ('OP-Act: Created a Favorites cache file in the Inst loc on '.$Time.'.');
-  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileInst, $data.PHP_EOL, FILE_APPEND); }
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Creating a Favorites cache file in the Installation directory on '.$Time.'.'.PHP_EOL, FILE_APPEND); 
+  $MAKEFavCacheFile = file_put_contents($FavoritesCacheFileInst, $data.PHP_EOL, FILE_APPEND); 
+  if (!file_exists($FavoritesCacheFileCloud)) { 
+    $txt = 'ERROR!!! HRC2CommonCore313, There was a problem creating a Favorites cache file in the Installation directory on '.$Time.'!'; 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------        
 // / The following code copies an index file to the Temp Cloud directory.
 if (!file_exists($CloudTempDir.'/index.html')) {
-  copy('index.html', $CloudTempDir.'/index.html'); }
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Copying an index file to '.$CloudTempDir.' on '.$Time.'.'.PHP_EOL, FILE_APPEND); 
+  @copy('index.html', $CloudTempDir.'/index.html'); 
+  if (!file_exists($CloudTempDir.'/index.html')) { 
+    $txt = 'ERROR!!! HRC2CommonCore309, There was a problem copying an index file to '.$CloudTempDir.' on '.$Time.'!'; 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); } }
 if (!file_exists($CloudTmpDir.'/index.html')) {
-  copy('index.html', $CloudTmpDir.'/index.html'); }  
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Copying an index file to '.$CloudTmpDir.' on '.$Time.'.'.PHP_EOL, FILE_APPEND);
+  @copy('index.html', $CloudTmpDir.'/index.html'); 
+  if (!file_exists($CloudTempDir.'/index.html')) { 
+    $txt = 'ERROR!!! HRC2CommonCore315, There was a problem copying an index file to '.$CloudTmpDir.' on '.$Time.'!'; 
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); } }  
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -346,27 +325,24 @@ if (file_exists($CloudTempDir)) {
   foreach ($DFiles as $DFile) {
     if (in_array($DFile, $defaultApps) or $DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
     $stat = lstat($DFile);
-      if (($Now - $stat['mtime']) >= 600) { // Time to keep files.
-        if (is_file($DFile)) {
-          unlink($DFile); 
-          $txt = ('OP-Act: Cleaned '.$DFile.' on '.$Time.'.');
-          $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } 
-      if (is_dir($DFile)) {
-        $CleanDir = $DFile;
-        $CleanFiles = scandir($DFile);
-        $JanitorDeleteIndex = 1;
-        include($JanitorFile); 
-        @rmdir($DFile); } } } }
+    if (($Now - $stat['mtime']) >= 600) { // Time to keep files.
+      if (is_file($DFile)) {
+        unlink($DFile); 
+        $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Cleaned '.$DFile.' on '.$Time.'.'.PHP_EOL, FILE_APPEND); } 
+    if (is_dir($DFile)) {
+      $CleanDir = $DFile;
+      $CleanFiles = scandir($DFile);
+      $JanitorDeleteIndex = 1;
+      include($JanitorFile); 
+      @rmdir($DFile); } } } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code sync's the users AppData between the InstLoc and the CloudLoc.
 if (!file_exists($appDataCloudDir)) {
-  $txt = ('WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData 
-   directory in the CloudLoc on '.$Time.'!'); 
+  $txt = 'WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData directory in the CloudLoc on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  echo nl2br($txt."\n".'Most likely the server\'s permissions are incorrect. 
-   Make sure the www-data usergroup and user have R/W access to ALL folders in the /var/www/html directory. '); }
+  die($txt.PHP_EOL.'Most likely the server\'s permissions are incorrect. Make sure the www-data usergroup and user have R/W access to ALL folders in the Cloud directory.'); }
 $dirs = array_filter(glob($appDataInstDir.'/*'), 'is_dir');
 foreach($dirs as $dir) {
   chown($appDataInstDir.'/'.basename($dir), $ApacheUser);
@@ -380,19 +356,15 @@ foreach ($iterator = new \RecursiveIteratorIterator (
     if (!is_dir($ADCD)) {
       mkdir($ADCD); 
       continue; } }
-  else {
-      if (!is_link($item) && !file_exists($ADCD)) {
-        copy($item, $ADCD); } } }
+  else if (!is_link($item) && !file_exists($ADCD)) copy($item, $ADCD); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code sync's the users AppData between the CloudLoc and the InstLoc.
 if (!file_exists($appDataInstDir)) {
-  $txt = ('WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData 
-   directory in the InstLoc on '.$Time.'!'); 
+  $txt = 'WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData directory in the InstLoc on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-  echo nl2br($txt."\n".'Most likely the server\'s permissions are incorrect. 
-   Make sure the www-data usergroup and user have R/W access to ALL folders in the /var/www/html directory. '); }
+  die($txt.PHP_EOL.'Most likely the server\'s permissions are incorrect. Make sure the www-data usergroup and user have R/W access to ALL folders in the Installation directory. '); }
 foreach ($iterator = new \RecursiveIteratorIterator (
   new \RecursiveDirectoryIterator ($appDataCloudDir, \RecursiveDirectoryIterator::SKIP_DOTS),
   \RecursiveIteratorIterator::SELF_FIRST) as $item) {
@@ -401,38 +373,35 @@ foreach ($iterator = new \RecursiveIteratorIterator (
     if (!is_dir($ADID)) {
       mkdir($ADID); 
       continue; } }
-  else {
-      if (!is_link($item) && !file_exists($ADID)) {
-        copy($item, $ADID); } } }
+  else if (!is_link($item) && !file_exists($ADID)) copy($item, $ADID); }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code determines the color scheme that the user has selected. 
+if ($noStyles !== 1) {
+  if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
+    $ColorScheme = '1'; }
+  if ($ColorScheme == '1') {
+    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/style.css">'); }
+  if ($ColorScheme == '2') {
+    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); }
+  if ($ColorScheme == '3') {
+    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); }
+  if ($ColorScheme == '4') {
+    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
+  if ($ColorScheme == '5') {
+    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code checks if ShowTips is enabled and loads a random Tip if needed.
 if (file_exists($TipFile) && $ShowTips == '1') {
   if ($ShowTips == '1') {
-    include ($TipFile);
+    include($TipFile);
     $RandomTip = array_rand($Tips);
     $Tip = $Tips[$RandomTip];
     $Tips = null; 
     $RandomTip = null;
     unset($Tips, $RandomTip); } } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code determines the color scheme that the user has selected. 
-// / May require a refresh to take effect.
-if ($noStyles !== 1) {
-  if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-    $ColorScheme = '1'; }
-  if ($ColorScheme == '1') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/style.css">'); }
-  if ($ColorScheme == '2') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); }
-  if ($ColorScheme == '3') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); }
-  if ($ColorScheme == '4') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
-  if ($ColorScheme == '5') {
-    echo ('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); } }
 // / -----------------------------------------------------------------------------------
 ?>

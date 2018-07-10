@@ -7,22 +7,16 @@
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
   </head>
 
-  <?php
-  // / -----------------------------------------------------------------------------------
-  // / The follwoing code checks for required core files and terminates if they are missing.
-  if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-    echo nl2br('<body>ERROR!!! HRC2Helper33, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-    die (); }
-  else {
-    require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
-
-  if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-    echo nl2br('<body>ERROR!!! HRC2Helper35, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n".'</body></html>'); 
-    die (); }
-  else {
-    require(realpath(dirname(__FILE__)).'/commonCore.php'); }
-  // / -----------------------------------------------------------------------------------
-   ?>
+<?php
+// / -----------------------------------------------------------------------------------
+// / The follwoing code checks for required core files and terminates if they are missing.
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
+  echo nl2br('<body>ERROR!!! HRC2Helper35, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n".'</body></html>'); 
+  die (); }
+else {
+  require(realpath(dirname(__FILE__)).'/commonCore.php'); }
+// / -----------------------------------------------------------------------------------
+?>
 
   <body style="font-family:<?php echo $Font; ?>;">
     <div align="center">

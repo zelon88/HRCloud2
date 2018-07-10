@@ -1,3 +1,25 @@
+COMMIT 7/9/2018
+v2.8.2 - More refactoring, minimize code, logging.
+
+-Improve logging.
+-Improve efficiency.
+-Fix bugs with recent required directory handlers not copying log data properly.
+-Tweak WordPress installer.
+-Rework directory handlers.
+-Eval the possibility of checking filesize on InstLoc sync. Totally not worth the 2x filesize scans it would take per InstLoc file.
+-Fixed when Apps are uninstalled; HRC2 always reports failure even on sucsess - not anymore.
+-Remove sanitizeCore from loading on pages that don't need it.
+-Evaluate and tweak which cores are loaded on which pages.
+
+----------
+IDEAS 7/9/2018
+
+-HRScan can be either PHP-AV with target towards the uploaded file with dropzone.
+-HRDesktop-Scan can be a scanner in python based on PHP-AV and clamAV
+-HRDesktop-Convert can be a converter in pythin based on HRConvert2 with as many dependencies as possible rolled up.
+-On first click of HRAI it should expand.
+-PHP-AV should make .html and .txt logfiles so that it can add a javascript script to auto scroll to bottom. Don't copy both in real-time, create the html first and update it and at the end when scan is done copy to .txt without the javascript and delete the .html original.
+
 ----------
 COMMIT 7/8/2018
 v2.8.1 - Improve security, refactor cloudCore, commonCore.

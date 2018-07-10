@@ -8,14 +8,8 @@
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
 </head>
 <?php 
-// / The follwoing code checks if the sanitizeCore.php file exists and 
-// / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('<body>ERROR!!! HRC2Index1-10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
 
+// / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
@@ -32,7 +26,10 @@ if (!file_exists('/var/www/html/HRProprietary/HRCloud2/appCore.php')) {
 else {
   require_once ('/var/www/html/HRProprietary/HRCloud2/appCore.php'); }
 
-include('/var/www/html/HRProprietary/HRCloud2/header.php'); ?>
+include('/var/www/html/HRProprietary/HRCloud2/header.php'); 
+// / -----------------------------------------------------------------------------------
+?>
+
 
 <body style="font-family:<?php echo $Font; ?>;">
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">

@@ -1,12 +1,8 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The following code detects if the commonCore is in memory and loads it if neccesary. 
-if (!isset($UserID)) {
-  if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-    echo nl2br('ERROR!!! HRC2GuiCore17, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
-    die (); }
-  else {
-    require_once(realpath(dirname(__FILE__)).'/commonCore.php'); } }
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('ERROR!!! HRC2GuiCore17, Cannot process the HRCloud2 Common Core file (commonCore.php).'.PHP_EOL); 
+else require_once(realpath(dirname(__FILE__)).'/commonCore.php'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -26,12 +22,7 @@ $pdfWorkArr = array('pdf', 'jpg', 'jpeg', 'png', 'bmp', 'gif');
 $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
 $fileArray1 = array();
-$tableCount = 0;
-$ArchInc = 0;
-$ConvertInc = 0;
-$RenameInc = 0;
-$ConvertInc = 0;
-$EditInc = 0;
+$tableCount = $ArchInc = $ConvertInc = $RenameInc = $EditInc = 0;
 if (!isset($Udir)) $Udir = '';
 $Udir = str_replace('//', '/', str_replace('//', '/', $Udir));
 // / -----------------------------------------------------------------------------------
@@ -39,10 +30,8 @@ $Udir = str_replace('//', '/', str_replace('//', '/', $Udir));
 // / -----------------------------------------------------------------------------------
 // / The following code sets GUI specific resources.
 function getCurrentURL() {
-  if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-    $httpPrefix = 'https://'; }
-  if (!empty($_SERVER['HTTPS']) or $_SERVER['HTTPS'] = 'on') {
-    $httpPrefix = 'http://'; }
+  if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') $httpPrefix = 'https://'; 
+  if (!empty($_SERVER['HTTPS']) or $_SERVER['HTTPS'] = 'on') $httpPrefix = 'http://'; 
   $Current_URL = $httpPrefix.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; 
   return ($CurrentURL); }
 function getFiles($pathToFiles) {
@@ -80,15 +69,16 @@ if (strpos($CurrentDir, 'Shared') !== FALSE) $CD = '../../../../';
 if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
   $ColorScheme = '1'; }
 if ($ColorScheme == '1') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyle.css">'); }
+  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyle.css">'); }
 if ($ColorScheme == '2') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleRED.css">'); }
+  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleRED.css">'); }
 if ($ColorScheme == '3') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleGREEN.css">'); }
+  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleGREEN.css">'); }
 if ($ColorScheme == '4') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleGREY.css">'); }
+  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleGREY.css">'); }
 if ($ColorScheme == '5') {
-  echo ('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleBLACK.css">'); } 
+  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleBLACK.css">'); } 
+// / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // Checks to see if veiwing hidden files is enabled
