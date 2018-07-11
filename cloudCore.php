@@ -28,21 +28,12 @@
 
 // / -----------------------------------------------------------------------------------
 // / The following code will check for and initialize required HRCloud2 Core files.
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".''); 
-  die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) {
-  echo nl2br('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'."\n"); 
-  die (); }
-else {
-  require (realpath(dirname(__FILE__)).'/securityCore.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'."\n"); 
-  die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die('ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'.PHP_EOL); 
+else require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'.PHP_EOL); 
+else require (realpath(dirname(__FILE__)).'/securityCore.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'.PHP_EOL); 
+else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

@@ -65,22 +65,6 @@ if (strpos($CurrentDir, 'Shared') !== FALSE) $CD = '../../../../';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / Color scheme handler.
-if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-  $ColorScheme = '1'; }
-if ($ColorScheme == '1') {
-  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyle.css">'); }
-if ($ColorScheme == '2') {
-  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleRED.css">'); }
-if ($ColorScheme == '3') {
-  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleGREEN.css">'); }
-if ($ColorScheme == '4') {
-  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleGREY.css">'); }
-if ($ColorScheme == '5') {
-  echo('<link rel="stylesheet" type="text/css" href="'.$CD.'Styles/iframeStyleBLACK.css">'); } 
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
 // Checks to see if veiwing hidden files is enabled
 if ($_SERVER['QUERY_STRING'] == "hidden") { 
   $hide = "";

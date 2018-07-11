@@ -29,7 +29,7 @@ if (isset ($ExternalIP)) unset ($ExternalIP);
 // / -----------------------------------------------------------------------------------
 // / The following code validates permission settings.
 if (!isset($CLPerms)) if (strlen($CLPerms) > 4 or strlen($CLPerms < 3)) $CLPerms = '0755'; 
-if (!isset($CLPerms)) if (strlen($IL_Perms) > 4 or strlen($IL_Perms < 3)) $IL_Perms = '0755'; 
+if (!isset($ILPerms)) if (strlen($IL_Perms) > 4 or strlen($IL_Perms < 3)) $IL_Perms = '0755'; 
 if (!isset($ApacheUser)) $ApacheGroup = 'www-data';
 if (!isset($ApacheUser)) $ApacheUser = 'www-data';
 $CLPerms = octdec(str_replace('\'', '', $CLPerms));
@@ -69,6 +69,8 @@ if (!isset($UserIDRAW)) {
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
 $Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$CallingScriptBasename = basename(pathinfo($_SERVER['SCRIPT_FILENAME'])['basename']);
+$CallingScriptStylesDir = pathinfo($_SERVER['SCRIPT_FILENAME'])['dirname'].'/Styles';
 $ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
@@ -171,8 +173,7 @@ if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') $UserDirPOST = $_POST
 // / If the root Cloud Drive is selected set the path directory and URL directory as a slash.
 if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) $Udir = $UserDirPOST = '/'; 
 // / Whatever directory the user is "in" is used for URLs.
-if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) { 
-  $Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'].'/'))); }
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) $Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'].'/'))); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -197,10 +198,10 @@ foreach ($RequiredDirs1 as $RequiredDir1) {
     chown($RequiredDir1, $ApacheUser);
     chgrp($RequiredDir1, $ApacheGroup);
     chmod($RequiredDir1, $ILPerms); }
-  if (!file_exists($RequiredDir1.'/index.html')) @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html');
-  if ($Now - @filemtime($RequiredDir1.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
-    @unlink($RequiredDir1.'/index.html');
-    @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } 
+  if (!file_exists($RequiredDir1.'/index.html')) copy($InstLoc.'/index.html', $RequiredDir1.'/index.html');
+  if (file_exists($RequiredDir1.'/index.html')) if ($Now - @filemtime($RequiredDir1.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
+    unlink($RequiredDir1.'/index.html');
+    copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -223,17 +224,19 @@ foreach ($RequiredDirs2 as $RequiredDir2) {
     chown($RequiredDir2, $ApacheUser);
     chgrp($RequiredDir2, $ApacheGroup);
     chmod($RequiredDir2, $ILPerms); }
-  if (!file_exists($RequiredDir2.'/.index.php') && file_exists($InstLoc.'/'.$LogInstallDir.'.index.php')) copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php');
-  if ($Now - @filemtime($RequiredDir2.'/.index.php') >= 60 * 60 * 24 * 1 && file_exists($InstLoc.'/'.$LogInstallDir.'.index.php')) { // 1 day  
+  if (!file_exists($RequiredDir2.'/.index.php')) copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php');
+  if (!file_exists($RequiredDir2.'/index.html')) copy($InstLoc.'/index.html', $RequiredDir2.'/index.html');
+  if (file_exists($RequiredDir2.'/.index.php')) if ($Now - @filemtime($RequiredDir2.'/.index.php') >= 60 * 60 * 24 * 1) { // 1 day  
     unlink($RequiredDir2.'/.index.php');
-    copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } } 
+    copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } 
+  if (file_exists($RequiredDir2.'/index.html')) if ($Now - @filemtime($RequiredDir2.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
+    unlink($RequiredDir2.'/index.html');
+    copy($InstLoc.'/index.html', $RequiredDir2.'/index.html'); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets a clean ClamLogFile if one does not exist.
-while (file_exists($ClamLogDir)) {
-  $ClamLogFileInc++;
-  $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt'; } 
+while (file_exists($ClamLogDir)) $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc++.'_'.$Date.'.txt'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -246,7 +249,7 @@ if (!file_exists($AdminConfig)) {
   $txt = 'WARNING!!! HRC2CommonCore151, There was a problem loading the admin settings on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die($txt); }
-if (file_exists($AdminConfig)) include($AdminConfig); 
+else include($AdminConfig); 
 $Nickname = '';
 $AdminIDRAW = null;
 $AdminID = null;
@@ -264,7 +267,7 @@ if (!file_exists($UserConfig)) {
   $txt = 'ERROR!!! HRC2CommonCore151, There was a problem creating the user config file on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die($txt); }
-if (file_exists($UserConfig)) include($UserConfig);
+else include($UserConfig);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -301,7 +304,7 @@ if (!file_exists($FavoritesCacheFileInst)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------        
-// / The following code copies an index file to the Temp Cloud directory.
+// / The following code ensures there are index files in the temp directories for document root protection.
 if (!file_exists($CloudTempDir.'/index.html')) {
   $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Copying an index file to '.$CloudTempDir.' on '.$Time.'.'.PHP_EOL, FILE_APPEND); 
   @copy('index.html', $CloudTempDir.'/index.html'); 
@@ -377,20 +380,21 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code determines the color scheme that the user has selected. 
+// / Primary color scheme handler. There is a separate one in the Gui core to handle auxiliary styles. 
 if ($noStyles !== 1) {
-  if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) {
-    $ColorScheme = '1'; }
-  if ($ColorScheme == '1') {
-    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/style.css">'); }
-  if ($ColorScheme == '2') {
-    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); }
-  if ($ColorScheme == '3') {
-    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); }
-  if ($ColorScheme == '4') {
-    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); }
-  if ($ColorScheme == '5') {
-    echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); } }
+  if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) $ColorScheme = '1'; 
+  if ($CallingScriptBasename !== '.index.php' or $minStyles == 1 or $allStyles = 1) {   
+    if ($ColorScheme == '1') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLUE.css">'); 
+    if ($ColorScheme == '2') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); 
+    if ($ColorScheme == '3') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); 
+    if ($ColorScheme == '4') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); 
+    if ($ColorScheme == '5') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); }
+  if ($CallingScriptBasename == '.index.php' or $CallingScriptBasename == 'cloudCore.php' or $maxStyles == 1 or $allStyles == 1) { 
+    if ($ColorScheme == '1') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleBLUE.css">'); 
+    if ($ColorScheme == '2') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleRED.css">'); 
+    if ($ColorScheme == '3') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREEN.css">'); 
+    if ($ColorScheme == '4') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREY.css">'); 
+    if ($ColorScheme == '5') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleBLACK.css">'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

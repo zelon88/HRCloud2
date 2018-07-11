@@ -228,15 +228,15 @@ if (isset($loadDefaultSettings)) {
       $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
     if (!isset($HighPerformanceAV)) { 
-      $NEWHighPerformanceAV = '0'; 
+      $NEWHighPerformanceAV = $HighPerformanceAV; 
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
     if (!isset($ThoroughAV)) { 
-      $NEWThoroughAV = '0'; 
+      $NEWThoroughAV = $ThoroughAV; 
       $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
     if (!isset($ThoroughAV)) { 
-      $NEWPersistentAV = '0'; 
+      $NEWPersistentAV = $PersistentAV; 
       $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } 
     if (!isset($NEWApacheUser)) { 
@@ -429,14 +429,6 @@ if ($PersistentAV == '1') {
   $PAVURL = 'Enabled'; }
 if ($PersistentAV !== '1') {
   $PAVURL = 'Disabled'; }
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / Prepare the echo value for the WordPress Integration input field.
-if ($WordPressIntegration == '1') {
-  $WPIURL = 'Enabled'; }
-if ($WordPressIntegration == '0') {
-  $WPIURL = 'Disabled'; }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
