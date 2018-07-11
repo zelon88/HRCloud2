@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Contacts
-App Version: v2.3 (7-30-2017 21:00)
+App Version: v2.4 (7-10-2018 23:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing contacts!
@@ -12,39 +12,35 @@ App Integration: 1 (True)
 HRCLOUD2-PLUGIN-END
 //*/
 
+$maxStyles = 1;
+
 ?>
 <script src="sorttable.js"></script>
 <script type="text/javascript">
 // / Javascript to clear the newContact text input field onclick &
 // / toggle the visibility of things onclick.
-    function Clear() {    
-      document.getElementById("newContact").value= ""; }
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if(e.style.display == 'block')
-         e.style.display = 'none';
-      else
-         e.style.display = 'block'; }
-    function goBack() {
-      window.history.back(); }
+function Clear() {    
+  document.getElementById("newContact").value= ""; }
+function toggle_visibility(id) {
+  var e = document.getElementById(id);
+  if(e.style.display == 'block')
+     e.style.display = 'none';
+  else
+     e.style.display = 'block'; }
+function goBack() {
+  window.history.back(); }
 </script>
 <div id='ContactsAPP' name='ContactsAPP' align='center'><h3>Contacts</h3><hr /><?php
  
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2ContactsApp10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  include ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); }
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php')) die ('</head><body>ERROR!!! HRC2ContactsApp10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'.PHP_EOL.'</body></html>'); 
+else include ('/var/www/html/HRProprietary/HRCloud2/sanitizeCore.php'); 
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2ContactsApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) die ('</head><body>ERROR!!! HRC2ContactsApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'.PHP_EOL.'</body></html>'); 
+else include ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); 
 
 // / The following code ensures the Contacts directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
@@ -254,12 +250,12 @@ $contactsList2 = scandir($ContactsDir);
 $contactCounter = 0;
 foreach ($contactsList2 as $contact) {
   if ($contact == '.' or $contact == '..' or strpos($contact, '.php') == 'false' or $contact == 'index.html' 
-    or strpos($contact, '.html') == 'true' or $contact == '' or $contact == '.php') continue; 
+   or strpos($contact, '.html') == 'true' or $contact == '' or $contact == '.php') continue; 
   $contactCounter++;
   $contactFile = $ContactsDir.$contact; 
   $contactEcho = str_replace('.php', '', $contact);
   $contactTime = date("F d Y H:i:s.",filemtime($contactFile));
-  echo nl2br ('<tr><td><strong>'.$contactCounter.'. </strong><a href="Contacts.php?editContact='.$contactEcho.'">'.$contactEcho.'</a></td>');
+  echo nl2br ('<tr><td><a href="Contacts.php?editContact='.$contactEcho.'"><strong>'.$contactCounter.'. </strong>  '.$contactEcho.'</a></td>');
   echo nl2br('<td><a href="Contacts.php?editContact='.$contactEcho.'"><img id="edit'.$contactCounter.'" name="'.$contact.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/edit.png"></a></td>');
   echo nl2br('<td><a href="Contacts.php?deleteContact='.$contactEcho.'"><img id="delete'.$contactCounter.'" name="'.$contact.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>');
   echo nl2br('<td><a><i>'.$contactTime.'</i></a></td></tr>'); } ?>
