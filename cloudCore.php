@@ -1379,7 +1379,7 @@ if (isset($_POST['search'])) {
                 \RecursiveIteratorIterator::SELF_FIRST) as $item) {
                 $item = str_replace('//', '/', str_replace('///', '/', $item));
                 $F6 = $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName();
-                if ($item->isDir()) {
+                if (is_dir($item)) {
                   @mkdir($F6); }   
                 else {
                   @copy($item, $F6); } } 
