@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
 <?php
+
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Bookmarks	
-App Version: v1.6 (7-7-2018 00:00)
+App Version: v1.7 (7-10-2018 23:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for saving your favorite URL's.
@@ -11,30 +12,26 @@ App Integration: 1 (True)
 HRCLOUD2-PLUGIN-END
 //*/
 
+$maxStyles = 1;
+
 ?>
 <script src="sorttable.js"></script>
 <script type="text/javascript">
 // / Javascript to clear the newBookmark text input field onclick.
-    function Clear() {    
-      document.getElementById("newBookmark").value= ""; }
+function Clear() {    
+  document.getElementById("newBookmark").value= ""; }
 </script>
 <div id='BookmarksAPP' name='BookmarksAPP' align='center'><h3>Bookmarks</h3><hr /><?php
  
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('../../sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('../../sanitizeCore.php'); }
+if (!file_exists('../../sanitizeCore.php')) die ('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'.PHP_EOL.'</body></html>'); 
+else require_once ('../../sanitizeCore.php'); 
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('../../commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('../../commonCore.php'); }
+if (!file_exists('../../commonCore.php')) die ('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'.PHP_EOL.'</body></html>'); 
+else require_once ('../../commonCore.php'); 
 
 // / The following code ensures the Bookmarks directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
@@ -98,8 +95,7 @@ if (is_dir($BookmarksDir)) {
       $txt = ('ERROR!!! HRC2N26, There was no Bookmark content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); } 
-    if ($bookmarkName == '' or $_POST['newBookmark'] == '') { 
-      $bookmarkName = 'New Bookmark-'.$Date; }
+    if ($bookmarkName == '' or $_POST['newBookmark'] == '') $bookmarkName = 'New Bookmark-'.$Date; 
   	$bookmark = str_replace(str_split('[]{};$!#^&%@>*<'), '', $_POST['bookmark']); 
     $BookmarkFile = $BookmarksDir.$bookmarkName.'.txt'; 
     $MAKEBookmarkFile = file_put_contents($BookmarkFile, $bookmark); 
@@ -127,16 +123,16 @@ $bookmarksList2 = scandir($BookmarksDir);
 $bookmarkCounter = 0;
 foreach ($bookmarksList2 as $bookmark) {
   if ($bookmark == '.' or $bookmark == '..' or strpos($bookmark, '.txt') == 'false' or $bookmark == 'index.html' 
-    or strpos($bookmark, '.html') == 'true' or $bookmark == '' or $bookmark == '.txt') continue; 
+   or strpos($bookmark, '.html') == 'true' or $bookmark == '' or $bookmark == '.txt') continue; 
   $bookmarkCounter++;
   $bookmarkFile = $BookmarksDir.$bookmark;
   $bookmarkDATA = file_get_contents($bookmarkFile); 
   $bookmarkEcho = str_replace('.txt', '', $bookmark);
   $bookmarkTime = date("F d Y H:i:s.",filemtime($bookmarkFile));
-  echo nl2br ('<tr><td><strong>'.$bookmarkCounter.'. </strong><a target="_blank" href="'.$bookmarkDATA.'">'.$bookmarkEcho.'</a></td>');
+  echo nl2br ('<tr><td><a target="_blank" href="'.$bookmarkDATA.'"><strong>'.$bookmarkCounter.'. </strong>  '.$bookmarkEcho.'</a></td>');
   echo nl2br('<td><a href="Bookmarks.php?editBookmark='.$bookmarkEcho.'"><img id="edit'.$bookmarkCounter.'" name="'.$bookmark.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/edit.png"></a></td>');
   echo nl2br('<td><a href="Bookmarks.php?deleteBookmark='.$bookmarkEcho.'"><img id="delete'.$bookmarkCounter.'" name="'.$bookmark.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>');
   echo nl2br('<td><a><i>'.$bookmarkTime.'</i></a></td></tr>'); } ?>
 <tbody>
 </table>
-</div><?php
+</div>
