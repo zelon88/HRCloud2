@@ -3,13 +3,15 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Grabber
-App Version: 1.8 (4-27-2018 21:30)
+App Version: 1.9 (7-10-2018 23:30)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for grabbing files from URL's.
 App Integration: 0 (False)
 HRCLOUD2-PLUGIN-END
 //*/
+
+$minStyles = 1;
 
 // / The following code sanitizes the user input URL. 
 if (isset($_POST['grabberURL'])) { 
