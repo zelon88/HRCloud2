@@ -1,3 +1,21 @@
+COMMIT 7/10/2018
+v2.8.3 - Continue refactor. Add stylesheet control
+
+-v2.8.3.
+-Fix bug with required directory handler.
+-Continue minimizing cores.
+-Fix index generator.
+-Consolidate stylesheet generators into commonCore.php instead of spreading the both of them out into guiCore and commonCore.
+-Add minStyles, maxStyles, and allStyles variables for Apps and plugins. Specify before loading commonCore.php for them to take effect.
+-ServMonitor to v3.2, add noStyles variable.
+-HRAI to v5.9, add noStyles variable.
+-UberGallery to v3.4, add noStyles variable.
+-ServStat to v1.2, add noStyles variable.
+-PHP-AV App to v3.4, add minStyles variable.
+-Notes App to v2.2, add maxStyles variable.
+-Contacs App to v2.4, add maxStyles variable.
+-Bookmarks App to v1.7, add maxStyles variable.
+
 COMMIT 7/9/2018
 v2.8.2 - More refactoring, minimize code, logging.
 
