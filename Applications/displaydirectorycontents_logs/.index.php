@@ -9,11 +9,8 @@
 
     <?php
     // / The following code will check for and initialize required HRCloud2 Core files.
-    if (!file_exists('../../../guiCore.php')) {
-      echo nl2br('ERROR!!! HRC2Index12, Cannot process the HRCloud2 GUI Core file (guiCore.php)!'."\n".''); 
-      die (); }
-    else {
-      require_once ('../../../guiCore.php'); }
+    if (!file_exists('../../../guiCore.php')) die ('ERROR!!! HRC2Index12, Cannot process the HRCloud2 GUI Core file (guiCore.php)!'.PHP_EOL); 
+    else require_once ('../../../guiCore.php'); }
     ?>
     </head>
 
