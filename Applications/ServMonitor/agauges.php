@@ -4,6 +4,8 @@
 // / The following code displays the HTML for the advanced gauge monitors. It is made to be loaded 
   // / in an iframer and refreshed at specified intervals.
 
+$noStyles = 1;
+
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
 if (!file_exists('../../commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2ServMonitorApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 

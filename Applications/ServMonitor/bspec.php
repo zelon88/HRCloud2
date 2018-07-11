@@ -2,6 +2,8 @@
 <html>
 <title>Basic Specification Monitors</title>
 <?php
+$noStyles = 1;
+
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and terminates if it does not.
 if (!file_exists('../../commonCore.php')) {
