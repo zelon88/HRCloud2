@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: v2.1 (7-7-2018 00:00)
+App Version: v2.2 (7-10-2018 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -12,30 +12,26 @@ App Integration: 1 (True)
 HRCLOUD2-PLUGIN-END
 //*/
 
+$maxStyles = 1;
+
 ?>
 <script src="sorttable.js"></script>
 <script type="text/javascript">
 // / Javascript to clear the newNote text input field onclick.
-    function Clear() {    
-      document.getElementById("newNote").value= ""; }
+function Clear() {    
+  document.getElementById("newNote").value= ""; }
 </script>
 <div id='NotesAPP' name='NotesAPP' align='center'><h3>Notes</h3><hr /><?php
  
 // / The follwoing code checks if the sanitizeCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('../../sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('../../sanitizeCore.php'); }
+if (!file_exists('../../sanitizeCore.php')) die ('</head><body>ERROR!!! HRC2AL10, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'.PHP_EOL.'</body></html>'); 
+else require_once ('../../sanitizeCore.php'); 
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('../../commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('../../commonCore.php'); }
+if (!file_exists('../../commonCore.php')) die ('</head><body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'.PHP_EOL.'</body></html>'); 
+else require_once ('../../commonCore.php'); 
 
 // / The following code ensures the Notes directory exists and creates it if it does not.
 $SaltHash = hash('ripemd160',$Date.$Salts.$UserIDRAW);
@@ -100,8 +96,7 @@ if (is_dir($NotesDir)) {
       $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); }
-    if ($noteName == '' or $_POST['newNote'] == '') { 
-      $noteName = 'New Note-'.$Date; }
+    if ($noteName == '' or $_POST['newNote'] == '') $noteName = 'New Note-'.$Date; 
   	$note = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['note']); 
     $NoteFile = $NotesDir.$noteName.'.txt'; 
     $MAKENoteFile = file_put_contents($NoteFile, $note.PHP_EOL); 
@@ -129,12 +124,12 @@ $notesList2 = scandir($NotesDir);
 $noteCounter = 0;
 foreach ($notesList2 as $note) { 
   if ($note == '.' or $note == '..' or strpos($note, '.txt') == 'false' or $note == 'index.html'
-    or strpos($note, '.html') == 'true' or $note == '' or $note == '.txt') continue; 
+   or strpos($note, '.html') == 'true' or $note == '' or $note == '.txt') continue; 
   $noteCounter++;
   $noteFile = $NotesDir.$note; 
   $noteEcho = str_replace('.txt', '', $note);
   $noteTime = date("F d Y H:i:s.",filemtime($noteFile));
-  echo nl2br ('<tr><td><strong>'.$noteCounter.'. </strong><a href="Notes.php?editNote='.$noteEcho.'">'.$noteEcho.'</a></td>');
+  echo nl2br ('<tr><td><a href="Notes.php?editNote='.$noteEcho.'"><strong>'.$noteCounter.'. </strong>  '.$noteEcho.'</a></td>');
   echo nl2br('<td><a href="Notes.php?editNote='.$noteEcho.'"><img id="edit'.$noteCounter.'" name="'.$note.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/edit.png"></a></td>');
   echo nl2br('<td><a href="Notes.php?deleteNote='.$noteEcho.'"><img id="delete'.$noteCounter.'" name="'.$note.'" src="'.$URL.'/HRProprietary/HRCloud2/Resources/deletesmall.png"></a></td>');
   echo nl2br('<td><a><i>'.$noteTime.'</i></a></td></tr>'); } ?>
