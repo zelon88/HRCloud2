@@ -232,6 +232,7 @@ foreach ($RequiredDirs2 as $RequiredDir2) {
   if (file_exists($RequiredDir2.'/index.html')) if ($Now - @filemtime($RequiredDir2.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
     unlink($RequiredDir2.'/index.html');
     copy($InstLoc.'/index.html', $RequiredDir2.'/index.html'); } } 
+$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
