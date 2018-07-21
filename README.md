@@ -37,7 +37,7 @@ HRCloud2 can integrate with WordPress, although it will install what it needs fr
 
 -Open, edit, and save Microsoft Office documents and rich-text files.
 
--Can perform OCR on any image or .pdf and create any office document. Supports multi-page PDF's.
+-Performs OCR on any image or .pdf and turn it into any office document. Supports multi-page PDF's.
 
 -Image editing features (rotate, resize, convert. API for maintain A/R).
 
