@@ -31,9 +31,11 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Can implement various levels of virus scanning. ClamAV is required for A/V support.
 
--Can archive and dearchive appropriate filetypes (various dependencies to enable support).
+-Can archive, extract, and convert just about anything (various dependencies to enable support).
 
--Can convert document, image, audio, video, 3d model, vector drawings, presentation (slideshow/pages), disk images, and archive filetypes to other filetypes.
+-Convert document, image, audio, video, 3d model, vector drawings, presentation (slideshow/pages), disk images, and archive filetypes to other filetypes.
+
+-Open, edit, and save Microsoft Office documents and rich-text files.
 
 -Can perform OCR on any image or .pdf and create any office document. Supports multi-page PDF's.
 
