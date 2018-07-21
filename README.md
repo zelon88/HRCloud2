@@ -13,7 +13,7 @@ A **Fully Featured** home-hosted **Cloud Storage** platform and **Personal Assis
 ![HRCloud2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_11-17-16_23.png)	
 ![HRCloud2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_7-21-18_1.png)
 ![HRCloud2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_8_10_17.png)	
-
+![HRCloud2](https://github.com/zelon88/HRCloud2/blob/master/Screenshots/HRCloud2_7-21-18_2.png)
 
 # A Secure, Private Cloud Storage Platform for your Home Server!
 
