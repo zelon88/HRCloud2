@@ -23,19 +23,19 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 # CURRENT CORE FEATURES
 
--Takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory or symlinks are created and cleaned every 10 minutes. 
+-Takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory or symlinks are created and cleaned every regularly. 
 
 -Supports unlimited number of users. User storage, cache, and log files are automatically created the first time a new user logs in. Uses built-in WordPress for account creation and management.
 
--Non-hosted permanent files remain until deleted by the end-user.
+-Multiple file uploads per request. To download multiple files the user can select files and the archive format of their choosing.
 
--Can upload and manipulate multiple files per request. To download multiple files the user can select files and the archive format of their choosing.
-
--Can implement various levels of virus scanning depending on server performance and capability. ClamAV is required for A/V support.
+-Can implement various levels of virus scanning. ClamAV is required for A/V support.
 
 -Can archive and dearchive appropriate filetypes (various dependencies to enable support).
 
--Can convert document, image, audio, 3d model, presentation (slideshow/pages), and archive filetypes to other filetypes (various dependencies to enable support).
+-Can convert document, image, audio, video, 3d model, vector drawings, presentation (slideshow/pages), disk images, and archive filetypes to other filetypes.
+
+-Can perform OCR on any image or .pdf and create any office document. Supports multi-page PDF's.
 
 -Image editing features (rotate, resize, convert. API for maintain A/R).
 
@@ -52,9 +52,9 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
   
 -Keeps excellent logs of everything it does.
 
--Stream & Playlist features.
+-Stream media & create playlists.
 
--Users can view and launch Apps from their AppLauncher.
+-Launch Apps from the AppLauncher.
 
 -Share files with other users or the public.
 
@@ -80,11 +80,11 @@ HRCloud2 can integrate with WordPress, althogh it will install what it needs fro
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
--Clear user / master cache option.
+-Clear cache option.
 
 -Clipboard (copy/paste files, folders, items between locations).
 
--Build your own desktop client app from the Settings page. Compatible with Windows, Linux, and MacOS.
+-Compiles a user specific desktop client app on-demand from the user's Settings page. Compatible with Windows, Linux, and MacOS on 32-bit, 64-bit, and ARM CPU's. Installers are included with Windows builds.
 
 # RUNS ON
 
