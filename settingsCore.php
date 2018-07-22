@@ -535,6 +535,7 @@ $TOSURL = $TermsOfServiceURL;
     <option value="home">Cloud Home</option>
   </select>
 </p>
+<br />
 <p style="float:center; padding-left:10%;"><input type='submit' name='GenerateClient' id='GenerateClient' value='Build Client' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <p alt="Change what HRAI and HRCloud2 calls you." title="Change what HRAI and HRCloud calls you." style="padding-left:15px;"><strong></strong> Nickname: </p>
@@ -668,6 +669,9 @@ if ($UserIDRAW == 1) { ?>
 <p><input type='text' id="NEWApacheGroup" name="NEWApacheGroup" style="padding-left:30px; width:100%;" value="<?php echo $AGURL; ?>"></p>
 
 <p alt="Options for performing virus scans on the server with ClamAV." title="Options for performing virus scans on the server with ClamAV." style="padding-left:15px;"> Virus Scanning (Requires ClamAV on server): </p>
+
+<p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+
 <p>
   <select id="NEWVirusScan" name="NEWVirusScan" style="padding-left:30px; width:100%;">
     <option value="<?php echo $VirusScan; ?>">Current (<?php echo $VSURL; ?>)</option>
@@ -723,7 +727,6 @@ if ($UserIDRAW == 1) { ?>
 </p>
 <p><input type='text' id="NEWTermsOfServiceURL" name="NEWTermsOfServiceURL" style="padding-left:30px; width:100%;" value="<?php echo $TermsOfServiceURL; ?>"<?php echo $TOSDisabledAtt; ?>></p>
 
-<p style="float:center; padding-left:10%;"><input type='submit' name='Scan' id='Scan' value='Scan Cloud' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <?php }
 // / -----------------------------------------------------------------------------------
 ?>

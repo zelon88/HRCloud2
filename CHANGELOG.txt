@@ -1,5 +1,26 @@
+----------
+COMMIT 7/21/2018
+v2.8.5 - Fix syntax errors in log files.
+
+-v2.8.5.
+-Fix logs1/.index.php error on line 12 (had an extra curly bracket).
+-Delete index3.php.
+-Move the "Scan Cloud" button on the Admin Settings page.
+-Add a <br /> to the "Build Client" button on the Settings page.
+
+----------
+IDEAS 7/10/2018
+
+-Add a Clipboard cache cleaner.
+-Add an All cache cleaner (with double verification).
+-Fix log index refresh buttons.
+
+----------
 COMMIT 7/10/2018
 v2.8.3 - Continue refactor. Add stylesheet control
+
+Sneak in 1 more fix!!!
+-Fix search feature throwing an error on $item->isDir function, cloudCore.php line 1382 by converting to is_dir($item).
 
 -v2.8.3.
 -Fix bug with required directory handler.
@@ -16,6 +37,7 @@ v2.8.3 - Continue refactor. Add stylesheet control
 -Contacs App to v2.4, add maxStyles variable.
 -Bookmarks App to v1.7, add maxStyles variable.
 
+----------
 COMMIT 7/9/2018
 v2.8.2 - More refactoring, minimize code, logging.
 
