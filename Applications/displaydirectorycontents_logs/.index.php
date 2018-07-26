@@ -10,7 +10,7 @@
     <?php
     // / The following code will check for and initialize required HRCloud2 Core files.
     if (!file_exists('../../../guiCore.php')) die ('ERROR!!! HRC2Index12, Cannot process the HRCloud2 GUI Core file (guiCore.php)!'.PHP_EOL); 
-    else require_once ('../../../guiCore.php'); }
+    else require_once ('../../../guiCore.php'); 
     ?>
     </head>
 
@@ -19,7 +19,7 @@
         <div align="center"><h3>HRCloud2 Logs</h3></div>
         <div align="center" style="margin-bottom:10px;">
           <input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
-          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refresh();"></div>
+          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refreshIframe();"></div>
         <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
       </div>
       <table class="sortable">
