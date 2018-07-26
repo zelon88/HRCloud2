@@ -125,6 +125,7 @@ $RequiredDirs1 = array($CloudDir, $CloudTemp, $CloudTempDir, $appDataCloudDir, $
 $RequiredDirs2 = array($LogLoc, $SesLogDir, $CloudShareDir);
 $tipsHeight = '0';
 $hr = '<hr style="width:100%;"/>'."\n";
+$br = '<br />';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -191,17 +192,18 @@ if (!is_dir($CloudLoc)) die('ERROR!!! HRC2CommonCore59, There was a problem veri
 // / -----------------------------------------------------------------------------------
 // / The following code creates the first set of required directories that need basic index.html document root protection files.
 foreach ($RequiredDirs1 as $RequiredDir1) {
+  $RequiredDir1 = rtrim($RequiredDir1, '/');
   if (!file_exists($RequiredDir1)) {
-    mkdir($RequiredDir1); 
+    @mkdir($RequiredDir1); 
     if (!file_exists($RequiredDir1)) die('ERROR!!! HRC2CommonCore137, The required directory '.$RequiredDir1.' does not exist and could not be created on '.$Time.'!'.PHP_EOL); }
   if (file_exists($RequiredDir1)) { 
-    chown($RequiredDir1, $ApacheUser);
-    chgrp($RequiredDir1, $ApacheGroup);
-    chmod($RequiredDir1, $ILPerms); }
-  if (!file_exists($RequiredDir1.'/index.html')) copy($InstLoc.'/index.html', $RequiredDir1.'/index.html');
+    @chown($RequiredDir1, $ApacheUser);
+    @chgrp($RequiredDir1, $ApacheGroup);
+    @chmod($RequiredDir1, $ILPerms); }
+  if (!file_exists($RequiredDir1.'/index.html')) @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html');
   if (file_exists($RequiredDir1.'/index.html')) if ($Now - @filemtime($RequiredDir1.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
-    unlink($RequiredDir1.'/index.html');
-    copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } 
+    @unlink($RequiredDir1.'/index.html');
+    @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -210,7 +212,7 @@ foreach ($RequiredDirs2 as $RequiredDir2) {
   if ($RequiredDir2 === $SesLogDir) $LogInstallDir = $LogInstallDir1; 
   if ($RequiredDir2 === $CloudShareDir) $LogInstallDir = $SharedInstallDir; 
   if (!file_exists($RequiredDir2)) {
-    mkdir($RequiredDir2);
+    @mkdir($RequiredDir2);
     if (!file_exists($RequiredDir2)) die('ERROR!!! HRC2CommonCore137, The required directory '.$RequiredDir2.' does not exist and could not be created on '.$Time.'!'.PHP_EOL); 
     @copy($InstLoc.'/index.html', $RequiredDir2.'/index.html');
     if ($RequiredDir2 === $LogLoc) $FilesArr = $LogInstallFiles; 
@@ -221,17 +223,17 @@ foreach ($RequiredDirs2 as $RequiredDir2) {
       if ($LIF1 == '.' or $LIF1 == '..') continue;
       @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $RequiredDir2.'/'.$LIF1); } }
   if (file_exists($RequiredDir2)) { 
-    chown($RequiredDir2, $ApacheUser);
-    chgrp($RequiredDir2, $ApacheGroup);
-    chmod($RequiredDir2, $ILPerms); }
+    @chown($RequiredDir2, $ApacheUser);
+    @chgrp($RequiredDir2, $ApacheGroup);
+    @chmod($RequiredDir2, $ILPerms); }
   if (!file_exists($RequiredDir2.'/.index.php')) copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php');
   if (!file_exists($RequiredDir2.'/index.html')) copy($InstLoc.'/index.html', $RequiredDir2.'/index.html');
   if (file_exists($RequiredDir2.'/.index.php')) if ($Now - @filemtime($RequiredDir2.'/.index.php') >= 60 * 60 * 24 * 1) { // 1 day  
-    unlink($RequiredDir2.'/.index.php');
-    copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } 
+    @unlink($RequiredDir2.'/.index.php');
+    @copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } 
   if (file_exists($RequiredDir2.'/index.html')) if ($Now - @filemtime($RequiredDir2.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
-    unlink($RequiredDir2.'/index.html');
-    copy($InstLoc.'/index.html', $RequiredDir2.'/index.html'); } } 
+    @unlink($RequiredDir2.'/index.html');
+    @copy($InstLoc.'/index.html', $RequiredDir2.'/index.html'); } } 
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 // / -----------------------------------------------------------------------------------
 

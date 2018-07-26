@@ -1,3 +1,13 @@
+
+----------
+COMMIT 7/25/2018
+v2.8.6 - Continue refactor. 
+
+-Continue consolidating code. 
+-Clean up dearchive code in cloudCore.php. 
+-Weed out legacy log entires from cloudCore.php.
+-Fix refresh buttons on log pages (may have to wait for a new logfile to be generated).
+
 ----------
 COMMIT 7/21/2018
 v2.8.5 - Fix syntax errors in log files.
