@@ -47,7 +47,7 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v3.4 | Virus Definition v4.5, 10/26/2017';
+    $versions = 'PHP-AV App v3.5 | Virus Definition v4.5, 10/26/2017';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
     $report = '';
@@ -59,7 +59,8 @@ require('config.php');
     $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
     $CONFIG['extensions'] = Array();
     $abort = FALSE;
-    $AVLogFile = $InstLoc.'/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt';
+    $AVLogDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/'.$Date;
+    $AVLogFile = $AVLogDir.'/PHPAV-'.$SesHash.'-'.$Date.'.txt';
     $AVLogURL = str_replace(str_split('~#[](){};$!#^&%@>*<"\''), '', '/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt');
     if (isset($_POST['AVScanTarget']) && $_POST['AVScanTarget'] !== '' && $_POST['AVScanTarget'] !== ' ') $AVScanTarget = str_replace(str_split('~#;:$!#^&%@>*<"\''), '', $_POST['AVScanTarget']);
     // / -----------------------------------------------------------------------------------
@@ -67,7 +68,8 @@ require('config.php');
     // / -----------------------------------------------------------------------------------
     // / The following code checks if App permission is set to '1' and if the user is an administrator or not.
     if ($UserIDRAW !== 1) {
-      $MAKELogFile = file_put_contents($LogFile, 'ERROR!!! PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!'.PHP_EOL, FILE_APPEND); 
+      $txt = 'ERROR!!! PHPAVApp28, A non-administrator attempted to execute the PHP-AV App on '.$Time.'!';
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       die($txt); } 
     // / -----------------------------------------------------------------------------------
 
@@ -76,7 +78,28 @@ require('config.php');
     // / This is written to the HRC2 logfile.
     $txt = ('OP-Act: Initiating PHP-AV App on '.$Time.'.'.PHP_EOL.'OP-Act: The PHP-AV Logfile for this session is '.$AVLogFile.'.'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    $MAKEAVLogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    // / -----------------------------------------------------------------------------------
+
+    // / -----------------------------------------------------------------------------------
+    // / The following code makes sure an AVLogFile exists and creates one if it does not.
+    // / Because PHP-AV logfiles can become extremely large only one can be generated per day.
+    // / Additional scans will overwrite the original PHP-AV logfile.
+    if (!file_exists($AVLogDir)) { 
+      $Date = date('m_d_y', strtotime("+1 day")); 
+      $AVLogDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/'.$Date;
+      $AVLogFile = $AVLogDir.'/PHPAV-'.$SesHash.'-'.$Date.'.txt';
+      $AVLogURL = str_replace(str_split('~#[](){};$!#^&%@>*<"\''), '', '/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt'); }
+    if (!file_exists($AVLogDir)) { 
+      $Date = date('m_d_y', strtotime("+2 days")); 
+      $AVLogDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/'.$Date;
+      $AVLogFile = $AVLogDir.'/PHPAV-'.$SesHash.'-'.$Date.'.txt';
+      $AVLogURL = str_replace(str_split('~#[](){};$!#^&%@>*<"\''), '', '/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt'); }
+    if (!file_exists($AVLogDir)) { 
+      $txt = 'ERROR!!! PHPAVApp98, No log directory exists on '.$Time.'!';
+      $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      die($txt); }
+    if (file_exists($AVLogFile)) file_put_contents($AVLogFile, 'Verified the PHPAV logfile.'.PHP_EOL); 
+    if (!file_exists($AVLogFile)) file_put_contents($AVLogFile, 'Created a PHPAV logfile.'.PHP_EOL); 
     // / -----------------------------------------------------------------------------------
 
     // / -----------------------------------------------------------------------------------
@@ -89,14 +112,6 @@ require('config.php');
       $MAKEAVLogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND);
       $UpdateInterval = 2000; }
     if ($UpateInt == '' or !(isset($UpdateInterval))) $UpateInt = 15000; 
-    // / -----------------------------------------------------------------------------------
-
-    // / -----------------------------------------------------------------------------------
-    // / The following code makes sure an AVLogFile exists and creates one if it does not.
-    // / Because PHP-AV logfiles can become extremely large only one can be generated per day.
-    // / Additional scans will overwrite the original PHP-AV logfile.
-    if (file_exists($AVLogFile)) file_put_contents($AVLogFile, 'Verified the PHPAV logfile.'.PHP_EOL); 
-    if (!file_exists($AVLogFile)) file_put_contents($AVLogFile, 'Created a PHPAV logfile.'.PHP_EOL); 
     // / -----------------------------------------------------------------------------------
 
     // / -----------------------------------------------------------------------------------
