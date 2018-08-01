@@ -1,4 +1,9 @@
 
+COMMIT 8/1/2018
+v2.8.7 - Fix bug with allStyles variable.
+
+-Fix allStyles condition in commonCore.
+
 ----------
 COMMIT 7/25/2018
 v2.8.6 - Continue refactor. 

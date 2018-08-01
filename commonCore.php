@@ -275,6 +275,7 @@ else include($UserConfig);
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the date and time for the session.
+// / It's important to note that the initial server time is not overwritten in the LogDir. 
 $Now = time();
 $Timezone = str_replace(' ', '_', $Timezone);
 date_default_timezone_set($Timezone);
@@ -383,10 +384,10 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / Primary color scheme handler. There is a separate one in the Gui core to handle auxiliary styles. 
+// / Primary color scheme handler. 
 if ($noStyles !== 1) {
   if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) $ColorScheme = '1'; 
-  if ($CallingScriptBasename !== '.index.php' or $minStyles == 1 or $allStyles = 1) {   
+  if ($CallingScriptBasename !== '.index.php' or $minStyles == 1 or $allStyles == 1) {   
     if ($ColorScheme == '1') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLUE.css">'); 
     if ($ColorScheme == '2') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); 
     if ($ColorScheme == '3') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); 
