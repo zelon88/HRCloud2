@@ -1,7 +1,20 @@
+COMMIT 8/1/2018
+v2.8.8 - PHP-AV Defs to v4.6.
 
+-v2.8.8.
+-PHP-AV Defs to v4.6.
+-Playing over a years worth of catch ups. Hopefully it works out.
+-Still need to find a way to automate this.
+-Added 61x versions of GandCrab SHA256's.
+-Added 54x versions of Emotet, file contents, URL's, and SHA256's.
+-Added 100+ misc malspam defs of various types.
+-Fix "Error sending query packet" bug after file scanning.
+
+----------
 COMMIT 8/1/2018
 v2.8.7 - Fix bug with allStyles variable.
 
+-v2.8.7.
 -Fix allStyles condition in commonCore.
 
 ----------
