@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: v3.4 (7-10-2018 00:00)
+App Version: v3.6 (8-3-2018 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -18,6 +18,7 @@ Modified by zelon88
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the memory limit for PHP to unlimited. Memory is controlled later.
+set_time_limit(0);
 ini_set('memory_limit', '-1');
 // / -----------------------------------------------------------------------------------
 
@@ -47,7 +48,7 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v3.5 | Virus Definition v4.5, 10/26/2017';
+    $versions = 'PHP-AV App v3.6 | Virus Definition v4.6, 8/1/2018';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
     $report = '';
@@ -175,8 +176,7 @@ require('config.php');
     // / -----------------------------------------------------------------------------------
     // / The following code is performed when a user opens the PHP-AV app.
     if (!isset($_POST['AVScan'])) { ?>
-    <script type="text/javascript" src="Resources/common.js">
-    </script>
+    <script type="text/javascript" src="Resources/common.js"></script>
     <script type="text/javascript">
       setInterval(refreshIframe, <?php echo $UpateInt; ?>);    
     </script>

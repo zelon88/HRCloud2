@@ -152,15 +152,15 @@ Malware Pony.8	pony.dll
 Malware Malspam	BNC967.tmp.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
 Malware Malspam.1	DekJanv.exe		8aa3b69e95fdde655a29a889fcb6710b6ef23936a0762961aabc0d00e19e4e26
 Malware Malspam.2	contract_54262.doc		d84b585409fb4f538cde666cefc7980ba3a927dc292dfb391bdcd8765d4ce0c8
-Malware Malspam.3	CherryFramework/pm.dll
-Malware Malspam.4	zapoy/gate.php
-Malware Malspam.5	24c887f5dd.html
-Malware Malspam.6	42e955644c.html
-Malware Malspam.7	20e18f23d2.html
-Malware Malspam.8	42e955644c.html
-Malware Malspam.9	24c887f5dd.html
-Malware Malspam.10	3dbee7b9f0.html
-Malware Malspam.11	20e18f23d2.html
+Malware Malspam.3	CherryFramework/pm.dll		429a5b8fee9b92d638bb4e27821eedbf9844a828ca9131b18f98b38ef16d6edf
+Malware Malspam.4	zapoy/gate.php		fb82fd4534d7c32a3de8523fde2d59b7c26146eae1827c0b4202630e3004c587
+Malware Malspam.5	24c887f5dd.html		c2097360c006fc3325914406e1b1f0d4857e9a550618ffedc1d0eb0fe8e64777
+Malware Malspam.6	42e955644c.html		b16c6a67e3629c27092661cec1d7643afc8d83f7902a8fcfb6691f310b95fbcb
+Malware Malspam.7	20e18f23d2.html		d2a812fbc44b5612d39806a96631b36f5b98c93458e49eb4f0ace42b6b8d6c66
+Malware Malspam.8	42e955644c.html		93930920ab4fab2dac0978c390b59cd6a6cb037c1faf404c0bdbe1e2f575fd2c
+Malware Malspam.9	24c887f5dd.html		2eecef6f124f190aae4c5552a4da888de07e293dab87d5ae119ef4fca02e24d2
+Malware Malspam.10	3dbee7b9f0.html		f7ca0d00fc2d128df124e7fe10d0d3623639c83ec88beede888859576c0faf70
+Malware Malspam.11	20e18f23d2.html		a2a6c7555df39be1025b476a8de5eb42e96e8846bcb316e74ab6d4ae7f0cb5ee
 Malware Malspam.12	Unedrcovertoolz0.exe		631a104bf3af15a447c19bf57a2144956c435037b0dcb035a27dbacddfdcb75b
 Malware Malspam.13			d1bef41cd683e345052aca32cc43941dd529f16994233de984a2941c82f992a2
 Malware Malspam.14	Completa.exe		545d75d3185890fd88fdbf055f5ab97c51f96c94741b9e05edd784de9d29c43d
@@ -192,14 +192,14 @@ Malware Malspam.39	596511736539557.zip		b45eed71cb31ca1c04433874a0ca471364353ed7
 Malware Malspam.40			d896e8d6516b6fe3f2d36bdd2abc3af1db222dfdcffc0a37cd1ea3c46d68f27e
 Malware Malspam.41	69765.zip
 Malware Malspam.42	87716771007.zip
-Malware Malspam.43	15639.js
-Malware Malspam.44	16184.js
-Malware Malspam.45	18957.js
-Malware Malspam.46	23177.js
-Malware Malspam.47	27945.js
-Malware Malspam.48	27961.js
-Malware Malspam.49	31702.js
-Malware Malspam.50	7374.js
+Malware Malspam.43	15639.js		73df38455456a94565f47f06839ab029a7e8dddb42dcdb3e8a0e2db4ee148fba
+Malware Malspam.44	16184.js		d60dbc150c1ad9f052e4ed8c73d2dbcedf95ca02706697bb87b142afdc9351b6
+Malware Malspam.45	18957.js		859a3f51822dcc7bed8308dbda275e49330e7ec036f1d4905ba1fc75fe0d1318
+Malware Malspam.46	23177.js		6adc88fc0a0e108851909618442c03f57cdfc20f6db4ee88b84c0caf420f991f
+Malware Malspam.47	27945.js		6e490f1d39ae743190ac73d06f0bdb3b4b271bdd927947f14311ad84088a47d2
+Malware Malspam.48	27961.js		9307773457add5c033fc2505c947b091f213c833b9c41d302d083452fb08a0f2
+Malware Malspam.49	31702.js		dc5821211f411e01ed7932cc83db772c66bb1ed7cd1eadbe8edb60091e49462f
+Malware Malspam.50	7374.js		bb2e040bb2652fab5eeb175daf2dc69ce2661087e21cebd166bdcc501b2f0986
 Malware Malspam.51	Commercial_CVS_inv.03.04.2017.zip		1b402c3ccfe5380425023022614abc4af53369536bda9c70b3074e50484bb340
 Malware Malspam.52	img-20170403-0014,jpeg.zip		ef3bbbace6eeaf06c2101612d45d694f734b6759ec89b83db0e3d07ea5c49f57
 Malware Malspam.53	img-20170403-0015,jpeg.zip		faad4f8730db9825cfc5fd29f105a16849c83e61e836d68b2e3eff55fe0f1ec5
@@ -207,13 +207,103 @@ Malware Malspam.54	img-20170403-0089,jpeg.zip		a62712ff422477b15e512d3d83285d61c
 Malware Malspam.55	img-20170403-0054.jpeg.js		94380803ac48bec2ca431f968240f4444fdc3a30bd04dbc62bf099bf0ece01f8
 Malware Malspam.56	462137.exe		d26161bc381625ade7fb51db987f2e69c244acc642911948b1507860e90fd3f9
 Malware Malspam.57	Balt.dll		7b1bcab8e3aa932c6ebac8df67d0797b0c8aaa3a7870408085341500687720a6
-Malware Malspam.58	33521.exe		
-Malware Malspam.59	usdelcar.txt
+Malware Malspam.58	33521.exe		cf8083a42b4c144f52c45ac4050d649ca1b07032776d82fb2defc2370a02e2dd
+Malware Malspam.59	usdelcar.txt		c2cae82e01d954e3a50feaebcd3f75de7416a851ea855d6f0e8aaac84a507ca3
 Malware Malspam.60	H6902644376.rar		c7f4f606611ab3651e01951e13cecb9cc3b0f69fa174515743efda1d45c73d5c
 Malware Malspam.61	H6902644376.js		06dc498492bfcb56b1954bfc05ba578e7c60f4cbc23c3d3cddcaddd4e00fb7ac
 Malware Malspam.62	rad7DAC6.tmp.exe		be7678a2c62ee93e52b73287873cdd8791580076eaa286f5afe8a124b285211a
 Malware Malspam.63	01a15f40-2e53-43db-ab18-2ccee5139e8b.exe
 Malware Malspam.64	lugrade4\last.conf		bd4bf39354cd12aed10b43008bf5834d9453ce09ac9d802cd62383752d534335
+Malware Malspam.65	Fatture_		9470538381d03905f4ecbc1e5e577e621d46d37d2a56786c0eb514634edb2b28
+Malware Malspam.66	eCDiXBI.exe		99a415c5bd03b71f959d825de43a6fce19ce3d83c61fa6cfbdd650bf437af3ad
+Malware Malspam.67	HTNYEL.vbs		3bfeeffda7d7e122c18672b8d82d67e3407dec1febf898551ff860211dcc1b49
+Malware Malspam.68	firfox.exe		f7f3981761a359f252d0e742a02f014cd31bf283d722dbf30ef062975a44336c
+Malware Malspam.69	M & T Bank Corporation.exe		b126c6087222f91c17ce6dd1160de724f5fe418b348fe54b8b4103c8f30b959e
+Malware Malspam.70	MDZYTH.exe		1fc2294c86e0aee50fdd516d3cd25b6e01d43f39dc01974cf949fd03b00b36a3
+Malware Malspam.71	cataloghal.exe		600dbf6887dc29d6427cb52c8e7718190938457a80afe551f811a9e4d7d7f1fc
+Malware Malspam.72	PAYE2891.doc		ca335c96ddba1c84ed5b67dacd6931e16adfbc0e890976da5db013a999ad6eae
+Malware Malspam.73	flux.exe		76338d11807ec055ff238c0dbfcd9a7d68d8297713a90ee87b07fcfc248ebb53
+Malware Malspam.74	DOC1041937684		faf0ebf33d21e2a9cf46b6d6bb67cd0b50256cfe4b33588e087f72c6f653d08b
+Malware Malspam.75	DOC1106022591		7fe716a12480983c7694d66ff9f379d780fdb1cca1131031dbd9af109c010986
+Malware Malspam.76	DOC1115226785		bf1f21531e2356036006115bde8585061f97bddd5b940b2417e71c59ee78214b
+Malware Malspam.77	DOC1165724396		7ef9665776daf32e2f643de696e0f84ccb396e03c565840cb3c5d6421eba5415
+Malware Malspam.78	DOC1185734425		28fcdeacda337c36b9fc26849cc8531654ec2f5cedecd8fb8e24e4b1eccf3799
+Malware Malspam.79	DOC1214829834		bc2399c08e1b31d0247bbd579e73296ce6305703cecf0628fa0567031fd06cf6
+Malware Malspam.80	DOC1235830180		d77eb535d17cb82f48b8a8db1529de7c1501a1c8cce030056fd7737c520d300f
+Malware Malspam.81	DOC1393010102		bfe6ad096e9ef46fb13da46e0253ffa772a947e8b1f2aff9f0aed14a52e04dc5
+Malware Malspam.82	DOC1443026327		b143002c473786d89ea86658ce84cddd9e72a610d35fc7e0c9face57b4a4c4b7
+Malware Malspam.83	DOC1468633890		c0b164d4731ff52a6e7a2f67b813e96e586d9250f21b91a59625425f228b2c73
+Malware Malspam.84	DOC1641716505		8da730793a001de06b3d029e7811e78837461f0ebc389956735694c137c6ba07
+Malware Malspam.85	DOC1831436464		6438a70837d41daad80b68e1ea7bcdce8d08b8f6054de9ee510998dc32943ea1
+Malware Malspam.86	DOC2325839057		98b9cf06d55798b754f5758a6486121901d20631f923cba6815568ed090cc04d
+Malware Malspam.87	DOC2515918147		2b36af6efd2b0fbea039f385a54070392fa6c352a820df888c788b22e06d11c4
+Malware Malspam.88	DOC2523525530		7de669191877e04d6450fed5aa0616ba761d642429ca9ff612362774dfd6c87c
+Malware Malspam.89	DOC2669922187		a6645dad4201a884645c00259e092c0dbaa5a94139d35921425e3ce67e8fa25b
+Malware Malspam.90	DOC2674728587		ee0100e58c52657166a2baed792dfd4cdbc2928d6e29c34ae0d53ce640e52055
+Malware Malspam.91	DOC2773911604		196f8ef5430bfb2ca30c8aeb09e90af82a4a74b2bfd7376634d11e27180e5594
+Malware Malspam.92	DOC2886638186		828d1c02d94efa6f1982136f96af116f4f82e93dd40589cf8c9b2661983e90eb
+Malware Malspam.93	DOC2892914828		c4eee41c646e840cf86142c97cc5d07ce45a7c93d2e66aa00c9d61840acbdb97
+Malware Malspam.94	DOC2905514090		ce006e1d06143ed2305154c55cc5c108b864c517d0233d934550991d4a6fb313
+Malware Malspam.95	DOC2912527924		5e85c40eca99c0dd79f5689ca443b6d529d9ab41837c47552d67dfc3830a4ff1
+Malware Malspam.96	DOC3038142426		163d4f46900adae36b1467fe0e54ddf6185bfa51470ac7c26bae3c58aba79d00
+Malware Malspam.97	DOC3062710601		7df64aa821a9e39851c2994a7f4d39b7b0b1ae221a58ec8aecb55ded864c42aa
+Malware Malspam.98	DOC3063225757		98ecddb70755ceeff10625765710e98e8d53ee6fe81a7ef91f404302b68bff0b
+Malware Malspam.99	DOC3096718037		11d7dfc73c6a1603030f27dbccff4a64caec47b4f258a440c176be6065ad4148
+Malware Malspam.100	DOC3288918471		920129258b67b150df804c9055330e1413bb93b83661b732bebb9977f7986eca
+Malware Malspam.101	DOC3308331381		2788dd2548f14945ce895df84ce8459f1735a154c243bcce90a9b22e3f0afbdc
+Malware Malspam.102	DOC3437219426		3adb20ca38173db2faff3b10fb54964616dad7328193b499109f9203eb4203b8
+Malware Malspam.103	DOC3482620097		999388d82f1d51c7b3931045dfd289b5afa455def7297d3493a3686f7d05d0c5
+Malware Malspam.104	DOC3650036004		38366f219b691f8415888313cf42e1213e7cc290927a0ee95fcf5649f5862c86
+Malware Malspam.105	DOC3674429629		ea9c75c00986f3593e27a7fe024825646366673959496353800b3311ece1f35d
+Malware Malspam.106	DOC3877327605		247acff8a2b1c2fbf1ad6c5e61c0ce8b361087b9a8b2bd514a5e5891bfb8dc6f
+Malware Malspam.107	DOC3906733473		feb5ceeeea8d5174a69fdb8c0a0d55efaf74d368309769fc45720c2621ca18a9
+Malware Malspam.108	DOC3920110804		7db92b7e99698b0074802a93c32782a9b019a05d8f424fb4c5bc8b8a7cb59c06
+Malware Malspam.109	DOC3961032088		2a3d45abc55bfdbb25ff20b38f6c2ca4c58de8f062ab96ea6ccc6d52d61b0278
+Malware Malspam.110	DOC3962721620		f5cbec1fb7dd120f603f1b8ca75ad52367090405cbeaa173c8415b8ce83c7b01
+Malware Malspam.111	DOC4015119990		e318d924cbef7a8e5fe2205b5e079a95302b2e0ae330cd5809d3d12cfaafe85e
+Malware Malspam.112	DOC4219839376		403b2cbd35d6c177544d9fde8a807df201ba70b3adacab73d8bca67921a2b08f
+Malware Malspam.113			2c8b1c591b852b4acacb5f8dda24f863f5faabfbe54a5386aeb0c90026952150
+Malware Malspam.114			bcccda3051c89d4bd2c1f9e70450cd8150284498cf188d98278b344d3a4841d7
+Malware Malspam.115			1eb351f8882be28fb0d52ed387cb1fe87efcbb185400248c4202ca8c26eb2896
+Malware Malspam.116			fd7e1992bee5a4beb9beefff1f2982356348574e6a07d6bcea2da7faab3b1352
+Malware Malspam.117			c3a3c01680304de2f06015d1b79dc76d3fde7659ff98a975c0d2ca97e7ae4dae
+Malware Malspam.118			2fe4a5d7c748a5cb568b78ad364bffb3b40530eb873aa2562aa4aafbc58c08f9
+Malware Malspam.119			7bf0b6f86bf916614bc7ae67e567794e39df6097e1de3721f0f496e516a74334
+Malware Malspam.120			64b0d90da749409ebe2ab1c68ada8ea9b8f2e82bafd2a83babab4a40a51c022d
+Malware Malspam.121			34f54e6a102435d7e7c19ca5ff0a1959f9dd56261a48b20476ef0302064214ee
+Malware Malspam.122			14f31304b270f1e4009d012dd6959ed0db8dec5516c2bb578ba8bf5dd19eb26d
+Malware Malspam.123			65e47f8492fd868c9c9a91d7ac35b8be73c94d1f96ab47a0d99a45e9f93989dc
+Malware Malspam.124			3cd4312dcaac23dd29995f2d60a86554175b0e10d657ed3c8d007d0c9217d0f5
+Malware Malspam.125			2d1a8ad9936837daa2aa9c06d752a7efa84d856b847c48d21481886c9421a058
+Malware Malspam.126			3a37d90e98c0964f57163c3ec7b0805f8b8d3d1da8206db3a23af4523bd71460
+Malware Malspam.127			9134352687fe37b7d7fccf0727de431e7e0ba67fd071fe7a9c407e8fc3e334aa
+Malware Malspam.128			1a49671814fde04000f22e8f6faf2dbf99b1ac951444c3910f99eec20e28511c
+Malware Malspam.129			42fde73c742467f8df796a162607e8f17337fb02207ca35a4c7e6383a0c31419
+Malware Malspam.130			713d4f1f206a6a773827e9d1960269c51c8681c7a530639ab309763c2dcb7625
+Malware Malspam.131			5a273b0de041c6a520cce29dec9c435ae8179cb9def7f87959d44769c9ec683f
+Malware Malspam.132			90f3b488a144e74bd81d318d9173d96f39e5a6107b1dbb617c3ee9877c4dc5d4
+Malware Malspam.133			1394a8cc6d7a945ebb674e23f08939f4c9ba6577c89c0dd252f292542dcda974
+Malware Malspam.134			ee7fbb555a15a3b74b848bb09c702f55476b134f2489a8fb660f63096b180420
+Malware Malspam.135			7503ae5601d7daf81dcb2113bf2aac9175f3dfb5b386c4b6d4bf7df77532f334
+Malware Malspam.136			808aff0889036605b26beaee394148f8e172b30c83a33c707f439917e2f0f169
+Malware Malspam.137			a6b7689d7efe0132cddd06662b30b76cf48f903fef6b40d3c88fa89ef31ea756
+Malware Malspam.138			46a39c24126e1fe5a2a88e60b2aba329942409ca2964633ea86a0386d16ba8f6
+Malware Malspam.139			57c398a854784b811ab4a14e558c25c2f51d4ba935e30b3513d635dc168bf3c0
+Malware Malspam.140			da6e88ca1a256597f2e5382fdfe949abdbb303b53433eab6757f145327875b29
+Malware Malspam.141			05aacf529c09fbd8c85252af3306e8ce8318123ccc581f8d00cce4b9127f157a
+Malware Malspam.142			e3581807504cd338722b7031cf631c46404d66322b5ae090047936b16ebb52ec
+Malware Malspam.143			d41128ebd262fed5785cbc07335077d811612d70ad23476f36a204baf7410a6e
+Malware Malspam.144			8392a6a5d04de4e09d048fb4e058c3aa12ed5b5f91ff1cd5603612210322550e
+Malware Malspam.145			8bd9569019a3e739ea24bdc6dae691e45c028d59ce8330c98981710668aae424
+Malware Malspam.146			6148952ea78af12e9e54d42f2a3a9a8e4707d60990f8884be81e9be98997e528
+Malware Malspam.147			6eca72dece5f59f60903901bd3e4ac9c64c67a86c857cae4ad80d18d4fb4d435
+Malware Malspam.148			771d376429e18ca84bd24f64b15605e97f6392e362e7e63dce131a460e2cf2a3
+Malware Malspam.149			d441d25540b7f0afdfdfd1bd8b2ca97b866380a0b79c16b18a85a2a35215415a
+Malware Malspam.150			4eb7eeabd603bccdd1048c2f4b4393a14aa124c59430b492192f5e14d97c92ee
+Malware Malspam.151			c4b85dd31156948414d3c7da5b7226098e9bdb20661a75daa65762a0d66d0674
+Malware Malspam.152			134051bca4b9718c810e2bca64ad0c4aa8578384db1d73f52c67e8946d8f9748
+Malware Malspam.153	z.exe		ba5044f299986f223f41c7148cb71f996c2f2e4a1cdc86e6875a198319bce044
+Malware Malspam.154	cooxjh.exe		339d22b5e02c79cdaa355bb11b063645332d0a2fd43ae78af6577818c4078284
 Malware BlankSlate.1	9910124.zip		c31a4e0fb58b3eeed32f0e355e3f4fd925264e89d60f95aa04f099ca7d2d8bdf
 Malware BlankSlate.2	409317.zip		7c8eec000dbd1da7b2996dd55c904e0bb12494ea88464bfcf84d174a3e2fbd57
 Malware BlankSlate.3	8010246017929.zip		836541d45e2eeaa2aabedb9849133f2fe981b3fef0c203e8fb5485783feea6cf
@@ -293,10 +383,10 @@ Malware BlankSlate.76	34010343464599.zip		32e82cce5ca90d609f77fdde7d8fb0fb84b280
 Malware BlankSlate.77	40411954834814.zip		f9ecdb08162d9c6b5d179ecb3d2a2dcedbb4bdc61bcad2d32c07d3e3e76c66e4
 Malware BlankSlate.78	859773799209654.zip		45b55a2c942d715217955a1c0c762a702c85ed83abb2ee50a5344b45f3f5ac96
 Malware BlankSlate.79	5517722324.zip		6faaeed56a66de784e18fe8047d04c2194572b2fec7d4cab5bf76f47c3a7a1ce
-Malware BlankSlate.80	5517722324.zip		7fdbfce5ab036910409a30b63277eadfc36497a4d240a8dcdbc0f87a4282c540
-Malware BlankSlate.81	5517722324.zip		c60888755cea19ba05f34c088ca4594f85c59849c0ac398d2c5dae69f103bd22
-Malware BlankSlate.82	5517722324.zip		f4fbbf6e29c98f1959005587109358b397ece6e57a137666be1c82dd511bd680
-Malware BlankSlate.83	5517722324.zip		db71396188384f590b97769d190c31c6706b2d7bf135e51bfb2fd8377ce2b6db
+Malware BlankSlate.80			7fdbfce5ab036910409a30b63277eadfc36497a4d240a8dcdbc0f87a4282c540
+Malware BlankSlate.81			c60888755cea19ba05f34c088ca4594f85c59849c0ac398d2c5dae69f103bd22
+Malware BlankSlate.82			f4fbbf6e29c98f1959005587109358b397ece6e57a137666be1c82dd511bd680
+Malware BlankSlate.83			db71396188384f590b97769d190c31c6706b2d7bf135e51bfb2fd8377ce2b6db
 Malware BlankSlate.84	13.js		fc976c546c64f5ca95983865bc335c012031e653a0459a1e36e9b7855cac6485
 Malware BlankSlate.85	154.js		a1f64d14e5a11000be0c41e97e31803cd4b5684693129919e4ad2c3998ae703c
 Malware BlankSlate.86	193.js		f2da5c149c36ec83ba04c0eae75659a997c51261c9cb92575641d05da928a927
@@ -392,15 +482,6 @@ Trojan Minzen		B469B78CA04E8FDAD957CCC68B5B1C3D
 Trojan	Dreambot
 Trojan Vawtrak		5238cd34caae600b3f592e2595aa6949
 Trojan Vawtrak.1		6fad86a0fcc912f32474f6c7a86fe37a
-Trojan	Emotet
-Trojan	Emotet.1	Purchase-Order-50717202/	5a8b91fac4cdd9220dae03dc4160d8d77fb509482d14370da38227b5de7ee639
-Trojan	Emotet.2	OVERDUE-ACCOUNT/	ae388ef426ffac2888e3c0d616619091048e07f7dadb04051a895b71c9123626
-Trojan	Emotet.3	gescanntes-Dokument/	32eb4a34d123927ca5fd2e5f36634c1e50017e156e4ec7e5cdce3feb23c6c543
-Trojan	Emotet.4	Payment-and-address./	
-Trojan	Emotet.5	Rechnung-Bestellung-97866	
-Trojan	Emotet.6	2017-11190	
-Trojan	Emotet.7	Rechnung-2017-10-76709	
-Trojan	Emotet.8	Rechnung-im-Anhang	
 Trojan ZeroT.1			3124fcb79da0bdf9d0d1995e37b06f7929d83c1c4b60e38c104743be71170efe
 Trojan ZeroT.2	0228.doc		b5c208e4fb8ba255883f771d384ca85566c7be8adcf5c87114a62efb53b73fda
 Trojan ZeroT.3	0228.exe		bc2246813d7267608e1a80a04dac32da9115a15b1550b0c4842b9d6e2e7de374
@@ -446,6 +527,32 @@ Trojan Emotet.32		e01954ac6d0009790c66b943e911063e
 Trojan Emotet.33		e49c549b95dbd8ebc0930ad3f147a4b9
 Trojan Emotet.34		ea804a986c02d734ad38ed0cb4d157a7
 Trojan Emotet.35	188.166.118.34
+Trojan Emotet.36	Joyce Lynch: 901597
+Trojan Emotet.37	Purchase-Order-50717202/		5a8b91fac4cdd9220dae03dc4160d8d77fb509482d14370da38227b5de7ee639
+Trojan Emotet.38	OVERDUE-ACCOUNT/		ae388ef426ffac2888e3c0d616619091048e07f7dadb04051a895b71c9123626
+Trojan Emotet.39	gescanntes-Dokument/		32eb4a34d123927ca5fd2e5f36634c1e50017e156e4ec7e5cdce3feb23c6c543
+Trojan Emotet.40	Payment-and-address./
+Trojan Emotet.41	Rechnung-Bestellung-97866
+Trojan Emotet.42	2017-11190
+Trojan Emotet.43	Rechnung-2017-10-76709
+Trojan Emotet.44	Rechnung-im-Anhang
+Trojan Emotet.45	Inv. 3653869422
+Trojan Emotet.46	=?UTF-8?B?SWhy
+Trojan Emotet.47	MKN3-97971776420
+Trojan Emotet.48	UmVjaG51bmcgZsO8ciB
+Trojan Emotet.49	0999639 Survey questions
+Trojan Emotet.50	die Rechnung 528924152756594
+Trojan Emotet.51	73861846
+Trojan Emotet.52	PoolCar Sales invoice
+Trojan Emotet.53	251580728
+Trojan Emotet.54	Seperate Remittance Advice Layout - paper document A4
+Trojan Emotet.55	Zahlungserinnerung vom Juli
+Trojan Emotet.56	gescanntes-Dokument-SZC2467896999.doc		369382490deaf9246e39d07c57db6b56fa3fd9454671ec728bf81a4c4a1a549e
+Trojan Emotet.57	MG-921280152.doc
+Trojan Emotet.58	VeloBatFX.exe		2f93c8c97f99c77880027b149d257268f45bce1255aeaefdc4f21f5bd744573f
+Trojan Emotet.59			e90cbb0729e523bc8647e2437cd7f91ed4dafe131b945599aca1e64058fe76e7
+Trojan Emotet.60			f0138f78c1fd8b47be240bb779b32dda0be2e681145b50765f5bb5715be9d5eb
+Trojan Emotet.61		abf6b315.gxe
 Trojan Terdot.A			151778e132753186eb8bb0dd5b6563a3d919af7e6bbdc4395e17442556021741
 Trojan Terdot.A.1			61a3ece84544ab539e69156a882f49d1082555a48e77b3ffab0dd854b7bac8d3
 Trojan Sundown	542.swf
@@ -606,6 +713,7 @@ Trojan Disttrak.31	lxiaw003.exe
 Trojan Disttrak.31	vdsk911.sys
 Trojan Disttrak.32	ntertmgr32.exe
 Trojan Disttrak.33	ntertmgr64.exe
+Trojan Disttrak.34	usbvideo324.pnf
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -634,6 +742,80 @@ Liber Inc. Exploit	sp2fucked.biz
 Liber Inc. Exploit	admin2cash.biz
 Liber Inc. Exploit	coolsearch.biz
 Liber Inc. Exploit	Web-res.biz
+Ransomware GandCrab	KRAB-DECRYPT.txt		ef7b107c93e6d605a618fee82d5aeb2b32e3265999f332f624920911aabe1f23
+Ransomware GandCrab.1			37e660ada1ea7c65de2499f5093416b3db59dfb360fc99c74820c355bf19ec52
+Ransomware GandCrab.2			222ac1b64977c9e24bdaf521a36788b068353c65869469a90b0af8d6c4060f8a
+Ransomware GandCrab.3			cf104f2ad205baee6d9d80e256201ef6758b850576686611c355808a681bec60
+Ransomware GandCrab.4			8ecbfe6f52ae98b5c9e406459804c4ba7f110e71716ebf05015a3a99c995baa1
+Ransomware GandCrab.5			6c1ed5eb1267d95d8a0dc8e1975923ebefd809c2027427b4ead867fb72703f82
+Ransomware GandCrab.6			b4b6f6c2588001e5b95eed79faf99a92b9d9224f65af6a92e055ddfb145a1ecc
+Ransomware GandCrab.7			063cf82cd52acb6a0539a6ff59f72fb5de473293a06c470a92c6d35a151b73e9
+Ransomware GandCrab.8			063cf82cd52acb6a0539a6ff59f72fb5de473293a06c470a92c6d35a151b73e9
+Ransomware GandCrab.9			6a8d922e34de35ac074b7de54d71227fb1a1ed92b9cfbc4daf8d64a9c5bc46b8
+Ransomware GandCrab.10			e7851a1b3e93968e7f6b92a1a3f59d250402be15a5bcb3262acff1e0a27b912c
+Ransomware GandCrab.11			67c50459db7f0042d7e1a96ce113e60f0179978dfe810bdb0f5320a092ce3b71
+Ransomware GandCrab.12			99eb1d90eb5f0d012f35fcc2a7dedd2229312794354843637ebb7f40b74d0809
+Ransomware GandCrab.13			846ad2d7e1e133ae4bc2decbc22ae686a44cccaffbee15b4d9b23143f6aa8d3f
+Ransomware GandCrab.14			f93379f495ce3c025b8f2ad59779d2de28f00a25b6206572522a71028f925f01
+Ransomware GandCrab.15			b4d0b03ca50f013b4f0f9efc2ecd822bfc13325356100f2f4d36eaf217d9077b
+Ransomware GandCrab.16			be54bb05adbda29316ba03d61b3365d8a03e1121a39ae492078787aff4f1248f
+Ransomware GandCrab.17			229275aa89ea8d39b3cc721d45d51d50707339b64afddde99119ebdf50ef6770
+Ransomware GandCrab.18			589e188602c4a24c68bc095c1105894a5e97e1df6218eaead89b7ab9a4e88eac
+Ransomware GandCrab.19			ad5dbe133677c987f95fc890ab37a48d9d2f9324a53356affd078e26d3cbb8fc
+Ransomware GandCrab.20			7fab866ce5474e690a06ca556c76e63a3c3c184ae493fce03bb2a839ef7ef725
+Ransomware GandCrab.21			c0db3c329592294a81f23c37e701a189110913c17d1371bc625a3eae97f37a94
+Ransomware GandCrab.22			243cafdc3582a750537fb7a4ba4e9640f4142f385478c106514bae0d736f462e
+Ransomware GandCrab.23			a67a98047097f2249eba7a31138efde45f3c02a3f7f46d3a9de85d630da7cd94
+Ransomware GandCrab.24			6fafe7bb56fd2696f2243fc305fe0c38f550dffcfc5fca04f70398880570ffff
+Ransomware GandCrab.25			469961813372d2a3645cf9927c983f5d661e2a60589425d9259e7658de63a181
+Ransomware GandCrab.26			5ab28933afa89bd0924ed45538b753cd260d0a6cec76eeca30d040476cf6d363
+Ransomware GandCrab.27			03b73dfe73dc7f9191e0c3a34801dd0e906b3ba8c77de76681a23a7c34cb5133
+Ransomware GandCrab.28			69f55139df165bea1fcada0b0174d01240bc40bc21aac4b42992f2e0a0c2ea1d
+Ransomware GandCrab.29			0c0def0788b5f946bb2d1a83d883d474550353c98eaffb4456d651cb4bcc3bd9
+Ransomware GandCrab.30			b4b6f6c2588001e5b95eed79faf99a92b9d9224f65af6a92e055ddfb145a1ecc
+Ransomware GandCrab.31			063cf82cd52acb6a0539a6ff59f72fb5de473293a06c470a92c6d35a151b73e9
+Ransomware GandCrab.32			ed8875c88bf061f45601629fbb3faa9f5b9ea4a076ba5a7accd566dc40862072
+Ransomware GandCrab.33			99eb1d90eb5f0d012f35fcc2a7dedd2229312794354843637ebb7f40b74d0809
+Ransomware GandCrab.34			846ad2d7e1e133ae4bc2decbc22ae686a44cccaffbee15b4d9b23143f6aa8d3f
+Ransomware GandCrab.35			f93379f495ce3c025b8f2ad59779d2de28f00a25b6206572522a71028f925f01
+Ransomware GandCrab.36			e7851a1b3e93968e7f6b92a1a3f59d250402be15a5bcb3262acff1e0a27b912c
+Ransomware GandCrab.37			6a8d922e34de35ac074b7de54d71227fb1a1ed92b9cfbc4daf8d64a9c5bc46b8
+Ransomware GandCrab.38			67c50459db7f0042d7e1a96ce113e60f0179978dfe810bdb0f5320a092ce3b71
+Ransomware GandCrab.39			a67a98047097f2249eba7a31138efde45f3c02a3f7f46d3a9de85d630da7cd94
+Ransomware GandCrab.40			6fafe7bb56fd2696f2243fc305fe0c38f550dffcfc5fca04f70398880570ffff
+Ransomware GandCrab.41			469961813372d2a3645cf9927c983f5d661e2a60589425d9259e7658de63a181
+Ransomware GandCrab.42			ad5dbe133677c987f95fc890ab37a48d9d2f9324a53356affd078e26d3cbb8fc
+Ransomware GandCrab.43			7fab866ce5474e690a06ca556c76e63a3c3c184ae493fce03bb2a839ef7ef725
+Ransomware GandCrab.44			c0db3c329592294a81f23c37e701a189110913c17d1371bc625a3eae97f37a94
+Ransomware GandCrab.45			243cafdc3582a750537fb7a4ba4e9640f4142f385478c106514bae0d736f462e
+Ransomware GandCrab.46			8a1e66b4834499dacc24abb27733c387733d919070fc504b14ee865678952559
+Ransomware GandCrab.47			e9bfa9691b48a75fa917a37290cb32b02ded3ae60dab4bcd625e8f390fd345a1
+Ransomware GandCrab.48			5ab28933afa89bd0924ed45538b753cd260d0a6cec76eeca30d040476cf6d363
+Ransomware GandCrab.49			b4d0b03ca50f013b4f0f9efc2ecd822bfc13325356100f2f4d36eaf217d9077b
+Ransomware GandCrab.50			be54bb05adbda29316ba03d61b3365d8a03e1121a39ae492078787aff4f1248f
+Ransomware GandCrab.51			589e188602c4a24c68bc095c1105894a5e97e1df6218eaead89b7ab9a4e88eac
+Ransomware GandCrab.52			03b73dfe73dc7f9191e0c3a34801dd0e906b3ba8c77de76681a23a7c34cb5133
+Ransomware GandCrab.53			229275aa89ea8d39b3cc721d45d51d50707339b64afddde99119ebdf50ef6770
+Ransomware GandCrab.54			ef7b107c93e6d605a618fee82d5aeb2b32e3265999f332f624920911aabe1f23
+Ransomware GandCrab.55			786e3c693fcdf55466fd6e5446de7cfeb58a4311442e0bc99ce0b0985c77b45d
+Ransomware GandCrab.56			8ecbfe6f52ae98b5c9e406459804c4ba7f110e71716ebf05015a3a99c995baa1
+Ransomware GandCrab.57			e454123d852e6a40eed1f2552e1a1ad3c00991541d812fbf24b70611bd1ec40a
+Ransomware GandCrab.58			6987fd73457ac0b5c245886532b1bdf5d58cb43890e04b706ebba44727403311
+Ransomware GandCrab.59			06ee45a770fa1a88b62d28059c2c44310f7ff56edbdaf35a0b9c44f2a4e57536
+Ransomware GandCrab.60			f5e74d939a5b329dddc94b75bd770d11c8f9cc3a640dccd8dff765b6997809f2
+Ransomware GandCrab.61			c13962f54a949724c0713a133035de7fbd48d49722ee5805be2ef1f8437d275a
+Ransomware GandCrab.62			53c98a623d23778770be0273254515786514fae00d11a928f32d43b5a3e33ed5
+Ransomware GandCrab.63			e9b4d828790e0ee6bbfc0675e09efc212dce7b84e07758a2f0444aeb24914e69
+Ransomware GandCrab.64			e7dc7b0fe39c98d63983eac54326bdf60e79a4f3aa0178564a6c905d11033ddf
+Ransomware GandCrab.65			5746e9436b95b620e5197ea718a598688fd6a587f8f9c2e9ddb9ec13193329b6
+Ransomware GandCrab.66			316a9295cf30b759c02b392f0b5b3e1f28ad2f6ed5ad1a11ad079e3dbcb141e1
+Ransomware GandCrab.67			b0c7057c8467f15e5e4875b696def20fcab892e1d254a369249a3159f0670854
+Ransomware GandCrab.68			428ffc236bc0b08d88f2990a3c1aa4dfab715aa90d65f60217e4f3651bc1b0d1
+Ransomware GandCrab.69			f3c921377c73cd3eec1ff5561ba603480f33caea6d49fc79b8fdf0e642d924dd
+Ransomware GandCrab.70			e11dcc64efb1ce8b8d5237590754c13e92a455095f7f1f501ce64a200f64ffe2
+Ransomware GandCrab.71			6498b44ed0de93353b5b798bb022ec407e85266ca0341e668ef03307d24ceda1
+Ransomware GandCrab.72			97547a45953be24a4261b2fd925748676627112ad53bd3b7240b1643eac4b94f
+Ransomware GandCrab.73	qwerty.exe		ae0d1591385c573af2ad6b04816a7d6a30c87ccf40e8f02b3c76e66a4c8450e6
 Ransomware Sage	4846.doc		b0aed0e368425dfe126491b71546ad27061a1c4346b4de51202766b4113620a7
 Ransomware Sage.1	28255.doc		55d6e3ed606acddf3c4112ffe4b4447f4bfacda9d03d187cbc2374b6048f5712
 Ransomware Sage.2	88507.zip		da8db4d594370f36b93d4121897d4056cf2f36e61b55b6e8a9569e3121fad1df
@@ -676,17 +858,17 @@ Ransomware RigEK.8			49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365
 Ransomware RigEK.9			6ca263b7d150b820c5f13458d1ceaaf0360ac401779379bcec77a99f2bf8e5ce
 Ransomware RigEK.10			6993b911a6310ff7097105922de714d7a070c13633e79c36701d3cccf4086719
 Ransomware RigEK.11			49d5fd5a5b0058eccd888a149f6f995e7c160dd3973c0c0edebf0311365847cd
-Ransomware RigEK.12	krp3cmg
-Ransomware RigEK.13	381m6bv285.exe
-Ransomware RigEK.14			8411ffb402372f51fbcc5f4d80f23eaf79871650d5cbbac8597c3667a49870b6
+Ransomware RigEK.12	krp3cmg		d871fa0e1ac9e03e65b71fc9f3261a320e63fd1731fae33595f79ec51d5fabc4
+Ransomware RigEK.13	381m6bv285.exe		12dc4c44b0bdbe2efb8d10de14b09682589069e3f2ea0c82b21c4270455d199d
+Ransomware RigEK.14	eunlock.dll		8411ffb402372f51fbcc5f4d80f23eaf79871650d5cbbac8597c3667a49870b6
 Ransomware RigEK.15			25b36b3ae96b38259cb473df2b0d02fe94135b8d53b960dc95315567590c683c
 Ransomware RigEK.16			9c18ef0d4b441cdcefcdbaceeb111a207dc1460ac2a082785cc028551606a5de
 Ransomware RigEK.17			e7b3102e3e49c6c3611353d704aae797923b699227df92d97987a2e012ba3f25
 Ransomware RigEK.Cerber	radF22EA.tmp.exe		840ce47e94db6dae302dddbfe33f9548a47541a0917def5e2e5644fc2965ba52
-Ransomware RigEK.Cerber.1	Rig-EK.swf
+Ransomware RigEK.Cerber.1	Rig-EK.swf		5a49dfdc87158cca5e0990361d57d870fde6aa6f63d16096698ba4c244bc3b54
 Ransomware RigEK.Bunitu			b27b370597fc8155f518dbc07f188c30ebc8e1d210f181acaf36ddb20714d64e
 Ransomware RigEK.Bunitu.2	airzaxz.dll		43be87120cbd555dc926becbe92fd7a0b2a43d1dd0418b3184d59c676c81eaf6
-Ransomware RigEK.Bunitu.2	diamond&basket
+Ransomware RigEK.Bunitu.2	diamond&basket		e4a1f94d58bd5ef7875991688017465441d99edc0d663bdac813bb9d03cae258
 Ransomware RigEK.18	experimea.info		8c9566ff0ab6df29f5d879e26d294e5836e3741b269a644ce497440a5e380164
 Ransomware RigEK.19	ipinfo.io		644b6905a1a1b35620c5dd44bfd30e039bbeaa54799853b4b93ee7ee51bbbe0e
 Ransomware RigEK.20	/windowsxp/t3.css		8bc2a1f203d87c731d036130c419ae6c7ad85eca159fe9c0effa32e5f97514ad
@@ -840,825 +1022,957 @@ Ransomware WannaCry.38		ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e
 Ransomware WannaCry.39		e8450dd6f908b23c9cbd6011fe3d940b24c0420a208d6924e2d920f92c894a96
 Ransomware WannaCry.40		ff8fcdc4cae2c9ed5207e53bb5bf1d97eef8147977d2bddfe8f55be91410f32c
 Ransomware WannaCry.41		f8812f1deb8001f3b7672b6fc85640ecb123bc2304b563728e6235ccbe782d85
-Known Spyware Host	dreampark.co.jp
-Known Spyware Host	enigmasoftwaregroup.com
-Known Spyware Host	healthycomputerclub.com
-Known Spyware Host	spyware.junglebee.com
-Known Spyware Host	the-spyware-review.com
-Known Spyware Host	onlinepcfix.com
-Known Spyware Host	spywarezapper.com
-Known Spyware Host	noadware.net
-Known Spyware Host	spy-deleter.com
-Known Spyware Host	spyblocs.com
-Known Spyware Host	neosoftlabs.com
-Known Spyware Host	trojan-scan.com
-Known Spyware Host	suprnova.com
-Known Spyware Host	e-spyware.com
-Known Spyware Host	adware.storesbiz.com
-Known Spyware Host	freespywarescan.org
-Known Spyware Host	nuker.com
-Known Spyware Host	nospyware.info
-Known Spyware Host	mambomarket.com
-Known Spyware Host	free-spyware-scan.com
-Known Spyware Host	spyburn.palsol.biz
-Known Spyware Host	comparespywareremovers.com
-Known Spyware Host	evidence-eliminator.com
-Known Spyware Host	eblocs.com
-Known Spyware Host	spywareremover.com
-Known Spyware Host	login.tracking101.com
-Known Spyware Host	spyforce.com
-Known Spyware Host	spywareinfoooo.com
-Known Spyware Host	com-install.com
-Known Spyware Host	stop-sign.com
-Known Spyware Host	netspyprotector.com
-Known Spyware Host	1clickspyclean.com
-Known Spyware Host	pcbugdoctor.com
-Known Spyware Host	ad-eliminator.com
-Known Spyware Host	hotbar.com
-Known Spyware Host	spywarenuker.com
-Known Spyware Host	spybot.com
-Known Spyware Host	compareandreview.com
-Known Spyware Host	interesoft.com
-Known Spyware Host	adwarespy.com
-Known Spyware Host	paretologic.com
-Known Spyware Host	privacysoftwarereport.com
-Known Spyware Host	smart-security.info
-Known Spyware Host	trekblue.com
-Known Spyware Host	spybot.com-xp.com
-Known Spyware Host	adwareremovergold.com
-Known Spyware Host	adwarespywareremoval.com
-Known Spyware Host	online-survival-lab.com
-Known Spyware Host	mediataskmaster.com
-Known Spyware Host	mp3advance.com
-Known Spyware Host	noadware.com
-Known Spyware Host	surfsecret.com
-Known Spyware Host	spybloc.com
-Known Spyware Host	spywareassassin.com
-Known Spyware Host	revieweasy.com/spy/
-Known Spyware Host	anti-adware.net
-Known Spyware Host	spybot-spyware-removal.com
-Known Spyware Host	nontoxic-internet.com
-Known Spyware Host	privacytools2004.com
-Known Spyware Host	mp3downloadhq.com
-Known Spyware Host	anti-spyware-review.com
-Known Spyware Host	spywarereview.info
-Known Spyware Host	freedownloadhq.com
-Known Spyware Host	theshopontop.com
-Known Spyware Host	incentiverewardcenter.com
-Known Spyware Host	adaware.info
-Known Spyware Host	adremovergold.com
-Known Spyware Host	mp3downloading.com
-Known Spyware Host	spybeware.com
-Known Spyware Host	trekdata.com
-Known Spyware Host	ratespywareremovers.com
-Known Spyware Host	spywarehelp.net
-Known Spyware Host	1.primaryads.com
-Known Spyware Host	uninstallxupiter.com
-Known Spyware Host	trackzapper.com
-Known Spyware Host	xeec.com
-Known Spyware Host	hop.clickbank.net
-Known Spyware Host	techlistings.net
-Known Spyware Host	removespyware.ru
-Known Spyware Host	free-adware-scan.com
-Known Spyware Host	spywareonline.org
-Known Spyware Host	service.netmeans.com
-Known Spyware Host	myfilesharing.com
-Known Spyware Host	adwarereport.com
-Known Spyware Host	freepcscan.com
-Known Spyware Host	scanspyware.net
-Known Spyware Host	spywareremovercomparisons.com
-Known Spyware Host	spywarethis.com
-Known Spyware Host	spyware-removers.org
-Known Spyware Host	spykillerdownload.com
-Known Spyware Host	realspyerase.biz
-Known Spyware Host	lsjmp.com
-Known Spyware Host	getmetickets.net
-Known Spyware Host	freedownloadtools.com
-Known Spyware Host	antispyware.com
-Known Spyware Host	spywarehub.com
-Known Spyware Host	software-comparisons.com
-Known Spyware Host	spyware-adware-download.com
-Known Spyware Host	spydetector.net
-Known Spyware Host	spyware.net
-Known Spyware Host	adware-remover.net
-Known Spyware Host	spy-hunter-detector.com
-Known Spyware Host	pcdocrx.net
-Known Spyware Host	bulletproofsoft.com
-Known Spyware Host	spyhunter.com
-Known Spyware Host	spyads.com
-Known Spyware Host	good-offers.com
-Known Spyware Host	hijack-this.net
-Known Spyware Host	2004spywareremovers.com
-Known Spyware Host	rizalsoftware.com
-Known Spyware Host	megalithusa.com
-Known Spyware Host	nospyx.com
-Known Spyware Host	likesurfing.com
-Known Spyware Host	spy-ware-remover.com
-Known Spyware Host	music-sharing.net
-Known Spyware Host	adwaresafe.com
-Known Spyware Host	spywareremovalutilities.com
-Known Spyware Host	spywareblaster.com
-Known Spyware Host	uant.net
-Known Spyware Host	bittorrents.com
-Known Spyware Host	spywarecrusher.com
-Known Spyware Host	spywarestormer.com
-Known Spyware Host	r.rd05.com
-Known Spyware Host	toptenreviews.com
-Known Spyware Host	spyware.speedylearning.com
-Known Spyware Host	sg08.biz
-Known Spyware Host	spywareremoversreview.com
-Known Spyware Host	spywarebegone.com
-Known Spyware Host	spyspotter.com
-Known Spyware Host	easyerase.com
-Known Spyware Host	spywareremovalauthority.com
-Known Spyware Host	66.33.0.35
-Known Spyware Host	pcspytool.com
-Known Spyware Host	palsol.com
-Known Spyware Host	antispyware.neonant.com
-Known Spyware Host	spywareboard.com
-Known Spyware Host	freedownloadzone.com
-Known Spyware Host	add-aware.com
-Known Spyware Host	spykiller.com
-Known Spyware Host	adwarexeliminator.com
-Known Spyware Host	spyinator.com
-Known Spyware Host	errornuker.com
-Known Spyware Host	x.cb.kount.com
-Known Spyware Host	iteens.com
-Known Spyware Host	spy-review.com
-Known Spyware Host	spyvest.com
-Known Spyware Host	mymusicinc.com
-Known Spyware Host	free-web-browsers.com
-Known Spyware Host	bhozapper.com
-Known Spyware Host	spycleaner.net
-Known Spyware Host	spywarexterminator.com
-Known Spyware Host	1automationwiz.com
-Known Spyware Host	achtungachtung.com
-Known Spyware Host	5spynetwork.com
-Known Spyware Host	swanksoft.com
-Known Spyware Host	smartcomparisons.com
-Known Spyware Host	safespy.net
-Known Spyware Host	spywareremove.org
-Known Spyware Host	topspywareremovers.com
-Known Spyware Host	consumerincentivepromotions.com
-Known Spyware Host	music-movie-downloads.com
-Known Spyware Host	bittorrentsoftwaredownload.com
-Known Spyware Host	360share.com
-Known Spyware Host	switchvpn.net
-Known Spyware Host	ipvanish.com
-Known Spyware Host	goldenfrog.com
-Known Spyware Host	pq-chat.com
-Known Spyware Host	protonmail.com
-Known Spyware Host	wickr.com
-Known Spyware Host	autohideip.com
-Known Spyware Host	easy-hideip.com
-Known Spyware Host	hideipprivacy.com
-Known Spyware Host	platinumhideip.com
-Known Spyware Host	quick-hide-ip.com
-Known Spyware Host	real-hide-ip.com
-Known Spyware Host	superhideip.com
-Known Spyware Host	utrasurf.us
-Known Spyware Host	webproxy.stealthy.co
-Known Spyware Host	webproxy.uach.cl
-Known Spyware Host	freebrowsing.tecnoent.com
-Known Spyware Host	onewebproxy.com
-Known Spyware Host	proxypy.org
-Known Spyware Host	poxy.info
-Known Spyware Host	web.leue.biz
-Known Spyware Host	unblockyoutube.xyz
-Known Spyware Host	surf-proxy.smoz.us
-Known Spyware Host	geti2p.net
-Known Spyware Host	bitvise.com
-Known Spyware Host	privatevpn.com
-Known Spyware Host	openvpn.net
-Known Spyware Host	easy-hide-ip.com
-Known Spyware Host	usessh001.com
-Known Spyware Host	telex.cc
-Known Spyware Host	hotspotshield.net
-Known Spyware Host	ultrasurfing.com
-Known Spyware Host	ultrasurf.us
-Known Spyware Host	mediahint.com
-Known Spyware Host	zenmate.com
-Known Spyware Host	betternet.co
-Known Spyware Host	expressvpn.com
-Known Spyware Host	tunnelbear.com
-Known Spyware Host	privateinternetaccess.com
-Known Spyware Host	dit-inc.us
-Known Spyware Host	freenetproject.org
-Known Spyware Host	hotspotshield.com
-Known Spyware Host	hsselite.com
-Known Spyware Host	live-k33.com
-Known Spyware Host	rltnsk.biz
-Known Spyware Host	scammed.by
-Known Spyware Host	eiserver.com
-Known Spyware Host	studyaway.ru
-Known Spyware Host	yakuzarc.com
-Known Spyware Host	wickercentral.com
-Known Spyware Host	bevanfoun.agencydation.org
-Known Spyware Host	cctvhotdeals.com
-Known Spyware Host	cdduplication.ie
-Known Spyware Host	celtichr.com
-Known Spyware Host	datagravity.com
-Known Spyware Host	dyfedpowys-helphub.org.uk
-Known Spyware Host	ep-surveillance.com
-Known Spyware Host	filtersplusfl.com
-Known Spyware Host	funlux.com
-Known Spyware Host	holtfarmholidays.com
-Known Spyware Host	jans.li
-Known Spyware Host	miller-engineers.com
-Known Spyware Host	oegllc.net
-Known Spyware Host	royaldetail.net
-Known Spyware Host	scammed.by
-Known Spyware Host	stonecrestfurniture.com
-Known Spyware Host	virtequip.com
-Known Spyware Host	voipdistributor.net
-Known Spyware Host	wcscoiledtubing.com
-Known Spyware Host	whq.org.uk
-Known Spyware Host	wickercentral.com
-Known Spyware Host	corppki.com
-Known Spyware Host	hotfrog.at
-Known Spyware Host	hotfrog.ca
-Known Spyware Host	hotfrog.ch
-Known Spyware Host	hotfrog.cn
-Known Spyware Host	hotfrog.co.uk
-Known Spyware Host	hotfrog.co.za
-Known Spyware Host	hotfrog.com
-Known Spyware Host	hotfrog.de
-Known Spyware Host	hotfrog.fr
-Known Spyware Host	hotfrog.hk
-Known Spyware Host	hotfrog.it
-Known Spyware Host	hotfrog.jp
-Known Spyware Host	hotfrog.pt
-Known Spyware Host	sydneyhillsallergy.com.au
-Known Spyware Host	visitpyrmontultimo.com.au
-Known Spyware Host	games-assets.xyz
-Known Spyware Host	visitpyrmontultimo.com.au
-Known Spyware Host	aptrixx.com
-Known Spyware Host	bestonlinebigdeal.xyz
-Known Spyware Host	bmwservis-izmir.com
-Known Spyware Host	bykp36.gq
-Known Spyware Host	cinemauae.com
-Known Spyware Host	krbmechanical.ca
-Known Spyware Host	pausetv.com.tr
-Known Spyware Host	saylegitimatepaydayloans.top
-Known Spyware Host	sr22dwi.com
-Known Spyware Host	thebestfurnitureidea.tk
-Known Spyware Host	torrentom-skachat-be
-Known Spyware Host	splatno-17.ml
-Known Spyware Host	uneasinesshelpwith.xyz
-Known Spyware Host	yd7333.com
-Known Spyware Host	psiphon3.com
-Known Spyware Host	psiphon.ca
-Known Spyware Host	iqpkvtcab.info
-Known Spyware Host	oumedfu.info
-Known Spyware Host	cxvnbcaj.info
-Known Spyware Host	plusisokioskinfinity.com
-Known Spyware Host	emailalohacanvasschools.com
-Known Spyware Host	bridgetoneshotelregistry.com
-Known Spyware Host	assistantqrparadisemls.com
-Known Spyware Host	campbeachpressfunny.com
-Known Spyware Host	placelifestylealwaysnetworks.com
-Known Spyware Host	growcleancopyis.com
-Known Spyware Host	bidssheetcitizennovo.com
-Known Spyware Host	musicaldeskhorsecaddy.com
-Known Spyware Host	ibmetroleisuretree.com
-Known Spyware Host	meteradventurebinhospital.com
-Known Spyware Host	tastyshoesdtgf.com
-Known Spyware Host	shinekarmaapartmentslot.com
-Known Spyware Host	beeradamnaside.com
-Known Spyware Host	flowsilverwillnova.com
-Known Spyware Host	linestrustmdsounds.com
-Known Spyware Host	chooserocketcanadianee.com
-Known Spyware Host	conferencepierandomvitamin.com
-Known Spyware Host	ritemagicbuzzhunt.com
-Known Spyware Host	portlandapplehsdistribution.com
-Known Spyware Host	profilespidermicreative.com
-Known Spyware Host	mobileninekeeperauthority.com
-Known Spyware Host	webdesignthisisundermodel.com
-Known Spyware Host	buttonoklmclip.com
-Known Spyware Host	rawvidglasscreations.com
-Known Spyware Host	electronicscontactsrobotafri.com
-Known Spyware Host	artofapparelcoastness.com
-Known Spyware Host	oilhekarmaepi.com
-Known Spyware Host	feedvoxnjhop.com
-Known Spyware Host	swimasstageafrican.com
-Known Spyware Host	leatherwestaudioomg.com
-Known Spyware Host	walkgzmysticra.com
-Known Spyware Host	glambingjumpsteps.com
-Known Spyware Host	lcbandstopscandy.com
-Known Spyware Host	headsinglesfilmsvision.com
-Known Spyware Host	recordamacirclesoup.com
-Known Spyware Host	mobjcopyvo.com
-Known Spyware Host	associationhomesadamcampus.com
-Known Spyware Host	spidermainfacebookrus.com
-Known Spyware Host	texasrayfivemw.com
-Known Spyware Host	colorscompanybeddiscount.com
-Known Spyware Host	sourcingphoenixbondmc.com
-Known Spyware Host	viewerduckcalifornianeeds.com
-Known Spyware Host	trackertheperfectchatcamp.com
-Known Spyware Host	ninecablepageskindle.com
-Known Spyware Host	boldbureaucomicbang.com
-Known Spyware Host	bobparawineideas.com
-Known Spyware Host	equityrentalaglegacy.com
-Known Spyware Host	youallaceunlimited.com
-Known Spyware Host	driverindiabidom.com
-Known Spyware Host	gamerextremewallgot.com
-Known Spyware Host	monstersngbarerating.com
-Known Spyware Host	weeklycosmohausadv.com
-Known Spyware Host	classifiedstradingminibridal.com
-Known Spyware Host	coutureexconnectionsforlife.com
-Known Spyware Host	homeberryboxking.com
-Known Spyware Host	formuladivasharkforkids.com
-Known Spyware Host	internetrentgallerycove.com
-Known Spyware Host	tourfixstatusstar.com
-Known Spyware Host	repcoursewowodd.com
-Known Spyware Host	magicinteldigestground.com
-Known Spyware Host	boulderszseagplus.com
-Known Spyware Host	hugemadequietsf.com
-Known Spyware Host	naturecggirlsable.com
-Known Spyware Host	asiangetagamercompare.com
-Known Spyware Host	ifrbdombusiness.com
-Known Spyware Host	buzzcrosshotelwee.com
-Known Spyware Host	forevercruiseevnm.com
-Known Spyware Host	champvillamojogifts.com
-Known Spyware Host	alliancecanvillasound.com
-Known Spyware Host	ipadsharesinvestchic.com
-Known Spyware Host	shoppinggalicevt.com
-Known Spyware Host	graphicvinevinemint.com
-Known Spyware Host	firekwikcollegemultimedia.com
-Known Spyware Host	goldencharterdepotpure.com
-Known Spyware Host	abcangelsgeniusgolden.com
-Known Spyware Host	highwickedsailwc.com
-Known Spyware Host	rainpentodaygame.com
-Known Spyware Host	weedheatsportable.com
-Known Spyware Host	nevadaboutiqueohioself.com
-Known Spyware Host	tagscomputingpilotllc.com
-Known Spyware Host	rateswebhostingkitchenprestige.com
-Known Spyware Host	skwostarsleaf.com
-Known Spyware Host	parkyooyouunderground.com
-Known Spyware Host	thisuccommercialamerica.com
-Known Spyware Host	dynamicdiamondrecpp.com
-Known Spyware Host	simrealtimeweatherreg.com
-Known Spyware Host	arpolicechurchdesignstudio.com
-Known Spyware Host	whyroadcampusranch.com
-Known Spyware Host	sidefailtrendyurl.com
-Known Spyware Host	leaseweb.com
-Known Spyware Host	urletconlynyc.com
-Known Spyware Host	oneforestgearsaver.com
-Known Spyware Host	twitterghnfcbingo.com
-Known Spyware Host	bridaluuartsviet.com
-Known Spyware Host	courseslemonmarketsresort.com
-Known Spyware Host	moviesreportevemorning.com
-Known Spyware Host	mydati.com
-Known Spyware Host	yojobuxkitchen.com
-Known Spyware Host	sinofficeentertainmentth.com
-Known Spyware Host	zipleisurefansstyles.com
-Known Spyware Host	losangelesgunraall.com
-Known Spyware Host	solutiontrycapitalfy.com
-Known Spyware Host	rusbaytapsplus.com
-Known Spyware Host	gearagereport.com
-Known Spyware Host	godkisssococ.com
-Known Spyware Host	jwplayer.com
-Known Spyware Host	deviantart.com
-Known Spyware Host	electricstrategyclicksm.com
-Known Spyware Host	qatarindofarmmanage.com
-Known Spyware Host	dallasegcomsoftware.com
-Known Spyware Host	coderpacassociateskids.com
-Known Spyware Host	olgiantfouruser.com
-Known Spyware Host	filmdestinationadvisorsincorporated.com
-Known Spyware Host	camsjesiteleaf.com
-Known Spyware Host	brothersluncharticlesido.com
-Known Spyware Host	zoneiasiteoh.com
-Known Spyware Host	caverosethingsdaily.com
-Known Spyware Host	ringfourreportpassion.com
-Known Spyware Host	dudefinancialjaxea.com
-Known Spyware Host	absolutestreettheorypush.com
-Known Spyware Host	onthegokingsarticlesgod.com
-Known Spyware Host	goguyslitsimple.com
-Known Spyware Host	ratevocomfortbeats.com
-Known Spyware Host	edgedraworsuite.com
-Known Spyware Host	shirtsdiallonglib.com
-Known Spyware Host	gridriverdynamicscareer.com
-Known Spyware Host	londonwaysoblack.com
-Known Spyware Host	legalkcamamode.com
-Known Spyware Host	foxzoomgorillastudy.com
-Known Spyware Host	orderareacallsconsultant.com
-Known Spyware Host	blogblogreportersafety.com
-Known Spyware Host	anomnitscoastal.com
-Known Spyware Host	scottfinancefriendsavings.com
-Known Spyware Host	customermatds.com
-Known Spyware Host	revmetricsevopharma.com
-Known Spyware Host	tattootheoryhappynumber.com
-Known Spyware Host	wiredtaowestcoasttk.com
-Known Spyware Host	gourmetcparoomsgoogle.com
-Known Spyware Host	omegalawyerhouses.com
-Known Spyware Host	multichipreviewwill.com
-Known Spyware Host	cityserversdubaiforum.com
-Known Spyware Host	cointhedailylogicbubble.com
-Known Spyware Host	coversbridalthinkdroid.com
-Known Spyware Host	treecondotwrev.com
-Known Spyware Host	accountingheadninegenius.com
-Known Spyware Host	downsecondnewsgirl.com
-Known Spyware Host	donbucketmauimemo.com
-Known Spyware Host	beattotalliciouslosangeles.com
-Known Spyware Host	resumeavenuestatusboy.com
-Known Spyware Host	clashroyale.com
-Known Spyware Host	therapyggmaxca.com
-Known Spyware Host	maxgames.com
-Known Spyware Host	negar.cc
-Known Spyware Host	wallstreetatlanticbooth.com
-Known Spyware Host	multimediadgyesmat.com
-Known Spyware Host	miniclip.com
-Known Spyware Host	rapid7.com
-Known Spyware Host	oscar.go.com
-Known Spyware Host	rbenglishnakedfactor.com
-Known Spyware Host	idosmartscaptecno.com
-Known Spyware Host	totallypizzageeksngo.com
-Known Spyware Host	elgasfmsurf.com
-Known Spyware Host	cellreferenceretirement.com
-Known Spyware Host	museaddselling.com
-Known Spyware Host	singleclockgreekter.com
-Known Spyware Host	creditempireamerican.com
-Known Spyware Host	bluetronsw.com
-Known Spyware Host	binarynerdeastmo.com
-Known Spyware Host	xxcrewexoengine.com
-Known Spyware Host	aniproxysafewebdesign.com
-Known Spyware Host	leaplockerport.com
-Known Spyware Host	iatampabuddybanner.com
-Known Spyware Host	manpowergianttwisted.com
-Known Spyware Host	www-searches.com
-Known Spyware Host	essentialllcfabricfame.com
-Known Spyware Host	remotewaptrperks.com
-Known Spyware Host	icpandadiaculture.com
-Known Spyware Host	vietnamnewjerseypigluxe.com
-Known Spyware Host	memberthatshopportland.com
-Known Spyware Host	eventdresskabro.com
-Known Spyware Host	easttapratecities.com
-Known Spyware Host	brainspartwarefrance.com
-Known Spyware Host	bubbleexpont.com
-Known Spyware Host	cmstoowirelessfacts.com
-Known Spyware Host	tropicalmovementarticlekc.com
-Known Spyware Host	hostscrunchphonemanager.com
-Known Spyware Host	apspicebirdextra.com
-Known Spyware Host	scannerwordsicearth.com
-Known Spyware Host	roboindustriespotranking.com
-Known Spyware Host	hragainmatescast.com
-Known Spyware Host	xpressmencampuspicture.com
-Known Spyware Host	pgndvnpod.com
-Known Spyware Host	afcnsfpd.com
-Known Spyware Host	irandigitalfivestarru.com
-Known Spyware Host	ndwidecaltrips.com
-Known Spyware Host	swexcellentsnetlg.com
-Known Spyware Host	realhotauctionquote.com
-Known Spyware Host	portnhchurchfit.com
-Known Spyware Host	reliefleadsgeneration.com
-Known Spyware Host	queenknowledgeblocksqatar.com
-Known Spyware Host	digitalforfreecomputer.com
-Known Spyware Host	pgchemdocparadise.com
-Known Spyware Host	hoodapepicft.com
-Known Spyware Host	nevadaaustrategyengineer.com
-Known Spyware Host	debtfullrealityleisure.com
-Known Spyware Host	fulroomsmoothplanning.com
-Known Spyware Host	labelsmultimediablutable.com
-Known Spyware Host	affiliateframeeaglobal.com
-Known Spyware Host	srcultureserveryellow.com
-Known Spyware Host	mjspecialsiwebadvisors.com
-Known Spyware Host	trendsvoicenortherncountry.com
-Known Spyware Host	rmhhtypevip.com
-Known Spyware Host	developmentfluidramoil.com
-Known Spyware Host	legalkiteafricanevery.com
-Known Spyware Host	prosonopenpainting.com
-Known Spyware Host	droidfacesfxtours.com
-Known Spyware Host	clubsdfgoldof.com
-Known Spyware Host	econocartoontecnoid.com
-Known Spyware Host	threadswatchesnzalien.com
-Known Spyware Host	mobreaderchurchgreen.com
-Known Spyware Host	coachanimeevolutioneverything.com
-Known Spyware Host	ecteaauctionvault.com
-Known Spyware Host	placestealthmbsharp.com
-Known Spyware Host	animalfotopcfi.com
-Known Spyware Host	iowabeammysocial.com
-Known Spyware Host	lightassociatesberlin.com
-Known Spyware Host	alternativecolourfruitfb.com
-Known Spyware Host	forumprizecookiesphere.com
-Known Spyware Host	tradefinancecertifiedgroove.com
-Known Spyware Host	studioshybridiaaudit.com
-Known Spyware Host	midwestmentorinvestmentstore.com
-Known Spyware Host	bullhostingprizesim.com
-Known Spyware Host	foneinternetidsub.com
-Known Spyware Host	psiphontoday.com
-Known Spyware Host	fotocollegehavenband.co
-Known Spyware Host	frontberrygraphicafter.com
-Known Spyware Host	dxmetaarkvegas.com
-Known Spyware Host	gameprimeeggsplus.com
-Known Spyware Host	danwebhostingblackwell.com
-Known Spyware Host	zebrametalmadnesscast.com
-Known Spyware Host	creditcardintelliworldofflow.com
-Known Spyware Host	speakjsscreenin.com
-Known Spyware Host	leagueintelgymgrab.com
-Known Spyware Host	scanspotvermonteducation.com
-Known Spyware Host	anywherespaingr.com
-Known Spyware Host	affiliateaddgarage.com
-Known Spyware Host	meteor.com
-Known Spyware Host	comicsfingerdayag.com
-Known Spyware Host	hopegraphicfschinese.com
-Known Spyware Host	kidzsupplyphototelecom.com
-Known Spyware Host	nycmerchantneedsdiy.com
-Known Spyware Host	launchfaqworthtoyou.com
-Known Spyware Host	studybritishresourcesaction.com
-Known Spyware Host	viewsaddsiliconhelper.com
-Known Spyware Host	profitssmsdirectoryzones.com
-Known Spyware Host	mlrvyesshield.com
-Known Spyware Host	incrediblemenurentalfone.com
-Known Spyware Host	viewsshiftcruiseant.com
-Known Spyware Host	ixmemberhairproducts.com
-Known Spyware Host	handjjsellinggold.com
-Known Spyware Host	magazineoutestatelottery.com
-Known Spyware Host	scirbsavictory.com
-Known Spyware Host	babymyownnfcuniversal.com
-Known Spyware Host	markserverhyperratings.com
-Known Spyware Host	pmswitchbdviewer.com
-Known Spyware Host	rioearweeklyforest.com
-Known Spyware Host	sunfrenchnavibc.com
-Known Spyware Host	weddingcomicsbenflyer.com
-Known Spyware Host	plreciperevan.com
-Known Spyware Host	towererobeamface.com
-Known Spyware Host	tickettypelucidpm.com
-Known Spyware Host	nanoadvisoravatarinternetmarketing.com
-Known Spyware Host	tapaybicyclepond.com
-Known Spyware Host	tagorangesslonestar.com
-Known Spyware Host	junkieexoticmotostrong.com
-Known Spyware Host	flowcentreartistjourney.com
-Known Spyware Host	mafiawatchmensweet.com
-Known Spyware Host	mathsafetyprofitfreak.com
-Known Spyware Host	ttdogmdwisconsin.com
-Known Spyware Host	www-searches.com
-Known Spyware Host	joballcallsegypt.com
-Known Spyware Host	riskboxescalgaryevolution.com
-Known Spyware Host	ticketnakedwefit.com
-Known Spyware Host	imneurobroads.com
-Known Spyware Host	wonderextremeruhero.com
-Known Spyware Host	vegasguidessoccermg.com
-Known Spyware Host	agegraphiclitphil.com
-Known Spyware Host	takelesitewords.com
-Known Spyware Host	sugarilovetattooam.com
-Known Spyware Host	jladmingurusvietnam.com
-Known Spyware Host	ceorechibroad.com
-Known Spyware Host	miniclip.com
-Known Spyware Host	beanmybestkingsspain.com
-Known Spyware Host	junkiesexpressgotlightning.com
-Known Spyware Host	thinkmeddeluxebaby.com
-Known Spyware Host	leafemeggwise.com
-Known Spyware Host	appleholidaywallstreetsoccer.com
-Known Spyware Host	zzbuckettownrock.com
-Known Spyware Host	smoothvoicesjsec.com
-Known Spyware Host	windbureauprefile.com
-Known Spyware Host	purchasetagoldcancer.com
-Known Spyware Host	kidxxdrinkfight.com
-Known Spyware Host	mmgmcypruscross.com
-Known Spyware Host	thisisodoptionzz.com
-Known Spyware Host	newyorkistportableprecision.com
-Known Spyware Host	biocafefitme.com
-Known Spyware Host	mmprofessorfilemiles.com
-Known Spyware Host	bargainintelligencelistonweb.com
-Known Spyware Host	journaldfwheritageelectric.com
-Known Spyware Host	massymachinebeam.com
-Known Spyware Host	trainerwavesgpnot.com
-Known Spyware Host	salonunolevelen.com
-Known Spyware Host	freeexperiencelightningcat.com
-Known Spyware Host	recreviewsowlho.com
-Known Spyware Host	perksimaginetownre.com
-Known Spyware Host	d19ya6dk74n9uf.cloudfront.net
-Known Spyware Host	a104270.secure.miisolutions.net
-Known Spyware Host	tag.navdmp.comhani
-Known Spyware Host	50tl.net
-Known Spyware Host	ad5.eu
-Known Spyware Host	ad7.biz
-Known Spyware Host	adfe.es
-Known Spyware Host	adf.ly
-Known Spyware Host	al.ly
-Known Spyware Host	admy.link
-Known Spyware Host	adyou.m
-Known Spyware Host	bc.vc
-Known Spyware Host	binbox.io
-Known Spyware Host	clk.im
-Known Spyware Host	coinurl.com
-Known Spyware Host	fitshr.com
-Known Spyware Host	fur.ly
-Known Spyware Host	goo.gl
-Known Spyware Host	itw.me
-Known Spyware Host	linkbucks.com
-Known Spyware Host	link.im
-Known Spyware Host	linkshrink.net
-Known Spyware Host	links.st
-Known Spyware Host	mije.net
-Known Spyware Host	nubrec.com
-Known Spyware Host	ouo.io
-Known Spyware Host	ow.ly
-Known Spyware Host	pornearn.com
-Known Spyware Host	p.pw
-Known Spyware Host	protect.re
-Known Spyware Host	shink.in
-Known Spyware Host	shorte.st
-Known Spyware Host	smarturl.it
-Known Spyware Host	stumbleupon.com
-Known Spyware Host	tinyarrows.com
-Known Spyware Host	tiny.cc
-Known Spyware Host	urlcash.net
-Known Spyware Host	x18.eu
-Known Spyware Host	xtendadvert.com
-Known Spyware Host	microsofteventoffice.com
-Known Spyware Host	directorio-w.com
-Known Spyware Host	yeabests.cc
-Known Spyware Host	S2.symcb.com
-Known Spyware Host	maroco.redirectme.net
-Known Spyware Host	maroco.myq-see.com
-Known Spyware Host	maroco.linkpc.net
-Known Spyware Host	futureinterest.org
-Known Spyware Host	pumaskill.com
-Known Spyware Host	vassg141.ocsp.omniroot.com
-Known Spyware Host	urchintelemetry.com
-Known Spyware Host	disorderstatus.ru
-Known Spyware Host	differentia.ru
-Known Spyware Host	bws3v7zh.ru
-Known Spyware Host	xtra1.gpsonextra.net
-Known Spyware Host	2s5m19yk.ru
-Known Spyware Host	groot-cdn.com
-Known Spyware Host	vestacp.com
-Known Spyware Host	domainsubmit.ru
-Known Spyware Host	nincsmail.com
-Known Spyware Host	viabcp.com
-Known Spyware Host	atributos.duckdns.org
-Known Spyware Host	frerusdimannsia.com
-Known Spyware Host	tandugolastsp.com
-Known Spyware Host	tontbetleftun.com
-Known Spyware Host	nagirlstylast.com
-Known Spyware Host	roponwithro.com
-Known Spyware Host	widdit.com
-Known Spyware Host	searchcompletion.com
-Known Spyware Host	certified-toolbar.com
-Known Spyware Host	complitly.com
-Known Spyware Host	newhometab.com
-Known Spyware Host	dtinstaller.com
-Known Spyware Host	chipinstaller.com
-Known Spyware Host	homebase-apps.com
-Known Spyware Host	helperbar.com
-Known Spyware Host	22find.com
-Known Spyware Host	qvo6.com
-Known Spyware Host	hotstartsearch.com
-Known Spyware Host	dosearches.com
-Known Spyware Host	portaldosites.com
-Known Spyware Host	v9.com
-Known Spyware Host	22apple.com
-Known Spyware Host	delta-homes.com
-Known Spyware Host	nationzoom.com
-Known Spyware Host	do-search.com
-Known Spyware Host	awesomehp.com
-Known Spyware Host	aartemis.com
-Known Spyware Host	sweet-page.com
-Known Spyware Host	webssearches.com
-Known Spyware Host	key-find.com
-Known Spyware Host	qone8.com
-Known Spyware Host	omiga-plus.com
-Known Spyware Host	www-search.net
-Known Spyware Host	safesear.ch
-Known Spyware Host	istartsurf.com
-Known Spyware Host	istartpageing.com
-Known Spyware Host	hhtxnet.com
-Known Spyware Host	batidoraporno.com
-Known Spyware Host	portalimageneschulas.com
-Known Spyware Host	musicaideal.net
-Known Spyware Host	juegoskizi3.net
-Known Spyware Host	wibbitz.com
-Known Spyware Host	smartadserver.com
-Known Spyware Host	player.ooyala.com
-Known Spyware Host	static.chartbeat.com
-Known Spyware Host	chartbeast.com
-Known Spyware Host	merca.net.co
-Known Spyware Host	wanderburst.com
-Known Spyware Host	ganadineroconencuestas.com
-Known Spyware Host	fast.ynna.biz
-Known Spyware Host	shcool.vf1.us
-Known Spyware Host	dailyanimalgames.com
-Known Spyware Host	android.apps.plus
-Known Spyware Host	ospserver.net
-Known Spyware Host	ivpaste.com
-Known Spyware Host	cloudzer.net
-Known Spyware Host	filerio.in
-Known Spyware Host	meneame.net
-Known Spyware Host	staticxx.facebook.com
-Known Spyware Host	portal.fb.com
-Known Spyware Host	ak.fbcdn.net
-Known Spyware Host	profile.ak.fbcdn.net
-Known Spyware Host	edxutilities.click
-Known Spyware Host	tubemogul.com
-Known Spyware Host	jotformeu.com
-Known Spyware Host	mimp3s.one
-Known Spyware Host	videoschistososdivertidos.com
-Known Spyware Host	ugamezone.com
-Known Spyware Host	juegosfriv.com
-Known Spyware Host	inside-shops.com
-Known Spyware Host	naver.jp
-Known Spyware Host	yellowbooster.info
-Known Spyware Host	native.ad
-Known Spyware Host	jamie.cloud.virtualmin.com
-Known Spyware Host	vhost.sourceforge.net
-Known Spyware Host	bl-1.com
-Known Spyware Host	mailstat.us
-Known Spyware Host	via.intercom.io
-Known Spyware Host	hsms06.com
-Known Spyware Host	rjmetrics.com
-Known Spyware Host Malspam	46.105.218.106
-Known Spyware Host Malspam.1	185.75.46.13
-Known Spyware Host Malspam.2	104.27.188.52
-Known Spyware Host Malspam.3	54.192.130.188
-Known Spyware Host Malspam.4	?xml-andre.ffranco@uol.com.br%0D
-Known Spyware Host Malspam.5	Unedrcovertoolz0.zip
-Known Spyware Host Malspam.6	sempre/notify.php
-Known Spyware Host Malspam.7	com=0D
-Known Spyware Host Malspam.8	pdf-douglassantos@detran.es.gov.br=0D
-Known Spyware Host Malspam.9	xml-douglassantos@detran.es.gov.br=0D
-Known Spyware Host Malspam.10	muabantiengame.com
-Known Spyware Host Malspam.11	www.security-support.tech
-Known Spyware Host Malspam.12	47.91.76.69
-Known Ransomware Host	slater.chat.ru
-Known Ransomware Host	hundeschulegoerg.de
-Known Ransomware Host	capitalsend.info
-Known Ransomware Host	investmentreply.info
-Known Ransomware Host	pure-send.com
-Known Ransomware Host	yourspamshield.com
-Known Ransomware Host	spamerlist.com
-Known Ransomware Host	smartanleger.net
-Known Ransomware Host	sharehold.info
-Known Ransomware Host	sharefinancial.info
-Known Ransomware Host	sharefinance.info
-Known Ransomware Host	finstock.info
-Known Ransomware Host	finreply.info
-Known Ransomware Host	fininvest.info
-Known Ransomware Host	communicationsdigest.com
-Known Ransomware Host	anlegersmart.com
-Known Ransomware Host	181.224.139.64
-Known Ransomware Host	74.208.147.73
-Known Ransomware Host	91.121.74.154
-Known Ransomware Host	stjoeschool.org
-Known Ransomware Host	vaippaandedicators.reducemycard.com
-Known Ransomware Host	185.118.164.42
-Known Ransomware Host	85.25.160.124
-Known Ransomware Host	192.169.189.167
-Known Ransomware Host	192.169.190.97
-Known Ransomware Host	209.126.120.8
-Known Ransomware Host	litigators.esteroscreen.com
-Known Ransomware Host	reikleivn-azarashi.orlandohomesbydevito.com
-Known Ransomware Host	reikleivn-azarashi.orlandohomesbydevito.com
-Known Ransomware Host	frageboegen-plletyksin.breastcanceroutreach.com
-Known Ransomware Host	candidulumbestuurlijk.newlandsierrarealestate.com
-Known Ransomware Host	mcimaildmz.dinnerplate.co.uk
-Known Ransomware Host	et.jacquieleebrasil.com.br
-Known Ransomware Host	kw.projetoraizes.com.br
-Known Ransomware Host	host.vivialvarez.com.ar
-Known Ransomware Host	85.25.107.126
-Known Ransomware Host	207.182.149.14
-Known Ransomware Host	178.32.131.248
-Known Ransomware Host	178.32.131.185
-Known Ransomware Host	85.25.107.127
-Known Ransomware Host	188.165.163.227
-Known Ransomware Host	93.190.143.211
-Known Ransomware Host	45.56.117.118
-Known Ransomware Host	144.76.133.38
-Known Ransomware Host	23.88.147.108
-Known Ransomware Host	54.186.95.29
-Known Ransomware Host	pationare.bit
-Known Ransomware Host	settledness.ru
-Known Ransomware Host	dutchcreekresort.com
-Known Ransomware Host	185.141.25.207
-Known Ransomware Host	79.110.251.102
-Known Ransomware Host	185.141.25.207
-Known Ransomware Host	mannyshrag.com
-Known Ransomware Host	ianusshale.net
-Known Ransomware Host	za95uur.ag0clk.top
-Known Ransomware Host	activaclinics.com
-Known Ransomware Host	195.123.209.74
-Known Ransomware Host	185.141.25.234
-Known Ransomware Host	h01wi.d7riwiu.top
-Known Ransomware Host	miligratonylaonella.com
-Known Ransomware Host	emploiadomicile.info
-Known Ransomware Host	185.141.25.234
-Known Ransomware Host	213.252.244.121
-Known Ransomware Host	kasdima.top
-Known Ransomware Host	scadradio.org
-Known Ransomware Host	176.223.111.82
-Known Ransomware Host	po1289k.kremalopsi.gq
-Known Ransomware Host	104.238.131.117
-Known Ransomware Host	loremipsumdolorsitamet.pw
-Known Ransomware Host	82.165.174.205
-Known Ransomware Host	institut-angeetbeaute.fr
-Known Ransomware Host	208.67.222.222
-Known Ransomware Host	resolver1.opendns.com
-Known Ransomware Host	198.105.254.228
-Known Ransomware Host	voligon.cn
-Known Malware Host Hanictor.1	185.86.79.93
-Known Malware Host Hanictor.2	47.91.78.8
-Known Malware Host Hanictor.3	137.74.176.54
-Known Malware Host Hanictor.4	47.91.90.51
+Known Spyware Host:	dreampark.co.jp
+Known Spyware Host:	enigmasoftwaregroup.com
+Known Spyware Host:	healthycomputerclub.com
+Known Spyware Host:	spyware.junglebee.com
+Known Spyware Host:	the-spyware-review.com
+Known Spyware Host:	onlinepcfix.com
+Known Spyware Host:	spywarezapper.com
+Known Spyware Host:	noadware.net
+Known Spyware Host:	spy-deleter.com
+Known Spyware Host:	spyblocs.com
+Known Spyware Host:	neosoftlabs.com
+Known Spyware Host:	trojan-scan.com
+Known Spyware Host:	suprnova.com
+Known Spyware Host:	e-spyware.com
+Known Spyware Host:	adware.storesbiz.com
+Known Spyware Host:	freespywarescan.org
+Known Spyware Host:	nuker.com
+Known Spyware Host:	nospyware.info
+Known Spyware Host:	mambomarket.com
+Known Spyware Host:	free-spyware-scan.com
+Known Spyware Host:	spyburn.palsol.biz
+Known Spyware Host:	comparespywareremovers.com
+Known Spyware Host:	evidence-eliminator.com
+Known Spyware Host:	eblocs.com
+Known Spyware Host:	spywareremover.com
+Known Spyware Host:	login.tracking101.com
+Known Spyware Host:	spyforce.com
+Known Spyware Host:	spywareinfoooo.com
+Known Spyware Host:	com-install.com
+Known Spyware Host:	stop-sign.com
+Known Spyware Host:	netspyprotector.com
+Known Spyware Host:	1clickspyclean.com
+Known Spyware Host:	pcbugdoctor.com
+Known Spyware Host:	ad-eliminator.com
+Known Spyware Host:	hotbar.com
+Known Spyware Host:	spywarenuker.com
+Known Spyware Host:	spybot.com
+Known Spyware Host:	compareandreview.com
+Known Spyware Host:	interesoft.com
+Known Spyware Host:	adwarespy.com
+Known Spyware Host:	paretologic.com
+Known Spyware Host:	privacysoftwarereport.com
+Known Spyware Host:	smart-security.info
+Known Spyware Host:	trekblue.com
+Known Spyware Host:	spybot.com-xp.com
+Known Spyware Host:	adwareremovergold.com
+Known Spyware Host:	adwarespywareremoval.com
+Known Spyware Host:	online-survival-lab.com
+Known Spyware Host:	mediataskmaster.com
+Known Spyware Host:	mp3advance.com
+Known Spyware Host:	noadware.com
+Known Spyware Host:	surfsecret.com
+Known Spyware Host:	spybloc.com
+Known Spyware Host:	spywareassassin.com
+Known Spyware Host:	revieweasy.com/spy/
+Known Spyware Host:	anti-adware.net
+Known Spyware Host:	spybot-spyware-removal.com
+Known Spyware Host:	nontoxic-internet.com
+Known Spyware Host:	privacytools2004.com
+Known Spyware Host:	mp3downloadhq.com
+Known Spyware Host:	anti-spyware-review.com
+Known Spyware Host:	spywarereview.info
+Known Spyware Host:	freedownloadhq.com
+Known Spyware Host:	theshopontop.com
+Known Spyware Host:	incentiverewardcenter.com
+Known Spyware Host:	adaware.info
+Known Spyware Host:	adremovergold.com
+Known Spyware Host:	mp3downloading.com
+Known Spyware Host:	spybeware.com
+Known Spyware Host:	trekdata.com
+Known Spyware Host:	ratespywareremovers.com
+Known Spyware Host:	spywarehelp.net
+Known Spyware Host:	1.primaryads.com
+Known Spyware Host:	uninstallxupiter.com
+Known Spyware Host:	trackzapper.com
+Known Spyware Host:	xeec.com
+Known Spyware Host:	hop.clickbank.net
+Known Spyware Host:	techlistings.net
+Known Spyware Host:	removespyware.ru
+Known Spyware Host:	free-adware-scan.com
+Known Spyware Host:	spywareonline.org
+Known Spyware Host:	service.netmeans.com
+Known Spyware Host:	myfilesharing.com
+Known Spyware Host:	adwarereport.com
+Known Spyware Host:	freepcscan.com
+Known Spyware Host:	scanspyware.net
+Known Spyware Host:	spywareremovercomparisons.com
+Known Spyware Host:	spywarethis.com
+Known Spyware Host:	spyware-removers.org
+Known Spyware Host:	spykillerdownload.com
+Known Spyware Host:	realspyerase.biz
+Known Spyware Host:	lsjmp.com
+Known Spyware Host:	getmetickets.net
+Known Spyware Host:	freedownloadtools.com
+Known Spyware Host:	antispyware.com
+Known Spyware Host:	spywarehub.com
+Known Spyware Host:	software-comparisons.com
+Known Spyware Host:	spyware-adware-download.com
+Known Spyware Host:	spydetector.net
+Known Spyware Host:	spyware.net
+Known Spyware Host:	adware-remover.net
+Known Spyware Host:	spy-hunter-detector.com
+Known Spyware Host:	pcdocrx.net
+Known Spyware Host:	bulletproofsoft.com
+Known Spyware Host:	spyhunter.com
+Known Spyware Host:	spyads.com
+Known Spyware Host:	good-offers.com
+Known Spyware Host:	hijack-this.net
+Known Spyware Host:	2004spywareremovers.com
+Known Spyware Host:	rizalsoftware.com
+Known Spyware Host:	megalithusa.com
+Known Spyware Host:	nospyx.com
+Known Spyware Host:	likesurfing.com
+Known Spyware Host:	spy-ware-remover.com
+Known Spyware Host:	music-sharing.net
+Known Spyware Host:	adwaresafe.com
+Known Spyware Host:	spywareremovalutilities.com
+Known Spyware Host:	spywareblaster.com
+Known Spyware Host:	uant.net
+Known Spyware Host:	bittorrents.com
+Known Spyware Host:	spywarecrusher.com
+Known Spyware Host:	spywarestormer.com
+Known Spyware Host:	r.rd05.com
+Known Spyware Host:	toptenreviews.com
+Known Spyware Host:	spyware.speedylearning.com
+Known Spyware Host:	sg08.biz
+Known Spyware Host:	spywareremoversreview.com
+Known Spyware Host:	spywarebegone.com
+Known Spyware Host:	spyspotter.com
+Known Spyware Host:	easyerase.com
+Known Spyware Host:	spywareremovalauthority.com
+Known Spyware Host:	66.33.0.35
+Known Spyware Host:	pcspytool.com
+Known Spyware Host:	palsol.com
+Known Spyware Host:	antispyware.neonant.com
+Known Spyware Host:	spywareboard.com
+Known Spyware Host:	freedownloadzone.com
+Known Spyware Host:	add-aware.com
+Known Spyware Host:	spykiller.com
+Known Spyware Host:	adwarexeliminator.com
+Known Spyware Host:	spyinator.com
+Known Spyware Host:	errornuker.com
+Known Spyware Host:	x.cb.kount.com
+Known Spyware Host:	iteens.com
+Known Spyware Host:	spy-review.com
+Known Spyware Host:	spyvest.com
+Known Spyware Host:	mymusicinc.com
+Known Spyware Host:	free-web-browsers.com
+Known Spyware Host:	bhozapper.com
+Known Spyware Host:	spycleaner.net
+Known Spyware Host:	spywarexterminator.com
+Known Spyware Host:	1automationwiz.com
+Known Spyware Host:	achtungachtung.com
+Known Spyware Host:	5spynetwork.com
+Known Spyware Host:	swanksoft.com
+Known Spyware Host:	smartcomparisons.com
+Known Spyware Host:	safespy.net
+Known Spyware Host:	spywareremove.org
+Known Spyware Host:	topspywareremovers.com
+Known Spyware Host:	consumerincentivepromotions.com
+Known Spyware Host:	music-movie-downloads.com
+Known Spyware Host:	bittorrentsoftwaredownload.com
+Known Spyware Host:	360share.com
+Known Spyware Host:	switchvpn.net
+Known Spyware Host:	ipvanish.com
+Known Spyware Host:	goldenfrog.com
+Known Spyware Host:	pq-chat.com
+Known Spyware Host:	protonmail.com
+Known Spyware Host:	wickr.com
+Known Spyware Host:	autohideip.com
+Known Spyware Host:	easy-hideip.com
+Known Spyware Host:	hideipprivacy.com
+Known Spyware Host:	platinumhideip.com
+Known Spyware Host:	quick-hide-ip.com
+Known Spyware Host:	real-hide-ip.com
+Known Spyware Host:	superhideip.com
+Known Spyware Host:	utrasurf.us
+Known Spyware Host:	webproxy.stealthy.co
+Known Spyware Host:	webproxy.uach.cl
+Known Spyware Host:	freebrowsing.tecnoent.com
+Known Spyware Host:	onewebproxy.com
+Known Spyware Host:	proxypy.org
+Known Spyware Host:	poxy.info
+Known Spyware Host:	web.leue.biz
+Known Spyware Host:	unblockyoutube.xyz
+Known Spyware Host:	surf-proxy.smoz.us
+Known Spyware Host:	geti2p.net
+Known Spyware Host:	bitvise.com
+Known Spyware Host:	privatevpn.com
+Known Spyware Host:	openvpn.net
+Known Spyware Host:	easy-hide-ip.com
+Known Spyware Host:	usessh001.com
+Known Spyware Host:	telex.cc
+Known Spyware Host:	hotspotshield.net
+Known Spyware Host:	ultrasurfing.com
+Known Spyware Host:	ultrasurf.us
+Known Spyware Host:	mediahint.com
+Known Spyware Host:	zenmate.com
+Known Spyware Host:	betternet.co
+Known Spyware Host:	expressvpn.com
+Known Spyware Host:	tunnelbear.com
+Known Spyware Host:	privateinternetaccess.com
+Known Spyware Host:	dit-inc.us
+Known Spyware Host:	freenetproject.org
+Known Spyware Host:	hotspotshield.com
+Known Spyware Host:	hsselite.com
+Known Spyware Host:	live-k33.com
+Known Spyware Host:	rltnsk.biz
+Known Spyware Host:	scammed.by
+Known Spyware Host:	eiserver.com
+Known Spyware Host:	studyaway.ru
+Known Spyware Host:	yakuzarc.com
+Known Spyware Host:	wickercentral.com
+Known Spyware Host:	bevanfoun.agencydation.org
+Known Spyware Host:	cctvhotdeals.com
+Known Spyware Host:	cdduplication.ie
+Known Spyware Host:	celtichr.com
+Known Spyware Host:	datagravity.com
+Known Spyware Host:	dyfedpowys-helphub.org.uk
+Known Spyware Host:	ep-surveillance.com
+Known Spyware Host:	filtersplusfl.com
+Known Spyware Host:	funlux.com
+Known Spyware Host:	holtfarmholidays.com
+Known Spyware Host:	jans.li
+Known Spyware Host:	miller-engineers.com
+Known Spyware Host:	oegllc.net
+Known Spyware Host:	royaldetail.net
+Known Spyware Host:	scammed.by
+Known Spyware Host:	stonecrestfurniture.com
+Known Spyware Host:	virtequip.com
+Known Spyware Host:	voipdistributor.net
+Known Spyware Host:	wcscoiledtubing.com
+Known Spyware Host:	whq.org.uk
+Known Spyware Host:	wickercentral.com
+Known Spyware Host:	corppki.com
+Known Spyware Host:	hotfrog.at
+Known Spyware Host:	hotfrog.ca
+Known Spyware Host:	hotfrog.ch
+Known Spyware Host:	hotfrog.cn
+Known Spyware Host:	hotfrog.co.uk
+Known Spyware Host:	hotfrog.co.za
+Known Spyware Host:	hotfrog.com
+Known Spyware Host:	hotfrog.de
+Known Spyware Host:	hotfrog.fr
+Known Spyware Host:	hotfrog.hk
+Known Spyware Host:	hotfrog.it
+Known Spyware Host:	hotfrog.jp
+Known Spyware Host:	hotfrog.pt
+Known Spyware Host:	sydneyhillsallergy.com.au
+Known Spyware Host:	visitpyrmontultimo.com.au
+Known Spyware Host:	games-assets.xyz
+Known Spyware Host:	visitpyrmontultimo.com.au
+Known Spyware Host:	aptrixx.com
+Known Spyware Host:	bestonlinebigdeal.xyz
+Known Spyware Host:	bmwservis-izmir.com
+Known Spyware Host:	bykp36.gq
+Known Spyware Host:	cinemauae.com
+Known Spyware Host:	krbmechanical.ca
+Known Spyware Host:	pausetv.com.tr
+Known Spyware Host:	saylegitimatepaydayloans.top
+Known Spyware Host:	sr22dwi.com
+Known Spyware Host:	thebestfurnitureidea.tk
+Known Spyware Host:	torrentom-skachat-be
+Known Spyware Host:	splatno-17.ml
+Known Spyware Host:	uneasinesshelpwith.xyz
+Known Spyware Host:	yd7333.com
+Known Spyware Host:	psiphon3.com
+Known Spyware Host:	psiphon.ca
+Known Spyware Host:	iqpkvtcab.info
+Known Spyware Host:	oumedfu.info
+Known Spyware Host:	cxvnbcaj.info
+Known Spyware Host:	plusisokioskinfinity.com
+Known Spyware Host:	emailalohacanvasschools.com
+Known Spyware Host:	bridgetoneshotelregistry.com
+Known Spyware Host:	assistantqrparadisemls.com
+Known Spyware Host:	campbeachpressfunny.com
+Known Spyware Host:	placelifestylealwaysnetworks.com
+Known Spyware Host:	growcleancopyis.com
+Known Spyware Host:	bidssheetcitizennovo.com
+Known Spyware Host:	musicaldeskhorsecaddy.com
+Known Spyware Host:	ibmetroleisuretree.com
+Known Spyware Host:	meteradventurebinhospital.com
+Known Spyware Host:	tastyshoesdtgf.com
+Known Spyware Host:	shinekarmaapartmentslot.com
+Known Spyware Host:	beeradamnaside.com
+Known Spyware Host:	flowsilverwillnova.com
+Known Spyware Host:	linestrustmdsounds.com
+Known Spyware Host:	chooserocketcanadianee.com
+Known Spyware Host:	conferencepierandomvitamin.com
+Known Spyware Host:	ritemagicbuzzhunt.com
+Known Spyware Host:	portlandapplehsdistribution.com
+Known Spyware Host:	profilespidermicreative.com
+Known Spyware Host:	mobileninekeeperauthority.com
+Known Spyware Host:	webdesignthisisundermodel.com
+Known Spyware Host:	buttonoklmclip.com
+Known Spyware Host:	rawvidglasscreations.com
+Known Spyware Host:	electronicscontactsrobotafri.com
+Known Spyware Host:	artofapparelcoastness.com
+Known Spyware Host:	oilhekarmaepi.com
+Known Spyware Host:	feedvoxnjhop.com
+Known Spyware Host:	swimasstageafrican.com
+Known Spyware Host:	leatherwestaudioomg.com
+Known Spyware Host:	walkgzmysticra.com
+Known Spyware Host:	glambingjumpsteps.com
+Known Spyware Host:	lcbandstopscandy.com
+Known Spyware Host:	headsinglesfilmsvision.com
+Known Spyware Host:	recordamacirclesoup.com
+Known Spyware Host:	mobjcopyvo.com
+Known Spyware Host:	associationhomesadamcampus.com
+Known Spyware Host:	spidermainfacebookrus.com
+Known Spyware Host:	texasrayfivemw.com
+Known Spyware Host:	colorscompanybeddiscount.com
+Known Spyware Host:	sourcingphoenixbondmc.com
+Known Spyware Host:	viewerduckcalifornianeeds.com
+Known Spyware Host:	trackertheperfectchatcamp.com
+Known Spyware Host:	ninecablepageskindle.com
+Known Spyware Host:	boldbureaucomicbang.com
+Known Spyware Host:	bobparawineideas.com
+Known Spyware Host:	equityrentalaglegacy.com
+Known Spyware Host:	youallaceunlimited.com
+Known Spyware Host:	driverindiabidom.com
+Known Spyware Host:	gamerextremewallgot.com
+Known Spyware Host:	monstersngbarerating.com
+Known Spyware Host:	weeklycosmohausadv.com
+Known Spyware Host:	classifiedstradingminibridal.com
+Known Spyware Host:	coutureexconnectionsforlife.com
+Known Spyware Host:	homeberryboxking.com
+Known Spyware Host:	formuladivasharkforkids.com
+Known Spyware Host:	internetrentgallerycove.com
+Known Spyware Host:	tourfixstatusstar.com
+Known Spyware Host:	repcoursewowodd.com
+Known Spyware Host:	magicinteldigestground.com
+Known Spyware Host:	boulderszseagplus.com
+Known Spyware Host:	hugemadequietsf.com
+Known Spyware Host:	naturecggirlsable.com
+Known Spyware Host:	asiangetagamercompare.com
+Known Spyware Host:	ifrbdombusiness.com
+Known Spyware Host:	buzzcrosshotelwee.com
+Known Spyware Host:	forevercruiseevnm.com
+Known Spyware Host:	champvillamojogifts.com
+Known Spyware Host:	alliancecanvillasound.com
+Known Spyware Host:	ipadsharesinvestchic.com
+Known Spyware Host:	shoppinggalicevt.com
+Known Spyware Host:	graphicvinevinemint.com
+Known Spyware Host:	firekwikcollegemultimedia.com
+Known Spyware Host:	goldencharterdepotpure.com
+Known Spyware Host:	abcangelsgeniusgolden.com
+Known Spyware Host:	highwickedsailwc.com
+Known Spyware Host:	rainpentodaygame.com
+Known Spyware Host:	weedheatsportable.com
+Known Spyware Host:	nevadaboutiqueohioself.com
+Known Spyware Host:	tagscomputingpilotllc.com
+Known Spyware Host:	rateswebhostingkitchenprestige.com
+Known Spyware Host:	skwostarsleaf.com
+Known Spyware Host:	parkyooyouunderground.com
+Known Spyware Host:	thisuccommercialamerica.com
+Known Spyware Host:	dynamicdiamondrecpp.com
+Known Spyware Host:	simrealtimeweatherreg.com
+Known Spyware Host:	arpolicechurchdesignstudio.com
+Known Spyware Host:	whyroadcampusranch.com
+Known Spyware Host:	sidefailtrendyurl.com
+Known Spyware Host:	leaseweb.com
+Known Spyware Host:	urletconlynyc.com
+Known Spyware Host:	oneforestgearsaver.com
+Known Spyware Host:	twitterghnfcbingo.com
+Known Spyware Host:	bridaluuartsviet.com
+Known Spyware Host:	courseslemonmarketsresort.com
+Known Spyware Host:	moviesreportevemorning.com
+Known Spyware Host:	mydati.com
+Known Spyware Host:	yojobuxkitchen.com
+Known Spyware Host:	sinofficeentertainmentth.com
+Known Spyware Host:	zipleisurefansstyles.com
+Known Spyware Host:	losangelesgunraall.com
+Known Spyware Host:	solutiontrycapitalfy.com
+Known Spyware Host:	rusbaytapsplus.com
+Known Spyware Host:	gearagereport.com
+Known Spyware Host:	godkisssococ.com
+Known Spyware Host:	jwplayer.com
+Known Spyware Host:	deviantart.com
+Known Spyware Host:	electricstrategyclicksm.com
+Known Spyware Host:	qatarindofarmmanage.com
+Known Spyware Host:	dallasegcomsoftware.com
+Known Spyware Host:	coderpacassociateskids.com
+Known Spyware Host:	olgiantfouruser.com
+Known Spyware Host:	filmdestinationadvisorsincorporated.com
+Known Spyware Host:	camsjesiteleaf.com
+Known Spyware Host:	brothersluncharticlesido.com
+Known Spyware Host:	zoneiasiteoh.com
+Known Spyware Host:	caverosethingsdaily.com
+Known Spyware Host:	ringfourreportpassion.com
+Known Spyware Host:	dudefinancialjaxea.com
+Known Spyware Host:	absolutestreettheorypush.com
+Known Spyware Host:	onthegokingsarticlesgod.com
+Known Spyware Host:	goguyslitsimple.com
+Known Spyware Host:	ratevocomfortbeats.com
+Known Spyware Host:	edgedraworsuite.com
+Known Spyware Host:	shirtsdiallonglib.com
+Known Spyware Host:	gridriverdynamicscareer.com
+Known Spyware Host:	londonwaysoblack.com
+Known Spyware Host:	legalkcamamode.com
+Known Spyware Host:	foxzoomgorillastudy.com
+Known Spyware Host:	orderareacallsconsultant.com
+Known Spyware Host:	blogblogreportersafety.com
+Known Spyware Host:	anomnitscoastal.com
+Known Spyware Host:	scottfinancefriendsavings.com
+Known Spyware Host:	customermatds.com
+Known Spyware Host:	revmetricsevopharma.com
+Known Spyware Host:	tattootheoryhappynumber.com
+Known Spyware Host:	wiredtaowestcoasttk.com
+Known Spyware Host:	gourmetcparoomsgoogle.com
+Known Spyware Host:	omegalawyerhouses.com
+Known Spyware Host:	multichipreviewwill.com
+Known Spyware Host:	cityserversdubaiforum.com
+Known Spyware Host:	cointhedailylogicbubble.com
+Known Spyware Host:	coversbridalthinkdroid.com
+Known Spyware Host:	treecondotwrev.com
+Known Spyware Host:	accountingheadninegenius.com
+Known Spyware Host:	downsecondnewsgirl.com
+Known Spyware Host:	donbucketmauimemo.com
+Known Spyware Host:	beattotalliciouslosangeles.com
+Known Spyware Host:	resumeavenuestatusboy.com
+Known Spyware Host:	clashroyale.com
+Known Spyware Host:	therapyggmaxca.com
+Known Spyware Host:	maxgames.com
+Known Spyware Host:	negar.cc
+Known Spyware Host:	wallstreetatlanticbooth.com
+Known Spyware Host:	multimediadgyesmat.com
+Known Spyware Host:	miniclip.com
+Known Spyware Host:	rapid7.com
+Known Spyware Host:	oscar.go.com
+Known Spyware Host:	rbenglishnakedfactor.com
+Known Spyware Host:	idosmartscaptecno.com
+Known Spyware Host:	totallypizzageeksngo.com
+Known Spyware Host:	elgasfmsurf.com
+Known Spyware Host:	cellreferenceretirement.com
+Known Spyware Host:	museaddselling.com
+Known Spyware Host:	singleclockgreekter.com
+Known Spyware Host:	creditempireamerican.com
+Known Spyware Host:	bluetronsw.com
+Known Spyware Host:	binarynerdeastmo.com
+Known Spyware Host:	xxcrewexoengine.com
+Known Spyware Host:	aniproxysafewebdesign.com
+Known Spyware Host:	leaplockerport.com
+Known Spyware Host:	iatampabuddybanner.com
+Known Spyware Host:	manpowergianttwisted.com
+Known Spyware Host:	www-searches.com
+Known Spyware Host:	essentialllcfabricfame.com
+Known Spyware Host:	remotewaptrperks.com
+Known Spyware Host:	icpandadiaculture.com
+Known Spyware Host:	vietnamnewjerseypigluxe.com
+Known Spyware Host:	memberthatshopportland.com
+Known Spyware Host:	eventdresskabro.com
+Known Spyware Host:	easttapratecities.com
+Known Spyware Host:	brainspartwarefrance.com
+Known Spyware Host:	bubbleexpont.com
+Known Spyware Host:	cmstoowirelessfacts.com
+Known Spyware Host:	tropicalmovementarticlekc.com
+Known Spyware Host:	hostscrunchphonemanager.com
+Known Spyware Host:	apspicebirdextra.com
+Known Spyware Host:	scannerwordsicearth.com
+Known Spyware Host:	roboindustriespotranking.com
+Known Spyware Host:	hragainmatescast.com
+Known Spyware Host:	xpressmencampuspicture.com
+Known Spyware Host:	pgndvnpod.com
+Known Spyware Host:	afcnsfpd.com
+Known Spyware Host:	irandigitalfivestarru.com
+Known Spyware Host:	ndwidecaltrips.com
+Known Spyware Host:	swexcellentsnetlg.com
+Known Spyware Host:	realhotauctionquote.com
+Known Spyware Host:	portnhchurchfit.com
+Known Spyware Host:	reliefleadsgeneration.com
+Known Spyware Host:	queenknowledgeblocksqatar.com
+Known Spyware Host:	digitalforfreecomputer.com
+Known Spyware Host:	pgchemdocparadise.com
+Known Spyware Host:	hoodapepicft.com
+Known Spyware Host:	nevadaaustrategyengineer.com
+Known Spyware Host:	debtfullrealityleisure.com
+Known Spyware Host:	fulroomsmoothplanning.com
+Known Spyware Host:	labelsmultimediablutable.com
+Known Spyware Host:	affiliateframeeaglobal.com
+Known Spyware Host:	srcultureserveryellow.com
+Known Spyware Host:	mjspecialsiwebadvisors.com
+Known Spyware Host:	trendsvoicenortherncountry.com
+Known Spyware Host:	rmhhtypevip.com
+Known Spyware Host:	developmentfluidramoil.com
+Known Spyware Host:	legalkiteafricanevery.com
+Known Spyware Host:	prosonopenpainting.com
+Known Spyware Host:	droidfacesfxtours.com
+Known Spyware Host:	clubsdfgoldof.com
+Known Spyware Host:	econocartoontecnoid.com
+Known Spyware Host:	threadswatchesnzalien.com
+Known Spyware Host:	mobreaderchurchgreen.com
+Known Spyware Host:	coachanimeevolutioneverything.com
+Known Spyware Host:	ecteaauctionvault.com
+Known Spyware Host:	placestealthmbsharp.com
+Known Spyware Host:	animalfotopcfi.com
+Known Spyware Host:	iowabeammysocial.com
+Known Spyware Host:	lightassociatesberlin.com
+Known Spyware Host:	alternativecolourfruitfb.com
+Known Spyware Host:	forumprizecookiesphere.com
+Known Spyware Host:	tradefinancecertifiedgroove.com
+Known Spyware Host:	studioshybridiaaudit.com
+Known Spyware Host:	midwestmentorinvestmentstore.com
+Known Spyware Host:	bullhostingprizesim.com
+Known Spyware Host:	foneinternetidsub.com
+Known Spyware Host:	psiphontoday.com
+Known Spyware Host:	fotocollegehavenband.co
+Known Spyware Host:	frontberrygraphicafter.com
+Known Spyware Host:	dxmetaarkvegas.com
+Known Spyware Host:	gameprimeeggsplus.com
+Known Spyware Host:	danwebhostingblackwell.com
+Known Spyware Host:	zebrametalmadnesscast.com
+Known Spyware Host:	creditcardintelliworldofflow.com
+Known Spyware Host:	speakjsscreenin.com
+Known Spyware Host:	leagueintelgymgrab.com
+Known Spyware Host:	scanspotvermonteducation.com
+Known Spyware Host:	anywherespaingr.com
+Known Spyware Host:	affiliateaddgarage.com
+Known Spyware Host:	meteor.com
+Known Spyware Host:	comicsfingerdayag.com
+Known Spyware Host:	hopegraphicfschinese.com
+Known Spyware Host:	kidzsupplyphototelecom.com
+Known Spyware Host:	nycmerchantneedsdiy.com
+Known Spyware Host:	launchfaqworthtoyou.com
+Known Spyware Host:	studybritishresourcesaction.com
+Known Spyware Host:	viewsaddsiliconhelper.com
+Known Spyware Host:	profitssmsdirectoryzones.com
+Known Spyware Host:	mlrvyesshield.com
+Known Spyware Host:	incrediblemenurentalfone.com
+Known Spyware Host:	viewsshiftcruiseant.com
+Known Spyware Host:	ixmemberhairproducts.com
+Known Spyware Host:	handjjsellinggold.com
+Known Spyware Host:	magazineoutestatelottery.com
+Known Spyware Host:	scirbsavictory.com
+Known Spyware Host:	babymyownnfcuniversal.com
+Known Spyware Host:	markserverhyperratings.com
+Known Spyware Host:	pmswitchbdviewer.com
+Known Spyware Host:	rioearweeklyforest.com
+Known Spyware Host:	sunfrenchnavibc.com
+Known Spyware Host:	weddingcomicsbenflyer.com
+Known Spyware Host:	plreciperevan.com
+Known Spyware Host:	towererobeamface.com
+Known Spyware Host:	tickettypelucidpm.com
+Known Spyware Host:	nanoadvisoravatarinternetmarketing.com
+Known Spyware Host:	tapaybicyclepond.com
+Known Spyware Host:	tagorangesslonestar.com
+Known Spyware Host:	junkieexoticmotostrong.com
+Known Spyware Host:	flowcentreartistjourney.com
+Known Spyware Host:	mafiawatchmensweet.com
+Known Spyware Host:	mathsafetyprofitfreak.com
+Known Spyware Host:	ttdogmdwisconsin.com
+Known Spyware Host:	www-searches.com
+Known Spyware Host:	joballcallsegypt.com
+Known Spyware Host:	riskboxescalgaryevolution.com
+Known Spyware Host:	ticketnakedwefit.com
+Known Spyware Host:	imneurobroads.com
+Known Spyware Host:	wonderextremeruhero.com
+Known Spyware Host:	vegasguidessoccermg.com
+Known Spyware Host:	agegraphiclitphil.com
+Known Spyware Host:	takelesitewords.com
+Known Spyware Host:	sugarilovetattooam.com
+Known Spyware Host:	jladmingurusvietnam.com
+Known Spyware Host:	ceorechibroad.com
+Known Spyware Host:	miniclip.com
+Known Spyware Host:	beanmybestkingsspain.com
+Known Spyware Host:	junkiesexpressgotlightning.com
+Known Spyware Host:	thinkmeddeluxebaby.com
+Known Spyware Host:	leafemeggwise.com
+Known Spyware Host:	appleholidaywallstreetsoccer.com
+Known Spyware Host:	zzbuckettownrock.com
+Known Spyware Host:	smoothvoicesjsec.com
+Known Spyware Host:	windbureauprefile.com
+Known Spyware Host:	purchasetagoldcancer.com
+Known Spyware Host:	kidxxdrinkfight.com
+Known Spyware Host:	mmgmcypruscross.com
+Known Spyware Host:	thisisodoptionzz.com
+Known Spyware Host:	newyorkistportableprecision.com
+Known Spyware Host:	biocafefitme.com
+Known Spyware Host:	mmprofessorfilemiles.com
+Known Spyware Host:	bargainintelligencelistonweb.com
+Known Spyware Host:	journaldfwheritageelectric.com
+Known Spyware Host:	massymachinebeam.com
+Known Spyware Host:	trainerwavesgpnot.com
+Known Spyware Host:	salonunolevelen.com
+Known Spyware Host:	freeexperiencelightningcat.com
+Known Spyware Host:	recreviewsowlho.com
+Known Spyware Host:	perksimaginetownre.com
+Known Spyware Host:	d19ya6dk74n9uf.cloudfront.net
+Known Spyware Host:	a104270.secure.miisolutions.net
+Known Spyware Host:	tag.navdmp.comhani
+Known Spyware Host:	50tl.net
+Known Spyware Host:	ad5.eu
+Known Spyware Host:	ad7.biz
+Known Spyware Host:	adfe.es
+Known Spyware Host:	adf.ly
+Known Spyware Host:	al.ly
+Known Spyware Host:	admy.link
+Known Spyware Host:	adyou.m
+Known Spyware Host:	bc.vc
+Known Spyware Host:	binbox.io
+Known Spyware Host:	clk.im
+Known Spyware Host:	coinurl.com
+Known Spyware Host:	fitshr.com
+Known Spyware Host:	fur.ly
+Known Spyware Host:	goo.gl
+Known Spyware Host:	itw.me
+Known Spyware Host:	linkbucks.com
+Known Spyware Host:	link.im
+Known Spyware Host:	linkshrink.net
+Known Spyware Host:	links.st
+Known Spyware Host:	mije.net
+Known Spyware Host:	nubrec.com
+Known Spyware Host:	ouo.io
+Known Spyware Host:	ow.ly
+Known Spyware Host:	pornearn.com
+Known Spyware Host:	p.pw
+Known Spyware Host:	protect.re
+Known Spyware Host:	shink.in
+Known Spyware Host:	shorte.st
+Known Spyware Host:	smarturl.it
+Known Spyware Host:	stumbleupon.com
+Known Spyware Host:	tinyarrows.com
+Known Spyware Host:	tiny.cc
+Known Spyware Host:	urlcash.net
+Known Spyware Host:	x18.eu
+Known Spyware Host:	xtendadvert.com
+Known Spyware Host:	microsofteventoffice.com
+Known Spyware Host:	directorio-w.com
+Known Spyware Host:	yeabests.cc
+Known Spyware Host:	S2.symcb.com
+Known Spyware Host:	maroco.redirectme.net
+Known Spyware Host:	maroco.myq-see.com
+Known Spyware Host:	maroco.linkpc.net
+Known Spyware Host:	futureinterest.org
+Known Spyware Host:	pumaskill.com
+Known Spyware Host:	vassg141.ocsp.omniroot.com
+Known Spyware Host:	urchintelemetry.com
+Known Spyware Host:	disorderstatus.ru
+Known Spyware Host:	differentia.ru
+Known Spyware Host:	bws3v7zh.ru
+Known Spyware Host:	xtra1.gpsonextra.net
+Known Spyware Host:	2s5m19yk.ru
+Known Spyware Host:	groot-cdn.com
+Known Spyware Host:	vestacp.com
+Known Spyware Host:	domainsubmit.ru
+Known Spyware Host:	nincsmail.com
+Known Spyware Host:	viabcp.com
+Known Spyware Host:	atributos.duckdns.org
+Known Spyware Host:	frerusdimannsia.com
+Known Spyware Host:	tandugolastsp.com
+Known Spyware Host:	tontbetleftun.com
+Known Spyware Host:	nagirlstylast.com
+Known Spyware Host:	roponwithro.com
+Known Spyware Host:	widdit.com
+Known Spyware Host:	searchcompletion.com
+Known Spyware Host:	certified-toolbar.com
+Known Spyware Host:	complitly.com
+Known Spyware Host:	newhometab.com
+Known Spyware Host:	dtinstaller.com
+Known Spyware Host:	chipinstaller.com
+Known Spyware Host:	homebase-apps.com
+Known Spyware Host:	helperbar.com
+Known Spyware Host:	22find.com
+Known Spyware Host:	qvo6.com
+Known Spyware Host:	hotstartsearch.com
+Known Spyware Host:	dosearches.com
+Known Spyware Host:	portaldosites.com
+Known Spyware Host:	v9.com
+Known Spyware Host:	22apple.com
+Known Spyware Host:	delta-homes.com
+Known Spyware Host:	nationzoom.com
+Known Spyware Host:	do-search.com
+Known Spyware Host:	awesomehp.com
+Known Spyware Host:	aartemis.com
+Known Spyware Host:	sweet-page.com
+Known Spyware Host:	webssearches.com
+Known Spyware Host:	key-find.com
+Known Spyware Host:	qone8.com
+Known Spyware Host:	omiga-plus.com
+Known Spyware Host:	www-search.net
+Known Spyware Host:	safesear.ch
+Known Spyware Host:	istartsurf.com
+Known Spyware Host:	istartpageing.com
+Known Spyware Host:	hhtxnet.com
+Known Spyware Host:	batidoraporno.com
+Known Spyware Host:	portalimageneschulas.com
+Known Spyware Host:	musicaideal.net
+Known Spyware Host:	juegoskizi3.net
+Known Spyware Host:	wibbitz.com
+Known Spyware Host:	smartadserver.com
+Known Spyware Host:	player.ooyala.com
+Known Spyware Host:	static.chartbeat.com
+Known Spyware Host:	chartbeast.com
+Known Spyware Host:	merca.net.co
+Known Spyware Host:	wanderburst.com
+Known Spyware Host:	ganadineroconencuestas.com
+Known Spyware Host:	fast.ynna.biz
+Known Spyware Host:	shcool.vf1.us
+Known Spyware Host:	dailyanimalgames.com
+Known Spyware Host:	android.apps.plus
+Known Spyware Host:	ospserver.net
+Known Spyware Host:	ivpaste.com
+Known Spyware Host:	cloudzer.net
+Known Spyware Host:	filerio.in
+Known Spyware Host:	meneame.net
+Known Spyware Host:	staticxx.facebook.com
+Known Spyware Host:	portal.fb.com
+Known Spyware Host:	ak.fbcdn.net
+Known Spyware Host:	profile.ak.fbcdn.net
+Known Spyware Host:	edxutilities.click
+Known Spyware Host:	tubemogul.com
+Known Spyware Host:	jotformeu.com
+Known Spyware Host:	mimp3s.one
+Known Spyware Host:	videoschistososdivertidos.com
+Known Spyware Host:	ugamezone.com
+Known Spyware Host:	juegosfriv.com
+Known Spyware Host:	inside-shops.com
+Known Spyware Host:	naver.jp
+Known Spyware Host:	yellowbooster.info
+Known Spyware Host:	native.ad
+Known Spyware Host:	jamie.cloud.virtualmin.com
+Known Spyware Host:	vhost.sourceforge.net
+Known Spyware Host:	bl-1.com
+Known Spyware Host:	mailstat.us
+Known Spyware Host:	via.intercom.io
+Known Spyware Host:	hsms06.com
+Known Spyware Host:	rjmetrics.com
+Known Spyware Host: Malspam	46.105.218.106
+Known Spyware Host: Malspam.1	185.75.46.13
+Known Spyware Host: Malspam.2	104.27.188.52
+Known Spyware Host: Malspam.3	54.192.130.188
+Known Spyware Host: Malspam.4	?xml-andre.ffranco@uol.com.br%0D
+Known Spyware Host: Malspam.5	Unedrcovertoolz0.zip
+Known Spyware Host: Malspam.6	sempre/notify.php
+Known Spyware Host: Malspam.7	com=0D
+Known Spyware Host: Malspam.8	pdf-douglassantos@detran.es.gov.br=0D
+Known Spyware Host: Malspam.9	xml-douglassantos@detran.es.gov.br=0D
+Known Spyware Host: Malspam.10	muabantiengame.com
+Known Spyware Host: Malspam.11	www.security-support.tech
+Known Spyware Host: Malspam.12	47.91.76.69
+Known Spyware Host: Malspam.13	beachesofnwflorida.com
+Known Spyware Host: Malspam.14	coastalrealtycsb.com
+Known Spyware Host: Malspam.15	coastalrealtypsj.com
+Known Spyware Host: Malspam.16	costaljoe.com
+Known Spyware Host: Malspam.17	csbbeachrentals.com
+Known Spyware Host: Malspam.18	floridasbestescape.com
+Known Spyware Host: Malspam.19	gocoastalflorida.com
+Known Spyware Host: Malspam.20	isdgcom.net
+Known Spyware Host: Malspam.21	sgiflbeachhomes.com
+Known Spyware Host: Malspam.22	sgirentalhomes.com
+Known Spyware Host: Malspam.23	stgeorgeislandbeachhomes.com
+Known Spyware Host: Malspam.24	visitcsb.com
+Known Spyware Host: Malspam.25	tanreblingtold.com
+Known Spyware Host: Malspam.26	hedningdolac.ru
+Known Spyware Host: Malspam.27	atlerando.ru
+Known Spyware Host: Malspam.28	http://yakshin.ru/wp-content/themes/omega/lib/1
+Known Spyware Host: Malspam.29	http://yakshin.ru/wp-content/themes/omega/lib/2
+Known Spyware Host: Malspam.30	http://yakshin.ru/wp-content/themes/omega/lib/3
+Known Spyware Host: Malspam.31	http://jeffreytobin.com/wp-content/plugins/options-framework/includes/1
+Known Spyware Host: Malspam.32	http://jeffreytobin.com/wp-content/plugins/options-framework/includes/2
+Known Spyware Host: Malspam.33	http://jeffreytobin.com/wp-content/plugins/options-framework/includes/3
+Known Spyware Host: Malspam.34	http://newstotalk.com/wp-content/themes/wp-genius/1
+Known Spyware Host: Malspam.35	http://newstotalk.com/wp-content/themes/wp-genius/2
+Known Spyware Host: Malspam.36	http://newstotalk.com/wp-content/themes/wp-genius/3
+Known Spyware Host: Malspam.37	http://peterjoubert.com/wp-content/themes/twentyeleven/inc/1
+Known Spyware Host: Malspam.38	http://peterjoubert.com/wp-content/themes/twentyeleven/inc/2
+Known Spyware Host: Malspam.39	http://peterjoubert.com/wp-content/themes/twentyeleven/inc/3
+Known Spyware Host: Malspam.40	http://marysherwoodlifestyles.com/wp-content/themes/twentythirteen/inc/1
+Known Spyware Host: Malspam.41	http://marysherwoodlifestyles.com/wp-content/themes/twentythirteen/inc/2
+Known Spyware Host: Malspam.42	http://marysherwoodlifestyles.com/wp-content/themes/twentythirteen/inc/3
+Known Spyware Host: Malspam.43	robwassotdint.ru
+Known Spyware Host: Malspam.44	countywidememorials.com
+Known Spyware Host: Malspam.45	countywidemonuments.com
+Known Spyware Host: Malspam.46	kwrn1550am.com
+Known Spyware Host: Malspam.47	prescriptionerrorlawyer.com
+Known Spyware Host: Malspam.48	ryanandrie.me
+Known Spyware Host: Malspam.49	sawgrasspark.com
+Known Spyware Host: Malspam.50	sleeplavish.com
+Known Spyware Host: Malspam.51	solutionsforsanjose.info
+Known Spyware Host: Malspam.52	solutionsforsanjose.net
+Known Spyware Host: Malspam.53	youngsvillehousevalues.com
+Known Spyware Host: Malspam.54	youngsvilleproperties.com
+Known Spyware Host: Malspam.55	hemfeketro.com
+Known Spyware Host: Malspam.56	gejohntorsar.ru
+Known Spyware Host: Malspam.57	tonstinnotna.ru
+Known Spyware Host: Malspam.58	http://fatcowcoupon.us/wp-content/plugins/nofollow-for-external-link/1
+Known Spyware Host: Malspam.59	http://fatcowcoupon.us/wp-content/plugins/nofollow-for-external-link/2
+Known Spyware Host: Malspam.60	http://fatcowcoupon.us/wp-content/plugins/nofollow-for-external-link/3
+Known Spyware Host: Malspam.61	http://alphafinancialservices.net/wp-content/themes/twentyeleven/inc/1
+Known Spyware Host: Malspam.62	http://alphafinancialservices.net/wp-content/themes/twentyeleven/inc/2
+Known Spyware Host: Malspam.63	http://alphafinancialservices.net/wp-content/themes/twentyeleven/inc/3
+Known Spyware Host: Malspam.64	http://buckscountybass.com/wp-content/themes/canvas-bcac/1
+Known Spyware Host: Malspam.65	http://buckscountybass.com/wp-content/themes/canvas-bcac/2
+Known Spyware Host: Malspam.66	http://buckscountybass.com/wp-content/themes/canvas-bcac/3
+Known Spyware Host: Malspam.67	http://mattbennett.ca/wp-content/themes/spark/inc/1
+Known Spyware Host: Malspam.68	http://mattbennett.ca/wp-content/themes/spark/inc/2
+Known Spyware Host: Malspam.69	http://mattbennett.ca/wp-content/themes/spark/inc/3
+Known Spyware Host: Malspam.70	http://hugefrigginarms.com/wp-content/themes/twentyfifteen/1
+Known Spyware Host: Malspam.71	http://hugefrigginarms.com/wp-content/themes/twentyfifteen/2
+Known Spyware Host: Malspam.72	http://hugefrigginarms.com/wp-content/themes/twentyfifteen/3
+Known Spyware Host: Malspam.73	actuneupca.com
+Known Spyware Host: Malspam.74	chiropracticlibrary.com
+Known Spyware Host: Malspam.75	clifmays.com
+Known Spyware Host: Malspam.76	gamification4you.com
+Known Spyware Host: Malspam.77	ifewholehousefan.com
+Known Spyware Host: Malspam.78	ifewholehousefan.net
+Known Spyware Host: Malspam.79	ifewholehousefans.com
+Known Spyware Host: Malspam.80	ifewholehousefans.info
+Known Spyware Host: Malspam.81	ifewholehousefans.net
+Known Spyware Host: Malspam.82	interfaithelectricandsolar.co
+Known Spyware Host: Malspam.83	interfaithelectricnsolar.co
+Known Spyware Host: Malspam.84	lmperfumes.com
+Known Spyware Host: Malspam.85	spinalrt.com
+Known Spyware Host: Malspam.86	superiorcomfortprohvac.com
+Known Spyware Host: Malspam.87	superiorhvacuniversity.com
+Known Spyware Host: Malspam.88	triadhangout.com
+Known Spyware Host: Malspam.89	triadpain.com
+Known Spyware Host: Malspam.90	triadpaingroup.com
+Known Spyware Host: Malspam.91	supratparfa.com
+Known Spyware Host: Malspam.92	losupsofof.ru
+Known Spyware Host: Malspam.93	depeparand.ru
+Known Spyware Host: Malspam.94	http://kdprvirtual.com/wp-content/plugins/duplicate-post/1
+Known Spyware Host: Malspam.95	http://kdprvirtual.com/wp-content/plugins/duplicate-post/2
+Known Spyware Host: Malspam.96	http://kdprvirtual.com/wp-content/plugins/duplicate-post/3
+Known Spyware Host: Malspam.97	http://animalhealthcenterinc.com/wp-content/plugins/post-expirator/1
+Known Spyware Host: Malspam.98	http://animalhealthcenterinc.com/wp-content/plugins/post-expirator/2
+Known Spyware Host: Malspam.99	http://animalhealthcenterinc.com/wp-content/plugins/post-expirator/3
+Known Spyware Host: Malspam.100	http://rogersonenterprises.com/blog/wp-content/plugins/jetpack/1
+Known Spyware Host: Malspam.101	http://rogersonenterprises.com/blog/wp-content/plugins/jetpack/2
+Known Spyware Host: Malspam.102	http://rogersonenterprises.com/blog/wp-content/plugins/jetpack/3
+Known Spyware Host: Malspam.103	http://militaryschools101.com/wp-content/plugins/nofollow-for-external-link/1
+Known Spyware Host: Malspam.104	http://militaryschools101.com/wp-content/plugins/nofollow-for-external-link/2
+Known Spyware Host: Malspam.105	http://militaryschools101.com/wp-content/plugins/nofollow-for-external-link/3
+Known Spyware Host: Malspam.106	http://bestwptricks.com/wp-content/plugins/polldaddy/1
+Known Spyware Host: Malspam.107	http://bestwptricks.com/wp-content/plugins/polldaddy/2
+Known Spyware Host: Malspam.108	http://bestwptricks.com/wp-content/plugins/polldaddy/3
+Known Spyware Host: Malspam.109	bithetbuter.ru
+Known Spyware Host: Malspam.110	plubmerspro.us
+Known Spyware Host: Malspam.111	grigori.ddns.net
+Known Spyware Host: Malspam.112	godstar.hopto.org
+Known Spyware Host: Malspam.113	166e61.com
+Known Spyware Host: Malspam.114	drywallexpo.com
+Known Spyware Host: Malspam.115	estimating.training
+Known Spyware Host: Malspam.116	finishtradeexpo.com
+Known Spyware Host: Malspam.117	fleamarketfragrances.com
+Known Spyware Host: Malspam.118	gurwitz.com
+Known Spyware Host: Malspam.119	ourversionfragrances.com
+Known Spyware Host: Malspam.120	ourversionscents.com
+Known Spyware Host: Malspam.121	knockoffcologne.com
+Known Spyware Host: Malspam.122	virtualdrywallexpo.com
+Known Spyware Host: Malspam.123	gotsurievent.com
+Known Spyware Host: Malspam.124	henfetanug.ru
+Known Spyware Host: Malspam.125	saortonsjohn.ru
+Known Spyware Host: Malspam.126	http://contentsuperstar.com/wp-content/languages/plugins/1
+Known Spyware Host: Malspam.127	http://contentsuperstar.com/wp-content/languages/plugins/4
+Known Spyware Host: Malspam.128	http://contentsuperstar.com/wp-content/languages/plugins/5
+Known Spyware Host: Malspam.129	http://image-a.com/wp/wp-content/plugins/easy-media-gallery/includes/1
+Known Spyware Host: Malspam.130	http://image-a.com/wp/wp-content/plugins/easy-media-gallery/includes/4
+Known Spyware Host: Malspam.131	http://image-a.com/wp/wp-content/plugins/easy-media-gallery/includes/5
+Known Spyware Host: Malspam.132	http://kuchingsupplies.com/wp-content/plugins/gallery-by-supsystic/vendor/Twig/1
+Known Spyware Host: Malspam.133	http://kuchingsupplies.com/wp-content/plugins/gallery-by-supsystic/vendor/Twig/4
+Known Spyware Host: Malspam.134	http://kuchingsupplies.com/wp-content/plugins/gallery-by-supsystic/vendor/Twig/5
+Known Spyware Host: Malspam.135	lyrintedba.com
+Known Spyware Host: Malspam.136	http://185.189.58.222/uh.exe
+Known Spyware Host: Malspam.137	ransomeware.bit
+Known Spyware Host: Malspam.138	zonealarm.bit
+Known Spyware Host: Malspam.139	gandcrab2pie73et.onion
+
+
+
+Known Ransomware Host:	slater.chat.ru
+Known Ransomware Host:	hundeschulegoerg.de
+Known Ransomware Host:	capitalsend.info
+Known Ransomware Host:	investmentreply.info
+Known Ransomware Host:	pure-send.com
+Known Ransomware Host:	yourspamshield.com
+Known Ransomware Host:	spamerlist.com
+Known Ransomware Host:	smartanleger.net
+Known Ransomware Host:	sharehold.info
+Known Ransomware Host:	sharefinancial.info
+Known Ransomware Host:	sharefinance.info
+Known Ransomware Host:	finstock.info
+Known Ransomware Host:	finreply.info
+Known Ransomware Host:	fininvest.info
+Known Ransomware Host:	communicationsdigest.com
+Known Ransomware Host:	anlegersmart.com
+Known Ransomware Host:	181.224.139.64
+Known Ransomware Host:	74.208.147.73
+Known Ransomware Host:	91.121.74.154
+Known Ransomware Host:	stjoeschool.org
+Known Ransomware Host:	vaippaandedicators.reducemycard.com
+Known Ransomware Host:	185.118.164.42
+Known Ransomware Host:	85.25.160.124
+Known Ransomware Host:	192.169.189.167
+Known Ransomware Host:	192.169.190.97
+Known Ransomware Host:	209.126.120.8
+Known Ransomware Host:	litigators.esteroscreen.com
+Known Ransomware Host:	reikleivn-azarashi.orlandohomesbydevito.com
+Known Ransomware Host:	reikleivn-azarashi.orlandohomesbydevito.com
+Known Ransomware Host:	frageboegen-plletyksin.breastcanceroutreach.com
+Known Ransomware Host:	candidulumbestuurlijk.newlandsierrarealestate.com
+Known Ransomware Host:	mcimaildmz.dinnerplate.co.uk
+Known Ransomware Host:	et.jacquieleebrasil.com.br
+Known Ransomware Host:	kw.projetoraizes.com.br
+Known Ransomware Host:	host.vivialvarez.com.ar
+Known Ransomware Host:	85.25.107.126
+Known Ransomware Host:	207.182.149.14
+Known Ransomware Host:	178.32.131.248
+Known Ransomware Host:	178.32.131.185
+Known Ransomware Host:	85.25.107.127
+Known Ransomware Host:	188.165.163.227
+Known Ransomware Host:	93.190.143.211
+Known Ransomware Host:	45.56.117.118
+Known Ransomware Host:	144.76.133.38
+Known Ransomware Host:	23.88.147.108
+Known Ransomware Host:	54.186.95.29
+Known Ransomware Host:	pationare.bit
+Known Ransomware Host:	settledness.ru
+Known Ransomware Host:	dutchcreekresort.com
+Known Ransomware Host:	185.141.25.207
+Known Ransomware Host:	79.110.251.102
+Known Ransomware Host:	185.141.25.207
+Known Ransomware Host:	mannyshrag.com
+Known Ransomware Host:	ianusshale.net
+Known Ransomware Host:	za95uur.ag0clk.top
+Known Ransomware Host:	activaclinics.com
+Known Ransomware Host:	195.123.209.74
+Known Ransomware Host:	185.141.25.234
+Known Ransomware Host:	h01wi.d7riwiu.top
+Known Ransomware Host:	miligratonylaonella.com
+Known Ransomware Host:	emploiadomicile.info
+Known Ransomware Host:	185.141.25.234
+Known Ransomware Host:	213.252.244.121
+Known Ransomware Host:	kasdima.top
+Known Ransomware Host:	scadradio.org
+Known Ransomware Host:	176.223.111.82
+Known Ransomware Host:	po1289k.kremalopsi.gq
+Known Ransomware Host:	104.238.131.117
+Known Ransomware Host:	loremipsumdolorsitamet.pw
+Known Ransomware Host:	82.165.174.205
+Known Ransomware Host:	institut-angeetbeaute.fr
+Known Ransomware Host:	208.67.222.222
+Known Ransomware Host:	resolver1.opendns.com
+Known Ransomware Host:	198.105.254.228
+Known Ransomware Host:	voligon.cn
+Known Ransomware Host:	http://silverlinktechnologies.com/privacy.bin
+Known Ransomware Host:	http://narwhaldatapartners.com/privacy.bin
+Known Malware Host: Hanictor.1	185.86.79.93
+Known Malware Host: Hanictor.2	47.91.78.8
+Known Malware Host: Hanictor.3	137.74.176.54
+Known Malware Host: Hanictor.4	47.91.90.51
 Known Ransomware Host: Sundown	188.165.163.227
 Known Ransomware Host: Rammit	littleinspiration.com
 Known Ransomware Host: Rammit	qwh9w.blgkyih.top
@@ -1768,6 +2082,7 @@ Known Ransomware Host: Bedep.16	89.163.241.90
 Known Ransomware Host: Bedep.17	/ads.php?sid=1826
 Known Ransomware Host: Zeuss Rig.EK	help.whatizzzit.com
 Known Ransomware Host: Zeuss Rig.EK.2	stat2.s76.r53.com.ua
+Known Trojan Host: Trickbot	162.244.32.142
 Known Trojan Host: Zeuss Panda	secpressnetwork.com
 Known Trojan Host: Zeuss Panda.1	alwaysonline.pw
 Known Trojan Host: Zeuss Panda.2	denoted-chioces.com
@@ -1801,6 +2116,42 @@ Known Trojan Host: FormBook.26	www.fairwaytablet.com
 Known Trojan Host: FormBook.27	www.ias39.com
 Known Trojan Host: FormBook.28	www.shucancan.com
 Known Trojan Host: FormBook.29	superiorleather.co.uk
+Known Trojan Host: Emotet	http://avocap.eu/Rechnung/Fakturierung/Rechnung-0846-5845/
+Known Trojan Host: Emotet.1	http://calendar.bubnov.ru/newsletter/EN_en/DOC/Invoice-93422/
+Known Trojan Host: Emotet.2	http://irisoil.com/Dokumente/Fakturierung/Rechnung-scan-Nr028435/
+Known Trojan Host: Emotet.3	http://stylethemonkey.com/newsletter/US/STATUS/Invoice-5225260/
+Known Trojan Host: Emotet.4	http://www.adventuredsocks.com/sites/En/ACCOUNT/Pay-Invoice/
+Known Trojan Host: Emotet.5	http://www.altinbronz.com.tr/default/En/FILE/Customer-Invoice-CM-3772286/
+Known Trojan Host: Emotet.6	http://www.arlab21.com/Rechnung/FORM/Rechnung/
+Known Trojan Host: Emotet.7	http://www.autoplasrecyclingltd.co.uk/files/En/New-Order-Upcoming/HRI-Monthly-Invoice/
+Known Trojan Host: Emotet.8	http://www.ayvalikfotografcisi.com/newsletter/US_us/Client/Invoice-83453/
+Known Trojan Host: Emotet.9	http://www.bazaltbezpeka.com.ua/Rechnungs-Details/RECHNUNG/Unsere-Rechnung-vom-09-Juli-033-880/
+Known Trojan Host: Emotet.10	http://www.bursabesevlernakliyat.com/Rechnung/Rechnungszahlung/Rechnung-fur-Zahlung-Nr080000/
+Known Trojan Host: Emotet.11	http://www.certiagro.com/Jul2018/EN_en/Client/Invoice-431495/
+Known Trojan Host: Emotet.12	http://www.clean.vanzherke.ru/Jul2018/US/Order/Auditor-of-State-Notification-of-EFT-Deposit/
+Known Trojan Host: Emotet.13	http://www.crackbros.com/files/En/FILE/Invoice-157212/
+Known Trojan Host: Emotet.14	http://www.dessertcake.com.ua/files/US/Purchase/Pay-Invoice/
+Known Trojan Host: Emotet.15	http://www.dilema.si/files/EN_en/OVERDUE-ACCOUNT/Direct-Deposit-Notice/
+Known Trojan Host: Emotet.16	http://www.dokassessoria.com.br/Rechnungs-Details/DETAILS/Erinnerung-an-die-Rechnungszahlung-002817/
+Known Trojan Host: Emotet.17	http://www.dom-stroy52.ru/default/EN_en/STATUS/20352/
+Known Trojan Host: Emotet.18	http://www.eshop9ja.com/default/US_us/STATUS/Invoice-574161/
+Known Trojan Host: Emotet.19	http://www.hilalkentasm.com/sites/En_us/STATUS/Invoices/
+Known Trojan Host: Emotet.20	http://www.ingpk.ru/sites/EN_en/STATUS/Services-07-09-18-New-Customer-RS/
+Known Trojan Host: Emotet.21	http://www.interfrazao.com.br/pdf/En/DOC/Past-Due-invoice/
+Known Trojan Host: Emotet.22	http://www.malwaeduskills.com/pdf/US/Client/Auditor-of-State-Notification-of-EFT-Deposit/
+Known Trojan Host: Emotet.23	http://www.lutz-nachhilfe.de/sites/En_us/Payment-and-address/Invoice-79627/
+Known Trojan Host: Emotet.24	http://www.missaost.com.br/files/En_us/FILE/Payment/
+Known Trojan Host: Emotet.25	http://www.segmaster.pagina-oficial.ws/sites/En/Purchase/Invoice-94754212-070918/
+Known Trojan Host: Emotet.26	http://www.sunnybeach05.ru/Jul2018/EN_en/ACCOUNT/Invoice-989633/
+Known Trojan Host: Emotet.27	http://www.xn--dieglcksspirale-3vb.net/pdf/En_us/Client/Invoice-533946/
+Known Trojan Host: Emotet.28	http://www.wadhwawisecitypanvel.info/default/US/STATUS/New-Invoice-KY95015-UI-9687/
+Known Trojan Host: Emotet.29	http://www.yildirimcatering.org/newsletter/En/OVERDUE-ACCOUNT/Invoices/
+Known Trojan Host: Emotet.30	http://primerplano.org/Yb/
+Known Trojan Host: Emotet.31	http://jmamusical.jp/wordpress/wp-content/Ec0SS/
+Known Trojan Host: Emotet.32	http://muaithai.pl/bdwsab/
+Known Trojan Host: Emotet.33	http://nagoyamicky.com/cacheqblog/bDWJMUD/
+Known Trojan Host: Emotet.34	http://ave-ant.com/u/
+Known Trojan Host: Emotet.35	airconhero.xyz
 Known Ransomware Host: Cerber.BS	dchromefastl.top
 Known Ransomware Host: Cerber.BS.1	dfffgooaldq.top
 Known Ransomware Host: Cerber.BS.2	dffjoleedas.top
