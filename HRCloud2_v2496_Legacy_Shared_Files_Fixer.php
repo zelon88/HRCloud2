@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<body>
 <title>HRCloud2 Legacy Shared Files Updater</title>
 <?php
 // / HRCloud2 v2.4.9.6 Legacy Shared Files updater.
