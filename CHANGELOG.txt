@@ -1,3 +1,12 @@
+COMMIT 8/11/2018
+v2.8.9 - Continue Re-factor, Add styles to API.
+
+-Condense code within sanitizeCore.php and securityCore.php.
+-Shorten the codebase another ~70 lines without compromising functionality.
+-Added support for noStyles, minStyles, maxStyles, and allStyles POST and GET inputs to the API.
+-Fix code comments in commonCore that didn't make much sense.
+
+----------
 COMMIT 8/1/2018
 v2.8.8 - PHP-AV Defs to v4.6.
 

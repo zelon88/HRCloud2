@@ -185,7 +185,7 @@ array_push($RequiredDirs1, $CloudTmpDir, $CloudUsrDir);
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code creates required HRCloud2 files if they do not exist. Also installs user specific files and new index files as needed.
+// / The following code verifies that the CloudLoc exists.
 if (!is_dir($CloudLoc)) die('ERROR!!! HRC2CommonCore59, There was a problem verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.'); 
 // / -----------------------------------------------------------------------------------
 
@@ -254,10 +254,7 @@ if (!file_exists($AdminConfig)) {
   die($txt); }
 else include($AdminConfig); 
 $Nickname = '';
-$AdminIDRAW = null;
-$AdminID = null;
-$adminAppDataInstDir = null;
-$AdminConfig = null;  
+$AdminIDRAW = $AdminID = $adminAppDataInstDir = $AdminConfig = null; 
 unset ($AdminIDRAW, $AdminID, $adminAppDataInstDir, $AdminConfig);
 // / -----------------------------------------------------------------------------------
 
@@ -384,7 +381,7 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / Primary color scheme handler. 
+// / The following code represents the primary color scheme handler. 
 if ($noStyles !== 1) {
   if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) $ColorScheme = '1'; 
   if ($CallingScriptBasename !== '.index.php' or $minStyles == 1 or $allStyles == 1) {   
