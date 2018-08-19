@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: v3.6 (8-3-2018 00:00)
+App Version: v3.7 (8-18-2018 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -48,7 +48,7 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v3.6 | Virus Definition v4.6, 8/1/2018';
+    $versions = 'PHP-AV App v3.7 | Virus Definition v4.6, 8/1/2018';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
     $report = '';
@@ -148,15 +148,16 @@ require('config.php');
       $txt = 'Scan target is '.$CONFIG['scanpath'].'.';
       $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND);
       include_once('PHP-AV-Lib.php');
-      $defs = load_defs('virus.def', $CONFIG['debug']);
-      file_scan($CONFIG['scanpath'], $defs, $CONFIG['debug']);
       // / The following code sets user supplied memory variables if they are greater than the ones contained in config.php.
       if ($memoryLimitPOST >= $memoryLimit) {
         $memoryLimit = $memoryLimitPOST; }
       if ($chunkSizePOST >= $chunkSize) {
         $chunkSize = $chunkSizePOST; }
       if (isset($_POST['AVScanTarget'])) {
+        if ($_POST['AVScanTarget'] == '') $_POST['AVScanTarget'] = $_SERVER['DOCUMENT_ROOT'];
         $CONFIG['scanpath'] = str_replace(' ', '\ ', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['AVScanTarget'])); }
+      $defs = load_defs('virus.def', $CONFIG['debug']);
+      file_scan($CONFIG['scanpath'], $defs, $CONFIG['debug']);
       if (!is_numeric($infected)) {
         $scanNote = 'There was an internal security error. Several variables may be corrupt or compromised. The scan was aborted.'; }
       if ($infected <= 0) {
