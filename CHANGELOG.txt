@@ -1,3 +1,10 @@
+COMMIT 8/17/2018
+v2.9 - PHP-AV to v3.7, fix bugs.
+
+-v2.9.
+-PHP-AV to v3.7, fix bugs.
+
+----------
 COMMIT 8/11/2018
 v2.8.9 - Continue Re-factor, Add styles to API.
 
