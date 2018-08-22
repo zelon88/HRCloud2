@@ -119,7 +119,7 @@ $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $defaultApps = array('.', '..', '', 'error.php', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'index.html', 'HRAIMiniGui.php', 'HRAI', 'HRConvert2', 
  'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'style.css', 'Shared', 'ServMon.php', 'Favorites.php',  
  'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'PHPAV.php', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery');
-$DangerousFiles = array('js', 'php', 'html', 'css');
+$DangerousFiles = array('js', 'php', 'html', 'css', 'phar');
 $installedApps = array_diff($Apps, $defaultApps);
 $RequiredDirs1 = array($CloudDir, $CloudTemp, $CloudTempDir, $appDataCloudDir, $ResourcesDir, $TempResourcesDir, $ClientInstallDir, $ClientInstallDirWin, $ClientInstallDirLin, $ClientInstallDirOsx, $CloudAppDir, $BackupDir);
 $RequiredDirs2 = array($LogLoc, $SesLogDir, $CloudShareDir);
