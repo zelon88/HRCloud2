@@ -1,3 +1,10 @@
+COMMIT 8/21/2018
+v2.9.1 - Add .phar archvies to dangerous files.
+
+-v2.9.1.
+-Add .phar archives to dangerous files.
+
+----------
 COMMIT 8/17/2018
 v2.9 - PHP-AV to v3.7, fix bugs.
 
