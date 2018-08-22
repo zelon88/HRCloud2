@@ -62,6 +62,7 @@ function virus_check($file, $defs, $debug, $defData) {
                 $txt = 'Scanning chunk ... ';
                 $MAKELogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND); }
               foreach ($defs as $virus) {
+                $virus = explode("\t", $virus[0]);
                 if (isset($virus[1]) && $virus[1] !== '' && $virus[1] !== ' ') {
                   if (strpos($data, $virus[1]) or strpos($file, $virus[1])) {
                     // File matches virus defs.
@@ -97,6 +98,7 @@ function virus_check($file, $defs, $debug, $defData) {
       if ($defData !== $data2) {
          $clean = 1;
         foreach ($defs as $virus) {
+          $virus = explode("\t", $virus[0]);
           $filesize = @filesize($file);
           if (isset($virus[1]) && $virus[1] !== '' && $virus[1] !== ' ') {
             if (strpos($data, $virus[1])) {
