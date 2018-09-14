@@ -19,6 +19,7 @@
       <?php
       echo rtrim(ltrim($Udir, '/'), '/');
       if ($showFavorites === '1') echo 'Favorites'; 
+      require($FavoritesCacheFileInst);
       ?>
       </div>
 
@@ -227,7 +228,6 @@
       <tbody>
     <?php
     if ($showFavorites == '1') {
-      require($FavoritesCacheFileInst);
       $dirArray = $FavoriteFiles; }
     if ($showFavorites !== '1') {
       $myDirectory = str_replace('//', '/', str_replace('///', '/', rtrim($CloudLoc.'/'.$UserID.$UserDirPOST, '/')));
@@ -369,15 +369,18 @@
               });
               </script>
               <?php }
+               if (in_array($name, $FavoriteFiles)) $Favorited = '<img src="'.$FavoritedIcon.'"></img>';
+               if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'"></img>';
                echo("
                 <tr class='$class'>
-                  <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name</a></td>
+                  <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name $Favorited $Shared</a></td>
                   <td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
                   <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
                   <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
                   <td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
                 </tr>");
-                $tableCount++; } } ?>
+                $tableCount++; 
+                $Favorited = $Shared = ''; } } ?>
       </tbody>
     </table>
     <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
