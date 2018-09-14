@@ -23,6 +23,9 @@ $imgArr = array('jpg', 'jpeg', 'png', 'bmp', 'gif');
 $modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
 $fileArray1 = array();
 $tableCount = $ArchInc = $ConvertInc = $RenameInc = $EditInc = 0;
+$FavoritedIcon = '/HRProprietary/HRCloud2/Resources/favorites.png';
+$SharedIcon = '/HRProprietary/HRCloud2/Resources/triangle.png';
+$SharedFiles = scandir($UserSharedDir);
 if (!isset($Udir)) $Udir = '';
 $Udir = str_replace('//', '/', str_replace('//', '/', $Udir));
 // / -----------------------------------------------------------------------------------

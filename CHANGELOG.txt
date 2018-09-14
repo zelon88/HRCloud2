@@ -1,3 +1,11 @@
+COMMIT 9/13/2018
+v2.9.3 - Add Favorites and Shared icons to Drive, version to Settings.
+
+-v2.9.3.
+-Add favorites and shared icons next to the filename of favorited and shared files on the Drive page.
+-Added version info to the bottom of the Settings page.
+
+----------
 COMMIT 8/21/2018
 v2.9.2 - Update PHP-AV App to v3.8.
 

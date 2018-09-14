@@ -7,26 +7,14 @@
 <?php
 // / -----------------------------------------------------------------------------------a
 // / The follwoing code checks for the required core filesand terminates if they are missing.
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2SettingsCore103, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require(realpath(dirname(__FILE__)).'/commonCore.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (securityCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require(realpath(dirname(__FILE__)).'/securityCore.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/compatibilityCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require(realpath(dirname(__FILE__)).'/compatibilityCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!<br /></body></html>'); 
+else require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore103, Cannot process the HRCloud2 Common Core file (commonCore.php)!<br /></body></html>'); 
+else require(realpath(dirname(__FILE__)).'/commonCore.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (securityCore.php)!<br /></body></html>'); 
+else require(realpath(dirname(__FILE__)).'/securityCore.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/compatibilityCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!<br /></body></html>');
+else require(realpath(dirname(__FILE__)).'/compatibilityCore.php');
 // / -----------------------------------------------------------------------------------
 
 ?>
@@ -746,6 +734,8 @@ if ($UserIDRAW == 1) { ?>
 <div id='end' name='end' class='end'>
 </div>
 </div>
+<hr />
+<p id="verisoninfo" name="versioninfo" onclick="window.open('http://www.HonestRepair.net/')" align="center"><small><i>HRCloud2 <?php echo $Version; ?> by <u>HonestRepair</u></small></i></p>
 <hr />
 </body>
   <script type="text/javascript">
