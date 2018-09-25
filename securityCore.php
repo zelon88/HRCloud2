@@ -23,9 +23,7 @@ $LogFileInc0 = $LogFileInc1 = $LogFileInc2 = 0;
 // / Secutity related processing.
 if (isset($_POST['YUMMYSaltHash'])) {
   $YUMMYSaltHash = $_POST['YUMMYSaltHash'];
-  if ($YUMMYSaltHash !== $SaltHash) {
-    echo nl2br('WARNING!!! HRC2SecCore46, There was a critical security fault. Login Request Denied.'."\n"); 
-    die("Application was halted on $Time".'.'); } }
+  if ($YUMMYSaltHash !== $SaltHash) die('WARNING!!! HRC2SecCore46, There was a critical security fault. Login Request Denied.'); }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -55,8 +53,7 @@ if (isset($_POST['Scan']) or isset($_POST['scanSelected'])) {
     if ($ThoroughRAW !== '-fdpass ') $Thorough = ''; }
   // / -----
   // / Handle pre-existing VirusLog files (increment the filename until one is found that doesn't exist).
-  while (file_exists($LogFile0)) {
-    $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc0++.'_'.$Date.'.txt'; } 
+  while (file_exists($LogFile0)) $LogFile0 = $SesLogDir.'/VirusLog_'.$LogFileInc0++.'_'.$Date.'.txt'; 
   while (file_exists($LogFile1)) {
     unlink($LogFile1);
     $LogFile1 = $SesLogDir.'/VirusLog_'.$LogFileInc1++.'_'.$Date.'.txt';  }

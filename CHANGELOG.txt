@@ -1,3 +1,14 @@
+----------
+COMMIT 9/24/2018
+v2.9.4 - Continue refactor. Fix bugs in AV settings.
+
+-v2.9.4.
+-Continue refactor through settingsCore and compatibilityCore.
+-Fix bugs where Settings page wouldn't update AV related settings.
+-Move Shared and Favorited icons to the left of the filename in Drive, instead of the right.
+-Add alt text to Favorite and Shared icons in Drive.
+
+----------
 COMMIT 9/13/2018
 v2.9.3 - Add Favorites and Shared icons to Drive, version to Settings.
 

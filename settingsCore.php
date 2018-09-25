@@ -36,49 +36,49 @@ if (isset($saveSettings)) {
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Color Scheme" setting: "'.$NEWColorScheme.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New Color-Scheme Settings.'."\n"); }
+    echo('Saved New Color-Scheme Settings.'.$br); }
   // / The following code sets the users HRAI display preference.
   if (isset($NEWShowHRAI)) {
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New HRAI Display Settings.'."\n"); }
+    echo('Saved New HRAI Display Settings.'.$br); }
   // / The following code sets the users HRAI audio preference.
   if (isset($NEWHRAIAudio)) {
     $txt = ('$HRAIAudio = \''.$NEWHRAIAudio.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "HRAI Audio" setting: "'.$NEWHRAIAudio.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New HRAI Audio Settings.'."\n"); }
+    echo('Saved New HRAI Audio Settings.'.$br); }
   // / The following code sets the users Tipa display preference.
   if (isset($NEWShowTips)) {
     $txt = ('$ShowTips = \''.$NEWShowTips.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New Tips Settings.'."\n"); }
+    echo('Saved New Tips Settings.'.$br); }
   // / The following code sets the current user timezone.
   if (isset($NEWTimezone)) {
     $txt = ('$Timezone = \''.$NEWTimezone.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New Timezone Settings.'."\n"); }
+    echo('Saved New Timezone Settings.'.$br); }
   // / The following code sets the current user nickname.
   if (isset($NEWNickname)) {
     $txt = ('$nickname = \''.$NEWNickname.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Nickname" setting: "'.$NEWNickname.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New Nickname Settings.'."\n"); }
+    echo('Saved New Nickname Settings.'.$br); }
   // / The following code sets the current user font.
   if (isset($NEWFont)) {
     $txt = ('$Font = \''.$NEWFont.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Font" setting: "'.$NEWFont.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo nl2br('Saved New Font Settings.'."\n"); }
+    echo('Saved New Font Settings.'.$br); }
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
@@ -87,77 +87,77 @@ if (isset($saveSettings)) {
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Data Compression Settings.'."\n"); }
+      echo ('Saved New Data Compression Settings.'.$br); }
     // / The following code is sets the server's Virus Scanning setting.
     if (isset($NEWVirusScan)) {
       $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Anti-Virus Settings.'."\n"); }
+      echo ('Saved New Anti-Virus Settings.'.$br); }
     // / The following code is sets the server's High Performance AV setting.
     if (isset($NEWHighPerformanceAV)) {
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New High Performance AV Settings.'."\n"); }
+      echo ('Saved New High Performance AV Settings.'.$br); }
     // / The following code is sets the server's High Performance AV setting.
     if (isset($NEWThoroughAV)) {
       $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Thorough AV" setting: "'.$NEWThoroughAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Thorough AV Settings.'."\n"); } 
+      echo ('Saved New Thorough AV Settings.'.$br); } 
     // / The following code is sets the server's Persistence AV setting.
     if (isset($NEWPersistentAV)) {
       $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Persistent AV Settings.'."\n"); } 
+      echo ('Saved New Persistent AV Settings.'.$br); } 
     // / The following code is sets the server's Apache User setting.
     if (isset($NEWApacheUser)) {
       $txt = ('$ApacheUser = \''.$NEWApacheUser.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Apache User" setting: "'.$NEWApacheUser.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Apache User Settings.'."\n"); }
+      echo ('Saved New Apache User Settings.'.$br); }
     // / The following code is sets the server's Apache Group setting.
     if (isset($NEWApacheGroup)) {
       $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Apache Group" setting: "'.$NEWApacheGroup.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Apache Group Settings.'."\n"); }
+      echo ('Saved New Apache Group Settings.'.$br); }
     // / The following code is sets the enablement of Privacy Policy modifications in the GUI.
     if (isset($NEWPPEnableURL)) {
       $txt = ('$PPEnableURL = \''.$NEWPPEnableURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Enable Privacy Policy" setting: "'.$NEWPPEnableURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Enable Privacy Policy Settings.'."\n"); }
+      echo('Saved New Enable Privacy Policy Settings.'.$br); }
     // / The following code is sets the Privacy Policy URL in the GUI.
     if (isset($NEWPrivacyPolicyURL)) {
       $txt = ('$PrivacyPolicyURL = \''.$NEWPrivacyPolicyURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Privacy Policy" setting: "'.$NEWPrivacyPolicyURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Privacy Policy Settings.'."\n"); }
+      echo('Saved New Privacy Policy Settings.'.$br); }
     // / The following code is sets the enablement of Terms Of Service modifications in the GUI.
     if (isset($NEWTOSEnableURL)) {
       $txt = ('$TOSEnableURL = \''.$NEWTOSEnableURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Enable Terms Of Service" setting: "'.$NEWTOSEnableURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Enable Terms Of Service Settings.'."\n"); }
+      echo('Saved New Enable Terms Of Service Settings.'.$br); }
     // / The following code is sets the Terms Of Service URL in the GUI.
     if (isset($NEWTermsOfServiceURL)) {
       $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Terms Of Service" setting: "'.$NEWTermsOfServiceURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo nl2br('Saved New Terms Of Service Settings.'."\n"); } }
+      echo('Saved New Terms Of Service Settings.'.$br); } }
     // / The following code applies settings that have just been submitted so they appear immediately.
     $ShowHRAI = $NEWShowHRAI;
     $HRAIAudio = $NEWHRAIAudio;
@@ -168,6 +168,10 @@ if (isset($saveSettings)) {
     $ShowTips = $NEWShowTips;
     $ApacheUser = $NEWApacheUser;
     $ApacheGroup = $NEWApacheGroup;
+    $VirusScan = $NEWVirusScan;
+    $ThoroughAV = $NEWThoroughAV;
+    $PersistentAV = $NEWPersistentAV;
+    $HighPerformanceAV = $NEWHighPerformanceAV;
     $PPEnableURL = $NEWPPEnableURL;
     $PPEnableURL = $NEWPPEnableURL; 
     $TOSEnableURL = $NEWTOSEnableURL;
@@ -177,7 +181,7 @@ if (isset($saveSettings)) {
 ?>
 <hr />
 <?php
-echo nl2br("\n".'All settings were saved & applied on '.$Time.'.'."\n");
+echo($br.'All settings were saved & applied on '.$Time.'.'.$br);
 ?></div>
 <div align="center">   
 <hr /></div>
@@ -261,6 +265,9 @@ if (isset($loadDefaultSettings)) {
     $ShowTips = $NEWShowTips;
     $ApacheUser = $NEWApacheUser;
     $ApacheGroup = $NEWApacheGroup; 
+    $ThoroughAV = $NEWThoroughAV;
+    $PersistentAV = $NEWPersistentAV;
+    $HighPerformanceAV = $NEWHighPerformanceAV;
     $PPEnableURL = $NEWPPEnableURL;
     $PPEnableURL = $NEWPPEnableURL; 
     $TOSEnableURL = $NEWTOSEnableURL;
@@ -268,7 +275,7 @@ if (isset($loadDefaultSettings)) {
     $PrivacyPolicyURL = $NEWPrivacyPolicyURL;
     $TermsOfServiceURL = $NEWTermsOfServiceURL; }
 
-  ?><div align="center"><?php echo nl2br("\n".'Reset "Application Settings" to default values on '.$Time.'.'."\n"); 
+  ?><div align="center"><?php echo($br.'Reset "Application Settings" to default values on '.$Time.'.'.$br); 
   ?>
 <hr /></div>
 <?php 
@@ -306,8 +313,7 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
         new \RecursiveDirectoryIterator ($GenClientDir, \RecursiveDirectoryIterator::SKIP_DOTS),
         \RecursiveIteratorIterator::SELF_FIRST) as $item) {
         @chmod($item, 0755);
-        if ($item->isDir()) {
-          copy('index.html', $item.'/index.html'); } }  
+        if ($item->isDir()) copy('index.html', $item.'/index.html'); }  
     if (is_dir($GenClientDir)) {
       if ($GenClientOS == 'windows') {
         $GenClientOS1 = 'win32'; 
@@ -315,8 +321,7 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
       if ($GenClientOS == 'linux') {
         $GenClientOS1 = 'linux'; 
         $GenClientPre = 'hr-cloud-2-client-'; }
-      if ($GenClientOS == 'osx') {
-        $GenClientOS1 = 'darwin'; }
+      if ($GenClientOS == 'osx') $GenClientOS1 = 'darwin';
       $txt = 'OP-Act: Executing "'.'cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU.'" on '.$Time.'.';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU);
@@ -336,135 +341,100 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
     $objects = scandir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU);
     foreach ($objects as $object) {
       if ($object != "." && $object != ".." && $object != '/' && $object != '//') {
-        if (filetype($dir."/".$object) == "dir") 
-           rrmdir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); 
-        else 
-          unlink ($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); } }
+        if (filetype($dir."/".$object) == "dir") rmdir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); 
+        else unlink ($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); } }
     reset($objects);
     rmdir($dir); }
-  echo nl2br('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'."\n".'</hr>'); } }
+  echo('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'.$br.'</hr>'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
-if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) {
-  $DCURL = 'Disabled'; }
-if ($DataCompression == '1') {
-  $DCURL = 'Enabled (Automatic)'; }
-if ($DataCompression == '2') {
-  $DCURL = 'Enabled (High Performance)'; }
-if ($DataCompression == '3') {
-  $DCURL = 'Enabled (High Capacity)'; } 
+if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) $DCURL = 'Disabled'; 
+if ($DataCompression == '1') $DCURL = 'Enabled (Automatic)'; 
+if ($DataCompression == '2') $DCURL = 'Enabled (High Performance)'; 
+if ($DataCompression == '3') $DCURL = 'Enabled (High Capacity)'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Color Scheme" option.
-if ($ColorScheme == '1') {
-  $CSURL = 'Blue (Default)'; }
-if ($ColorScheme == '2') {
-  $CSURL = 'Red'; }
-if ($ColorScheme == '3') {
-  $CSURL = 'Green'; } 
-if ($ColorScheme == '4') {
-  $CSURL = 'Grey'; }
-if ($ColorScheme == '5') {
-  $CSURL = 'Black'; }
+if ($ColorScheme == '1') $CSURL = 'Blue (Default)'; 
+if ($ColorScheme == '2') $CSURL = 'Red'; 
+if ($ColorScheme == '3') $CSURL = 'Green';  
+if ($ColorScheme == '4') $CSURL = 'Grey'; 
+if ($ColorScheme == '5') $CSURL = 'Black'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the show HRAI input field.
-if ($ShowHRAI == '1') {
-  $SHRAIURL = 'Enabled'; }
-if ($ShowHRAI !== '1') {
-  $SHRAIURL = 'Disabled'; }
+if ($ShowHRAI == '1') $SHRAIURL = 'Enabled'; 
+if ($ShowHRAI !== '1') $SHRAIURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the HRAI audio input field.
-if ($HRAIAudio == '1') {
-  $AHRAIURL = 'Enabled'; }
-if ($HRAIAudio !== '1') {
-  $AHRAIURL = 'Disabled'; }
+if ($HRAIAudio == '1') $AHRAIURL = 'Enabled'; 
+if ($HRAIAudio !== '1') $AHRAIURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Anti-Virus input field.
-if ($VirusScan == '1') {
-  $VSURL = 'Enabled'; }
-if ($VirusScan !== '1') {
-  $VSURL = 'Disabled'; }
+if ($VirusScan == '1') $VSURL = 'Enabled'; 
+if ($VirusScan !== '1') $VSURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the High Performance AV input field.
-if ($HighPerformanceAV == '1') {
-  $HPAVURL = 'Enabled'; }
-if ($HighPerformanceAV !== '1') {
-  $HPAVURL = 'Disabled'; }
+if ($HighPerformanceAV == '1') $HPAVURL = 'Enabled'; 
+if ($HighPerformanceAV !== '1') $HPAVURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Thorough AV input field.
-if ($ThoroughAV == '1') {
-  $TAVURL = 'Enabled'; }
-if ($ThoroughAV !== '1') {
-  $TAVURL = 'Disabled'; }
+if ($ThoroughAV == '1') $TAVURL = 'Enabled'; 
+if ($ThoroughAV !== '1') $TAVURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Persistent AV input field.
-if ($PersistentAV == '1') {
-  $PAVURL = 'Enabled'; }
-if ($PersistentAV !== '1') {
-  $PAVURL = 'Disabled'; }
+if ($PersistentAV == '1') $PAVURL = 'Enabled'; 
+if ($PersistentAV !== '1') $PAVURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Timezone input field.
-if (isset($Timezone)) {
-  $TZURL = $Timezone; }
-if (!isset($Timezone)) {
-  $TZURL = $defaultTimezone; }
+if (isset($Timezone)) $TZURL = $Timezone; 
+if (!isset($Timezone)) $TZURL = $defaultTimezone; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Nickname input field.
-if (isset($nickname)) {
-  $NNURL = $nickname; }
-if (!isset($nickname)) {
-  $NNURL = $defaultNickname; }
+if (isset($nickname)) $NNURL = $nickname; 
+if (!isset($nickname)) $NNURL = $defaultNickname; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Nickname input field.
-if (isset($Font)) {
-  $FURL = $Font; }
-if (!isset($Font)) {
-  $FURL = $defaultFont; }
+if (isset($Font)) $FURL = $Font; 
+if (!isset($Font)) $FURL = $defaultFont; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Tips input field.
-if ($ShowTips == '1') {
-  $STipsURL = 'Enabled'; }
-if ($ShowTips !== '1') {
-  $STipsURL = 'Disabled'; }
+if ($ShowTips == '1') $STipsURL = 'Enabled'; 
+if ($ShowTips !== '1') $STipsURL = 'Disabled'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Apache User input field.
-if (isset($ApacheUser)) {
-  $AUURL = $ApacheUser; }
-if (!isset($ApacheUser)) {
-  $AUURL = 'www-data'; }
+if (isset($ApacheUser)) $AUURL = $ApacheUser; 
+if (!isset($ApacheUser)) $AUURL = 'www-data'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Prepare the echo value for the Apache Group input field.
-if (isset($ApacheGroup)) {
-  $AGURL = $ApacheGroup; }
-if (!isset($ApacheGroup)) {
-  $AGURL = 'www-data'; }
+if (isset($ApacheGroup)) $AGURL = $ApacheGroup; 
+if (!isset($ApacheGroup)) $AGURL = 'www-data'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -609,14 +579,14 @@ foreach ($regions as $name => $mask) {
     $timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm; } }
 print '<p alt="Adjust the timezone so that logs and GUI elements match your local time." title="Adjust the timezone so that logs and GUI elements match your local time." style="padding-left:15px;"><strong></strong> Timezone:</p>
 <p><select id="NEWTimezone" name="NEWTimezone" style="padding-left:30px; width:100%;">';
-print '<option name="'.$TZURL.'" value="'.$TZURL.'">Current ('.$TZURL.')</option>'."\n";
+print '<option name="'.$TZURL.'" value="'.$TZURL.'">Current ('.$TZURL.')</option>'.$br;
 foreach($timezones as $region => $list) {
-  print '<optgroup label="' . $region . '">' . "\n";
+  print '<optgroup label="' . $region . '">' . $br;
   foreach($list as $timezone => $name) {
     $explode1 = explode(' - ', $timezone);
     $tzexplode = trim($explode1[0]);
-    print '<option name="' . $timezone . '" value="'.$tzexplode.'">' . $name . '</option>' . "\n"; }
-  print '<optgroup>' . "\n"; }
+    print '<option name="' . $timezone . '" value="'.$tzexplode.'">' . $name . '</option>' . $br; }
+  print '<optgroup>' . $br; }
 print '</select></p>';  
 // / -----------------------------------------------------------------------------------
 ?>
