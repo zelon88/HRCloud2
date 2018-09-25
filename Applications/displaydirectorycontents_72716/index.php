@@ -369,11 +369,11 @@
               });
               </script>
               <?php }
-               if (in_array($name, $FavoriteFiles)) $Favorited = '<img src="'.$FavoritedIcon.'"></img>';
-               if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'"></img>';
+               if (in_array($name, $FavoriteFiles)) $Favorited = '<img src="'.$FavoritedIcon.'" title="Favorite File" alt="Favorite File"></img>';
+               if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'" title="Shared File" alt="Shared File"></img>';
                echo("
                 <tr class='$class'>
-                  <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$name $Favorited $Shared</a></td>
+                  <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Favorited $Shared $name</a></td>
                   <td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
                   <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
                   <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
