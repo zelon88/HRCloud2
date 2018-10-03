@@ -65,7 +65,7 @@ if (!isset($UserIDRAW)) {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The followind code hashes the user ID and sets the directory structure for the session.
+// / The followind code sets the directory structure and global variables for the session.
 $VersionFile = 'versionInfo.php';
 require($VersionFile);
 $Date = date("m_d_y");
@@ -148,10 +148,6 @@ if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $defaultTOSEnabl
 if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $defaultTOSEnableURL = '0'; 
 if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
 if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code sets some default settings if none are specified by the user's config.php.
 if (!isset($ShowHRAI) or $ShowHRAI == '') $ShowHRAI = $defaultShowHRAI;
 if (!isset($HRAIAudio) or $HRAIAudio == '') $HRAIAudio = $defaultHRAIAudio;
 if (!isset($nickname) or $nickname == '') $nickname = $defaultNickname;
@@ -169,7 +165,8 @@ if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL =
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets a target directory within a users Cloud drive and prefixes 
-// / any request files with the $_POST['UserDir']. Also used to create new UserDirs.
+// / any requested files with the $_POST['UserDir']. 
+// / Also used to create new UserDirs.
 $UserDirPOST = '/';
 // / If a valid UserDir is set, use it for all paths and operations.
 if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') $UserDirPOST = $_POST['UserDirPOST'] = str_replace('//', '/', str_replace('///', '/', '/'.$_POST['UserDir'].'/')); 
@@ -180,7 +177,7 @@ if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) $Udir = str_replac
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code defines the user directories and adds them to the array of.
+// / The following code defines the user directories and adds them to the array of RequiredDirs.
 $CloudTmpDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudTempDir.$UserDirPOST)))); 
 $CloudUsrDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudDir.$UserDirPOST)))); 
 array_push($RequiredDirs1, $CloudTmpDir, $CloudUsrDir);
@@ -274,7 +271,7 @@ else include($UserConfig);
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets the date and time for the session.
-// / It's important to note that the initial server time is not overwritten in the LogDir. 
+// / It's important to note that logs created before this variable is set may be written using server timezone.
 $Now = time();
 $Timezone = str_replace(' ', '_', $Timezone);
 date_default_timezone_set($Timezone);
@@ -383,7 +380,7 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code represents the primary color scheme handler. 
+// / The following code represents the stylesheet/color scheme handler. 
 if ($noStyles !== 1) {
   if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) $ColorScheme = '1'; 
   if ($CallingScriptBasename !== '.index.php' or $minStyles == 1 or $allStyles == 1) {   
@@ -402,8 +399,8 @@ if ($noStyles !== 1) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code checks if ShowTips is enabled and loads a random Tip if needed.
-if (file_exists($TipFile) && $ShowTips == '1') {
-  if ($ShowTips == '1') {
+if ($ShowTips == '1') {
+  if (file_exists($TipFile)) {
     include($TipFile);
     $RandomTip = array_rand($Tips);
     $Tip = $Tips[$RandomTip];

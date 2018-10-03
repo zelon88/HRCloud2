@@ -1,5 +1,14 @@
 ----------
 COMMIT 9/24/2018
+v2.9.5 - Continue refactor. Fix bugs in AV settings.
+
+-v2.9.5.
+-Change the way Tips are displayed to reduce an unneccesary check.
+-Revise code comments in commonCore.php.
+-I've got a really good idea for adding striping/mirroring support (multiple storage locations). Working on a specsheet and some brainstorm ideas.
+
+----------
+COMMIT 9/24/2018
 v2.9.4 - Continue refactor. Fix bugs in AV settings.
 
 -v2.9.4.
