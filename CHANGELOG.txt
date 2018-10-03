@@ -1,6 +1,6 @@
 ----------
 COMMIT 9/24/2018
-v2.9.5 - Continue refactor. Fix bugs in AV settings.
+v2.9.5 - Remove extra check during show Tips. Revise code comments.
 
 -v2.9.5.
 -Change the way Tips are displayed to reduce an unneccesary check.
