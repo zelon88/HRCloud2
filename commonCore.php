@@ -247,6 +247,7 @@ $AdminIDRAW = 1;
 $AdminID = hash('ripemd160', $AdminIDRAW.$Salts);
 $adminAppDataInstDir = $InstLoc.'/DATA/'.$AdminID.'/.AppData';
 $AdminConfig = $adminAppDataInstDir.'/.config.php';
+if (!file_exists($AdminConfig)) copy($LogInstallDir.'/.config.php', $AdminConfig);
 if (!file_exists($AdminConfig)) { 
   $txt = 'WARNING!!! HRC2CommonCore151, There was a problem loading the admin settings on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 

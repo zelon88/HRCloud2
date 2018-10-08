@@ -1,4 +1,13 @@
 ----------
+COMMIT 10/7/2018
+v2.9.6 - Update WP package, fix install format.
+
+-Fix the format of the installation package for Wordpress.
+-Update included Wordpress package to v4.9.8.
+-Revise and simplify the installation instructions.
+-Fix CommonCore151 error being thrown if $AdminConfig doesn't exist.
+
+----------
 COMMIT 9/24/2018
 v2.9.5 - Remove extra check during show Tips. Revise code comments.
 
