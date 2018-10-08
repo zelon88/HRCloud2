@@ -35,6 +35,7 @@ of their servers.
 -sudo apt-get install mysql-server
 -sudo apt-get install mysql-client
 -sudo mysql_secure_installation
+**DO NOT ENABLE PASSWORD STRENGTH MODULE**
 -sudo mysql -u root -p
 -CREATE DATABASE database1;
 -exit
@@ -136,6 +137,12 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
   -define('DB_PASSWORD', 'YOURPASSWORD');
 **VISIT "http://localhost" IN  A BROWSER AND YOU SHOULD BE GREETED BY THE WORDPRESS INSTALLATION PAGE**
 **COMPLETELY READ AND FILL OUT THE WORDPRESS INSTALLATION PAGE**
+
+**IF YOU GET AN ERROR: "ERROR ESTABLISHING CONNECTION TO DATABASE" FOLLOW THE STEPS BELOW**
+-sudo mysql
+-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR_DB_PASSWORD_HERE';
+-FLUSH PRIVILEGES;
+-exit;
 --------------------------------------------------
 
 -----STEP 7 - VISIT YOUR CLOUD!!!-----
