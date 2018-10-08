@@ -44,7 +44,9 @@ if (!file_exists($WPFile)) {
   echo nl2br('Notice!!! HRC2CommonCore27, WordPress was not detected on the server.'.PHP_EOL."\n".' Please visit http://yourserver in a browser and configure WordPress before returning or refreshing this page.'.PHP_EOL."\n");
   echo nl2br('OP-Act: Installing WordPress.'.PHP_EOL."\n");
   shell_exec('unzip '.$WPArch.' -d '.$ServerRootDir); 
-  if (file_exists($WPFile)) echo nl2br('OP-Act: Sucessfully installed WordPress!'.PHP_EOL."\n"); 
+  if (file_exists($WPFile)) { 
+    echo nl2br('OP-Act: Sucessfully installed WordPress!'.PHP_EOL."\n"); 
+    @unlink($ServerRootDir.'/index.html'); }
   if (!file_exists($WPFile)) echo nl2br('ERROR!!! HRC2CommonCore32, WordPress was not detected on the server and could not be installed.'.PHP_EOL."\n"); 
   die(); }
 else require_once ($WPFile); 
