@@ -4,7 +4,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Notes
-App Version: v2.2 (7-10-2018 00:00)
+App Version: v2.3 (10-12-2018 00:00)
 App License: GPLv3
 App Author: zelon88
 App Description: A simple HRCloud2 App for creating, viewing, and managing notes and to-do lists!
@@ -54,8 +54,8 @@ $newest_note = $notesList[0];
 
 // / The following code is performed whenever a user selects to edit a Note.
 if (isset($_GET['editNote'])) {
-  $noteToEdit = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
-  $noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
+  $noteToEdit = str_replace(str_split('./\'[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
+  $noteName = str_replace(str_split('./\'[]{};:$!#^&%@>*<'), '', $_GET['editNote']);
   if ($noteToEdit == '') $noteToEdit = 'New Note-'.$Date;
   if ($noteName == '') $noteName = 'New Note-'.$Date;
   $noteToEdit = $noteToEdit.'.txt';
@@ -69,7 +69,7 @@ if (isset($_GET['editNote'])) {
 
 // / The following code is performed whenever a user selects to delete a Note.
 if (isset($_GET['deleteNote'])) {
-  $noteToDelete = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
+  $noteToDelete = str_replace(str_split('./\'[]{};:$!#^&%@>*<'), '', $_GET['deleteNote']);
   $noteToDelete = $noteToDelete;
   $counter = 0;
   while (file_exists($NotesDir.$noteToDelete.'.txt')) {
@@ -91,13 +91,13 @@ if (isset($_GET['deleteNote'])) {
 if (is_dir($NotesDir)) {
   // / If the input POSTS are set, we turn them into a note.
   if (isset($_POST['newNote'])) {
-  	$noteName = str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['newNote']);
+  	$noteName = str_replace(str_split('./\'/[]{};:$!#^&%@>*<'), '', $_POST['newNote']);
     if (!isset($_POST['note'])) {
       $txt = ('ERROR!!! HRC2N26, There was no Note content detected on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL , FILE_APPEND); 
       die ($txt); }
     if ($noteName == '' or $_POST['newNote'] == '') $noteName = 'New Note-'.$Date; 
-  	$note = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['note']); 
+  	$note = str_replace(str_split('\'[]/{};:$#^>*<'), '', $_POST['note']); 
     $NoteFile = $NotesDir.$noteName.'.txt'; 
     $MAKENoteFile = file_put_contents($NoteFile, $note.PHP_EOL); 
     $txt = ('OP-Act: Note '.$noteName.' created sucessfully on '.$Time.'!'); 
