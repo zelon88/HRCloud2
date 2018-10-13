@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v2.9.6
-WRITTEN ON : 10/7/2018
+THIS VERSION : v2.9.7
+WRITTEN ON : 10/12/2018
 */
 
 // / -----------------------------------------------------------------------------------
@@ -530,7 +530,8 @@ if ($CheckCompatPOST == '1' or $CheckCompatPOST == 'true'  or $CheckCompatPOST =
   if (file_exists($InstLoc.'/Applications/HRAI/awake.php'))@unlink($InstLoc.'/Applications/HRAI/awake.php'); 
   if (file_exists($InstLoc.'/Applications/HRAI/online.php')) @unlink($InstLoc.'/Applications/HRAI/online.php'); 
   if (file_exists($InstLoc.'/Applications/HRAI/coreArr.php')) @unlink($InstLoc.'/Applications/HRAI/coreArr.php'); 
-  if (file_exists($InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php')) @unlink($InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php'); 
+  if (file_exists($InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php')) @unlink($InstLoc.'/Applications/HRAI/CoreCommands/CMDcfh.php');
+  if (file_exists($InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php')) @unlink($InstLoc.'/Applications/HRAI/CoreCommands/CMDsync.php'); 
   if (file_exists($InstLoc.'/Applications/HRAI/CallForHelp.php')) @unlink($InstLoc.'/Applications/HRAI/CallForHelp.php'); 
   if (file_exists($InstLoc.'/Applications/HRAI/ForceCallForHelp.php')) @unlink($InstLoc.'/Applications/HRAI/ForceCallForHelp.php'); 
   if (file_exists($InstLoc.'/Applications/HRAI/langPar.php')) @unlink($InstLoc.'/Applications/HRAI/langPar.php'); 

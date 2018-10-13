@@ -1,4 +1,18 @@
 ----------
+COMMIT 10/12/2018
+v2.9.7 - Notes App to v2.3, HRAI to v6.0.
+
+-v2.9.7
+-Notes App to v2.3.
+-Improve note sanitization while allowing more safe characters through.
+-HRAI to v6.0.
+-Fix errors during "Scan file" core command. Now uses HRScan2 (if installed).
+-Fix uptime core command not displaying properly on some servers.
+-Remove CMDsync core command.
+-Add "Note taker" commands. Takes notes to HRCloud2's Notes App.
+-Revise spacing of several core commands.
+
+----------
 COMMIT 10/7/2018
 v2.9.6 - Update WP package, fix install format.
 
