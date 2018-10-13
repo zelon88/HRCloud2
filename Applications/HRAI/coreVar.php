@@ -1,5 +1,5 @@
 <?php
-$HRAI_VERSION = 'v5.9';
+$HRAI_VERSION = 'v6.0';
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
 $HRAIMiniGUIFile = $InstLoc.'/Applications/HRAIMiniGui.php';
 $HRC2SecurityCoreFile = $InstLoc.'/securityCore.php';
