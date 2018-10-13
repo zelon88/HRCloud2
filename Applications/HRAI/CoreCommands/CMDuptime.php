@@ -22,14 +22,17 @@ $input = str_replace('  ',' ',$input);
 $input = rtrim($input);
 $input = ltrim($input);
 if ($CMDinit[$CMDcounter] == 1) {
+
 // / --------------------------------------
   exec("uptime", $system); // get the uptime stats
-  $string = $system[0]; // this might not be necessary
-  $uptime = explode(" ", $string); // break up the stats into an array
-  $up_days = $uptime[4]; // grab the days from the array
-  $hours = explode(":", $uptime[7]); // split up the hour:min in the stats
-  $up_hours = $hours[0]; // grab the hours
-  $mins = $hours[1]; // get the mins
+  $str   = @file_get_contents('/proc/uptime');
+  $num   = floatval($str);
+  $secs  = fmod($num, 60); $num = (int)($num / 60);
+  $mins  = $num % 60;      $num = (int)($num / 60);
+  $hours = $num % 24;      $num = (int)($num / 24);
+  $days  = $num;
+  $up_days = $days; // grab the days from the array
+  $up_hours = $hours; // grab the hours
   $up_mins = str_replace(",", "", $mins); // strip the comma from the mins
   $output = "This server has been up for " . $up_days . " days, " . $up_hours . " hours, and " . $up_mins . " minutes.\n";
   echo nl2br($output); } 

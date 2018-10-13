@@ -1,7 +1,7 @@
 <?php
 
-$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
-$inputMATCH = array('scan', 'virus check', 'malware check');
+$CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
+$inputMATCH = array('scan a file', 'scan file', 'virus check', 'malware check', 'av scan', 'antivirus scan', 'scan for', 'file scan');
 $CMDcounter++;
 
 if (isset($input)) {
@@ -20,7 +20,11 @@ $input = ltrim($input);
 if ($CMDinit[$CMDcounter] == 1) {
 
 // / --------------------------------------
-
-include('/var/www/html/HRProprietary/HRCloud2/Applications/HRScan2/uploadbuttonhtmlNOGUI.php');
-echo nl2br("--------------------------------\r"); }
-?>
+$HRScan2File = '/var/www/html/HRProprietary/HRScan2/scanGui1.php';
+if (file_exists($HRScan2File)) { 
+  ?>
+  <iframe width="500" src="/HRProprietary/HRScan2/scanCore.php?noGui=TRUE"></iframe>
+  <?php } 
+if (!file_exists($HRScan2File)) { ?>
+  <p>HRScan2 was not detected on this server! To scan files with HRAI you must install <a href="https://github.com/zelon88/HRScan2" target="_blank">HRScan2</a>.</p>
+<?php } }

@@ -13,7 +13,7 @@ if (isset($input)) {
       $input = preg_replace('/'.$inputM1.'/',' ',$input); 
       $randomKey = array_rand($responses);
       $output = $responses[$randomKey];
-      echo nl2br($output); } } }
+      echo($output.'<br />'); } } }
 
 $input = str_replace('   ',' ',$input);
 $input = str_replace('  ',' ',$input);
