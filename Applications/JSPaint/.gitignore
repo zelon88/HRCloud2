@@ -1,0 +1,9 @@
+
+# npm
+node_modules/
+*.log
+*.log.*
+
+# os crap
+Thumbs.db
+~*
