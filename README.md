@@ -80,9 +80,9 @@ HRCloud2 can integrate with WordPress, although it will install what it needs fr
 
 -Includes "Calendar" App for checking out dates (Tasks/ToDo's/Notifications in-process).
 
--Includes JSPaint App for creating, editing, and saving image files. Feels just like MSPaint!
+-Includes "JSPaint" App for creating, editing, and saving image files. Feels just like MSPaint!
 
--Includes an RSS feed reader. A high performance way to create, manage, and view separate RSS feeds with multiple sources each.
+-Includes an "RSS" feed reader. A high performance way to create, manage, and view separate RSS feeds with multiple sources each.
 
 -Automatic Updates (downloads latest updates from Github and installs itself).
 
