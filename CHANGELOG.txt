@@ -1,3 +1,10 @@
+COMMIT 10/13/2018
+v2.9.7.5 - Add JSPaint App.
+
+-v2.9.7.5.
+-Add JSPaint App by Isaiah Odhner (1j01).
+-https://github.com/1j01/jspaint
+
 ----------
 COMMIT 10/12/2018
 v2.9.7 - Notes App to v2.3, HRAI to v6.0.
