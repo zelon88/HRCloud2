@@ -42,7 +42,7 @@ of their servers.
 **WRITE DOWN THE MYSQL ROOT PASSWORD AND DATABASE NAME!!!**
 --------------------------------------------------
 
------STEP 3 - INSTALL PHP7.1 & PLUGINS-----
+-----STEP 3 - INSTALL PHP7 & PLUGINS-----
 -sudo apt-get install php libapache2-mod-php php-mysql
 -sudo apt-get install php-all-dev
 **YOU MAY NEED TO CHANGE THE VERSIONS BELOW DEPENDING ON YOUR UBUNTU/PHP VERSION**
