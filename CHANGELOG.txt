@@ -1,4 +1,13 @@
 COMMIT 10/13/2018
+v2.9.7.6 - Add RSS App.
+
+-v2.9.7.6.
+-Add RSS App.
+-Add lists of RSS Feeds and save/view/edit/delete them.
+-Based on the Notes App, Bookmarks app, and Daniel Reszka's (danielres) Github Gist (https://github.com/danielres/A-minimal-markdown-editor-in-PHP) which I turned into a function and made more robust by adding a trim() function to it.
+
+----------
+COMMIT 10/13/2018
 v2.9.7.5 - Add JSPaint App.
 
 -v2.9.7.5.
