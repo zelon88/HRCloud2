@@ -41,7 +41,8 @@
         <img id="streamButton" name="streamButton" title="Create Playlist" alt="Create Playlist" onclick="toggle_visibility('StreamOptionsDiv');" src='Resources/stream.png'/> | 
         <img id='shareButton' name="shareButton" title="Share" alt="Share" onclick="toggle_visibility('ShareOptionsDiv');" src='Resources/triangle.png'/> | 
         <img id='clipboardButton' name="clipboardButton" title="Clipboard" alt="Clipboard" onclick="toggle_visibility('ClipboardOptionsDiv');" src='Resources/clipboard.png'/> | 
-        <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/>
+        <img id='SearchButton' name="SearchButton" title="Search" alt="Search" onclick="toggle_visibility('SearchOptionsDiv');" src='Resources/searchsmall.png'/> | 
+        <img id="NewWindowButton" name="NewWindowButton" title="New Winow" alt="New Window" onclick="window.open('cloudCore.php');" src='Resources/newwindow.png'/>
       </div>
 
       <div align="center" id='newOptionsDiv' name='newOptionsDiv' style="display:none;">
@@ -103,6 +104,7 @@
           <option value="mp3">Mp3</option>
           <option value="wav">Wav</option>
           <option value="wma">Wma</option>
+          <option value="m4a">M4a</option>
           <option value="flac">Flac</option>  
           <option value="ogg">Ogg</option>
             <option value="mp3">--Video Formats--</option>
@@ -112,6 +114,7 @@
           <option value="mp4">Mp4</option>
           <option value="flv">Flv</option>
           <option value="mpeg">Mpeg</option>
+          <option value="m4v">M4v</option>
           <option value="wmv">Wmv</option>
             <option value="mp3">--Image Formats--</option>
           <option value="jpg">Jpg</option>  
