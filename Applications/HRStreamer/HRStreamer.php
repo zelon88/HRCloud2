@@ -168,12 +168,12 @@ foreach ($PlaylistSongArr as $PlaylistSong) {
               };
               ctx<?php echo $SongCount; ?>.fillStyle = capStyle<?php echo $SongCount; ?>;
               if (value<?php echo $SongCount; ?> < capYPositionArray<?php echo $SongCount; ?>[i<?php echo $SongCount; ?>]) {
-                  ctx<?php echo $SongCount; ?>.fillRect(i<?php echo $SongCount; ?> * 12, cheight<?php echo $SongCount; ?> - (--capYPositionArray<?php echo $SongCount; ?>[i]), meterWidth<?php echo $SongCount; ?>, capHeight<?php echo $SongCount; ?>);
+                  ctx<?php echo $SongCount; ?>.fillRect(i<?php echo $SongCount; ?> * 12, cheight<?php echo $SongCount; ?> - (--capYPositionArray<?php echo $SongCount; ?>[i<?php echo $SongCount; ?>]), meterWidth<?php echo $SongCount; ?>, capHeight<?php echo $SongCount; ?>);
               } else {
                   ctx<?php echo $SongCount; ?>.fillRect(i<?php echo $SongCount; ?> * 12, cheight<?php echo $SongCount; ?> - value<?php echo $SongCount; ?>, meterWidth<?php echo $SongCount; ?>, capHeight<?php echo $SongCount; ?>);
                   capYPositionArray<?php echo $SongCount; ?>[i<?php echo $SongCount; ?>] = value<?php echo $SongCount; ?>;
               };
-              ctx<?php echo $SongCount; ?>.fillStyle = gradient<?php echo $SongCount; ?>; //set the filllStyle to gradient for a better look
+              ctx<?php echo $SongCount; ?>.fillStyle = gradient<?php echo $SongCount; ?>;
               ctx<?php echo $SongCount; ?>.fillRect(i<?php echo $SongCount; ?> * 12 /*meterWidth+gap*/ , cheight<?php echo $SongCount; ?> - value<?php echo $SongCount; ?> + capHeight<?php echo $SongCount; ?>, meterWidth<?php echo $SongCount; ?>, cheight<?php echo $SongCount; ?>); 
           }
       requestAnimationFrame(renderFrame<?php echo $SongCount; ?>);
