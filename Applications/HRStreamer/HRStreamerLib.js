@@ -10,9 +10,6 @@
     function hide_visibility(id) {
       var e = document.getElementById(id);
       e.style.display = 'none'; }
-    function hide_visibility_name(name) {
-      var e = document.getElementsByName(name);
-      e.style.display = 'none'; }
     function goBack() {
       window.history.back(); }
     function stopAllAudio() {
@@ -24,5 +21,18 @@
         myAudio.play(); } 
       else {
         myAudio.pause(); } }
+    function startAudio(id) {
+      var myAudio = document.getElementById(id);
+      myAudio.play(); }
     var songsrc = [];
     var index = 0;
+    function hide_visibility_class(ele) {
+    let divs = document.getElementsByClassName(ele);
+    for (let x = 0; x < divs.length; x++) {
+      let div = divs[x];
+      div.style.display = 'none'; } }
+    function hide_visibility_name(ele) {
+    let divs = document.getElementsByName(ele);
+    for (let x = 0; x < divs.length; x++) {
+      let div = divs[x];
+      div.style.display = 'none'; } }
