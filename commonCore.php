@@ -329,7 +329,7 @@ if (!file_exists($CloudTmpDir.'/index.html')) {
 if (file_exists($CloudTempDir)) {
   $DFiles = glob($CloudTempDir.'/*');
   foreach ($DFiles as $DFile) {
-    if (in_array($DFile, $defaultApps) or $DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..')) continue;
+    if (in_array($DFile, $defaultApps) or $DFile == ($CloudTempDir.'/.') or $DFile == ($CloudTempDir.'/..') or strpos($DFile, '.Playlist') == TRUE) continue;
     $stat = lstat($DFile);
     if (($Now - $stat['mtime']) >= 600) { // Time to keep files.
       if (is_file($DFile)) {

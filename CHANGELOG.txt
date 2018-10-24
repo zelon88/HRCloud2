@@ -1,3 +1,16 @@
+COMMIT 10/21/2018
+v2.9.7.7 - Add Visualizers, m4a, m4v support.
+
+-v2.9.7.7
+-Add .m4a and .m4v support to file uploads and conversions.
+-Make processing filenames with symbols a non-issue by improving the upload filename cleaning process.
+-HRStreamer to v1.1.
+-Make streamer more robust.
+-Add visualizers.
+-Updated getid3 to the latest version.
+-Add "New Window" button to Cloud Drive page.
+
+----------
 COMMIT 10/13/2018
 v2.9.7.6 - Add RSS App.
 

@@ -74,7 +74,7 @@ if(isset($upload)) {
       echo($txt.$br.$hr); 
       continue; }
     $F2 = str_replace('//', '/', str_replace('///', '/', pathinfo($file, PATHINFO_BASENAME)));
-    $F3 = str_replace('//', '/', str_replace('///', '/', $CloudUsrDir.$F2));
+    $F3 = str_replace(str_split('()|&'), '', str_replace('//', '/', str_replace('///', '/', $CloudUsrDir.$F2)));
     if($file == "") {
       $txt = ("ERROR!!! HRC2160, No file specified on $Time.");
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
@@ -321,7 +321,7 @@ if (isset($_POST['archive'])) {
     foreach ($DangerousFiles as $DangerousFile) if (strpos($TFile1, $DangerousFile) !== FALSE) continue 2;  
     $TFile1 = str_replace('//', '/', str_replace('///', '/', str_replace(' ', '\ ', str_replace(str_split('[]{};:$!#^&%@>*<'), '', $TFile1)))); 
     $allowed =  array('mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'dat', 'cfg', 'txt', 'doc', 'docx', 'rtf', 'xls', 'xlsx', 'csv', 'ods', 'odf', 'odt', 'jpg', 'mp3', 
-     'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
+     'avi', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd', 'm4v', 'm4a');
     $archarray = array('zip', '7z', 'rar', 'tar', 'tar.gz', 'tar.bz2', 'iso', 'vhd');
     $rararr = array('rar');
     $ziparr = array('zip');
@@ -499,7 +499,7 @@ if (isset($_POST['convertSelected'])) {
     foreach ($DangerousFiles as $DangerousFile) if (strpos($file, $DangerousFile) !== FALSE) continue 2; 
     $MAKELogFile = file_put_contents($LogFile, 'OP-Act: User '.$UserID.' selected to Convert file '.$file.'.'.PHP_EOL, FILE_APPEND);
     $allowed =  array('svg', 'dxf', 'vdx', 'fig', '3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 
-     'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'csv', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2', '3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv', 
+     'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'csv', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'm4v', 'm4a', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2', '3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv', 
      'avi', 'aac', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'odp');
     $file1 = str_replace('//', '/', str_replace('///', '/', $CloudUsrDir.$file));
     $file2 = str_replace('//', '/', str_replace('///', '/', $CloudTmpDir.$file));
@@ -520,8 +520,8 @@ if (isset($_POST['convertSelected'])) {
     $newPathname = str_replace('//', '/', $CloudUsrDir.$newFile);
     $docarray =  array('txt', 'doc', 'xls', 'xlsx', 'csv', 'docx', 'rtf', 'odf', 'ods', 'odt', 'dat', 'cfg', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'odp', 'odf');
     $imgarray = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
-    $audioarray =  array('mp3', 'wma', 'wav', 'ogg', 'mp2', 'flac', 'aac');
-    $videoarray =  array('3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv');
+    $audioarray =  array('mp3', 'wma', 'wav', 'ogg', 'mp2', 'flac', 'aac', 'm4a');
+    $videoarray =  array('3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv', 'm4v');
     $modelarray = array('3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml');
     $drawingarray = array('xvg', 'dxf', 'vdx', 'fig');
     $pdfarray = array('pdf');
