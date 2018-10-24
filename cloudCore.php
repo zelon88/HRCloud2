@@ -499,7 +499,7 @@ if (isset($_POST['convertSelected'])) {
     foreach ($DangerousFiles as $DangerousFile) if (strpos($file, $DangerousFile) !== FALSE) continue 2; 
     $MAKELogFile = file_put_contents($LogFile, 'OP-Act: User '.$UserID.' selected to Convert file '.$file.'.'.PHP_EOL, FILE_APPEND);
     $allowed =  array('svg', 'dxf', 'vdx', 'fig', '3ds', 'obj', 'collada', 'off', 'ply', 'stl', 'ptx', 'dxf', 'u3d', 'vrml', 'mov', 'mp4', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'flac', 'aac', 'dat', 
-     'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'csv', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'm4v', 'm4a', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2', '3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv', 
+     'cfg', 'txt', 'doc', 'docx', 'rtf' ,'xls', 'xlsx', 'csv', 'ods', 'odf', 'odt', 'jpg', 'mp3', 'm4v', 'm4a', 'm4p', 'zip', 'rar', 'tar', 'tar.gz', 'tar.bz', 'tar.bZ2', '3gp', 'mkv', 'avi', 'mp4', 'flv', 'mpeg', 'wmv', 
      'avi', 'aac', 'mp2', 'wma', 'wav', 'ogg', 'jpeg', 'bmp', 'png', 'gif', 'pdf', 'abw', 'iso', 'vhd', 'vdi', 'pages', 'pptx', 'ppt', 'xps', 'potx', 'pot', 'ppa', 'ppa', 'odp');
     $file1 = str_replace('//', '/', str_replace('///', '/', $CloudUsrDir.$file));
     $file2 = str_replace('//', '/', str_replace('///', '/', $CloudTmpDir.$file));
