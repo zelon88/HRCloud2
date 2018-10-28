@@ -1,5 +1,4 @@
-<html>
-  <head>
+
     <meta charset="UTF-8">
     <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="Resources/HRC2-Lib.js"></script>
@@ -11,7 +10,6 @@
     if (!file_exists('././guiCore.php')) die ('ERROR!!! HRC2Index12, Cannot process the HRCloud2 GUI Core file (guiCore.php)!'.PHP_EOL); 
     else require_once ('././guiCore.php'); 
     ?>
-    </head>
 
     <body style="font-family:<?php echo $Font; ?>;">
     <div id="container">
@@ -21,11 +19,11 @@
       if ($showFavorites === '1') echo 'Favorites'; 
       require($FavoritesCacheFileInst);
       ?>
-      </div>
+      </h3></div>
 
       <div align="center" style="margin-bottom:5px;">
-        <input type='submit' name="back" id="back" value='&#x2190' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> |
-        <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="document.location.href = document.location.href; toggle_visibility('loadingCommandDiv');"> | 
+        <input type='submit' name="back" id="back" value='&#x2190;' class="submitsmall" target="cloudContents" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> |
+        <input type='submit' name="refresh" id="refresh" value='&#x21BA;' class="submitsmall" onclick="document.location.href = document.location.href; toggle_visibility('loadingCommandDiv');"> | 
         <input type='submit' value='+' onclick="toggle_visibility('newOptionsDiv');">
       </div>
       <div align="center" style="margin-bottom:5px;">
@@ -70,7 +68,7 @@
       <form action="cloudCore.php?UserDirPOST=<?php echo $Udir; ?>" method="post" enctype="multipart/form-data">
         <div align="center" name="uploadDiv" id="uploadDiv" style="display:none;">
         <input type="file" name="filesToUpload[]" id="filesToUpload" class="uploadbox" multiple style="display:none;">
-        <input type='submit' name="upload" id="upload" value='&#x21E7' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
+        <input type='submit' name="upload" id="upload" value='&#x21E7;' style="display:none;" onclick="toggle_visibility('loadingCommandDiv');">
         </div>
       </form>
       <div align="center" id='deleteOptionsDiv' name='deleteOptionsDiv' style="display:none;">
