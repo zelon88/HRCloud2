@@ -6,19 +6,17 @@
 <title>HRCloud2 | Apps </title>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-</head>
 <?php 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('<body>ERROR!!! HRC2AL18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
+else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 
 include(realpath(dirname(__FILE__)).'/header.php'); ?>
 
-<body style="font-family:<?php echo $Font; ?>;">
+<div style="font-family:<?php echo $Font; ?>;">
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:820px;">
 <?php if ($ShowHRAI == '1') { ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -29,7 +27,7 @@ include(realpath(dirname(__FILE__)).'/header.php'); ?>
   <button id='button2' name='button2' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
   <button id='button3' name='button3' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
   <button id='button4' name='button4' class="button" style="float: left; display: block;" onclick="window.open('Applications/HRAIMiniGui.php','HRAI','resizable,height=400,width=650'); return false;">++</button>
-  <form action="appLauncher.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
+  <form action="appLauncher.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA;</button></form>
   </div>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">
@@ -47,6 +45,7 @@ if ($ShowTips == '1' && isset($Tip)) {
   echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
 <div id="cloudContentsDiv" align='center'>
   <iframe src="appIndex.php" id="cloudContents" name="cloudContents" width="815px" style="min-height:450px; max-height:950px; padding-top:-4px; padding-left:-4px; border:inset;" onload="document.getElementById('loading').style.display='none';"></iframe>
+</div>
 </div>
 </div>
 <?php 

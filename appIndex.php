@@ -6,7 +6,6 @@
     <title>HRCLoud2 | App Launcher</title>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-  </head>
 
 <?php
 // / -----------------------------------------------------------------------------------
@@ -14,18 +13,16 @@
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
   echo nl2br('<body>ERROR!!! HRC2AppIndex28, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
+else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 
 if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) {
   echo nl2br('<body>ERROR!!! HRC2AppIndex34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
   die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/appCore.php'); }  
+else require_once (realpath(dirname(__FILE__)).'/appCore.php');  
 // / -----------------------------------------------------------------------------------
 ?>
 
-  <body style="font-family:<?php echo $Font; ?>;">
+  <div style="font-family:<?php echo $Font; ?>;">
     <div align="center">
       <p><strong>HRCloud2 Apps</strong> 
       <?php 
@@ -141,5 +138,6 @@ else {
       echo nl2br('</div>');     
     $appCounter++; } ?>
     </div>
+  </div>
   </body>
 </html>

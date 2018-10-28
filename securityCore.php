@@ -1,12 +1,8 @@
 <?php 
 // / -----------------------------------------------------------------------------------
 // / The following code will load required HRConvert2 files.
-if (!file_exists(realpath(dirname(__FILE__)).'/config.php')) die ('ERROR!!! HRC2SecCore3, Cannot process the HRCloud2 Config file (config.php).'.PHP_EOL); 
-else require (realpath(dirname(__FILE__)).'/config.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('ERROR!!! HRC2SecCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).'.PHP_EOL); 
 else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die ('ERROR!!! HRC2SecCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).'.PHP_EOL); 
-else require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

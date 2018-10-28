@@ -1,10 +1,6 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die ('<body>ERROR!!! HRC2AppCore5, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'.PHP_EOL.'</body></html>'); 
-else require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('<body>ERROR!!! HRC2AppCore13, Cannot process the HRCloud2 Common Core file (commonCore.php).'.PHP_EOL.'</body></html>'); 
-else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die ('<body>ERROR!!! HRC2AppCore21, Cannot process the HRCloud2 Security Core file (securityCore.php).'.PHP_EOL.'</body></html>'); 
 else require_once (realpath(dirname(__FILE__)).'/securityCore.php'); 
 // / -----------------------------------------------------------------------------------

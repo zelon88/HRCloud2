@@ -6,23 +6,19 @@
 <title>HRCloud2 | Settings</title>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-</head>
 
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('commonCore.php')) {
-  echo nl2br('<body>ERROR!!! HRC2IndexSet15, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require('commonCore.php'); }
+if (!file_exists('commonCore.php')) die ('<body>ERROR!!! HRC2IndexSet15, Cannot process the HRCloud2 Common Core file (commonCore.php)!'.PHP_EOL.'</body></html>'); 
+else require('commonCore.php'); 
 
 include('header.php'); 
 // / -----------------------------------------------------------------------------------
 ?>
 
-<body style="font-family:<?php echo $Font; ?>;">
+<div style="font-family:<?php echo $Font; ?>;">
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') { ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -73,5 +69,6 @@ $heightAdjuster = $hraiHeight + $tipsHeight; ?>
     });
 })(jQuery);
 </script>
+</div>
 </body>
 </html>

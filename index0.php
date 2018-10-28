@@ -6,21 +6,15 @@
     <title>HRCloud2 | Home </title>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
+
 <?php
 
 // / ----------------------------------------------------------------------------------- 
 // / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  include_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
-
-if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) {
-  echo nl2br('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/appCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('</head><body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'.PHP_EOL.'</body></html>'); 
+else include_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
+if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) die ('</head><body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'.PHP_EOL.'</body></html>'); 
+else require_once (realpath(dirname(__FILE__)).'/appCore.php'); 
 
 include(realpath(dirname(__FILE__)).'/header.php');
 // / -----------------------------------------------------------------------------------
@@ -36,7 +30,7 @@ include(realpath(dirname(__FILE__)).'/header.php');
         <button id='button2' name='button2' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
         <button id='button3' name='button3' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
         <button id='button4' name='button4' class="button" style="float: left; display: block;" onclick="window.open('Applications/HRAIMiniGui.php','HRAI','resizable,height=400,width=650'); return false;">++</button>
-      <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
+      <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA;</button></form>
       </div>
       <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
         <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">

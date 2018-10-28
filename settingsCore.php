@@ -1,16 +1,18 @@
 <!doctype html>
 <html>
 <meta charset="UTF-8">
+<title>HRCLoud2 | Application Settings</title>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-<title>HRCLoud2 | Application Settings</title>
+<script type="text/javascript">
+  function selectChanged(id1, id2) {
+    var x = document.getElementById(id1).value;
+    document.getElementById(id2).disabled = (x == 0); }
+  selectChanged();
+</script>
 <?php
 // / -----------------------------------------------------------------------------------a
 // / The follwoing code checks for the required core filesand terminates if they are missing.
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore11, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!<br /></body></html>'); 
-else require(realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore103, Cannot process the HRCloud2 Common Core file (commonCore.php)!<br /></body></html>'); 
-else require(realpath(dirname(__FILE__)).'/commonCore.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (securityCore.php)!<br /></body></html>'); 
 else require(realpath(dirname(__FILE__)).'/securityCore.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/compatibilityCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!<br /></body></html>');
@@ -18,7 +20,7 @@ else require(realpath(dirname(__FILE__)).'/compatibilityCore.php');
 // / -----------------------------------------------------------------------------------
 
 ?>
-<body style="font-family:<?php echo $Font; ?>;">
+<div style="font-family:<?php echo $Font; ?>;">
 <div align="center">
 <h3>HRCloud2 Settings</h3>
 <hr />
@@ -707,11 +709,6 @@ if ($UserIDRAW == 1) { ?>
 <hr />
 <p id="verisoninfo" name="versioninfo" onclick="window.open('http://www.HonestRepair.net/')" align="center"><small><i>HRCloud2 <?php echo $Version; ?> by <u>HonestRepair</u></small></i></p>
 <hr />
+</div>
 </body>
-  <script type="text/javascript">
-    function selectChanged(id1, id2) {
-      var x = document.getElementById(id1).value;
-      document.getElementById(id2).disabled = (x == 0); }
-    selectChanged();
-</script>
 </html>

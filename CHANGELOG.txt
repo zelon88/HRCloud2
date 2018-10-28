@@ -1,3 +1,12 @@
+COMMIT 10/28/2018
+v2.9.8 - Fix HTML syntax, remove unneeded core calls.
+
+-v2.9.8.
+-Revisited which cores call which cores and which cores require which cores.
+-Improve performance by reducing the number of core calls.
+-Fix a bunch of HTML syntax errors through the entire UI.
+
+----------
 COMMIT 10/21/2018
 v2.9.7.7 - Add Visualizers, m4a, m4v support.
 

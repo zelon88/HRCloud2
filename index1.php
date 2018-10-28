@@ -6,32 +6,26 @@
 <title>HRCloud2 | Home </title>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
-</head>
+
 <?php 
 
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) {
-  echo nl2br('<body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  include_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); }
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/commonCore.php')) die ('<body>ERROR!!! HRC2Index1-19, Cannot process the HRCloud2 Common Core file (commonCore.php)!'.PHP_EOL.'</body></html>'); 
+else Include_once ('/var/www/html/HRProprietary/HRCloud2/commonCore.php'); 
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
-if (!file_exists('/var/www/html/HRProprietary/HRCloud2/appCore.php')) {
-  echo nl2br('<body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
-  die (); }
-else {
-  require_once ('/var/www/html/HRProprietary/HRCloud2/appCore.php'); }
+if (!file_exists('/var/www/html/HRProprietary/HRCloud2/appCore.php')) die ('<body>ERROR!!! HRC2AL34, Cannot process the HRCloud2 App Core file (appCore.php)!'.PHP_EOL.'</body></html>'); 
+else require_once ('/var/www/html/HRProprietary/HRCloud2/appCore.php'); 
 
 include('/var/www/html/HRProprietary/HRCloud2/header.php'); 
 // / -----------------------------------------------------------------------------------
 ?>
 
 
-<body style="font-family:<?php echo $Font; ?>;">
+<div style="font-family:<?php echo $Font; ?>;">
 <div id="centerdiv" align='center' style="margin: 0 auto; max-width:815px;">
 <?php if ($ShowHRAI == '1') {  ?>
 <div id="HRAIDiv" style="float: center; ">
@@ -42,7 +36,7 @@ include('/var/www/html/HRProprietary/HRCloud2/header.php');
   <button id='button2' name='button2' class="button" style="float: left; display: block;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '100%';">+</button>
   <button id='button3' name='button3' class="button" style="float: left; display: none;" onclick="toggle_visibility('button0'); toggle_visibility('button2'); toggle_visibility('button3'); document.getElementById('HRAIMini').style.height = '75px';">-</button>
   <button id='button4' name='button4' class="button" style="float: left; display: block;" onclick="window.open('Applications/HRAIMiniGui.php','HRAI','resizable,height=400,width=650'); return false;">++</button>
-  <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA</button></form>
+  <form action="index1.php"><button id="button" name="button5" class="button" style="float:left;" href="#" onclick="toggle_visibility('loadingCommandDiv');">&#x21BA;</button></form>
   </div>
   <form action="Applications/HRAI/core.php#end" id="Corefile Input" method="post" target="HRAIMini">
   <input type="hidden" name="user_ID" value="<?php echo $UserID;?>">
@@ -89,6 +83,7 @@ if ($ShowTips == '1' && isset($Tip)) {
   <p><input type="submit" value="Launch Contacts" onclick="window.open('Applications/Contacts/Contacts.php','Contacts','resizable,height=400,width=650'); return false;"></p>
   <p>Recent Contacts: <a onclick="window.open('Applications/Contacts/Contacts.php?editContact=<?php echo $random_contact; ?>','Contacts','resizable,height=400,width=650'); return false;" href="Applications/Contacts/Contacts.php?editContact=<?php echo $random_contact; ?>"><i></i><?php echo substr($random_contact, 0, 20); ?></a></p>
   </div>
+</div>
 </div>
 </div>
 </div>

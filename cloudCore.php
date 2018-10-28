@@ -28,10 +28,6 @@
 
 // / -----------------------------------------------------------------------------------
 // / The following code will check for and initialize required HRCloud2 Core files.
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) die('ERROR!!! HRC233, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php)!'.PHP_EOL); 
-else require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); 
-if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die('ERROR!!! HRC247, Cannot process the HRCloud2 Security Core file (securityCore.php).'.PHP_EOL); 
-else require (realpath(dirname(__FILE__)).'/securityCore.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('ERROR!!! HRC235, Cannot process the HRCloud2 Common Core file (commonCore.php).'.PHP_EOL); 
 else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 // / -----------------------------------------------------------------------------------
@@ -864,8 +860,8 @@ if (isset($_POST['streamSelected'])) {
   $PlaylistName = str_replace(str_split('.\\/[]{};:>$#!&* <'), '', ($_POST['playlistname']));
   $PLVideoArr =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp');    
   $PLVideoArr2 =  array('avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');    
-  $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'aac', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
-  $PLAudioArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac');
+  $PLMediaArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'ogv', 'wmv', 'mpg', 'mpeg', 'm4v', '3gp', 'mp4');
+  $PLAudioArr =  array('mp2', 'mp3', 'wma', 'wav', 'aac', 'flac', 'ogg', 'm4a', 'm4p');
   $PLAudioOGGArr =  array('ogg');
   $PLAudioMP4Arr =  array('mp4');
   $PLVideoMP4Arr =  array('mp4');
@@ -1231,8 +1227,7 @@ if (isset($_GET['playlistSelected']) or isset($_POST['playlistSelected'])) {
   include($InstLoc.'/Applications/HRStreamer/HRStreamer.php'); 
   die(); }
 if (isset($_POST['shareConfirm']) or isset($_POST['unshareConfirm']) or isset($_GET['showShared'])) {
-  echo('<script type="text/javascript">window.location = "DATA/'.$UserID.'/.AppData/Shared/.index.php?viewsharebutton=view+shared";</script>');
-  die(); }
+  die('<script type="text/javascript">window.location = "DATA/'.$UserID.'/.AppData/Shared/.index.php?viewsharebutton=view+shared";</script>'); }
 require($InstLoc.'/Applications/displaydirectorycontents_72716/index.php'); 
 // / -----------------------------------------------------------------------------------
 ?>

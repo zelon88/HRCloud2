@@ -2,8 +2,8 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v2.9.7.7
-WRITTEN ON : 10/23/2018
+THIS VERSION : v2.9.8
+WRITTEN ON : 10/28/2018
 */
 
 // / -----------------------------------------------------------------------------------
@@ -12,23 +12,11 @@ WRITTEN ON : 10/23/2018
   // / clean and regenerate HRCloud2 cache files.
 // / -----------------------------------------------------------------------------------
 
-// / -----------------------------------------------------------------------------------
-// / The following code opens an HTML Div element to contain the output from our compatibility operations.
-echo('<div style="margin-left:15px;">');
-// / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo('ERROR!!! HRC2CompatCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).<br />'); 
-  die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/commonCore.php'); }
-if (!file_exists(realpath(dirname(__FILE__)).'/sanitizeCore.php')) {
-  echo('ERROR!!! HRC2CompatCore22, Cannot process the HRCloud2 Sanitization Core file (sanitizeCore.php).<br />'); 
-  die (); }
-else {
-  require_once (realpath(dirname(__FILE__)).'/sanitizeCore.php'); }
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('ERROR!!! HRC2CompatCore14, Cannot process the HRCloud2 Common Core file (commonCore.php).<br />'); 
+else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -592,5 +580,4 @@ if ($CheckPermsPOST == '1' or $CheckPermsPOST == 'true'  or $CheckPermsPOST == '
 if (isset($_POST['ClearCache']) or isset($_POST['AutoUpdate']) or isset($_POST['AutoDownload']) or isset($_POST['AutoInstall']) or 
   isset($_POST['AutoClean']) or isset($_POST['CheckCompatibility'])) {
   echo('<div align="center"><form target ="_parent" action="index1.php" method="get"><button id="button" name="home" value="1">Home</button></form></div>'); }
-echo('</div>');
 // / -----------------------------------------------------------------------------------
