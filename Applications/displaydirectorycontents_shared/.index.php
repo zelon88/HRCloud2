@@ -1,6 +1,4 @@
 <!doctype html>
-<html>
-  <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="../../../../Applications/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../../../../Resources/HRC2-Lib.js"></script>
@@ -12,14 +10,13 @@
     if (!file_exists('../../../../guiCore.php')) die ('ERROR!!! HRC2Index12, Cannot process the HRCloud2 GUI Core file (guiCore.php)!'.PHP_EOL); 
     else require_once ('../../../../guiCore.php'); 
     ?>
-    </head>
 
-    <body style="font-family:<?php echo $Font; ?>;">
+    <div style="font-family:<?php echo $Font; ?>;">
       <div align="center" id="container">
         <div align="center"><h3>Shared Files</h3></div>
         <div align="center" style="margin-bottom:10px;">
-          <input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
-          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); document.location.href = document.location.href;"></div>
+          <input type='submit' name="back" id="back" value='&#x2190;' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+          <input type='submit' name="refresh" id="refresh" value='&#x21BA;' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); document.location.href = document.location.href;"></div>
         <div align="center" name="unshareButton" id="unshareButton" style="margin-bottom:10px;"><img src="/HRProprietary/HRCloud2/Resources/deletesmall.png" title="Remove Shared File" alt="Remove Shared File" onclick="toggle_visibility('loadingCommandDiv');"></div>
         <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
       </div>
@@ -151,5 +148,6 @@
           });
           });
         </script>
+      </div>
       </body>
 </html>
