@@ -18,8 +18,8 @@
       <div align="center" id="container">
         <div align="center"><h3>HRCloud2 Logs</h3></div>
         <div align="center" style="margin-bottom:10px;">
-          <input type='submit' name="back" id="back" value='&#x2190' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
-          <input type='submit' name="refresh" id="refresh" value='&#x21BA' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refreshIframe();"></div>
+          <input type='submit' name="back" id="back" value='&#x2190;' target="cloudContents" class="submitsmall" onclick="goBack(); toggle_visibility('loadingCommandDiv');"> | 
+          <input type='submit' name="refresh" id="refresh" value='&#x21BA;' class="submitsmall" onclick="toggle_visibility('loadingCommandDiv'); refreshIframe();"></div>
         <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="float:center; display:none; margin-bottom:10px; max-width:64px; max-height:64px;"><img src='/HRProprietary/HRCloud2/Resources/logosmall.gif'></div>
       </div>
       <table class="sortable">
@@ -99,6 +99,5 @@
     ?>
         </tbody>
     </table>
-</div>
 </body>
 </html>
