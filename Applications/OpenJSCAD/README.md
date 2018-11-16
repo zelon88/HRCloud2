@@ -1,3 +1,12 @@
+# This version of OpenJSCAD was tweaked by [zelon88](https://github.com/zelon88) to work with the HRCloud2 App Launcher.
+
+Changes include: 
+- Taking the web-based installation approach described below.
+- Renaming index.html to OpenJSCAD.php.
+- Add the HRCloud2 App declaration described in the [Apps wiki](https://github.com/zelon88/HRCloud2/wiki/About-HRCloud2-Apps).
+- Resize the official logo and call is OpenJSCAD.png.
+- Some other minor tweaks are in the works for compatibility purposes.
+
 # @jscad/web: OpenJSCAD Web UI
 
 This is the Web based UI for [OpenJsCAD](https://github.com/jscad/OpenJSCAD.org), either to host yourself, or use directly at https://openjscad.org/.
