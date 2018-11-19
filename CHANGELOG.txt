@@ -1,3 +1,18 @@
+COMMIT 11/18/2018
+v3.0 - Improve sanitization.
+
+-v3.0.
+-Improve sanitization.
+-Based on input from neogeovr on Reddit.
+
+----------
+COMMIT 11/15/2018
+v2.9.9 - Add OpenJSCAD app.
+
+-v2.9.9.
+-Add OpenJSCAD app.
+
+----------
 COMMIT 10/28/2018
 v2.9.8 - Fix HTML syntax, remove unneeded core calls.
 

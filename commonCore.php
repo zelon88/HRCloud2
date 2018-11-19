@@ -171,17 +171,17 @@ if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL =
 // / Also used to create new UserDirs.
 $UserDirPOST = '/';
 // / If a valid UserDir is set, use it for all paths and operations.
-if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') $UserDirPOST = $_POST['UserDirPOST'] = str_replace('//', '/', str_replace('///', '/', '/'.$_POST['UserDir'].'/')); 
+if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') $UserDirPOST = $_POST['UserDirPOST'] = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', '/'.$_POST['UserDir'].'/'))); 
 // / If the root Cloud Drive is selected set the path directory and URL directory as a slash.
 if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) $Udir = $UserDirPOST = '/'; 
 // / Whatever directory the user is "in" is used for URLs.
-if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) $Udir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'].'/'))); 
+if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) $Udir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', $_POST['UserDirPOST'].'/')))); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code defines the user directories and adds them to the array of RequiredDirs.
-$CloudTmpDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudTempDir.$UserDirPOST)))); 
-$CloudUsrDir = str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudDir.$UserDirPOST)))); 
+$CloudTmpDir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudTempDir.$UserDirPOST))))); 
+$CloudUsrDir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudDir.$UserDirPOST))))); 
 array_push($RequiredDirs1, $CloudTmpDir, $CloudUsrDir);
 // / -----------------------------------------------------------------------------------
 
