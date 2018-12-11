@@ -1,3 +1,12 @@
+COMMIT 12/10/2018
+v3.0.1 - Improve security.
+
+-v3.0.1.
+-Improve security by adding a directory/user check.
+-commonCore will not run if the user attempts to access another users directory.
+-There is currently no features to allow a user to view/modify another users data, but this extra check will help ensure that even through some crazy hacker miracle a malicious crafted request should never result in compromise.
+
+----------
 COMMIT 11/18/2018
 v3.0 - Improve sanitization.
 

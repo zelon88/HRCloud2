@@ -182,6 +182,7 @@ if (isset($_POST['UserDir']) or isset($_POST['UserDirPOST'])) $Udir = str_replac
 // / The following code defines the user directories and adds them to the array of RequiredDirs.
 $CloudTmpDir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudTempDir.$UserDirPOST))))); 
 $CloudUsrDir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudDir.$UserDirPOST))))); 
+if (strpos($CloudTmpDir, $UserID) == FALSE or strpos($CloudUsrDir, $UserID) == FALSE) die('ERROR!!! HRC2CommonCore185, There was a critical security fault on '.$Time.'!'.PHP_EOL); 
 array_push($RequiredDirs1, $CloudTmpDir, $CloudUsrDir);
 // / -----------------------------------------------------------------------------------
 
