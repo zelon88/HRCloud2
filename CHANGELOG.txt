@@ -1,3 +1,10 @@
+COMMIT 12/17/2018
+v3.0.2 - Fix log generation issue.
+
+-v3.0.2.
+-Fix the special required directory handler so that it correctly creates log file indexes.
+
+----------
 COMMIT 12/10/2018
 v3.0.1 - Improve security.
 

@@ -211,8 +211,9 @@ foreach ($RequiredDirs1 as $RequiredDir1) {
 // / -----------------------------------------------------------------------------------
 // / The following code creates the last set of required directories that need advanced setup.
 foreach ($RequiredDirs2 as $RequiredDir2) { 
-  if ($RequiredDir2 === $SesLogDir) $LogInstallDir = $LogInstallDir1; 
-  if ($RequiredDir2 === $CloudShareDir) $LogInstallDir = $SharedInstallDir; 
+  if ($RequiredDir2 === $SesLogDir) $LogInstallDirectory = $LogInstallDir1; 
+  if ($RequiredDir2 === $CloudShareDir) $LogInstallDirectory = $SharedInstallDir; 
+  if ($RequiredDir2 === $LogLoc) $LogInstallDirectory = $LogInstallDir; 
   if (!file_exists($RequiredDir2)) {
     @mkdir($RequiredDir2);
     if (!file_exists($RequiredDir2)) die('ERROR!!! HRC2CommonCore137, The required directory '.$RequiredDir2.' does not exist and could not be created on '.$Time.'!'.PHP_EOL); 
@@ -223,20 +224,20 @@ foreach ($RequiredDirs2 as $RequiredDir2) {
     foreach ($FilesArr as $LIF1) {
       if (in_array($LIF1, $installedApps)) continue;
       if ($LIF1 == '.' or $LIF1 == '..') continue;
-      @copy($InstLoc.'/'.$LogInstallDir1.$LIF1, $RequiredDir2.'/'.$LIF1); } }
+      @copy($InstLoc.'/'.$LogInstallDirectory.$LIF1, $RequiredDir2.'/'.$LIF1); } }
   if (file_exists($RequiredDir2)) { 
     @chown($RequiredDir2, $ApacheUser);
     @chgrp($RequiredDir2, $ApacheGroup);
     @chmod($RequiredDir2, $ILPerms); }
-  if (!file_exists($RequiredDir2.'/.index.php')) copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php');
+  if (!file_exists($RequiredDir2.'/.index.php')) copy($InstLoc.'/'.$LogInstallDirectory.'.index.php', $RequiredDir2.'/.index.php');
   if (!file_exists($RequiredDir2.'/index.html')) copy($InstLoc.'/index.html', $RequiredDir2.'/index.html');
   if (file_exists($RequiredDir2.'/.index.php')) if ($Now - @filemtime($RequiredDir2.'/.index.php') >= 60 * 60 * 24 * 1) { // 1 day  
     @unlink($RequiredDir2.'/.index.php');
-    @copy($InstLoc.'/'.$LogInstallDir.'.index.php', $RequiredDir2.'/.index.php'); } 
+    @copy($InstLoc.'/'.$LogInstallDirectory.'.index.php', $RequiredDir2.'/.index.php'); } 
   if (file_exists($RequiredDir2.'/index.html')) if ($Now - @filemtime($RequiredDir2.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
     @unlink($RequiredDir2.'/index.html');
     @copy($InstLoc.'/index.html', $RequiredDir2.'/index.html'); } } 
-$LogInstallDir = 'Applications/displaydirectorycontents_logs/';
+$LogInstallDirectory = 'Applications/displaydirectorycontents_logs/';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
