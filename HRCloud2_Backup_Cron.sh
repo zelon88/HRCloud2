@@ -1,0 +1,1 @@
+#!/usr/bin/php -f /var/www/html/HRProprietary/HRCloud2/backupCore.php execute

@@ -17,6 +17,7 @@ if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die ('</head>
 else require(realpath(dirname(__FILE__)).'/securityCore.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/compatibilityCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore107, Cannot process the HRCloud2 Compatibility Core file (compatibilityCore.php)!<br /></body></html>');
 else require(realpath(dirname(__FILE__)).'/compatibilityCore.php');
+$BackupToken = hash('ripemd160', $Salts.$BackupLoc.$Date.$UserID.$UserIDRAW);
 // / -----------------------------------------------------------------------------------
 
 ?>
@@ -351,6 +352,22 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code loads the backupCore to perform an admin on-demand backup,
+if (isset($_POST['backupNowToken'])) {
+  if (!file_exists(realpath(dirname(__FILE__)).'/backupCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore355, Cannot process the HRCloud2 Backup Core file (backupCore.php)!<br /></body></html>');
+  else require(realpath(dirname(__FILE__)).'/backupCore.php');
+    echo('Backup Complete!'.$br);
+    echo('Cloud Items Scanned: '.$BackupScannedFilesCloud.$br);
+    echo('Backup Items Scanned: '.$BackupScannedFilesBackup.$br);
+    echo('Files Created: '.$BackupCreatedFiles.$br);
+    echo('Directories Created: '.$BackupCreatedFolders.$br);
+    echo('Files Removed: '.$BackupRemovedFiles.$br);
+    echo('Directories Removed: '.$BackupRemovedFolders.$br);
+    echo('Modified Files Replaced: '.$BackupReplacedFiles.$hr); } 
+// / -----------------------------------------------------------------------------------
+
+
+// / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
 if ($DataCompression == '0' or $DataCompression == '' or !isset($DataCompression)) $DCURL = 'Disabled'; 
 if ($DataCompression == '1') $DCURL = 'Enabled (Automatic)'; 
@@ -616,6 +633,10 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='AutoClean' id='AutoClean' value='Clean Update' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
 </p>
+
+<p alt="Backup all user submitted data." title="Backup all user submitted data." style="padding-left:15px;"> Backup User Data: </p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='backupUserDataNow' id='backupUserDataNow' value='Backup Now' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
+<input type='hidden' id='backupNowToken' name='backupNowToken' value='<?php echo $BackupToken; ?>'/>
 
 <p alt="Verify the permissions level, owner, and group of HRCloud2 controlled directories." title="Verify the permissions level, owner, and group of HRCloud2 controlled directories." style="padding-left:15px;"> Permissions Check:</p>
 <p style="float:center; padding-left:10%;">

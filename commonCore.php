@@ -148,6 +148,7 @@ if (!isset($defaultPPEnableURL) or $defaultPPEnableURL == '') $defaultPPEnableUR
 if (!is_numeric($defaultPPEnableURL) or $defaultPPEnableURL > '1') $defaultPPEnableURL = '0'; 
 if (!isset($defaultTOSEnableURL) or $defaultTOSEnableURL == '') $defaultTOSEnableURL = '0';
 if (!is_numeric($defaultTOSEnableURL) or $defaultTOSEnableURL > '1') $defaultTOSEnableURL = '0'; 
+if (!isset($BackupLoc)) $BackupLoc = '';
 if (!isset($defaultPrivacyPolicyURL) or $defaultPrivacyPolicyURL == '') $defaultPrivacyPolicyURL = 'https://www.honestrepair.net/index.php/privacy-policy';
 if (!isset($defaultTermsOfServiceURL) or $defaultTermsOfServiceURL == '') $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-service';
 if (!isset($ShowHRAI) or $ShowHRAI == '') $ShowHRAI = $defaultShowHRAI;
@@ -348,7 +349,7 @@ if (file_exists($CloudTempDir)) {
 // / -----------------------------------------------------------------------------------
 // / The following code sync's the users AppData between the InstLoc and the CloudLoc.
 if (!file_exists($appDataCloudDir)) {
-  $txt = 'WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData directory in the CloudLoc on '.$Time.'!'; 
+  $txt = 'WARNING!!! HRC2CommonCore238, There was a problem creating a sync\'d copy of the AppData directory in the CloudLoc on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die($txt.PHP_EOL.'Most likely the server\'s permissions are incorrect. Make sure the www-data usergroup and user have R/W access to ALL folders in the Cloud directory.'); }
 $dirs = array_filter(glob($appDataInstDir.'/*'), 'is_dir');
@@ -370,7 +371,7 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 // / -----------------------------------------------------------------------------------
 // / The following code sync's the users AppData between the CloudLoc and the InstLoc.
 if (!file_exists($appDataInstDir)) {
-  $txt = 'WARNING!!! HRC2CommonCore238, There was a problem creating the a sync\'d copy of the AppData directory in the InstLoc on '.$Time.'!'; 
+  $txt = 'WARNING!!! HRC2CommonCore238, There was a problem creating a sync\'d copy of the AppData directory in the InstLoc on '.$Time.'!'; 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
   die($txt.PHP_EOL.'Most likely the server\'s permissions are incorrect. Make sure the www-data usergroup and user have R/W access to ALL folders in the Installation directory. '); }
 foreach ($iterator = new \RecursiveIteratorIterator (

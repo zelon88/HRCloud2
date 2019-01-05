@@ -1,3 +1,16 @@
+COMMIT 1/3/2019
+v3.0.3 - Add backupCore, enable on-demand user data backups.
+
+-v3.0.3.
+-Fix typo in commonCore.php
+-Add manual backup feature to Admin settings page.
+-Add backupCore.
+-Still working on a Cron script for auto backups (cron will call backupCore using a shell script).
+-Still working on instructions to include auto backup information.
+-Added GUI elements to settingsCore for changing backup settings & performing on-demand backups.
+-Existing users will need to update their config.php file to contain an $EnableBackups = '1'; line and a $BackupLoc = '/path/to/backup/dir'; line.
+
+----------
 COMMIT 12/17/2018
 v3.0.2 - Fix log generation issue.
 
