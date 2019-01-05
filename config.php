@@ -20,7 +20,9 @@ $Accept_GPLv3_OpenSource_License = '1';
 
 // / ------------------------------
 // / General Information ... 
-  // / To disable HRCloud2 for maintenance, set to '1';
+  // / To enable backups, set to '1'.
+$EnableBackups = '1';
+  // / To disable HRCloud2 for maintenance, set to '1'.
 $EnableMaintenanceMode = '0';
   // / This timezone will be the default one used if a user has not specified there own.
 $defaultTimezone = 'America/New_York';
@@ -97,6 +99,9 @@ $ServerRootDir = '/var/www/html';
 $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
   // / The CloudLoc is where permanent Cloud files are stored. (NO SLASH AFTER DIRECTORY!!!) ...  
 $CloudLoc = '/mnt/23E43FN6A95F784A/Cloud';
+  // / Set backup location is where user data is backed up if backups are enabled. 
+  // / It is also possible to run as a cron by using the supplied bash script.
+$BackupLoc = '/media/justin/Media/Test';
 // / ------------------------------ 
 
 // / ------------------------------ 
