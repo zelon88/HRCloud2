@@ -353,7 +353,7 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
 
 // / -----------------------------------------------------------------------------------
 // / The following code loads the backupCore to perform an admin on-demand backup,
-if (isset($_POST['backupNowToken'])) {
+if (isset($_POST['backupUserDataNow'])) {
   if (!file_exists(realpath(dirname(__FILE__)).'/backupCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore355, Cannot process the HRCloud2 Backup Core file (backupCore.php)!<br /></body></html>');
   else require(realpath(dirname(__FILE__)).'/backupCore.php');
     echo('Backup Complete!'.$br);
