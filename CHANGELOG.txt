@@ -1,5 +1,15 @@
-COMMIT 1/3/2019
-v3.0.3 - Add backupCore, enable on-demand user data backups.
+COMMIT 1/5/2019
+ v3.0.4 - Fix bugs with backupCore.
+
+-v3.0.4.
+-Fix bugs with backupCore on and around lines 61, 81, and 88.
+-Revise some of the checks.
+-Hide the Backup Now button in settings page when $BackupsEnabled is set to anything but '1'.
+-Commit the first version of cron shell script for testing.
+
+----------
+COMMIT 1/4/2019
+ v3.0.3 - Add backupCore, enable on-demand backups.
 
 -v3.0.3.
 -Fix typo in commonCore.php

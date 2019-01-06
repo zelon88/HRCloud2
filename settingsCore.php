@@ -634,9 +634,12 @@ if ($UserIDRAW == 1) { ?>
   <input type='submit' name='CheckCompatibility' id='CheckCompatibility' value='Compat Check' style="padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/>
 </p>
 
+<?php
+if ($EnableBackups == '1') { ?>
 <p alt="Backup all user submitted data." title="Backup all user submitted data." style="padding-left:15px;"> Backup User Data: </p>
 <p style="float:center; padding-left:10%;"><input type='submit' name='backupUserDataNow' id='backupUserDataNow' value='Backup Now' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 <input type='hidden' id='backupNowToken' name='backupNowToken' value='<?php echo $BackupToken; ?>'/>
+<?php } ?>
 
 <p alt="Verify the permissions level, owner, and group of HRCloud2 controlled directories." title="Verify the permissions level, owner, and group of HRCloud2 controlled directories." style="padding-left:15px;"> Permissions Check:</p>
 <p style="float:center; padding-left:10%;">
