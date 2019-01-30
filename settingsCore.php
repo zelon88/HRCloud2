@@ -309,8 +309,6 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
     exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.$GenClientHomepage.'" "'.$GenClientDir.'"');
     @copy ('index.html', $ClientInstallDir.'/'.$GenClientOS.'/index.html');
-    @system("/bin/chmod -R 0755 $CloudLoc");
-    @system("/bin/chmod -R 0755 $InstLoc");
     if (file_exists($GenClientDir)) {
       foreach ($iterator = new \RecursiveIteratorIterator (
         new \RecursiveDirectoryIterator ($GenClientDir, \RecursiveDirectoryIterator::SKIP_DOTS),
@@ -329,15 +327,15 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU);
       if (!file_exists($GenClientZip)) {
-        $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'.';
+        $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'!';
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         die($txt); }
     if (!is_dir($GenClientDir)) {
-      $txt = 'ERROR!!! HRC2SettingsCore201, Could not create the Client App build folder on '.$Time.'.';
+      $txt = 'ERROR!!! HRC2SettingsCore201, Could not create the Client App build folder on '.$Time.'!';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       die($txt); } }
   if (!in_array($GenClientOS, $SupportedClientOS) or !in_array($GenClientCPU, $SupportedClientCPU)) {
-    $txt = 'ERROR!!! HRC2SettingsCore189, Invalid Client App Settings specified on '.$Time.'.';
+    $txt = 'ERROR!!! HRC2SettingsCore189, Invalid Client App Settings specified on '.$Time.'!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
   @copy($GenClientZip, $GenClientTempZip);
   if (is_dir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU)) {
@@ -352,7 +350,24 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code loads the backupCore to perform an admin on-demand backup,
+// / The following code generates a copy of the users AppData directory to their cloud drive in .zip format.
+if (isset($_POST['downloadAppData'])) {
+  if (is_dir($LogLoc)) { 
+    $archDst = $CloudUsrDir.'User-Data_'.$Date.'.zip';
+    $archTempDst = $CloudTmpDir.'User-Data_'.$Date.'.zip';
+    $txt = 'OP-Act: Executing "zip -j '.$archDst.' '.$LogLoc.' -x *Shared*" on '.$Time.'.';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+    shell_exec('cd '.$CloudUsrDir.'; zip -r '.$archDst.' .AppData -x *Shared*'); 
+    @copy($archDst, $archTempDst);
+    echo('Generated a copy of your User Data to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/User-Data_'.$Date.'.zip"><strong>Download Now</strong></a>.'.$br.'</hr>'); } 
+  else {
+    $txt = 'ERROR!!! HRC2SettingsCore360, Could not generate a User Data package on '.$Time.'!';
+    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+    die($txt); } }
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code loads the backupCore to perform an admin on-demand backup
 if (isset($_POST['backupUserDataNow'])) {
   if (!file_exists(realpath(dirname(__FILE__)).'/backupCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore355, Cannot process the HRCloud2 Backup Core file (backupCore.php)!<br /></body></html>');
   else require(realpath(dirname(__FILE__)).'/backupCore.php');
@@ -365,7 +380,6 @@ if (isset($_POST['backupUserDataNow'])) {
     echo('Directories Removed: '.$BackupRemovedFolders.$br);
     echo('Modified Files Replaced: '.$BackupReplacedFiles.$hr); } 
 // / -----------------------------------------------------------------------------------
-
 
 // / -----------------------------------------------------------------------------------
 // / Set the echo value for the "Data Comrpession" option.
@@ -491,6 +505,9 @@ $TOSURL = $TermsOfServiceURL;
 ?>
 <div align='left'>
 <form action="settingsCore.php" method="post" name='NEWAppSettings' id='NEWAppSettings'> 
+
+<p alt="Generate an archive of my user specific data." title="Generate an archive of my user specific data." style="padding-left:15px;"> Export User Data: </p>
+<p style="float:center; padding-left:10%;"><input type='submit' name='downloadAppData' id='downloadAppData' value=' Export User Data' style="padding-left:30px; padding: 2px; border: 1px solid black" onclick="toggle_visibility('loading');"/></p>
 
 <p alt="Generate a Desktop client App for your device." title="Generate a client App for your device." style="padding-left:15px;"><strong></strong> Desktop App: </p>
 <p>
