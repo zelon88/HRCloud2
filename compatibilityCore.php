@@ -2,7 +2,7 @@
 
 /*
 HRCLOUD2 VERSION INFORMATION
-THIS VERSION : v3.0.5
+THIS VERSION : v3.0.6
 WRITTEN ON : 1/29/2019
 */
 
@@ -36,14 +36,7 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
-// / The following code sets the global variables for the session.
-$ClearCachePOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['ClearCache'])); 
-$AutoUpdatePOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoUpdate'])); 
-$AutoDownloadPOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoDownload'])); 
-$AutoInstallPOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoInstall'])); 
-$AutoCleanPOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['AutoClean'])); 
-$CheckCompatPOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['CheckCompatibility'])); 
-$CheckPermsPOST = str_replace('..', '', str_replace(str_split('./[]{};:$!#^&%@>*<'), '', $_POST['CheckPermissions'])); 
+// / The following code sets the global variables for the session. 
 $ResourceDir = $InstLoc.'/Resources/TEMP';
 $ResourceDir1 = $ResourceDir.'/HRCloud2-master';
 $UpdatedZIP1 = $ResourceDir.'/HRC2UPDATE1.zip';

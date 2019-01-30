@@ -67,6 +67,24 @@ if (isset($_POST['GenClientHomepage'])) $GenClientHomepage = htmlentities(str_re
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
+// / The following code sets variables for generating client-side Apps based on user supplied specs. 
+if (isset($_POST['GenerateClient'])) $GenerateClient = htmlentities(str_replace('..', '', str_replace(str_split('\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['GenerateClient'])), ENT_QUOTES, 'UTF-8');
+if (isset($_POST['GenClientOS'])) $GenClientOS = htmlentities(str_replace('..', '', str_replace(str_split('\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['GenClientOS'])), ENT_QUOTES, 'UTF-8'); 
+if (isset($_POST['GenClientCPU'])) $GenClientCPU = htmlentities(str_replace('..', '', str_replace(str_split('\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['GenClientCPU'])), ENT_QUOTES, 'UTF-8'); 
+if (isset($_POST['GenClientHomepage'])) $GenClientHomepage = htmlentities(str_replace('..', '', str_replace(str_split('\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['GenClientHomepage'])), ENT_QUOTES, 'UTF-8'); 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code sets variables for generating an AppData package (the user specific data, GDPR compliance) to the users Cloud drive.
+if (isset($_POST['downloadAppData'])) $DownloadAppData = htmlentities(str_replace('..', '', str_replace(str_split('\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['downloadAppData'])), ENT_QUOTES, 'UTF-8');
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code triggers the backupCore (when used as administrator).
+if (isset($_POST['backupUserDataNow'])) $BackupUserDataNow = htmlentities(str_replace('..', '', str_replace(str_split('\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['backupUserDataNow'])), ENT_QUOTES, 'UTF-8');
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
   // / ONLY ADMINISTRATORS CAN SET COMPRESSION SETTINGS !!!
 // / Can be used by administrators to set data compression settings for user uploaded content.
   // / "DataCompressionPOST" can be set to 0 for "disabled" or 1 for "enabled".

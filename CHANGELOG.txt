@@ -1,5 +1,15 @@
+COMMIT 1/30/2019
+v3.0.6 - Improve security, consistency of codebase.
+
+-v3.0.6.
+-Add a check to ensure a generated .AppData user-data package actually belongs to the user it's being delivered to.
+-Removed redundant code from compatibilityCore.
+-Add the backupUserDataNow and downloadUserData API calls to sanitizeCore (their values are never used, but sanitizeCore contains the official API reference so these should really be in there).
+-Changed to an exec function from shell_exec.
+
+----------
 COMMIT 1/29/2019
-v3.0.5 - Add option to export user data
+v3.0.5 - Add option to export user data.
 
 -v3.0.5.
 -Add option to the settings page for exporting user data (logs, cache, bookmarks, notes, ect...)

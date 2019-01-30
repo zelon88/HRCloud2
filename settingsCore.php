@@ -351,13 +351,13 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
 
 // / -----------------------------------------------------------------------------------
 // / The following code generates a copy of the users AppData directory to their cloud drive in .zip format.
-if (isset($_POST['downloadAppData'])) {
-  if (is_dir($LogLoc)) { 
+if (isset($DownloadAppData)) {
+  if (is_dir($LogLoc) && strpos($LogLoc, $UserID) !== FALSE && strpos($CloudUsrDir, $UserID) !== FALSE && strpos($CloudTmpDir, $UserID) !== FALSE) { 
     $archDst = $CloudUsrDir.'User-Data_'.$Date.'.zip';
     $archTempDst = $CloudTmpDir.'User-Data_'.$Date.'.zip';
     $txt = 'OP-Act: Executing "zip -j '.$archDst.' '.$LogLoc.' -x *Shared*" on '.$Time.'.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    shell_exec('cd '.$CloudUsrDir.'; zip -r '.$archDst.' .AppData -x *Shared*'); 
+    exec('cd '.$CloudUsrDir.'; zip -r '.$archDst.' .AppData -x *Shared*'); 
     @copy($archDst, $archTempDst);
     echo('Generated a copy of your User Data to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/User-Data_'.$Date.'.zip"><strong>Download Now</strong></a>.'.$br.'</hr>'); } 
   else {
@@ -368,7 +368,7 @@ if (isset($_POST['downloadAppData'])) {
 
 // / -----------------------------------------------------------------------------------
 // / The following code loads the backupCore to perform an admin on-demand backup
-if (isset($_POST['backupUserDataNow'])) {
+if (isset($BackupUserDataNow)) {
   if (!file_exists(realpath(dirname(__FILE__)).'/backupCore.php')) die ('</head><body>ERROR!!! HRC2SettingsCore355, Cannot process the HRCloud2 Backup Core file (backupCore.php)!<br /></body></html>');
   else require(realpath(dirname(__FILE__)).'/backupCore.php');
     echo('Backup Complete!'.$br);
