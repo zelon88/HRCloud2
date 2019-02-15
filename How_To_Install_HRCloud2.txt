@@ -67,31 +67,22 @@ of their servers.
 --------------------------------------------------
 
 -----STEP 4 - INSTALL BASIC FEATURE DEPENDENCIES-----
--sudo apt-get install clamav
--sudo apt-get install libreoffice-common
--sudo apt-get install unoconv
+-sudo apt-get install clamav && sudo apt-get install libreoffice-common && sudo apt-get install unoconv && sudo apt-get install default-jre
+-sudo chown -R www-data:www-data /var/www
 -sudo leafpad /etc/rc.local
 **ADD THE FOLLOWING LINE TO THE "rc.local" FILE **ABOVE** THE "exit 0" LINE**
-  /usr/bin/libreoffice/program/soffice.bin --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
+  /usr/bin/soffice --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
+**IF YOU DO NOT HAVE AN rc.local FILE, COPY AND PASTE THE INCLUDED ONE**
+-sudo chmod +x /etc/rc.local
+-sudo systemctl enable rc-local.service
+-sudo apt-get install rar && sudo apt-get install unrar && sudo apt-get install p7zip-full && sudo apt-get install imagemagick && sudo apt-get install ffmpeg && sudo apt-get install tesseract-ocr && sudo apt-get install meshlab && sudo apt-get install dia && sudo apt-get install pandoc && sudo apt-get install poppler-utils && sudo apt-get install nodejs && sudo apt-get install winetricks
+-npm install nativefier -g
+**REBOOT THE SERVER**
 **IF DOCUMENT CONVERSIONS DONT WORK...**
           **-unoconv --listen**
           **OR -unoconv -l**
           **OR create a daemon to run unoconv --listen**
--sudo apt-get install poppler-utils
--sudo apt-get install rar
--sudo apt-get install unrar
--sudo apt-get install p7zip-full
--sudo apt-get install imagemagick
--sudo apt-get install ffmpeg
--sudo apt-get install id3
--sudo apt-get install tesseract-ocr
--sudo apt-get install meshlab
--sudo apt-get install dia
--sudo apt-get install pandoc
--sudo apt-get install nodejs
--sudo apt-get install winetricks
--npm install nativefier -g
-**REBOOT THE SERVER**
+**OR adjust the shebang at the top of /usr/bin/unoconv to #!/usr/bin/env python3
 --------------------------------------------------
 
 -----STEP 5 - INSTALL HRCLOUD2-----
