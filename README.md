@@ -62,6 +62,8 @@ HRCloud2 can integrate with WordPress, although it will install what it needs fr
 
 -Admins can automatically install Apps from .zip files or uninstall them just as easily.
 
+-Compatible with the [HRCloud2-Game-Pack](https://github.com/zelon88/HRCloud2-Game-Pack) and [HRCloud2-App-Pack](https://github.com/zelon88/HRCloud2-App-Pack)
+
 -Includes "Notes", "Contacts", "Bookmarks", and "Calculator" apps by zelon88.
 
 -Includes "Grabber" App by zelon88 for downloading files from URL straight to your Cloud Drive.
@@ -91,6 +93,8 @@ HRCloud2 can integrate with WordPress, although it will install what it needs fr
 -Clipboard (copy/paste files, folders, items between locations).
 
 -Compiles a user specific desktop client app on-demand from the user's Settings page. Compatible with Windows, Linux, and MacOS on 32-bit, 64-bit, and ARM CPU's. Installers are included with Windows builds.
+
+-Includes a cron for auto-backups, or backup anytime from the admin settings page.
 
 # RUNS ON
 
