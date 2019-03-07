@@ -48,7 +48,11 @@
           if (substr("$dirArray[$index]", 0, 1) != $hide) {
             $favicon = "";
             $class = "file";
-            $name = $dirArray[$index];
+            $name = $namehref = $shortName = str_replace('//', '/', str_replace('///', '/', $dirArray[$index]));
+            $nameLength = $fixedLength = strlen($name);
+            if ($nameLength > 35) { 
+              $shortName = substr($name, 0, 24).'...'.substr($name, ($nameLength-8), $nameLength);
+              $fixedLength = strlen($shortName); }
             foreach ($DangerousFiles as $DangerousFile) { 
               if (strpos($name, $DangerousFile) == TRUE) continue 2; } 
             $namehref = $dirArray[$index];
@@ -121,11 +125,11 @@
                   $size = "Unknown"; }
             if (in_array($name, $defaultApps)) continue;
            echo("<tr class='$class'>
-              <td><a href='$namehref'$favicon class='name'>$name</a></td>
-              <td><a href='$namehref'>$extn</a></td>
-              <td><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$name'></div></td>
-                    <td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
-              <td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>");  
+              <td title='$name' alt='$name'><a href='$namehref'$favicon class='name'>$shortName</a></td>
+              <td title='$name' alt='$extn'><a href='$namehref'>$extn</a></td>
+              <td title='Select \"$name\"' alt='Select \"$name\"'><div><input type='checkbox' name='corePostSelect[]' id='$namehref' value='$name'></div></td>
+              <td title='$size' alt='$size' sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
+              <td title='$modtime' alt='$modtime' sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td></tr>");  
           $fileCounter++; } } ?>
         </tbody>
         </table>
