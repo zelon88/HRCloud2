@@ -237,16 +237,18 @@
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         die($txt); }
       $myDirectory = opendir($myDirectory);
-      while ($entryName = readdir($myDirectory)) {
-        $dirArray[] = $entryName; }
+      while ($entryName = readdir($myDirectory)) $dirArray[] = $entryName; 
       closedir($myDirectory); }
     $indexCount = count($dirArray);
     if ($indexCount > 1) sort($dirArray);
     for ($index = 0; $index < $indexCount; $index++) {
       if (substr("$dirArray[$index]", 0, 1) != $hide) {
         $class = "file";
-        $name = str_replace('//', '/', str_replace('///', '/', $dirArray[$index]));
-        $namehref = $name;
+        $name = $namehref = $shortName = str_replace('//', '/', str_replace('///', '/', $dirArray[$index]));
+        $nameLength = $fixedLength = strlen($name);
+        if ($nameLength > 28) { 
+          $shortName = substr($name, 0, 17).'...'.substr($name, ($nameLength-8), $nameLength);
+          $fixedLength = strlen($shortName); }
         $fileArray = array_push($fileArray1, $namehref);
         if (!file_exists($CloudUsrDir.$dirArray[$index])) continue; 
         if (empty($namehref)) continue;
@@ -374,11 +376,11 @@
                if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'" title="Shared File" alt="Shared File"></img>';
                echo("
                 <tr class='$class'>
-                  <td><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Favorited $Shared $name</a></td>
-                  <td><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
-                  <td><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
-                  <td sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
-                  <td sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
+                  <td title='$name' alt='$name'><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Favorited $Shared $shortName</a></td>
+                  <td title='Select \"$name\"' alt='Select \"$name\"'><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
+                  <td title='$extn' alt='$extn'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
+                  <td title='$size' alt='$size' sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
+                  <td title='$modtime' alt='$modtime' sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
                 </tr>");
                 $tableCount++; 
                 $Favorited = $Shared = ''; } } ?>
