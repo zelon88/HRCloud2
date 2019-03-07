@@ -1,3 +1,14 @@
+COMMIT 3/6/2019
+v3.0.7 - Improve Drive & Shared indexes.
+
+-v3.0.7.
+-Drive and shared indexes now truncate long filenames.
+-Truncation involves chopping the middle out of long names and replacing it with '... '.
+-This allows enough room for favorite and shared icons as well as filename, and gives extra long names a breakpoint.
+-Add title and alt text to all table row items.
+-I need to figure out a way to purge Shared index files from a users Cloud drive.
+
+----------
 COMMIT 1/30/2019
 v3.0.6 - Improve security, consistency of codebase.
 
