@@ -25,6 +25,7 @@ $fileArray1 = array();
 $tableCount = $ArchInc = $ConvertInc = $RenameInc = $EditInc = 0;
 $FavoritedIcon = '/HRProprietary/HRCloud2/Resources/favorites.png';
 $SharedIcon = '/HRProprietary/HRCloud2/Resources/triangle.png';
+$FolderIcon = '/HRProprietary/HRCloud2/Resources/folder.png';
 $SharedFiles = scandir($UserSharedDir);
 if (!isset($Udir)) $Udir = '';
 $Udir = str_replace('//', '/', str_replace('//', '/', $Udir));
