@@ -299,10 +299,8 @@
             case 'Directory': $extn = 'Folder'; break;
             case '<directory>': $extn = 'Folder'; break;
             case 'directory': $extn = 'Folder'; break;
-            default: if ($extn != "") { $extn = strtoupper($extn)." File"; }
+            default: if ($extn != "") $extn = strtoupper($extn)." File";
               break; }
-            if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == FALSE) {
-              $extn = "Folder"; }
             if ($extn == 'HTML File' or $extn == 'PHP File' or $extn == 'CSS File') continue;
             foreach ($DangerousFiles as $DangerousFile) { 
               if (strpos($name, $DangerousFile) == TRUE) continue 2; } 
@@ -310,6 +308,8 @@
             $sizekey = filesize($CloudUsrDir.$dirArray[$index]); }
             $FileURL = 'DATA/'.$UserID.$UserDirPOST.$namehref;
             $extnRAW = pathinfo($dirArray[$index], PATHINFO_EXTENSION);
+            if (strpos($extn, 'Directory') == TRUE or strpos($name, '.') == FALSE) {
+              $extn = "Folder"; }
             if ($extnRAW == '' or $extnRAW == NULL or preg_match('~[0-9]~', $size) == FALSE) {
               $extn = "Folder"; 
               $size = "Unknown"; 
@@ -372,18 +372,19 @@
               });
               </script>
               <?php }
+               $Folder = $Favorited = $Shared = '';
+               if ($extn == "Folder") $Folder = '<img src="'.$FolderIcon.'" title="Folder" alt="Folder"</img>';
                if (in_array($name, $FavoriteFiles)) $Favorited = '<img src="'.$FavoritedIcon.'" title="Favorite File" alt="Favorite File"></img>';
                if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'" title="Shared File" alt="Shared File"></img>';
                echo("
                 <tr class='$class'>
-                  <td title='$name' alt='$name'><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Favorited $Shared $shortName</a></td>
+                  <td title='$name' alt='$name'><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Folder $Favorited $Shared $shortName</a></td>
                   <td title='Select \"$name\"' alt='Select \"$name\"'><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
                   <td title='$extn' alt='$extn'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
                   <td title='$size' alt='$size' sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
                   <td title='$modtime' alt='$modtime' sorttable_customkey='$timekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$modtime</a></td>
                 </tr>");
-                $tableCount++; 
-                $Favorited = $Shared = ''; } } ?>
+                $tableCount++; } } ?>
       </tbody>
     </table>
     <div align='center' id='loading' name='loading' style="display:none;"><img src='Resources/pacman.gif'/></div>
