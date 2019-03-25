@@ -42,7 +42,7 @@ table {
 }
 
 th {
-	background-color: #959596; /*Slight-Light Blue*/
+	background-color: #888566; /*Slight-Light Blue*/
 	color: #FFF; /*White*/
 	cursor: pointer;
 	padding: 5px 10px;
@@ -61,7 +61,7 @@ a {
 }
 
 td a {
-	color: #424F57; /*Slight-Light Blue 2*/
+	color: #888566; /*Slight-Light Blue 2*/
 	display: block;
 	padding: 5px 10px;
 }
@@ -96,21 +96,21 @@ tr:hover td a {
  .submitsmall {
   height: 18px;
   width: 35px;
-  -moz-box-shadow: 0px 0px 0px 2px #959596; /*Sky Blue*/
-  -webkit-box-shadow: 0px 0px 0px 2px #959596; /*Sky Blue*/
-  box-shadow: 0px 0px 0px 2px #959596; /*Sky Blue*/
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #959596), color-stop(1, #959596)); /*Blue 2 and Blue 1*/
-  background:-moz-linear-gradient(top, #424F57 5%, #959596 100%); /*Blue 1 and Blue 2*/
-  background:-webkit-linear-gradient(top, #424F57 5%, #959596 100%); /*Blue 1 and Blue 2*/
-  background:-o-linear-gradient(top, #424F57 5%, #959596 100%); /*Blue 1 and Blue 2*/
-  background:-ms-linear-gradient(top, #424F57 5%, #959596 100%); /*Blue 1 and Blue 2*/
-  background:linear-gradient(to bottom, #424F57 5%, #959596 100%); /*Blue 1 and Blue 2*/
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#959596', endColorstr='#476e9e',GradientType=0); /*Blue 2 and Blue 1*/
-  background-color:#959596; /*Blue 1*/
+  -moz-box-shadow: 0px 0px 0px 2px #CCBB11; /*Sky Blue*/
+  -webkit-box-shadow: 0px 0px 0px 2px #CCBB11; /*Sky Blue*/
+  box-shadow: 0px 0px 0px 2px #CCBB11; /*Sky Blue*/
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #CCBB11), color-stop(1, #888566)); /*Blue 2 and Blue 1*/
+  background:-moz-linear-gradient(top, #888566 5%, #888566 100%); /*Blue 1 and Blue 2*/
+  background:-webkit-linear-gradient(top, #888566 5%, #888566 100%); /*Blue 1 and Blue 2*/
+  background:-o-linear-gradient(top, #888566 5%, #888566 100%); /*Blue 1 and Blue 2*/
+  background:-ms-linear-gradient(top, #888566 5%, #888566 100%); /*Blue 1 and Blue 2*/
+  background:linear-gradient(to bottom, #888566 5%, #888566 100%); /*Blue 1 and Blue 2*/
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCBB11', endColorstr='#888566',GradientType=0); /*Blue 2 and Blue 1*/
+  background-color:#CCBB11; /*Blue 1*/
   -moz-border-radius:10px;
   -webkit-border-radius:10px;
   border-radius:10px;
-  border:1px solid #959596; /*Blue 2*/
+  border:1px solid #CCBB11; /*Blue 2*/
   display:inline-block;
   cursor:pointer;
   color:#ffffff; /*White*/
@@ -121,4 +121,4 @@ tr:hover td a {
   margin-left:4px;
   margin-right:4px;
   text-decoration:none;
-  text-shadow:0px 1px 0px #091218; /*Blue 3*/
+  text-shadow:0px 1px 0px #000000; /*Blue 3*/
