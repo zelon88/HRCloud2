@@ -25,4 +25,8 @@ $Tips = array(
 'Have an idea for an app? It\'s easier than you think to make your own HRC2 Apps. For more information on HRC2 Apps check out <a href="https://github.com/zelon88/HRCloud2/wiki/About-HRCloud2-Apps">the official HRCloud2 Wiki</a>.',
 'You can hide HRAI from your Cloud pages from your Settings page by clicking the ≡ button!',
 'Time not showing right? Change your Timezone settings by clicking the ≡ button!',
+'You can change the color scheme & font on your "Settings" page!',
+'Curious what information we collect about you? Download a copy of your user data from your "Settings" page!',
+'You can hover your mouse over many features & settings to display more information about them.',
+'The OpenJSCAD App can open, edit, and save all kinds of 3D models right in your browser!',
 'Have a couple files you use all the time? Add them to your favorites by clicking on the <img src="Resources/favorites.png"></img> button!');
