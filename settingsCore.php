@@ -394,8 +394,12 @@ if ($DataCompression == '3') $DCURL = 'Enabled (High Capacity)';
 if ($ColorScheme == '1') $CSURL = 'Blue (Default)'; 
 if ($ColorScheme == '2') $CSURL = 'Red'; 
 if ($ColorScheme == '3') $CSURL = 'Green';  
-if ($ColorScheme == '4') $CSURL = 'Grey'; 
+if ($ColorScheme == '4') $CSURL = 'Orange'; 
 if ($ColorScheme == '5') $CSURL = 'Black'; 
+if ($ColorScheme == '6') $CSURL = 'Purple'; 
+if ($ColorScheme == '7') $CSURL = 'Green (2)'; 
+if ($ColorScheme == '8') $CSURL = 'Grey'; 
+if ($ColorScheme == '9') $CSURL = 'Yellow'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -542,8 +546,13 @@ $TOSURL = $TermsOfServiceURL;
     <option value="1">Blue (Default)</option>
     <option value="2">Red</option>
     <option value="3">Green</option>
-    <?php // ADD NUMBER 4 NEXT!!!!! ?>
+    <option value="7">Green (2)</option>
+    <option value="4">Orange</option>
     <option value="5">Black</option>
+    <option value="6">Purple</option>
+    <?php // GREEN2 IS #7, OUT OF ORDER. CHECK ORDER CAREFULLY!!! ?>
+    <option value="8">Grey</option>
+    <option value="9">Yellow</option>
   </select>
 </p>
 

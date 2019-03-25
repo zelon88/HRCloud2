@@ -339,7 +339,7 @@ if (isset($_POST['archive'])) {
         echo($txt.$br.$hr);   
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         continue; } }
-    // / Check the Cloud Location with ClamAV before archiving, just in case.
+        // / Check the Cloud Location with ClamAV before archiving, just in case.
         if ($VirusScan == '1') {
           shell_exec(str_replace('  ', ' ', str_replace('  ', ' ', 'clamscan -r '.$Thorough.' '.$archSrc.' | grep FOUND >> '.$ClamLogDir)));
           $ClamLogFileDATA = file_get_contents($ClamLogDir);
@@ -682,7 +682,7 @@ if (isset($_POST['convertSelected'])) {
                         @chmod($delFile, $ILPerms);
                         @rmdir($delFile); } } 
                         @rmdir($safedir); } }
-// / Error handler and logger for converting files.
+  // / Error handler and logger for converting files.
   if (!file_exists($newPathname)) {
     $txt = ('ERROR!!! HRC2524, '."Conversion failed! $newPathname could not be created from $oldPathname".'!');
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
@@ -818,7 +818,7 @@ if (isset($_POST['pdfworkSelected'])) {
               $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
               echo($txt.$br.$hr);
               continue; } }
-          // / If the output file is a txt file we leave it as-is.
+        // / If the output file is a txt file we leave it as-is.
         if (!file_exists($newPathname)) {                    
           if ($extension == 'txt') { 
             if (file_exists($pathnameTEMP)) {

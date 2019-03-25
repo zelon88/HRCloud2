@@ -100,10 +100,7 @@ if ($ClearFavoritesPOST == '1' or $ClearFavoritesPOST == 'true' or $ClearFavorit
 // / Will establish a CuRL connection to Github and download the latest Master commit in .zip form and unpack it
   // / to the $InstLoc. Temporary files will then be deleted.
 if ($AutoUpdatePOST == '1' or $AutoUpdatePOST == 'true'  or $AutoUpdatePOST == 'Automatic Update') {
-  $AutoDownloadPOST = 'true';
-  $AutoInstallPOST = 'true';
-  $AutoCleanPOST = 'true';
-  $CheckCompatPOST = 'true';
+  $AutoDownloadPOST = $AutoInstallPOST = $AutoInstallPOST = $CheckCompatPOST = 'true';
   $txt = ('OP-Act: Initiating Auto-Updater on '.$Time.'.'); 
   echo($txt.$hr);
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);   

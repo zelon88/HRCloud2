@@ -1,3 +1,14 @@
+COMMIT 3/22/2019
+v3.0.9 - Add Orange/Purple/Green2/Grey/Yellow color schemes.
+
+-v3.0.9.
+-Add Orange, Green2, Purple, Grey & Yellow color schemes.
+-Improve comments.
+-Trivial code reduction.
+-Fix yellow <hr>.
+-Add more Tips to Resources/tips.php.
+
+----------
 COMMIT 3/17/2019
 v3.0.8 - Add folder icon to Drive page.	
 

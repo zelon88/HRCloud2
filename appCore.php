@@ -222,7 +222,7 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
 // / -----------------------------------------------------------------------------------
 // / The following code returns the random file or folder for each Cloud module. 
 $files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);
-$fileCounter = count($files)*2;
+$fileCounter = count($files) * 2;
 $fileCouner1 = 0;
 $random_file = array_rand($files, 1);
 $random_file = $files[$random_file];
@@ -236,7 +236,7 @@ while ($random_file == '.' or $random_file == '..' or strpos($random_file, '.htm
 // / -----------------------------------------------------------------------------------
 // / The following code sets a random App to echo for some home screens and GUI's.
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
-$appCounter = count($apps)*2;
+$appCounter = count($apps) * 2;
 $appCouner1 = 0;
 $random_app = array_rand($apps);
 $random_app = $apps[$random_app];

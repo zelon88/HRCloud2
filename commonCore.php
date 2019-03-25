@@ -393,14 +393,22 @@ if ($noStyles !== 1) {
     if ($ColorScheme == '1') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLUE.css">'); 
     if ($ColorScheme == '2') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleRED.css">'); 
     if ($ColorScheme == '3') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN.css">'); 
-    if ($ColorScheme == '4') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">'); 
-    if ($ColorScheme == '5') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); }
+    if ($ColorScheme == '4') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleORANGE.css">'); 
+    if ($ColorScheme == '5') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLACK.css">'); 
+    if ($ColorScheme == '6') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/stylePURPLE.css">'); 
+    if ($ColorScheme == '7') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREEN2.css">'); 
+    if ($ColorScheme == '8') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleGREY.css">');
+    if ($ColorScheme == '9') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleYELLOW.css">'); }
   if ($CallingScriptBasename == '.index.php' or $CallingScriptBasename == 'cloudCore.php' or $maxStyles == 1 or $allStyles == 1) { 
     if ($ColorScheme == '1') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleBLUE.css">'); 
     if ($ColorScheme == '2') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleRED.css">'); 
     if ($ColorScheme == '3') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREEN.css">'); 
-    if ($ColorScheme == '4') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREY.css">'); 
-    if ($ColorScheme == '5') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleBLACK.css">'); } }
+    if ($ColorScheme == '4') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleORANGE.css">'); 
+    if ($ColorScheme == '5') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleBLACK.css">'); 
+    if ($ColorScheme == '6') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStylePURPLE.css">'); 
+    if ($ColorScheme == '7') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREEN2.css">'); 
+    if ($ColorScheme == '8') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREY.css">');
+    if ($ColorScheme == '9') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleYELLOW.css">'); } }
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
