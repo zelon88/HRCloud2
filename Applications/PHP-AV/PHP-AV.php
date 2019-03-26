@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: v3.8 (8-21-2018 00:00)
+App Version: v3.9 (3-25-2019 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -48,7 +48,7 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v3.8 | Virus Definition v4.6, 8/1/2018';
+    $versions = 'PHP-AV App v3.9 | Virus Definition v4.7, 3/25/2019';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
     $report = '';
@@ -56,10 +56,9 @@ require('config.php');
     $filecount = 0;
     $infected = 0;
     $CONFIG = Array();
-    $CONFIG['debug'] = 0;
+    $abort = $CONFIG['debug'] = FALSE;
     $CONFIG['scanpath'] = $_SERVER['DOCUMENT_ROOT'];
     $CONFIG['extensions'] = Array();
-    $abort = FALSE;
     $AVLogDir = $InstLoc.'/DATA/'.$UserID.'/.AppData/'.$Date;
     $AVLogFile = $AVLogDir.'/PHPAV-'.$SesHash.'-'.$Date.'.txt';
     $AVLogURL = str_replace(str_split('~#[](){};$!#^&%@>*<"\''), '', '/HRProprietary/HRCloud2/DATA/'.$UserID.'/.AppData/'.$Date.'/PHPAV-'.$SesHash.'-'.$Date.'.txt');
