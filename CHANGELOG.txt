@@ -1,3 +1,17 @@
+COMMIT - 3/25/2019
+v3.1 - PHP-AV to v3.9.
+
+-v3.1.
+-PHP-AV App to v3.9. Defs to v4.7.
+-Add support for SHA1 hash detection ($data3, $virus[4]).
+-Add code detection for lots of malicious files. 
+-Includes malicious code samples for Golang, Python, C++, node.js, Java, Javascript, PowerShell, Ruby, VBS & more.
+-Fix obscenely large logfiles by removing filename logging during scanning.
+-To continue logging filenames like before (and generate really large log files) set $CONFIG['debug'] = True;
+-Fixed indented code blocks.
+-Bump included WordPress version to v5.1.1 (latest).
+
+----------
 COMMIT 3/22/2019
 v3.0.9 - Add Orange/Purple/Green2/Grey/Yellow color schemes.
 
