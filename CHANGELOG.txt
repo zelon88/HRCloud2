@@ -1,5 +1,13 @@
+COMMIT 3/29/2019
+v3.1.1 - Fix typo in guiCore.
+
+-v3.1.1.
+-Fix a typo in guiCore (assignment instead of comparison).
+-Thanks to nat on raddle.me
+
+----------
 COMMIT - 3/25/2019
-v3.1 - PHP-AV to v3.9.
+v3.1 - PHP-AV to v3.9. Add SHA1 detection, code samples.
 
 -v3.1.
 -PHP-AV App to v3.9. Defs to v4.7.
