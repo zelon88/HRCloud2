@@ -35,7 +35,7 @@ $Udir = str_replace('//', '/', str_replace('//', '/', $Udir));
 // / The following code sets GUI specific resources.
 function getCurrentURL() {
   if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') $httpPrefix = 'https://'; 
-  if (!empty($_SERVER['HTTPS']) or $_SERVER['HTTPS'] = 'on') $httpPrefix = 'http://'; 
+  if (!empty($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'on') $httpPrefix = 'http://'; 
   $Current_URL = $httpPrefix.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; 
   return ($CurrentURL); }
 function getFiles($pathToFiles) {
