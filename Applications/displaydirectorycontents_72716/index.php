@@ -1,8 +1,8 @@
 
     <meta charset="UTF-8">
-    <script type="text/javascript" src="Applications/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="Resources/HRC2-Lib.js"></script>
-    <script type="text/javascript" src="Resources/sorttable.js"></script>
+    <script type="text/javascript" src="Applications/jquery-3.1.0.min.js" preload></script>
+    <script type="text/javascript" src="Resources/HRC2-Lib.js" defer></script>
+    <script type="text/javascript" src="Resources/sorttable.js" defer></script>
     <title>Cloud Contents</title>
 
     <?php
@@ -214,7 +214,7 @@
         <p><input type='submit' id='clipboardCopy' name='clipboardCopy' value='Copy' onclick="toggle_visibility('loadingCommandDiv');">
           | <input type='submit' id='clipboardPaste' name='clipboardPaste' value='Paste' onclick="toggle_visibility('loadingCommandDiv');"></p>
       </div>
-      <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="display:none;"><img src='Resources/logoSmall.gif' style="max-width:64px; max-height:64px;"/></div>
+      <div align="center" id='loadingCommandDiv' name='loadingCommandDiv' style="display:none;"><img src='Resources/logoSmall.gif' style="max-width:64px; max-height:64px;" preload/></div>
     </div>  
     <table class="sortable">
       <thead>
