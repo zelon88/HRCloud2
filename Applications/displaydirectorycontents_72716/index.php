@@ -373,9 +373,9 @@
               </script>
               <?php }
                $Folder = $Favorited = $Shared = '';
-               if ($extn == "Folder") $Folder = '<img src="'.$FolderIcon.'" title="Folder" alt="Folder"</img>';
-               if (in_array($name, $FavoriteFiles)) $Favorited = '<img src="'.$FavoritedIcon.'" title="Favorite File" alt="Favorite File"></img>';
-               if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'" title="Shared File" alt="Shared File"></img>';
+               if ($extn == "Folder") $Folder = '<img src="'.$FolderIcon.'" title="Folder" alt="Folder"/>';
+               if (in_array($name, $FavoriteFiles)) $Favorited = '<img src="'.$FavoritedIcon.'" title="Favorite File" alt="Favorite File"/>';
+               if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'" title="Shared File" alt="Shared File"/>';
                echo("
                 <tr class='$class'>
                   <td title='$name' alt='$name'><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Folder $Favorited $Shared $shortName</a></td>
