@@ -1,4 +1,12 @@
 COMMIT 4/2/2019
+v3.1.3 - Fix HTML bugs with Folder, Shared, Favorite icons.
+
+-v3.1.3.
+-Fix HTML bugs in Drive items when displaying Folder, Shared, and Favorite icons.
+-Stray HTML tags and typos mostly.
+
+----------
+COMMIT 4/2/2019
 v3.1.2 - Improve JS performance, reduce errors.
 
 -v3.1.2.
