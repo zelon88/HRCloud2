@@ -1,8 +1,8 @@
 <!doctype html>
     <meta charset="UTF-8">
-    <script type="text/javascript" src="../../../../Applications/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="../../../../Resources/HRC2-Lib.js"></script>
-    <script type="text/javascript" src="../../../../Resources/sorttable.js"></script>
+    <script type="text/javascript" src="../../../../Applications/jquery-3.1.0.min.js" preload></script>
+    <script type="text/javascript" src="../../../../Resources/HRC2-Lib.js" defer></script>
+    <script type="text/javascript" src="../../../../Resources/sorttable.js" defer></script>
     <title>Shared Cloud Contents</title>
 
     <?php
