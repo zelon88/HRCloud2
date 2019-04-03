@@ -1,3 +1,12 @@
+COMMIT 4/3/2019
+v3.1.4 - Fix bug. Improve performance by defering some resources.
+
+-v3.1.4.
+-Defer some image resources on Drive and App pages (appIndex).
+-Found some more resources without preload or defer attributes in the GUI.
+-Fix a bug where appCore would display an error message upon succesfully uninstalling an App.
+
+----------
 COMMIT 4/2/2019
 v3.1.3 - Fix HTML bugs with Folder, Shared, Favorite icons.
 

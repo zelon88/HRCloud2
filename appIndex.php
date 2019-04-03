@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="favicon.ico">
     <title>HRCLoud2 | App Launcher</title>
-    <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
+    <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js" preload></script>
+    <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js" defer></script>
 
 <?php
 // / -----------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ else require_once (realpath(dirname(__FILE__)).'/appCore.php');
       $appCounter = 0;
       if ($UserIDRAW == 1) { 
         echo '<button id="showInstallAppButton" name="showInstallAppButton" class="button" alt="Install App" title="Install App" style="display:block; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');">+</button>';
-        echo '<img id="XshowInstallAppButton" name="XshowInstallAppButton" style="margin-right:5px; display:none; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');" src="Resources/x.png" alt="Close \'Install App\'" title="Close \'Install App\'"></p>'; 
+        echo '<img id="XshowInstallAppButton" name="XshowInstallAppButton" style="margin-right:5px; display:none; float:right;" onclick="toggle_visibility(\'showInstallAppButton\'); toggle_visibility(\'XshowInstallAppButton\'); toggle_visibility(\'installAppForm\');" src="Resources/x.png" alt="Close \'Install App\'" title="Close \'Install App\'" defer></p>'; 
         echo '<div id="installAppForm" name="installAppForm" style="display:none;"><form method="post" action="appIndex.php" enctype="multipart/form-data"><input type="file" id="appToUpload" name="appToUpload[]" class="uploadbox" multiple>';
         echo '<input type="hidden" id="YUMMYSaltHash" name="YUMMYSaltHash" value="'.$SaltHash.'"><input type="submit" id="installApplication" name="installApplication" class="button" value="Install App"></form></div>'; }
       if ($UserIDRAW !== 1) { 

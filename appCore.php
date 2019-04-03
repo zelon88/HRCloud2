@@ -157,7 +157,7 @@ if (isset($_POST['uninstallApplication'])) {
         $txt = ('OP-Act: Deleted file '.$CleanDir.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n".PHP_EOL.'--------------------'.PHP_EOL."\n"); } 
-      if (!file_exists($CleanDir)) {
+      if (file_exists($CleanDir)) {
         $txt = ('ERROR!!! HRC2AppCore165 Could not delete file '.$CleanDir.' on '.$Time.'.');
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
         echo nl2br($txt."\n".PHP_EOL.'--------------------'.PHP_EOL."\n"); } } }
