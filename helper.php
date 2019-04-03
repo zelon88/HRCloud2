@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico">
+    <link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico" preload>
     <title>HRCLoud2 | Help</title>
-    <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js" preload></script>
 
 <?php
 // / -----------------------------------------------------------------------------------

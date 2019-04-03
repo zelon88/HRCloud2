@@ -1,3 +1,13 @@
+COMMIT 4/2/2019
+v3.1.2 - Improve JS performance, reduce errors.
+
+-v3.1.2.
+-Remove unneeded iframe refresh function from HRC2-Lib.js
+-Move HRC2-Lib.js call below HRAI to reduce errors.
+-Fix logs directory refresh buttons (pre-existing folders won't be fixed, new ones will).
+-Add preload and defer attributes to some scripts to improve performance.
+
+----------
 COMMIT 3/29/2019
 v3.1.1 - Fix typo in guiCore.
 

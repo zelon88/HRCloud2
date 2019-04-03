@@ -2,10 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico">
+<link rel="shortcut icon" href="/HRProprietary/HRCloud2/favicon.ico" preload>
 <title>HRCloud2 | Logs </title>
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js"></script>
-<script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js"></script>
+<script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js" preload></script>
 
 <?php
 // / -----------------------------------------------------------------------------------
@@ -41,7 +40,7 @@ include('header.php');
   <input type="text" name="input" id="input"  value="<?php echo $input; ?>" onclick="ClearInput();">
   <input id='submitHRAI' type="submit" value="Hello HRAI"></div></form>
 </div>
-<?php } 
+<?php } ?><script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js" defer></script><?php
 if ($ShowTips == '1' && isset($Tip)) {
   $tipsHeight = '60';
   echo '<p><strong>Tip: </strong>'.$Tip.'</p>'; } ?>
