@@ -1158,67 +1158,53 @@ if (isset($_POST['clipboardCopy'])) {
 
 // / -----------------------------------------------------------------------------------
 // / Code to search a users Cloud Drive and return the results.
-if (isset($_POST['search'])) { 
-  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: '."User initiated Cloud Search on $Time".'.'.PHP_EOL, FILE_APPEND); ?>
-  <div align="center"><h3>Search Results</h3></div>
-  <hr />
-  <?php
-  $SearchRAW = $_POST['search'];
-  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Raw user input is "'.$SearchRAW.'" on '.$Time.'.'.PHP_EOL, FILE_APPEND);
-  $searchRAW = str_replace('..', '', str_replace(str_split('\\/[]{};:!$#&@>*<'), '', $searchRAW));
-  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: Sanitized user input is "'.$SearchRAW.'" on '.$Time.'.'.PHP_EOL, FILE_APPEND);
-  $SearchLower = strtolower($SearchRAW);
-  if ($SearchRAW == '') {
-    ?><div align="center"><?php echo('Please enter a search keyword.'.$br.'<a href="#" onclick="goBack();">&#8592; Go Back</a>'); ?><hr /></div> <?php die(); }
+if (isset($_POST['search'])) { ?>
+  <div align="center"><h3>Search Results</h3></div><hr /><?php
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: '."User initiated Cloud Search on $Time".'.'.PHP_EOL, FILE_APPEND); 
+  $MAKELogFile = file_put_contents($LogFile, 'OP-Act: User input is "'.$SearchRAW.'" on '.$Time.'.'.PHP_EOL, FILE_APPEND);
   $PendingResCount1 = $PendingResCount2 = 0;
-  $ResultFiles = scandir($CloudUsrDir);
-  if (isset($SearchRAW)) {       
-    foreach ($ResultFiles as $ResultFile0) {
-      if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html' 
-       or $ResultFile0 == '.AppData' or strpos($ResultFile0, '.php') !== FALSE) continue;
-      foreach ($DangerousFiles as $DangerousFile) { 
-        if (strpos($ResultFile0, $DangerousFile) !== FALSE) continue 2; } 
-        $ResultFile = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $CloudUsrDir.$ResultFile0)));    
-        $ResultTmpFile = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $CloudTmpDir.$ResultFile0)));
-        $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
-        $F2 = pathinfo($ResultFile, PATHINFO_BASENAME);
-        $F3 = $CloudTmpDir.$F2;
-        $F4 = pathinfo($ResultFile, PATHINFO_FILENAME);
-        $F5 = pathinfo($ResultFile, PATHINFO_EXTENSION);
-        $MAKELogFile = file_put_contents($LogFile, 'OP-Act: '."Submitted $ResultFile to $CloudTmpDir on $Time".'.'.PHP_EOL, FILE_APPEND);
+  $searchDir = $CloudUsrDir;
+  function search($searchTerm, $searchDir) { 
+    global $LogFile, $PendingResCount1, $PendingResCount2, $Time, $br, $DangerousFiles, $CloudUsrDir, $CloudTmpDir, $UserID, $UserDirPOST;
+    $SearchRAW = str_replace('..', '', str_replace(str_split('\\/[]{};:!$#&@>*<'), '', $searchTerm));
+    $SearchLower = strtolower($SearchRAW);
+    if ($SearchRAW == '') {
+      ?><div align="center"><?php echo('Please enter a search keyword.'.$br.'<a href="#" onclick="goBack();">&#8592; Go Back</a>'); ?><hr /></div> <?php die(); }
+    $ResultFiles =  scandir($searchDir); 
+    if (isset($SearchRAW)) {       
+      foreach ($ResultFiles as $ResultFile0) {
+        if ($ResultFile0 == '.' or $ResultFile0 == '..' or $ResultFile0 == 'index.html' 
+         or $ResultFile0 == '.AppData' or strpos($ResultFile0, '.php') !== FALSE or strpos($ResultFile0, '.htaccess') !== FALSE) continue;
+        foreach ($DangerousFiles as $DangerousFile) if (strpos($ResultFile0, $DangerousFile) !== FALSE) continue 2; 
+        $ResultFile = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $searchDir.$ResultFile0)));    
         $PendingResCount1++; 
         $ResultRAW = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $ResultFile0)));
         $Result = strtolower($ResultRAW);
-        if (!preg_match("/$SearchLower/", $Result)) continue; 
-        if (preg_match("/$SearchLower/", $Result)) { 
-          $PendingResCount2++; 
-            if (is_dir($ResultFile)) {
-              @mkdir($F3, $ILPerms);
-              foreach ($iterator = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($ResultFile, \RecursiveDirectoryIterator::SKIP_DOTS),
-                \RecursiveIteratorIterator::SELF_FIRST) as $item) {
-                $item = str_replace('//', '/', str_replace('///', '/', $item));
-                $F6 = $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName();
-                if (is_dir($item)) {
-                  @mkdir($F6); }   
-                else {
-                  @copy($item, $F6); } } 
-          $ResultURL = 'cloudCore.php?UserDirPOST='.$ResultFile0 ; }
-        if (!is_dir($ResultFile)) {  
-          @copy($ResultFile, $ResultTmpFile); } 
-          ?><a href='<?php echo($ResultURL); ?>'><?php echo($ResultFile0."\n"); ?></a>
-          <hr /><?php } } 
-  echo('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); 
-  $MAKELogFile = file_put_contents($LogFile, 'OP-ACT, Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'.PHP_EOL, FILE_APPEND); } ?>
+        if (strpos($Result, $SearchLower) === FALSE or !file_exists($ResultFile)) continue; 
+        else {  
+          if (!is_dir($ResultFile)) { 
+            $ResultTmpFile = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $CloudTmpDir.$ResultFile0)));
+            $ResultURL = 'DATA/'.$UserID.$UserDirPOST.$ResultFile0;
+            $F2 = pathinfo($ResultFile, PATHINFO_BASENAME);
+            $F3 = $CloudTmpDir.$F2;
+            $F4 = pathinfo($ResultFile, PATHINFO_FILENAME);
+            $F5 = pathinfo($ResultFile, PATHINFO_EXTENSION);
+            @symlink($ResultFile, $ResultTmpFile); 
+            $MAKELogFile = file_put_contents($LogFile, 'OP-Act: '."Submitted $ResultFile to $CloudTmpDir on $Time".'.'.PHP_EOL, FILE_APPEND);
+            $PendingResCount2++;
+            ?><a href='<?php echo($ResultURL); ?>'><?php echo($ResultFile0."\n"); ?></a>
+            <hr /><?php } } } } 
+    echo('Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'); 
+    $MAKELogFile = file_put_contents($LogFile, 'OP-ACT, Searched '.$PendingResCount1.' files for "'.$SearchRAW.'" and found '.$PendingResCount2.' results on '.$Time.'.'.PHP_EOL, FILE_APPEND); }
+  search($_POST['search'], $searchDir); ?>
   <br>
   <div align="center"><a href="#" onclick="goBack();">&#8592; Go Back</a></div>
-  <hr />
-<?php 
+  <hr /><?php
   // / Free un-needed memory.
   $_POST['search'] = $txt = $MAKELogFile = $SearchRAW = $PendingResCount1 = $PendingResCount2 = $ResultFiles = $SearchLower = $ResultFile = $ResultFile0 = $ResultTmpFile
    = $ResultURL = $F2 = $F3 = $F4 = $F5 = $F6 = $Result = $iterator = $item = null;
   unset($_POST['search'], $txt, $MAKELogFile, $SearchRAW, $PendingResCount1, $PendingResCount2, $ResultFiles, $SearchLower, $ResultFile, $ResultFile0, $ResultTmpFile,
-   $ResultURL, $F2, $F3, $F4, $F5, $F6, $Result, $iterator, $item); }
+   $ResultURL, $F2, $F3, $F4, $F5, $F6, $Result, $iterator, $item); } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

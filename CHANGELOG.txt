@@ -1,3 +1,14 @@
+COMMIT 4/4/2019
+v3.1.5 - Fix bugs in search feature. Strenghen security.
+
+-v3.1.5.
+-Improve security/sanitization.
+-Search now completes much faster.
+-Search is now current-directory specific (less than ideal).
+-Working on search all folders.
+-scandir() is weird.
+
+----------
 COMMIT 4/3/2019
 v3.1.4 - Fix bug. Improve performance by defering some resources.
 
