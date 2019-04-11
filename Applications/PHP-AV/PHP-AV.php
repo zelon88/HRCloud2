@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: v3.9 (3-25-2019 00:00)
+App Version: v4.0 (4-10-2019 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -48,7 +48,7 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v3.9 | Virus Definition v4.7, 3/25/2019';
+    $versions = 'PHP-AV App v4.0 | Virus Definition v4.9, 4/10/2019';
     $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
     $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
     $report = '';
