@@ -1,3 +1,12 @@
+COMMIT 4/10/2019
+v3.1.6 - PHP-AV App to v4.0. Defs to v3.9.
+
+-v3.1.6.
+-PHP-AV App to v4.0. 
+-Defs to v4.9.
+-Improve consistency of scan results.
+
+----------
 COMMIT 4/4/2019
 v3.1.5 - Fix bugs in search feature. Strenghen security.
 
