@@ -75,6 +75,10 @@ of their servers.
 **IF YOU DO NOT HAVE AN rc.local FILE, COPY AND PASTE THE INCLUDED ONE**
 -sudo chmod +x /etc/rc.local
 -sudo systemctl enable rc-local.service
+**IF YOU GET ERRORS WHEN ENABLING THE SERVICE (ON 'BUNTU 16.10 AND UP)**
+          **-sudo leafpad /etc/systemd/system/rc-local.service**
+          **-sudo chmod +x /etc/rc.local**
+          **-sudo systemctl enable rc-local.service**
 -sudo apt-get install rar && sudo apt-get install unrar && sudo apt-get install p7zip-full && sudo apt-get install imagemagick && sudo apt-get install ffmpeg && sudo apt-get install tesseract-ocr && sudo apt-get install meshlab && sudo apt-get install dia && sudo apt-get install pandoc && sudo apt-get install poppler-utils && sudo apt-get install nodejs && sudo apt-get install winetricks
 -sudo apt install libssl1.0-dev && sudo apt install nodejs-dev && sudo apt install node-gyp && sudo apt install npm
 -sudo npm install nativefier -g
