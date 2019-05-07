@@ -21,6 +21,8 @@ HRCloud2 is a personal Cloud CMS Platform similar to ownCloud but with far great
 
 HRCloud2 can integrate with WordPress, although it will install what it needs from WordPress when it does not exist. It uses user accounts created by WordPress, but does not itself use a database for anything other than user authentication. All log and cache files are internally controlled. 
 
+A perfect ownCloud or NextCloud alternative. 
+
 # CURRENT CORE FEATURES
 
 * Takes user uploads and stores them in user-specific (but not database driven) non-hosted directories set by the administrator in the config.php file. Files that are requested by the user are temporarily moved to a user-specific hosted directory or symlinks are created and cleaned regularly. 
