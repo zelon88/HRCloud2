@@ -140,7 +140,7 @@ if (isset($download)) {
           if (strpos($item, $DangerousFile) !== FALSE) continue 2; } 
         $item = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $item)));
         $F4 = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', $F3.DIRECTORY_SEPARATOR.$iterator->getSubPathName())));
-        if ($item->isDir()) {
+        if (is_dir($item)) {
           @mkdir($F4); 
           $txt = ('OP-Act: Created '.$F4.' on '.$Time.'.');
           $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
