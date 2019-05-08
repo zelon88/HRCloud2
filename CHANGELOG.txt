@@ -1,3 +1,11 @@
+COMMIT 5/7/2019
+v3.1.7 - Fix bug with directory checking.
+
+-v3.1.7.
+-Fix bug with directory checking.
+-Change from isDir to is_dir.
+
+----------
 COMMIT 4/10/2019
 v3.1.6 - PHP-AV App to v4.0. Defs to v3.9.
 
