@@ -1,0 +1,87 @@
+body {
+	background-color: #e1e0dc;
+	background: url("../img/bg.jpg") no-repeat;
+	padding: 8%;
+
+}
+.jumbotron {
+	background-color: transparent;
+}
+
+input {
+	margin: 1% 0% 0 0%;
+	width: 80%;
+}
+h1, p {
+	text-align: center;
+}
+
+.btn {
+	margin-left: 43%;
+	margin-top: 5%;
+}
+
+#message {
+	margin-top: 3%;
+}
+.error {
+	display: none;
+}
+
+section .icon {
+    width: 170px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #ffffff;
+    font-size: 100px;
+    line-height: 1em;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+section .icon .icon-box {
+    border-radius: 10px;
+    display: inline-block;
+    width: 170px;
+    height: 170px;
+    margin-top: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding: 0 20px;
+}
+
+.icon-box img {
+	width: 100px;
+	margin: 25% auto;
+	font-size: 50px;
+	text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+
+}
+
+@media (max-width: 543px){
+	.jumbotron {
+		padding: 4rem 3rem;
+	}
+	.container {
+    width: 100%;
+    padding: 0;
+}
+	.lead {
+    color: #eee;
+    position: absolute;
+    top: 5%;
+    right: 4%;
+		left:4%;
+}
+	.btn {
+    margin: 30% auto;
+    width: 100%;
+	}
+	.btn-group-lg>.btn, .btn-lg {
+		padding: 0.45rem 1.00rem;
+		border-radius: .7rem;
+}
+	.form-group {
+    margin-top: 3rem;
+		margin-bottom: 0;
+	}
+}
