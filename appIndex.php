@@ -6,18 +6,15 @@
     <title>HRCLoud2 | App Launcher</title>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Applications/jquery-3.1.0.min.js" preload></script>
     <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/HRC2-Lib.js" defer></script>
+    <script type="text/javascript" src="/HRProprietary/HRCloud2/Resources/Drag-Drop-Swap.js" defer></script>
 
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
-if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) {
-  echo nl2br('<body>ERROR!!! HRC2AppIndex28, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
-  die (); }
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('<body>ERROR!!! HRC2AppIndex28, Cannot process the HRCloud2 Common Core file (commonCore.php)!<br></body></html>'); 
 else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 
-if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) {
-  echo nl2br('<body>ERROR!!! HRC2AppIndex34, Cannot process the HRCloud2 App Core file (appCore.php)!'."\n".'</body></html>'); 
-  die (); }
+if (!file_exists(realpath(dirname(__FILE__)).'/appCore.php')) die ('<body>ERROR!!! HRC2AppIndex34, Cannot process the HRCloud2 App Core file (appCore.php)!<br></body></html>'); 
 else require_once (realpath(dirname(__FILE__)).'/appCore.php');  
 // / -----------------------------------------------------------------------------------
 ?>
@@ -38,7 +35,7 @@ else require_once (realpath(dirname(__FILE__)).'/appCore.php');
     </div>
     <hr />
     <div align="center" id='loading' name='loading' style="display:none;"><img src="Resources/pacmansmall.gif"></div>
-    <div align="center">
+    <div class="dragContainer" align="center">
     <?php 
     // / The following code detects and displays each valid App in the "Applications" directory.
     foreach ($apps as $appName) {
@@ -87,7 +84,7 @@ else require_once (realpath(dirname(__FILE__)).'/appCore.php');
             if ($UserIDRAW !== 1) continue 2; }
           $lineCounter++; }
 
-      echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;">');
+      echo nl2br('<div id="app'.$appCounter.'Overview" name="'.$appName.'Overview" style="overflow-y:auto; height:160px; float:left; width:190px; height:195px; border:inset; margin-bottom:2px;" draggable=true>');
       echo ('<div align="center">');
       echo nl2br('<br><input type="submit" id="launchApplication" name="launchApplication" value="'.$appName.'" onclick="location.href=\''.'Applications/'.$appName.'/'.$appName.'.php\'; toggle_visibility(\'loading\');"><p>');
 

@@ -21,11 +21,11 @@ $stopper = 0;
 // / -----------------------------------------------------------------------------------
 // / The following code will be performed when an administrator selects to install an HRCloud2 App.
 if (isset($_POST['installApplication'])) {
-  // / Perform security check (UserID).
-  if ($UserIDRAW !== 1) { 
-    $txt = ('!!! WARNING !!! HRC2AppCore30 You are not an administrator!');
-    $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    die($txt); }
+// / Perform security check (UserID).
+if ($UserIDRAW !== 1) { 
+  $txt = ('!!! WARNING !!! HRC2AppCore30 You are not an administrator!');
+  $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+  die($txt); }
 if (!isset($YUMMYSaltHash)) die('!!! WARNING !!! HRC2AppCore41, There was a critical security fault. Login Request Denied.'.PHP_EOL."Application was halted on $Time".'.'); 
 if ($YUMMYSaltHash !== $SaltHash) die('!!! WARNING !!! HRC2AppCore41, There was a critical security fault. Login Request Denied.'.PHP_EOL."Application was halted on $Time".'.'); 
 if (isset($_FILES["appToUpload"])) {
@@ -49,7 +49,7 @@ if (isset($_FILES["appToUpload"])) {
         $txt = ("ERROR!!! HRC2AppCore67, Improper file format on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
         die($txt);  }
-    if($file == "") {
+    if ($file == "") {
         $txt = ("ERROR!!! HRC2AppCore160, No file specified on $Time.");
         $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
         die($txt); }

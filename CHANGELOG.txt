@@ -1,5 +1,17 @@
+COMMIT 6/11/2019
+v3.1.8 - Working on adding drag-drop-swap to appIndex.
+
+-v3.1.8.
+-Add initial version of drag-drop-swap to appIndex for swapping Apps around.
+-Currently very buggy.
+-Adapted from https://codepen.io/cilestin/pen/ogQQBP by "Drew" (@cilestin, https://codepen.io/cilestin/).
+-Original version only worked for <li></li>.
+-Also working on Weather app using OpenWeatherMap API functionality and an App originally by @cmfcmf (https://github.com/cmfcmf, https://github.com/cmfcmf).
+-The App will store client supplied locations (optional) for monitoring.
+
+----------
 COMMIT 5/7/2019
-v3.1.7 - Fix bug with directory checking.
+v3.1.7 - Fix bug with cloudCore directory checking.
 
 -v3.1.7.
 -Fix bug with directory checking.
