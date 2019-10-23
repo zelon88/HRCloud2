@@ -1,3 +1,11 @@
+COMMIT 10/22/2019
+v3.1.9 - Fix bug in cloudCore.php pdfworkSelected method.
+
+-v3.1.9.
+-Sanitizing the wrong $_POST['method'] variable.
+-Shouldn't have posed a risk before, as the method was never used to affect UI elements or carry user input through sensitive operations. 
+
+----------
 COMMIT 6/11/2019
 v3.1.8 - Working on adding drag-drop-swap to appIndex.
 
