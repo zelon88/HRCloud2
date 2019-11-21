@@ -1,3 +1,12 @@
+COMMIT 11/20/2019
+v3.2 - Fix bug with wordpress installation package formatted incorrectly.
+
+-v3.2.
+-Issue# 26. https://github.com/zelon88/HRCloud2/issues/26
+-The Wordpress installation package was misformatted and as such HRCloud2 was unable to install it.
+-Updated included Wordpress package to latest v5.3. 
+
+----------
 COMMIT 10/22/2019
 v3.1.9 - Fix bug in cloudCore.php pdfworkSelected method.
 
