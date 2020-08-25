@@ -1,11 +1,11 @@
 /* Originally: Cascading Style Sheet for IE4 build 1008+ */
 
+/* for scrollbars and selection color */
+@import "../lib/os-gui/windows-98.css";
+
 body {
 	font-size: 70%;
 	font-family: Verdana, Arial, Helvetica, "MS Sans Serif";
-	/* Chrome apps have text selection disabled by default */
-	-webkit-user-select: text;
-	cursor: auto;
 }
 
 html,
@@ -148,7 +148,7 @@ ol dl dl {
 
 dd {
 	margin-bottom: 0em;
-    /* not currently working */
+	/* not currently working */
 	margin-left: 1.5em;
 }
 
