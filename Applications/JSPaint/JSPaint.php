@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: JSPaint
-App Version: v1.0 (10-14-2018 00:00)
+App Version: v1.1 (7-24-2020 00:00)
 App License: GPLv3
 App Author: Isaiah Odhner (1j01)
 App Description: A simple HRCloud2 App for creating and editing pictures.
@@ -16,90 +16,262 @@ HRCLOUD2-PLUGIN-END
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Paint</title>
+		<title>JS Paint</title>
+		
 		<link href="styles/normalize.css" rel="stylesheet" type="text/css">
 		<link href="styles/layout.css" rel="stylesheet" type="text/css">
 		<link href="styles/print.css" rel="stylesheet" type="text/css" media="print">
-		<link rel="icon" href="images/icons/16.png" sizes="16x16" type="image/png">
-		<link rel="icon" href="images/icons/32.png" sizes="32x32" type="image/png">
-		<link rel="icon" href="images/icons/48.png" sizes="48x48" type="image/png">
-		<link rel="icon" href="images/icons/128.png" sizes="128x128" type="image/png">
-		<link rel="icon" href="images/icons/windows.ico" sizes="16x16 32x32 48x48" type="image/icon">
+		<link href="lib/os-gui/layout.css" rel="stylesheet" type="text/css">
+		<!-- <link href="lib/os-gui/windows-98.css" rel="stylesheet" type="text/css"> -->
+		<!-- <link href="lib/os-gui/windows-default.css" rel="stylesheet" type="text/css" title="Windows Default"> -->
+		<!-- <link href="lib/os-gui/peggys-pastels.css" rel="alternate stylesheet" type="text/css" title="Peggy's Pastels"> -->
+
+		<link rel="apple-touch-icon" href="images/icons/apple-icon-180x180.png">
+		<!-- Chrome will pick the largest image for some reason, instead of the most appropriate one. -->
+		<!-- <link rel="icon" type="image/png" sizes="192x192" href="images/icons/192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/icons/32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="images/icons/96x96.png"> -->
+		<!-- <link rel="icon" type="image/png" sizes="16x16" href="images/icons/16x16.png"> -->
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="mask-icon" href="images/icons/safari-pinned-tab.svg" color="red">
+		<link rel="manifest" href="manifest.webmanifest">
+		<meta name="msapplication-TileColor" content="#008080">
+		<meta name="msapplication-TileImage" content="images/icons/ms-icon-144x144.png">
+		<meta name="theme-color" content="#000080">
+
 		<meta name="viewport" content="width=device-width, user-scalable=no">
-		<meta name="description" content="MS Paint recreated in JavaScript, with extra features" />
-		<meta property="og:title" content="JS Paint" />
-		<meta property="og:description" content="MS Paint recreated in JavaScript, with extra features" />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://jspaint.app" />
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:image" content="https://jspaint.app/images/meta/facebook-card.png" />
+
+		<meta name="description" content="Classic MS Paint in the browser, with extra features" />
+		<meta property="og:image:width" content="279">
+		<meta property="og:image:height" content="279">
+		<meta property="og:description" content="Classic MS Paint in the browser, with extra features.">
+		<meta property="og:title" content="JS Paint">
+		<meta property="og:url" content="https://jspaint.app">
+		<meta property="og:image" content="https://jspaint.app/images/icons/og-image-279x279.jpg">
 		<meta name="twitter:title" content="JS Paint">
-		<meta name="twitter:description" content="MS Paint recreated in JavaScript, with extra features">
-		<meta name="twitter:image" content="https://jspaint.app/images/meta/twitter-card.png">
+		<meta name="twitter:description" content="Classic MS Paint in the browser, with extra features">
+		<meta name="twitter:image" content="https://jspaint.app/images/meta/twitter-card-plz-no-crop.png">
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@isaiahodhner">
 		<meta name="twitter:creator" content="@isaiahodhner">
 
-		<script type="text/javascript">
-			// Partial support for IE with a general polyfill
-			if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
-				document.write('<script src="https://cdn.polyfill.io/v2/polyfill.min.js"><\/script>');
-				
-				// document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"><\/script>');
-				// this polyfill doesn't support base64 data URIs, leading to a confusing error message when loading the document from localStorage
-				// we shouldn't really be storing images as data URIs tho (ideally)
-				
-				document.write('<style>.help-window iframe { height: 100% } .horizontal { flex-shrink: 0; flex-grow: 1; flex-basis: 0; } </style>');
-				
-				var last_error_message_time = +new Date;
-				var error_message_debounce_ms = 200;
-				window.onerror = function(){
-					var current_time = +new Date;
-					if(!last_error_message_time || (current_time > last_error_message_time + error_message_debounce_ms)){
-						alert("Internet Explorer is not supported!");
-						last_error_message_time = +new Date;
-					}
-				};
-			}
-		</script>
 		<script src="src/theme.js"></script>
 	</head>
 	<body>
 		<div id="about-paint" style="display: none">
-			<h1><img src='images/icons/32.png'/> JS Paint <small class='version-number' title='Is that a thing? What I mean is, expect bugs!'>Public Alpha</small><hr/></h1>
-			<p>JS Paint is a web-based remake of MS Paint by <a href='https://isaiahodhner.ml/'>Isaiah Odhner</a>.</p>
-			<p>Read about the project and <b>extra features</b> on <a href='https://github.com/1j01/jspaint#readme'>the README</a>.</p>
-			<p>Request features and report bugs <a href='https://github.com/1j01/jspaint/issues'>on GitHub</a>
-			or <a href='mailto:isaiahodhner@gmail.com?subject=JS%20Paint'>by email</a>.</p>
-			<p>If you want to support development and keep the site running,<br>
-			you can send me some cash via PayPal:</p>
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<!--<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
-			</form>
+			<h1 id="about-paint-header">
+				<img src="images/icons/32x32.png" width="32" height="32" id="paint-32x32" alt=""/>
+				<span id="jspaint-project-name">JS Paint</span>
+				<small id="jspaint-version" title="expect bugs!">Alpha</small>
+				<button id="view-project-news">View Project News</button>
+			</h1>
+			
+			<div id="maybe-outdated-view-project-news" hidden>
+				<div id="maybe-outdated-line">
+					<div id="outdated" hidden>
+						<div class="on-official-host">
+							There's a new version of JS Paint. <a id="refresh-to-update" href=".">Refresh</a> to get it.
+						</div>
+						<div class="on-third-party-host">
+							This instance of JS Paint is outdated compared to <a href="https://jspaint.app" target="_blank">jspaint.app</a>.
+						</div>
+						<div class="on-dev-host">
+							This version of JS Paint is outdated compared to <a href="https://jspaint.app" target="_blank">jspaint.app</a>.
+						</div>
+					</div>
+					<div id="checking-for-updates" hidden>
+						Checking for updates...
+					</div>
+					<div id="failed-to-check-if-outdated" hidden>
+						Couldn't check for updates.
+						<span class="navigator-offline">You're offline.</span>
+						<span class="navigator-online">JS Paint may be outdated.</span>
+					</div>
+				</div>
+				
+			</div>
+			<p>JS Paint is a web-based remake of MS Paint by <a href="https://isaiahodhner.ml/">Isaiah Odhner</a>.</p>
+			<p>Read about the project and <b>extra features</b> on <a href="https://github.com/1j01/jspaint#readme">the README</a>.</p>
+			<p>Request features and report bugs <a href="https://github.com/1j01/jspaint/issues">on GitHub</a>
+			or <a href="mailto:isaiahodhner@gmail.com?subject=JS%20Paint">by email</a>.</p>
+			<p>If you want to support the project &amp; cover domain fees:
+				<a href="https://www.paypal.me/IsaiahOdhner" target="_blank">paypal.me/IsaiahOdhner</a>
+			</p>
 		</div>
-		<script src="lib/jquery.min.js"></script>
+		<div id="news" hidden>
+			<article class="news-entry" id="news-2019-winter-update">
+				<h1>Winter Update</h1>
+				<time datetime="2019-12-20">2019-12-20</time>
+				<img width="563" height="334" style="max-width: 100%; height: auto;" src="https://i.postimg.cc/63Wc6vpG/2019-winter-update-candy-cane.gif"/>
+				<h2>Winter Theme</h2>
+				<p>
+					A new UI skin is available, under <b>Extras &gt; Themes &gt; Winter</b>, featuring winter and holiday icons, festive fonts, and a palette with seasonal colors and peppermint patterns.
+				</p>
+				<img width="256" height="16" src="images/winter/tools.png"/>
+				<p>
+					Merry Christmas and happy Hanukkah!
+				</p>
+				<h2>Better History</h2>
+				<b class="new">New:</b> Jump to any point in the document's history, forwards or backwards, with <b>Edit &gt; History</b> or <kbd>Ctrl+Shift+Y</kbd>.
+				<ul>
+					<li>
+						Click on Text in the history view to go back to text editing.
+					</li>
+					<li>
+						You can return to when a selection existed.
+					</li>
+					<li>
+						Note: these states are skipped over with normal Undo and Redo, so you need to use the History window.
+					</li>
+					<li>
+						Branching history: if you undo, and then make changes, you can get back to everything.
+						Future states are preserved.
+					</li>
+				</ul>
+				<b class="bad">Warning:</b> History is not saved with the autosave. Document history will be lost if you refresh the page, or close the tab, or if the tab crashes, or if you close or restart your browser, or likely if you're just on a phone and the mobile browser loses focus.
+				<h2>Improved Mobile Support</h2>
+				<p>
+					<b class="new">New:</b> Use two fingers to pan the view.
+				</p>
+				<p>
+					I recently made it easier to grab handles for resizing things.
+					With that, combined with multitouch panning,
+					JS Paint is much more useable on a phone.
+				</p>
+				<p><b class="bad">Caveat:</b> It's slow on some devices, and parts of the interface are still too small for touch.</p>
+			</article>
+			<article class="news-entry" id="news-2019-polygon-text-and-select">
+				<h1>Polygon, Text, and Select</h1>
+				<time datetime="2019-12-04">2019-12-04</time>
+				<p>
+					Handles are now way easier to drag, with extended click targets, similar to Paint from Windows 7.
+					It's not unreasonable to use with a touch screen now!
+					This applies to selections, textboxes, and the main canvas handles.
+				</p>
+				<p>
+					Resizing things while zoomed in is <a href="https://github.com/1j01/jspaint/issues/13#issuecomment-562247085">finally fixed</a>!
+				</p>
+				<p>
+					The Text tool now perfectly previews the pixels that will be placed on the canvas.
+					What you see is what you get!
+					Also it retains all browser editing behavior, like spellcheck,
+					using a convoluted, yet elegant overlaying strategy.
+					(I prototyped this <a href="https://jsfiddle.net/1j01/wnac09u3/">here</a>
+					and <a href="https://jsfiddle.net/1j01/qkvfjn1r/">here</a> if you're interested.)
+				</p>
+				<p>
+					With the fill-only option selected, the Polygon tool now previews with inverted lines, like MS Paint does.
+					(When you finish the polygon, the boundary of the shape matches the preview exactly,
+					because it actually <em>does</em> draw a stroke, just the same color as the fill.)
+				</p>
+			</article>
+			<article class="news-entry" id="news-2019-zoom-viewport">
+				<h1>Zoom To Mouse</h1>
+				<time datetime="2019-10-26">2019-10-26</time>
+				<p>
+					<b class="new">New:</b> The Magnifier now lets you zoom to a specific location,
+					showing a preview of the new viewport.
+				</p>
+				<p>
+					Also, when zooming out with the Magnifier,
+					or changing the zoom from the toolbar or menus,
+					the top left corner of the viewport is now kept anchored.
+				</p>
+				<p>
+					Also, pasting a selection will now go to the top left of the viewport,
+					instead of the entire document.
+				</p>
+			</article>
+			<article class="news-entry" id="news-2019-grid-zoom-cursors">
+				<h1>The Grid, Custom Zoom, and Dynamic Cursors</h1>
+				<time datetime="2019-10-09">2019-10-09</time>
+				<p>
+					<b class="new">New:</b> The Grid. Zoom to 4x+ and use <b>View &gt; Zoom &gt; Show Grid</b> or <kbd>Ctrl+G</kbd> to enable.
+					This works with browser zoom as well to provide crisp gridlines even if you zoom in with your browser.
+				</p>
+				<p>
+					<b class="new">New:</b> <b>View &gt; Zoom &gt; Custom Zoom</b>,
+					including an actually-custom numerical zoom option, unlike MS Paint.
+				</p>
+				<p>
+					<b class="new">New:</b> Dynamic cursors for brush and eraser,
+					so you now have a preview of exactly where the tool will draw.
+				</p>
+				<p>
+					Also, in the event that your browser clears canvases to free up memory,
+					you should be more likely to be able to undo to get back to a useful state.
+				</p>
+			</article>
+			<article class="news-entry" id="news-2019-async-clipboard">
+				<h1>Full Clipboard Support</h1>
+				<time datetime="2019-09-21">2019-09-21</time>
+				<p>
+					JS Paint now lets you copy real image data to the Clipboard, both with keyboard shortcuts and from the Edit menu.
+					This feature is available in Chrome 76+. Other browsers don't support it yet, as of Sep 2019.
+				</p>
+				<p>
+					Also: paste a URL of an image, and JS Paint will load it.
+					(This is an alternative to <b>File &gt; Load from URL</b>.)
+				</p>
+			</article>
+			<style>
+				#news {
+					background: white;
+					color: black;
+				}
+				.news-entry {
+					padding: 20px;
+					max-width: 563px;
+				}
+				.news-entry > h1 {
+					font-size: 1.3em;
+					margin: 0;
+					margin-bottom: 0.3em;
+				}
+				.news-entry > time {
+					font-size: 1.2em;
+					color: gray;
+				}
+				.news-entry > h2 {
+					font-size: 1.9em;
+					font-weight: normal;
+					margin: 0;
+					margin-bottom: 0.3em;
+					margin-top: 0.3em;
+				}
+				.news-entry .new {
+					color: green;
+				}
+				.news-entry .bad {
+					color: #d11a29;
+				}
+			</style>
+		</div>
+
+		<script src="lib/jquery-3.4.1.min.js"></script>
 		<script src="lib/pep.js"></script>
 		<script src="lib/canvas.toBlob.js"></script>
 		<script src="lib/gif.js/gif.js"></script>
 		<script src="lib/palette.js"></script>
 		<script src="lib/FileSaver.js"></script>
 		<script src="lib/font-detective.js"></script>
-		<script src="./lib/libtess.min.js"></script>
+		<script src="lib/libtess.min.js"></script>
+		<script src="lib/os-gui/parse-theme.js"></script>
+		<script src="lib/os-gui/$Window.js"></script>
+		<script src="lib/os-gui/$MenuBar.js"></script>
+		<script src="lib/imagetracer_v1.2.5.js"></script>
 		<script src="src/helpers.js"></script>
 		<script src="src/storage.js"></script>
 		<script src="src/$Component.js"></script>
-		<script src="src/$Window.js"></script>
-		<script src="src/$MenuBar.js"></script>
+		<script src="src/$ToolWindow.js"></script>
 		<script src="src/$ToolBox.js"></script>
 		<script src="src/$ColorBox.js"></script>
 		<script src="src/$FontBox.js"></script>
 		<script src="src/$Handles.js"></script>
 		<script src="src/OnCanvasObject.js"></script>
-		<script src="src/Selection.js"></script>
-		<script src="src/TextBox.js"></script>
+		<script src="src/OnCanvasSelection.js"></script>
+		<script src="src/OnCanvasTextBox.js"></script>
+		<script src="src/OnCanvasHelperLayer.js"></script>
 		<script src="src/image-manipulation.js"></script>
 		<script src="src/tool-options.js"></script>
 		<script src="src/tools.js"></script>
@@ -108,11 +280,65 @@ HRCLOUD2-PLUGIN-END
 		<script src="src/manage-storage.js"></script>
 		<script src="src/imgur.js"></script>
 		<script src="src/help.js"></script>
-		<script src="src/app.js"></script>
+		<script src="src/simulate-random-gestures.js"></script>
 		<script src="src/menus.js"></script>
-		<script src="src/canvas-change.js"></script>
+		<script src="src/speech-recognition.js"></script>
+		<script src="src/app.js"></script>
 		<script src="src/sessions.js"></script>
 		<script src="lib/konami.js"></script>
 		<script src="src/vaporwave-fun.js"></script>
+
+		<script>
+			if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
+				document.write(
+					'<style>body { text-align: center; }</style>' +
+					'<div className="not-supported">' +
+						'<h1 className="not-supported-header">Internet Explorer is not supported!</h1>' +
+						'<p className="not-supported-details">Try Chrome, Firefox, or Edge.</p>' +
+					'</div>'
+				);
+			}
+		</script>
+		<noscript>
+			<h1><img src="images/icons/32x32.png" width="32" height="32" alt=""/> JS Paint</h1>
+
+			<p>This application requires JavaScript to run.</p>
+
+			<p>
+				Assuming this is the official instance of jspaint,
+				at <a href="https://jspaint.app">https://jspaint.app</a>,
+				you can safely enable JavaScript.
+			</p>
+
+			<p>You can also check out <a href="https://github.com/1j01/jspaint">the source code and project info</a>.</p>
+		</noscript>
+		
+		<svg style="position: absolute; pointer-events: none; bottom: 100%;">
+			<defs>
+				<filter id="disabled-inset-filter" x="0" y="0" width="1px" height="1px">
+					<feColorMatrix
+						in="SourceGraphic"
+						type="matrix"
+						values="
+							1 0 0 0 0
+							0 1 0 0 0
+							0 0 1 0 0
+							-1000 -1000 -1000 1 0
+						"
+						result="black-parts-isolated"
+					/>
+					<feFlood result="shadow-color" flood-color="var(--ButtonShadow)"/>
+					<feFlood result="hilight-color" flood-color="var(--ButtonHilight)"/>
+					<feOffset in="black-parts-isolated" dx="1" dy="1" result="offset"/>
+					<feComposite in="hilight-color" in2="offset" operator="in" result="hilight-colored-offset"/>
+					<feComposite in="shadow-color" in2="black-parts-isolated" operator="in" result="shadow-colored"/>
+					<feMerge>
+						<feMergeNode in="hilight-colored-offset"/>
+						<feMergeNode in="shadow-colored"/>
+					</feMerge>
+				</filter>
+			</defs>
+		</svg>
 	</body>
 </html>
+

@@ -1,7 +1,8 @@
 {
   "name": "jspaint",
+  "productName": "JS Paint",
   "version": "1.0.0",
-  "description": "An MS Paint remake.",
+  "description": "Classic MS Paint clone with extra features",
   "keywords": [
     "paint",
     "jspaint",
@@ -15,23 +16,83 @@
     "edit",
     "canvas",
     "app",
-    "nw-app",
-    "web-app"
+    "web-app",
+    "recreation",
+    "clone",
+    "image-editing",
+    "image-editor",
+    "bitmap"
   ],
-  "main": "index.html",
-  "scripts": {
-    "start": "nw",
-    "dev": "live-server",
-    "test": "parallelshell \"http-server -p 11822 --silent\" \"casperjs test test.js --engine=slimerjs\"",
-    "test-verbose": "parallelshell \"http-server -p 11822\" \"casperjs test test.js --engine=slimerjs --verbose --log-level=debug\""
-  },
-  "window": {
-    "icon": "images/icons/48.png",
-    "toolbar": false
+  "author": "Isaiah Odhner <isaiahodhner@gmail.com>",
+  "main": "src/electron-main.js",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "jspaint"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   },
   "dependencies": {
-    "nw": "^0.27.4",
-    "wallpaper": "^2.6.0"
+    "electron-is-dev": "^1.1.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "wallpaper": "4.4.1"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.45",
+    "@electron-forge/maker-deb": "6.0.0-beta.45",
+    "@electron-forge/maker-rpm": "6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.45",
+    "@electron-forge/maker-zip": "6.0.0-beta.45",
+    "concat-glob-cli": "^0.1.0",
+    "cross-spawn": "^7.0.0",
+    "cypress": "4.7.0",
+    "cypress-image-snapshot": "3.1.1",
+    "devtron": "^1.4.0",
+    "electron": "6.0.10",
+    "electron-debug": "^3.0.1",
+    "eslint": "6.4.0",
+    "live-server": "^1.2.1",
+    "serve": "11.2.0",
+    "start-server-and-test": "1.10.6"
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "debug-start": "electron-forge start --inspect-electron",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint src/",
+    "lint-cat": "concat-glob-cli --files \"src/**/!(electron*).js\" --output concatenated-source.js && eslint --rule \"no-undef: error\" --rule \"no-unused-vars: error\" concatenated-source.js",
+    "lint-cat:NOTE": "Disable the eslint comment that disables ThisExpression to use this.",
+    "dev": "live-server --ignorePattern=\"(node_modules|cypress|out)[/\\\\\\\\]|package\\.json|cypress\\.json\"",
+    "dev:NOTE": "@XXX: the octuple backlash ends up meaning a single backslash on Linux, two backslashes on Windows. In this case it's fine because it's in a regexp character class so the extra is redundant and doesn't cause an error.",
+    "test:start-server": "live-server --port=11822 --no-browser --ignorePattern=\"(node_modules|cypress|out)[/\\\\\\\\]|package\\.json|cypress\\.json\"",
+    "test:start-server:NOTE": "@XXX: the octuple backlash ends up meaning a single backslash on Linux, two backslashes on Windows. In this case it's fine because it's in a regexp character class so the extra is redundant and doesn't cause an error.",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --record",
+    "cy:accept": "cypress run --env updateSnapshots=true",
+    "test": "start-server-and-test test:start-server http://localhost:11822 cy:run",
+    "accept": "start-server-and-test test:start-server http://localhost:11822 cy:accept"
   },
   "repository": {
     "type": "git",
@@ -39,12 +100,5 @@
   },
   "bugs": {
     "url": "https://github.com/1j01/jspaint/issues"
-  },
-  "devDependencies": {
-    "cross-spawn": "^5.1.0",
-    "http-server": "^0.11.1",
-    "live-server": "^1.2.0",
-    "parallelshell": "^3.0.2",
-    "phantomcss": "^1.4.0"
   }
 }
