@@ -13,7 +13,7 @@ html, body, .jspaint {
 .choose-eraser,
 .choose-magnification,
 .choose-stroke-size,
-.choose-transparency {
+.choose-transparent-mode {
 	flex-flow: column;
 	align-items: center;
 	justify-content: space-around;
@@ -51,7 +51,7 @@ html, body, .jspaint {
 .jspaint > .vertical {
 	height: 100%;
 }
-@media (max-width: 300px) {
+@media (max-width: 200px) {
 	.horizontal > .component-area {
 		display: none;
 	}
@@ -61,64 +61,74 @@ html, body, .jspaint {
 		display: none;
 	}
 }
-@media (max-height: 370px) {
+@media (max-height: 359px) {
 	.vertical > .status-area {
 		display: none !important;
 	}
 }
-.menus {
-	z-index: 5000; /*
-		really high so the menu popups go over subwindows (which dynamically increase z-index)
-		and also over other-user cursors in multi-user mode
-		also at least 2 so popups go over the canvas handles,
-		and at least 1 so that the modern theme's menubar can have a shadow
-	*/
-	/* TODO: put the menu popups in their own container, separate from the menubar */
-	/* FIXME: ..especially since now the text of the buttons goes over windows */
+.window,
+.window-content {
+	max-width: 100vw;
+	max-height: 100vh;
 }
 .component-area,
-.menus *,
-.window-titlebar {
+.tool-window .window-titlebar {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
-.menus *,
-.menu-popup * {
-	cursor: default;
-}
 .status-area,
-.component-area,
-.menus {
+.component-area {
 	flex: 0 0 auto;
+}
+
+.selection,
+.textbox,
+.helper-layer {
+	z-index: 3;
 }
 .selection,
 .textbox {
+	display: block !important; /* @TODO: reduce overzealous display: flex; */
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 }
+
+.textbox > img,
+.textbox > canvas,
 .selection > img,
 .selection > canvas {
+	/* @TODO: maybe don't include the canvas in the DOM (is it helpful to inspect it tho? it's not critical...) */
+	opacity: 0;
+}
+.selection > img,
+.selection > canvas,
+.helper-layer > canvas {
 	width: 100%;
 	height: 100%;
 }
 .resize-ghost,
-.selection:not(.instantiated),
 .component-ghost {
 	pointer-events: none;
 }
+.resize-ghost {
+	z-index: 4;
+}
 .component-ghost {
-	z-index: 500;
+	z-index: 5001; /* 50-5000 reserved for subwindows, which dynamically increase z-index */
 }
 .textbox-editor {
-	width: 100%;
-	height: 100%;
-	padding: 0;
-	margin: 0;
-	border: 0;
-	resize: none;
+	color: transparent !important;
+	background: transparent !important;
+	caret-color: black;
+	z-index: 4; /* go above handles and .main-canvas */
+	outline: none;
 }
+/* debug */
+/*.textbox-editor:hover {
+	color: rgba(255, 0, 255, 0.5) !important;
+}*/
 
 .menu-container {
 	position: relative;
@@ -127,7 +137,7 @@ html, body, .jspaint {
 	position: absolute;
 	top: 100%;
 	left: 0;
-	z-index: 4;
+	z-index: 5002; /* 50-5000 reserved for subwindows, which dynamically increase z-index */
 	box-sizing: border-box;
 }
 .menu-popup-table {
@@ -173,6 +183,106 @@ html, body, .jspaint {
 	border-left: 1px solid #7b7b7b;
 }
 
+.hover-halo {
+	pointer-events: none;
+	z-index: 1000000;
+	box-shadow: 0 0 10px yellow, 0 0 3px yellow;
+}
+.dwell-indicator {
+	position: fixed;
+	pointer-events: none;
+	z-index: 1000000;
+}
+.dwell-indicator::after {
+	content: "";
+	display: block;
+	position: absolute;
+	background: red;
+	left: 2px;
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+}
+.dwell-indicator:not(.for-release) {
+	background: yellow;
+}
+.dwell-indicator.for-release {
+	background: white;
+}
+.dwell-indicator:not(.for-release),
+.dwell-indicator:not(.for-release)::after {
+	border-radius: 50%;
+}
+.dwell-indicator.for-release,
+.dwell-indicator.for-release::after {
+	clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+.eye-gaze-mode .color-button {
+	width: 25px;
+	height: 25px;
+}
+.eye-gaze-mode .Colors-component.tall {
+	width: 50px;
+}
+.eye-gaze-mode .Colors-component.tall .color-box {
+	width: 100%;
+}
+.eye-gaze-mode .Colors-component.tall .current-colors {
+	width: 100%;
+}
+.eye-gaze-mode .Colors-component.tall .foreground-color {
+	left: 12px;
+}
+.eye-gaze-mode .Colors-component.tall .background-color {
+	right: 12px;
+}
+
+.eye-gaze-mode .os-window .window-titlebar,
+.eye-gaze-mode .tool-window .window-titlebar {
+	font-size: 2rem;
+	line-height: 1.2;
+	height: 2.8rem;
+}
+.eye-gaze-mode .os-window .window-title-area,
+.eye-gaze-mode .tool-window .window-title-area {
+	height: 100%;
+}
+.eye-gaze-mode .os-window .window-titlebar button,
+.eye-gaze-mode .tool-window .window-titlebar button {
+	transform: scale(3);
+	margin-right: 32px;
+}
+.eye-gaze-mode .tool-window .window-titlebar button {
+	transform-origin: 0 0;
+}
+
+.eye-gaze-mode .menu-button {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.eye-gaze-mode .menu-button {
+	height: 3rem;
+	line-height: 2.5rem;
+}
+.eye-gaze-mode .menu-button,
+.eye-gaze-mode .menu-button * {
+	font-size: 2rem;
+}
+.eye-gaze-mode .menu-item * {
+	font-size: 2rem;
+	line-height: 1.5;
+}
+
+.eye-gaze-mode .status-area {
+	padding-left: 170px;
+}
+
+.component-area {
+	/* for measuring offsetTop/offsetLeft of component elements */
+	/* (makes it relative to this element) */
+	position: relative;
+}
+
 .Tools-component {
 	height: 273px;
 	align-items: center;
@@ -201,33 +311,81 @@ html, body, .jspaint {
 	position: relative;
 }
 
-
+.horizontal .component-area {
+	flex-direction: column;
+}
 .Colors-component {
-	height: 47px;
 	align-items: center;
+	justify-content: center;
+}
+.Colors-component.wide {
+	height: 47px;
+}
+.Colors-component.tall {
+	width: 47px;
 }
 .palette {
 	display: flex;
+}
+.Colors-component.wide .palette {
 	flex-flow: row wrap;
 }
-.color-box,
-.palette {
+.Colors-component.tall .palette {
+	flex-flow: column wrap;
+}
+.Colors-component.wide .color-box,
+.Colors-component.wide .palette {
+	flex-direction: row;
 	height: 32px;
 }
-.current-colors {
+.Colors-component.tall .color-box,
+.Colors-component.tall .palette {
+	flex-direction: column;
+	width: 32px;
+}
+.Colors-component.wide .current-colors {
 	width: 30px;
 	height: 31px;
+}
+.Colors-component.tall .current-colors {
+	width: 31px;
+	height: 32px;
 }
 .current-colors,
 .color-button {
 	position: relative;
 }
+.foreground-color {
+	position: absolute;
+	left: 2px;
+	top: 4px;
+}
+.background-color {
+	position: absolute;
+	right: 3px;
+	bottom: 3px;
+}
+.Colors-component.tall .foreground-color {
+	left: 4px;
+	top: 3px;
+}
+.Colors-component.tall .background-color {
+	right: 3px;
+	bottom: 3px;
+}
+
+.Colors-component.wide .color-button,
+.Colors-component.wide .color-selection {
+	margin-left: 1px;
+}
+.Colors-component.tall .color-button,
+.Colors-component.tall .color-selection {
+	margin-top: 1px;
+}
 .color-button,
 .color-selection {
-	margin-left: 1px;
 	padding: 0;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	width: 15px;
 	height: 15px;
 	border: 0;
@@ -250,27 +408,58 @@ html, body, .jspaint {
 	overflow: auto;
 	padding: 3px;
 }
+.main-canvas {
+	position: absolute;
+	z-index: 2;
+}
 .handle {
 	position: absolute;
 	width: 3px;
 	height: 3px;
 	z-index: 1;
 }
+.handle::after {
+	/* make handles way easier to grab */
+	content: "";
+	pointer-events: all; /* @TODO: maybe don't have a blanket pointer-events: none; on pseudo elements */
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 32px;
+	height: 32px;
+	max-width: inherit;
+	max-height: inherit;
+	/*background: rgba(255, 255, 0, 0.5);*/ /* debug */
+}
+.textbox::before {
+	/* allow dragging textbox */
+	/* In mspaint the border drawn around selections and textboxes extends out from them,
+	centered on the pixels bordering the contents,
+	which makes it more reasonable to have the border be a draggable thing.
+	I'm making the draggable area outside the border for now. */
+	content: "";
+	pointer-events: all; /* @TODO: maybe don't have a blanket pointer-events: none; on pseudo elements */
+	display: block;
+	position: absolute;
+	left: -10px;
+	right: -10px;
+	top: -10px;
+	bottom: -10px;
+	/*background: orange;*/ /* debug */
+}
 
 
-.window-title {
+.tool-window .window-title {
 	display: inline-block !important;
 	margin: 0;
 	padding: 0;
 	cursor: default;
 }
-.window-close-button {
-	display: inline-block !important;
+.tool-window .window-close-button {
+	display: block !important;
 	float: right;
-}
-.window-close-button:before {
-	content: '×';
-	position: relative;
 }
 
 .window-content .button-group {
@@ -298,22 +487,65 @@ html, body, .jspaint {
 	padding: 5px;
 }
 
-.version-number {
-	/* TODO: separate into a shared.css? (not really layout!) */
-	font-size: 0.6em;
-	color: #7b7b7b;
+.flip-and-rotate fieldset {
+	width: 200px;
+}
+
+/* @TODO: part of os-gui */
+.os-window {
+	display: flex;
+	flex-direction: column;
+}
+/* @TODO: part of os-gui */
+.os-window .window-content {
+	flex: 1; 
 }
 
 .help-window .window-content {
 	display: flex;
+	flex-flow: column;
+}
+.help-window .main {
+	flex: 1;
+	display: flex;
 	flex-flow: row;
+}
+.help-window .toolbar button {
+	width: 55px;
+	height: 40px;
+	padding: 0;
+	font-size: 12px;
+	line-height: 60px;
+}
+.help-window .toolbar button {
+	position: relative;
+}
+.help-window .toolbar button .icon {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.help-window .toolbar button .icon {
+	background-image: url("../images/help-viewer-toolbar-icons-grayscale.png");
+}
+.help-window .toolbar button:not([disabled]):hover .icon {
+	background-image: url("../images/help-viewer-toolbar-icons.png");
+}
+.help-window .toolbar button[disabled] .icon {
+	filter: saturate(0%) opacity(50%); /* fallback */
+	filter: url("#disabled-inset-filter");
 }
 .help-window .contents {
 	background: white;
+	background: var(--Window);
+	color: var(--WindowText);
 	flex-basis: 300px; /* normally the default is 200px, but that leaves a scrollbar and we don't have rollover viewing of longer titles (@TODO) */
 	flex-grow: 0;
 	flex-shrink: 0;
 	overflow: auto;
+	box-sizing: border-box;
 }
 .help-window ul {
 	margin: 0;
@@ -331,6 +563,7 @@ html, body, .jspaint {
 }
 .help-window iframe {
 	flex: 1;
+	width: 0;
 }
 .help-window li ul {
 	padding-left: 16px;
@@ -380,10 +613,98 @@ html, body, .jspaint {
 	margin-left: 15px;
 }
 
+.history-view {
+	width: 500px;
+	height: 500px;
+	max-width: calc(100vw - 10px);
+	max-height: calc(100vh - 100px);
+	overflow: auto;
+	background: white;
+	color: black;
+}
+.history-entry {
+	cursor: pointer;
+	padding: 5px;
+	display: flex;
+}
+.history-entry-icon-area {
+	width: 16px;
+	height: 16px;
+	margin-right: 6px;
+}
+.history-entry.current {
+	font-weight: bold;
+}
+.history-entry:not(.current):not(.ancestor-of-current) {
+	color: gray;
+}
+.history-entry:hover:hover:hover { /* specificity hack vs :not()s */
+	color: #0000ff;
+	text-decoration: underline;
+}
+
 ::before, ::after {
 	pointer-events: none;
 }
 
 .cursor-bully * {
 	cursor: inherit !important;
+}
+
+#about-paint-header {
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+#jspaint-project-name {
+	margin-left: 10px;
+	margin-right: 8px;
+}
+#jspaint-version {
+	/* @TODO: separate into a shared.css? (not really layout!) */
+	font-size: 0.6em;
+	color: #7b7b7b;
+}
+#maybe-outdated-line {
+	font-style: italic;
+	height: 2em;
+}
+#view-project-news {
+	margin: auto;
+	margin-right: 40px;
+	width: 150px;
+	height: 2.2em;
+}
+
+#news {
+	max-height: 500px;
+	overflow: auto;
+}
+@media (max-height: 550px) {
+	#news {
+		max-height: calc(100vh - 50px);
+	}
+}
+
+.news-indicator {
+	font-family: sans-serif;
+}
+.news-indicator > img {
+	margin-right: 5px;
+}
+@media (max-width: 500px) {
+	.news-indicator > img {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
+	.news-indicator .not-the-icon {
+		display: none;
+	}
+}
+
+[touch-action="none"] {
+	touch-action: none;
 }
