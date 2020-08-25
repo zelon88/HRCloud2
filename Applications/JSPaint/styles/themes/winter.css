@@ -1,0 +1,25 @@
+@import "./classic.css";
+@import "../../lib/os-gui/blue.css";
+@import url('https://fonts.googleapis.com/css?family=Charm|Princess+Sofia&display=swap');
+
+:root {
+	--theme-loaded: "winter.css";
+}
+
+.menus * {
+	font-family: 'Princess Sofia', cursive;
+	font-size: 20px;
+}
+.menu-button {
+	padding: 5px 10px;
+	height: 30px;
+}
+.menu-popup * {
+	font-family: 'Charm', cursive;
+	font-size: 18px;
+}
+
+.menu-hotkey {
+	/* @TODO: when actually supporting menu navigation hotkeys, enable if accessing the menus with the keyboard */
+	text-decoration: none;
+}
