@@ -1,4 +1,4 @@
-Follow the early development of HRCloud3 on the official [HRCloud3 Github Repo](https://github.com/zelon88/HRCloud3)!!!
+Follow the early development of **HRCloud3** on the official [HRCloud3 Github Repo](https://github.com/zelon88/HRCloud3)!!!
 
 
 -----------------------------------------------
