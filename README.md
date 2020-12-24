@@ -1,4 +1,6 @@
-*[OFFICIAL WEBSITE (Try HRCloud2!)](https://honestrepair.net)*
+Follow the early development of HRCloud3 on the official [HRCloud3 Github Repo](https://github.com/zelon88/HRCloud3)!!!
+
+
 -----------------------------------------------
 **[YOUTUBE CHANNEL!](https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
