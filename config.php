@@ -27,6 +27,8 @@ $Accept_GPLv3_OpenSource_License = '1';
   // / Default is '1'.
 $EnableBackups = '1';
   // / Setting to prevent the application for being run during maintenance.
+  // / When enabled this setting will prevent HRCloud2 from loading.
+  // / When disabled HRCloud2 will load and users will be able to access it's features.
   // / To allow HRCloud2 to run normally, set to '0'.
   // / To disable HRCloud2 for maintenance, set to '1'.
   // / Default is '0'.
@@ -34,8 +36,8 @@ $EnableMaintenanceMode = '0';
   // / Setting to use as the default timezone. Only applied if a user has not specified their own.
   // / Default is 'America/New_York'.
 $defaultTimezone = 'America/New_York';
-  // / Setting to be used in HRAI responses. 
-  // / This is the name she will call the user by if they have not specified their own.
+  // / Setting to be used by HRAI in responses to address the user. 
+  // / This is the name HRAI will call the user if they have not specified their own.
   // / Default is 'Commander'.
 $defaultNickname = 'Commander';
   // / Setting to specify the default font type to use for displaying text within GUI elements.
@@ -43,33 +45,41 @@ $defaultNickname = 'Commander';
   // / Systems that lack the font specified here will display their default system font.
   // / Default is 'Helvetica'.
 $defaultFont = 'Helvetica';
-  // / Setting to specify the default color scheme until individual set their own.
+  // / Setting to specify the default color scheme until the users sets their own.
   // / Default is '1'.
 $defaultColorScheme = '1';
   // / Setting to show HRAI on your Cloud homepage. 
+  // / When enabled HRAI will be visible at the top of most pages by default.
+  // / When disabled HRAI will only be visible at the top of the Home page by default.
   // / To hide HRAI on most pages by default, set to '0'.
   // / To show HRAI on most pages by default, set to '1'.
   // / Default is '1'.
 $defaultShowHRAI = '1';
   // / Setting to specify the default HRAI audio settings until users set their own.
+  // / When enabled HRAI will speak her responses to the user with client speakers & audio devices by default.
+  // / When enabled HRAI will not speak using any audio devices. Her responses will be text only by default.
   // / To disable HRAI audio by default, set to '0'.
   // / To enable HRAI audio by default, set to '1'.
   // / Default is '1'.
 $defaultHRAIAudio = '1';
   // / Setting to specify the default setting for displaying tooltips at the top of each page.
+  // / When enabled tooltips will be displayed at the top of most pages by default.
+  // / When disabled tooltips will not be displayed on any pages by default.
   // / To disable tooltips by default, set to '0'.
   // / To enable tooltips by default, set to '1'.
   // / Default is '1'.
 $defaultShowTips = '1';
   // / Setting to determine if the Privacy Policy link is enabled.
-  // / When this is enabled, users will be shown links to the $defaultPrivacyPolicyURL on the Help page.
+  // / When enabled users will be shown links to the $defaultPrivacyPolicyURL on the Help page by default.
+  // / When disabled users will not be shown links to the $defaultPrivacyPolicyURL on the Help page by default.
   // / To disable the Privacy Policy button on the Help page, se to '0'.
   // / To enable the Privacy Policy button on the Help page, set to '1'.
   // / If enabled the $defaultPrivacyPolicyURL must be set to the destination of your Privacy Policy.
   // / Default is '0'.
 $defaultPPEnableURL = '0';
   // / Setting to determine if the Terms Of Service link is enabled.
-  // / When this is enabled, users will be shown links to the $defaultTermsOfServiceURL on the Help page.
+  // / When enabled users will be shown links to the $defaultTermsOfServiceURL on the Help page by default.
+  // / When disabled users will not be shown links to the $defaultTermsOfServiceURL on the Help page by default.
   // / To disable the Terms Of Service button on the Help page, se to '0'.
   // / To enable the Terms Of Service button on the Help page, set to '1'.
   // / If enabled the $defaultTermsOfServiceURL must be set to the destination of your Terms Of Service.
@@ -107,6 +117,8 @@ $URL = 'https://www.YOUR_URL_HERE.net';
   // / may experience poor performance and high latency when using your HRCloud2 server.
   // / Even if this setting is disabled administrators are given the option to run a one-time bulk scan of the 
   // / server at any time via the Settings page.
+  // / When enabled HRCloud2 will perform a virus scan during most user submitted file operations.
+  // / When disabled HRCloud2 will not perform a virus scan during any user submitted file operations.
   // / To disable automatic virus scanning during file operations, set to '0'.
   // / To enable automatic virus scanning during file operations, set to '1'.
   // / Default is '0'.
@@ -115,6 +127,8 @@ $VirusScan = '0';
   // / If you are running an old or slow CPU you should leave this setting disabled.
   // / If you experience extremely long latency during file operations you can test if this setting improves
   // / performance before completely disabling virus scanning.
+  // / When enabled the virus scanning components will be allowed to use multiple threads of the host CPU.
+  // / When disabled the virus scanning components will only ever use a single CPU thread.
   // / To disable multi-threaded virus scanning, set to '0'.
   // / To enable multi-threaded virus scanning, set to '1'.
 $HighPerformanceAV = '1';
@@ -122,13 +136,15 @@ $HighPerformanceAV = '1';
   // / Thorough virus scanning requires strict permissions & may require additional ClamAV user, usergroup, 
   // / or permissions configuration. For more information see the official ClamAV documentation.
   // / If you experience errors during virus scan operations disable this setting.
+  // / When enabled the virus scanner will perform a deep scan on each target file.
+  // / When disabled the virus scanner will only perform a scan of a target file's descriptors.
   // / Disable '0' if you experience errors.
   // / Enable '0' if you experience false-negatives.
 $ThoroughAV = '1';
   // / Setting to specify if persistent virus scanning should be used.
   // / Persistend virus scanning attempts to achieve the highest level of scanning that is permissable. 
-  // / If enabled the virus scanner will reconfigure & retry failed operations with reduced permissions.
-  // / If disabled the virus scanner will abort failed operations.
+  // / When enabled the virus scanner will reconfigure & retry a failed operation with reduced permissions.
+  // / When disabled the virus scanner will abort an operation as soon as it fails.
   // / To disable persistent virus scanning, set to '0'.
   // / To enable persistent virus scanning, set to '1'.
   // / Default is '1'.
