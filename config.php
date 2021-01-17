@@ -146,7 +146,7 @@ $HighPerformanceAV = '1';
   // / Enable '0' if you experience false-negatives.
 $ThoroughAV = '1';
   // / Setting to specify if persistent virus scanning should be used.
-  // / Persistend virus scanning attempts to achieve the highest level of scanning that is permissable. 
+  // / Persistent virus scanning attempts to achieve the highest level of scanning that is permissable. 
   // / When enabled the virus scanner will reconfigure & retry a failed operation with reduced permissions.
   // / When disabled the virus scanner will abort an operation as soon as it fails.
   // / To disable persistent virus scanning, set to '0'.
