@@ -22,6 +22,10 @@ $Accept_GPLv3_OpenSource_License = '1';
 // / ------------------------------
 // / General Information ... 
   // / Setting to allow backups to be run.
+  // / This application includes a cron file that administrators can use to schedule automatic backups.
+  // / When enabled you must also specify the $BackupLoc in setting in the Directory Locations section.
+  // / When enabled this will allow scheduled & administrator backup features.
+  // / When disabled all backup related features will be unavailable.
   // / To enable backups, set to '1'.
   // / To disable backups, set to '0'.
   // / Default is '1'.
