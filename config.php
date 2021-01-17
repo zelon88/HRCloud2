@@ -45,11 +45,11 @@ $defaultTimezone = 'America/New_York';
   // / Default is 'Commander'.
 $defaultNickname = 'Commander';
   // / Setting to specify the default font type to use for displaying text within GUI elements.
-  // / Note that these will only function on client systems that have the specified font installed.
+  // / These will only function on client systems that have the specified font installed.
   // / Systems that lack the font specified here will display their default system font.
   // / Default is 'Helvetica'.
 $defaultFont = 'Helvetica';
-  // / Setting to specify the default color scheme until the users sets their own.
+  // / Setting to specify the default color scheme until the user sets their own.
   // / Default is '1'.
 $defaultColorScheme = '1';
   // / Setting to show HRAI on your Cloud homepage. 
@@ -59,7 +59,7 @@ $defaultColorScheme = '1';
   // / To show HRAI on most pages by default, set to '1'.
   // / Default is '1'.
 $defaultShowHRAI = '1';
-  // / Setting to specify the default HRAI audio settings until users set their own.
+  // / Setting to specify the default HRAI audio settings until user sets their own.
   // / When enabled HRAI will speak her responses to the user with client speakers & audio devices by default.
   // / When enabled HRAI will not speak using any audio devices. Her responses will be text only by default.
   // / To disable HRAI audio by default, set to '0'.
