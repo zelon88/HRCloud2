@@ -46,11 +46,11 @@ of their servers.
 -sudo apt-get install php libapache2-mod-php php-mysql
 -sudo apt-get install php-all-dev
 **YOU MAY NEED TO CHANGE THE VERSIONS BELOW DEPENDING ON YOUR UBUNTU/PHP VERSION**
--sudo apt-get install php7.2-zip
--sudo apt-get install php7.2-gd
+-sudo apt-get install php7.4-zip
+-sudo apt-get install php7.4-gd
 -sudo apt-get install php-curl
-**EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.2/apache2/php.ini"**
--sudo leafpad /etc/php/7.1/apache2/php.ini
+**EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.4/apache2/php.ini"**
+-sudo leafpad /etc/php/7.4/apache2/php.ini
 **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
   max_execution_time = 90
   max_input_time = 90
