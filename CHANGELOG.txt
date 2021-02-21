@@ -1,3 +1,10 @@
+COMMIT 2/20/2021
+v3.4.1 - Update installation instructions.
+
+-v3.4.1.
+-Add the latest version of PHP to the installation instructions.
+
+----------
 COMMIT 1/17/2021
 v3.4, Clarify config file settings, improve comments.
 
@@ -5,6 +12,7 @@ v3.4, Clarify config file settings, improve comments.
 -Update default config.php file with more detailed comments.
 -Fixed typos, grammer, and formatting inconsistencies.
 
+----------
 COMMIT 8/24/2020
 v3.3, JSPaint to v1.1, WordPress to v5.5.
 
