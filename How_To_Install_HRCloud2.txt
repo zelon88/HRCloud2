@@ -42,45 +42,42 @@ of their servers.
 **WRITE DOWN THE MYSQL ROOT PASSWORD AND DATABASE NAME!!!**
 --------------------------------------------------
 
------STEP 3 - INSTALL PHP7 & PLUGINS-----
--sudo apt-get install php libapache2-mod-php php-mysql
--sudo apt-get install php-all-dev
-**YOU MAY NEED TO CHANGE THE VERSIONS BELOW DEPENDING ON YOUR UBUNTU/PHP VERSION**
--sudo apt-get install php7.4-zip
--sudo apt-get install php7.4-gd
--sudo apt-get install php-curl
+-----STEP 3 - INSTALL LIBREOFFICE, PHP7 & PLUGINS-----
+-sudo apt-get install libreoffice-common && sudo apt-get install php libapache2-mod-php php-mysql && sudo apt-get install php-all-dev
+**YOU MAY NEED TO CHANGE THE PHP VERSIONS BELOW DEPENDING ON YOUR UBUNTU/PHP VERSION**
+-sudo apt-get install php7.4-zip && sudo apt-get install php7.4-gd && sudo apt-get install php-curl
 **EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.4/apache2/php.ini"**
--sudo leafpad /etc/php/7.4/apache2/php.ini
-**SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
-  max_execution_time = 90
-  max_input_time = 90
-  memory_limit = 512M
-  ;Use 256 - 384M for Raspberry Pis
-  display_errors = On
-  ;Leave display errors = Off if you're not debugging HRCloud2 youself
-  post_max_size = 3000M
-  upload_max_filesize = 3000M
-  max_file_uploads = 100
-  zlib.output_compression = On
+-sudo libreoffice /etc/php/7.4/apache2/php.ini
+  **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
+    max_execution_time = 90
+    max_input_time = 90
+    memory_limit = 512M
+    ;Use 256 - 384M for Raspberry Pis
+    display_errors = On
+    ;Leave display errors = Off if you're not debugging HRCloud2 youself
+    post_max_size = 3000M
+    upload_max_filesize = 3000M
+    max_file_uploads = 100
+    zlib.output_compression = On
 **SAVE THE MODIFIED "php.ini" FILE AND EXIT LEAFPAD**
 -sudo service apache2 restart
 --------------------------------------------------
 
 -----STEP 4 - INSTALL BASIC FEATURE DEPENDENCIES-----
--sudo apt-get install clamav && sudo apt-get install libreoffice-common && sudo apt-get install unoconv && sudo apt-get install default-jre
+-sudo apt-get install clamav && sudo apt-get install unoconv && sudo apt-get install default-jre
 -sudo chown -R www-data:www-data /var/www
--sudo leafpad /etc/rc.local
-**ADD THE FOLLOWING LINE TO THE "rc.local" FILE **ABOVE** THE "exit 0" LINE**
-  /usr/bin/soffice --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
+-sudo libreoffice /etc/rc.local
+  **ADD THE FOLLOWING LINE TO THE "rc.local" FILE **ABOVE** THE "exit 0" LINE**
+    /usr/bin/soffice --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
 **IF YOU DO NOT HAVE AN rc.local FILE, COPY AND PASTE THE INCLUDED ONE**
 -sudo chmod +x /etc/rc.local
 -sudo systemctl enable rc-local.service
 **IF YOU GET ERRORS WHEN ENABLING THE SERVICE (ON 'BUNTU 16.10 AND UP)**
-          **-sudo leafpad /etc/systemd/system/rc-local.service**
+          **-sudo libreoffice /etc/systemd/system/rc-local.service**
           **-sudo chmod +x /etc/rc.local**
           **-sudo systemctl enable rc-local.service**
 -sudo apt-get install rar && sudo apt-get install unrar && sudo apt-get install p7zip-full && sudo apt-get install imagemagick && sudo apt-get install ffmpeg && sudo apt-get install tesseract-ocr && sudo apt-get install meshlab && sudo apt-get install dia && sudo apt-get install pandoc && sudo apt-get install poppler-utils && sudo apt-get install nodejs && sudo apt-get install winetricks
--sudo apt install libssl1.0-dev && sudo apt install nodejs-dev && sudo apt install node-gyp && sudo apt install npm
+-sudo apt install libnode-dev && sudo apt install node-gyp && sudo apt install npm
 -sudo npm install nativefier -g
 **REBOOT THE SERVER**
 **IF DOCUMENT CONVERSIONS DONT WORK...**
@@ -93,28 +90,25 @@ of their servers.
 -----STEP 5 - INSTALL HRCLOUD2-----
 **CREATE A DIRECTORY IN "/var/www/html" NAMED "HRProprietary"**
 **CREATE ANOTHER DIRECTORY IN "/var/www/html/HRProprietary" NAMED "HRCloud2"**
-**VISIT "http://github.com/zelon88/HRCloud2" AND DOWNLOAD THE LATEST HRCLOUD2 .zip FILE
-  TO YOUR DOWNLOADS FOLDER**
+**VISIT "http://github.com/zelon88/HRCloud2" AND DOWNLOAD THE LATEST HRCLOUD2 .zip FILE TO YOUR DOWNLOADS FOLDER**
 **EXTRACT HRCLOUD2.zip TO YOUR DOWNLOADS FOLDER**
 **COPY THE CONTENTS OF THE "HRCloud2-master" FOLDER TO "/var/www/html/HRProprietary/HRCloud2"*
--sudo leafpad /var/www/html/HRProprietary/HRCloud2/config.php
-**CAREFULLY READ AND COMPLETELY FILL OUT THE CONFIG.PHP FILE!!!**
-**HRCLOUD2 REQUIRES A SAFE LOCATION TO CREATE USER CLOUD DIRECTORIES. TO FACILITATE
-  THIS YOU MUST CREATE A !!!NEW!!! DIRECTORY AND ENTER IS AS THE "$CloudLoc"**
-**ONCE YOU HAVE CREATED A CLOUD LOCATION "$CloudLoc" CONTINUE**
-          -sudo chmod -R 0755 /path/to/my/CloudLoc
-          -sudo chown -R www-data /path/to/my/CloudLoc
-          -sudo chgrp -R www-data /path/to/my/CloudLoc
+-sudo libreoffice /var/www/html/HRProprietary/HRCloud2/config.php
+  **CAREFULLY READ AND COMPLETELY FILL OUT THE CONFIG.PHP FILE!!!**
+  **HRCLOUD2 REQUIRES A SAFE LOCATION TO CREATE USER CLOUD DIRECTORIES. TO FACILITATE THIS YOU MUST CREATE A !!!NEW!!! DIRECTORY AND ENTER IS AS THE "$CloudLoc"**
+  **ONCE YOU HAVE CREATED A CLOUD LOCATION "$CloudLoc" CONTINUE**
+            -sudo chmod -R 0755 /path/to/my/CloudLoc
+            -sudo chown -R www-data /path/to/my/CloudLoc
+            -sudo chgrp -R www-data /path/to/my/CloudLoc
 **IF YOU DO NOT HAVE A VALID "$CloudLoc" AND PROPER PERMISSIONS, HRCLOUD2 ...WILL...NOT...WORK!!!**
--sudo leafpad /var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php
-**CAREFULLY READ AND COMPLETELY FILL OUT YOUR ADMIN USER AND LOGIN INFO FOR HRAI**
+-sudo libreoffice /var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php
+  **CAREFULLY READ AND COMPLETELY FILL OUT YOUR ADMIN USER AND LOGIN INFO FOR HRAI**
 -sudo chmod -R 0755 /var/www/html
 -sudo chown -R www-data /var/www/html
 -sudo chgrp -R www-data /var/www/html
 **OPTIONAL -sudo useradd -g www-data USERNAME  #adds your user to www-data usergroup.**
 **MAKE SURE THAT ANY UPDATES YOU PERFORM TO HRCLOUD2 HAVE PROPER PERMISSIONS!!!**
-**SCRUTINIZE / DOUBLE-CHECK THE PERMISSIONS FOR ANY FILES ADDED TO /HRCloud2 AFTER 
-  INSTALLATION IS COMPLETE!!!**
+**SCRUTINIZE / DOUBLE-CHECK THE PERMISSIONS FOR ANY FILES ADDED TO /HRCloud2 AFTER INSTALLATION IS COMPLETE!!!**
 **VISIT HTTP://localhost/HRProprietary/HRCloud2/index1.php IN A BROWSER TO HAVE HRCLOUD2 INSTALL WORDPRESS!!!**
 
 IMPORTANT NOTE: If you need to correct permissions later, perform the following commands 
@@ -126,10 +120,11 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
 
 -----STEP 6 - CONFIGURE WORDPRESS-----
 **NAVIGATE TO "/var/www/html"**
-**EDIT "wp-config.php" WITH THE FOLLOWING INFORMATION**
-  -define('DB_NAME', 'database1');
-  -define('DB_USER', 'root');
-  -define('DB_PASSWORD', 'YOURPASSWORD');
+-sudo libreoffice /var/www/html/wp-config.php
+  **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
+    define('DB_NAME', 'database1');
+    define('DB_USER', 'root');
+    define('DB_PASSWORD', 'YOURPASSWORD');
 **VISIT "http://localhost" IN  A BROWSER AND YOU SHOULD BE GREETED BY THE WORDPRESS INSTALLATION PAGE**
 **COMPLETELY READ AND FILL OUT THE WORDPRESS INSTALLATION PAGE**
 
@@ -141,9 +136,7 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
 --------------------------------------------------
 
 -----STEP 7 - VISIT YOUR CLOUD!!!-----
-Go to http://localhost/HRProprietary/HRCloud2 to view your Cloud Drive! The computer you install HRCloud2 onto
-should be considered a staitionary NAS device that you can safely point your "Static NAT" at and access from anywhere. To accomplish
-these things, follow the additional steps below. 
+Go to http://localhost/HRProprietary/HRCloud2 to view your Cloud Drive! The computer you install HRCloud2 onto should be considered a staitionary NAS device that you can safely point your "Static NAT" at and access from anywhere. To accomplish these things, follow the additional steps below. 
 --------------------------------------------------
 
 -----STEP 8 - ADD FIREWALL EXCEPTIONS AND SETUP STATIC NAT ON YOUR ROUTER-----
@@ -168,5 +161,3 @@ these things, follow the additional steps below.
 --------------------------------------------------
 
 If you have any problems with HRCloud2 please create an issue on http://github.com/zelon88/HRCloud2
-
-
