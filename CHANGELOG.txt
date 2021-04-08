@@ -5,6 +5,7 @@ v3.5 - Add Smart-Lightbulb app, Update to work with latest PHP versions.
 -Updated to work with PHP versions up-to and including 7.4.3.
 -Add "Smart-Lightbulb" app for controlling Bluetooth lightbulbs remotely.
 -Added more robust variable declarations in commonCore, sanitizeCore & settingsCore.
+-Update included WordPress package to v5.7.
 
 KNOWN ISSUES
 
