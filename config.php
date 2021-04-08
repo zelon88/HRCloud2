@@ -111,10 +111,10 @@ $defaultTermsOfServiceURL = 'https://www.honestrepair.net/index.php/terms-of-ser
   // / Change the Salts to something completely random and keep it a secret. 
   // / Store your $Salts in hardcopy form or an encrypted drive in case of emergency.
   // / IF YOU LOSE YOUR SALTS YOU WILL BE UNABLE TO DECODE USER ID'S AFTER AN EMEREGENCY.
-$Salts = 'somethingSoRanDoMThatNobod65y_Will_evar+guess+it';
+$Salts = 'secrets-so-fake-my-brain-hurts';
   // / Setting to specify the destination of this HRCloud2 installation. 
   // / Set to an externally or internally accesible domain or IP.
-$URL = 'https://www.YOUR_URL_HERE.net';
+$URL = 'http://localhost';
   // / Setting to specify whether to perform real-time virus scanning during user submitted file operations. 
   // / This setting requires that ClamAV be installed on the server.
   // / Virus scanning with ClamAV is extremely resource intensive. If your server has an old or slow CPU users 
@@ -126,7 +126,7 @@ $URL = 'https://www.YOUR_URL_HERE.net';
   // / To disable automatic virus scanning during file operations, set to '0'.
   // / To enable automatic virus scanning during file operations, set to '1'.
   // / Default is '0'.
-$VirusScan = '0';
+$VirusScan = '1';
   // / Setting to determine if multi-threaded virus scanning is used. 
   // / If you are running an old or slow CPU you should leave this setting disabled.
   // / If you experience extremely long latency during file operations you can test if this setting improves
@@ -178,7 +178,7 @@ $InstLoc = '/var/www/html/HRProprietary/HRCloud2';
   // / Default is a placeholder which is designed to fail if left unmodified. 
   // / This setting is unique to every system. You MUST specify a custom location. 
   // / Example is '/CloudStorage/UserData'.
-$CloudLoc = '/CloudStorage/UserData';
+$CloudLoc = '/testCloud';
   // / This setting should be pointed to wherever your backup files are stored.
   // / When scheduled backups occur, or when an administrator performs a manual backup, the contents of the 
   // / Cloud Location will be copied to the Backup Location.
@@ -187,7 +187,7 @@ $CloudLoc = '/CloudStorage/UserData';
   // / The www-data user needs to have read & write permissions granted to this directory. 
   // / Default is a placeholder which is designed to fail if left unmodified. 
   // / This setting is unique to every system. You MUST specify a custom location. 
-$BackupLoc = '/CloudStorage/BACKUP';
+$BackupLoc = '/testCloudBackup';
 // / ------------------------------ 
 
 // / ------------------------------ 

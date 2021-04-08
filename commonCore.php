@@ -72,14 +72,15 @@ $VersionFile = 'versionInfo.php';
 require($VersionFile);
 $Date = date("m_d_y");
 $Time = date("F j, Y, g:i a"); 
+$Now = time();
 $Current_URL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $CallingScriptBasename = basename(pathinfo($_SERVER['SCRIPT_FILENAME'])['basename']);
 $CallingScriptStylesDir = pathinfo($_SERVER['SCRIPT_FILENAME'])['dirname'].'/Styles';
-$ServerID = hash('ripemd160', $UniqueServerName.$Salts);
 $UserID = hash('ripemd160', $UserIDRAW.$Salts);
+$AdminUserID = hash('ripemd160', '1', $Salts);
 $SesHash = substr(hash('ripemd160', $Date.$UserID.$Salts), -7);
 $LogLoc = $InstLoc.'/DATA/'.$UserID.'/.AppData';
-$LogInc = $ClamLogFileInc = 0;
+$LogInc = $ClamLogFileInc = $showFavorites = 0;
 $SesLogDir = $LogLoc.'/'.$Date;
 $ClamLogDir = $SesLogDir.'/VirusLog_'.$ClamLogFileInc.'_'.$Date.'.txt';
 $LogFile = $SesLogDir.'/HRC2-'.$SesHash.'-'.$Date.'.txt';
@@ -90,7 +91,7 @@ $CloudShareDir = $LogLoc.'/Shared';
 $AppDir = $InstLoc.'/Applications/';
 $CloudAppDir = $CloudLoc.'/Apps';
 $JanitorFile = $InstLoc.'/janitor.php';
-$AdminConfig = $InstLoc.'/DATA/'.$AdminCacheHash.'/.AppData/.config.php';
+$AdminConfig = $InstLoc.'/DATA/'.$AdminUserID.'/.AppData/.config.php';
 $LogInstallDir = 'Applications/displaydirectorycontents_logs/';
 $LogInstallDir1 = 'Applications/displaydirectorycontents_logs1/';
 $LogInstallFiles = scandir($InstLoc.'/'.$LogInstallDir);
@@ -122,7 +123,7 @@ $UserContacts = $InstLoc.'/DATA/'.$UserID.'/.AppData/.contacts.php';
 $UserNotes = $InstLoc.'/DATA/'.$UserID.'/.AppData/.notes.php';
 $defaultApps = array('.', '..', '', 'error.php', 'HRAIMiniGui.php', 'jquery-3.1.0.min.js', 'index.html', 'HRAIMiniGui.php', 'HRAI', 'HRConvert2', 
  'HRStreamer', 'getid3', 'displaydirectorycontents_logs', 'displaydirectorycontents_logs1', 'style.css', 'Shared', 'ServMon.php', 'Favorites.php',  
- 'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'PHPAV.php', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery');
+ 'displaydirectorycontents_72716', 'displaydirectorycontents_shared', 'wordpress.zip', 'PHPAV.php', 'Bookmarks', 'Calendar', 'Contacts', 'Notes', 'UberGallery', '.AppData');
 $DangerousFiles = array('js', 'php', 'html', 'css');
 $installedApps = array_diff($Apps, $defaultApps);
 $RequiredDirs1 = array($CloudDir, $CloudTemp, $CloudTempDir, $appDataCloudDir, $ResourcesDir, $TempResourcesDir, $ClientInstallDir, $ClientInstallDirWin, $ClientInstallDirLin, $ClientInstallDirOsx, $CloudAppDir, $BackupDir);
@@ -137,8 +138,7 @@ $br = '<br />';
 if (!isset($defaultNickname) or $defaultNickname == '') $defaultNickname = 'Commander';  
 if (!isset($defaultTimezone) or $defaultTimezone == '') $defaultTimezone = 'America/New_York'; 
 if (!isset($defaultFont) or $defaultFont == '') $defaultFont = 'Helvetica'; 
-if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';
-if (!is_numeric($defaultColorSchemes)) $defaultColorSchemes = '0'; 
+if (!isset($defaultColorScheme)) if (!isset($defaultColorScheme) or $defaultColorScheme == '') $defaultColorScheme = '1';
 if (!isset($defaultShowHRAI) or $defaultShowHRAI == '') $defaultShowHRAI = '';
 if (!isset($defaultHRAIAudio) or $defaultHRAIAudio == '') $defaultHRAIAudio = '1'; 
 if (!is_numeric($defaultHRAIAudio) or $defaultHRAIAudio > '1') $defaultHRAIAudio = '0'; 
@@ -172,7 +172,7 @@ if (!isset($TermsOfServiceURL) or $TermsOfServiceURL == '') $TermsOfServiceURL =
 // / Also used to create new UserDirs.
 $UserDirPOST = '/';
 // / If a valid UserDir is set, use it for all paths and operations.
-if (isset($_POST['UserDir']) or $_POST['UserDir'] !== '/') $UserDirPOST = $_POST['UserDirPOST'] = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', '/'.$_POST['UserDir'].'/'))); 
+if (isset($_POST['UserDir'])) if ($_POST['UserDir'] !== '/') $UserDirPOST = $_POST['UserDirPOST'] = str_replace('..', '', str_replace('//', '/', str_replace('///', '/', '/'.$_POST['UserDir'].'/'))); 
 // / If the root Cloud Drive is selected set the path directory and URL directory as a slash.
 if (!isset($_POST['UserDir']) && !isset($_POST['UserDirPOST'])) $Udir = $UserDirPOST = '/'; 
 // / Whatever directory the user is "in" is used for URLs.
@@ -185,11 +185,6 @@ $CloudTmpDir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/
 $CloudUsrDir = str_replace('..', '', str_replace('//', '/', str_replace('//', '/', str_replace('//', '/', str_replace('///', '/', $CloudDir.$UserDirPOST))))); 
 if (strpos($CloudTmpDir, $UserID) == FALSE or strpos($CloudUsrDir, $UserID) == FALSE) die('ERROR!!! HRC2CommonCore185, There was a critical security fault on '.$Time.'!'.PHP_EOL); 
 array_push($RequiredDirs1, $CloudTmpDir, $CloudUsrDir);
-// / -----------------------------------------------------------------------------------
-
-// / -----------------------------------------------------------------------------------
-// / The following code verifies that the CloudLoc exists.
-if (!is_dir($CloudLoc)) die('ERROR!!! HRC2CommonCore59, There was a problem verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -207,6 +202,11 @@ foreach ($RequiredDirs1 as $RequiredDir1) {
   if (file_exists($RequiredDir1.'/index.html')) if ($Now - @filemtime($RequiredDir1.'/index.html') >= 60 * 60 * 24 * 1) { // 1 day
     @unlink($RequiredDir1.'/index.html');
     @copy($InstLoc.'/index.html', $RequiredDir1.'/index.html'); } } 
+// / -----------------------------------------------------------------------------------
+
+// / -----------------------------------------------------------------------------------
+// / The following code verifies that the CloudLoc exists.
+if (!is_dir($CloudLoc)) die($CloudLoc.'ERROR!!! HRC2CommonCore59, There was a problem verifying the CloudLoc as a valid directory. Please check the config.php file and refresh the page.'); 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

@@ -40,6 +40,7 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Color Scheme" setting: "'.$NEWColorScheme.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo('Saved New Color-Scheme Settings.'.$br); }
+    else $NEWColorScheme = $ColorScheme; 
   // / The following code sets the users HRAI display preference.
   if (isset($NEWShowHRAI)) {
     $txt = ('$ShowHRAI = \''.$NEWShowHRAI.'\';');
@@ -47,6 +48,7 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Show HRAI" setting: "'.$NEWShowHRAI.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo('Saved New HRAI Display Settings.'.$br); }
+    else $NEWShowHRAI = $ShowHRAI; 
   // / The following code sets the users HRAI audio preference.
   if (isset($NEWHRAIAudio)) {
     $txt = ('$HRAIAudio = \''.$NEWHRAIAudio.'\';');
@@ -54,6 +56,7 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "HRAI Audio" setting: "'.$NEWHRAIAudio.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo('Saved New HRAI Audio Settings.'.$br); }
+    else $NEWHRAIAudio = $HRAIAudio; 
   // / The following code sets the users Tipa display preference.
   if (isset($NEWShowTips)) {
     $txt = ('$ShowTips = \''.$NEWShowTips.'\';');
@@ -61,6 +64,7 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Show Tips" setting: "'.$NEWShowTips.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo('Saved New Tips Settings.'.$br); }
+    else $NEWShowTips = $ShowTips; 
   // / The following code sets the current user timezone.
   if (isset($NEWTimezone)) {
     $txt = ('$Timezone = \''.$NEWTimezone.'\';');
@@ -68,13 +72,15 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Timezone" setting: "'.$NEWTimezone.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo('Saved New Timezone Settings.'.$br); }
+    else $NEWTimezone = $Timezone; 
   // / The following code sets the current user nickname.
   if (isset($NEWNickname)) {
     $txt = ('$nickname = \''.$NEWNickname.'\';');
     $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
     $txt = ('OP-Act: Saved "Nickname" setting: "'.$NEWNickname.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-    echo('Saved New Nickname Settings.'.$br); }
+    echo('Saved New Nickname Settings.'.$br); } 
+    else $NEWNickname = $Nickname; 
   // / The following code sets the current user font.
   if (isset($NEWFont)) {
     $txt = ('$Font = \''.$NEWFont.'\';');
@@ -82,6 +88,7 @@ if (isset($saveSettings)) {
     $txt = ('OP-Act: Saved "Font" setting: "'.$NEWFont.'" to the user cache file on '.$Time.'!'); 
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
     echo('Saved New Font Settings.'.$br); }
+    else $NEWFont = $Font; 
   // / The following settings area only set or displayed when the user is an authentiacted administrator.
   if ($UserIDRAW == 1) {
     // / The following code is sets the server's Data Compression settings. 
@@ -91,6 +98,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Data Compression" setting: "'.$NEWDataCompression.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New Data Compression Settings.'.$br); }
+    else $NEWDataCompression = $DataCompression; 
     // / The following code is sets the server's Virus Scanning setting.
     if (isset($NEWVirusScan)) {
       $txt = ('$VirusScan = \''.$NEWVirusScan.'\';');
@@ -98,6 +106,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Virus Scan" setting: "'.$NEWVirusScan.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New Anti-Virus Settings.'.$br); }
+    else $NEWVirusScan = $VirusScan; 
     // / The following code is sets the server's High Performance AV setting.
     if (isset($NEWHighPerformanceAV)) {
       $txt = ('$HighPerformanceAV = \''.$NEWHighPerformanceAV.'\';');
@@ -105,6 +114,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "High Performance AV" setting: "'.$NEWHighPerformanceAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New High Performance AV Settings.'.$br); }
+    else $NEWHighPerformanceAV = $HighPerformanceAV; 
     // / The following code is sets the server's High Performance AV setting.
     if (isset($NEWThoroughAV)) {
       $txt = ('$ThoroughAV = \''.$NEWThoroughAV.'\';');
@@ -112,6 +122,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Thorough AV" setting: "'.$NEWThoroughAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New Thorough AV Settings.'.$br); } 
+    else $NEWThoroughAV = $ThoroughAV; 
     // / The following code is sets the server's Persistence AV setting.
     if (isset($NEWPersistentAV)) {
       $txt = ('$PersistentAV = \''.$NEWPersistentAV.'\';');
@@ -119,6 +130,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Persistent AV" setting: "'.$NEWPersistentAV.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New Persistent AV Settings.'.$br); } 
+    else $NEWPersistentAV = $PersistentAV; 
     // / The following code is sets the server's Apache User setting.
     if (isset($NEWApacheUser)) {
       $txt = ('$ApacheUser = \''.$NEWApacheUser.'\';');
@@ -126,6 +138,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Apache User" setting: "'.$NEWApacheUser.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New Apache User Settings.'.$br); }
+    else $NEWApacheUser = $ApacheUser; 
     // / The following code is sets the server's Apache Group setting.
     if (isset($NEWApacheGroup)) {
       $txt = ('$ApacheGroup = \''.$NEWApacheGroup.'\';');
@@ -133,6 +146,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Apache Group" setting: "'.$NEWApacheGroup.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo ('Saved New Apache Group Settings.'.$br); }
+    else $NEWApacheGroup = $ApacheGroup; 
     // / The following code is sets the enablement of Privacy Policy modifications in the GUI.
     if (isset($NEWPPEnableURL)) {
       $txt = ('$PPEnableURL = \''.$NEWPPEnableURL.'\';');
@@ -140,6 +154,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Enable Privacy Policy" setting: "'.$NEWPPEnableURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo('Saved New Enable Privacy Policy Settings.'.$br); }
+    else $NEWPPEnableURL = $PPEnableURL; 
     // / The following code is sets the Privacy Policy URL in the GUI.
     if (isset($NEWPrivacyPolicyURL)) {
       $txt = ('$PrivacyPolicyURL = \''.$NEWPrivacyPolicyURL.'\';');
@@ -147,6 +162,7 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Privacy Policy" setting: "'.$NEWPrivacyPolicyURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo('Saved New Privacy Policy Settings.'.$br); }
+    else $NEWPrivacyPolicyURL = $PrivacyPolicyURL; 
     // / The following code is sets the enablement of Terms Of Service modifications in the GUI.
     if (isset($NEWTOSEnableURL)) {
       $txt = ('$TOSEnableURL = \''.$NEWTOSEnableURL.'\';');
@@ -154,13 +170,15 @@ if (isset($saveSettings)) {
       $txt = ('OP-Act: Saved "Enable Terms Of Service" setting: "'.$NEWTOSEnableURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
       echo('Saved New Enable Terms Of Service Settings.'.$br); }
+    else $NEWTOSEnableURL = $TOSEnableURL; 
     // / The following code is sets the Terms Of Service URL in the GUI.
     if (isset($NEWTermsOfServiceURL)) {
       $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); 
       $txt = ('OP-Act: Saved "Terms Of Service" setting: "'.$NEWTermsOfServiceURL.'" to the user cache file on '.$Time.'!'); 
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
-      echo('Saved New Terms Of Service Settings.'.$br); } }
+      echo('Saved New Terms Of Service Settings.'.$br); } 
+    else $NEWTermsOfServiceURL = $TermsOfServiceURL; }
     // / The following code applies settings that have just been submitted so they appear immediately.
     $ShowHRAI = $NEWShowHRAI;
     $HRAIAudio = $NEWHRAIAudio;
@@ -255,7 +273,7 @@ if (isset($loadDefaultSettings)) {
       $txt = ('$TOSEnableURL = \''.$NEWTOSEnableURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); }
     if (!isset($NEWTermsOfServiceURL)) { 
-      $NEWTernsOfServiceURL = $TermsOfServiceURL; 
+      $NEWTermsOfServiceURL = $TermsOfServiceURL; 
       $txt = ('$TermsOfServiceURL = \''.$NEWTermsOfServiceURL.'\';');
       $WriteSetting = file_put_contents($UserConfig, $txt.PHP_EOL, FILE_APPEND); } 
     // / The following code applies settings that have just been submitted so they appear immediately.
@@ -307,7 +325,7 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
     $GenClientTempZip = $CloudTmpDir.'HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip';
     $txt = 'OP-Act: Executing "nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.$GenClientHomepage.'" "'.$GenClientDir.'"" on '.$Time.'.';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
-    exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.$GenClientHomepage.'" "'.$GenClientDir.'"');
+    shell_exec('nativefier -n "HRCloud2-Client" -a "'.$GenClientCPU.'" -p "'.$GenClientOS.'" "'.$GenClientURL.$GenClientHomepage.'" "'.$GenClientDir.'"');
     @copy ('index.html', $ClientInstallDir.'/'.$GenClientOS.'/index.html');
     if (file_exists($GenClientDir)) {
       foreach ($iterator = new \RecursiveIteratorIterator (
@@ -325,6 +343,10 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
       if ($GenClientOS == 'osx') $GenClientOS1 = 'darwin';
       $txt = 'OP-Act: Executing "'.'cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU.'" on '.$Time.'.';
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
+      if (!file_exists($GenClientDir.'/'.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU)) { 
+        $txt = 'ERROR!!! HRC2SettingsCore347, Could not create the Client App build directory on '.$Time.'!';
+        $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); 
+        die($txt); }
       exec('cd '.$GenClientDir.'; zip -r -o '.$GenClientZip.' '.$GenClientPre.$GenClientOS1.'-'.$GenClientCPU);
       if (!file_exists($GenClientZip)) {
         $txt = 'ERROR!!! HRC2SettingsCore197, Could not create the Client App zip file on '.$Time.'!';
@@ -338,14 +360,6 @@ if (isset($GenerateClient) && isset($GenClientOS) && isset($GenClientCPU) && iss
     $txt = 'ERROR!!! HRC2SettingsCore189, Invalid Client App Settings specified on '.$Time.'!';
     $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); } } 
   @copy($GenClientZip, $GenClientTempZip);
-  if (is_dir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU)) {
-    $objects = scandir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU);
-    foreach ($objects as $object) {
-      if ($object != "." && $object != ".." && $object != '/' && $object != '//') {
-        if (filetype($dir."/".$object) == "dir") rmdir($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); 
-        else unlink ($GenClientDir.'HRCloud2-Client-'.$GenClientOS1.'-'.$GenClientCPU."/".$object); } }
-    reset($objects);
-    rmdir($dir); }
   echo('Generated a Client App Installation package to your Cloud Drive! | <a href="'.$URL.'/HRProprietary/HRCloud2/DATA/'.$UserID.'/HRCloud2-Client_'.$GenClientOS.'_'.$GenClientCPU.'_'.$Date.'.zip"><strong>Download Now</strong></a>.'.$br.'</hr>'); } }
 // / -----------------------------------------------------------------------------------
 

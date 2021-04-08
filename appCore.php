@@ -1,6 +1,8 @@
 <?php
 // / -----------------------------------------------------------------------------------
 // / The follwoing code checks for required core files and terminates if they are missing.
+if (!file_exists(realpath(dirname(__FILE__)).'/commonCore.php')) die ('<body>ERROR!!! HRC2AppCore4, Cannot process the HRCloud2 Common Core file (securityCore.php).'.PHP_EOL.'</body></html>'); 
+else require_once (realpath(dirname(__FILE__)).'/commonCore.php'); 
 if (!file_exists(realpath(dirname(__FILE__)).'/securityCore.php')) die ('<body>ERROR!!! HRC2AppCore21, Cannot process the HRCloud2 Security Core file (securityCore.php).'.PHP_EOL.'</body></html>'); 
 else require_once (realpath(dirname(__FILE__)).'/securityCore.php'); 
 // / -----------------------------------------------------------------------------------
@@ -223,29 +225,34 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
 // / The following code returns the random file or folder for each Cloud module. 
 $files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);
 $fileCounter = count($files) * 2;
-$fileCouner1 = 0;
-$random_file = array_rand($files, 1);
-$random_file = $files[$random_file];
-while ($random_file == '.' or $random_file == '..' or strpos($random_file, '.html') or strpos($random_file, '.php')) {
-  if ($fileCounter1 >= $appCounter) {
-    $random_file = 'No files to show!';
+$fileCounter1 = 0;
+$random_file = array_rand($files);
+$random_file = $apps[$random_file];
+while ($fileCounter1 <= $fileCounter) {
+  if ($random_file == '.' or $random_file == '..' or  $random_file == 'index.html' or in_array($random_file, $defaultApps)) {
+    $fileCounter1++; } 
+  else { 
     break; }
-  $random_file = $files[$random_file]; }
+  $random_file = array_rand($files);
+  $random_file = $files[$random_file]; } 
+if (in_array($random_file, $defaultApps) or $random_file === '.AppData') $random_file = 'No files to show!'; 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / The following code sets a random App to echo for some home screens and GUI's.
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 $appCounter = count($apps) * 2;
-$appCouner1 = 0;
+$appCounter1 = 0;
 $random_app = array_rand($apps);
 $random_app = $apps[$random_app];
-while ($random_app == '.' or $random_app == '..' or in_array($random_app, $defaultApps) or strpos($random_app, '.')) {
-  if ($appCounter1 >= $appCounter) {
-    $random_app = 'No apps to show!';
+while ($appCounter1 <= $appCounter) {
+  if ($random_app == '.' or $random_app == '..' or  $random_app == 'index.html' or in_array($random_app, $defaultApps)) {
+    $appCounter1++; } 
+  else { 
     break; }
   $random_app = array_rand($apps);
-  $random_app = $apps[$random_app]; }
+  $random_app = $apps[$random_app]; } 
+if (in_array($random_app, $defaultApps)) $random_app = 'No apps to show!'; 
 // / --------------------------------------------------
 
 // / --------------------------------------------------
@@ -258,7 +265,7 @@ if (!is_dir($ContactsDir)) {
   $txt = ('OP-Act: Created '.$ContactsDir.' on '.$Time.'.');
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
-$contactCounter = count($contacts)*2;
+$contactCounter = count($contacts) * 2;
 $contactCounter1 = 0;
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
@@ -278,7 +285,7 @@ if (!is_dir($NotesDir)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $noteCounter = count($notes)*2;
-$noteCouner1 = 0;
+$noteCounter1 = 0;
 $random_note = array_rand($notes);
 $random_note = $notes[$random_note];
 while ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.php') or strpos($random_note, '.html')) {

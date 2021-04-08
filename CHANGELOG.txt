@@ -1,3 +1,17 @@
+COMMIT 3/7/2021
+v3.5 - Add Smart-Lightbulb app, Update to work with latest PHP versions.
+
+-v3.5.
+-Updated to work with PHP versions up-to and including 7.4.3.
+-Add "Smart-Lightbulb" app for controlling Bluetooth lightbulbs remotely.
+-Added more robust variable declarations in commonCore, sanitizeCore & settingsCore.
+
+KNOWN ISSUES
+
+-Building a client app with electron is broken. Output from the exec() command that calls nativefier to build the app are cut off in the middle of normal output. I'm working on a solution.
+-Added more robust sanity checks for when Nativefier fails.
+
+----------
 COMMIT 2/20/2021
 v3.4.1 - Update installation instructions.
 

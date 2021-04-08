@@ -43,9 +43,13 @@ set_time_limit(0);
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify what kinds of included stylesheets to use.
 if (isset($_POST['noStyles']) or isset($_GET['noStyles'])) $noStyles = 1;
+else $noStyles = 0;
 if (isset($_POST['minStyles']) or isset($_GET['minStyles'])) $minStyles = 1;
+else $minStyles = 0;
 if (isset($_POST['maxStyles']) or isset($_GET['maxStyles'])) $maxStyles = 1;
+else $maxStyles = 0;
 if (isset($_POST['allStyles']) or isset($_GET['allStyles'])) $allStyles = 1; 
+else $allStyles = 0;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -94,16 +98,22 @@ if (isset($_POST['backupUserDataNow'])) $BackupUserDataNow = htmlentities(str_re
   // / 2 = Maximum performance.
   // / 3 = Maximum storage capacity.
 if (isset($_POST['DataCompression'])) $DataCompression = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['DataCompression'])), ENT_QUOTES, 'UTF-8'); 
+else $DataCompression = '';
 if (isset($_POST['DataCompressionMethod'])) $DataCompressionMethod = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['DataCompressionMethod'])), ENT_QUOTES, 'UTF-8'); 
+else $DataCompressionMethod = '';
 if (isset($_POST['NEWDataCompression'])) $DataCompressionMethod = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['NEWDataCompression'])), ENT_QUOTES, 'UTF-8'); 
+else $DataCompressionMethod = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to clear the HRCloud2 cache files. Accepts a value of '1' or 'true'.
 if (isset($_POST['ClearCachePOST'])) $ClearCachePOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['ClearCachePOST'])), ENT_QUOTES, 'UTF-8'); 
+else $ClearCachePOST = '';
 if (isset($_POST['ClearUserCache'])) $ClearCachePOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['ClearUserCache'])), ENT_QUOTES, 'UTF-8'); 
+else $ClearCachePOST = '';
 if (isset($_POST['ClearCache'])) $ClearCachePOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['ClearCache'])), ENT_QUOTES, 'UTF-8'); 
 if (isset($_POST['ClearFavorites'])) $ClearFavoritesPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['ClearFavorites'])), ENT_QUOTES, 'UTF-8'); 
+else $ClearFavoritesPOST = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -148,6 +158,7 @@ if (isset($_POST['NEWTermsOfServiceURL'])) $NEWTermsOfServiceURL = htmlentities(
   // / Accepts a value of '1' or 'true'.
   // / ONLY ADMINISTRATORS CAN AUTO-UPDATE HRC2 !!!
 if (isset($_POST['AutoUpdate'])) $AutoUpdatePOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['AutoUpdate'])), ENT_QUOTES, 'UTF-8'); 
+else $AutoUpdatePOST = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -155,24 +166,30 @@ if (isset($_POST['AutoUpdate'])) $AutoUpdatePOST = htmlentities(str_replace('..'
   // / DOES NOT INSTALL OR REPLACE ANYTHING !!!
   // / ONLY ADMINISTRATORS CAN DOWNLOAD HRC2 UPDATES !!!
 if (isset($_POST['AutoDownload'])) $AutoDownloadPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['AutoDownload'])), ENT_QUOTES, 'UTF-8'); 
+else $AutoDownloadPOST = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to automatically install an official HRC2 update package that was download manually.
   // / WILL EXTRACT AND OVER-WRITE HRC2 SYSTEM FILES WITH ONES FROM /Resources/TEMP
 if (isset($_POST['AutoInstall'])) $AutoInstallPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['AutoInstall'])), ENT_QUOTES, 'UTF-8'); 
+else $AutoInstallPOST = '';
 
 // / Can be used to clean up the HRC2 temp directories and perform compatibility adjustments after a manual update.
   // / ONLY ADMINISTRATORS CAN DOWNLOAD HRC2 UPDATES !!!
 if (isset($_POST['AutoClean'])) $AutoCleanPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['AutoClean'])), ENT_QUOTES, 'UTF-8'); 
+else $AutoCleanPOST = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to automatically check for and repair compatibility bugs and known issues.
   // / Accepts a value of '1' or 'true'.
 if (isset($_POST['CheckCompatibility'])) $CheckCompatPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['CheckCompatibility'])), ENT_QUOTES, 'UTF-8'); 
+else $CheckCompatPOST = '';
 if (isset($_POST['CheckCompat'])) $CheckCompatPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['CheckCompat'])), ENT_QUOTES, 'UTF-8'); 
+else $CheckCompatPOST = '';
 if (isset($_POST['CheckPermissions'])) $CheckPermsPOST = htmlentities(str_replace('..', '', str_replace(str_split('|\\~#[]{};:$!#^&%@>*<"\''), '', $_POST['CheckPermissions'])), ENT_QUOTES, 'UTF-8'); 
+else $CheckPermsPOST = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
