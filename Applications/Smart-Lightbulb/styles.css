@@ -1,0 +1,63 @@
+body {
+    background: #fff;
+}
+
+.app-layout {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+    background: #fff;
+    max-width: 450px;
+}
+
+.app-layout main {
+    display: flex;
+    flex-direction: column;
+}
+
+i.material-icons {
+    max-width: 24px;
+}
+
+.color-buttons {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.mic-button, 
+.power-button {
+    text-align: center;
+}
+
+.mic-button {
+    margin-top: 2pc;
+} 
+
+.power-button {
+    margin-bottom: 2pc;
+}
+
+.hidden {
+    display: none;
+}
+
+.title-and-connect {
+    display: inherit;
+}
+
+.connect-another-icon {
+    top: 17px !important;
+    left: 4px !important;
+    margin-left: -10px !important;
+    position: relative !important;
+    float: right !important;
+}
+
+.connect-another {
+    margin-left: 10px;
+}
+
+#on-off {
+    background-color: #fff;
+}
