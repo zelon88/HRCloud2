@@ -11,7 +11,7 @@ $Now = time();
 
 // / Your OpenWeatherMap.org API key.
 // / Requires account with OpenWeatherMap.
-$key = '<INSERT_OPENWEATHERMAP_API_KEY_HERE';
+$key = '<INSERT_OPENWEATHERMAP_API_KEY_HERE>';
 
 // / Specify URLs used to obtain weather information.
 $urlWithCity = 'https://api.openweathermap.org/data/2.5/weather?q='.$city.'&appid='.$key;
