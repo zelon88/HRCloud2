@@ -53,9 +53,12 @@ foreach ($tempvoltCacheDATA as $cacheDATALine) {
     array_push($batterySensorArr, $cacheDATALine); }
   if (strpos($cacheDATALine, 'Adapter') == 'true') {
     array_push($adapterSensorArr, $cacheDATALine); } }
-$thermalSensorArr1 = explode(', ', $thermalSensorArr[0]);
-$batterySensorArr1 = explode(', ', $batterySensorArr[0]);
-$adapterSensorArr1 = explode(', ', $adapterSensorArr[0]);
+if (isset($thermalSensorArr[0])) $thermalSensorArr1 = explode(', ', $thermalSensorArr[0]);
+else $thermalSensorArr1 = array();
+if (isset($batterySensorArr[0])) $batterySensorArr1 = explode(', ', $batterySensorArr[0]);
+else $batterySensorArr1 = array();
+if (isset($adapterSensorArr[0])) $adapterSensorArr1 = explode(', ', $adapterSensorArr[0]);
+else $adapterSensorArr1 = array();
 
 // / The following code creates the include file required for the advanced thermal monitors.
 $WRITEtempvoltIncludeFile = file_put_contents($tempvoltIncludeFile, '<?php $thermalSensorArr1[1] = \''.$thermalSensorArr1[1].'\'; ?>');

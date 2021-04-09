@@ -9,14 +9,23 @@ $noStyles = 1;
 if (!file_exists('../../commonCore.php')) {
   echo nl2br('</head><body>ERROR!!! HRC2ServMonitorApp18, Cannot process the HRCloud2 Common Core file (commonCore.php)!'."\n".'</body></html>'); 
   die (); }
-else {
-  include ('../../commonCore.php'); }
+else include ('../../commonCore.php'); 
 // / -----------------------------------------------------------------------------------
 
  // / -----------------------------------------------------------------------------------
 // / The following code sets the variables for the session and loads the cache file.
 $ServMonUserCache = $CloudTmpDir.'/.AppData/ServMon.php';
 require($ServMonUserCache);
+// / -----------------------------------------------------------------------------------
+
+// / ----------------------------------------------------------------------------------- 
+// / The following code detects if variables are not set properly & sets default values instead.
+if (isset($batterySensorArr[0])) $batteryEcho = $batterySensorArr[0];
+else $batteryEcho = '';
+if (isset($adapterSensorArr[0])) $adapterEcho = $adapterSensorArr[0];
+else $adapterEcho = '';
+if (isset($networkDeviceData)) $networkEcho = $networkDeviceData;
+else $networkEcho = '';
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -39,9 +48,9 @@ foreach ($thermalSensorArr as $thermalSensorDATA) {
   if ($thermalSensorDATA == $thermalSensorArr[0]) continue; ?>
 <a style="padding-left:5px;" onclick="toggle_visibility('acc<?php echo $basicMonitorCounter; ?>TemperatureGauge');"><strong><img src="Resources/gauge.png" title="Accessory Temperature" alt="Accessory Temperature"> • Accessory Temperature: </strong>  <i><?php echo $thermalSensorDATA; ?></i></a><hr />
 <?php } ?>
-<a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> • Battery Status: </strong>  <i><?php echo $batterySensorArr[0]; ?></i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('poweradapterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> • Power Status: </strong>  <i><?php echo $adapterSensorArr[0]; ?></i></a><hr />
-<a style="padding-left:5px;" onclick="toggle_visibility('networkadapterGauge');"><strong><img src="Resources/gauge.png" title="Network Status" alt="Network Status"> • Network Status: </strong>  <i><?php echo $networkDeviceData; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('batteryGauge');"><strong><img src="Resources/gauge.png" title="Battery Status" alt="Battery Status"> • Battery Status: </strong>  <i><?php echo $batteryEcho; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('poweradapterGauge');"><strong><img src="Resources/gauge.png" title="Power Status" alt="Power Status"> • Power Status: </strong>  <i><?php echo $adapterEcho; ?></i></a><hr />
+<a style="padding-left:5px;" onclick="toggle_visibility('networkadapterGauge');"><strong><img src="Resources/gauge.png" title="Network Status" alt="Network Status"> • Network Status: </strong>  <i><?php echo $networkEcho; ?></i></a><hr />
 </div>
 </body>
 </html>

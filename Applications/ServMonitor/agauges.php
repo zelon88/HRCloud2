@@ -24,15 +24,6 @@ $IncludeDiskFile1 = 'Cache/diskINCLUDE1.php';
 $IncludeTempVoltFile1 = 'Cache/tempvoltINCLUDE1.php';
 $ServMonUserCache = $CloudTmpDir.'/.AppData/ServMon.php';
 require($ServMonUserCache);
-if ($UpdateInterval !== '0' or $UpdateInterval !== 0 or $UpdateInterval !== '') { ?>
-<script>
-    $(document).ready(function(){
-        setInterval(function() {
-            $("#cpuGauge").load("cpuUpdate.php #cpuGauge");
-        }, <?php echo $UpdateInt; ?>);
-    });
-</script>
-<?php }
 
 // / The following code reads the cache data from the previous session to facilitate guages that start from previous
   // / values.
@@ -87,6 +78,13 @@ $WRITEIncludeDiskDATA1 = @file_put_contents($IncludeDiskFile1, $IncludeDiskDATA1
 $IncludeTempVoltDATA1 = file_get_contents($IncludeTempVoltFile);
 $WRITEIncludeTempVoltDATA1 = @file_put_contents($IncludeTempVoltFile1, $IncludeTempVoltDATA1);
 ?>
+
+    <script>
+      $(document).ready(function(){
+        setInterval(function() {
+          $("#cpuGauge").load("cpuUpdate.php #cpuGauge"); }, 
+          <?php echo $UpdateInt; ?>); });
+    </script>
     <div align="center" id="cpuGauge" name="cpuGauge" style="border:inset; float:left; width:355px; height:365px;">
         CPU Usage: <?php echo $cpu; ?>% <img src="Resources/x.png" title="Close CPU Info" alt="Close CPU Info" onclick="toggle_visibility1('cpuGauge');" style="float:right; padding-right:2px; padding-top:2px; padding-bottom:2px;">
         <div style="float: center;" id="cpugaugeContainer"></div>

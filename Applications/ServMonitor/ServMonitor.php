@@ -6,7 +6,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: ServMonitor
-App Version: v3.2 (7-10-2018 00:00)
+App Version: v3.3 (4-8-2021 00:00)
 App License: GPLv3
 App Author: zelon88 (w/special credits)
 App Description: A simple HRCloud2 App for monitoring server status.
@@ -45,7 +45,7 @@ if ($UpdateInterval <= 2000) {
   $txt = ('WARNING!!! HRC2ServMonitorApp32, The "Update Interval" must be greater than 2000ms on '.$Time.'! Please increase the "Update Interval" to a value greater than 2000ms (or 2s).'); 
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
   $UpdateInterval = 2000; }
-if ($UpateInt == '' or !(isset($UpdateInterval))) {
+if (!isset($UpateInt) or !(isset($UpdateInterval))) {
   $UpateInt = 5000; }
 // / -----------------------------------------------------------------------------------
 
