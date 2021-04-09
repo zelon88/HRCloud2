@@ -4,6 +4,7 @@ $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDmeminfo.php';
 $inputMATCH = array('how much ram', 'how much memory', 'ram usage', 'ram use', 
   'memory use', 'mem use', 'mem info', 'memory info');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 foreach ($inputMATCH as $inputM1) {
   if (preg_match('/'.$inputM1.'/', $input)) {

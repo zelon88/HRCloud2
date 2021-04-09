@@ -4,6 +4,7 @@ $inputMATCH = array('what time', 'what is the time', 'whats the time', 'have you
   'whats the the date', 'what day is it', 'what date is it' ,'date', 'what time', 
   'the time', 'the day', 'tell me the day', 'what day is it');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

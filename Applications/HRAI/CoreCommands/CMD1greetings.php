@@ -2,6 +2,8 @@
 
 // / --------------------------------------
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
+
 set_time_limit(0);
 $CoreGreetings = array('hello', 'hi', 'hey', 'sup',);
 $BasicTimeofDay = array('morning', 'noon', 'afternoon', 'evening', 'night');

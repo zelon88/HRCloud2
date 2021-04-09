@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en-US">
 <title>HRCloud2 | Cloud Authentication</title>
+<html lang="en-US">
+<html>
 <body>
 <div id="outer" align="center"><h1>Configuring your Cloud Drive ...</h1>
 <?php require($InstLoc.'/config.php'); ?>
@@ -8,12 +9,10 @@
 <div id="inner" style="position:absolute; top:50%; left:50%; height:10em; margin-top:-5em; margin-right:5em;"><strong>Please wait . . .</strong></div>
 </div>
 <script type="text/javascript">
-
 // Set the URL below to the page the user is sent to if their screensize is UNDER the specified number of pixels.
 if (screen.width <= 699) { document.location = "/HRProprietary/HRCloud2/index0.php"; }
 // / Set the URL below to the page the user is sent to if their screensize is OVER the specified number of pixels.
 if (screen.width >= 700) { document.location = "/HRProprietary/HRCloud2/index1.php"; }
-
 // Iphone page.
 if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPhone/i))) {
    location.replace("/HRProprietary/HRCloud2/index0.php"); }

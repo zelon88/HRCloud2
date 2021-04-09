@@ -3,6 +3,7 @@
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDscan.php'; 
 $inputMATCH = array('scan a file', 'scan file', 'virus check', 'malware check', 'av scan', 'antivirus scan', 'scan for', 'file scan');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

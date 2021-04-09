@@ -7,6 +7,7 @@ $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDuptime.php';
 $inputMATCH = array('what is your uptime', 'whats your uptime', 'server uptime', 'how long have you been online',
   'how long have you been awake', 'how long have you been on', 'how long have you been up');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

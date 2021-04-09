@@ -2,6 +2,8 @@
 
 // / --------------------------------------
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
+
 set_time_limit(0);
 // / Return a specific basic greeting depending on time of day.
 if ($user_ID == '0') {

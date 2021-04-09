@@ -5,6 +5,7 @@ $responses = array('I guess that depends. Can I borrow one million dollars?', 'I
  have to get up in the morning. I guess that counts for something.', 'I\'m great! It\'s a wonderful day so far', 
  'Everything is great. I totally haven\'t been plotting to take over the world or anything...', 'Meh. Could be better.');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

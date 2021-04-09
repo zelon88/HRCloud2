@@ -3,6 +3,7 @@
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDbusy.php'; 
 $inputMATCH = array('what is your status', 'whats your status', 'server status', 'are you busy', 'are you idle');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

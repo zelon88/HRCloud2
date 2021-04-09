@@ -7,6 +7,7 @@ $inputMATCH = array('what cpu', 'what processor', 'whats cpu', 'whats processor'
   'processor brand', 'cpu vendor', 'processor vendor', 'cpu vendor', 'is your cpu',
   'is your processor', 'cpu spec');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input) && $input !== '') {
   foreach ($inputMATCH as $inputM1) {

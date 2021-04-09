@@ -3,6 +3,7 @@
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDconvert.php'; 
 $inputMATCH = array('convert', 'change file');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

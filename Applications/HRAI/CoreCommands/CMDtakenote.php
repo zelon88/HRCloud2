@@ -3,6 +3,7 @@
 $CMDfile = $InstLoc.'/Applications/HRAI/CoreCommands/CMDtakenote.php'; 
 $inputMATCH = array('take a note', 'take note', 'note this', 'make note', 'make a note', 'a note of this', 'create note', 'write');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {

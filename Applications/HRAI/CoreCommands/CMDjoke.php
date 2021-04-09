@@ -18,6 +18,7 @@ $responses = array('What does a user-interface and a joke have in common?<br />I
   'All my jokes are "yo mama" jokes, and I\'ve already received a warning from human resources.',
   'Why did Elon Musk go broke? Because his car insurance rates were out-of-control.');
 $CMDcounter++;
+$CMDinit[$CMDcounter] = 0;
 
 if (isset($input)) {
   foreach ($inputMATCH as $inputM1) {
