@@ -20,3 +20,5 @@ $HRAISpeed = '175';
 $HRAIPitch = '0';
 $HRAIVoiceType = '';
 $noStyles = 1;
+$CMDinit = array();
+$fireOutput = '';
