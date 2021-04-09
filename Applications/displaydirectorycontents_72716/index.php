@@ -260,7 +260,7 @@
           $size = "&lt;Directory&gt;";
           $sizekey = "0";
           $class = "dir";
-            if ($name == ".") $name = ". (Current Directory)"; $extn = "&lt;System Dir&gt;"; $favicon = " style='background-image:url($slash$namehref/favicon.ico);'";
+            if ($name == ".") $name = ". (Current Directory)"; $extn = "&lt;System Dir&gt;"; 
             if ($name == "..") $name = ".. (Parent Directory)"; $extn = "&lt;System Dir&gt;"; }
       // File-only operations.
         else {
@@ -378,7 +378,7 @@
                if (in_array($name, $SharedFiles)) $Shared = '<img src="'.$SharedIcon.'" title="Shared File" alt="Shared File" defer/>';
                echo("
                 <tr class='$class'>
-                  <td title='$name' alt='$name'><a id='corePostDL$tableCount' $favicon class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Folder $Favorited $Shared $shortName</a></td>
+                  <td title='$name' alt='$name'><a id='corePostDL$tableCount' class='name' onclick=".'"toggle_visibility(\'loadingCommandDiv\');"'.">$Folder $Favorited $Shared $shortName</a></td>
                   <td title='Select \"$name\"' alt='Select \"$name\"'><div><input type='checkbox' name='corePostSelect[]' id='$Udir$namehref' value='$Udir$namehref'></div></td>
                   <td title='$extn' alt='$extn'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$extn</a></td>
                   <td title='$size' alt='$size' sorttable_customkey='$sizekey'><a id='corePostDL$tableCount' name='corePostDL$tableCount'>$size</a></td>
