@@ -1,4 +1,12 @@
-COMMIT 3/7/2021
+COMMIT 4/8/2021
+v3.5.1 - Finish Weather app, fix ServMonitor HRAI, displaydirectorycontents.
+
+-Add a bunch of features and functionality to Weather app.
+-Update ServMonitor, HRAI, & displaydirectorycontents to work with the newer versions of PHP.
+-Add missing acpi dependancy to instructions for ServMonitor.
+
+----------
+COMMIT 4/7/2021
 v3.5 - Add Smart-Lightbulb app, Update to work with latest PHP versions.
 
 -v3.5.
