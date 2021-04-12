@@ -556,7 +556,6 @@ if (isset($_POST['convertSelected'])) {
           exec('/usr/bin/unoconv -l &', $DocEnginePID1); 
           exec("pgrep soffice.bin", $DocEnginePID, $DocEngineStatus); } }
       if (count($DocEnginePID) > 0) {
-        $MAKELogFile = file_put_contents($LogFile, 'OP-Act, The document conversion engine PID is '.$DocEnginePID[0].PHP_EOL, FILE_APPEND);
         $MAKELogFile = file_put_contents($LogFile, "OP-Act, Executing \"unoconv -o $newPathname -f $extension $pathname\" on ".$Time.'.'.PHP_EOL, FILE_APPEND);      
         exec("unoconv -o $newPathname -f $extension $pathname", $returnDATA); 
         if (!is_array($returnDATA)) $MAKELogFile = file_put_contents($LogFile, 'OP-Act, Unoconv returned '.$returnDATA.' on '.$Time.'.'.PHP_EOL, FILE_APPEND); 

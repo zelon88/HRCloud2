@@ -50,6 +50,7 @@ if (isset($_POST['maxStyles']) or isset($_GET['maxStyles'])) $maxStyles = 1;
 else $maxStyles = 0;
 if (isset($_POST['allStyles']) or isset($_GET['allStyles'])) $allStyles = 1; 
 else $allStyles = 0;
+if (!isset($noStyles) && !isset($minStyles) && !isset($maxStyles)) $allStyles = 1;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

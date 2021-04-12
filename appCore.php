@@ -17,7 +17,7 @@ $defaultApps = array('.', '..', '', 'jquery-3.1.0.min.js', 'HRAI', 'HRConvert2',
 $installedApps = array_diff($Apps, $defaultApps);
 if (isset($_POST['uninstallApplication'])) $uninstallApp = str_replace(str_split('[]{};:$!#^&%@>*<'), '', $_POST['uninstallApplication']);
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
-$stopper = 0;
+$stopper = $fileCounter1 = $noteCounter1 = $contactCounter1 = $appCounter1 = 0;
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------
@@ -225,7 +225,6 @@ if (!isset($_POST['installApplication']) or !isset($_POST['uninstallApplication'
 // / The following code returns the random file or folder for each Cloud module. 
 $files = scandir($CloudUsrDir, SCANDIR_SORT_DESCENDING);
 $fileCounter = count($files) * 2;
-$fileCounter1 = 0;
 $random_file = array_rand($files);
 $random_file = $apps[$random_file];
 while ($fileCounter1 <= $fileCounter) {
@@ -242,7 +241,6 @@ if (in_array($random_file, $defaultApps) or $random_file === '.AppData') $random
 // / The following code sets a random App to echo for some home screens and GUI's.
 $apps = scandir($AppDir, SCANDIR_SORT_DESCENDING);
 $appCounter = count($apps) * 2;
-$appCounter1 = 0;
 $random_app = array_rand($apps);
 $random_app = $apps[$random_app];
 while ($appCounter1 <= $appCounter) {
@@ -266,7 +264,6 @@ if (!is_dir($ContactsDir)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $contacts = scandir($ContactsDir, SCANDIR_SORT_DESCENDING);
 $contactCounter = count($contacts) * 2;
-$contactCounter1 = 0;
 $random_contact = array_rand($contacts);
 $random_contact = $contacts[$random_contact];
 while ($random_contact == '.' or $random_contact == '..' or in_array($random_contact, $defaultApps) or strpos($random_contact, '.txt') or strpos($random_contact, '.html')) {
@@ -285,7 +282,6 @@ if (!is_dir($NotesDir)) {
   $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND); }
 $notes = scandir($NotesDir, SCANDIR_SORT_DESCENDING);
 $noteCounter = count($notes)*2;
-$noteCounter1 = 0;
 $random_note = array_rand($notes);
 $random_note = $notes[$random_note];
 while ($random_note == '.' or $random_note == '..' or in_array($random_note, $defaultApps) or strpos($random_note, '.php') or strpos($random_note, '.html')) {

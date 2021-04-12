@@ -408,7 +408,7 @@ if ($noStyles !== 1) {
     if ($ColorScheme == '6') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStylePURPLE.css">'); 
     if ($ColorScheme == '7') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREEN2.css">'); 
     if ($ColorScheme == '8') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleGREY.css">');
-    if ($ColorScheme == '9') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleYELLOW.css">'); } }
+    if ($ColorScheme == '9') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/iframeStyleYELLOW.css">'); } } 
 // / -----------------------------------------------------------------------------------
 
 // / -----------------------------------------------------------------------------------

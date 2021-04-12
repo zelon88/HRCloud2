@@ -1,8 +1,17 @@
 COMMIT 4/8/2021
+v3.5.2 - Fix stylesheets, Pell App to v3.5.
+
+-Updated Pell to latest PHP versions (tested 7.4.3).
+-Pell to v3.5.
+-Discovered that the way we install Unoconv is broken. We wind up installing 0.7 which is old. We want to use pip. The docs need to be updated to reflect this. Not sure if the core needs to be modified yet.
+-Update the way commonCore produces stylesheets in santitizeCore.php and commonCore.php.
+
+----------
+COMMIT 4/8/2021
 v3.5.1 - Finish Weather app, fix ServMonitor HRAI, displaydirectorycontents.
 
--Add a bunch of features and functionality to Weather app.
--Update ServMonitor, HRAI, & displaydirectorycontents to work with the newer versions of PHP.
+-Add a bunch of features and functionality to Weather app (v0.6).
+-Update ServMonitor (v3.3), HRAI (v6.1), & displaydirectorycontents to work with the newer versions of PHP.
 -Add missing acpi dependancy to instructions for ServMonitor.
 
 ----------
