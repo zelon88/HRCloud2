@@ -1,7 +1,7 @@
 <?php 
 require_once 'config.php'; 
 
-if (isset($key)) if (%key == '<INSERT_OPENWEATHERMAP_API_KEY_HERE>') { 
+if (isset($key)) if ($key == '<INSERT_OPENWEATHERMAP_API_KEY_HERE>') { 
   if ($key == '') { 
     $jumbotronTopText = $needKeyText; 
     $jumbotronBottomText = ''; }
