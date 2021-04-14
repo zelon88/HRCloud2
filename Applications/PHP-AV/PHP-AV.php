@@ -3,7 +3,7 @@
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: PHP-AV
-App Version: v4.0 (4-10-2019 00:00)
+App Version: v4.1 (4-13-2021 00:00)
 App License: GPLv3
 App Author: FujitsuBoy (aka Keyboard Artist) & zelon88
 App Description: A simple HRCloud2 App for scanning files for viruses.
@@ -48,9 +48,9 @@ require('config.php');
 
     // / -----------------------------------------------------------------------------------
     // / The following code sets the variables for the session.
-    $versions = 'PHP-AV App v4.0 | Virus Definition v4.9, 4/10/2019';
-    $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
-    $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
+    $versions = 'PHP-AV App v4.1 | Virus Definition v4.9, 4/13/2021';
+    if (isset($_POST['AVmemoryLimit'])) $memoryLimitPOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVmemoryLimit']);
+    if (isset($_POST['AVchunkSize'])) $chunkSizePOST = str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_POST['AVchunkSize']);
     $report = '';
     $dircount = 0;
     $filecount = 0;
@@ -111,7 +111,6 @@ require('config.php');
       $MAKELogFile = file_put_contents($LogFile, $txt.PHP_EOL, FILE_APPEND);
       $MAKEAVLogFile = file_put_contents($AVLogFile, $txt.PHP_EOL, FILE_APPEND);
       $UpdateInterval = 2000; }
-    if ($UpateInt == '' or !(isset($UpdateInterval))) $UpateInt = 15000; 
     // / -----------------------------------------------------------------------------------
 
     // / -----------------------------------------------------------------------------------
@@ -150,7 +149,7 @@ require('config.php');
       // / The following code sets user supplied memory variables if they are greater than the ones contained in config.php.
       if ($memoryLimitPOST >= $memoryLimit) {
         $memoryLimit = $memoryLimitPOST; }
-      if ($chunkSizePOST >= $chunkSize) {
+      if (isset($chunkSizePOST)) if ($chunkSizePOST >= $chunkSize) {
         $chunkSize = $chunkSizePOST; }
       if (isset($_POST['AVScanTarget'])) {
         if ($_POST['AVScanTarget'] == '') $_POST['AVScanTarget'] = $_SERVER['DOCUMENT_ROOT'];

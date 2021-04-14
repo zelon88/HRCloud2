@@ -23,7 +23,8 @@ $CONFIG['debug'] = 0;
 // large it may fail.
 // Default: Document root defined in Apache
 
-$CONFIG['scanpath'] = $CONFIG['scanpath'];
+// / This is not needed for the HRC2 app versopm of this software. 
+//$CONFIG['scanpath'] = $CONFIG['scanpath'];
 
 // MEMORY LIMITS
 // -----------------
