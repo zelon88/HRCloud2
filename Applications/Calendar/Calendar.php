@@ -1,15 +1,16 @@
 <?php
-
 /*//
 HRCLOUD2-PLUGIN-START
 App Name: Calendar
-App Version: v0.6 (7-7-2018 00:00)
+App Version: v0.7 (4-13-2021 00:00)
 App License: GPLv3
 App Author: bastianallgeier & zelon88
 App Description: A simple Calendar app for HRCloud2!
 App Integration: 0 (False)
 HRCLOUD2-PLUGIN-END
 //*/
+
+$noStyles = 1;
 
 // / The follwoing code checks if the commonCore.php file exists and 
 // / terminates if it does not.
@@ -28,7 +29,8 @@ else {
   require_once ('../../Applications/Calendar/calendarLibrary.php'); }
 
 // / The following code sets the desured GUI for the session.
-$guiPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_GET['gui']), ENT_QUOTES, 'UTF-8'); 
+if (isset($_GET['gui'])) $guiPOST = htmlentities(str_replace(str_split('~#[](){};:$!#^&%@>*<"\''), '', $_GET['gui']), ENT_QUOTES, 'UTF-8'); 
+else $guiPOST = 'month';
 $GUI = 'month';
 if ($guiPOST === 'year') $GUI = 'year';
 if ($guiPOST === 'month') $GUI = 'month';
