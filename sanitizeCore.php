@@ -42,13 +42,13 @@ set_time_limit(0);
 
 // / -----------------------------------------------------------------------------------
 // / Can be used to specify what kinds of included stylesheets to use.
-if (isset($_POST['noStyles']) or isset($_GET['noStyles'])) $noStyles = 1;
+if (isset($_POST['noStyles']) or isset($noStyles) or isset($_GET['noStyles'])) $noStyles = 1;
 else $noStyles = 0;
-if (isset($_POST['minStyles']) or isset($_GET['minStyles'])) $minStyles = 1;
+if (isset($_POST['minStyles']) or isset($minStyles) or isset($_GET['minStyles'])) $minStyles = 1;
 else $minStyles = 0;
-if (isset($_POST['maxStyles']) or isset($_GET['maxStyles'])) $maxStyles = 1;
+if (isset($_POST['maxStyles']) or isset($maxStyles) or isset($_GET['minStyles'])) $maxStyles = 1;
 else $maxStyles = 0;
-if (isset($_POST['allStyles']) or isset($_GET['allStyles'])) $allStyles = 1; 
+if (isset($_POST['allStyles']) or isset($allStyles) or isset($_GET['allStyles'])) $allStyles = 1; 
 else $allStyles = 0;
 if (!isset($noStyles) && !isset($minStyles) && !isset($maxStyles)) $allStyles = 1;
 // / -----------------------------------------------------------------------------------

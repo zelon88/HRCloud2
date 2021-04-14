@@ -388,6 +388,7 @@ foreach ($iterator = new \RecursiveIteratorIterator (
 // / -----------------------------------------------------------------------------------
 // / The following code represents the stylesheet/color scheme handler. 
 if ($noStyles !== 1) {
+  echo $noStyles;
   if ($ColorScheme == '0' or $ColorScheme == '' or !isset($ColorScheme)) $ColorScheme = '1'; 
   if ($CallingScriptBasename !== '.index.php' or $minStyles == 1 or $allStyles == 1) {   
     if ($ColorScheme == '1') echo('<link rel="stylesheet" type="text/css" href="'.$URL.'/HRProprietary/HRCloud2/Styles/styleBLUE.css">'); 

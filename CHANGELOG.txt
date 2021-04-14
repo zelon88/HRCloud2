@@ -1,3 +1,28 @@
+COMMIT 4/13/2021
+v3.5.3 - Calculator to v1.7, ServStat to v1.3, Grabber to v2.0, PHP-AV to v4.1, Weather to v0.7, Calendar to v0.7.
+
+-Calculator to v1.7.
+  -Fix syntax errors on PHP 7.4.3.
+-ServStat to v1.3.
+  -Make app admin-only until I can make the server.xml file user-specific.
+  -Fix typo in app declaration block.
+-Grabber to v2.0.
+  -Refactor a lot of old and embarrassing code.
+  -Remove a lot of redundant checks (does_url_exist being called more than once).
+  -Add ability to infer the file extension from the URL. 
+  -Users no longer have to type the filename into the filename field. Grabber figures out the file extension and names the file appropriately.
+  -Fix syntax errors on PHP 7.4.3.
+-PHP-AV to v4.1.
+  -Fix improperly nested code block.
+  -Fix syntax errors on PHP 7.4.3.
+-Weather to v0.7.
+  -Fix typo in $key declaration.
+-Calendar to v0.7.
+  -Add noStyles variable to prevent default stylesheets from loading.
+  -Fix syntax errors on PHP 7.4.3.
+-Fix the way stylesheet declarations are processed in sanitizeCore.php. 
+
+----------
 COMMIT 4/8/2021
 v3.5.2 - Fix stylesheets, Pell App to v3.5.
 
