@@ -14,7 +14,7 @@ http://www.ubuntu.com/download/desktop/install-ubuntu-desktop
 
 IMPORTANT NOTE: During this guide we will be setting-up a fully
 functional, yet somewhat customized, LAMP stack including 
-linux, Apache2.4, MySQL, and PHP7.0. If you DO NOT want to have
+linux, Apache2.4, MySQL, and PHP8.0. If you DO NOT want to have
 a LAMP stack installed on your local machine DO NOT install this software.
 This software was designed to be run on a dedicated server setup for NAS
 duties.
@@ -42,12 +42,12 @@ of their servers.
 **WRITE DOWN THE MYSQL ROOT PASSWORD AND DATABASE NAME!!!**
 --------------------------------------------------
 
------STEP 3 - INSTALL LIBREOFFICE, PHP7 & PLUGINS-----
--sudo apt-get install libreoffice-common && sudo apt-get install php libapache2-mod-php php-mysql && sudo apt-get install php-all-dev
+-----STEP 3 - INSTALL FEATHERPAD, LIBREOFFICE, PHP7 & PLUGINS-----
+-sudo apt-get install featherpad && sudo apt-get install libreoffice-common && sudo apt-get install libreoffice-java-common && sudo apt-get install php libapache2-mod-php php-mysql && sudo apt-get install php-all-dev
 **YOU MAY NEED TO CHANGE THE PHP VERSIONS BELOW DEPENDING ON YOUR UBUNTU/PHP VERSION**
--sudo apt-get install php7.4-zip && sudo apt-get install php7.4-gd && sudo apt-get install php-curl
-**EDIT THE "php.ini" FILE LOCATED IN "/etc/php/7.4/apache2/php.ini"**
--sudo libreoffice /etc/php/7.4/apache2/php.ini
+-sudo apt-get install php8.0-zip && sudo apt-get install php8.0-gd && sudo apt-get install php-curl
+**EDIT THE "php.ini" FILE LOCATED IN "/etc/php/8.0/apache2/php.ini"**
+-sudo featherpad /etc/php/8.0/apache2/php.ini
   **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
     max_execution_time = 90
     max_input_time = 90
@@ -59,21 +59,21 @@ of their servers.
     upload_max_filesize = 3000M
     max_file_uploads = 100
     zlib.output_compression = On
-**SAVE THE MODIFIED "php.ini" FILE AND EXIT LEAFPAD**
+**SAVE THE MODIFIED "php.ini" FILE AND EXIT FEATHERPAD**
 -sudo service apache2 restart
 --------------------------------------------------
 
 -----STEP 4 - INSTALL BASIC FEATURE DEPENDENCIES-----
 -sudo apt-get install clamav && sudo apt-get install unoconv && sudo apt-get install default-jre
 -sudo chown -R www-data:www-data /var/www
--sudo libreoffice /etc/rc.local
+-sudo featherpad /etc/rc.local
   **ADD THE FOLLOWING LINE TO THE "rc.local" FILE **ABOVE** THE "exit 0" LINE**
     /usr/bin/soffice --headless --accept="socket,host=127.0.0.1,port=$soffice_port;urp;" --nofirststartwizard &
-**IF YOU DO NOT HAVE AN rc.local FILE, COPY AND PASTE THE INCLUDED ONE**
+**IF YOU DO NOT HAVE AN "rc.local" FILE, OR IF THE FILE IS BLANK THEN COPY AND PASTE THE INCLUDED ONE**
 -sudo chmod +x /etc/rc.local
 -sudo systemctl enable rc-local.service
-**IF YOU GET ERRORS WHEN ENABLING THE SERVICE (ON 'BUNTU 16.10 AND UP)**
-          **-sudo libreoffice /etc/systemd/system/rc-local.service**
+**IF YOU GET ERRORS WHEN ENABLING THE SERVICE**
+          **COPY AND PASTE THE INCLUDED "rc-local.service" FILE TO "/etc/systemd/system/rc-local.service"**
           **-sudo chmod +x /etc/rc.local**
           **-sudo systemctl enable rc-local.service**
 -sudo apt-get install rar && sudo apt-get install unrar && sudo apt-get install p7zip-full && sudo apt-get install imagemagick && sudo apt-get install ffmpeg && sudo apt-get install tesseract-ocr && sudo apt-get install meshlab && sudo apt-get install dia && sudo apt-get install pandoc && sudo apt-get install poppler-utils && sudo apt-get install nodejs && sudo apt-get install winetricks
@@ -93,7 +93,7 @@ of their servers.
 **VISIT "http://github.com/zelon88/HRCloud2" AND DOWNLOAD THE LATEST HRCLOUD2 .zip FILE TO YOUR DOWNLOADS FOLDER**
 **EXTRACT HRCLOUD2.zip TO YOUR DOWNLOADS FOLDER**
 **COPY THE CONTENTS OF THE "HRCloud2-master" FOLDER TO "/var/www/html/HRProprietary/HRCloud2"*
--sudo libreoffice /var/www/html/HRProprietary/HRCloud2/config.php
+-sudo featherpad /var/www/html/HRProprietary/HRCloud2/config.php
   **CAREFULLY READ AND COMPLETELY FILL OUT THE CONFIG.PHP FILE!!!**
   **HRCLOUD2 REQUIRES A SAFE LOCATION TO CREATE USER CLOUD DIRECTORIES. TO FACILITATE THIS YOU MUST CREATE A !!!NEW!!! DIRECTORY AND ENTER IS AS THE "$CloudLoc"**
   **ONCE YOU HAVE CREATED A CLOUD LOCATION "$CloudLoc" CONTINUE**
@@ -101,7 +101,7 @@ of their servers.
             -sudo chown -R www-data /path/to/my/CloudLoc
             -sudo chgrp -R www-data /path/to/my/CloudLoc
 **IF YOU DO NOT HAVE A VALID "$CloudLoc" AND PROPER PERMISSIONS, HRCLOUD2 ...WILL...NOT...WORK!!!**
--sudo libreoffice /var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php
+-sudo featherpad /var/www/html/HRProprietary/HRCloud2/Applications/HRAI/adminINFO.php
   **CAREFULLY READ AND COMPLETELY FILL OUT YOUR ADMIN USER AND LOGIN INFO FOR HRAI**
 -sudo chmod -R 0755 /var/www/html
 -sudo chown -R www-data /var/www/html
@@ -120,7 +120,7 @@ IMPORTANT NOTE: If you need to correct permissions later, perform the following 
 
 -----STEP 6 - CONFIGURE WORDPRESS-----
 **NAVIGATE TO "/var/www/html"**
--sudo libreoffice /var/www/html/wp-config.php
+-sudo featherpad /var/www/html/wp-config.php
   **SEARCH FOR AND MODIFY THE FOLLOWING VALUES CAREFULLY**
     define('DB_NAME', 'database1');
     define('DB_USER', 'root');
