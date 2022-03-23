@@ -1,10 +1,12 @@
 Follow the early development of **HRCloud3** on the official [HRCloud3 Github Repo](https://github.com/zelon88/HRCloud3)!!!
 
+-----------------------------------------------
 [Join the HonestRepair Slack Team!](https://join.slack.com/t/honestrepair/shared_invite/zt-15jd9y01x-5tPNbaWwui4rJ~WsKqjZsg)
 
 -----------------------------------------------
 **[YOUTUBE CHANNEL!](https://www.youtube.com/playlist?list=PLVbKN4o8V_4OSXI0SGGBMxRvXTZJT3YM_)**
 
+-----------------------------------------------
 **[WIKI DOCUMENTATION!](https://github.com/zelon88/HRCloud2/wiki)**
 
 # HRCloud2
